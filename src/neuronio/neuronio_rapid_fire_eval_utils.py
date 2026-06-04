@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np
@@ -16,6 +16,9 @@ class RapidFireConfig:
     peak_search_after: int = 45
     window_before: int = 40
     window_after: int = 80
+    bad_peak_error_thresholds: List[float] = field(
+        default_factory=lambda: [0.8, 1.0, 1.5, 2.0, 3.0]
+    )
 
 
 @dataclass
@@ -33,6 +36,7 @@ class RapidFireEvent:
 class RapidFireEvaluationResult:
     metrics: Dict[str, float]
     events: List[RapidFireEvent]
+    event_metrics: Dict[str, np.ndarray] = field(default_factory=dict)
 
 
 class RapidFireEventDetector:
@@ -178,6 +182,7 @@ class RapidFireSomaEvaluator:
     ) -> RapidFireEvaluationResult:
         y_soma_gt, y_soma_hat = self._validate_arrays(y_soma_gt, y_soma_hat)
         events = self.detector.detect(y_soma_gt)
+        event_metrics = self._compute_event_metrics(y_soma_gt, y_soma_hat, events)
 
         metrics = {
             "rapid_event_count": float(len(events)),
@@ -194,15 +199,13 @@ class RapidFireSomaEvaluator:
             "soma_rmse_rapid": self._compute_rmse_on_event_windows(
                 y_soma_gt, y_soma_hat, events
             ),
-            "peak_abs_error_mean": self._compute_mean_abs_error_at_peaks(
-                y_soma_gt, y_soma_hat, events
-            ),
-            "peak_signed_error_mean": self._compute_mean_signed_error_at_peaks(
-                y_soma_gt, y_soma_hat, events
-            ),
         }
+        metrics.update(self._compute_coverage_metrics(y_soma_gt, events))
+        metrics.update(self._compute_peak_error_summary(event_metrics))
 
-        return RapidFireEvaluationResult(metrics=metrics, events=events)
+        return RapidFireEvaluationResult(
+            metrics=metrics, events=events, event_metrics=event_metrics
+        )
 
     def print_results(self, result: RapidFireEvaluationResult) -> None:
         metrics = result.metrics
@@ -218,6 +221,37 @@ class RapidFireSomaEvaluator:
         print(f"Soma RMSE rapid       : {metrics['soma_rmse_rapid']:.4f}")
         print(f"Peak abs error mean   : {metrics['peak_abs_error_mean']:.4f}")
         print(f"Peak signed error mean: {metrics['peak_signed_error_mean']:.4f}")
+
+        print("")
+        print("Rapid-fire coverage")
+        print("--------------------------------")
+        print(f"Total eval points     : {int(metrics['total_eval_time_points'])}")
+        print(f"Rapid segment points  : {int(metrics['rapid_segment_points'])}")
+        print(f"Rapid segment percent : {metrics['rapid_segment_percent']:.2f}%")
+        print(f"Rapid window points   : {int(metrics['rapid_window_points'])}")
+        print(f"Rapid window percent  : {metrics['rapid_window_percent']:.2f}%")
+        print(f"Total simulations     : {int(metrics['total_simulations'])}")
+        print(f"Simulations with rapid: {int(metrics['simulations_with_rapid'])}")
+        print(f"Simulation percent    : {metrics['simulations_with_rapid_percent']:.2f}%")
+
+        print("")
+        print("Rapid-fire peak error distribution")
+        print("--------------------------------")
+        print(f"Peak abs error median : {metrics['peak_abs_error_median']:.4f}")
+        print(f"Peak abs error p90    : {metrics['peak_abs_error_p90']:.4f}")
+        print(f"Peak abs error p95    : {metrics['peak_abs_error_p95']:.4f}")
+        print(f"Peak abs error p99    : {metrics['peak_abs_error_p99']:.4f}")
+        print(f"Underestimated peaks  : {int(metrics['underestimated_peak_count'])}")
+        print(f"Underestimated percent: {metrics['underestimated_peak_percent']:.2f}%")
+
+        for threshold in self.config.bad_peak_error_thresholds:
+            key_suffix = self._threshold_key_suffix(threshold)
+            count_key = f"bad_peak_error_count_at_{key_suffix}"
+            percent_key = f"bad_peak_error_percent_at_{key_suffix}"
+            print(
+                f"Abs peak error >= {threshold:g}: "
+                f"{int(metrics[count_key])} ({metrics[percent_key]:.2f}%)"
+            )
 
     def plot_event(
         self,
@@ -369,41 +403,145 @@ class RapidFireSomaEvaluator:
 
         return np.asarray(true_values), np.asarray(pred_values)
 
-    def _compute_mean_abs_error_at_peaks(
+    def _compute_event_metrics(
         self,
         y_true: np.ndarray,
         y_pred: np.ndarray,
         events: List[RapidFireEvent],
-    ) -> float:
-        errors = [
-            abs(
-                y_pred[event.sim_index, event.peak_time]
-                - y_true[event.sim_index, event.peak_time]
+    ) -> Dict[str, np.ndarray]:
+        peak_abs_errors = []
+        peak_signed_errors = []
+        event_durations = []
+        window_durations = []
+
+        for event in events:
+            true_peak = y_true[event.sim_index, event.peak_time]
+            pred_peak = y_pred[event.sim_index, event.peak_time]
+            signed_error = pred_peak - true_peak
+
+            start = max(
+                self.config.ignore_time_at_start_ms,
+                event.onset_time - self.config.window_before,
             )
-            for event in events
-        ]
+            stop = min(y_true.shape[1], event.peak_time + self.config.window_after)
 
-        if len(errors) == 0:
-            return np.nan
+            peak_abs_errors.append(abs(signed_error))
+            peak_signed_errors.append(signed_error)
+            event_durations.append(event.end_time - event.onset_time + 1)
+            window_durations.append(max(0, stop - start))
 
-        return float(np.mean(errors))
+        return {
+            "peak_abs_error": np.asarray(peak_abs_errors, dtype=float),
+            "peak_signed_error": np.asarray(peak_signed_errors, dtype=float),
+            "event_duration": np.asarray(event_durations, dtype=float),
+            "window_duration": np.asarray(window_durations, dtype=float),
+        }
 
-    def _compute_mean_signed_error_at_peaks(
-        self,
-        y_true: np.ndarray,
-        y_pred: np.ndarray,
-        events: List[RapidFireEvent],
-    ) -> float:
-        errors = [
-            y_pred[event.sim_index, event.peak_time]
-            - y_true[event.sim_index, event.peak_time]
-            for event in events
-        ]
+    def _compute_coverage_metrics(
+        self, y_true: np.ndarray, events: List[RapidFireEvent]
+    ) -> Dict[str, float]:
+        num_sims, num_time = y_true.shape
+        ignore = self.config.ignore_time_at_start_ms
+        total_eval_time_points = num_sims * max(0, num_time - ignore)
 
-        if len(errors) == 0:
-            return np.nan
+        rapid_segment_mask = np.zeros_like(y_true, dtype=bool)
+        rapid_window_mask = np.zeros_like(y_true, dtype=bool)
+        sims_with_rapid = set()
 
-        return float(np.mean(errors))
+        for event in events:
+            sims_with_rapid.add(event.sim_index)
+
+            segment_start = max(ignore, event.onset_time)
+            segment_stop = min(num_time, event.end_time + 1)
+            if segment_stop > segment_start:
+                rapid_segment_mask[event.sim_index, segment_start:segment_stop] = True
+
+            window_start = max(ignore, event.onset_time - self.config.window_before)
+            window_stop = min(num_time, event.peak_time + self.config.window_after)
+            if window_stop > window_start:
+                rapid_window_mask[event.sim_index, window_start:window_stop] = True
+
+        rapid_segment_points = int(rapid_segment_mask.sum())
+        rapid_window_points = int(rapid_window_mask.sum())
+        simulations_with_rapid = len(sims_with_rapid)
+
+        if total_eval_time_points == 0:
+            rapid_segment_fraction = np.nan
+            rapid_window_fraction = np.nan
+        else:
+            rapid_segment_fraction = rapid_segment_points / total_eval_time_points
+            rapid_window_fraction = rapid_window_points / total_eval_time_points
+
+        if num_sims == 0:
+            simulation_fraction = np.nan
+        else:
+            simulation_fraction = simulations_with_rapid / num_sims
+
+        return {
+            "total_eval_time_points": float(total_eval_time_points),
+            "rapid_segment_points": float(rapid_segment_points),
+            "rapid_segment_fraction": float(rapid_segment_fraction),
+            "rapid_segment_percent": float(100 * rapid_segment_fraction),
+            "rapid_window_points": float(rapid_window_points),
+            "rapid_window_fraction": float(rapid_window_fraction),
+            "rapid_window_percent": float(100 * rapid_window_fraction),
+            "total_simulations": float(num_sims),
+            "simulations_with_rapid": float(simulations_with_rapid),
+            "simulations_with_rapid_fraction": float(simulation_fraction),
+            "simulations_with_rapid_percent": float(100 * simulation_fraction),
+        }
+
+    def _compute_peak_error_summary(
+        self, event_metrics: Dict[str, np.ndarray]
+    ) -> Dict[str, float]:
+        abs_errors = event_metrics.get("peak_abs_error", np.asarray([]))
+        signed_errors = event_metrics.get("peak_signed_error", np.asarray([]))
+        summary = {}
+
+        if len(abs_errors) == 0:
+            summary.update(
+                {
+                    "peak_abs_error_mean": np.nan,
+                    "peak_abs_error_median": np.nan,
+                    "peak_abs_error_p90": np.nan,
+                    "peak_abs_error_p95": np.nan,
+                    "peak_abs_error_p99": np.nan,
+                    "peak_signed_error_mean": np.nan,
+                    "underestimated_peak_count": 0.0,
+                    "underestimated_peak_fraction": np.nan,
+                    "underestimated_peak_percent": np.nan,
+                }
+            )
+            for threshold in self.config.bad_peak_error_thresholds:
+                key_suffix = self._threshold_key_suffix(threshold)
+                summary[f"bad_peak_error_count_at_{key_suffix}"] = 0.0
+                summary[f"bad_peak_error_fraction_at_{key_suffix}"] = np.nan
+                summary[f"bad_peak_error_percent_at_{key_suffix}"] = np.nan
+            return summary
+
+        underestimated = signed_errors < 0
+        summary.update(
+            {
+                "peak_abs_error_mean": float(np.mean(abs_errors)),
+                "peak_abs_error_median": float(np.median(abs_errors)),
+                "peak_abs_error_p90": float(np.quantile(abs_errors, 0.90)),
+                "peak_abs_error_p95": float(np.quantile(abs_errors, 0.95)),
+                "peak_abs_error_p99": float(np.quantile(abs_errors, 0.99)),
+                "peak_signed_error_mean": float(np.mean(signed_errors)),
+                "underestimated_peak_count": float(underestimated.sum()),
+                "underestimated_peak_fraction": float(underestimated.mean()),
+                "underestimated_peak_percent": float(100 * underestimated.mean()),
+            }
+        )
+
+        for threshold in self.config.bad_peak_error_thresholds:
+            bad = abs_errors >= threshold
+            key_suffix = self._threshold_key_suffix(threshold)
+            summary[f"bad_peak_error_count_at_{key_suffix}"] = float(bad.sum())
+            summary[f"bad_peak_error_fraction_at_{key_suffix}"] = float(bad.mean())
+            summary[f"bad_peak_error_percent_at_{key_suffix}"] = float(100 * bad.mean())
+
+        return summary
 
     def _compute_correlation(self, x: np.ndarray, y: np.ndarray) -> float:
         x = np.asarray(x).reshape(-1)
@@ -424,6 +562,9 @@ class RapidFireSomaEvaluator:
             return np.nan
 
         return float(np.sqrt(np.mean((y_pred - y_true) ** 2)))
+
+    def _threshold_key_suffix(self, threshold: float) -> str:
+        return str(float(threshold)).replace(".", "_")
 
     def _validate_arrays(
         self, y_soma_gt: np.ndarray, y_soma_hat: np.ndarray
