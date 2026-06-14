@@ -15,7 +15,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from tqdm import tqdm
 
 # Relative Imports
-package_path = Path('/raid/home/ragnoale/giadaneuron')  # TODO: change to elmneuron path
+package_path = Path('/raid/home/ragnoale/giada')  # TODO: change to elmneuron path
 sys.path.insert(0, str(package_path))
 
 from src.expressive_leaky_memory_neuron import ELM
