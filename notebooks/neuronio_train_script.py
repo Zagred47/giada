@@ -10,12 +10,12 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.optim as optim
-import wandb
+# import wandb
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from tqdm import tqdm
 
 # Relative Imports
-package_path = Path(...)  # TODO: change to elmneuron path
+package_path = Path('/raid/home/ragnoale/giadaneuron')  # TODO: change to elmneuron path
 sys.path.insert(0, str(package_path))
 
 from src.expressive_leaky_memory_neuron import ELM
@@ -44,17 +44,17 @@ if __name__ == "__main__":
     os.makedirs(str(artefacts_dir))
 
     # wandb config
-    api_key_file = ...  # TODO: change to api_key path
-    project_name = ...  # TODO: change to project name
-    group_name = ...  # TODO: change to group name
+    # api_key_file = ...  # TODO: change to api_key path
+    # project_name = ...  # TODO: change to project name
+    # group_name = ...  # TODO: change to group name
 
-    # login to wandb
-    with open(api_key_file, "r") as file:
-        api_key = file.read().strip()
-    wandb.login(key=api_key)
+    # # login to wandb
+    # with open(api_key_file, "r") as file:
+    #     api_key = file.read().strip()
+    # wandb.login(key=api_key)
 
-    # initialize wandb
-    wandb.init(project=project_name, group=group_name, config={})
+    # # initialize wandb
+    # wandb.init(project=project_name, group=group_name, config={})
 
     ########## General Config ##########
     print("General configuration started...")
@@ -62,9 +62,9 @@ if __name__ == "__main__":
     # General Config
     general_config = dict()
     general_config["seed"] = 0
-    general_config["device"] = "cuda" if torch.cuda.is_available() else "cpu"
+    general_config["device"] = "cuda:1" if torch.cuda.is_available() else "cpu"
     general_config["short_training_run"] = False
-    general_config["verbose"] = general_config["short_training_run"]
+    general_config["verbose"] = True#general_config["short_training_run"]
     torch_device = torch.device(general_config["device"])
     print("Torch Device: ", torch_device)
 
@@ -87,13 +87,9 @@ if __name__ == "__main__":
     # https://www.kaggle.com/datasets/selfishgene/single-neurons-as-deep-nets-nmda-test-data # Data_test
 
     # Location of downloaded folders
-    data_dir_path = Path(...)  # TODO: change to neuronio data path
-    train_data_dir_path = (
-        data_dir_path / "neuronio_train_data"
-    )  # TODO: change to train subfolder
-    test_data_dir_path = (
-        data_dir_path / "neuronio_test_data"
-    )  # TODO: change to test subfolder
+    data_dir_path = Path('data')  # TODO: change to neuronio data path
+    train_data_dir_path = data_dir_path / "train"  # TODO: change to train subfolder
+    test_data_dir_path = data_dir_path / "test/Data_test"  # TODO: change to test subfolder
 
     # Data Config
 
@@ -162,14 +158,14 @@ if __name__ == "__main__":
         json.dump(model_config, f, ensure_ascii=False, indent=4, sort_keys=True)
     with open(str(artefacts_dir / "train_config.json"), "w", encoding="utf-8") as f:
         json.dump(train_config, f, ensure_ascii=False, indent=4, sort_keys=True)
-    wandb.config.update(
-        {
-            "general_config": general_config,
-            "data_config": data_config,
-            "model_config": model_config,
-            "train_config": train_config,
-        }
-    )
+    # wandb.config.update(
+    #     {
+    #         "general_config": general_config,
+    #         "data_config": data_config,
+    #         "model_config": model_config,
+    #         "train_config": train_config,
+    #     }
+    # )
 
     ########## Data, Model and Training Setup ##########
     print("Data, model and training setup started...")
@@ -243,6 +239,7 @@ if __name__ == "__main__":
     valid_auc_hist = []
     for epoch in range(train_config["num_epochs"]):
         # Training
+        print('Epoch:', epoch)
         model.train()
         running_loss = 0.0
         pbar = tqdm(
@@ -295,16 +292,16 @@ if __name__ == "__main__":
         )
 
         # Log statistics
-        wandb.log(
-            {
-                "epoch": epoch + 1,
-                "train_loss": running_loss / train_config["batches_per_epoch"],
-                "train_rmse": train_rmse,
-                "train_auc": train_auc,
-                "valid_rmse": valid_rmse,
-                "valid_auc": valid_auc,
-            }
-        )
+        # wandb.log(
+        #     {
+        #         "epoch": epoch + 1,
+        #         "train_loss": running_loss / train_config["batches_per_epoch"],
+        #         "train_rmse": train_rmse,
+        #         "train_auc": train_auc,
+        #         "valid_rmse": valid_rmse,
+        #         "valid_auc": valid_auc,
+        #     }
+        # )
 
     # Free up memory
     del train_data_loader
@@ -387,10 +384,10 @@ if __name__ == "__main__":
     # save eval results
     with open(str(artefacts_dir / "eval_results.json"), "w", encoding="utf-8") as f:
         json.dump(eval_results, f, ensure_ascii=False, indent=4, sort_keys=True)
-    wandb.log(eval_results)
+    # wandb.log(eval_results)
     with open(str(artefacts_dir / "model_stats.json"), "w", encoding="utf-8") as f:
         json.dump(model_stats, f, ensure_ascii=False, indent=4, sort_keys=True)
-    wandb.log({"model_stats": model_stats})
+    # wandb.log({"model_stats": model_stats})
 
     # save model for later
     torch.save(
@@ -400,10 +397,10 @@ if __name__ == "__main__":
     # TODO: copy artefacts_dir for local version
 
     # save artefacts to wandb
-    wandb.save(
-        str(artefacts_dir) + "/*", base_path=str(temporary_dir.name), policy="now"
-    )
-    wandb.finish()  # finish wandb run
+    # wandb.save(
+    #     str(artefacts_dir) + "/*", base_path=str(temporary_dir.name), policy="now"
+    # )
+    # wandb.finish()  # finish wandb run
     temporary_dir.cleanup()
 
     ########## FINISHED ##########
