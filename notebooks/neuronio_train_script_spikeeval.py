@@ -32,6 +32,10 @@ from src.neuronio.neuronio_eval_utils import (
     filter_and_extract_core_results,
     get_num_trainable_params,
 )
+from src.neuronio.neuronio_rapid_fire_eval_utils import (
+    RapidFireConfig,
+    RapidFireSomaEvaluator,
+)
 from src.neuronio.neuronio_train_utils import NeuronioLoss
 
 if __name__ == "__main__":
@@ -217,6 +221,7 @@ if __name__ == "__main__":
 
     # Initialize the loss function, optimizer, and scheduler
     criterion = NeuronioLoss()
+    rapid_fire_evaluator = RapidFireSomaEvaluator(RapidFireConfig())
     optimizer = optim.Adam(model.parameters(), lr=train_config["learning_rate"])
     scheduler = CosineAnnealingLR(
         optimizer, T_max=train_config["batches_per_epoch"] * train_config["num_epochs"]
@@ -362,15 +367,20 @@ if __name__ == "__main__":
             device=torch_device,
         )
         test_results = filter_and_extract_core_results(*test_predictions, verbose=False)
+        rapid_fire_results = rapid_fire_evaluator.evaluate(
+            test_predictions[2], test_predictions[3]
+        )
 
     eval_results = dict()
     if not general_config["short_training_run"]:
         eval_results["train_results"] = train_results
         eval_results["valid_results"] = valid_results
     eval_results["test_results"] = test_results
+    eval_results["test_rapid_fire_results"] = rapid_fire_results.metrics
 
     # Show evaluation results
     print(eval_results)
+    rapid_fire_evaluator.print_results(rapid_fire_results)
 
     ########## SERIALIZATION ##########
     print("Serialization started...")
