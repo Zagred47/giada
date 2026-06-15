@@ -32,7 +32,11 @@ from src.neuronio.neuronio_eval_utils import (
     filter_and_extract_core_results,
     get_num_trainable_params,
 )
-from src.neuronio.neuronio_train_utils import NeuronioLoss
+from src.neuronio.neuronio_rapid_fire_eval_utils import (
+    RapidFireConfig,
+    RapidFireSomaEvaluator,
+)
+from src.neuronio.neuronio_train_utils import NeuronioRapidFireEPLLoss
 
 if __name__ == "__main__":
     ########## Logging Config ##########
@@ -147,6 +151,10 @@ if __name__ == "__main__":
     train_config["num_workers"] = 10
     train_config["burn_in_time"] = 150
     train_config["input_window_size"] = 500
+    train_config["rapid_fire_high_threshold"] = 0.11375
+    train_config["rapid_fire_derivative_threshold"] = 0.03103
+    train_config["rapid_fire_lambda_over"] = 3.0
+    train_config["rapid_fire_smooth_window"] = 7
 
     # Save Configs
 
@@ -216,7 +224,13 @@ if __name__ == "__main__":
     model = ELM(**model_config).to(torch_device)
 
     # Initialize the loss function, optimizer, and scheduler
-    criterion = NeuronioLoss()
+    criterion = NeuronioRapidFireEPLLoss(
+        high_threshold=train_config["rapid_fire_high_threshold"],
+        derivative_threshold=train_config["rapid_fire_derivative_threshold"],
+        lambda_over=train_config["rapid_fire_lambda_over"],
+        smooth_window=train_config["rapid_fire_smooth_window"],
+    )
+    rapid_fire_evaluator = RapidFireSomaEvaluator(RapidFireConfig())
     optimizer = optim.Adam(model.parameters(), lr=train_config["learning_rate"])
     scheduler = CosineAnnealingLR(
         optimizer, T_max=train_config["batches_per_epoch"] * train_config["num_epochs"]
@@ -362,15 +376,20 @@ if __name__ == "__main__":
             device=torch_device,
         )
         test_results = filter_and_extract_core_results(*test_predictions, verbose=False)
+        rapid_fire_results = rapid_fire_evaluator.evaluate(
+            test_predictions[2], test_predictions[3]
+        )
 
     eval_results = dict()
     if not general_config["short_training_run"]:
         eval_results["train_results"] = train_results
         eval_results["valid_results"] = valid_results
     eval_results["test_results"] = test_results
+    eval_results["test_rapid_fire_results"] = rapid_fire_results.metrics
 
     # Show evaluation results
     print(eval_results)
+    rapid_fire_evaluator.print_results(rapid_fire_results)
 
     ########## SERIALIZATION ##########
     print("Serialization started...")
