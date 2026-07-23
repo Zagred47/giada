@@ -1145,6 +1145,10 @@ class TeacherAuditSession:
         saved_rng_sequences = self._snapshot_rng_sequences()
         target = self._excitatory_synapse_for(self.representatives["nexus"])
 
+        # SaveState restores model state, not CVODE's adaptive integration
+        # history. Reinitialize both branches at the checkpoint so the replay
+        # comparison starts from the same numerical solver state.
+        self.cvode.re_init()
         first = self._snapshot_branch(target["netcon"], checkpoint_time)
         saved.restore()
         self.cvode.re_init()
@@ -1186,7 +1190,8 @@ class TeacherAuditSession:
             "deterministic_with_tolerance_1e_6_mv": deterministic,
             "rng_restore_strategy": (
                 "owned per-synapse Random123 sequence captured at checkpoint "
-                "and restored before replay"
+                "and restored before replay; CVODE reinitialized symmetrically "
+                "for both branches"
             ),
             "rng_limit": (
                 "The wrapper owns RNG POINTER state because NEURON SaveState "
