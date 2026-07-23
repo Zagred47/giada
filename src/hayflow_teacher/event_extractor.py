@@ -11,7 +11,7 @@ from dataclasses import asdict, dataclass
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
-EVENT_DETECTOR_VERSION = "diagnostic-v0.1.0"
+EVENT_DETECTOR_VERSION = "diagnostic-v0.2.0"
 
 
 @dataclass(frozen=True)
@@ -145,6 +145,7 @@ def extract_events(
             below = np.flatnonzero(
                 values[onset_index + 1 :] <= definition.reset_threshold
             )
+            right_censored = not bool(below.size)
             offset_index = (
                 onset_index + 1 + int(below[0])
                 if below.size
@@ -175,6 +176,8 @@ def extract_events(
                     "peak_ms": float(time[peak_index]),
                     "offset_ms": float(time[offset_index]),
                     "duration_ms": duration,
+                    "right_censored": right_censored,
+                    "duration_is_lower_bound": right_censored,
                     "amplitude": float(values[peak_index] - baseline),
                     "peak_value": float(values[peak_index]),
                     "unit": definition.unit,
@@ -230,4 +233,3 @@ def event_ids_by_transition(
             ]
         )
     return result
-

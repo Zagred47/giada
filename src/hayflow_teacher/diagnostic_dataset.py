@@ -148,6 +148,7 @@ class DiagnosticDatasetSession:
         write_json(
             self.output_dir / "event_definition_config.json",
             {
+                "event_detector_version": self.event_definitions[0].detector_version,
                 "status": "diagnostic_not_final",
                 "visual_review_required": True,
                 "interpretation_note": (
@@ -1726,6 +1727,7 @@ class DiagnosticDatasetSession:
                     round(float(event["onset_ms"]), 9),
                     round(float(event["peak_ms"]), 9),
                     round(float(event["offset_ms"]), 9),
+                    bool(event.get("right_censored", False)),
                 )
                 for event in events
             ]

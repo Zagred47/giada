@@ -162,6 +162,12 @@ Notebook `01b` therefore performs a separate, staged stimulus search. It:
   event definition on the required fraction of seeds;
 - checks both required protocol families and robust coverage of NMDA spike,
   NMDA plateau, and calcium-spike labels;
+- marks events that remain above their reset threshold at the trace boundary as
+  `right_censored`, so a recording cutoff is never reported as a biological
+  offset;
+- replays only the selected protocols for 160 ms, requires every selected
+  event to recover below its reset threshold on all three seeds, and proves
+  that the complete first 35 ms are numerically identical to the search trace;
 - writes every trace, the complete input schedule, selected synapse/segment
   identifiers, plots for selected and best-rejected candidates, a hashed
   artifact index, and
@@ -172,6 +178,7 @@ that case the archive must still be inspected before extending the stimulus
 grid; weights and event thresholds must not be changed merely to force a
 positive result. Once the required event-rich tuft plateau and paired
 hot-zone calcium families pass, all three dendritic event labels have robust
-coverage, and the traces pass visual review, their selected schedules are used
+coverage, the long-horizon confirmation is uncensored and exact on the shared
+prefix, and the traces pass visual review, their selected schedules are used
 to regenerate the small transition dataset (schema v0.3) before implementing
 `02_full_state_flowmap_baseline.ipynb`.

@@ -1,4 +1,4 @@
-schema_version: 0.2.0
+schema_version: 0.3.0
 
 experiment:
   name: dendritic_protocol_calibration
@@ -7,6 +7,8 @@ experiment:
   seeds: [310001, 310002, 310003]
   required_success_fraction: 0.6666666666666666
   required_event_kinds_for_completion: [nmda_spike, nmda_plateau, calcium_spike]
+  confirmation_duration_ms: 160
+  confirmation_overlap_tolerance: 1.0e-9
   preserve_canonical_synaptic_weights: true
   stop_at_first_robust_level: true
 

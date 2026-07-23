@@ -1,10 +1,15 @@
+import tempfile
 import unittest
+from pathlib import Path
+
+import numpy as np
 
 from src.hayflow_teacher.dendritic_calibration import (
     DendriticCandidate,
     DendriticProtocolCalibrator,
     build_candidate_actions,
     candidate_from_mapping,
+    candidate_from_selected_protocol,
     evenly_spaced_offsets,
 )
 
@@ -144,6 +149,62 @@ class DendriticCalibrationContractTest(unittest.TestCase):
         self.assertEqual(candidate.event_window_ms, 0.25)
         self.assertIn("n32-b4-r2", candidate.candidate_id)
         self.assertIn("branch-w250", candidate.candidate_id)
+
+    def test_selected_protocol_reconstructs_exact_candidate(self):
+        protocol = {
+            "family": "tuft_nmda_plateau",
+            "target": "tuft",
+            "required_event_kinds": ["nmda_plateau"],
+            "forbidden_event_kinds": [],
+            "synapse_count": 12,
+            "burst_count": 2,
+            "events_per_synapse_per_burst": 1,
+            "burst_start_ms": 3,
+            "burst_interval_ms": 1,
+            "maximum_tree_distance_um": 220.0,
+            "pair_with_somatic_spike": False,
+            "selection_mode": "branch_cluster",
+            "event_probe_mode": "cluster_center",
+            "event_probe_kinds": ["nmda_spike", "nmda_plateau"],
+            "event_window_ms": 0.4,
+        }
+        candidate = candidate_from_selected_protocol(protocol)
+        candidate.validate(160)
+        self.assertEqual(candidate.synapse_count, 12)
+        self.assertEqual(candidate.burst_count, 2)
+        self.assertIn("n12-b2-r1-unpaired-branch-w400", candidate.candidate_id)
+
+    def test_long_trace_prefix_comparison_is_exact(self):
+        calibrator = DendriticProtocolCalibrator.__new__(
+            DendriticProtocolCalibrator
+        )
+        calibrator.np = np
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            short = directory / "short.npz"
+            long = directory / "long.npz"
+            np.savez(
+                short,
+                time_ms=np.asarray([0.0, 0.5, 1.0]),
+                voltage=np.asarray([-70.0, -20.0, -50.0]),
+            )
+            np.savez(
+                long,
+                time_ms=np.asarray([0.0, 0.5, 1.0, 1.5]),
+                voltage=np.asarray([-70.0, -20.0, -50.0, -65.0]),
+            )
+            exact = calibrator._compare_trace_prefix(short, long, 0.0)
+            self.assertTrue(exact["valid"])
+            self.assertEqual(exact["maximum_absolute_error"], 0.0)
+
+            np.savez(
+                long,
+                time_ms=np.asarray([0.0, 0.5, 1.0, 1.5]),
+                voltage=np.asarray([-70.0, -19.9, -50.0, -65.0]),
+            )
+            changed = calibrator._compare_trace_prefix(short, long, 1e-9)
+            self.assertFalse(changed["valid"])
+            self.assertGreater(changed["maximum_absolute_error"], 0.09)
 
     def test_required_and_forbidden_events_cannot_overlap(self):
         candidate = DendriticCandidate(

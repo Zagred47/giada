@@ -35,6 +35,7 @@ from .dendritic_calibration import (
     SynapseSelection,
     build_candidate_actions,
     candidate_from_mapping,
+    candidate_from_selected_protocol,
     evenly_spaced_offsets,
 )
 
@@ -53,6 +54,7 @@ __all__ = [
     "event_ids_by_transition",
     "build_candidate_actions",
     "candidate_from_mapping",
+    "candidate_from_selected_protocol",
     "evenly_spaced_offsets",
     "extract_events",
     "expected_audit_hashes",

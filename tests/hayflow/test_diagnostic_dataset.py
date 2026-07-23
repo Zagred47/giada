@@ -178,7 +178,30 @@ class DiagnosticContractTest(unittest.TestCase):
         self.assertEqual(len(events), 1)
         self.assertEqual(events[0]["onset_ms"], 0.5)
         self.assertEqual(events[0]["offset_ms"], 1.75)
+        self.assertFalse(events[0]["right_censored"])
+        self.assertFalse(events[0]["duration_is_lower_bound"])
         self.assertEqual(event_ids_by_transition(events, [0.0, 1.0]), [[0], []])
+
+    def test_event_extractor_marks_right_boundary_censoring(self):
+        time = [0.0, 0.5, 1.0, 1.5]
+        definition = EventDefinition(
+            "nmda_plateau",
+            "tuft",
+            22,
+            "tuft",
+            threshold=-40,
+            reset_threshold=-50,
+            min_duration_ms=0.5,
+        )
+        events = extract_events(
+            time,
+            {"tuft": [-70.0, -30.0, -20.0, -25.0]},
+            [definition],
+        )
+        self.assertEqual(len(events), 1)
+        self.assertTrue(events[0]["right_censored"])
+        self.assertTrue(events[0]["duration_is_lower_bound"])
+        self.assertEqual(events[0]["offset_ms"], 1.5)
 
     def test_linked_bap_requires_a_somatic_event(self):
         time = [index * 0.25 for index in range(9)]

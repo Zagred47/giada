@@ -16,10 +16,10 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 from ..hayflow_data import InputAction, write_json
 from .audit_runtime import PINNED_TEACHER_COMMIT
-from .event_extractor import extract_events
+from .event_extractor import EVENT_DETECTOR_VERSION, extract_events
 
 
-DENDRITIC_CALIBRATION_SCHEMA_VERSION = "0.2.0"
+DENDRITIC_CALIBRATION_SCHEMA_VERSION = "0.3.0"
 
 SELECTION_MODES = {"target_nearest", "branch_cluster"}
 EVENT_PROBE_MODES = {"target_representative", "cluster_center"}
@@ -191,6 +191,36 @@ def candidate_from_mapping(
     )
 
 
+def candidate_from_selected_protocol(
+    protocol: Mapping[str, Any],
+) -> DendriticCandidate:
+    """Reconstruct an exact selected candidate for long-horizon replay."""
+
+    return DendriticCandidate(
+        family=str(protocol["family"]),
+        target=str(protocol["target"]),
+        required_event_kinds=tuple(protocol["required_event_kinds"]),
+        synapse_count=int(protocol["synapse_count"]),
+        burst_count=int(protocol["burst_count"]),
+        events_per_synapse_per_burst=int(
+            protocol["events_per_synapse_per_burst"]
+        ),
+        burst_start_ms=int(protocol["burst_start_ms"]),
+        burst_interval_ms=int(protocol["burst_interval_ms"]),
+        pair_with_somatic_spike=bool(protocol["pair_with_somatic_spike"]),
+        maximum_tree_distance_um=(
+            None
+            if protocol.get("maximum_tree_distance_um") is None
+            else float(protocol["maximum_tree_distance_um"])
+        ),
+        forbidden_event_kinds=tuple(protocol["forbidden_event_kinds"]),
+        selection_mode=str(protocol["selection_mode"]),
+        event_probe_mode=str(protocol["event_probe_mode"]),
+        event_probe_kinds=tuple(protocol["event_probe_kinds"]),
+        event_window_ms=float(protocol["event_window_ms"]),
+    )
+
+
 def evenly_spaced_offsets(
     count: int, event_window_ms: float = 0.8
 ) -> List[float]:
@@ -289,8 +319,16 @@ class DendriticProtocolCalibrator:
             / "dendritic_protocol_calibration"
         ).resolve()
         self.traces_dir = self.output_dir / "traces"
+        self.confirmation_traces_dir = (
+            self.output_dir / "confirmation_traces"
+        )
         self.figures_dir = self.output_dir / "figures"
-        for directory in (self.output_dir, self.traces_dir, self.figures_dir):
+        for directory in (
+            self.output_dir,
+            self.traces_dir,
+            self.confirmation_traces_dir,
+            self.figures_dir,
+        ):
             directory.mkdir(parents=True, exist_ok=True)
         self.sample_interval_ms = float(sample_interval_ms)
         if self.sample_interval_ms <= 0.0:
@@ -645,6 +683,8 @@ class DendriticProtocolCalibrator:
         candidate: DendriticCandidate,
         seed: int,
         duration_ms: int,
+        *,
+        trace_directory: Optional[Path] = None,
     ) -> Dict[str, Any]:
         """Run one candidate from the canonical equilibrium snapshot."""
 
@@ -834,7 +874,9 @@ class DendriticProtocolCalibrator:
                 for step, actions in sorted(actions_by_step.items())
             },
         }
-        trace_path = self.traces_dir / (
+        destination = Path(trace_directory or self.traces_dir)
+        destination.mkdir(parents=True, exist_ok=True)
+        trace_path = destination / (
             f"{candidate.candidate_id}-seed{int(seed)}.npz"
         )
         self.np.savez_compressed(
@@ -1066,16 +1108,303 @@ class DendriticProtocolCalibrator:
         self._write_artifact_index()
         return self.report
 
+    def _compare_trace_prefix(
+        self,
+        short_trace_path: Path,
+        long_trace_path: Path,
+        tolerance: float,
+    ) -> Dict[str, Any]:
+        """Compare the complete short trace with the long replay prefix."""
+
+        missing_variables = []
+        shape_mismatches = []
+        per_variable_error = {}
+        short_sample_count = 0
+        with self.np.load(short_trace_path) as short_data, self.np.load(
+            long_trace_path
+        ) as long_data:
+            short_sample_count = int(short_data["time_ms"].shape[0])
+            for name in short_data.files:
+                if name not in long_data.files:
+                    missing_variables.append(name)
+                    continue
+                short_values = self.np.asarray(short_data[name], dtype=float)
+                long_values = self.np.asarray(long_data[name], dtype=float)
+                if (
+                    short_values.ndim == 0
+                    or short_values.ndim != long_values.ndim
+                    or long_values.shape[0] < short_values.shape[0]
+                    or long_values.shape[1:] != short_values.shape[1:]
+                ):
+                    shape_mismatches.append(
+                        {
+                            "variable": name,
+                            "short_shape": list(short_values.shape),
+                            "long_shape": list(long_values.shape),
+                        }
+                    )
+                    continue
+                long_prefix = long_values[: short_values.shape[0]]
+                if long_prefix.shape != short_values.shape:
+                    shape_mismatches.append(
+                        {
+                            "variable": name,
+                            "short_shape": list(short_values.shape),
+                            "long_prefix_shape": list(long_prefix.shape),
+                        }
+                    )
+                    continue
+                error = float(
+                    self.np.max(self.np.abs(short_values - long_prefix))
+                )
+                per_variable_error[name] = error
+
+        maximum_error = max(per_variable_error.values(), default=0.0)
+        return {
+            "valid": (
+                not missing_variables
+                and not shape_mismatches
+                and maximum_error <= float(tolerance)
+            ),
+            "tolerance": float(tolerance),
+            "short_sample_count": short_sample_count,
+            "maximum_absolute_error": maximum_error,
+            "per_variable_max_absolute_error": per_variable_error,
+            "missing_variables": missing_variables,
+            "shape_mismatches": shape_mismatches,
+        }
+
+    def confirm_selected_protocols(
+        self,
+        *,
+        duration_ms: int,
+        overlap_tolerance: float = 1e-9,
+    ) -> Dict[str, Any]:
+        """Replay selected protocols long enough to observe event recovery."""
+
+        self._require_ready()
+        if not self.report or not self.report.get("selected_protocols"):
+            raise RuntimeError("run calibration before long-horizon confirmation")
+        self._upgrade_event_metadata_for_confirmation()
+        short_duration_ms = int(self.report["duration_ms"])
+        duration_ms = int(duration_ms)
+        if duration_ms <= short_duration_ms:
+            raise ValueError(
+                "confirmation duration must exceed calibration duration"
+            )
+        if float(overlap_tolerance) < 0.0:
+            raise ValueError("overlap tolerance cannot be negative")
+
+        if self.confirmation_traces_dir.is_dir():
+            shutil.rmtree(self.confirmation_traces_dir)
+        self.confirmation_traces_dir.mkdir(parents=True, exist_ok=True)
+
+        short_trials = {
+            (str(trial["candidate_id"]), int(trial["seed"])): trial
+            for trial in self.report["trials"]
+            if not trial.get("skipped")
+        }
+        protocol_reports = {}
+        confirmation_trials = []
+        figure_records = []
+        for family, protocol in self.report["selected_protocols"].items():
+            candidate = candidate_from_selected_protocol(protocol)
+            candidate.validate(duration_ms)
+            family_trials = []
+            for seed in self.report["seeds"]:
+                long_trial = self.run_trial(
+                    candidate,
+                    int(seed),
+                    duration_ms,
+                    trace_directory=self.confirmation_traces_dir,
+                )
+                short_trial = short_trials[(candidate.candidate_id, int(seed))]
+                overlap = self._compare_trace_prefix(
+                    self.output_dir / short_trial["trace_path"],
+                    self.output_dir / long_trial["trace_path"],
+                    float(overlap_tolerance),
+                )
+                required_kinds = set(candidate.required_event_kinds)
+                required_events = [
+                    event
+                    for event in long_trial["events"]
+                    if event["kind"] in required_kinds
+                ]
+                detected_kinds = {event["kind"] for event in required_events}
+                censored_events = [
+                    {
+                        "kind": event["kind"],
+                        "segment_id": event["segment_id"],
+                        "onset_ms": event["onset_ms"],
+                        "offset_ms": event["offset_ms"],
+                    }
+                    for event in required_events
+                    if bool(event.get("right_censored", False))
+                ]
+                recovered = (
+                    required_kinds.issubset(detected_kinds)
+                    and not censored_events
+                )
+                confirmed = bool(
+                    long_trial["success"]
+                    and recovered
+                    and overlap["valid"]
+                )
+                long_trial["confirmation"] = {
+                    "confirmed": confirmed,
+                    "required_events_recovered_below_reset": recovered,
+                    "right_censored_required_events": censored_events,
+                    "short_horizon_overlap": overlap,
+                }
+                confirmation_trials.append(long_trial)
+                family_trials.append(long_trial)
+
+            protocol_valid = all(
+                trial["confirmation"]["confirmed"]
+                for trial in family_trials
+            )
+            protocol_reports[family] = {
+                "candidate_id": candidate.candidate_id,
+                "valid": protocol_valid,
+                "seed_count": len(family_trials),
+                "confirmed_seed_count": sum(
+                    trial["confirmation"]["confirmed"]
+                    for trial in family_trials
+                ),
+                "maximum_short_horizon_overlap_error": max(
+                    trial["confirmation"]["short_horizon_overlap"][
+                        "maximum_absolute_error"
+                    ]
+                    for trial in family_trials
+                ),
+                "right_censored_required_event_count": sum(
+                    len(
+                        trial["confirmation"][
+                            "right_censored_required_events"
+                        ]
+                    )
+                    for trial in family_trials
+                ),
+                "trial_trace_paths": [
+                    trial["trace_path"] for trial in family_trials
+                ],
+            }
+            plot_trial = family_trials[0]
+            relative = Path("figures") / f"confirmed_{family}.png"
+            self._plot_trial(
+                plot_trial,
+                title=f"Long-horizon confirmation: {family}",
+                output_path=self.output_dir / relative,
+            )
+            figure_records.append(
+                {
+                    "status": "long_horizon_confirmation",
+                    "family": family,
+                    "candidate_id": candidate.candidate_id,
+                    "seed": plot_trial["seed"],
+                    "path": relative.as_posix(),
+                }
+            )
+
+        confirmation_report = {
+            "schema_version": DENDRITIC_CALIBRATION_SCHEMA_VERSION,
+            "valid": all(
+                item["valid"] for item in protocol_reports.values()
+            ),
+            "teacher_commit": PINNED_TEACHER_COMMIT,
+            "short_duration_ms": short_duration_ms,
+            "confirmation_duration_ms": duration_ms,
+            "overlap_tolerance": float(overlap_tolerance),
+            "protocols": protocol_reports,
+            "trials": confirmation_trials,
+            "figures": figure_records,
+        }
+        write_json(
+            self.output_dir / "confirmation_report.json",
+            confirmation_report,
+        )
+        self.report["long_horizon_confirmation"] = confirmation_report
+        self.report.setdefault("diagnostic_figures", []).extend(
+            figure_records
+        )
+        write_json(self.output_dir / "calibration_report.json", self.report)
+        write_json(
+            self.output_dir / "selected_dendritic_protocols.json",
+            {
+                "schema_version": DENDRITIC_CALIBRATION_SCHEMA_VERSION,
+                "teacher_commit": self.report["teacher_commit"],
+                "canonical_synaptic_weights_unchanged": True,
+                "selected_protocols": self.report["selected_protocols"],
+                "event_coverage": self.report["event_coverage"],
+                "long_horizon_confirmation": {
+                    "valid": confirmation_report["valid"],
+                    "report": "confirmation_report.json",
+                    "duration_ms": duration_ms,
+                },
+            },
+        )
+        self._write_artifact_index()
+        return confirmation_report
+
+    def _upgrade_event_metadata_for_confirmation(self) -> None:
+        """Upgrade an in-memory v0.2 sweep for an incremental confirmation."""
+
+        self.session.event_definitions = [
+            replace(
+                definition,
+                detector_version=EVENT_DETECTOR_VERSION,
+            )
+            for definition in self.session.event_definitions
+        ]
+        event_config_path = self.session.output_dir / "event_definition_config.json"
+        if event_config_path.is_file():
+            event_config = json.loads(
+                event_config_path.read_text(encoding="utf-8")
+            )
+            event_config["event_detector_version"] = EVENT_DETECTOR_VERSION
+            event_config["definitions"] = [
+                definition.to_dict()
+                for definition in self.session.event_definitions
+            ]
+            write_json(event_config_path, event_config)
+
+        for trial in self.report.get("trials", ()):
+            if trial.get("skipped") or not trial.get("trace_path"):
+                continue
+            trace_path = self.output_dir / str(trial["trace_path"])
+            with self.np.load(trace_path) as data:
+                trace_end_ms = float(data["time_ms"][-1])
+            for event in trial.get("events", ()):
+                event.setdefault(
+                    "right_censored",
+                    abs(float(event["offset_ms"]) - trace_end_ms) <= 1e-9,
+                )
+                event.setdefault(
+                    "duration_is_lower_bound",
+                    bool(event["right_censored"]),
+                )
+                event["detector_version"] = EVENT_DETECTOR_VERSION
+                if isinstance(event.get("parameters"), dict):
+                    event["parameters"][
+                        "detector_version"
+                    ] = EVENT_DETECTOR_VERSION
+        self.report["schema_version"] = DENDRITIC_CALIBRATION_SCHEMA_VERSION
+
     def _reset_run_outputs(self) -> None:
         """Remove only prior calibration outputs, preserving teacher state."""
 
-        for directory in (self.traces_dir, self.figures_dir):
+        for directory in (
+            self.traces_dir,
+            self.confirmation_traces_dir,
+            self.figures_dir,
+        ):
             if directory.is_dir():
                 shutil.rmtree(directory)
             directory.mkdir(parents=True, exist_ok=True)
         for name in (
             "artifact_index.json",
             "calibration_report.json",
+            "confirmation_report.json",
             "selected_dendritic_protocols.json",
         ):
             path = self.output_dir / name
