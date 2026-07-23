@@ -1516,12 +1516,45 @@ class TeacherAuditSession:
     def _snapshot_branch(
         self, netcon: Any, checkpoint_time: float
     ) -> Dict[str, Any]:
-        vectors = self._start_voltage_recording()
+        if abs(float(self.h.t) - checkpoint_time) > 1e-6:
+            raise RuntimeError(
+                "SaveState did not restore the checkpoint time: "
+                f"expected {checkpoint_time}, got {float(self.h.t)}"
+            )
         self._seed_neuron()
         netcon.event(checkpoint_time + 1.0)
-        self.h.continuerun(checkpoint_time + 15.0)
-        return self._finish_voltage_recording(vectors)
+        sample_times = self.np.arange(
+            checkpoint_time,
+            checkpoint_time + 15.0 + 0.0125,
+            0.025,
+        )
+        trace_values = {
+            label: [] for label in self.representatives
+        }
+        actual_times = []
+        for sample_time in sample_times:
+            if float(sample_time) > float(self.h.t) + 1e-12:
+                self.h.continuerun(float(sample_time))
+            actual_times.append(float(self.h.t))
+            for label, segment_id in self.representatives.items():
+                trace_values[label].append(
+                    float(self.live_segments[segment_id].v)
+                )
+        traces = {
+            "time_ms": self.np.asarray(actual_times, dtype=float),
+        }
+        traces.update(
+            {
+                label: self.np.asarray(values, dtype=float)
+                for label, values in trace_values.items()
+            }
+        )
+        return traces
 
     def _interp_unique(self, grid: Any, times: Any, values: Any) -> Any:
+        if len(times) == 0 or len(values) == 0:
+            raise RuntimeError(
+                "snapshot continuation produced an empty fixed-grid trace"
+            )
         unique_times, indices = self.np.unique(times, return_index=True)
         return self.np.interp(grid, unique_times, values[indices])

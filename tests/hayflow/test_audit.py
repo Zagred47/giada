@@ -8,9 +8,61 @@ from src.hayflow_teacher.audit import (
     repository_file_record,
     validate_parent_tree,
 )
+from src.hayflow_teacher.audit_runtime import TeacherAuditSession
 
 
 class AuditHelpersTest(unittest.TestCase):
+    def test_snapshot_branch_samples_explicitly_after_restore(self):
+        calls = []
+
+        class FakeHoc:
+            t = 10.0
+
+            @classmethod
+            def continuerun(cls, target):
+                calls.append(("continuerun", target))
+                cls.t = target
+
+        class FakeNetCon:
+            @staticmethod
+            def event(target):
+                calls.append(("event", target))
+
+        class FakeNumpy:
+            @staticmethod
+            def arange(start, stop, step):
+                del stop, step
+                return [start, start + 0.025, start + 15.0]
+
+            @staticmethod
+            def asarray(values, dtype=None):
+                del dtype
+                return list(values)
+
+        class FakeSegment:
+            v = -76.0
+
+        session = object.__new__(TeacherAuditSession)
+        session.h = FakeHoc()
+        session.np = FakeNumpy()
+        session.representatives = {"soma": 0}
+        session.live_segments = {0: FakeSegment()}
+        session._seed_neuron = lambda: calls.append("seed")
+
+        result = session._snapshot_branch(FakeNetCon(), 10.0)
+
+        self.assertEqual(result["time_ms"], [10.0, 10.025, 25.0])
+        self.assertEqual(result["soma"], [-76.0, -76.0, -76.0])
+        self.assertEqual(
+            calls,
+            [
+                "seed",
+                ("event", 11.0),
+                ("continuerun", 10.025),
+                ("continuerun", 25.0),
+            ],
+        )
+
     def test_selected_source_functions_do_not_execute_top_level(self):
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory) / "generator.py"
