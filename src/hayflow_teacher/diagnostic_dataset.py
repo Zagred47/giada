@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import random
 import shutil
+import time
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
@@ -40,6 +41,69 @@ from .event_extractor import (
 
 
 DEFAULT_MICROTRACE_STEP_MS = 0.025
+
+
+def _format_progress_duration(seconds: float) -> str:
+    seconds = max(0, int(round(seconds)))
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    if hours:
+        return f"{hours:d}h {minutes:02d}m {seconds:02d}s"
+    if minutes:
+        return f"{minutes:d}m {seconds:02d}s"
+    return f"{seconds:d}s"
+
+
+class _ConsoleProgress:
+    """Dependency-free notebook progress with throughput and rolling ETA."""
+
+    def __init__(self, phase: str, total: int) -> None:
+        self.phase = str(phase)
+        self.total = max(0, int(total))
+        self.started = time.perf_counter()
+        self.last_report = self.started
+        self.report_every = max(1, self.total // 50)
+        print(
+            f"[HayFlow][{self.phase}] avvio: {self.total:,} elementi",
+            flush=True,
+        )
+
+    def update(
+        self,
+        completed: int,
+        *,
+        detail: str = "",
+        force: bool = False,
+    ) -> None:
+        completed = max(0, min(int(completed), self.total))
+        now = time.perf_counter()
+        should_report = (
+            force
+            or completed in (1, self.total)
+            or completed % self.report_every == 0
+            or now - self.last_report >= 30.0
+        )
+        if not should_report:
+            return
+        elapsed = max(now - self.started, 1e-9)
+        rate = completed / elapsed
+        remaining = max(0, self.total - completed)
+        eta = remaining / rate if completed and rate > 0 else float("inf")
+        percent = 100.0 if not self.total else 100.0 * completed / self.total
+        eta_text = (
+            _format_progress_duration(eta)
+            if eta != float("inf")
+            else "calcolo..."
+        )
+        suffix = f" | {detail}" if detail else ""
+        print(
+            f"[HayFlow][{self.phase}] {completed:,}/{self.total:,} "
+            f"({percent:5.1f}%) | {rate:.2f}/s | "
+            f"trascorso {_format_progress_duration(elapsed)} | ETA {eta_text}"
+            f"{suffix}",
+            flush=True,
+        )
+        self.last_report = now
 
 
 class DiagnosticDatasetSession:
@@ -798,6 +862,10 @@ class DiagnosticDatasetSession:
         transition_rows = []
         event_counts = Counter()
         total_events = 0
+        total_transitions = sum(item.duration_ms for item in protocols)
+        generation_progress = _ConsoleProgress(
+            "generazione", total_transitions
+        )
 
         with TransitionH5Writer(
             self.transition_path,
@@ -809,7 +877,7 @@ class DiagnosticDatasetSession:
             micro_observable_names=self.micro_observable_ids,
         ) as writer:
             writer.set_microtrace_grid(micro_grid)
-            for trajectory in protocols:
+            for trajectory_number, trajectory in enumerate(protocols, start=1):
                 self._active_trajectory = trajectory
                 equilibrium_rng = json.loads(
                     self.equilibrium_rng_path.read_text(encoding="utf-8")
@@ -854,6 +922,14 @@ class DiagnosticDatasetSession:
                     )
                     row["metadata"]["snapshot_step_index"] = checkpoint_step
                     index = writer.append(row)
+                    generation_progress.update(
+                        writer.count,
+                        detail=(
+                            f"traiettoria {trajectory_number}/{len(protocols)} "
+                            f"{trajectory.trajectory_id}; "
+                            f"step {step_index + 1}/{trajectory.duration_ms}"
+                        ),
+                    )
                     trajectory_indices.append(index)
                     local_times = row["absolute_time_ms"]
                     if step_index:
@@ -918,6 +994,15 @@ class DiagnosticDatasetSession:
                 total_events += len(events)
                 self._on_trajectory_complete(
                     trajectory, trajectory_times, trajectory_traces, events
+                )
+                generation_progress.update(
+                    writer.count,
+                    detail=(
+                        f"completata traiettoria {trajectory_number}/"
+                        f"{len(protocols)} {trajectory.trajectory_id}; "
+                        f"eventi={len(events)}"
+                    ),
+                    force=True,
                 )
                 self._active_trajectory = None
 

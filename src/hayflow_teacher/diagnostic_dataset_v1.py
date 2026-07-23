@@ -25,7 +25,7 @@ from ..hayflow_data import (
 )
 from .audit import git_commit, sha256_file
 from .audit_runtime import PINNED_TEACHER_COMMIT
-from .diagnostic_dataset import DiagnosticDatasetSession
+from .diagnostic_dataset import DiagnosticDatasetSession, _ConsoleProgress
 from .dendritic_calibration import (
     DendriticProtocolCalibrator,
     build_candidate_actions,
@@ -1278,8 +1278,12 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         maximum_error = 0.0
         replayed = 0
         with h5py.File(self.transition_path, "r") as handle:
+            transition_count = int(handle.attrs["transition_count"])
+            replay_progress = _ConsoleProgress(
+                "replay esaustivo", transition_count
+            )
             trajectory_indices: Dict[str, List[int]] = defaultdict(list)
-            for index in range(int(handle.attrs["transition_count"])):
+            for index in range(transition_count):
                 trajectory_indices[
                     self._decode(handle["metadata/trajectory_id"][index])
                 ].append(index)
@@ -1395,6 +1399,14 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                     row_error = max(errors)
                     maximum_error = max(maximum_error, row_error)
                     replayed += 1
+                    replay_progress.update(
+                        replayed,
+                        detail=(
+                            f"traiettoria {trajectory_id}; "
+                            f"step {int(handle['metadata/step_index'][index]) + 1}/"
+                            f"{len(indices)}; errore max={maximum_error:.3g}"
+                        ),
+                    )
                     if row_error > 1e-5:
                         failures.append(
                             {
@@ -1403,6 +1415,14 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                                 "maximum_error": row_error,
                             }
                         )
+                replay_progress.update(
+                    replayed,
+                    detail=(
+                        f"completata traiettoria {trajectory_id}; "
+                        f"fallimenti={len(failures)}"
+                    ),
+                    force=True,
+                )
                 self._active_trajectory = None
         return {
             "valid": not failures,
@@ -1634,6 +1654,11 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
     def validate_dataset_v1(self, replay_count: int = 5) -> Dict[str, Any]:
         """Run legacy checks plus exhaustive replay and the v1 acceptance gate."""
 
+        print(
+            "[HayFlow][validazione] fase 1/4: controlli strutturali e replay "
+            "campionati",
+            flush=True,
+        )
         try:
             base = super().validate_dataset(replay_count=replay_count)
         except RuntimeError:
@@ -1642,7 +1667,27 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                     encoding="utf-8"
                 )
             )
+        print(
+            f"[HayFlow][validazione] fase 1/4 completata: valid={base['valid']}",
+            flush=True,
+        )
+        print(
+            "[HayFlow][validazione] fase 2/4: replay esaustivo di tutte le "
+            "transizioni",
+            flush=True,
+        )
         exhaustive = self._exhaustive_sequential_replay()
+        print(
+            "[HayFlow][validazione] fase 2/4 completata: "
+            f"valid={exhaustive['valid']}, "
+            f"errore max={exhaustive['maximum_error']:.3g}",
+            flush=True,
+        )
+        print(
+            "[HayFlow][validazione] fase 3/4: contratto v1, eventi, split, "
+            "branching e hash 01b",
+            flush=True,
+        )
         contract = self._v1_contract_checks()
         blockers = []
         if not base["valid"]:
@@ -1680,12 +1725,21 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
             "contract": contract,
         }
         write_json(self.output_dir / "validation_report.json", report)
+        print(
+            "[HayFlow][validazione] fase 4/4: figure diagnostiche e indice "
+            "degli artefatti",
+            flush=True,
+        )
         self._plot_v1_figures()
         self._write_artifact_index()
         if blockers:
             raise RuntimeError(
                 f"diagnostic dataset v1 validation failed: {blockers}"
             )
+        print(
+            "[HayFlow][validazione] completata: valid=True",
+            flush=True,
+        )
         return report
 
     def _plot_v1_figures(self) -> None:
