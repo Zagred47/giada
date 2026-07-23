@@ -932,11 +932,12 @@ class TeacherAuditSession:
         )
         events = [
             {
-                "time_ms": 10.0,
+                "time_ms": time_ms,
                 "synapse_id": basal_synapse["synapse_id"],
-                "protocol": "single_basal_AMPA_NMDA",
+                "protocol": "basal_AMPA_NMDA_probe_burst",
                 "netcon": basal_synapse["netcon"],
             }
+            for time_ms in range(10, 20)
         ]
         events.extend(
             {
@@ -945,7 +946,7 @@ class TeacherAuditSession:
                 "protocol": "nexus_AMPA_NMDA_burst",
                 "netcon": nexus_synapse["netcon"],
             }
-            for time_ms in (20.0, 22.0, 24.0, 26.0, 28.0)
+            for time_ms in (30.0, 32.0, 34.0, 36.0, 38.0)
         )
         traces = self._run_voltage_protocol(duration_ms, events)
         sanity = self._trace_sanity(traces)
@@ -960,20 +961,26 @@ class TeacherAuditSession:
             ]
             return float(np.max(response_window) - np.median(baseline))
 
+        basal_response = response("basal", 10.0)
+        nexus_response = response("nexus", 30.0)
         self.active_report = {
             "duration_ms": float(duration_ms),
             "protocols": [
-                "single basal ProbAMPANMDA2 event",
+                "ten-event basal ProbAMPANMDA2 probe burst",
                 "five-event nexus ProbAMPANMDA2 burst",
             ],
             "events": [self._public_event(event) for event in events],
             "sanity": sanity,
-            "basal_response_delta_mv": response("basal", 10.0),
-            "nexus_response_delta_mv": response("nexus", 20.0),
+            "basal_response_delta_mv": basal_response,
+            "nexus_response_delta_mv": nexus_response,
             "soma_spike_times_ms": detect_spikes(
                 traces["time_ms"], traces["soma"]
             ),
         }
+        if basal_response <= 0.1 or nexus_response <= 0.1:
+            self.blockers.append(
+                "Active smoke test did not evoke both local synaptic responses."
+            )
         self._save_trace_npz(
             self.artifact_dir / "smoke_test_active.npz", traces, events
         )
@@ -1272,6 +1279,20 @@ class TeacherAuditSession:
             "snapshot_deterministic": self.snapshot_report.get(
                 "deterministic_with_tolerance_1e_6_mv", False
             ),
+            "smoke_test": {
+                "rest_spurious_spikes_absent": self.rest_report.get(
+                    "spurious_spikes_absent", False
+                ),
+                "active_basal_response_delta_mv": self.active_report.get(
+                    "basal_response_delta_mv"
+                ),
+                "active_nexus_response_delta_mv": self.active_report.get(
+                    "nexus_response_delta_mv"
+                ),
+                "active_soma_spike_times_ms": self.active_report.get(
+                    "soma_spike_times_ms", []
+                ),
+            },
             "blockers": list(dict.fromkeys(self.blockers)),
             "warnings": list(dict.fromkeys(self.warnings)),
             "recommended_next_action": (
