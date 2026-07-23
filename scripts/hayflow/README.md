@@ -45,3 +45,10 @@ to instantiate the canonical runtime synapses and produce the machine-readable
 teacher audit under `artifacts/teacher_audit/`. It may also be uploaded and run
 standalone: its first executable cell clones the owned repository before the
 teacher checkout and runtime setup.
+
+Then run `notebooks/01_burnin_snapshots_and_transition_dataset.ipynb` to prove
+the one-millisecond transition contract. Before baseline training, run
+`notebooks/01b_dendritic_protocol_calibration.ipynb`: it searches for robust
+nexus NMDA spikes, tuft NMDA plateaus, and hot-zone calcium spikes using only
+canonical-weight synapses. Its selected schedules are reviewed and folded into
+the diagnostic dataset before `02_full_state_flowmap_baseline.ipynb` begins.

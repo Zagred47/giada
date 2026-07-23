@@ -27,15 +27,31 @@ from .diagnostic_dataset import (
     DiagnosticDatasetSession,
     expected_audit_hashes,
 )
+from .dendritic_calibration import (
+    DENDRITIC_CALIBRATION_SCHEMA_VERSION,
+    DendriticCandidate,
+    DendriticProtocolCalibrator,
+    InsufficientCanonicalSynapsesError,
+    build_candidate_actions,
+    candidate_from_mapping,
+    evenly_spaced_offsets,
+)
 
 __all__ = [
     "BoundaryState",
     "default_event_definitions",
     "detect_spikes",
     "DiagnosticDatasetSession",
+    "DENDRITIC_CALIBRATION_SCHEMA_VERSION",
+    "DendriticCandidate",
+    "DendriticProtocolCalibrator",
+    "InsufficientCanonicalSynapsesError",
     "EVENT_DETECTOR_VERSION",
     "EventDefinition",
     "event_ids_by_transition",
+    "build_candidate_actions",
+    "candidate_from_mapping",
+    "evenly_spaced_offsets",
     "extract_events",
     "expected_audit_hashes",
     "git_commit",

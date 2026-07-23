@@ -1,0 +1,72 @@
+schema_version: 0.1.0
+
+experiment:
+  name: dendritic_protocol_calibration
+  duration_ms: 35
+  sample_interval_ms: 0.025
+  seeds: [310001, 310002, 310003]
+  required_success_fraction: 0.6666666666666666
+  preserve_canonical_synaptic_weights: true
+  stop_at_first_robust_level: true
+
+families:
+  nexus_nmda_spike:
+    target: nexus
+    maximum_tree_distance_um: 300.0
+    required_event_kinds: [nmda_spike]
+    forbidden_event_kinds: [axonal_spike, somatic_spike]
+    required_for_completion: true
+    burst_start_ms: 3
+    burst_interval_ms: 1
+    pair_with_somatic_spike: false
+    levels:
+      - {synapse_count: 8, burst_count: 1, events_per_synapse_per_burst: 1}
+      - {synapse_count: 16, burst_count: 3, events_per_synapse_per_burst: 1}
+      - {synapse_count: 32, burst_count: 4, events_per_synapse_per_burst: 1}
+      - {synapse_count: 64, burst_count: 5, events_per_synapse_per_burst: 1}
+      - {synapse_count: 96, burst_count: 6, events_per_synapse_per_burst: 2}
+
+  tuft_nmda_plateau:
+    target: tuft
+    maximum_tree_distance_um: 400.0
+    required_event_kinds: [nmda_plateau]
+    forbidden_event_kinds: [axonal_spike, somatic_spike]
+    required_for_completion: true
+    burst_start_ms: 3
+    burst_interval_ms: 1
+    pair_with_somatic_spike: false
+    levels:
+      - {synapse_count: 16, burst_count: 3, events_per_synapse_per_burst: 1}
+      - {synapse_count: 32, burst_count: 5, events_per_synapse_per_burst: 1}
+      - {synapse_count: 64, burst_count: 6, events_per_synapse_per_burst: 1}
+      - {synapse_count: 96, burst_count: 8, events_per_synapse_per_burst: 1}
+      - {synapse_count: 128, burst_count: 8, events_per_synapse_per_burst: 2}
+
+  hot_zone_calcium_spike:
+    target: hot_zone
+    maximum_tree_distance_um: 300.0
+    required_event_kinds: [calcium_spike]
+    required_for_completion: true
+    burst_start_ms: 3
+    burst_interval_ms: 1
+    pair_with_somatic_spike: false
+    levels:
+      - {synapse_count: 8, burst_count: 2, events_per_synapse_per_burst: 1}
+      - {synapse_count: 16, burst_count: 3, events_per_synapse_per_burst: 1}
+      - {synapse_count: 32, burst_count: 5, events_per_synapse_per_burst: 1}
+      - {synapse_count: 64, burst_count: 6, events_per_synapse_per_burst: 1}
+      - {synapse_count: 96, burst_count: 8, events_per_synapse_per_burst: 2}
+
+  paired_bap_calcium_candidate:
+    target: hot_zone
+    maximum_tree_distance_um: 300.0
+    required_event_kinds: [calcium_spike]
+    required_for_completion: false
+    burst_start_ms: 3
+    burst_interval_ms: 1
+    pair_with_somatic_spike: true
+    levels:
+      - {synapse_count: 8, burst_count: 2, events_per_synapse_per_burst: 1}
+      - {synapse_count: 16, burst_count: 3, events_per_synapse_per_burst: 1}
+      - {synapse_count: 32, burst_count: 4, events_per_synapse_per_burst: 1}
+      - {synapse_count: 64, burst_count: 5, events_per_synapse_per_burst: 1}
