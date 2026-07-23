@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Tuple
 
 
-SCHEMA_VERSION = "0.1.0"
+SCHEMA_VERSION = "0.2.0"
 
 
 class MorphologicalRegion(str, Enum):
@@ -63,6 +63,7 @@ class SegmentManifest:
     passive_reversal_mv: float
     axial_conductance_to_parent_us: float
     mechanisms: Tuple[str, ...] = ()
+    region_tags: Tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -168,6 +169,14 @@ class TeacherManifest:
                 raise ValueError(f"segment {segment.id} has an unknown parent")
             elif segment.parent_segment_id == segment.id:
                 raise ValueError(f"segment {segment.id} cannot parent itself")
+            if len(set(segment.region_tags)) != len(segment.region_tags):
+                raise ValueError(
+                    f"segment {segment.id} has duplicate region_tags"
+                )
+            if any(not tag for tag in segment.region_tags):
+                raise ValueError(
+                    f"segment {segment.id} has an empty region tag"
+                )
 
         if self.segments and roots == 0:
             raise ValueError("the segment tree must contain at least one root")

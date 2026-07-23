@@ -31,9 +31,9 @@ variables, assigned currents, ion concentrations, and static parameters. It
 does not instantiate synapses: those are recreated for each simulation by the
 original generator and will be appended by the generator instrumentation hook.
 
-The first apical classification is deliberately broad. Nexus, hot-zone, trunk,
-and tuft labels require a separately validated region map and must not be
-silently inferred from section names.
+The structural command keeps apical classification broad. The canonical
+runtime audit refines nexus, trunk, and tuft using upstream conventions and
+stores the calcium hot zone as an overlapping segment tag.
 
 For Kaggle, Colab, or Jupyter/HPC, the same workflow is available as
 `notebooks/hayflow_teacher_manifest.ipynb`. The notebook pins NEURON 8.2.7 to

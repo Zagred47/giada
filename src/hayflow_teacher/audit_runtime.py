@@ -148,7 +148,11 @@ class TeacherAuditSession:
         self.snapshot_report: Dict[str, Any] = {}
         self.global_accessible_state_ids = set()
         self.calcium_accessible_segment_ids = set()
+        self.hot_zone_segment_ids = set()
+        self.synapse_rngs: List[Any] = []
+        self.rng_mode = "owned_random123_negexp_v1"
         self.blockers: List[str] = []
+        self.warnings: List[str] = []
         self.assumptions = [
             (
                 "nrngui.hoc is replaced by stdrun.hoc for headless execution; "
@@ -169,10 +173,10 @@ class TeacherAuditSession:
                 "used by the upstream generator."
             ),
             (
-                "The upstream script seeds NumPy but leaves the NMODL global "
-                "exprand stream implicit. The audit also calls h.set_seed so "
-                "smoke-test realizations are repeatable without changing the "
-                "random distribution or any model parameter."
+                "The upstream script leaves the NMODL global exprand stream "
+                "implicit. The audit binds one owned Random123 stream per "
+                "synapse, configured with negexp(1), so the canonical random "
+                "distribution is retained while snapshot replay is possible."
             ),
         ]
 
@@ -238,11 +242,6 @@ class TeacherAuditSession:
         neuron_seed_api = hasattr(h, "set_seed")
         if neuron_seed_api:
             h.set_seed(self.seed)
-        else:
-            self.blockers.append(
-                "NEURON h.set_seed is unavailable; the legacy global "
-                "NMODL random stream cannot be reset by this audit."
-            )
         neuron_rng_backend = "unknown"
         if hasattr(h, "use_mcell_ran4"):
             neuron_rng_backend = (
@@ -373,7 +372,7 @@ class TeacherAuditSession:
                 "read by any conductance-removal branch in the generator."
             ),
         }
-        self.blockers.append(
+        self.warnings.append(
             "Upstream useActiveDendrites is metadata-only in the generator; "
             "there is no canonical passive-dendrite construction branch."
         )
@@ -492,7 +491,6 @@ class TeacherAuditSession:
                 section_record.region,
                 section_name(section),
                 location,
-                distance_um,
                 dendritic_index_by_location,
                 trunk_sections,
                 nexus_location,
@@ -506,6 +504,11 @@ class TeacherAuditSession:
                     "x": float(segment.x),
                     "parent_segment_id": item.parent_segment_id,
                     "region": audit_region,
+                    "region_tags": self._json_list(
+                        ["hot_zone"]
+                        if self._is_hot_zone(distance_um, section_record.region)
+                        else []
+                    ),
                     "length_um": float(section.L) / int(section.nseg),
                     "diameter_um": float(segment.diam),
                     "area_um2": float(segment.area()),
@@ -526,6 +529,11 @@ class TeacherAuditSession:
                 }
             )
         self.segment_df = self.pd.DataFrame(rows).sort_values("segment_id")
+        self.hot_zone_segment_ids = set(
+            int(row.segment_id)
+            for row in self.segment_df.itertuples()
+            if "hot_zone" in json.loads(str(row.region_tags))
+        )
         self.segment_df.to_csv(
             self.artifact_dir / "segments.csv", index=False
         )
@@ -553,6 +561,10 @@ class TeacherAuditSession:
                 str(key): int(value)
                 for key, value in self.segment_df["region"].value_counts().items()
             },
+            "region_tag_counts": {
+                "hot_zone": len(self.hot_zone_segment_ids),
+            },
+            "hot_zone_segment_ids": sorted(self.hot_zone_segment_ids),
             "representative_segment_ids": dict(self.representatives),
             "nexus_source_convention": "apic[50](0.9)",
             "tuft_source_convention": "upstream dendritic ids [366, 559)",
@@ -566,11 +578,6 @@ class TeacherAuditSession:
         self._require_morphology()
         if not self.synapse_records:
             self._instantiate_canonical_synapses()
-            self.blockers.append(
-                "Canonical point processes leave their RNG POINTER unbound "
-                "and draw from a process-global exprand stream; SaveState "
-                "cannot own or serialize that external stream."
-            )
 
         bindings = [record["binding"] for record in self.synapse_records]
         source_files = self.environment["source_files"]
@@ -583,9 +590,17 @@ class TeacherAuditSession:
             ],
             "assumptions": list(self.assumptions),
             "audit_regions": self.morphology_report["region_counts"],
+            "audit_region_tags": self.morphology_report["region_tag_counts"],
+            "hot_zone_segment_ids": sorted(self.hot_zone_segment_ids),
             "rng_note": (
-                "Upstream factories do not call setRNG; ProbAMPANMDA2 and "
-                "ProbUDFsyn2 therefore fall back to the legacy global exprand."
+                "Upstream factories leave rng unbound. The audit binds one "
+                "Random123 stream per synapse and keeps negexp(1), matching "
+                "the distribution consumed by the canonical mod files."
+            ),
+            "rng_mode": self.rng_mode,
+            "axial_current_convention": (
+                "positive inward to child; i_nA = g_parent_uS * "
+                "(v_parent_mV - v_child_mV)"
             ),
         }
         self.manifest = self.manifest_extractor.extract(
@@ -606,8 +621,16 @@ class TeacherAuditSession:
             int(row.segment_id): region_map[str(row.region)]
             for row in self.segment_df.itertuples()
         }
+        region_tags_by_id = {
+            int(row.segment_id): tuple(json.loads(str(row.region_tags)))
+            for row in self.segment_df.itertuples()
+        }
         self.manifest.segments = [
-            replace(item, region=audit_region_by_id[item.id])
+            replace(
+                item,
+                region=audit_region_by_id[item.id],
+                region_tags=region_tags_by_id[item.id],
+            )
             for item in self.manifest.segments
         ]
         self.manifest.write_json(
@@ -630,7 +653,7 @@ class TeacherAuditSession:
                 continue
             record = self.synapse_records[int(variable.owner_id)]
             point_variables_by_segment[record["segment_id"]].append(
-                (variable, record["point_process"])
+                (variable, self._synapse_variable_owner(record, variable))
             )
 
         mechanism_rows = []
@@ -652,7 +675,7 @@ class TeacherAuditSession:
             point_missing = defaultdict(list)
             parameters = {}
             for variable in variables:
-                accessible = self._try_reference(live, variable.name) is not None
+                accessible = self._variable_is_accessible(variable, live)
                 category = variable.kind.value
                 target = categories if accessible else missing
                 target[category].append(
@@ -668,13 +691,13 @@ class TeacherAuditSession:
                     parameters[f"{variable.mechanism}.{variable.name}"] = (
                         variable.static_value
                     )
-                if accessible and variable.kind == VariableKind.STATE:
+                if accessible and variable.snapshot_required:
                     self.global_accessible_state_ids.add(variable.id)
                 if accessible and variable.kind == VariableKind.CONCENTRATION:
                     self.calcium_accessible_segment_ids.add(segment_id)
             for variable, point_process in point_variables_by_segment[segment_id]:
-                accessible = (
-                    self._try_reference(point_process, variable.name) is not None
+                accessible = self._variable_is_accessible(
+                    variable, point_process
                 )
                 category = variable.kind.value
                 target = point_categories if accessible else point_missing
@@ -691,7 +714,7 @@ class TeacherAuditSession:
                     parameters[
                         f"point:{variable.mechanism}.{variable.name}"
                     ] = variable.static_value
-                if accessible and variable.kind == VariableKind.STATE:
+                if accessible and variable.snapshot_required:
                     self.global_accessible_state_ids.add(variable.id)
             mechanism_rows.append(
                 {
@@ -720,6 +743,12 @@ class TeacherAuditSession:
                     ),
                     "concentrations_N_R": self._json_list(
                         sorted(missing[VariableKind.CONCENTRATION.value])
+                    ),
+                    "axial_currents_accessible": self._json_list(
+                        sorted(categories[VariableKind.AXIAL_CURRENT.value])
+                    ),
+                    "axial_currents_N_R": self._json_list(
+                        sorted(missing[VariableKind.AXIAL_CURRENT.value])
                     ),
                     "point_process_state_accessible": self._json_list(
                         sorted(point_categories[VariableKind.STATE.value])
@@ -786,9 +815,10 @@ class TeacherAuditSession:
             accessible_by_kind = defaultdict(list)
             missing_by_kind = defaultdict(list)
             for variable in synapse_variables:
+                owner = self._synapse_variable_owner(record, variable)
                 target = (
                     accessible_by_kind
-                    if self._try_reference(point_process, variable.name) is not None
+                    if self._variable_is_accessible(variable, owner)
                     else missing_by_kind
                 )
                 target[variable.kind.value].append(variable.name)
@@ -815,8 +845,8 @@ class TeacherAuditSession:
                         for component in item.components
                     ),
                     "magnesium_mM": (
-                        float(point_process.mg)
-                        if hasattr(point_process, "mg")
+                        float(item.parameters["mg_mM"])
+                        if "mg_mM" in item.parameters
                         else None
                     ),
                     "state_accessible": self._json_list(
@@ -848,7 +878,8 @@ class TeacherAuditSession:
                         )
                     ),
                     "stochastic": True,
-                    "rng_binding": "unbound; legacy global exprand fallback",
+                    "rng_binding": self.rng_mode,
+                    "rng_stream_id": record["rng_stream_id"],
                 }
             )
         self.synapse_df = self.pd.DataFrame(synapse_rows)
@@ -970,6 +1001,7 @@ class TeacherAuditSession:
                 VariableKind.STATE,
                 VariableKind.ION_CURRENT,
                 VariableKind.CONCENTRATION,
+                VariableKind.AXIAL_CURRENT,
             }:
                 continue
             objects_by_variable[variable.id] = self.live_segments[
@@ -977,14 +1009,11 @@ class TeacherAuditSession:
             ]
             attempts.append(variable)
 
-        selected_synapse_ids = set()
-        for segment_id in selected_segment_ids:
-            try:
-                selected_synapse_ids.add(
-                    self._excitatory_synapse_for(segment_id)["synapse_id"]
-                )
-            except KeyError:
-                continue
+        selected_synapse_ids = {
+            int(record["synapse_id"])
+            for record in self.synapse_records
+            if int(record["segment_id"]) in selected_segment_ids
+        }
         for variable in self.manifest.variables:
             if variable.scope.value != "synapse":
                 continue
@@ -998,16 +1027,24 @@ class TeacherAuditSession:
             }:
                 continue
             record = self.synapse_records[int(variable.owner_id)]
-            objects_by_variable[variable.id] = record["point_process"]
+            objects_by_variable[variable.id] = self._synapse_variable_owner(
+                record, variable
+            )
             attempts.append(variable)
 
-        vectors = {}
         results = []
+        variables_by_id = {variable.id: variable for variable in attempts}
+        sample_buffers = {}
         for variable in attempts:
-            reference = self._try_reference(
-                objects_by_variable[variable.id], variable.name
-            )
-            available = reference is not None
+            unavailable_reason = None
+            try:
+                self._read_variable(
+                    variable, objects_by_variable[variable.id]
+                )
+                available = True
+            except Exception as error:
+                available = False
+                unavailable_reason = type(error).__name__
             result = {
                 "variable_id": variable.id,
                 "scope": variable.scope.value,
@@ -1018,29 +1055,39 @@ class TeacherAuditSession:
                 "unit": variable.unit,
                 "access": "available" if available else "N/R",
             }
+            if unavailable_reason is not None:
+                result["reason"] = f"read failed: {unavailable_reason}"
             results.append(result)
             if available:
-                try:
-                    vector = self.h.Vector()
-                    vector.record(reference)
-                    vectors[variable.id] = vector
-                except Exception as error:
-                    result["access"] = "N/R"
-                    result["reason"] = f"record failed: {type(error).__name__}"
+                sample_buffers[variable.id] = []
 
         self._seed_neuron()
+        self._reset_owned_rngs()
         self.h.finitialize(self.v_init_mv)
         nexus_synapse = self._excitatory_synapse_for(
             self.representatives["nexus"]
         )
-        nexus_synapse["netcon"].event(1.0)
-        self.h.continuerun(float(duration_ms))
+        for event_time in (1.0, 1.5, 2.0, 2.5, 3.0):
+            nexus_synapse["netcon"].event(event_time)
+        step_count = int(round(float(duration_ms) / 0.025))
+        if abs(step_count * 0.025 - float(duration_ms)) > 1e-9:
+            raise ValueError("state audit duration must align to 0.025 ms")
+        sample_times = self.np.linspace(0.0, float(duration_ms), step_count + 1)
+        for sample_time in sample_times:
+            self._advance_exact(float(sample_time))
+            for variable_id, values in sample_buffers.items():
+                variable = variables_by_id[variable_id]
+                values.append(
+                    self._read_variable(
+                        variable, objects_by_variable[variable_id]
+                    )
+                )
 
         for result in results:
-            vector = vectors.get(result["variable_id"])
-            if vector is None:
+            samples = sample_buffers.get(result["variable_id"])
+            if samples is None:
                 continue
-            values = self.np.asarray(vector.to_python(), dtype=float)
+            values = self.np.asarray(samples, dtype=float)
             result.update(
                 {
                     "sample_count": int(values.size),
@@ -1050,7 +1097,11 @@ class TeacherAuditSession:
                     "last": float(values[-1]) if values.size else None,
                 }
             )
-            vector.play_remove()
+            variable = variables_by_id[result["variable_id"]]
+            if variable.kind == VariableKind.AXIAL_CURRENT:
+                result["derivation"] = (
+                    "g_parent_uS*(v_parent_mV-v_child_mV)"
+                )
 
         counts = Counter(result["access"] for result in results)
         calcium_locations = sorted(
@@ -1064,6 +1115,8 @@ class TeacherAuditSession:
         )
         self.state_access_report = {
             "duration_ms": float(duration_ms),
+            "sample_interval_ms": 0.025,
+            "sample_count": len(sample_times),
             "representative_segments": dict(self.representatives),
             "attempt_count": len(results),
             "available_count": int(counts["available"]),
@@ -1083,33 +1136,32 @@ class TeacherAuditSession:
         self._require_synapses()
         h = self.h
         self._seed_neuron()
+        self._reset_owned_rngs()
         h.finitialize(self.v_init_mv)
-        h.continuerun(10.0)
-        checkpoint_time = float(h.t)
+        self._advance_exact(10.0)
+        checkpoint_time = 10.0
         saved = h.SaveState()
         saved.save()
+        saved_rng_sequences = self._snapshot_rng_sequences()
         target = self._excitatory_synapse_for(self.representatives["nexus"])
 
         first = self._snapshot_branch(target["netcon"], checkpoint_time)
         saved.restore()
         self.cvode.re_init()
+        self._restore_rng_sequences(saved_rng_sequences)
         second = self._snapshot_branch(target["netcon"], checkpoint_time)
 
-        grid = self.np.arange(
-            checkpoint_time,
-            checkpoint_time + 15.0 + 0.0125,
-            0.025,
+        grid = self.np.linspace(
+            checkpoint_time, checkpoint_time + 15.0, 601
         )
         errors = {}
+        if not self.np.allclose(first["time_ms"], grid, atol=1e-12):
+            raise RuntimeError("first snapshot branch is not on the fixed grid")
+        if not self.np.allclose(second["time_ms"], grid, atol=1e-12):
+            raise RuntimeError("second snapshot branch is not on the fixed grid")
         for label in self.representatives:
-            first_values = self._interp_unique(
-                grid, first["time_ms"], first[label]
-            )
-            second_values = self._interp_unique(
-                grid, second["time_ms"], second[label]
-            )
             errors[label] = float(
-                self.np.max(self.np.abs(first_values - second_values))
+                self.np.max(self.np.abs(first[label] - second[label]))
             )
         first_spikes = detect_spikes(first["time_ms"], first["soma"])
         second_spikes = detect_spikes(second["time_ms"], second["soma"])
@@ -1133,14 +1185,12 @@ class TeacherAuditSession:
             "spike_times_match": spike_match,
             "deterministic_with_tolerance_1e_6_mv": deterministic,
             "rng_restore_strategy": (
-                "h.set_seed(audit_seed) is called before each continuation"
-                if hasattr(self.h, "set_seed")
-                else "N/R: h.set_seed is unavailable"
+                "owned per-synapse Random123 sequence captured at checkpoint "
+                "and restored before replay"
             ),
             "rng_limit": (
-                "SaveState does not expose/save the upstream unbound global "
-                "exprand stream. This test resets it explicitly; production "
-                "branching needs owned per-synapse RNG streams."
+                "The wrapper owns RNG POINTER state because NEURON SaveState "
+                "does not serialize external Random objects automatically."
             ),
         }
         write_json(
@@ -1157,6 +1207,7 @@ class TeacherAuditSession:
             "teacher_manifest.json",
             "segments.csv",
             "mechanisms.csv",
+            "mechanisms_aggregate.csv",
             "synapses.csv",
             "state_variables.json",
             "smoke_test_rest.npz",
@@ -1176,6 +1227,12 @@ class TeacherAuditSession:
             for key, value in self.synapse_df["functional_type"].value_counts().items()
         }
         calcium_ids = sorted(self.calcium_accessible_segment_ids)
+        net_receive_state_ids = {
+            variable.id
+            for variable in self.manifest.variables
+            if variable.mechanism == "NetCon"
+            and variable.id in self.global_accessible_state_ids
+        }
         calcium_regions = sorted(
             {self._region_for_segment(segment_id) for segment_id in calcium_ids}
         )
@@ -1192,20 +1249,33 @@ class TeacherAuditSession:
             "state_variables_accessible": len(
                 self.global_accessible_state_ids
             ),
+            "snapshot_variables_accessible": len(
+                self.global_accessible_state_ids
+            ),
+            "net_receive_state_variables_accessible": len(
+                net_receive_state_ids
+            ),
             "representative_state_variables_accessible": (
                 self.state_access_report.get("available_count", 0)
             ),
             "calcium_accessible": bool(calcium_ids),
             "calcium_accessible_segment_ids": calcium_ids,
             "calcium_accessible_regions": calcium_regions,
+            "hot_zone_segment_ids": sorted(self.hot_zone_segment_ids),
+            "hot_zone_segment_count": len(self.hot_zone_segment_ids),
+            "rng_mode": self.rng_mode,
             "snapshot_deterministic": self.snapshot_report.get(
                 "deterministic_with_tolerance_1e_6_mv", False
             ),
             "blockers": list(dict.fromkeys(self.blockers)),
+            "warnings": list(dict.fromkeys(self.warnings)),
             "recommended_next_action": (
-                "Add an upstream generator instrumentation hook that owns "
-                "per-synapse RNG streams, then repeat snapshot/restore before "
-                "collecting the diagnostic dataset."
+                "Generate the small full-state diagnostic dataset."
+                if not self.blockers
+                and self.snapshot_report.get(
+                    "deterministic_with_tolerance_1e_6_mv", False
+                )
+                else "Resolve remaining snapshot replay blockers and rerun audit."
             ),
         }
         write_json(self.artifact_dir / "final_report.json", report)
@@ -1276,7 +1346,6 @@ class TeacherAuditSession:
         broad_region: MorphologicalRegion,
         section: str,
         location: Tuple[str, int],
-        distance_um: float,
         dendritic_index: Mapping[Tuple[str, int], int],
         trunk_sections: set,
         nexus_location: Tuple[str, int],
@@ -1295,12 +1364,19 @@ class TeacherAuditSession:
         tuft_start, tuft_end = UPSTREAM_TUFT_DENDRITIC_RANGE
         if dend_id is not None and tuft_start <= dend_id < tuft_end:
             return "tuft"
-        hot_start, hot_end = CALCIUM_HOT_ZONE_DISTANCE_UM
-        if hot_start < distance_um < hot_end:
-            return "hot_zone"
         if section in trunk_sections:
             return "apical_trunk"
         return "apical_oblique"
+
+    @staticmethod
+    def _is_hot_zone(
+        distance_um: float, broad_region: MorphologicalRegion
+    ) -> bool:
+        hot_start, hot_end = CALCIUM_HOT_ZONE_DISTANCE_UM
+        return (
+            broad_region == MorphologicalRegion.APICAL_TRUNK
+            and hot_start < distance_um < hot_end
+        )
 
     def _select_representatives(self) -> Dict[str, int]:
         df = self.segment_df
@@ -1316,12 +1392,28 @@ class TeacherAuditSession:
             ]
             return int(row["segment_id"])
 
+        def choose_tag(tag: str, target: Optional[float] = None) -> int:
+            subset = df[
+                df["region_tags"].map(
+                    lambda value: tag in json.loads(str(value))
+                )
+            ]
+            if subset.empty:
+                raise RuntimeError(f"no representative segment tagged {tag}")
+            if target is None:
+                target = float(subset["distance_from_soma_um"].median())
+            row = subset.iloc[
+                (subset["distance_from_soma_um"] - target).abs().argmin()
+            ]
+            return int(row["segment_id"])
+
         return {
             "soma": choose("soma"),
             "ais": choose("ais"),
             "basal": choose("basal"),
             "trunk": choose("apical_trunk", 500.0),
             "nexus": choose("nexus"),
+            "hot_zone": choose_tag("hot_zone"),
             "tuft": choose("tuft"),
         }
 
@@ -1334,18 +1426,27 @@ class TeacherAuditSession:
             for segment_id, segment in self.live_segments.items()
         }
         records = []
+        self.synapse_rngs = []
         for dendritic_id, segment in enumerate(self.dendritic_segments):
             segment_id = location_to_id[self._location(segment)]
             excitatory = define_nmda(segment)
             ex_netcon = self.h.NetCon(None, excitatory)
             ex_netcon.delay = 0
             ex_netcon.weight[0] = 1
+            ex_stream_id = len(records)
+            ex_rng = self._bind_owned_rng(excitatory, ex_stream_id)
             ex_binding = NeuronSynapseBinding(
                 point_process=excitatory,
                 point_process_name="ProbAMPANMDA2",
                 segment=segment,
                 event_group_id=f"excitatory:{dendritic_id}",
                 base_weight=float(ex_netcon.weight[0]),
+                netcon=ex_netcon,
+                parameters={
+                    "mg_mM": self._global_mechanism_parameter(
+                        "mg_ProbAMPANMDA2", 1.0
+                    )
+                },
             )
             records.append(
                 {
@@ -1355,18 +1456,23 @@ class TeacherAuditSession:
                     "functional_type": "excitatory_AMPA+NMDA",
                     "point_process": excitatory,
                     "netcon": ex_netcon,
+                    "rng": ex_rng,
+                    "rng_stream_id": ex_stream_id,
                     "binding": ex_binding,
                 }
             )
 
             inhibitory = define_gabaa(segment)
             inh_netcon = connect_empty(inhibitory)
+            inh_stream_id = len(records)
+            inh_rng = self._bind_owned_rng(inhibitory, inh_stream_id)
             inh_binding = NeuronSynapseBinding(
                 point_process=inhibitory,
                 point_process_name="ProbUDFsyn2",
                 segment=segment,
                 event_group_id=f"inhibitory:{dendritic_id}",
                 base_weight=float(inh_netcon.weight[0]),
+                netcon=inh_netcon,
             )
             records.append(
                 {
@@ -1376,12 +1482,48 @@ class TeacherAuditSession:
                     "functional_type": "inhibitory_GABAA",
                     "point_process": inhibitory,
                     "netcon": inh_netcon,
+                    "rng": inh_rng,
+                    "rng_stream_id": inh_stream_id,
                     "binding": inh_binding,
                 }
             )
         for synapse_id, record in enumerate(records):
             record["synapse_id"] = synapse_id
         self.synapse_records = records
+
+        self.environment["synapse_rng"] = {
+            "mode": self.rng_mode,
+            "stream_count": len(self.synapse_rngs),
+            "generator": "Random123",
+            "distribution": "negexp(1)",
+            "stream_key": "(audit_seed, synapse_id, 0)",
+            "upstream_fallback": "process-global exprand(1)",
+        }
+        write_json(self.artifact_dir / "environment.json", self.environment)
+
+    def _bind_owned_rng(self, point_process: Any, stream_id: int) -> Any:
+        if not hasattr(point_process, "setRNG"):
+            raise RuntimeError(
+                f"{point_process.hname()} does not expose setRNG()"
+            )
+        rng = self.h.Random()
+        rng.Random123(self.seed, int(stream_id), 0)
+        rng.negexp(1.0)
+        point_process.setRNG(rng)
+        self.synapse_rngs.append(rng)
+        return rng
+
+    def _global_mechanism_parameter(
+        self, name: str, expected_default: float
+    ) -> float:
+        if not hasattr(self.h, name):
+            raise RuntimeError(f"global mechanism parameter {name} is unavailable")
+        value = float(getattr(self.h, name))
+        if abs(value - expected_default) > 1e-12:
+            raise RuntimeError(
+                f"{name}={value}, expected canonical default {expected_default}"
+            )
+        return value
 
     @staticmethod
     def _try_reference(owner: Any, name: str) -> Optional[Any]:
@@ -1394,6 +1536,49 @@ class TeacherAuditSession:
             return reference
         except Exception:
             return None
+
+    def _variable_is_accessible(self, variable: Any, owner: Any) -> bool:
+        if variable.mechanism == "NetCon":
+            try:
+                self._read_variable(variable, owner)
+                return True
+            except Exception:
+                return False
+        if variable.kind != VariableKind.AXIAL_CURRENT:
+            return self._try_reference(owner, variable.name) is not None
+        segment = self.manifest.segments[int(variable.owner_id)]
+        return (
+            segment.parent_segment_id is not None
+            and segment.axial_conductance_to_parent_us > 0.0
+        )
+
+    def _read_variable(self, variable: Any, owner: Any) -> float:
+        if variable.kind == VariableKind.AXIAL_CURRENT:
+            segment_id = int(variable.owner_id)
+            segment = self.manifest.segments[segment_id]
+            if segment.parent_segment_id is None:
+                raise ValueError("root segment has no axial current to parent")
+            child_voltage = float(self.live_segments[segment_id].v)
+            parent_voltage = float(
+                self.live_segments[segment.parent_segment_id].v
+            )
+            return float(segment.axial_conductance_to_parent_us) * (
+                parent_voltage - child_voltage
+            )
+        base_name = variable.name.split("[", 1)[0]
+        value = getattr(owner, base_name)
+        if "[" in variable.name:
+            index = int(variable.name.split("[", 1)[1].split("]", 1)[0])
+            value = value[index]
+        return float(value)
+
+    @staticmethod
+    def _synapse_variable_owner(record: Mapping[str, Any], variable: Any) -> Any:
+        return (
+            record["netcon"]
+            if variable.mechanism == "NetCon"
+            else record["point_process"]
+        )
 
     def _region_for_segment(self, segment_id: int) -> str:
         row = self.segment_df[self.segment_df["segment_id"] == segment_id]
@@ -1414,38 +1599,71 @@ class TeacherAuditSession:
         if hasattr(self.h, "set_seed"):
             self.h.set_seed(self.seed)
 
-    def _start_voltage_recording(self) -> Dict[str, Any]:
-        vectors = {"time_ms": self.h.Vector()}
-        vectors["time_ms"].record(self.h._ref_t)
-        for label, segment_id in self.representatives.items():
-            vector = self.h.Vector()
-            vector.record(self.live_segments[segment_id]._ref_v)
-            vectors[label] = vector
-        return vectors
+    def _reset_owned_rngs(self) -> None:
+        for rng in self.synapse_rngs:
+            rng.seq(0)
 
-    def _finish_voltage_recording(
-        self, vectors: Mapping[str, Any]
-    ) -> Dict[str, Any]:
-        traces = {
-            label: self.np.asarray(vector.to_python(), dtype=float)
-            for label, vector in vectors.items()
-        }
-        for vector in vectors.values():
-            vector.play_remove()
-        return traces
+    def _snapshot_rng_sequences(self) -> List[float]:
+        return [float(rng.seq()) for rng in self.synapse_rngs]
+
+    def _restore_rng_sequences(self, sequences: Sequence[float]) -> None:
+        if len(sequences) != len(self.synapse_rngs):
+            raise RuntimeError(
+                "saved RNG stream count does not match instantiated synapses"
+            )
+        for rng, sequence in zip(self.synapse_rngs, sequences):
+            rng.seq(sequence)
+
+    def _advance_exact(self, target_time_ms: float) -> None:
+        target = float(target_time_ms)
+        current = float(self.h.t)
+        if target < current - 1e-9:
+            raise RuntimeError(
+                f"cannot advance backward from {current} to {target} ms"
+            )
+        if target > current + 1e-12:
+            self.cvode.solve(target)
+        actual = float(self.h.t)
+        if abs(actual - target) > 1e-9:
+            raise RuntimeError(
+                f"CVODE did not reach requested time {target} ms; got {actual}"
+            )
 
     def _run_voltage_protocol(
         self,
         duration_ms: float,
         events: Sequence[Mapping[str, Any]],
     ) -> Dict[str, Any]:
-        vectors = self._start_voltage_recording()
         self._seed_neuron()
+        self._reset_owned_rngs()
         self.h.finitialize(self.v_init_mv)
         for event in events:
             event["netcon"].event(float(event["time_ms"]))
-        self.h.continuerun(float(duration_ms))
-        return self._finish_voltage_recording(vectors)
+        return self._sample_voltage_grid(0.0, float(duration_ms), 0.025)
+
+    def _sample_voltage_grid(
+        self, start_time_ms: float, stop_time_ms: float, step_ms: float
+    ) -> Dict[str, Any]:
+        span = float(stop_time_ms) - float(start_time_ms)
+        step_count = int(round(span / float(step_ms)))
+        if abs(step_count * float(step_ms) - span) > 1e-9:
+            raise ValueError("fixed voltage grid must divide the requested span")
+        sample_times = self.np.linspace(
+            float(start_time_ms), float(stop_time_ms), step_count + 1
+        )
+        values = {label: [] for label in self.representatives}
+        for sample_time in sample_times:
+            self._advance_exact(float(sample_time))
+            for label, segment_id in self.representatives.items():
+                values[label].append(float(self.live_segments[segment_id].v))
+        traces = {"time_ms": self.np.asarray(sample_times, dtype=float)}
+        traces.update(
+            {
+                label: self.np.asarray(trace, dtype=float)
+                for label, trace in values.items()
+            }
+        )
+        return traces
 
     def _trace_sanity(self, traces: Mapping[str, Any]) -> Dict[str, Any]:
         time = traces["time_ms"]
@@ -1521,40 +1739,8 @@ class TeacherAuditSession:
                 "SaveState did not restore the checkpoint time: "
                 f"expected {checkpoint_time}, got {float(self.h.t)}"
             )
-        self._seed_neuron()
         netcon.event(checkpoint_time + 1.0)
-        sample_times = self.np.arange(
-            checkpoint_time,
-            checkpoint_time + 15.0 + 0.0125,
-            0.025,
-        )
-        trace_values = {
-            label: [] for label in self.representatives
-        }
-        actual_times = []
-        for sample_time in sample_times:
-            if float(sample_time) > float(self.h.t) + 1e-12:
-                self.h.continuerun(float(sample_time))
-            actual_times.append(float(self.h.t))
-            for label, segment_id in self.representatives.items():
-                trace_values[label].append(
-                    float(self.live_segments[segment_id].v)
-                )
-        traces = {
-            "time_ms": self.np.asarray(actual_times, dtype=float),
-        }
-        traces.update(
-            {
-                label: self.np.asarray(values, dtype=float)
-                for label, values in trace_values.items()
-            }
+        traces = self._sample_voltage_grid(
+            checkpoint_time, checkpoint_time + 15.0, 0.025
         )
         return traces
-
-    def _interp_unique(self, grid: Any, times: Any, values: Any) -> Any:
-        if len(times) == 0 or len(values) == 0:
-            raise RuntimeError(
-                "snapshot continuation produced an empty fixed-grid trace"
-            )
-        unique_times, indices = self.np.unique(times, return_index=True)
-        return self.np.interp(grid, unique_times, values[indices])

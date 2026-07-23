@@ -9,6 +9,7 @@ from src.hayflow_teacher.audit import (
     validate_parent_tree,
 )
 from src.hayflow_teacher.audit_runtime import TeacherAuditSession
+from src.hayflow_schema import MorphologicalRegion
 
 
 class AuditHelpersTest(unittest.TestCase):
@@ -18,10 +19,11 @@ class AuditHelpersTest(unittest.TestCase):
         class FakeHoc:
             t = 10.0
 
-            @classmethod
-            def continuerun(cls, target):
-                calls.append(("continuerun", target))
-                cls.t = target
+        class FakeCVode:
+            @staticmethod
+            def solve(target):
+                calls.append(("solve", target))
+                FakeHoc.t = target
 
         class FakeNetCon:
             @staticmethod
@@ -30,8 +32,8 @@ class AuditHelpersTest(unittest.TestCase):
 
         class FakeNumpy:
             @staticmethod
-            def arange(start, stop, step):
-                del stop, step
+            def linspace(start, stop, count):
+                del count
                 return [start, start + 0.025, start + 15.0]
 
             @staticmethod
@@ -44,10 +46,10 @@ class AuditHelpersTest(unittest.TestCase):
 
         session = object.__new__(TeacherAuditSession)
         session.h = FakeHoc()
+        session.cvode = FakeCVode()
         session.np = FakeNumpy()
         session.representatives = {"soma": 0}
         session.live_segments = {0: FakeSegment()}
-        session._seed_neuron = lambda: calls.append("seed")
 
         result = session._snapshot_branch(FakeNetCon(), 10.0)
 
@@ -56,12 +58,75 @@ class AuditHelpersTest(unittest.TestCase):
         self.assertEqual(
             calls,
             [
-                "seed",
                 ("event", 11.0),
-                ("continuerun", 10.025),
-                ("continuerun", 25.0),
+                ("solve", 10.025),
+                ("solve", 25.0),
             ],
         )
+
+    def test_owned_rng_sequences_are_restored(self):
+        class FakeRandom:
+            def __init__(self, sequence):
+                self.sequence = sequence
+
+            def seq(self, value=None):
+                if value is None:
+                    return self.sequence
+                self.sequence = value
+
+        session = object.__new__(TeacherAuditSession)
+        session.synapse_rngs = [FakeRandom(3), FakeRandom(7)]
+
+        saved = session._snapshot_rng_sequences()
+        session.synapse_rngs[0].seq(99)
+        session.synapse_rngs[1].seq(101)
+        session._restore_rng_sequences(saved)
+
+        self.assertEqual(session._snapshot_rng_sequences(), [3.0, 7.0])
+
+    def test_hot_zone_is_an_overlay_on_apical_regions(self):
+        self.assertTrue(
+            TeacherAuditSession._is_hot_zone(
+                700.0, MorphologicalRegion.APICAL_TRUNK
+            )
+        )
+        self.assertFalse(
+            TeacherAuditSession._is_hot_zone(
+                700.0, MorphologicalRegion.BASAL
+            )
+        )
+
+    def test_owned_rng_uses_random123_and_canonical_distribution(self):
+        calls = []
+
+        class FakeRandom:
+            def Random123(self, first, second, third):
+                calls.append(("Random123", first, second, third))
+
+            def negexp(self, mean):
+                calls.append(("negexp", mean))
+
+        class FakeHoc:
+            @staticmethod
+            def Random():
+                return FakeRandom()
+
+        class FakePointProcess:
+            @staticmethod
+            def setRNG(rng):
+                calls.append(("setRNG", rng))
+
+        session = object.__new__(TeacherAuditSession)
+        session.h = FakeHoc()
+        session.seed = 1729
+        session.synapse_rngs = []
+
+        rng = session._bind_owned_rng(FakePointProcess(), 12)
+
+        self.assertEqual(calls[0], ("Random123", 1729, 12, 0))
+        self.assertEqual(calls[1], ("negexp", 1.0))
+        self.assertEqual(calls[2], ("setRNG", rng))
+        self.assertEqual(session.synapse_rngs, [rng])
 
     def test_selected_source_functions_do_not_execute_top_level(self):
         with tempfile.TemporaryDirectory() as directory:

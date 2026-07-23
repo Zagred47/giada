@@ -38,6 +38,7 @@ class NeuronSynapseBinding:
     point_process_name: Optional[str] = None
     components: Tuple[SynapseComponent, ...] = ()
     parameters: Mapping[str, float] = field(default_factory=dict)
+    netcon: Optional[Any] = None
 
 
 class NeuronManifestExtractor:
@@ -101,6 +102,14 @@ class NeuronManifestExtractor:
             self._config.region_classifier_version,
         )
         manifest_metadata["synapses_included"] = bool(synapses)
+        if synapses:
+            manifest_metadata["net_receive_state_layout"] = {
+                mechanism: [
+                    {"name": name, "weight_index": index}
+                    for name, index in layout
+                ]
+                for mechanism, layout in KNOWN_NET_RECEIVE_STATE_LAYOUT.items()
+            }
         if hidden_state:
             manifest_metadata["unexposed_net_receive_state"] = hidden_state
         manifest_metadata["units"] = {
@@ -359,7 +368,7 @@ class NeuronManifestExtractor:
                 variables.extend(mechanism_variables)
                 seen_names.update(item.name for item in mechanism_variables)
 
-            for name in sorted(section_info.get("ions", {}).keys()):
+            for name in ion_variable_names(section_info.get("ions", {})):
                 if name in seen_names:
                     continue
                 kind = classify_assigned_variable(name)
@@ -482,6 +491,13 @@ class NeuronManifestExtractor:
                 owner_id=synapse_id,
                 point_process=binding.point_process,
             )
+            net_receive_layout = KNOWN_NET_RECEIVE_STATE_LAYOUT.get(mechanism)
+            if binding.netcon is not None and net_receive_layout is not None:
+                synapse_variables.extend(
+                    self._netcon_state_variables(
+                        synapse_id, binding.netcon, net_receive_layout
+                    )
+                )
             variables.extend(synapse_variables)
             parameters = dict(binding.parameters)
             for variable in synapse_variables:
@@ -510,16 +526,39 @@ class NeuronManifestExtractor:
                     ),
                 )
             )
-            if mechanism in KNOWN_NET_RECEIVE_STATE:
-                exposed = {item.name for item in synapse_variables}
-                missing = [
-                    name
-                    for name in KNOWN_NET_RECEIVE_STATE[mechanism]
-                    if name not in exposed
+            if net_receive_layout is not None and binding.netcon is None:
+                hidden_state[f"synapse:{synapse_id}:{mechanism}"] = [
+                    name for name, _ in net_receive_layout
                 ]
-                if missing:
-                    hidden_state[f"synapse:{synapse_id}:{mechanism}"] = missing
         return manifests, variables, hidden_state
+
+    @staticmethod
+    def _netcon_state_variables(
+        synapse_id: int,
+        netcon: Any,
+        layout: Tuple[Tuple[str, int], ...],
+    ) -> List[MechanismVariable]:
+        weight_count = int(netcon.wcnt())
+        required_count = 1 + max(index for _, index in layout)
+        if weight_count < required_count:
+            raise RuntimeError(
+                f"NetCon for synapse {synapse_id} has {weight_count} weights; "
+                f"{required_count} are required by its NET_RECEIVE layout"
+            )
+        return [
+            MechanismVariable(
+                id=f"synapse:{synapse_id}:NetCon:{semantic_name}",
+                mechanism="NetCon",
+                name=f"weight[{weight_index}]",
+                kind=VariableKind.STATE,
+                scope=VariableScope.SYNAPSE,
+                owner_id=synapse_id,
+                unit="ms" if semantic_name == "tsyn" else None,
+                snapshot_required=True,
+                record_by_default=True,
+            )
+            for semantic_name, weight_index in layout
+        ]
 
     @staticmethod
     def _psection(section: Any) -> Mapping[str, Any]:
@@ -535,9 +574,21 @@ class NeuronManifestExtractor:
             return "unknown"
 
 
-KNOWN_NET_RECEIVE_STATE = {
-    "ProbAMPANMDA2": ["Pv", "Pr", "u", "tsyn"],
-    "ProbUDFsyn2": ["Pv", "Pr", "u", "tsyn"],
+KNOWN_NET_RECEIVE_STATE_LAYOUT = {
+    "ProbAMPANMDA2": (
+        ("weight_AMPA", 1),
+        ("weight_NMDA", 2),
+        ("Pv", 3),
+        ("Pr", 4),
+        ("u", 5),
+        ("tsyn", 6),
+    ),
+    "ProbUDFsyn2": (
+        ("Pv", 1),
+        ("Pr", 2),
+        ("u", 3),
+        ("tsyn", 4),
+    ),
 }
 
 
@@ -577,13 +628,40 @@ def default_region_classifier(name: str, section: Any) -> MorphologicalRegion:
 
 def classify_assigned_variable(name: str) -> VariableKind:
     lowered = name.lower().split("[", 1)[0]
-    if lowered in {"cai", "cao", "nai", "nao", "ki", "ko"}:
+    concentration_names = {"cai", "cao", "nai", "nao", "ki", "ko"}
+    current_names = {"i", "ica", "ina", "ik"}
+    if lowered in concentration_names or any(
+        lowered.startswith(f"{item}_") for item in concentration_names
+    ):
         return VariableKind.CONCENTRATION
-    if lowered in {"i", "ica", "ina", "ik"} or lowered.startswith("i_"):
+    if (
+        lowered in current_names
+        or lowered.startswith("i_")
+        or any(lowered.startswith(f"{item}_") for item in current_names - {"i"})
+    ):
         return VariableKind.ION_CURRENT
     if lowered in {"g", "g_ampa", "g_nmda"} or lowered.startswith("g_"):
         return VariableKind.SYNAPTIC_CONDUCTANCE
     return VariableKind.DERIVED
+
+
+def ion_variable_names(ions: Mapping[str, Any]) -> List[str]:
+    """Return recordable range-variable names from ``Section.psection`` ions.
+
+    NEURON 8 represents ions as a species-to-variable mapping, for example
+    ``{"ca": {"cai": [...], "cao": [...], "ica": [...]}}``. Older test
+    doubles and some wrappers expose the variables directly at the top level.
+    Supporting both forms prevents the species name (``ca``) from being
+    mistaken for the actual concentration and current variables.
+    """
+
+    names = set()
+    for species, payload in ions.items():
+        if isinstance(payload, Mapping):
+            names.update(str(name) for name in payload)
+        else:
+            names.add(str(species))
+    return sorted(names)
 
 
 def unit_for_variable(

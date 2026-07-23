@@ -39,9 +39,11 @@ complete latent architecture:
 6. train and roll out a one-millisecond full-state flow map before introducing
    state compression.
 
-The teacher's morphology, mechanisms, input-generation distributions, CVODE
-configuration, and random seeds must remain unchanged while instrumentation is
-added.
+The teacher's morphology, mechanisms, input-generation distributions, and
+CVODE configuration must remain unchanged while instrumentation is added. The
+upstream point processes use an unowned process-global random stream; HayFlow
+partitions the same `negexp(1)` distribution into deterministic per-synapse
+`Random123` streams and records this instrumentation choice in provenance.
 
 ## Source provenance
 
@@ -63,8 +65,9 @@ in two explicit ways:
 
 - synapses are inventoried only after the generator creates its point
   processes and supplies `NeuronSynapseBinding` objects;
-- apical trunk, nexus, hot-zone, and tuft labels remain provisional until their
-  anatomical classifier is validated.
+- the structural pass keeps apical labels broad; the runtime audit validates
+  nexus, trunk, and tuft against upstream conventions and adds hot zone as an
+  overlapping segment tag.
 
 The manifest records these limitations in metadata instead of presenting an
 incomplete inventory as a complete teacher contract.
@@ -83,3 +86,8 @@ are written under `artifacts/teacher_audit/` and remain excluded from Git.
 The audit notebook is also standalone: when no mounted checkout is provided,
 its first executable cell clones the owned repository before fetching or
 loading any teacher code.
+
+The runtime manifest also includes the `NET_RECEIVE` state stored in each
+indexed `NetCon.weight` vector. These values are part of the Markov state even
+though `MechanismStandard` does not expose them as ordinary point-process
+STATE variables.

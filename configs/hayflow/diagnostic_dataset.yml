@@ -20,12 +20,16 @@ state:
   record_axial_currents: true
   record_concentrations: true
   record_synaptic_conductances: true
+  record_net_receive_state: true
 
 synapses:
   preserve_teacher_point_processes: true
   preserve_shared_presynaptic_events: true
   ampa_nmda_coupling: explicit_components
   preserve_voltage_dependent_nmda_block: true
+  magnesium_mM: 1.0
+  rng_mode: owned_random123_negexp_v1
+  rng_stream_key: [dataset_seed, synapse_id, 0]
 
 microtraces:
   diagnostic_sample_interval_ms: 0.025

@@ -140,6 +140,12 @@ class FakeAMPANMDA:
         return "ProbAMPANMDA2[0]"
 
 
+class FakeNetCon:
+    @staticmethod
+    def wcnt():
+        return 7
+
+
 def build_extractor(hoc):
     config = NeuronManifestConfig(
         teacher_name="fake_hay",
@@ -164,7 +170,13 @@ class NeuronManifestExtractorTest(unittest.TestCase):
             parent=self.soma,
             parent_x=0.5,
             density_mechanisms=("pas", "Ca_HVA"),
-            ions={"cai": [0.1, 0.2, 0.3], "ica": [0.0, 0.0, 0.0]},
+            ions={
+                "ca": {
+                    "cai": [0.1, 0.2, 0.3],
+                    "cao": [2.0, 2.0, 2.0],
+                    "ica": [0.0, 0.0, 0.0],
+                }
+            },
         )
         self.axon = FakeSection(
             "cell.axon[0]",
@@ -215,6 +227,12 @@ class NeuronManifestExtractorTest(unittest.TestCase):
         self.assertTrue(
             any(item.kind == VariableKind.CONCENTRATION for item in variables.values())
         )
+        self.assertNotIn("segment:1:ion:ca", variables)
+        self.assertIn("segment:1:ion:cai", variables)
+        self.assertIn("segment:1:ion:cao", variables)
+        self.assertIn("segment:1:ion:ica", variables)
+        mechanism_current = variables["segment:1:Ca_HVA:ica_Ca_HVA"]
+        self.assertEqual(mechanism_current.kind, VariableKind.ION_CURRENT)
         parameters = [
             item
             for item in variables.values()
@@ -229,6 +247,7 @@ class NeuronManifestExtractorTest(unittest.TestCase):
             segment=list(self.apic)[0],
             event_group_id="excitatory:0",
             base_weight=1.0,
+            netcon=FakeNetCon(),
         )
         manifest = build_extractor(self.hoc).extract(
             [self.soma, self.apic],
@@ -244,9 +263,19 @@ class NeuronManifestExtractorTest(unittest.TestCase):
         self.assertTrue(synapse.components[1].voltage_dependent)
         self.assertEqual(synapse.components[1].magnesium_alpha, 0.08)
         self.assertEqual(synapse.components[1].magnesium_beta, 3.57)
-        self.assertIn(
-            "synapse:0:ProbAMPANMDA2",
-            manifest.metadata["unexposed_net_receive_state"],
+        self.assertNotIn("unexposed_net_receive_state", manifest.metadata)
+        self.assertIn("synapse:0:NetCon:Pv", synapse.state_variable_ids)
+        netcon_states = [
+            item
+            for item in manifest.variables
+            if item.scope.value == "synapse" and item.mechanism == "NetCon"
+        ]
+        self.assertEqual(len(netcon_states), 6)
+        self.assertEqual(
+            manifest.metadata["net_receive_state_layout"][
+                "ProbAMPANMDA2"
+            ][2],
+            {"name": "Pv", "weight_index": 3},
         )
 
 

@@ -138,8 +138,9 @@ class TeacherManifestTest(unittest.TestCase):
             manifest.write_json(path)
             saved = json.loads(path.read_text(encoding="utf-8"))
 
-        self.assertEqual(saved["schema_version"], "0.1.0")
+        self.assertEqual(saved["schema_version"], "0.2.0")
         self.assertEqual(saved["segments"][1]["region"], "apical_trunk")
+        self.assertEqual(saved["segments"][1]["region_tags"], [])
         self.assertEqual(len(saved["synapses"][0]["components"]), 2)
 
     def test_unknown_segment_parent_is_rejected(self) -> None:
