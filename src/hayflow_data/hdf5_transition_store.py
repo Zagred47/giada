@@ -19,6 +19,7 @@ class TransitionH5Writer:
         segment_count: int,
         probe_count: int,
         *,
+        micro_observable_names: Sequence[str] = (),
         compression: str = "gzip",
         compression_level: int = 4,
     ) -> None:
@@ -35,6 +36,9 @@ class TransitionH5Writer:
         self.file = h5py.File(self.path, "w")
         self.file.attrs["format"] = "hayflow_diagnostic_transitions"
         self.file.attrs["transition_count"] = 0
+        self.file.attrs["micro_observable_names_json"] = json.dumps(
+            list(micro_observable_names), separators=(",", ":")
+        )
         self.count = 0
         options = {
             "compression": compression,
@@ -115,6 +119,20 @@ class TransitionH5Writer:
         self.micro_somatic_current.attrs["meaning"] = (
             "current actually delivered by the diagnostic soma IClamp"
         )
+        self.micro_observables = None
+        if micro_observable_names:
+            observable_count = len(micro_observable_names)
+            self.micro_observables = micro.create_dataset(
+                "protocol_observables",
+                shape=(0, microtrace_samples, observable_count),
+                maxshape=(None, microtrace_samples, observable_count),
+                chunks=(1, microtrace_samples, observable_count),
+                dtype="f4",
+                **options,
+            )
+            self.micro_observables.attrs["variable_names_json"] = json.dumps(
+                list(micro_observable_names), separators=(",", ":")
+            )
         summaries = micro.create_group("all_segment_voltage_summary")
         self.micro_voltage_summary = {
             name: summaries.create_dataset(
@@ -125,7 +143,13 @@ class TransitionH5Writer:
                 dtype="f4",
                 **options,
             )
-            for name in ("minimum_mv", "maximum_mv", "integral_mv_ms")
+            for name in (
+                "minimum_mv",
+                "maximum_mv",
+                "integral_mv_ms",
+                "minimum_time_offset_ms",
+                "maximum_time_offset_ms",
+            )
         }
 
         strings = h5py.string_dtype(encoding="utf-8")
@@ -144,6 +168,13 @@ class TransitionH5Writer:
                 "step_index": "i8",
                 "start_time_ms": "f8",
                 "native_snapshot_ref": strings,
+                "snapshot_step_index": "i8",
+                "protocol_id": strings,
+                "protocol_variant": strings,
+                "stimulus_relative_time_ms": "f8",
+                "snapshot_source": strings,
+                "microtrace_mode": strings,
+                "negative_control": "i1",
             }.items()
         }
         inputs = self.file.create_group("inputs")
@@ -181,6 +212,10 @@ class TransitionH5Writer:
         self._append(
             self.micro_somatic_current, row["micro_somatic_current"]
         )
+        if self.micro_observables is not None:
+            self._append(
+                self.micro_observables, row["micro_protocol_observables"]
+            )
         all_voltage = self.np.asarray(row["micro_all_voltage"], dtype=float)
         self._append(
             self.micro_voltage_summary["minimum_mv"],
@@ -194,10 +229,27 @@ class TransitionH5Writer:
             self.micro_voltage_summary["integral_mv_ms"],
             self.np.trapz(all_voltage, self.micro_time[...], axis=0),
         )
+        self._append(
+            self.micro_voltage_summary["minimum_time_offset_ms"],
+            self.micro_time[self.np.argmin(all_voltage, axis=0)],
+        )
+        self._append(
+            self.micro_voltage_summary["maximum_time_offset_ms"],
+            self.micro_time[self.np.argmax(all_voltage, axis=0)],
+        )
 
         metadata = row["metadata"]
+        defaults = {
+            "snapshot_step_index": metadata.get("step_index", 0),
+            "protocol_id": metadata.get("protocol", ""),
+            "protocol_variant": "canonical",
+            "stimulus_relative_time_ms": float(metadata.get("step_index", 0)),
+            "snapshot_source": "equilibrium_snapshot",
+            "microtrace_mode": "full_all_segment_voltage",
+            "negative_control": 0,
+        }
         for name, dataset in self.meta.items():
-            self._append(dataset, metadata[name])
+            self._append(dataset, metadata.get(name, defaults.get(name)))
         self._append(
             self.input_json,
             json.dumps(row["inputs"], sort_keys=True, separators=(",", ":")),
@@ -273,10 +325,16 @@ def validate_hdf5_store(path: Path) -> Dict[str, Any]:
             "microtraces/all_segment_voltage_summary/minimum_mv",
             "microtraces/all_segment_voltage_summary/maximum_mv",
             "microtraces/all_segment_voltage_summary/integral_mv_ms",
+            "microtraces/all_segment_voltage_summary/minimum_time_offset_ms",
+            "microtraces/all_segment_voltage_summary/maximum_time_offset_ms",
         ):
             values = handle[name]
             if values.shape[0] != count or not np.isfinite(values[...]).all():
                 issues.append(f"/{name} is invalid")
+        if "protocol_observables" in handle["microtraces"]:
+            values = handle["microtraces/protocol_observables"]
+            if values.shape[0] != count or not np.isfinite(values[...]).all():
+                issues.append("/microtraces/protocol_observables is invalid")
         def text(value: Any) -> str:
             return value.decode() if isinstance(value, bytes) else str(value)
 

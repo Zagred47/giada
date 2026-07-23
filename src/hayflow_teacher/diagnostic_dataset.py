@@ -99,6 +99,9 @@ class DiagnosticDatasetSession:
         self.burnin_report: Dict[str, Any] = {}
         self.dataset_manifest: Dict[str, Any] = {}
         self.transition_path = self.output_dir / "transition_dataset.h5"
+        self.native_snapshot_stride = 1
+        self.micro_observable_ids: List[str] = []
+        self._active_trajectory: Optional[ProtocolTrajectory] = None
 
     def prepare_teacher(self) -> Dict[str, Any]:
         """Instantiate the exact audited teacher and write stable tables."""
@@ -287,6 +290,9 @@ class DiagnosticDatasetSession:
                     "current actually delivered by the diagnostic soma IClamp"
                 )
             },
+            "protocol_microtrace_observable_ids": list(
+                self.micro_observable_ids
+            ),
             "probe_order": list(self.audit.representatives),
             "all_segment_voltage_order": list(range(len(self.audit.live_segments))),
         }
@@ -800,9 +806,11 @@ class DiagnosticDatasetSession:
             len(self.micro_variables),
             len(self.audit.live_segments),
             len(self.audit.representatives),
+            micro_observable_names=self.micro_observable_ids,
         ) as writer:
             writer.set_microtrace_grid(micro_grid)
             for trajectory in protocols:
+                self._active_trajectory = trajectory
                 equilibrium_rng = json.loads(
                     self.equilibrium_rng_path.read_text(encoding="utf-8")
                 )
@@ -817,13 +825,23 @@ class DiagnosticDatasetSession:
                 trajectory_traces = {
                     label: [] for label in self.audit.representatives
                 }
+                trajectory_traces.update(
+                    {label: [] for label in self.micro_observable_ids}
+                )
+                checkpoint_path = None
+                checkpoint_step = 0
                 for step_index in range(trajectory.duration_ms):
                     actions = list(trajectory.actions_by_step.get(step_index, ()))
                     validate_input_actions(actions)
                     transition_id = writer.count
-                    snapshot_path = (
-                        self.snapshots_dir / f"transition_{transition_id:06d}.neuron.bin"
-                    )
+                    if step_index % int(self.native_snapshot_stride) == 0:
+                        checkpoint_step = int(step_index)
+                        checkpoint_path = self.snapshots_dir / (
+                            f"transition_{transition_id:06d}.neuron.bin"
+                        )
+                        snapshot_path = checkpoint_path
+                    else:
+                        snapshot_path = None
                     row = self._run_transition(
                         transition_id,
                         trajectory,
@@ -831,6 +849,10 @@ class DiagnosticDatasetSession:
                         actions,
                         snapshot_path,
                     )
+                    row["metadata"]["native_snapshot_ref"] = (
+                        checkpoint_path.relative_to(self.output_dir).as_posix()
+                    )
+                    row["metadata"]["snapshot_step_index"] = checkpoint_step
                     index = writer.append(row)
                     trajectory_indices.append(index)
                     local_times = row["absolute_time_ms"]
@@ -839,6 +861,15 @@ class DiagnosticDatasetSession:
                     trajectory_times.extend(local_times.tolist())
                     for probe_index, label in enumerate(self.audit.representatives):
                         values = row["micro_probe_voltage"][:, probe_index]
+                        if step_index:
+                            values = values[1:]
+                        trajectory_traces[label].extend(values.tolist())
+                    for observable_index, label in enumerate(
+                        self.micro_observable_ids
+                    ):
+                        values = row["micro_protocol_observables"][
+                            :, observable_index
+                        ]
                         if step_index:
                             values = values[1:]
                         trajectory_traces[label].extend(values.tolist())
@@ -869,10 +900,26 @@ class DiagnosticDatasetSession:
                         event["transition_onset_offset_ms"] = (
                             event["onset_ms"] - start
                         )
+                        stimulus_time = starts[0] + float(
+                            trajectory.stimulus_onset_step
+                        )
+                        event["stimulus_relative_onset_ms"] = (
+                            event["onset_ms"] - stimulus_time
+                        )
+                        event["stimulus_relative_peak_ms"] = (
+                            event["peak_ms"] - stimulus_time
+                        )
+                        event["stimulus_relative_offset_ms"] = (
+                            event["offset_ms"] - stimulus_time
+                        )
                         labels.append(event)
                         event_counts[event["kind"]] += 1
                     writer.update_events(transition_index, labels)
                 total_events += len(events)
+                self._on_trajectory_complete(
+                    trajectory, trajectory_times, trajectory_traces, events
+                )
+                self._active_trajectory = None
 
         category_counts = Counter(item.category for item in protocols)
         split_counts = Counter(item.split for item in protocols)
@@ -883,15 +930,19 @@ class DiagnosticDatasetSession:
             len(self.micro_variables),
             41,
             len(self.audit.live_segments),
-            microtrace_scalar_count=1,
+            microtrace_scalar_count=1 + len(self.micro_observable_ids),
             probe_count=len(self.audit.representatives),
         )
         native_snapshot_sizes = [
             path.stat().st_size
             for path in self.snapshots_dir.glob("transition_*.neuron.bin")
         ]
+        total_snapshot_bytes = int(sum(native_snapshot_sizes))
         mean_snapshot_bytes = int(
-            sum(native_snapshot_sizes) / len(native_snapshot_sizes)
+            total_snapshot_bytes / max(1, len(native_snapshot_sizes))
+        )
+        observed_snapshot_bytes_per_transition = int(
+            total_snapshot_bytes / len(transition_rows)
         )
         transition_store_bytes = self.transition_path.stat().st_size
         observed_hdf5_bytes_per_transition = int(
@@ -904,24 +955,33 @@ class DiagnosticDatasetSession:
                     observed_hdf5_bytes_per_transition
                 ),
                 "observed_mean_native_snapshot_bytes": mean_snapshot_bytes,
+                "native_snapshot_count": len(native_snapshot_sizes),
+                "native_snapshot_stride": int(self.native_snapshot_stride),
+                "observed_snapshot_bytes_per_transition": (
+                    observed_snapshot_bytes_per_transition
+                ),
                 "observed_bytes_per_transition_hdf5_plus_snapshot": (
-                    observed_hdf5_bytes_per_transition + mean_snapshot_bytes
+                    observed_hdf5_bytes_per_transition
+                    + observed_snapshot_bytes_per_transition
                 ),
                 "observed_extrapolation_per_million_hdf5_plus_snapshots": (
                     1_000_000
-                    * (observed_hdf5_bytes_per_transition + mean_snapshot_bytes)
+                    * (
+                        observed_hdf5_bytes_per_transition
+                        + observed_snapshot_bytes_per_transition
+                    )
                 ),
                 "estimated_total_bytes_per_transition_including_snapshot": (
                     size_estimate[
                         "estimated_uncompressed_bytes_per_transition"
                     ]
-                    + mean_snapshot_bytes
+                    + observed_snapshot_bytes_per_transition
                 ),
                 "estimated_total_bytes_per_million_including_snapshots": (
                     size_estimate[
                         "estimated_uncompressed_bytes_per_million_transitions"
                     ]
-                    + 1_000_000 * mean_snapshot_bytes
+                    + 1_000_000 * observed_snapshot_bytes_per_transition
                 ),
             }
         )
@@ -970,6 +1030,13 @@ class DiagnosticDatasetSession:
             "full_segment_microtrace_policy": (
                 "enabled for every transition only in this small diagnostic dataset"
             ),
+            "native_snapshot_policy": {
+                "stride_ms": int(self.native_snapshot_stride),
+                "replay": (
+                    "restore nearest preceding native checkpoint and replay "
+                    "the ordered macro-step prefix"
+                ),
+            },
             "size_estimate": size_estimate,
         }
         write_json(
@@ -980,6 +1047,15 @@ class DiagnosticDatasetSession:
             {"transitions": transition_rows},
         )
         return self.dataset_manifest
+
+    def _on_trajectory_complete(
+        self,
+        trajectory: ProtocolTrajectory,
+        time_ms: Sequence[float],
+        traces: Mapping[str, Sequence[float]],
+        events: Sequence[Mapping[str, Any]],
+    ) -> None:
+        """Extension hook for versioned diagnostic datasets."""
 
     def _run_transition(
         self,
@@ -1024,6 +1100,10 @@ class DiagnosticDatasetSession:
             "micro_probe_voltage": micro["probe_voltage"],
             "micro_all_voltage": micro["all_voltage"],
             "micro_somatic_current": micro["somatic_current"],
+            "micro_protocol_observables": micro.get(
+                "protocol_observables",
+                self.np.empty((len(micro["time_ms"]), 0), dtype=float),
+            ),
             "absolute_time_ms": micro["time_ms"],
             "inputs": public_actions,
             "events": [],
@@ -1037,6 +1117,15 @@ class DiagnosticDatasetSession:
                 "step_index": int(step_index),
                 "start_time_ms": start_time,
                 "native_snapshot_ref": relative_snapshot,
+                "snapshot_step_index": int(step_index),
+                "protocol_id": trajectory.protocol_id or trajectory.protocol,
+                "protocol_variant": trajectory.protocol_variant,
+                "stimulus_relative_time_ms": float(
+                    step_index - trajectory.stimulus_onset_step
+                ),
+                "snapshot_source": trajectory.snapshot_source,
+                "microtrace_mode": "full_all_segment_voltage",
+                "negative_control": int(trajectory.negative_control),
             },
         }
 
@@ -1098,6 +1187,7 @@ class DiagnosticDatasetSession:
         probes = []
         all_voltage = []
         somatic_current = []
+        protocol_observables = []
         representative_ids = list(self.audit.representatives.values())
         segment_ids = list(range(len(self.audit.live_segments)))
         for sample_time in times:
@@ -1116,13 +1206,25 @@ class DiagnosticDatasetSession:
                 ]
             )
             somatic_current.append(float(self.somatic_clamp.i))
+            if self.micro_observable_ids:
+                protocol_observables.append(
+                    self._read_protocol_micro_observables()
+                )
         return {
             "time_ms": self.np.asarray(times, dtype=float),
             "selected": self.np.asarray(selected, dtype=float),
             "probe_voltage": self.np.asarray(probes, dtype=float),
             "all_voltage": self.np.asarray(all_voltage, dtype=float),
             "somatic_current": self.np.asarray(somatic_current, dtype=float),
+            "protocol_observables": self.np.asarray(
+                protocol_observables, dtype=float
+            ).reshape(len(times), len(self.micro_observable_ids)),
         }
+
+    def _read_protocol_micro_observables(self) -> Sequence[float]:
+        """Return values for an optional versioned micro-observable schema."""
+
+        return [0.0] * len(self.micro_observable_ids)
 
     def run_somatic_current_smoke_test(
         self,
@@ -1482,7 +1584,10 @@ class DiagnosticDatasetSession:
 
             test_event_counts: Dict[str, int] = defaultdict(int)
             for index in range(count):
-                if decode(handle["metadata/split"][index]) != "test":
+                if decode(handle["metadata/split"][index]) not in {
+                    "test",
+                    "deterministic_test",
+                }:
                     continue
                 trajectory_id = decode(
                     handle["metadata/trajectory_id"][index]
@@ -1584,39 +1689,94 @@ class DiagnosticDatasetSession:
         self, handle: Any, index: int, *, include_arrays: bool = False
     ) -> Dict[str, Any]:
         decode = lambda value: value.decode() if isinstance(value, bytes) else str(value)
+        trajectory_id = decode(handle["metadata/trajectory_id"][index])
+        target_step = int(handle["metadata/step_index"][index])
+        checkpoint_step = int(
+            handle["metadata/snapshot_step_index"][index]
+        )
         snapshot = self.output_dir / decode(
             handle["metadata/native_snapshot_ref"][index]
         )
-        rng = handle["rng_state/t"][index, :]
+        trajectory_indices = [
+            row_index
+            for row_index in range(int(handle.attrs["transition_count"]))
+            if decode(handle["metadata/trajectory_id"][row_index])
+            == trajectory_id
+            and checkpoint_step
+            <= int(handle["metadata/step_index"][row_index])
+            <= target_step
+        ]
+        trajectory_indices.sort(
+            key=lambda row_index: int(
+                handle["metadata/step_index"][row_index]
+            )
+        )
+        if not trajectory_indices or int(
+            handle["metadata/step_index"][trajectory_indices[0]]
+        ) != checkpoint_step:
+            raise RuntimeError("native checkpoint row is missing from trajectory")
+        checkpoint_index = trajectory_indices[0]
+        rng = handle["rng_state/t"][checkpoint_index, :]
         trajectory_seed = int(handle["metadata/seed"][index])
         self._restore_native_snapshot(snapshot, rng, trajectory_seed)
-        actions = [
-            InputAction(
-                kind=row["kind"],
-                offset_ms=row["offset_ms"],
-                synapse_id=row.get("synapse_id"),
-                weight_multiplier=row.get("weight_multiplier", 1.0),
-                duration_ms=row.get("duration_ms"),
-                amplitude_na=row.get("amplitude_na"),
-                metadata=row.get("metadata", {}),
-            )
-            for row in json.loads(handle["inputs/ordered_actions_json"][index])
-        ]
         trajectory = ProtocolTrajectory(
-            decode(handle["metadata/trajectory_id"][index]),
+            trajectory_id,
             decode(handle["metadata/category"][index]),
             decode(handle["metadata/protocol"][index]),
             int(handle["metadata/seed"][index]),
-            1,
+            max(1, target_step + 1),
             decode(handle["metadata/split"][index]),
+            protocol_id=decode(handle["metadata/protocol_id"][index]),
+            protocol_variant=decode(
+                handle["metadata/protocol_variant"][index]
+            ),
+            stimulus_onset_step=max(
+                0,
+                target_step
+                - int(
+                    round(
+                        float(
+                            handle["metadata/stimulus_relative_time_ms"][
+                                index
+                            ]
+                        )
+                    )
+                ),
+            ),
+            negative_control=bool(
+                handle["metadata/negative_control"][index]
+            ),
+            snapshot_source=decode(
+                handle["metadata/snapshot_source"][index]
+            ),
         )
-        replay = self._run_transition(
-            index,
-            trajectory,
-            int(handle["metadata/step_index"][index]),
-            actions,
-            snapshot_path=None,
-        )
+        self._active_trajectory = trajectory
+        replay = None
+        for row_index in trajectory_indices:
+            actions = [
+                InputAction(
+                    kind=row["kind"],
+                    offset_ms=row["offset_ms"],
+                    synapse_id=row.get("synapse_id"),
+                    weight_multiplier=row.get("weight_multiplier", 1.0),
+                    duration_ms=row.get("duration_ms"),
+                    amplitude_na=row.get("amplitude_na"),
+                    metadata=row.get("metadata", {}),
+                )
+                for row in json.loads(
+                    handle["inputs/ordered_actions_json"][row_index]
+                )
+            ]
+            replay = self._run_transition(
+                row_index,
+                trajectory,
+                int(handle["metadata/step_index"][row_index]),
+                actions,
+                snapshot_path=None,
+            )
+        self._active_trajectory = None
+        if replay is None:
+            raise RuntimeError("transition replay produced no macro-step")
         errors = {
             category: float(
                 self.np.max(
@@ -1672,6 +1832,8 @@ class DiagnosticDatasetSession:
             "max_probe_microtrace_error_mv": micro_error,
             "max_somatic_current_microtrace_error_na": current_error,
             "microtrace_boundary_voltage_error_mv": boundary_error,
+            "native_checkpoint_step_index": checkpoint_step,
+            "replayed_prefix_transition_count": len(trajectory_indices),
             "reproduced": maximum <= 1e-5 and boundary_error <= 1e-5,
         }
         if include_arrays:
@@ -1824,7 +1986,12 @@ class DiagnosticDatasetSession:
                 )
         write_json(
             self.output_dir / "artifact_index.json",
-            {"schema_version": DATASET_SCHEMA_VERSION, "artifacts": records},
+            {
+                "schema_version": self.dataset_manifest.get(
+                    "schema_version", DATASET_SCHEMA_VERSION
+                ),
+                "artifacts": records,
+            },
         )
 
     def package_artifacts(self, archive_base: Optional[Path] = None) -> Path:

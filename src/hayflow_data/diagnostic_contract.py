@@ -14,7 +14,17 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
 DATASET_SCHEMA_VERSION = "0.2.0"
+DIAGNOSTIC_DATASET_V1_SCHEMA_VERSION = "1.0.0"
 BOUNDARY_INTERVAL_MS = 1.0
+
+DIAGNOSTIC_SPLITS = {
+    "train",
+    "validation",
+    "test",
+    "deterministic_test",
+    "event_boundary_test",
+    "branching_test",
+}
 
 
 @dataclass(frozen=True)
@@ -104,6 +114,14 @@ class ProtocolTrajectory:
         default_factory=dict
     )
     event_enriched: bool = False
+    protocol_id: Optional[str] = None
+    protocol_variant: str = "canonical"
+    stimulus_onset_step: int = 0
+    required_event_kinds: Tuple[str, ...] = ()
+    negative_control: bool = False
+    event_probe_label: Optional[str] = None
+    snapshot_source: str = "equilibrium_snapshot"
+    metadata: Mapping[str, Any] = field(default_factory=dict)
 
     def validate(self) -> None:
         if not self.trajectory_id:
@@ -113,12 +131,19 @@ class ProtocolTrajectory:
             "local_synaptic",
             "somatic_events",
             "dendritic_events",
+            "branching",
         }:
             raise ValueError(f"unsupported category {self.category!r}")
-        if self.split not in {"train", "validation", "test"}:
+        if self.split not in DIAGNOSTIC_SPLITS:
             raise ValueError(f"unsupported split {self.split!r}")
         if self.duration_ms <= 0:
             raise ValueError("duration_ms must be positive")
+        if not 0 <= int(self.stimulus_onset_step) < self.duration_ms:
+            raise ValueError("stimulus_onset_step lies outside trajectory")
+        if not self.protocol_variant:
+            raise ValueError("protocol_variant is required")
+        if not self.snapshot_source:
+            raise ValueError("snapshot_source is required")
         for step, actions in self.actions_by_step.items():
             if not 0 <= int(step) < self.duration_ms:
                 raise ValueError("action step lies outside trajectory")

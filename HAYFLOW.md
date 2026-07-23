@@ -180,5 +180,39 @@ positive result. Once the required event-rich tuft plateau and paired
 hot-zone calcium families pass, all three dendritic event labels have robust
 coverage, the long-horizon confirmation is uncensored and exact on the shared
 prefix, and the traces pass visual review, their selected schedules are used
-to regenerate the small transition dataset (schema v0.3) before implementing
+by `01c` to build the diagnostic transition dataset v1 before implementing
 `02_full_state_flowmap_baseline.ipynb`.
+
+## Diagnostic dataset v1
+
+`notebooks/01c_build_diagnostic_transition_dataset.ipynb` consumes the complete
+hashed artifact bundle produced by `01b` and generates
+`artifacts/diagnostic_dataset_v1/`. It is the final data-contract gate before
+the full-state baseline and does not train a neural model.
+
+The v1 dataset:
+
+- reuses the two selected schedules exactly on seeds 310001--310003;
+- includes rest, subthreshold, somatic spiking, confirmed tuft NMDA plateau,
+  confirmed paired hot-zone calcium spike, near-threshold controls, and five
+  futures from a common branching state;
+- keeps all 17,220 core state variables at every boundary and stores the 9,182
+  current/conductance observables as a separate privileged category;
+- stores all 642 voltage microtraces plus canonical probes, the confirmed tuft
+  cluster center, an alternate-branch control center, local calcium currents,
+  and summed AMPA/NMDA observables at 0.025 ms;
+- uses periodic native NEURON checkpoints and replays the ordered prefix from
+  the nearest checkpoint, avoiding one large `SaveState` file per millisecond
+  while preserving transition-level reproducibility;
+- writes HDF5 data and Parquet indices for transitions, protocols, events,
+  splits, and branching, together with a storage cost report;
+- exhaustively replays every transition and requires uncensored positive
+  events, clean whole-trajectory splits, stable segment/state schemas, exact
+  first-35-ms overlap with `01b`, and valid hashes for all 88 calibration
+  artifacts;
+- produces stimulus-relative figures with separate axes for voltage, calcium,
+  calcium current, NMDA conductance, and NMDA current.
+
+The `01b` ZIP or its extracted directory is a required input. This keeps the
+provenance check real: `01c` does not silently trust copied protocol names when
+the reference traces and their hashes are unavailable.

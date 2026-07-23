@@ -7,6 +7,8 @@ batching utilities may be extracted only when their semantics match.
 from .diagnostic_contract import (
     BOUNDARY_INTERVAL_MS,
     DATASET_SCHEMA_VERSION,
+    DIAGNOSTIC_DATASET_V1_SCHEMA_VERSION,
+    DIAGNOSTIC_SPLITS,
     BurnInCriteria,
     InputAction,
     ProtocolTrajectory,
@@ -23,6 +25,8 @@ __all__ = [
     "BOUNDARY_INTERVAL_MS",
     "BurnInCriteria",
     "DATASET_SCHEMA_VERSION",
+    "DIAGNOSTIC_DATASET_V1_SCHEMA_VERSION",
+    "DIAGNOSTIC_SPLITS",
     "estimate_dataset_size_bytes",
     "InputAction",
     "ProtocolTrajectory",
