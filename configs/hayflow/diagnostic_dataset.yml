@@ -1,0 +1,61 @@
+schema_version: 0.1.0
+
+teacher:
+  name: hay_l5pc_full
+  repository: https://github.com/SelfishGene/neuron_as_deep_net
+  local_path: ../neuron_as_deep_net
+  commit: 074c4666300a8ad246601dab179a97a6942f0f29
+  morphology: L5PC_NEURON_simulation/morphologies/cell1.asc
+  integration: cvode
+
+state:
+  discretization: instantiated_neuron_tree
+  include_soma: true
+  include_axon: true
+  include_all_dendrites: true
+  boundary_interval_ms: 1.0
+  snapshot_precision: native
+  record_all_mod_states: true
+  record_mechanism_currents: true
+  record_axial_currents: true
+  record_concentrations: true
+  record_synaptic_conductances: true
+
+synapses:
+  preserve_teacher_point_processes: true
+  preserve_shared_presynaptic_events: true
+  ampa_nmda_coupling: explicit_components
+  preserve_voltage_dependent_nmda_block: true
+
+microtraces:
+  diagnostic_sample_interval_ms: 0.025
+  diagnostic_record_continuously: true
+  event_window_storage_enabled: false
+  event_window_pre_ms: null
+  event_window_post_ms: null
+
+events:
+  detector_version: diagnostic-v0
+  thresholds_configurable: true
+  kinds:
+    - axonal_spike
+    - somatic_spike
+    - backpropagating_ap
+    - calcium_spike
+    - nmda_spike
+    - nmda_plateau
+
+storage:
+  boundary_states: always
+  synaptic_events: always
+  event_labels: always
+  privileged_targets: diagnostic_full
+  training_float_dtype: float32_after_validation
+  sparse_segment_mechanism_layout: true
+  compression: null
+
+validation:
+  require_manifest_validation: true
+  require_snapshot_restore_replay: true
+  require_instrumentation_equivalence: true
+  require_event_trace_review: true

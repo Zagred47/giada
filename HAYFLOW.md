@@ -1,0 +1,76 @@
+# HayFlow development boundary
+
+HayFlow is developed in this repository, but it is kept separate from the
+existing ELM/NeuronIO pipeline. The original
+`SelfishGene/neuron_as_deep_net` checkout is a pinned teacher reference and is
+not modified by HayFlow code.
+
+## Package boundaries
+
+- `src/hayflow_schema`: dependency-light contracts shared by generation and
+  training. It must not import NEURON, PyTorch, or JAX.
+- `src/hayflow_teacher`: adapters around the instantiated NEURON teacher,
+  including manifest extraction, logging, snapshot/restore, and event
+  extraction.
+- `src/hayflow_data`: storage readers, window sampling, batching, and format
+  validation for HayFlow datasets.
+- `src/hayflow_model`: full-state flow-map baselines and, later, the latent
+  HayFlow architecture.
+- `src/hayflow_eval`: event, voltage, rollout, and restore-fidelity metrics.
+- `src/neuronio`: the existing ELM baseline and infrastructure. It remains
+  independently usable.
+
+Teacher generation and model training intentionally use separate runtime
+environments. Dataset files, snapshots, compiled NEURON mechanisms, and model
+artifacts are generated locally and are not committed.
+
+## First implementation milestone
+
+The first milestone is an observability and Markov-state experiment, not the
+complete latent architecture:
+
+1. inspect the fully instantiated NEURON morphology and write a versioned
+   `TeacherManifest`;
+2. log complete 1 ms boundary states and native-precision restart snapshots;
+3. extract configurable axonal, somatic, bAP, calcium, NMDA-spike, and
+   NMDA-plateau events;
+4. prove snapshot/restore fidelity by replaying the same interval;
+5. generate a small diagnostic dataset with continuous 0.025 ms microtraces;
+6. train and roll out a one-millisecond full-state flow map before introducing
+   state compression.
+
+The teacher's morphology, mechanisms, input-generation distributions, CVODE
+configuration, and random seeds must remain unchanged while instrumentation is
+added.
+
+## Source provenance
+
+The initial teacher reference is:
+
+- repository: `https://github.com/SelfishGene/neuron_as_deep_net`
+- branch: `master`
+- commit: `074c4666300a8ad246601dab179a97a6942f0f29`
+- local development path: `../neuron_as_deep_net`
+
+The local path is configurable; the commit is part of the dataset provenance
+and must be recorded in every generated manifest.
+
+## Current implementation status
+
+`scripts/hayflow/build_teacher_manifest.py` now performs the first structural
+pass against an instantiated NEURON cell. The pass is intentionally incomplete
+in two explicit ways:
+
+- synapses are inventoried only after the generator creates its point
+  processes and supplies `NeuronSynapseBinding` objects;
+- apical trunk, nexus, hot-zone, and tuft labels remain provisional until their
+  anatomical classifier is validated.
+
+The manifest records these limitations in metadata instead of presenting an
+incomplete inventory as a complete teacher contract.
+
+The reproducible Linux entry point is
+`notebooks/hayflow_teacher_manifest.ipynb`. It pins NEURON 8.2.7, checks out
+the exact teacher commit, compiles the original mechanisms, runs the contract
+tests, builds the manifest, and rejects a dendrite-only or topologically
+invalid result.

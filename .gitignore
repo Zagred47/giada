@@ -104,6 +104,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+.venv-hayflow-teacher/
 env/
 venv/
 ENV/
@@ -133,3 +134,10 @@ dmypy.json
 tmp
 wandb
 shd_data
+
+# HayFlow generated data and local teacher build artifacts
+data/hayflow/
+artifacts/hayflow/
+L5PC_NEURON_simulation/x86_64/
+L5PC_NEURON_simulation/arm64/
+L5PC_NEURON_simulation/nrnmech.dll

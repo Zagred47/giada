@@ -3,6 +3,11 @@
 This repository features a minimal implementation of the (Branch) Expressive Leaky Memory neuron in PyTorch.
 Notebooks to train and evaluate on NeuronIO are provided, as well as pre-trained models of various sizes.
 
+HayFlow, the morphology-aware surrogate of the full Hay L5PC teacher, is being
+developed as a separate set of packages in this repository. Its package
+boundaries, provenance rules, and first diagnostic milestone are documented in
+[HAYFLOW.md](./HAYFLOW.md).
+
 ![The ELM neuron](./elm_neuron_sketch.png)
 
 ### Installation:
