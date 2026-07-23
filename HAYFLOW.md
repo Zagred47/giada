@@ -103,7 +103,7 @@ The notebook:
 - measures rest convergence from `v_init = -76 mV` and rejects an arbitrary
   burn-in cutoff;
 - writes a canonical equilibrium `SaveState` plus the externally owned
-  Random123 sequences;
+  Random123 key, distribution, and sequence positions;
 - generates 36 short diagnostic trajectories covering rest/subthreshold,
   local excitation/inhibition, somatic-event candidates, and dendritic-event
   candidates, with seed/protocol isolation across train, validation, and test;

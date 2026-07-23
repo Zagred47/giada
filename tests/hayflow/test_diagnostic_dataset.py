@@ -13,7 +13,10 @@ from src.hayflow_teacher.event_extractor import (
     event_ids_by_transition,
     extract_events,
 )
-from src.hayflow_teacher.diagnostic_dataset import expected_audit_hashes
+from src.hayflow_teacher.diagnostic_dataset import (
+    DiagnosticDatasetSession,
+    expected_audit_hashes,
+)
 
 
 class DiagnosticContractTest(unittest.TestCase):
@@ -76,6 +79,37 @@ class DiagnosticContractTest(unittest.TestCase):
                 and all(character in "0123456789abcdef" for character in value)
                 for value in hashes.values()
             )
+        )
+
+    def test_random123_restore_includes_key_distribution_and_sequence(self):
+        calls = []
+
+        class FakeRandom:
+            def Random123(self, first, second, third):
+                calls.append(("key", first, second, third))
+
+            def negexp(self, mean):
+                calls.append(("distribution", mean))
+
+            def seq(self, sequence):
+                calls.append(("sequence", sequence))
+
+        session = object.__new__(DiagnosticDatasetSession)
+        session.audit = type(
+            "Audit", (), {"synapse_rngs": [FakeRandom(), FakeRandom()]}
+        )()
+        session._configure_rngs(1234, [7.0, 11.0])
+
+        self.assertEqual(
+            calls,
+            [
+                ("key", 1234, 0, 0),
+                ("distribution", 1.0),
+                ("sequence", 7.0),
+                ("key", 1234, 1, 0),
+                ("distribution", 1.0),
+                ("sequence", 11.0),
+            ],
         )
 
     def test_event_extractor_preserves_full_event_duration(self):

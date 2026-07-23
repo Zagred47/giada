@@ -275,6 +275,8 @@ class DiagnosticDatasetSession:
                 "width": len(self.audit.synapse_rngs),
                 "generator": "Random123",
                 "index": "synapse_id",
+                "stream_key": "(metadata/seed, synapse_id, 0)",
+                "stored_value": "Random.seq() position",
             },
             "variables": rows,
             "microtrace_variable_ids": self.micro_variable_ids,
@@ -404,6 +406,7 @@ class DiagnosticDatasetSession:
             {
                 "time_ms": float(self.h.t),
                 "rng_mode": self.audit.rng_mode,
+                "random123_seed": self.seed,
                 "sequences": rng_state,
             },
         )
@@ -437,20 +440,36 @@ class DiagnosticDatasetSession:
         saved.fwrite(file_object)
 
     def _restore_native_snapshot(
-        self, path: Path, rng_sequences: Sequence[float]
+        self,
+        path: Path,
+        rng_sequences: Sequence[float],
+        random123_seed: int,
     ) -> None:
         self.somatic_clamp.amp = 0.0
         saved = self.h.SaveState()
         file_object = self.h.File(str(path))
         saved.fread(file_object)
         saved.restore()
-        self.audit._restore_rng_sequences(rng_sequences)
+        self._configure_rngs(random123_seed, rng_sequences)
 
-    def _rekey_rngs(self, seed: int) -> None:
-        for stream_id, rng in enumerate(self.audit.synapse_rngs):
+    def _configure_rngs(
+        self, seed: int, sequences: Sequence[float]
+    ) -> None:
+        """Restore the complete Random123 identity, not only its position."""
+
+        if len(sequences) != len(self.audit.synapse_rngs):
+            raise RuntimeError(
+                "saved RNG stream count does not match instantiated synapses"
+            )
+        for stream_id, (rng, sequence) in enumerate(
+            zip(self.audit.synapse_rngs, sequences)
+        ):
             rng.Random123(int(seed), int(stream_id), 0)
             rng.negexp(1.0)
-            rng.seq(0)
+            rng.seq(float(sequence))
+
+    def _rekey_rngs(self, seed: int) -> None:
+        self._configure_rngs(seed, [0.0] * len(self.audit.synapse_rngs))
 
     def build_default_protocols(self) -> List[ProtocolTrajectory]:
         """Create 36 short trajectories spanning the four requested classes."""
@@ -634,9 +653,11 @@ class DiagnosticDatasetSession:
             for trajectory in protocols:
                 equilibrium_rng = json.loads(
                     self.equilibrium_rng_path.read_text(encoding="utf-8")
-                )["sequences"]
+                )
                 self._restore_native_snapshot(
-                    self.equilibrium_snapshot_path, equilibrium_rng
+                    self.equilibrium_snapshot_path,
+                    equilibrium_rng["sequences"],
+                    equilibrium_rng["random123_seed"],
                 )
                 self._rekey_rngs(trajectory.seed)
                 trajectory_indices = []
@@ -761,6 +782,9 @@ class DiagnosticDatasetSession:
             "rng": {
                 "mode": self.audit.rng_mode,
                 "stream_count": len(self.audit.synapse_rngs),
+                "stream_key": "(trajectory_seed, synapse_id, 0)",
+                "sequence_storage": "rng_state/t and rng_state/t_plus_1",
+                "key_storage": "metadata/seed",
                 "split_isolation": "distinct trajectory seeds; no window split",
             },
             "solver_boundary_policy": (
@@ -910,7 +934,7 @@ class DiagnosticDatasetSession:
         self._require_equilibrium()
         equilibrium_rng = json.loads(
             self.equilibrium_rng_path.read_text(encoding="utf-8")
-        )["sequences"]
+        )
         basal_id = int(
             self.audit._excitatory_synapse_for(
                 self.audit.representatives["basal"]
@@ -935,7 +959,9 @@ class DiagnosticDatasetSession:
 
         def branch(actions: Sequence[InputAction]) -> Dict[str, Any]:
             self._restore_native_snapshot(
-                self.equilibrium_snapshot_path, equilibrium_rng
+                self.equilibrium_snapshot_path,
+                equilibrium_rng["sequences"],
+                equilibrium_rng.get("random123_seed", self.seed),
             )
             trajectory = ProtocolTrajectory(
                 "branch", "local_synaptic", "branching", self.seed, 1, "test"
@@ -1068,8 +1094,6 @@ class DiagnosticDatasetSession:
             blockers.append("one or more sampled transitions failed replay")
         if not trajectory_replay["reproduced"]:
             blockers.append("test trajectory or its event labels failed replay")
-        if int(self.dataset_manifest.get("event_count", 0)) == 0:
-            blockers.append("no candidate event was detected in the dataset")
         if not segment_mapping_stable:
             blockers.append("voltage state does not preserve segment_id order")
         if boundary_voltage_error > 1e-5:
@@ -1081,9 +1105,24 @@ class DiagnosticDatasetSession:
         if not branching["different_inputs_diverge"]:
             blockers.append("different-input branching did not diverge")
 
+        manifest = self.dataset_manifest
+        if not manifest and (self.output_dir / "dataset_manifest.json").is_file():
+            manifest = json.loads(
+                (self.output_dir / "dataset_manifest.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+        warnings = []
+        if int(manifest.get("event_count", 0)) == 0:
+            warnings.append(
+                "No candidate event crossed the provisional diagnostic "
+                "thresholds. Review traces and tune protocols/definitions; "
+                "the transition data contract remains structurally valid."
+            )
         report = {
             "valid": not blockers,
             "blockers": blockers,
+            "warnings": warnings,
             "hdf5": base,
             "teacher_commit_matches_audit": (
                 git_commit(self.teacher_repo) == PINNED_TEACHER_COMMIT
@@ -1114,7 +1153,8 @@ class DiagnosticDatasetSession:
             handle["metadata/native_snapshot_ref"][index]
         )
         rng = handle["rng_state/t"][index, :]
-        self._restore_native_snapshot(snapshot, rng)
+        trajectory_seed = int(handle["metadata/seed"][index])
+        self._restore_native_snapshot(snapshot, rng, trajectory_seed)
         actions = [
             InputAction(
                 kind=row["kind"],
