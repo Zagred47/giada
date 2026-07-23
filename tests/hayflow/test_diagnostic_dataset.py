@@ -69,6 +69,56 @@ class DiagnosticContractTest(unittest.TestCase):
             estimate["estimated_uncompressed_bytes_for_dataset"],
             10 * estimate["estimated_uncompressed_bytes_per_transition"],
         )
+        with_current = estimate_dataset_size_bytes(
+            10, 100, 20, 41, 642, microtrace_scalar_count=1
+        )
+        self.assertEqual(
+            with_current["estimated_uncompressed_bytes_per_transition"]
+            - estimate["estimated_uncompressed_bytes_per_transition"],
+            41 * 4,
+        )
+        self.assertEqual(
+            estimate[
+                "estimated_uncompressed_boundary_bytes_per_transition"
+            ],
+            2 * 100 * 8,
+        )
+
+    def test_somatic_current_uses_native_iclamp_timing(self):
+        class FakeClamp:
+            delay = None
+            dur = None
+            amp = None
+
+        session = object.__new__(DiagnosticDatasetSession)
+        session.somatic_clamp = FakeClamp()
+        action = InputAction(
+            "somatic_current",
+            0.125,
+            duration_ms=0.75,
+            amplitude_na=1.5,
+        )
+        session._configure_somatic_current(100.0, [action])
+        self.assertEqual(session.somatic_clamp.delay, 100.125)
+        self.assertEqual(session.somatic_clamp.dur, 0.75)
+        self.assertEqual(session.somatic_clamp.amp, 1.5)
+        session._disable_somatic_clamp()
+        self.assertEqual(session.somatic_clamp.dur, 0.0)
+        self.assertEqual(session.somatic_clamp.amp, 0.0)
+
+    def test_somatic_driver_rejects_two_pulses_in_one_macro_step(self):
+        session = object.__new__(DiagnosticDatasetSession)
+        session.somatic_clamp = type("Clamp", (), {})()
+        actions = [
+            InputAction(
+                "somatic_current", 0.1, duration_ms=0.2, amplitude_na=1.0
+            ),
+            InputAction(
+                "somatic_current", 0.5, duration_ms=0.2, amplitude_na=1.0
+            ),
+        ]
+        with self.assertRaisesRegex(NotImplementedError, "at most one"):
+            session._configure_somatic_current(0.0, actions)
 
     def test_audited_teacher_hash_contract_is_complete(self):
         hashes = expected_audit_hashes()

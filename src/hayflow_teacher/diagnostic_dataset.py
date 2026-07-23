@@ -83,12 +83,13 @@ class DiagnosticDatasetSession:
         self.h = None
         self.cvode = None
         self.somatic_clamp = None
-        self.callback_refs: List[Any] = []
         self.state_variables: Dict[str, List[Any]] = {}
         self.state_schema: Dict[str, Any] = {}
         self.micro_variables: List[Any] = []
         self.micro_variable_ids: List[str] = []
         self.event_definitions: List[EventDefinition] = []
+        self.calibrated_somatic_current_na: Optional[float] = None
+        self.somatic_calibration_report: Dict[str, Any] = {}
         self.equilibrium_snapshot_path = (
             self.snapshots_dir / "equilibrium_snapshot.neuron.bin"
         )
@@ -137,7 +138,7 @@ class DiagnosticDatasetSession:
         ]
         self.somatic_clamp = self.h.IClamp(soma_segment)
         self.somatic_clamp.delay = 0.0
-        self.somatic_clamp.dur = 1e9
+        self.somatic_clamp.dur = 0.0
         self.somatic_clamp.amp = 0.0
 
         self._build_state_schema()
@@ -280,6 +281,11 @@ class DiagnosticDatasetSession:
             },
             "variables": rows,
             "microtrace_variable_ids": self.micro_variable_ids,
+            "microtrace_input_observables": {
+                "somatic_current_na": (
+                    "current actually delivered by the diagnostic soma IClamp"
+                )
+            },
             "probe_order": list(self.audit.representatives),
             "all_segment_voltage_order": list(range(len(self.audit.live_segments))),
         }
@@ -319,7 +325,7 @@ class DiagnosticDatasetSession:
         criteria.validate()
         self.audit._seed_neuron()
         self.audit._reset_owned_rngs()
-        self.somatic_clamp.amp = 0.0
+        self._disable_somatic_clamp()
         self.h.finitialize(self.audit.v_init_mv)
 
         voltage_variables = self.state_variables["voltage"]
@@ -445,12 +451,23 @@ class DiagnosticDatasetSession:
         rng_sequences: Sequence[float],
         random123_seed: int,
     ) -> None:
-        self.somatic_clamp.amp = 0.0
+        self._disable_somatic_clamp()
         saved = self.h.SaveState()
         file_object = self.h.File(str(path))
         saved.fread(file_object)
         saved.restore()
+        # Point-process parameters are not part of the canonical state
+        # contract.  Reset the instrumentation explicitly even when loading
+        # snapshots produced by an older diagnostic run.
+        self._disable_somatic_clamp()
         self._configure_rngs(random123_seed, rng_sequences)
+
+    def _disable_somatic_clamp(self) -> None:
+        """Leave the diagnostic current source in an inert, known state."""
+
+        self.somatic_clamp.delay = 0.0
+        self.somatic_clamp.dur = 0.0
+        self.somatic_clamp.amp = 0.0
 
     def _configure_rngs(
         self, seed: int, sequences: Sequence[float]
@@ -471,10 +488,134 @@ class DiagnosticDatasetSession:
     def _rekey_rngs(self, seed: int) -> None:
         self._configure_rngs(seed, [0.0] * len(self.audit.synapse_rngs))
 
+    def calibrate_somatic_spike_current(
+        self,
+        candidate_amplitudes_na: Sequence[float] = (
+            0.5,
+            0.75,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            4.0,
+            6.0,
+        ),
+    ) -> Dict[str, Any]:
+        """Select the smallest tested two-pulse current that evokes soma and AIS spikes."""
+
+        self._require_equilibrium()
+        candidates = [float(value) for value in candidate_amplitudes_na]
+        if not candidates or any(value <= 0.0 for value in candidates):
+            raise ValueError("somatic calibration amplitudes must be positive")
+        if candidates != sorted(set(candidates)):
+            raise ValueError(
+                "somatic calibration amplitudes must be unique and increasing"
+            )
+        equilibrium_rng = json.loads(
+            self.equilibrium_rng_path.read_text(encoding="utf-8")
+        )
+        trials = []
+        selected = None
+        for amplitude in candidates:
+            self._restore_native_snapshot(
+                self.equilibrium_snapshot_path,
+                equilibrium_rng["sequences"],
+                equilibrium_rng.get("random123_seed", self.seed),
+            )
+            trajectory = ProtocolTrajectory(
+                f"somatic-calibration-{amplitude:g}",
+                "somatic_events",
+                "somatic_spike_current_calibration",
+                self.seed,
+                4,
+                "test",
+            )
+            time_ms = []
+            traces = {label: [] for label in self.audit.representatives}
+            delivered_current = []
+            for step_index in range(4):
+                actions = (
+                    [
+                        InputAction(
+                            "somatic_current",
+                            0.05,
+                            duration_ms=0.9,
+                            amplitude_na=amplitude,
+                        )
+                    ]
+                    if step_index in (1, 2)
+                    else []
+                )
+                transition = self._run_transition(
+                    -1,
+                    trajectory,
+                    step_index,
+                    actions,
+                    snapshot_path=None,
+                )
+                sample_slice = slice(None) if step_index == 0 else slice(1, None)
+                time_ms.extend(
+                    transition["absolute_time_ms"][sample_slice].tolist()
+                )
+                delivered_current.extend(
+                    transition["micro_somatic_current"][sample_slice].tolist()
+                )
+                for probe_index, label in enumerate(self.audit.representatives):
+                    traces[label].extend(
+                        transition["micro_probe_voltage"][
+                            sample_slice, probe_index
+                        ].tolist()
+                    )
+            events = extract_events(
+                time_ms, traces, self.event_definitions
+            )
+            event_counts = Counter(event["kind"] for event in events)
+            passed = bool(event_counts["somatic_spike"]) and bool(
+                event_counts["axonal_spike"]
+            )
+            trials.append(
+                {
+                    "amplitude_na": amplitude,
+                    "observed_peak_absolute_current_na": float(
+                        self.np.max(self.np.abs(delivered_current))
+                    ),
+                    "soma_peak_mv": float(max(traces["soma"])),
+                    "ais_peak_mv": float(max(traces["ais"])),
+                    "event_counts": dict(sorted(event_counts.items())),
+                    "passed": passed,
+                }
+            )
+            if passed:
+                selected = amplitude
+                break
+        self.calibrated_somatic_current_na = selected
+        self.somatic_calibration_report = {
+            "valid": selected is not None,
+            "selection_rule": (
+                "smallest tested amplitude producing both somatic_spike and "
+                "axonal_spike during two 0.9 ms pulses"
+            ),
+            "selected_amplitude_na": selected,
+            "candidate_amplitudes_na": candidates,
+            "trials": trials,
+        }
+        write_json(
+            self.output_dir / "somatic_current_calibration.json",
+            self.somatic_calibration_report,
+        )
+        if selected is None:
+            raise RuntimeError(
+                "somatic current calibration found no soma/AIS spike; inspect "
+                "somatic_current_calibration.json before expanding the search"
+            )
+        return self.somatic_calibration_report
+
     def build_default_protocols(self) -> List[ProtocolTrajectory]:
         """Create 36 short trajectories spanning the four requested classes."""
 
         self._require_equilibrium()
+        if self.calibrated_somatic_current_na is None:
+            self.calibrate_somatic_spike_current()
 
         def synapses(region: str, inhibitory: bool = False, limit: int = 8) -> List[int]:
             class_name = "ProbUDFsyn2" if inhibitory else "ProbAMPANMDA2"
@@ -505,6 +646,8 @@ class DiagnosticDatasetSession:
                 duration_ms=duration,
                 amplitude_na=amplitude,
             )
+
+        spike_current = float(self.calibrated_somatic_current_na)
 
         templates: List[Tuple[str, str, Dict[int, Tuple[InputAction, ...]], bool]] = [
             ("rest_subthreshold", "rest_no_input", {}, False),
@@ -554,19 +697,27 @@ class DiagnosticDatasetSession:
             (
                 "somatic_events",
                 "somatic_single_pulse",
-                {4: (current(1.5),), 5: (current(1.5),)},
+                {4: (current(spike_current),), 5: (current(spike_current),)},
                 True,
             ),
             (
                 "somatic_events",
                 "somatic_double_pulse",
-                {3: (current(1.5),), 4: (current(1.5),), 7: (current(1.5),), 8: (current(1.5),)},
+                {
+                    3: (current(spike_current),),
+                    4: (current(spike_current),),
+                    7: (current(spike_current),),
+                    8: (current(spike_current),),
+                },
                 True,
             ),
             (
                 "somatic_events",
                 "somatic_rapid_firing_candidate",
-                {step: (current(1.8),) for step in range(2, 9)},
+                {
+                    step: (current(1.2 * spike_current),)
+                    for step in range(2, 9)
+                },
                 True,
             ),
             (
@@ -585,7 +736,7 @@ class DiagnosticDatasetSession:
                 "dendritic_events",
                 "mixed_bap_ca_nmda_candidate",
                 {
-                    3: (current(1.5),),
+                    3: (current(spike_current),),
                     4: tuple(event(item, 0.1 + 0.1 * i) for i, item in enumerate(nexus[:8])),
                     5: tuple(event(item, 0.1 + 0.1 * i) for i, item in enumerate(tuft[:8])),
                 },
@@ -731,6 +882,8 @@ class DiagnosticDatasetSession:
             len(self.micro_variables),
             41,
             len(self.audit.live_segments),
+            microtrace_scalar_count=1,
+            probe_count=len(self.audit.representatives),
         )
         native_snapshot_sizes = [
             path.stat().st_size
@@ -739,9 +892,24 @@ class DiagnosticDatasetSession:
         mean_snapshot_bytes = int(
             sum(native_snapshot_sizes) / len(native_snapshot_sizes)
         )
+        transition_store_bytes = self.transition_path.stat().st_size
+        observed_hdf5_bytes_per_transition = int(
+            transition_store_bytes / len(transition_rows)
+        )
         size_estimate.update(
             {
+                "observed_compressed_hdf5_bytes": transition_store_bytes,
+                "observed_compressed_hdf5_bytes_per_transition": (
+                    observed_hdf5_bytes_per_transition
+                ),
                 "observed_mean_native_snapshot_bytes": mean_snapshot_bytes,
+                "observed_bytes_per_transition_hdf5_plus_snapshot": (
+                    observed_hdf5_bytes_per_transition + mean_snapshot_bytes
+                ),
+                "observed_extrapolation_per_million_hdf5_plus_snapshots": (
+                    1_000_000
+                    * (observed_hdf5_bytes_per_transition + mean_snapshot_bytes)
+                ),
                 "estimated_total_bytes_per_transition_including_snapshot": (
                     size_estimate[
                         "estimated_uncompressed_bytes_per_transition"
@@ -779,6 +947,13 @@ class DiagnosticDatasetSession:
             "trajectory_counts_by_split": dict(split_counts),
             "event_counts": dict(event_counts),
             "event_count": total_events,
+            "somatic_current_calibration": {
+                "report": "somatic_current_calibration.json",
+                "selected_amplitude_na": self.calibrated_somatic_current_na,
+                "selection_rule": self.somatic_calibration_report.get(
+                    "selection_rule"
+                ),
+            },
             "rng": {
                 "mode": self.audit.rng_mode,
                 "stream_count": len(self.audit.synapse_rngs),
@@ -814,13 +989,18 @@ class DiagnosticDatasetSession:
         snapshot_path: Optional[Path],
     ) -> Dict[str, Any]:
         start_time = float(self.h.t)
+        self._disable_somatic_clamp()
         state_t = self.capture_boundary_state()
         rng_t = self.np.asarray(
             self.audit._snapshot_rng_sequences(), dtype=float
         )
         if snapshot_path is not None:
             self._write_native_snapshot(snapshot_path)
-        # SaveState cannot preserve adaptive solver history.  Both dataset
+        # IClamp discontinuities must be configured before re_init so CVODE
+        # sees the actual delay/duration boundaries.  NetCon events are queued
+        # afterwards because re_init clears the event queue.
+        self._configure_somatic_current(start_time, actions)
+        # SaveState cannot preserve adaptive solver history. Both dataset
         # generation and replay therefore start the macro-step after re_init.
         self.cvode.re_init()
         public_actions = self._schedule_actions(start_time, actions)
@@ -842,6 +1022,7 @@ class DiagnosticDatasetSession:
             "micro_selected": micro["selected"],
             "micro_probe_voltage": micro["probe_voltage"],
             "micro_all_voltage": micro["all_voltage"],
+            "micro_somatic_current": micro["somatic_current"],
             "absolute_time_ms": micro["time_ms"],
             "inputs": public_actions,
             "events": [],
@@ -858,10 +1039,37 @@ class DiagnosticDatasetSession:
             },
         }
 
+    def _configure_somatic_current(
+        self, start_time: float, actions: Sequence[InputAction]
+    ) -> None:
+        """Drive one diagnostic IClamp pulse using native point-process timing.
+
+        The first implementation used Python callbacks registered through
+        ``CVode.event``.  Those callbacks could be present in the serialized
+        input while the clamp remained silent after a boundary ``re_init``.
+        Configuring IClamp itself before ``re_init`` makes the delivered input
+        part of the solver schedule and lets us observe it through ``IClamp.i``.
+        """
+
+        current_actions = [
+            action for action in actions if action.kind == "somatic_current"
+        ]
+        if len(current_actions) > 1:
+            raise NotImplementedError(
+                "diagnostic-v0.2 supports at most one somatic-current pulse "
+                "per 1 ms transition"
+            )
+        if not current_actions:
+            return
+        action = current_actions[0]
+        action.validate()
+        self.somatic_clamp.delay = start_time + float(action.offset_ms)
+        self.somatic_clamp.dur = float(action.duration_ms)
+        self.somatic_clamp.amp = float(action.amplitude_na)
+
     def _schedule_actions(
         self, start_time: float, actions: Sequence[InputAction]
     ) -> List[Dict[str, Any]]:
-        self.callback_refs = []
         public = []
         for action in actions:
             action.validate()
@@ -880,21 +1088,6 @@ class DiagnosticDatasetSession:
                     "from recorded conductance/state discontinuities"
                 )
                 record["netcon"].event(start_time + action.offset_ms)
-            else:
-                amplitude = float(action.amplitude_na)
-
-                def set_amplitude(value: float = amplitude) -> None:
-                    self.somatic_clamp.amp = value
-
-                def clear_amplitude() -> None:
-                    self.somatic_clamp.amp = 0.0
-
-                self.callback_refs.extend([set_amplitude, clear_amplitude])
-                self.cvode.event(start_time + action.offset_ms, set_amplitude)
-                self.cvode.event(
-                    start_time + action.offset_ms + float(action.duration_ms),
-                    clear_amplitude,
-                )
             public.append(item)
         return public
 
@@ -903,6 +1096,7 @@ class DiagnosticDatasetSession:
         selected = []
         probes = []
         all_voltage = []
+        somatic_current = []
         representative_ids = list(self.audit.representatives.values())
         segment_ids = list(range(len(self.audit.live_segments)))
         for sample_time in times:
@@ -920,13 +1114,111 @@ class DiagnosticDatasetSession:
                     for segment_id in segment_ids
                 ]
             )
-        self.callback_refs = []
+            somatic_current.append(float(self.somatic_clamp.i))
         return {
             "time_ms": self.np.asarray(times, dtype=float),
             "selected": self.np.asarray(selected, dtype=float),
             "probe_voltage": self.np.asarray(probes, dtype=float),
             "all_voltage": self.np.asarray(all_voltage, dtype=float),
+            "somatic_current": self.np.asarray(somatic_current, dtype=float),
         }
+
+    def run_somatic_current_smoke_test(
+        self,
+        amplitude_na: float = 0.1,
+        offset_ms: float = 0.1,
+        duration_ms: float = 0.8,
+        minimum_voltage_response_mv: float = 1e-3,
+        raise_on_failure: bool = True,
+    ) -> Dict[str, Any]:
+        """Prove that a declared current is delivered and changes the teacher."""
+
+        self._require_equilibrium()
+        equilibrium_rng = json.loads(
+            self.equilibrium_rng_path.read_text(encoding="utf-8")
+        )
+        trajectory = ProtocolTrajectory(
+            "somatic-current-smoke",
+            "rest_subthreshold",
+            "somatic_current_driver_smoke",
+            self.seed,
+            1,
+            "test",
+        )
+        stimulus = InputAction(
+            "somatic_current",
+            float(offset_ms),
+            duration_ms=float(duration_ms),
+            amplitude_na=float(amplitude_na),
+        )
+
+        def branch(actions: Sequence[InputAction]) -> Dict[str, Any]:
+            self._restore_native_snapshot(
+                self.equilibrium_snapshot_path,
+                equilibrium_rng["sequences"],
+                equilibrium_rng.get("random123_seed", self.seed),
+            )
+            return self._run_transition(
+                -1, trajectory, 0, actions, snapshot_path=None
+            )
+
+        control = branch([])
+        first = branch([stimulus])
+        second = branch([stimulus])
+        probe_labels = list(self.audit.representatives)
+        soma_probe_index = probe_labels.index("soma")
+        observed_current = float(
+            self.np.max(self.np.abs(first["micro_somatic_current"]))
+        )
+        soma_response = float(
+            self.np.max(
+                self.np.abs(
+                    first["micro_probe_voltage"][:, soma_probe_index]
+                    - control["micro_probe_voltage"][:, soma_probe_index]
+                )
+            )
+        )
+        repeat_voltage_error = float(
+            self.np.max(
+                self.np.abs(
+                    first["micro_probe_voltage"]
+                    - second["micro_probe_voltage"]
+                )
+            )
+        )
+        repeat_current_error = float(
+            self.np.max(
+                self.np.abs(
+                    first["micro_somatic_current"]
+                    - second["micro_somatic_current"]
+                )
+            )
+        )
+        current_delivered = observed_current >= 0.95 * abs(float(amplitude_na))
+        voltage_responded = soma_response >= float(minimum_voltage_response_mv)
+        deterministic = max(repeat_voltage_error, repeat_current_error) <= 1e-12
+        report = {
+            "valid": current_delivered and voltage_responded and deterministic,
+            "commanded_amplitude_na": float(amplitude_na),
+            "observed_peak_absolute_current_na": observed_current,
+            "current_delivered": current_delivered,
+            "maximum_somatic_response_vs_control_mv": soma_response,
+            "minimum_voltage_response_mv": float(minimum_voltage_response_mv),
+            "voltage_responded": voltage_responded,
+            "repeat_voltage_error_mv": repeat_voltage_error,
+            "repeat_current_error_na": repeat_current_error,
+            "deterministic": deterministic,
+            "driver": "native_IClamp_delay_duration_amplitude_before_cvode_re_init",
+        }
+        write_json(
+            self.output_dir / "somatic_current_smoke_test.json", report
+        )
+        if raise_on_failure and not report["valid"]:
+            raise RuntimeError(
+                "somatic current smoke test failed: the declared IClamp input "
+                "was not delivered deterministically or did not change soma voltage"
+            )
+        return report
 
     def run_branching_diagnostic(self) -> Dict[str, Any]:
         """Prove same-future identity and different-future divergence."""
@@ -1003,12 +1295,137 @@ class DiagnosticDatasetSession:
         write_json(self.branching_dir / "branching_report.json", report)
         return report
 
+    def _protocol_coverage_report(self, handle: Any) -> Dict[str, Any]:
+        """Summarize delivered inputs, voltage excursions, and event coverage."""
+
+        decode = (
+            lambda value: value.decode()
+            if isinstance(value, bytes)
+            else str(value)
+        )
+        probe_labels = list(self.audit.representatives)
+        soma_index = probe_labels.index("soma")
+        ais_index = probe_labels.index("ais")
+        trajectories: Dict[str, Dict[str, Any]] = {}
+        current_delivery_failures = []
+        count = int(handle.attrs["transition_count"])
+        for index in range(count):
+            trajectory_id = decode(handle["metadata/trajectory_id"][index])
+            row = trajectories.setdefault(
+                trajectory_id,
+                {
+                    "trajectory_id": trajectory_id,
+                    "category": decode(handle["metadata/category"][index]),
+                    "protocol": decode(handle["metadata/protocol"][index]),
+                    "split": decode(handle["metadata/split"][index]),
+                    "commanded_current_pulse_count": 0,
+                    "observed_peak_absolute_current_na": 0.0,
+                    "soma_minimum_mv": float("inf"),
+                    "soma_maximum_mv": float("-inf"),
+                    "ais_minimum_mv": float("inf"),
+                    "ais_maximum_mv": float("-inf"),
+                    "event_counts": Counter(),
+                },
+            )
+            actions = json.loads(handle["inputs/ordered_actions_json"][index])
+            current_actions = [
+                action
+                for action in actions
+                if action["kind"] == "somatic_current"
+            ]
+            observed_current = float(
+                self.np.max(
+                    self.np.abs(
+                        handle["microtraces/somatic_current_na"][index, :]
+                    )
+                )
+            )
+            row["commanded_current_pulse_count"] += len(current_actions)
+            row["observed_peak_absolute_current_na"] = max(
+                row["observed_peak_absolute_current_na"], observed_current
+            )
+            for action in current_actions:
+                commanded = abs(float(action["amplitude_na"]))
+                if observed_current + 1e-12 < 0.95 * commanded:
+                    current_delivery_failures.append(
+                        {
+                            "transition_id": int(
+                                handle["metadata/transition_id"][index]
+                            ),
+                            "trajectory_id": trajectory_id,
+                            "commanded_amplitude_na": commanded,
+                            "observed_peak_absolute_current_na": observed_current,
+                        }
+                    )
+            probe_voltage = handle["microtraces/probe_voltage"][index, :, :]
+            soma = probe_voltage[:, soma_index]
+            ais = probe_voltage[:, ais_index]
+            row["soma_minimum_mv"] = min(
+                row["soma_minimum_mv"], float(self.np.min(soma))
+            )
+            row["soma_maximum_mv"] = max(
+                row["soma_maximum_mv"], float(self.np.max(soma))
+            )
+            row["ais_minimum_mv"] = min(
+                row["ais_minimum_mv"], float(self.np.min(ais))
+            )
+            row["ais_maximum_mv"] = max(
+                row["ais_maximum_mv"], float(self.np.max(ais))
+            )
+            for event in json.loads(handle["events/labels_json"][index]):
+                row["event_counts"][str(event["kind"])] += 1
+
+        rows = []
+        somatic_trajectories_without_spikes = []
+        dendritic_trajectories_without_candidates = []
+        dendritic_kinds = {"calcium_spike", "nmda_spike", "nmda_plateau"}
+        for row in trajectories.values():
+            event_counts = dict(sorted(row["event_counts"].items()))
+            row["event_counts"] = event_counts
+            row["soma_voltage_range_mv"] = (
+                row["soma_maximum_mv"] - row["soma_minimum_mv"]
+            )
+            row["ais_voltage_range_mv"] = (
+                row["ais_maximum_mv"] - row["ais_minimum_mv"]
+            )
+            if row["category"] == "somatic_events" and not (
+                event_counts.get("somatic_spike", 0)
+                or event_counts.get("axonal_spike", 0)
+            ):
+                somatic_trajectories_without_spikes.append(
+                    row["trajectory_id"]
+                )
+            if row["category"] == "dendritic_events" and not any(
+                event_counts.get(kind, 0) for kind in dendritic_kinds
+            ):
+                dendritic_trajectories_without_candidates.append(
+                    row["trajectory_id"]
+                )
+            rows.append(row)
+        return {
+            "valid_current_delivery": not current_delivery_failures,
+            "current_delivery_failures": current_delivery_failures,
+            "somatic_event_coverage_valid": not somatic_trajectories_without_spikes,
+            "somatic_trajectories_without_spikes": (
+                somatic_trajectories_without_spikes
+            ),
+            "dendritic_trajectories_without_candidate_events": (
+                dendritic_trajectories_without_candidates
+            ),
+            "trajectories": sorted(
+                rows, key=lambda row: row["trajectory_id"]
+            ),
+        }
+
     def validate_dataset(
         self, replay_count: int = 3
     ) -> Dict[str, Any]:
         """Run structural checks and replay sampled transitions and a test path."""
 
         base = validate_hdf5_store(self.transition_path)
+        current_smoke = self.run_somatic_current_smoke_test(
+            raise_on_failure=False
+        )
         branching = self.run_branching_diagnostic()
         try:
             import h5py
@@ -1078,6 +1495,7 @@ class DiagnosticDatasetSession:
             trajectory_replay = self._replay_hdf5_trajectory(
                 handle, test_trajectory
             )
+            protocol_coverage = self._protocol_coverage_report(handle)
 
         source_hashes = {
             str(record["path"]): str(record["sha256"])
@@ -1104,6 +1522,16 @@ class DiagnosticDatasetSession:
             blockers.append("same-input branching is not deterministic")
         if not branching["different_inputs_diverge"]:
             blockers.append("different-input branching did not diverge")
+        if not current_smoke["valid"]:
+            blockers.append("somatic IClamp smoke test failed")
+        if not protocol_coverage["valid_current_delivery"]:
+            blockers.append(
+                "one or more declared somatic currents were not delivered"
+            )
+        if not protocol_coverage["somatic_event_coverage_valid"]:
+            blockers.append(
+                "one or more somatic-event trajectories produced no soma/AIS spike"
+            )
 
         manifest = self.dataset_manifest
         if not manifest and (self.output_dir / "dataset_manifest.json").is_file():
@@ -1113,11 +1541,13 @@ class DiagnosticDatasetSession:
                 )
             )
         warnings = []
-        if int(manifest.get("event_count", 0)) == 0:
+        if protocol_coverage[
+            "dendritic_trajectories_without_candidate_events"
+        ]:
             warnings.append(
-                "No candidate event crossed the provisional diagnostic "
-                "thresholds. Review traces and tune protocols/definitions; "
-                "the transition data contract remains structurally valid."
+                "One or more dendritic-event trajectories produced no provisional "
+                "Ca/NMDA candidate. Review these traces before treating the event "
+                "definitions as biological ground truth."
             )
         report = {
             "valid": not blockers,
@@ -1131,6 +1561,8 @@ class DiagnosticDatasetSession:
             "sampled_transition_replays": replays,
             "test_trajectory_replay": trajectory_replay,
             "branching": branching,
+            "somatic_current_smoke_test": current_smoke,
+            "protocol_coverage": protocol_coverage,
             "segment_mapping_stable": segment_mapping_stable,
             "missing_native_snapshot_count": len(missing_snapshot_refs),
             "all_transition_boundary_voltage_error_mv": boundary_voltage_error,
@@ -1139,10 +1571,12 @@ class DiagnosticDatasetSession:
             ),
         }
         write_json(self.output_dir / "validation_report.json", report)
-        if blockers:
-            raise RuntimeError(f"diagnostic dataset validation failed: {blockers}")
+        # Always leave visual evidence and a downloadable index, including
+        # when biological coverage intentionally blocks acceptance.
         self._plot_examples()
         self._write_artifact_index()
+        if blockers:
+            raise RuntimeError(f"diagnostic dataset validation failed: {blockers}")
         return report
 
     def _replay_hdf5_transition(
@@ -1208,6 +1642,14 @@ class DiagnosticDatasetSession:
                 )
             )
         )
+        current_error = float(
+            self.np.max(
+                self.np.abs(
+                    replay["micro_somatic_current"]
+                    - handle["microtraces/somatic_current_na"][index, :]
+                )
+            )
+        )
         voltage_ids = [
             int(variable.owner_id)
             for variable in self.state_variables["voltage"]
@@ -1219,12 +1661,15 @@ class DiagnosticDatasetSession:
             float(self.np.max(self.np.abs(all_voltage[0, voltage_ids] - boundary_voltage))),
             float(self.np.max(self.np.abs(all_voltage[-1, voltage_ids] - boundary_voltage_1))),
         )
-        maximum = max([*errors.values(), rng_error, micro_error])
+        maximum = max(
+            [*errors.values(), rng_error, micro_error, current_error]
+        )
         report = {
             "transition_id": int(index),
             "max_state_error_by_category": errors,
             "max_rng_sequence_error": rng_error,
             "max_probe_microtrace_error_mv": micro_error,
+            "max_somatic_current_microtrace_error_na": current_error,
             "microtrace_boundary_voltage_error_mv": boundary_error,
             "reproduced": maximum <= 1e-5 and boundary_error <= 1e-5,
         }

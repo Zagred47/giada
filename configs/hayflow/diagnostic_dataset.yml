@@ -1,4 +1,4 @@
-schema_version: 0.1.0
+schema_version: 0.2.0
 
 teacher:
   name: hay_l5pc_full
@@ -34,6 +34,7 @@ synapses:
 microtraces:
   diagnostic_sample_interval_ms: 0.025
   diagnostic_record_continuously: true
+  record_delivered_somatic_current: true
   event_window_storage_enabled: false
   event_window_pre_ms: null
   event_window_post_ms: null
@@ -48,6 +49,11 @@ events:
     - calcium_spike
     - nmda_spike
     - nmda_plateau
+
+somatic_current:
+  driver: native_iclamp_timing_before_cvode_reinit
+  require_delivery_smoke_test: true
+  calibrate_smallest_soma_and_ais_spiking_amplitude: true
 
 storage:
   boundary_states: always

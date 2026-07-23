@@ -104,6 +104,17 @@ class TransitionH5Writer:
         self.micro_all_voltage.attrs["policy"] = (
             "stored for this small diagnostic dataset; reconsider before scale-up"
         )
+        self.micro_somatic_current = micro.create_dataset(
+            "somatic_current_na",
+            shape=(0, microtrace_samples),
+            maxshape=(None, microtrace_samples),
+            chunks=(1, microtrace_samples),
+            dtype="f4",
+            **options,
+        )
+        self.micro_somatic_current.attrs["meaning"] = (
+            "current actually delivered by the diagnostic soma IClamp"
+        )
         summaries = micro.create_group("all_segment_voltage_summary")
         self.micro_voltage_summary = {
             name: summaries.create_dataset(
@@ -167,6 +178,9 @@ class TransitionH5Writer:
         self._append(self.micro_selected, row["micro_selected"])
         self._append(self.micro_probe_voltage, row["micro_probe_voltage"])
         self._append(self.micro_all_voltage, row["micro_all_voltage"])
+        self._append(
+            self.micro_somatic_current, row["micro_somatic_current"]
+        )
         all_voltage = self.np.asarray(row["micro_all_voltage"], dtype=float)
         self._append(
             self.micro_voltage_summary["minimum_mv"],
@@ -255,6 +269,7 @@ def validate_hdf5_store(path: Path) -> Dict[str, Any]:
             "microtraces/selected_variables",
             "microtraces/probe_voltage",
             "microtraces/all_segment_voltage",
+            "microtraces/somatic_current_na",
             "microtraces/all_segment_voltage_summary/minimum_mv",
             "microtraces/all_segment_voltage_summary/maximum_mv",
             "microtraces/all_segment_voltage_summary/integral_mv_ms",

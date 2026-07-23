@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
-DATASET_SCHEMA_VERSION = "0.1.0"
+DATASET_SCHEMA_VERSION = "0.2.0"
 BOUNDARY_INTERVAL_MS = 1.0
 
 
@@ -182,17 +182,32 @@ def estimate_dataset_size_bytes(
     microtrace_width: int,
     microtrace_samples: int,
     segment_count: int,
-    float_bytes: int = 4,
+    boundary_float_bytes: int = 8,
+    microtrace_float_bytes: int = 4,
+    microtrace_scalar_count: int = 0,
+    probe_count: int = 0,
 ) -> Dict[str, int]:
     """Return an uncompressed planning estimate, including one-million scale."""
 
-    per_transition = float_bytes * (
-        2 * state_width
-        + microtrace_samples * microtrace_width
-        + microtrace_samples * segment_count
+    boundary_bytes = 2 * state_width * boundary_float_bytes
+    microtrace_bytes = microtrace_float_bytes * (
+        microtrace_samples
+        * (
+            microtrace_width
+            + segment_count
+            + microtrace_scalar_count
+            + probe_count
+        )
         + 3 * segment_count
     )
+    per_transition = boundary_bytes + microtrace_bytes
     return {
+        "estimated_uncompressed_boundary_bytes_per_transition": int(
+            boundary_bytes
+        ),
+        "estimated_uncompressed_microtrace_bytes_per_transition": int(
+            microtrace_bytes
+        ),
         "estimated_uncompressed_bytes_per_transition": int(per_transition),
         "estimated_uncompressed_bytes_for_dataset": int(
             transition_count * per_transition

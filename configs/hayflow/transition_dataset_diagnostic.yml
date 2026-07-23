@@ -1,4 +1,4 @@
-schema_version: 0.1.0
+schema_version: 0.2.0
 
 teacher:
   repository: https://github.com/SelfishGene/neuron_as_deep_net.git
@@ -46,6 +46,17 @@ burnin:
     - Ih
     - Im
 
+somatic_current:
+  driver: native_iclamp_timing_before_cvode_reinit
+  smoke_test:
+    amplitude_na: 0.1
+    offset_ms: 0.1
+    duration_ms: 0.8
+    minimum_voltage_response_mv: 0.001
+  calibration:
+    candidate_amplitudes_na: [0.5, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0]
+    selection_rule: smallest_tested_with_both_soma_and_ais_spike
+
 dataset:
   default_trajectory_count: 36
   duration_ms_per_trajectory: 12
@@ -73,3 +84,5 @@ completion:
   require_same_input_identity: true
   require_different_input_divergence: true
   require_teacher_hash_match: true
+  require_observed_somatic_current: true
+  require_somatic_event_coverage: true
