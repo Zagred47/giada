@@ -1040,7 +1040,7 @@ class TeacherAuditSession:
             vector = vectors.get(result["variable_id"])
             if vector is None:
                 continue
-            values = self.np.asarray(vector, dtype=float)
+            values = self.np.asarray(vector.to_python(), dtype=float)
             result.update(
                 {
                     "sample_count": int(values.size),
@@ -1427,7 +1427,7 @@ class TeacherAuditSession:
         self, vectors: Mapping[str, Any]
     ) -> Dict[str, Any]:
         traces = {
-            label: self.np.asarray(vector, dtype=float).copy()
+            label: self.np.asarray(vector.to_python(), dtype=float)
             for label, vector in vectors.items()
         }
         for vector in vectors.values():
