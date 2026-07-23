@@ -636,7 +636,7 @@ def infer_synapse_components(
                 reversal_mv=reversal,
                 normalization=_normalization(tau_rise_nmda, tau_decay_nmda),
                 voltage_dependent=True,
-                magnesium_alpha=0.062,
+                magnesium_alpha=0.08,
                 magnesium_beta=3.57,
             ),
         )

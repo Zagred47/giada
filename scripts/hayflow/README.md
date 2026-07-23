@@ -39,3 +39,9 @@ For Kaggle, Colab, or Jupyter/HPC, the same workflow is available as
 `notebooks/hayflow_teacher_manifest.ipynb`. The notebook pins NEURON 8.2.7 to
 avoid silently switching to the C++ mechanism compilation introduced in
 NEURON 9 while the legacy Hay `.mod` files are still being audited.
+
+Run `notebooks/00_teacher_audit_and_smoke_test.ipynb` next, in a fresh kernel,
+to instantiate the canonical runtime synapses and produce the machine-readable
+teacher audit under `artifacts/teacher_audit/`. It may also be uploaded and run
+standalone: its first executable cell clones the owned repository before the
+teacher checkout and runtime setup.

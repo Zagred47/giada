@@ -74,3 +74,12 @@ The reproducible Linux entry point is
 the exact teacher commit, compiles the original mechanisms, runs the contract
 tests, builds the manifest, and rejects a dendrite-only or topologically
 invalid result.
+
+After that setup, `notebooks/00_teacher_audit_and_smoke_test.ipynb` performs
+the canonical runtime audit: full morphology, mechanisms, instantiated
+synapses, no-input and active smoke tests, representative internal-state
+recording, and a deterministic snapshot/restore diagnostic. Its small outputs
+are written under `artifacts/teacher_audit/` and remain excluded from Git.
+The audit notebook is also standalone: when no mounted checkout is provided,
+its first executable cell clones the owned repository before fetching or
+loading any teacher code.

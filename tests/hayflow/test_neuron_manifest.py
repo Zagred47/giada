@@ -242,6 +242,8 @@ class NeuronManifestExtractorTest(unittest.TestCase):
             ["AMPA", "NMDA"],
         )
         self.assertTrue(synapse.components[1].voltage_dependent)
+        self.assertEqual(synapse.components[1].magnesium_alpha, 0.08)
+        self.assertEqual(synapse.components[1].magnesium_beta, 3.57)
         self.assertIn(
             "synapse:0:ProbAMPANMDA2",
             manifest.metadata["unexposed_net_receive_state"],
