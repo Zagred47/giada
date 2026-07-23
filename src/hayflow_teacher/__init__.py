@@ -16,10 +16,28 @@ from .neuron_manifest import (
     NeuronSynapseBinding,
 )
 from .audit_runtime import TeacherAuditSession, resolve_audit_repositories
+from .event_extractor import (
+    EVENT_DETECTOR_VERSION,
+    EventDefinition,
+    default_event_definitions,
+    event_ids_by_transition,
+    extract_events,
+)
+from .diagnostic_dataset import (
+    DiagnosticDatasetSession,
+    expected_audit_hashes,
+)
 
 __all__ = [
     "BoundaryState",
+    "default_event_definitions",
     "detect_spikes",
+    "DiagnosticDatasetSession",
+    "EVENT_DETECTOR_VERSION",
+    "EventDefinition",
+    "event_ids_by_transition",
+    "extract_events",
+    "expected_audit_hashes",
     "git_commit",
     "load_source_functions",
     "NeuronManifestConfig",

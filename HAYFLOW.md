@@ -91,3 +91,44 @@ The runtime manifest also includes the `NET_RECEIVE` state stored in each
 indexed `NetCon.weight` vector. These values are part of the Markov state even
 though `MechanismStandard` does not expose them as ordinary point-process
 STATE variables.
+
+## Diagnostic transition dataset
+
+`notebooks/01_burnin_snapshots_and_transition_dataset.ipynb` is the second
+experiment. It does not train HayFlow. It establishes a replayable data
+contract for one-millisecond teacher transitions.
+
+The notebook:
+
+- measures rest convergence from `v_init = -76 mV` and rejects an arbitrary
+  burn-in cutoff;
+- writes a canonical equilibrium `SaveState` plus the externally owned
+  Random123 sequences;
+- generates 36 short diagnostic trajectories covering rest/subthreshold,
+  local excitation/inhibition, somatic-event candidates, and dendritic-event
+  candidates, with seed/protocol isolation across train, validation, and test;
+- stores rich boundary state and RNG arrays in compressed HDF5, while keeping
+  native NEURON snapshots for transition-level replay;
+- stores ordered intra-millisecond inputs rather than count aggregation;
+- samples representative internal variables and all 642 voltages at 0.025 ms
+  for this small dataset only, with per-segment minima, maxima, and integrals;
+- writes provisional, versioned event definitions and plots representative
+  trajectories for mandatory visual review;
+- verifies sampled transition replay, a complete test trajectory, branching,
+  finite values, time grids, split isolation, boundary/microtrace consistency,
+  and canonical teacher hashes.
+
+Because `SaveState` does not contain CVODE's adaptive-history internals, both
+generation and replay call `CVode.re_init()` at each 1 ms boundary. This leaves
+the teacher equations and tolerances unchanged and defines a symmetric,
+replayable numerical flow-map contract. The instrumentation choice is recorded
+in every dataset manifest and must be reconsidered explicitly before massive
+generation.
+
+The default output is `artifacts/transition_dataset_diagnostic/` locally, or
+`/kaggle/working/hayflow_transition_dataset_diagnostic/` in the notebook. It
+contains `burnin_report.json`, the equilibrium snapshot, `state_schema.json`,
+Parquet morphology/synapse tables, `transition_dataset.h5`, provisional event
+configuration, example figures, `validation_report.json`, and a hashed artifact
+index. Only after this report is green should
+`02_full_state_flowmap_baseline.ipynb` be implemented.
