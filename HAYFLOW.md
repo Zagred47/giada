@@ -145,23 +145,33 @@ the Hay teacher.
 Notebook `01b` therefore performs a separate, staged stimulus search. It:
 
 - preserves every canonical synaptic weight and all teacher mechanisms;
-- selects local excitatory synapses by distance through the instantiated
-  morphology tree, not merely by similar distance from the soma;
-- varies recruited synapse count, burst count, repetitions and synchrony;
-- includes a separate soma-spike pairing family;
+- selects local excitatory synapses along one ancestor/descendant path through
+  the instantiated morphology tree, rather than mixing nearby branchlets;
+- places a candidate-specific voltage/calcium probe at the actual cluster
+  center instead of assuming one fixed nexus segment represents every event;
+- varies recruited synapse count, burst count, repetitions, and an explicit
+  intra-millisecond synchrony window;
+- separates strict isolated-NMDA searches from event-rich plateau protocols;
+- treats the reproducible soma-spike-paired calcium response as the canonical
+  required BAC-like calcium family, while retaining the unpaired search as an
+  optional diagnostic;
 - repeats each candidate across multiple Random123 trajectory keys;
 - records representative voltages, `cai`, aggregate and mechanism-specific
   calcium currents, and summed AMPA/NMDA conductance/current;
 - accepts the least intense configured level that crosses the provisional
   event definition on the required fraction of seeds;
+- checks both required protocol families and robust coverage of NMDA spike,
+  NMDA plateau, and calcium-spike labels;
 - writes every trace, the complete input schedule, selected synapse/segment
-  identifiers, plots, a hashed artifact index, and
+  identifiers, plots for selected and best-rejected candidates, a hashed
+  artifact index, and
   `selected_dendritic_protocols.json`.
 
 The calibration is intentionally allowed to finish with `valid: false`. In
 that case the archive must still be inspected before extending the stimulus
 grid; weights and event thresholds must not be changed merely to force a
-positive result. Once the required nexus NMDA, tuft plateau and hot-zone
-calcium families pass visual review, their selected schedules are used to
-regenerate the small transition dataset (schema v0.3) before implementing
+positive result. Once the required event-rich tuft plateau and paired
+hot-zone calcium families pass, all three dendritic event labels have robust
+coverage, and the traces pass visual review, their selected schedules are used
+to regenerate the small transition dataset (schema v0.3) before implementing
 `02_full_state_flowmap_baseline.ipynb`.

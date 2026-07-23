@@ -17,6 +17,11 @@ class DendriticCalibrationContractTest(unittest.TestCase):
         self.assertTrue(all(0.0 <= value < 1.0 for value in offsets))
         with self.assertRaisesRegex(ValueError, "positive"):
             evenly_spaced_offsets(0)
+        narrow = evenly_spaced_offsets(8, 0.2)
+        self.assertLess(max(narrow) - min(narrow), max(offsets) - min(offsets))
+        self.assertTrue(all(0.4 < value < 0.6 for value in narrow))
+        with self.assertRaisesRegex(ValueError, "strictly inside"):
+            evenly_spaced_offsets(8, 1.0)
 
     def test_candidate_schedule_keeps_canonical_weights(self):
         candidate = DendriticCandidate(
@@ -88,6 +93,30 @@ class DendriticCalibrationContractTest(unittest.TestCase):
             15.0,
         )
 
+    def test_compact_cluster_does_not_mix_distant_branches(self):
+        parents = {0: None, 1: 0, 2: 1, 3: 2, 4: 1, 5: 4, 6: 5}
+        distances = {
+            0: 0.0,
+            1: 10.0,
+            2: 20.0,
+            3: 30.0,
+            4: 30.0,
+            5: 50.0,
+            6: 70.0,
+        }
+        candidates = [(2, 20), (3, 30), (4, 40), (5, 50), (6, 60)]
+        center, selected = DendriticProtocolCalibrator.compact_synapse_cluster(
+            candidates,
+            3,
+            parents,
+            distances,
+            target_segment_id=1,
+            maximum_center_distance_um=45.0,
+        )
+        self.assertIn(center, {4, 5, 6})
+        self.assertEqual({row[2] for row in selected}, {40, 50, 60})
+        self.assertLessEqual(max(row[0] for row in selected), 40.0)
+
     def test_mapping_builds_versioned_candidate(self):
         family = {
             "target": "tuft",
@@ -96,17 +125,25 @@ class DendriticCalibrationContractTest(unittest.TestCase):
             "burst_interval_ms": 2,
             "pair_with_somatic_spike": False,
             "maximum_tree_distance_um": 250.0,
+            "selection_mode": "branch_cluster",
+            "event_probe_mode": "cluster_center",
+            "event_probe_kinds": ["nmda_spike", "nmda_plateau"],
         }
         level = {
             "synapse_count": 32,
             "burst_count": 4,
             "events_per_synapse_per_burst": 2,
+            "event_window_ms": 0.25,
         }
         candidate = candidate_from_mapping("tuft_plateau", family, level)
         self.assertEqual(candidate.target, "tuft")
         self.assertEqual(candidate.event_cost, 256)
         self.assertEqual(candidate.maximum_tree_distance_um, 250.0)
+        self.assertEqual(candidate.selection_mode, "branch_cluster")
+        self.assertEqual(candidate.event_probe_mode, "cluster_center")
+        self.assertEqual(candidate.event_window_ms, 0.25)
         self.assertIn("n32-b4-r2", candidate.candidate_id)
+        self.assertIn("branch-w250", candidate.candidate_id)
 
     def test_required_and_forbidden_events_cannot_overlap(self):
         candidate = DendriticCandidate(

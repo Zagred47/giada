@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import shutil
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
@@ -19,7 +19,10 @@ from .audit_runtime import PINNED_TEACHER_COMMIT
 from .event_extractor import extract_events
 
 
-DENDRITIC_CALIBRATION_SCHEMA_VERSION = "0.1.0"
+DENDRITIC_CALIBRATION_SCHEMA_VERSION = "0.2.0"
+
+SELECTION_MODES = {"target_nearest", "branch_cluster"}
+EVENT_PROBE_MODES = {"target_representative", "cluster_center"}
 
 
 class InsufficientCanonicalSynapsesError(RuntimeError):
@@ -41,14 +44,22 @@ class DendriticCandidate:
     pair_with_somatic_spike: bool = False
     maximum_tree_distance_um: Optional[float] = None
     forbidden_event_kinds: Tuple[str, ...] = ()
+    selection_mode: str = "target_nearest"
+    event_probe_mode: str = "target_representative"
+    event_probe_kinds: Tuple[str, ...] = ()
+    event_window_ms: float = 0.8
 
     @property
     def candidate_id(self) -> str:
         pairing = "paired" if self.pair_with_somatic_spike else "unpaired"
+        selection = (
+            "branch" if self.selection_mode == "branch_cluster" else "nearest"
+        )
+        window_us = int(round(self.event_window_ms * 1000.0))
         return (
             f"{self.family}-{self.target}-n{self.synapse_count}-"
             f"b{self.burst_count}-r{self.events_per_synapse_per_burst}-"
-            f"{pairing}"
+            f"{pairing}-{selection}-w{window_us:03d}"
         )
 
     @property
@@ -66,6 +77,23 @@ class DendriticCandidate:
             raise ValueError("candidate requires at least one event kind")
         if set(self.required_event_kinds) & set(self.forbidden_event_kinds):
             raise ValueError("required and forbidden event kinds overlap")
+        if self.selection_mode not in SELECTION_MODES:
+            raise ValueError(f"unsupported selection mode {self.selection_mode!r}")
+        if self.event_probe_mode not in EVENT_PROBE_MODES:
+            raise ValueError(
+                f"unsupported event probe mode {self.event_probe_mode!r}"
+            )
+        if not 0.0 < float(self.event_window_ms) < 1.0:
+            raise ValueError("event window must lie strictly inside one ms")
+        if (
+            self.event_probe_mode == "cluster_center"
+            and not set(self.required_event_kinds).issubset(
+                set(self.event_probe_kinds)
+            )
+        ):
+            raise ValueError(
+                "cluster-center probes must include every required event kind"
+            )
         if min(
             self.synapse_count,
             self.burst_count,
@@ -83,6 +111,23 @@ class DendriticCandidate:
             and self.maximum_tree_distance_um <= 0.0
         ):
             raise ValueError("maximum tree distance must be positive")
+
+
+@dataclass(frozen=True)
+class SynapseSelection:
+    """A deterministic local selection and the segment used as event probe."""
+
+    mode: str
+    target_segment_id: int
+    center_segment_id: int
+    synapse_ids: Tuple[int, ...]
+    segment_ids: Tuple[int, ...]
+    center_distances_um: Tuple[float, ...]
+    center_to_target_distance_um: float
+
+    @property
+    def maximum_center_distance_um(self) -> float:
+        return float(max(self.center_distances_um, default=0.0))
 
 
 def candidate_from_mapping(
@@ -114,15 +159,53 @@ def candidate_from_mapping(
         forbidden_event_kinds=tuple(
             family_config.get("forbidden_event_kinds", ())
         ),
+        selection_mode=str(
+            level.get(
+                "selection_mode",
+                family_config.get("selection_mode", "target_nearest"),
+            )
+        ),
+        event_probe_mode=str(
+            level.get(
+                "event_probe_mode",
+                family_config.get(
+                    "event_probe_mode", "target_representative"
+                ),
+            )
+        ),
+        event_probe_kinds=tuple(
+            level.get(
+                "event_probe_kinds",
+                family_config.get(
+                    "event_probe_kinds",
+                    family_config["required_event_kinds"],
+                ),
+            )
+        ),
+        event_window_ms=float(
+            level.get(
+                "event_window_ms",
+                family_config.get("event_window_ms", 0.8),
+            )
+        ),
     )
 
 
-def evenly_spaced_offsets(count: int) -> List[float]:
+def evenly_spaced_offsets(
+    count: int, event_window_ms: float = 0.8
+) -> List[float]:
     """Return deterministic event offsets strictly inside one millisecond."""
 
     if int(count) <= 0:
         raise ValueError("offset count must be positive")
-    return [0.1 + 0.8 * (index + 0.5) / int(count) for index in range(int(count))]
+    window = float(event_window_ms)
+    if not 0.0 < window < 1.0:
+        raise ValueError("event window must lie strictly inside one ms")
+    left = 0.5 - 0.5 * window
+    return [
+        left + window * (index + 0.5) / int(count)
+        for index in range(int(count))
+    ]
 
 
 def build_candidate_actions(
@@ -140,7 +223,7 @@ def build_candidate_actions(
         raise ValueError("selected synapse count does not match the candidate")
     actions: Dict[int, List[InputAction]] = {}
     event_total = len(selected) * candidate.events_per_synapse_per_burst
-    offsets = evenly_spaced_offsets(event_total)
+    offsets = evenly_spaced_offsets(event_total, candidate.event_window_ms)
     for burst_index in range(candidate.burst_count):
         step = candidate.burst_start_ms + (
             burst_index * candidate.burst_interval_ms
@@ -268,16 +351,111 @@ class DendriticProtocolCalibrator:
             - 2.0 * soma_distances_um[lca]
         )
 
-    def select_local_excitatory_synapses(
+    @classmethod
+    def compact_synapse_cluster(
+        cls,
+        candidates: Sequence[Tuple[int, int]],
+        count: int,
+        parents: Mapping[int, Optional[int]],
+        soma_distances_um: Mapping[int, float],
+        *,
+        target_segment_id: int,
+        maximum_center_distance_um: Optional[float],
+    ) -> Tuple[int, List[Tuple[float, int, int]]]:
+        """Choose the most compact tree-local cluster in a candidate pool."""
+
+        requested = int(count)
+        if requested <= 0:
+            raise ValueError("cluster count must be positive")
+        if len(candidates) < requested:
+            raise InsufficientCanonicalSynapsesError(
+                f"candidate pool has only {len(candidates)} canonical "
+                f"excitatory synapses, fewer than requested {requested}"
+            )
+
+        best: Optional[
+            Tuple[
+                Tuple[float, float, float, int, int],
+                int,
+                List[Tuple[float, int, int]],
+            ]
+        ] = None
+        best_available = 0
+        ancestors = {
+            int(segment_id): set(cls._ancestors(int(segment_id), parents))
+            for segment_id, _ in candidates
+        }
+        for center_segment_id, center_synapse_id in candidates:
+            center_ancestors = ancestors[int(center_segment_id)]
+            ranked = sorted(
+                (
+                    cls.tree_distance_um(
+                        int(segment_id),
+                        int(center_segment_id),
+                        parents,
+                        soma_distances_um,
+                    ),
+                    int(segment_id),
+                    int(synapse_id),
+                )
+                for segment_id, synapse_id in candidates
+                if int(segment_id) in center_ancestors
+                or int(center_segment_id) in ancestors[int(segment_id)]
+            )
+            if maximum_center_distance_um is None:
+                local = ranked
+            else:
+                local = [
+                    row
+                    for row in ranked
+                    if row[0] <= float(maximum_center_distance_um)
+                ]
+            best_available = max(best_available, len(local))
+            if len(local) < requested:
+                continue
+            selected = local[:requested]
+            target_distance = cls.tree_distance_um(
+                int(center_segment_id),
+                int(target_segment_id),
+                parents,
+                soma_distances_um,
+            )
+            score = (
+                float(target_distance),
+                float(selected[-1][0]),
+                float(sum(item[0] for item in selected)),
+                int(center_segment_id),
+                int(center_synapse_id),
+            )
+            if best is None or score < best[0]:
+                best = (score, int(center_segment_id), selected)
+
+        if best is None:
+            radius_note = (
+                "without a radius limit"
+                if maximum_center_distance_um is None
+                else f"within {float(maximum_center_distance_um):g} um"
+            )
+            raise InsufficientCanonicalSynapsesError(
+                f"best branch-local pool has only {best_available} canonical "
+                f"excitatory synapses {radius_note}, fewer than requested "
+                f"{requested}"
+            )
+        return best[1], best[2]
+
+    def select_synapse_cluster(
         self,
         target: str,
         count: int,
         maximum_tree_distance_um: Optional[float] = None,
-    ) -> List[int]:
-        """Select canonical excitatory synapses nearest through the tree."""
+        selection_mode: str = "target_nearest",
+    ) -> SynapseSelection:
+        """Select canonical excitatory synapses with explicit tree geometry."""
 
         if target not in self.audit.representatives:
             raise KeyError(f"unknown representative target {target!r}")
+        if selection_mode not in SELECTION_MODES:
+            raise ValueError(f"unsupported selection mode {selection_mode!r}")
         target_id = int(self.audit.representatives[target])
         parents = self._parent_map()
         distances = self._distance_map()
@@ -304,38 +482,90 @@ class DendriticProtocolCalibrator:
                 }
             return True
 
-        candidates = []
+        candidates: List[Tuple[int, int]] = []
         for record in self.audit.synapse_records:
             if record["class_name"] != "ProbAMPANMDA2":
                 continue
             segment_id = int(record["segment_id"])
             if not eligible(segment_id):
                 continue
+            candidates.append(
+                (segment_id, int(record["synapse_id"]))
+            )
+
+        if selection_mode == "branch_cluster":
+            center_id, selected = self.compact_synapse_cluster(
+                candidates,
+                count,
+                parents,
+                distances,
+                target_segment_id=target_id,
+                maximum_center_distance_um=maximum_tree_distance_um,
+            )
+            center_to_target = self.tree_distance_um(
+                center_id, target_id, parents, distances
+            )
+            return SynapseSelection(
+                mode=selection_mode,
+                target_segment_id=target_id,
+                center_segment_id=center_id,
+                synapse_ids=tuple(row[2] for row in selected),
+                segment_ids=tuple(row[1] for row in selected),
+                center_distances_um=tuple(float(row[0]) for row in selected),
+                center_to_target_distance_um=float(center_to_target),
+            )
+
+        nearest = []
+        for segment_id, synapse_id in candidates:
             tree_distance = self.tree_distance_um(
                 segment_id, target_id, parents, distances
             )
             if (
-                maximum_tree_distance_um is not None
-                and tree_distance > float(maximum_tree_distance_um)
+                maximum_tree_distance_um is None
+                or tree_distance <= float(maximum_tree_distance_um)
             ):
-                continue
-            candidates.append(
-                (tree_distance, segment_id, int(record["synapse_id"]))
-            )
-        candidates.sort()
-        if len(candidates) < int(count):
+                nearest.append((tree_distance, segment_id, synapse_id))
+        nearest.sort()
+        if len(nearest) < int(count):
             raise InsufficientCanonicalSynapsesError(
-                f"target {target!r} has only {len(candidates)} eligible "
+                f"target {target!r} has only {len(nearest)} eligible "
                 f"canonical excitatory synapses, fewer than requested {count}"
             )
-        return [row[2] for row in candidates[: int(count)]]
+        selected = nearest[: int(count)]
+        return SynapseSelection(
+            mode=selection_mode,
+            target_segment_id=target_id,
+            center_segment_id=target_id,
+            synapse_ids=tuple(row[2] for row in selected),
+            segment_ids=tuple(row[1] for row in selected),
+            center_distances_um=tuple(float(row[0]) for row in selected),
+            center_to_target_distance_um=0.0,
+        )
+
+    def select_local_excitatory_synapses(
+        self,
+        target: str,
+        count: int,
+        maximum_tree_distance_um: Optional[float] = None,
+    ) -> List[int]:
+        """Backward-compatible target-nearest selection."""
+
+        selection = self.select_synapse_cluster(
+            target,
+            count,
+            maximum_tree_distance_um,
+            selection_mode="target_nearest",
+        )
+        return list(selection.synapse_ids)
 
     @staticmethod
     def _safe_read(owner: Any, name: str) -> float:
         return float(getattr(owner, name)) if hasattr(owner, name) else 0.0
 
     def _sample_observables(
-        self, synapse_ids: Sequence[int]
+        self,
+        synapse_ids: Sequence[int],
+        event_probe_segment_id: Optional[int] = None,
     ) -> Dict[str, float]:
         values = {
             f"voltage_{label}_mv": float(
@@ -343,6 +573,23 @@ class DendriticProtocolCalibrator:
             )
             for label, segment_id in self.audit.representatives.items()
         }
+        if event_probe_segment_id is not None:
+            event_probe = self.audit.live_segments[
+                int(event_probe_segment_id)
+            ]
+            values["voltage_event_probe_mv"] = float(event_probe.v)
+            values["cai_event_probe_mM"] = self._safe_read(
+                event_probe, "cai"
+            )
+            values["ica_event_probe_mA_per_cm2"] = self._safe_read(
+                event_probe, "ica"
+            )
+            values["ica_hva_event_probe_mA_per_cm2"] = self._safe_read(
+                event_probe, "ica_Ca_HVA"
+            )
+            values["ica_lva_event_probe_mA_per_cm2"] = self._safe_read(
+                event_probe, "ica_Ca_LVAst"
+            )
         for label in ("nexus", "hot_zone", "tuft"):
             segment = self.audit.live_segments[
                 int(self.audit.representatives[label])
@@ -375,6 +622,7 @@ class DendriticProtocolCalibrator:
         start_time: float,
         actions: Sequence[InputAction],
         synapse_ids: Sequence[int],
+        event_probe_segment_id: Optional[int] = None,
     ) -> Tuple[List[float], Dict[str, List[float]]]:
         self.session._disable_somatic_clamp()
         self.session._configure_somatic_current(start_time, actions)
@@ -385,7 +633,9 @@ class DendriticProtocolCalibrator:
         rows: Dict[str, List[float]] = {}
         for sample_time in times:
             self.audit._advance_exact(float(sample_time))
-            observed = self._sample_observables(synapse_ids)
+            observed = self._sample_observables(
+                synapse_ids, event_probe_segment_id
+            )
             for name, value in observed.items():
                 rows.setdefault(name, []).append(float(value))
         return times.tolist(), rows
@@ -400,10 +650,17 @@ class DendriticProtocolCalibrator:
 
         self._require_ready()
         candidate.validate(duration_ms)
-        synapse_ids = self.select_local_excitatory_synapses(
+        selection = self.select_synapse_cluster(
             candidate.target,
             candidate.synapse_count,
             candidate.maximum_tree_distance_um,
+            candidate.selection_mode,
+        )
+        synapse_ids = list(selection.synapse_ids)
+        event_probe_segment_id = (
+            selection.center_segment_id
+            if candidate.event_probe_mode == "cluster_center"
+            else selection.target_segment_id
         )
         canonical_weights = {
             synapse_id: float(
@@ -453,6 +710,7 @@ class DendriticProtocolCalibrator:
                 start_time,
                 list(actions_by_step.get(step, ())),
                 synapse_ids,
+                event_probe_segment_id,
             )
             start = 0 if step == 0 else 1
             times.extend(step_times[start:])
@@ -481,8 +739,25 @@ class DendriticProtocolCalibrator:
             label: traces[f"voltage_{label}_mv"]
             for label in self.audit.representatives
         }
+        event_definitions = list(self.session.event_definitions)
+        if candidate.event_probe_mode == "cluster_center":
+            voltage_traces["event_probe"] = traces[
+                "voltage_event_probe_mv"
+            ]
+            probe_kinds = set(candidate.event_probe_kinds)
+            event_definitions = [
+                replace(
+                    definition,
+                    signal="event_probe",
+                    segment_id=int(event_probe_segment_id),
+                    region=f"{candidate.target}_stimulus_cluster",
+                )
+                if definition.kind in probe_kinds
+                else definition
+                for definition in event_definitions
+            ]
         events = extract_events(
-            times, voltage_traces, self.session.event_definitions
+            times, voltage_traces, event_definitions
         )
         counts = Counter(event["kind"] for event in events)
         success = all(
@@ -492,19 +767,10 @@ class DendriticProtocolCalibrator:
         )
         target = candidate.target
         cai = self.np.asarray(traces[f"cai_{target}_mM"], dtype=float)
+        probe_cai = self.np.asarray(
+            traces["cai_event_probe_mM"], dtype=float
+        )
         nmda_current = self.np.asarray(traces["sum_i_NMDA"], dtype=float)
-        parents = self._parent_map()
-        soma_distances = self._distance_map()
-        target_segment_id = int(self.audit.representatives[target])
-        synapse_tree_distances = [
-            self.tree_distance_um(
-                int(self.audit.synapse_records[item]["segment_id"]),
-                target_segment_id,
-                parents,
-                soma_distances,
-            )
-            for item in synapse_ids
-        ]
         result = {
             "candidate_id": candidate.candidate_id,
             "family": candidate.family,
@@ -520,24 +786,42 @@ class DendriticProtocolCalibrator:
             "events_per_synapse_per_burst": (
                 candidate.events_per_synapse_per_burst
             ),
+            "event_window_ms": candidate.event_window_ms,
             "canonical_synaptic_event_count": candidate.event_cost,
             "canonical_netcon_weights": canonical_weights,
             "canonical_weights_unchanged": True,
             "pair_with_somatic_spike": candidate.pair_with_somatic_spike,
             "somatic_current_na": somatic_current,
+            "selection_mode": candidate.selection_mode,
+            "event_probe_mode": candidate.event_probe_mode,
+            "event_probe_kinds": list(candidate.event_probe_kinds),
+            "event_probe_segment_id": int(event_probe_segment_id),
+            "event_probe_region": (
+                f"{candidate.target}_stimulus_cluster"
+                if candidate.event_probe_mode == "cluster_center"
+                else candidate.target
+            ),
             "selected_synapse_ids": synapse_ids,
-            "selected_segment_ids": [
-                int(self.audit.synapse_records[item]["segment_id"])
-                for item in synapse_ids
-            ],
-            "selected_synapse_tree_distances_um": synapse_tree_distances,
-            "maximum_selected_tree_distance_um": float(
-                max(synapse_tree_distances)
+            "selected_segment_ids": list(selection.segment_ids),
+            "selected_synapse_tree_distances_um": list(
+                selection.center_distances_um
+            ),
+            "maximum_selected_tree_distance_um": (
+                selection.maximum_center_distance_um
+            ),
+            "cluster_center_to_target_distance_um": (
+                selection.center_to_target_distance_um
             ),
             "target_peak_voltage_mv": float(
                 self.np.max(traces[f"voltage_{target}_mv"])
             ),
+            "event_probe_peak_voltage_mv": float(
+                self.np.max(traces["voltage_event_probe_mv"])
+            ),
             "target_cai_increase_mM": float(self.np.max(cai) - cai[0]),
+            "event_probe_cai_increase_mM": float(
+                self.np.max(probe_cai) - probe_cai[0]
+            ),
             "peak_sum_g_nmda_us": float(
                 self.np.max(traces["sum_g_NMDA"])
             ),
@@ -582,7 +866,7 @@ class DendriticProtocolCalibrator:
             )
         if not bool(config.get("stop_at_first_robust_level", True)):
             raise NotImplementedError(
-                "calibration-v0.1 selects the first robust configured level"
+                "calibration-v0.2 selects the first robust configured level"
             )
 
         trials = []
@@ -630,6 +914,7 @@ class DendriticProtocolCalibrator:
                         "events_per_synapse_per_burst": (
                             candidate.events_per_synapse_per_burst
                         ),
+                        "event_window_ms": candidate.event_window_ms,
                         "burst_start_ms": candidate.burst_start_ms,
                         "burst_interval_ms": candidate.burst_interval_ms,
                         "maximum_tree_distance_um": (
@@ -637,6 +922,11 @@ class DendriticProtocolCalibrator:
                         ),
                         "pair_with_somatic_spike": (
                             candidate.pair_with_somatic_spike
+                        ),
+                        "selection_mode": candidate.selection_mode,
+                        "event_probe_mode": candidate.event_probe_mode,
+                        "event_probe_kinds": list(
+                            candidate.event_probe_kinds
                         ),
                         "canonical_weights_unchanged": True,
                         "duration_ms": duration_ms,
@@ -660,6 +950,28 @@ class DendriticProtocolCalibrator:
                                 "maximum_selected_tree_distance_um"
                             ]
                         ),
+                        "cluster_center_to_target_distance_um": (
+                            candidate_trials[0][
+                                "cluster_center_to_target_distance_um"
+                            ]
+                        ),
+                        "event_probe_segment_id": candidate_trials[0][
+                            "event_probe_segment_id"
+                        ],
+                        "event_success_fractions": {
+                            kind: sum(
+                                trial["event_counts"].get(kind, 0) > 0
+                                for trial in candidate_trials
+                            )
+                            / len(candidate_trials)
+                            for kind in sorted(
+                                {
+                                    event_kind
+                                    for trial in candidate_trials
+                                    for event_kind in trial["event_counts"]
+                                }
+                            )
+                        },
                         "input_schedule_template": candidate_trials[0][
                             "input_schedule"
                         ],
@@ -677,9 +989,35 @@ class DendriticProtocolCalibrator:
             if bool(family.get("required_for_completion", True))
         ]
         missing = [name for name in required_families if name not in selected]
+        required_event_kinds = list(
+            map(str, config.get("required_event_kinds_for_completion", ()))
+        )
+        event_coverage = {}
+        for kind in required_event_kinds:
+            protocols = [
+                {
+                    "family": family,
+                    "candidate_id": protocol["candidate_id"],
+                    "success_fraction": protocol[
+                        "event_success_fractions"
+                    ].get(kind, 0.0),
+                }
+                for family, protocol in selected.items()
+                if protocol["event_success_fractions"].get(kind, 0.0)
+                >= required_fraction
+            ]
+            event_coverage[kind] = {
+                "covered": bool(protocols),
+                "protocols": protocols,
+            }
+        missing_event_kinds = [
+            kind
+            for kind, coverage in event_coverage.items()
+            if not coverage["covered"]
+        ]
         self.report = {
             "schema_version": DENDRITIC_CALIBRATION_SCHEMA_VERSION,
-            "valid": not missing,
+            "valid": not missing and not missing_event_kinds,
             "teacher_commit": PINNED_TEACHER_COMMIT,
             "teacher_source_hashes": {
                 str(record["path"]): str(record["sha256"])
@@ -694,12 +1032,16 @@ class DendriticProtocolCalibrator:
                 "canonical synapse count",
                 "burst count",
                 "events per synapse",
-                "synchrony",
+                "event synchrony window",
+                "tree-local branch cluster",
                 "optional somatic-spike pairing",
             ],
             "selected_protocols": selected,
             "required_families": required_families,
             "missing_required_families": missing,
+            "required_event_kinds_for_completion": required_event_kinds,
+            "event_coverage": event_coverage,
+            "missing_required_event_kinds": missing_event_kinds,
             "trial_count": len(
                 [trial for trial in trials if not trial.get("skipped")]
             ),
@@ -708,6 +1050,8 @@ class DendriticProtocolCalibrator:
             ),
             "trials": trials,
         }
+        diagnostic_figures = self._plot_diagnostics(selected, trials)
+        self.report["diagnostic_figures"] = diagnostic_figures
         write_json(self.output_dir / "calibration_report.json", self.report)
         write_json(
             self.output_dir / "selected_dendritic_protocols.json",
@@ -716,9 +1060,9 @@ class DendriticProtocolCalibrator:
                 "teacher_commit": self.report["teacher_commit"],
                 "canonical_synaptic_weights_unchanged": True,
                 "selected_protocols": selected,
+                "event_coverage": event_coverage,
             },
         )
-        self._plot_selected(selected, trials)
         self._write_artifact_index()
         return self.report
 
@@ -738,11 +1082,102 @@ class DendriticProtocolCalibrator:
             if path.is_file():
                 path.unlink()
 
-    def _plot_selected(
+    @staticmethod
+    def _rejected_trial_score(trial: Mapping[str, Any]) -> Tuple[Any, ...]:
+        counts = trial.get("event_counts", {})
+        required_hits = sum(
+            counts.get(kind, 0) > 0
+            for kind in trial.get("required_event_kinds", ())
+        )
+        forbidden_hits = sum(
+            counts.get(kind, 0) > 0
+            for kind in trial.get("forbidden_event_kinds", ())
+        )
+        return (
+            int(required_hits),
+            -int(forbidden_hits),
+            float(trial.get("event_probe_peak_voltage_mv", -1e9)),
+            -int(trial.get("canonical_synaptic_event_count", 0)),
+            -int(trial.get("seed", 0)),
+        )
+
+    def _plot_trial(
+        self,
+        trial: Mapping[str, Any],
+        *,
+        title: str,
+        output_path: Path,
+    ) -> None:
+        trace_path = self.output_dir / str(trial["trace_path"])
+        with self.np.load(trace_path) as data:
+            time = data["time_ms"]
+            figure, axes = self.audit.plt.subplots(
+                3, 1, figsize=(11, 9), sharex=True
+            )
+            for label in self.audit.representatives:
+                axes[0].plot(
+                    time, data[f"voltage_{label}_mv"], label=label
+                )
+            if trial.get("event_probe_mode") == "cluster_center":
+                axes[0].plot(
+                    time,
+                    data["voltage_event_probe_mv"],
+                    label=(
+                        "event_probe "
+                        f"(seg {trial['event_probe_segment_id']})"
+                    ),
+                    linewidth=2.2,
+                    linestyle="--",
+                )
+            target = str(trial["target"])
+            if trial.get("event_probe_mode") == "cluster_center":
+                cai_key = "cai_event_probe_mM"
+                ica_key = "ica_event_probe_mA_per_cm2"
+                calcium_label = "event_probe"
+            else:
+                cai_key = f"cai_{target}_mM"
+                ica_key = f"ica_{target}_mA_per_cm2"
+                calcium_label = target
+            baseline = float(data[cai_key][0])
+            axes[1].plot(
+                time,
+                data[cai_key] - baseline,
+                label=f"delta cai ({calcium_label})",
+            )
+            axes[1].plot(
+                time,
+                data[ica_key],
+                label=f"ica ({calcium_label})",
+            )
+            axes[2].plot(time, data["sum_g_NMDA"], label="sum g_NMDA")
+            axes[2].plot(time, data["sum_i_NMDA"], label="sum i_NMDA")
+            required = set(trial.get("required_event_kinds", ()))
+            for event in trial.get("events", ()):
+                if event.get("kind") in required:
+                    axes[0].axvline(
+                        float(event["onset_ms"]),
+                        color="black",
+                        alpha=0.18,
+                        linewidth=1.0,
+                    )
+            axes[0].set_ylabel("voltage (mV)")
+            axes[1].set_ylabel("Ca observables")
+            axes[2].set_ylabel("NMDA observables")
+            axes[2].set_xlabel("absolute teacher time (ms)")
+            axes[0].set_title(title)
+            for axis in axes:
+                axis.grid(alpha=0.2)
+                axis.legend(ncol=4)
+            figure.tight_layout()
+            figure.savefig(output_path, dpi=160)
+            self.audit.plt.close(figure)
+
+    def _plot_diagnostics(
         self,
         selected: Mapping[str, Mapping[str, Any]],
         trials: Sequence[Mapping[str, Any]],
-    ) -> None:
+    ) -> List[Dict[str, Any]]:
+        records: List[Dict[str, Any]] = []
         for family, protocol in selected.items():
             successful = next(
                 trial
@@ -750,45 +1185,68 @@ class DendriticProtocolCalibrator:
                 if trial.get("candidate_id") == protocol["candidate_id"]
                 and trial.get("success")
             )
-            trace_path = self.output_dir / successful["trace_path"]
-            with self.np.load(trace_path) as data:
-                time = data["time_ms"]
-                figure, axes = self.audit.plt.subplots(
-                    3, 1, figsize=(11, 9), sharex=True
+            relative = Path("figures") / f"selected_{family}.png"
+            self._plot_trial(
+                successful,
+                title=f"Selected dendritic protocol: {family}",
+                output_path=self.output_dir / relative,
+            )
+            records.append(
+                {
+                    "status": "selected",
+                    "family": family,
+                    "candidate_id": successful["candidate_id"],
+                    "seed": successful["seed"],
+                    "path": relative.as_posix(),
+                }
+            )
+
+        families = sorted(
+            {
+                str(trial["family"])
+                for trial in trials
+                if not trial.get("skipped")
+            }
+        )
+        for family in families:
+            selected_id = selected.get(family, {}).get("candidate_id")
+            rejected = [
+                trial
+                for trial in trials
+                if trial.get("family") == family
+                and not trial.get("skipped")
+                and (
+                    trial.get("candidate_id") != selected_id
+                    or not trial.get("success")
                 )
-                for label in self.audit.representatives:
-                    axes[0].plot(
-                        time, data[f"voltage_{label}_mv"], label=label
-                    )
-                target = str(protocol["target"])
-                baseline = float(data[f"cai_{target}_mM"][0])
-                axes[1].plot(
-                    time,
-                    data[f"cai_{target}_mM"] - baseline,
-                    label=f"delta cai ({target})",
-                )
-                axes[1].plot(
-                    time,
-                    data[f"ica_{target}_mA_per_cm2"],
-                    label=f"ica ({target})",
-                )
-                axes[2].plot(time, data["sum_g_NMDA"], label="sum g_NMDA")
-                axes[2].plot(time, data["sum_i_NMDA"], label="sum i_NMDA")
-                axes[0].set_ylabel("voltage (mV)")
-                axes[1].set_ylabel("Ca observables")
-                axes[2].set_ylabel("NMDA observables")
-                axes[2].set_xlabel("absolute teacher time (ms)")
-                axes[0].set_title(
-                    f"Selected dendritic protocol: {family}"
-                )
-                for axis in axes:
-                    axis.grid(alpha=0.2)
-                    axis.legend(ncol=4)
-                figure.tight_layout()
-                figure.savefig(
-                    self.figures_dir / f"selected_{family}.png", dpi=160
-                )
-                self.audit.plt.close(figure)
+            ]
+            if not rejected:
+                continue
+            best = max(rejected, key=self._rejected_trial_score)
+            relative = Path("figures") / f"best_rejected_{family}.png"
+            self._plot_trial(
+                best,
+                title=f"Best rejected candidate: {family}",
+                output_path=self.output_dir / relative,
+            )
+            records.append(
+                {
+                    "status": "best_rejected",
+                    "family": family,
+                    "candidate_id": best["candidate_id"],
+                    "seed": best["seed"],
+                    "required_event_hits": {
+                        kind: int(best["event_counts"].get(kind, 0))
+                        for kind in best["required_event_kinds"]
+                    },
+                    "forbidden_event_hits": {
+                        kind: int(best["event_counts"].get(kind, 0))
+                        for kind in best["forbidden_event_kinds"]
+                    },
+                    "path": relative.as_posix(),
+                }
+            )
+        return records
 
     def _write_artifact_index(self) -> None:
         from .audit import sha256_file
