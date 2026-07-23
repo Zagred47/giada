@@ -217,6 +217,10 @@ class TransitionH5Writer:
                 self.micro_observables, row["micro_protocol_observables"]
             )
         all_voltage = self.np.asarray(row["micro_all_voltage"], dtype=float)
+        # Index NumPy, not the h5py dataset.  Per-segment extrema naturally
+        # produce repeated, non-monotonic indices, which h5py rejects for
+        # fancy indexing even though the equivalent NumPy operation is valid.
+        micro_time = self.micro_time[...]
         self._append(
             self.micro_voltage_summary["minimum_mv"],
             self.np.min(all_voltage, axis=0),
@@ -227,15 +231,15 @@ class TransitionH5Writer:
         )
         self._append(
             self.micro_voltage_summary["integral_mv_ms"],
-            self.np.trapz(all_voltage, self.micro_time[...], axis=0),
+            self.np.trapz(all_voltage, micro_time, axis=0),
         )
         self._append(
             self.micro_voltage_summary["minimum_time_offset_ms"],
-            self.micro_time[self.np.argmin(all_voltage, axis=0)],
+            micro_time[self.np.argmin(all_voltage, axis=0)],
         )
         self._append(
             self.micro_voltage_summary["maximum_time_offset_ms"],
-            self.micro_time[self.np.argmax(all_voltage, axis=0)],
+            micro_time[self.np.argmax(all_voltage, axis=0)],
         )
 
         metadata = row["metadata"]
