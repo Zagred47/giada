@@ -662,18 +662,16 @@ class DendriticProtocolCalibrator:
         synapse_ids: Sequence[int],
         event_probe_segment_id: Optional[int] = None,
     ) -> Tuple[List[float], Dict[str, List[float]]]:
-        self.session._disable_somatic_clamp()
-        self.session._configure_somatic_current(start_time, actions)
-        self.cvode.re_init()
-        self.session._schedule_actions(start_time, actions)
-        sample_count = int(round(1.0 / self.sample_interval_ms)) + 1
-        times = start_time + self.np.linspace(0.0, 1.0, sample_count)
-        rows: Dict[str, List[float]] = {}
-        for sample_time in times:
-            self.audit._advance_exact(float(sample_time))
-            observed = self._sample_observables(
+        times, _, samples = self.session._drive_one_ms(
+            start_time,
+            actions,
+            lambda: self._sample_observables(
                 synapse_ids, event_probe_segment_id
-            )
+            ),
+            sample_interval_ms=self.sample_interval_ms,
+        )
+        rows: Dict[str, List[float]] = {}
+        for observed in samples:
             for name, value in observed.items():
                 rows.setdefault(name, []).append(float(value))
         return times.tolist(), rows

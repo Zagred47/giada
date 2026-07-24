@@ -31,7 +31,7 @@ from .dendritic_calibration import (
     build_candidate_actions,
     candidate_from_selected_protocol,
 )
-from .event_extractor import default_event_definitions
+from .event_extractor import default_event_definitions, extract_events
 
 
 PLATEAU_PROTOCOL_ID = (
@@ -195,6 +195,7 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         self.protocol_registry: Dict[str, Dict[str, Any]] = {}
         self.protocol_rows: List[Dict[str, Any]] = []
         self.prefix_overlap_rows: List[Dict[str, Any]] = []
+        self.preflight_report: Dict[str, Any] = {}
         self.reference_trace_by_protocol_seed: Dict[Tuple[str, int], Path] = {}
         self.alternate_tuft_selection: Dict[str, Any] = {}
         self.micro_observable_ids = [
@@ -227,6 +228,32 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         self.calibration_integrity = integrity
         self.calibration_root = root
         return root
+
+    @staticmethod
+    def _protocol_plan_sha256(
+        protocols: Sequence[ProtocolTrajectory],
+    ) -> str:
+        payload = {
+            "trajectories": [
+                {
+                    "trajectory_id": row.trajectory_id,
+                    "category": row.category,
+                    "protocol": row.protocol,
+                    "protocol_id": row.protocol_id,
+                    "protocol_variant": row.protocol_variant,
+                    "seed": row.seed,
+                    "duration_ms": row.duration_ms,
+                    "split": row.split,
+                    "stimulus_onset_step": row.stimulus_onset_step,
+                    "actions": {
+                        str(step): [action.to_dict() for action in actions]
+                        for step, actions in sorted(row.actions_by_step.items())
+                    },
+                }
+                for row in sorted(protocols, key=lambda item: item.trajectory_id)
+            ]
+        }
+        return canonical_json_sha256(payload)
 
     def prepare_v1_contract(self) -> Dict[str, Any]:
         """Bind the exact 01b protocols and extend the static probe schema."""
@@ -496,6 +523,8 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
             raise RuntimeError("prepare_v1_contract() must run first")
         if self.calibrated_somatic_current_na is None:
             self.calibrate_somatic_spike_current()
+        if self.calibrated_somatic_single_spike_current_na is None:
+            self.calibrate_somatic_single_spike_current()
         if int(dendritic_duration_ms) < 70:
             raise ValueError(
                 "confirmed dendritic trajectories need at least 70 ms"
@@ -504,12 +533,15 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         self.protocol_rows = []
         plans: List[ProtocolTrajectory] = []
 
-        spike_current = float(self.calibrated_somatic_current_na)
+        paired_spike_current = float(self.calibrated_somatic_current_na)
+        single_spike_current = float(
+            self.calibrated_somatic_single_spike_current_na
+        )
         selected_ca_current = float(
             self.selected_protocols["paired_bap_calcium_spike"]
             ["somatic_current_na"]
         )
-        if abs(spike_current - selected_ca_current) > 1e-12:
+        if abs(paired_spike_current - selected_ca_current) > 1e-12:
             raise RuntimeError(
                 "somatic calibration no longer matches the confirmed Ca protocol"
             )
@@ -595,7 +627,7 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                 210001,
                 "train",
                 16,
-                {3: (current(1.2 * spike_current),)},
+                {3: (current(single_spike_current),)},
             ),
             (
                 "somatic_double_pulse",
@@ -603,8 +635,8 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                 "validation",
                 16,
                 {
-                    3: (current(1.2 * spike_current),),
-                    7: (current(1.2 * spike_current),),
+                    3: (current(single_spike_current),),
+                    7: (current(single_spike_current),),
                 },
             ),
             (
@@ -613,7 +645,7 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                 "deterministic_test",
                 16,
                 {
-                    step: (current(1.2 * spike_current),)
+                    step: (current(single_spike_current),)
                     for step in range(2, 9)
                 },
             ),
@@ -623,8 +655,8 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                 "event_boundary_test",
                 20,
                 {
-                    2: (current(1.2 * spike_current),),
-                    10: (current(1.2 * spike_current),),
+                    2: (current(single_spike_current),),
+                    10: (current(single_spike_current),),
                 },
             ),
         ]
@@ -821,7 +853,7 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
             (
                 "somatic_spike",
                 dendritic_duration_ms,
-                {3: (current(1.2 * spike_current),)},
+                {3: (current(single_spike_current),)},
                 ("somatic_spike",),
                 "soma",
                 int(self.audit.representatives["soma"]),
@@ -908,30 +940,83 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
             synapse_sum("i_AMPA"),
         ]
 
-    def _on_trajectory_complete(
+    def _run_trajectory_prefix_in_memory(
+        self,
+        trajectory: ProtocolTrajectory,
+        duration_ms: int,
+    ) -> Tuple[List[float], Dict[str, List[float]]]:
+        """Run the real storage transition path without writing the HDF5 file."""
+
+        duration = min(int(duration_ms), int(trajectory.duration_ms))
+        if duration <= 0:
+            raise ValueError("preflight duration must be positive")
+        equilibrium_rng = json.loads(
+            self.equilibrium_rng_path.read_text(encoding="utf-8")
+        )
+        self._restore_native_snapshot(
+            self.equilibrium_snapshot_path,
+            equilibrium_rng["sequences"],
+            equilibrium_rng.get("random123_seed", self.seed),
+        )
+        self._rekey_rngs(trajectory.seed)
+        times: List[float] = []
+        traces = {label: [] for label in self.audit.representatives}
+        traces.update({label: [] for label in self.micro_observable_ids})
+        self._active_trajectory = trajectory
+        preflight_snapshot = self.output_dir / "_preflight_checkpoint.neuron.bin"
+        try:
+            for step_index in range(duration):
+                transition = self._run_transition(
+                    -1,
+                    trajectory,
+                    step_index,
+                    list(trajectory.actions_by_step.get(step_index, ())),
+                    snapshot_path=(
+                        preflight_snapshot if step_index == 0 else None
+                    ),
+                )
+                keep = slice(None) if step_index == 0 else slice(1, None)
+                times.extend(transition["absolute_time_ms"][keep].tolist())
+                for probe_index, label in enumerate(self.audit.representatives):
+                    traces[label].extend(
+                        transition["micro_probe_voltage"][keep, probe_index].tolist()
+                    )
+                for observable_index, label in enumerate(
+                    self.micro_observable_ids
+                ):
+                    traces[label].extend(
+                        transition["micro_protocol_observables"][
+                            keep, observable_index
+                        ].tolist()
+                    )
+        finally:
+            self._active_trajectory = None
+            preflight_snapshot.unlink(missing_ok=True)
+        return times, traces
+
+    def _compare_reference_prefix(
         self,
         trajectory: ProtocolTrajectory,
         time_ms: Sequence[float],
         traces: Mapping[str, Sequence[float]],
-        events: Sequence[Mapping[str, Any]],
-    ) -> None:
+        duration_ms: float,
+    ) -> Dict[str, Any]:
         key = (str(trajectory.protocol_id), int(trajectory.seed))
         reference_path = self.reference_trace_by_protocol_seed.get(key)
         if reference_path is None:
-            return
+            raise KeyError(f"no 01b reference trace for {key}")
         with self.np.load(reference_path) as reference:
-            sample_count = int(round(35.0 / 0.025)) + 1
+            sample_count = int(round(float(duration_ms) / 0.025)) + 1
             errors = {}
             new_time = self.np.asarray(time_ms[:sample_count], dtype=float)
             old_time = self.np.asarray(
                 reference["time_ms"][:sample_count], dtype=float
             )
-            if new_time.shape != old_time.shape:
-                errors["time_ms"] = 1.0e300
-            else:
-                errors["time_ms"] = float(
-                    self.np.max(self.np.abs(new_time - old_time))
-                )
+            errors["time_ms"] = (
+                1.0e300
+                if new_time.shape != old_time.shape
+                else float(self.np.max(self.np.abs(new_time - old_time)))
+            )
             for label in self.audit.representatives:
                 reference_key = (
                     "voltage_event_probe_mv"
@@ -953,9 +1038,7 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                 )
             observable_reference_keys = {
                 "cai_event_probe_mM": "cai_event_probe_mM",
-                "ica_event_probe_mA_per_cm2": (
-                    "ica_event_probe_mA_per_cm2"
-                ),
+                "ica_event_probe_mA_per_cm2": "ica_event_probe_mA_per_cm2",
                 "ica_hva_event_probe_mA_per_cm2": (
                     "ica_hva_event_probe_mA_per_cm2"
                 ),
@@ -982,19 +1065,153 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                     else float(self.np.max(self.np.abs(current - expected)))
                 )
         maximum = max(errors.values(), default=1.0e300)
-        self.prefix_overlap_rows.append(
+        return {
+            "trajectory_id": trajectory.trajectory_id,
+            "protocol_id": trajectory.protocol_id,
+            "seed": trajectory.seed,
+            "duration_ms": float(duration_ms),
+            "maximum_absolute_error": maximum,
+            "per_variable_max_absolute_error": errors,
+            "valid": maximum == 0.0,
+            "reference_trace": str(
+                reference_path.relative_to(self.calibration_root)
+            ),
+        }
+
+    def run_v1_preflight(
+        self,
+        protocols: Sequence[ProtocolTrajectory],
+        *,
+        prefix_duration_ms: int = 6,
+    ) -> Dict[str, Any]:
+        """Fail fast on driver, branching, and single-spike invariants."""
+
+        self._require_equilibrium()
+        protocols = list(protocols)
+        prefix_protocols = [
+            row
+            for row in protocols
+            if (str(row.protocol_id), int(row.seed))
+            in self.reference_trace_by_protocol_seed
+        ]
+        if len(prefix_protocols) != 6:
+            raise RuntimeError(
+                f"preflight expected 6 confirmed prefixes, found {len(prefix_protocols)}"
+            )
+        prefix_rows = []
+        for trajectory in prefix_protocols:
+            times, traces = self._run_trajectory_prefix_in_memory(
+                trajectory, prefix_duration_ms
+            )
+            prefix_rows.append(
+                self._compare_reference_prefix(
+                    trajectory,
+                    times,
+                    traces,
+                    float(prefix_duration_ms),
+                )
+            )
+
+        single = next(
+            row for row in protocols if row.protocol_id == "somatic_single_spike"
+        )
+        single_times, single_traces = self._run_trajectory_prefix_in_memory(
+            single, single.duration_ms
+        )
+        single_events = extract_events(
+            single_times,
             {
-                "trajectory_id": trajectory.trajectory_id,
-                "protocol_id": trajectory.protocol_id,
-                "seed": trajectory.seed,
-                "duration_ms": 35.0,
-                "maximum_absolute_error": maximum,
-                "per_variable_max_absolute_error": errors,
-                "valid": maximum == 0.0,
-                "reference_trace": str(
-                    reference_path.relative_to(self.calibration_root)
+                label: single_traces[label]
+                for label in self.audit.representatives
+            },
+            self.event_definitions,
+        )
+        single_kinds = sorted({str(row["kind"]) for row in single_events})
+        single_valid = {"somatic_spike", "axonal_spike"}.issubset(single_kinds)
+
+        branch_protocols = [
+            row for row in protocols if row.split == "branching_test"
+        ]
+        equilibrium_rng = json.loads(
+            self.equilibrium_rng_path.read_text(encoding="utf-8")
+        )
+        branch_states = []
+        for trajectory in branch_protocols:
+            self._restore_native_snapshot(
+                self.equilibrium_snapshot_path,
+                equilibrium_rng["sequences"],
+                equilibrium_rng.get("random123_seed", self.seed),
+            )
+            self._rekey_rngs(trajectory.seed)
+            state = self.capture_boundary_state()
+            branch_states.append(
+                self.np.concatenate(
+                    [
+                        *(state[category] for category in self.state_variables),
+                        self.np.asarray(
+                            self.audit._snapshot_rng_sequences(), dtype=float
+                        ),
+                    ]
+                )
+            )
+        branch_error = max(
+            (
+                float(self.np.max(self.np.abs(row - branch_states[0])))
+                for row in branch_states[1:]
+            ),
+            default=0.0,
+        )
+        report = {
+            "schema_version": DIAGNOSTIC_DATASET_V1_SCHEMA_VERSION,
+            "protocol_plan_sha256": self._protocol_plan_sha256(protocols),
+            "valid": (
+                all(row["valid"] for row in prefix_rows)
+                and single_valid
+                and branch_error == 0.0
+            ),
+            "prefix_duration_ms": int(prefix_duration_ms),
+            "confirmed_prefixes": {
+                "valid": all(row["valid"] for row in prefix_rows),
+                "comparison_count": len(prefix_rows),
+                "maximum_error": max(
+                    (row["maximum_absolute_error"] for row in prefix_rows),
+                    default=1.0e300,
                 ),
-            }
+                "comparisons": prefix_rows,
+            },
+            "single_spike": {
+                "valid": single_valid,
+                "trajectory_id": single.trajectory_id,
+                "calibrated_amplitude_na": (
+                    self.calibrated_somatic_single_spike_current_na
+                ),
+                "observed_event_kinds": single_kinds,
+            },
+            "branching_initial_state": {
+                "valid": branch_error == 0.0,
+                "future_count": len(branch_states),
+                "maximum_error": branch_error,
+            },
+        }
+        self.preflight_report = report
+        write_json(self.output_dir / "preflight_report.json", report)
+        return report
+
+    def _on_trajectory_complete(
+        self,
+        trajectory: ProtocolTrajectory,
+        time_ms: Sequence[float],
+        traces: Mapping[str, Sequence[float]],
+        events: Sequence[Mapping[str, Any]],
+    ) -> None:
+        if (
+            str(trajectory.protocol_id), int(trajectory.seed)
+        ) not in self.reference_trace_by_protocol_seed:
+            return
+        self.prefix_overlap_rows.append(
+            self._compare_reference_prefix(
+                trajectory, time_ms, traces, 35.0
+            )
         )
 
     @staticmethod
@@ -1195,6 +1412,18 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         self, protocols: Optional[Sequence[ProtocolTrajectory]] = None
     ) -> Dict[str, Any]:
         protocols = list(protocols or self.build_v1_protocols())
+        if not self.preflight_report.get("valid"):
+            raise RuntimeError(
+                "run_v1_preflight(protocols) must pass before the expensive "
+                "dataset generation phase"
+            )
+        if self.preflight_report.get(
+            "protocol_plan_sha256"
+        ) != self._protocol_plan_sha256(protocols):
+            raise RuntimeError(
+                "protocol plan changed after preflight; rebuild the plan and "
+                "rerun run_v1_preflight before generation"
+            )
         self.prefix_overlap_rows = []
         provenance_dir = self.output_dir / "provenance"
         provenance_dir.mkdir(parents=True, exist_ok=True)
@@ -1253,6 +1482,21 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                     "splits": "splits.json",
                 },
                 "storage_report": "storage_report.json",
+                "preflight_report": "preflight_report.json",
+                "preflight_protocol_plan_sha256": self.preflight_report[
+                    "protocol_plan_sha256"
+                ],
+                "somatic_single_spike_calibration": {
+                    "report": "somatic_single_spike_current_calibration.json",
+                    "selected_amplitude_na": (
+                        self.calibrated_somatic_single_spike_current_na
+                    ),
+                    "selection_rule": (
+                        self.somatic_single_spike_calibration_report.get(
+                            "selection_rule"
+                        )
+                    ),
+                },
                 "prefix_overlap_report": "prefix_overlap_report.json",
                 "table_report": table_report,
                 "right_censoring_policy": {
@@ -1339,21 +1583,19 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                         actions,
                         snapshot_path=None,
                     )
-                    errors = []
+                    errors: Dict[str, float] = {}
                     for category in self.state_variables:
                         for replay_key, boundary in (
                             ("state_t", "t"),
                             ("state_t_plus_1", "t_plus_1"),
                         ):
-                            errors.append(
-                                float(
-                                    self.np.max(
-                                        self.np.abs(
-                                            replay[replay_key][category]
-                                            - handle[
-                                                f"states/{category}/{boundary}"
-                                            ][index, :]
-                                        )
+                            errors[f"{category}.{replay_key}"] = float(
+                                self.np.max(
+                                    self.np.abs(
+                                        replay[replay_key][category]
+                                        - handle[
+                                            f"states/{category}/{boundary}"
+                                        ][index, :]
                                     )
                                 )
                             )
@@ -1361,42 +1603,36 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                         ("rng_t", "t"),
                         ("rng_t_plus_1", "t_plus_1"),
                     ):
-                        errors.append(
-                            float(
-                                self.np.max(
-                                    self.np.abs(
-                                        replay[replay_key]
-                                        - handle[f"rng_state/{boundary}"][index, :]
-                                    )
+                        errors[f"rng.{replay_key}"] = float(
+                            self.np.max(
+                                self.np.abs(
+                                    replay[replay_key]
+                                    - handle[f"rng_state/{boundary}"][index, :]
                                 )
                             )
                         )
-                    errors.append(
-                        float(
-                            self.np.max(
-                                self.np.abs(
-                                    replay["micro_probe_voltage"]
-                                    - handle["microtraces/probe_voltage"][
-                                        index, :, :
-                                    ]
-                                )
+                    errors["microtrace.probe_voltage"] = float(
+                        self.np.max(
+                            self.np.abs(
+                                replay["micro_probe_voltage"]
+                                - handle["microtraces/probe_voltage"][
+                                    index, :, :
+                                ]
                             )
                         )
                     )
                     if "protocol_observables" in handle["microtraces"]:
-                        errors.append(
-                            float(
-                                self.np.max(
-                                    self.np.abs(
-                                        replay["micro_protocol_observables"]
-                                        - handle[
-                                            "microtraces/protocol_observables"
-                                        ][index, :, :]
-                                    )
+                        errors["microtrace.protocol_observables"] = float(
+                            self.np.max(
+                                self.np.abs(
+                                    replay["micro_protocol_observables"]
+                                    - handle[
+                                        "microtraces/protocol_observables"
+                                    ][index, :, :]
                                 )
                             )
                         )
-                    row_error = max(errors)
+                    row_error = max(errors.values(), default=0.0)
                     maximum_error = max(maximum_error, row_error)
                     replayed += 1
                     replay_progress.update(
@@ -1413,6 +1649,9 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                                 "transition_id": index,
                                 "trajectory_id": trajectory_id,
                                 "maximum_error": row_error,
+                                "errors_by_component": dict(
+                                    sorted(errors.items())
+                                ),
                             }
                         )
                 replay_progress.update(
@@ -1427,6 +1666,7 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         return {
             "valid": not failures,
             "replayed_transition_count": replayed,
+            "failure_count": len(failures),
             "maximum_error": maximum_error,
             "tolerance": 1e-5,
             "failures": failures,
@@ -1599,7 +1839,20 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         overlap_valid = len(self.prefix_overlap_rows) == 6 and all(
             row["valid"] for row in self.prefix_overlap_rows
         )
+        if not self.preflight_report and (
+            self.output_dir / "preflight_report.json"
+        ).is_file():
+            self.preflight_report = json.loads(
+                (self.output_dir / "preflight_report.json").read_text(
+                    encoding="utf-8"
+                )
+            )
+        preflight_valid = bool(self.preflight_report.get("valid")) and (
+            self.preflight_report.get("protocol_plan_sha256")
+            == self.dataset_manifest.get("preflight_protocol_plan_sha256")
+        )
         return {
+            "preflight_valid": preflight_valid,
             "required_events_present": not required_failures,
             "required_event_failures": required_failures,
             "required_events_not_right_censored": not required_censored,
@@ -1695,6 +1948,7 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         if not exhaustive["valid"]:
             blockers.append("one or more transitions failed exhaustive replay")
         for key in (
+            "preflight_valid",
             "required_events_present",
             "required_events_not_right_censored",
             "negative_controls_valid",

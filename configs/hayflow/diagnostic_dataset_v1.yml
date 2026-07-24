@@ -65,6 +65,12 @@ validation:
   require_branching_future_divergence: true
   require_no_nan_or_inf: true
 
+preflight:
+  confirmed_prefix_duration_ms: 6
+  require_exact_01b_overlap: true
+  require_single_pulse_soma_and_ais_spike: true
+  require_identical_branching_initial_state: true
+
 figures:
   use_stimulus_relative_time: true
   separate_incompatible_units: true

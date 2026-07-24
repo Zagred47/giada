@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from src.hayflow_data import (
     BurnInCriteria,
@@ -159,6 +160,85 @@ class DiagnosticContractTest(unittest.TestCase):
                 ("key", 1234, 1, 0),
                 ("distribution", 1.0),
                 ("sequence", 11.0),
+            ],
+        )
+
+    def test_native_restore_recomputes_derived_currents_before_boundary_read(self):
+        calls = []
+
+        class FakeSaveState:
+            def fread(self, file_object):
+                calls.append("fread")
+
+            def restore(self):
+                calls.append("restore")
+
+        class FakeH:
+            def SaveState(self):
+                return FakeSaveState()
+
+            def File(self, path):
+                return path
+
+            def fcurrent(self):
+                calls.append("fcurrent")
+
+        session = object.__new__(DiagnosticDatasetSession)
+        session.h = FakeH()
+        session.somatic_clamp = type("Clamp", (), {})()
+        session.audit = type("Audit", (), {"synapse_rngs": []})()
+        session._restore_native_snapshot(Path("snapshot.bin"), [], 7)
+
+        self.assertEqual(calls, ["fread", "restore", "fcurrent"])
+        self.assertEqual(session.somatic_clamp.amp, 0.0)
+
+    def test_one_ms_driver_orders_solver_and_events_canonically(self):
+        calls = []
+
+        class FakeNP:
+            @staticmethod
+            def linspace(start, stop, count):
+                return [start + (stop - start) * i / (count - 1) for i in range(count)]
+
+            @staticmethod
+            def asarray(values, dtype=None):
+                return list(values)
+
+        session = object.__new__(DiagnosticDatasetSession)
+        session.np = FakeNP()
+        session.cvode = type(
+            "CVode", (), {"re_init": lambda self: calls.append("re_init")}
+        )()
+        session.audit = type(
+            "Audit",
+            (),
+            {"_advance_exact": lambda self, value: calls.append(("advance", value))},
+        )()
+        session._disable_somatic_clamp = lambda: calls.append("disable")
+        session._configure_somatic_current = (
+            lambda start, actions: calls.append("configure")
+        )
+        session._schedule_actions = lambda start, actions: (
+            calls.append("schedule") or [{"kind": "test"}]
+        )
+
+        times, public, samples = session._drive_one_ms(
+            10.0, [], lambda: calls.append("observe") or 1, sample_interval_ms=0.5
+        )
+
+        self.assertEqual(times, [10.0, 10.5, 11.0])
+        self.assertEqual(public, [{"kind": "test"}])
+        self.assertEqual(samples, [1, 1, 1])
+        self.assertEqual(calls[:4], ["disable", "configure", "re_init", "schedule"])
+        self.assertEqual(
+            calls[4:],
+            [
+                ("advance", 10.0),
+                "observe",
+                ("advance", 10.5),
+                "observe",
+                ("advance", 11.0),
+                "observe",
             ],
         )
 

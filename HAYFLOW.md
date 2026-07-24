@@ -192,6 +192,16 @@ the full-state baseline and does not train a neural model.
 
 The v1 dataset:
 
+- recomputes derived currents and conductances immediately after every native
+  restore, before exposing `S_t`, so branching does not depend on which
+  trajectory ran previously;
+- routes calibration, generation, and replay through one canonical 1 ms driver
+  with a fixed IClamp/CVODE/NetCon ordering;
+- calibrates paired somatic stimulation and a genuine single-pulse spike
+  protocol separately rather than extrapolating one threshold from the other;
+- runs a mandatory six-prefix/single-spike/branching preflight before creating
+  the expensive HDF5 store, and binds the green preflight to an exact hash of
+  the subsequent trajectory plan;
 - reuses the two selected schedules exactly on seeds 310001--310003;
 - includes rest, subthreshold, somatic spiking, confirmed tuft NMDA plateau,
   confirmed paired hot-zone calcium spike, near-threshold controls, and five

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from src.hayflow_data import ProtocolTrajectory
 from src.hayflow_teacher import (
+    DiagnosticDatasetV1Session,
     actions_from_selected_protocol,
     canonical_json_sha256,
     filter_synaptic_actions,
@@ -14,6 +15,64 @@ from src.hayflow_teacher.audit import sha256_file
 
 
 class DiagnosticDatasetV1ContractTest(unittest.TestCase):
+    def test_generation_requires_a_green_preflight(self):
+        session = object.__new__(DiagnosticDatasetV1Session)
+        session.preflight_report = {}
+        protocol = ProtocolTrajectory(
+            trajectory_id="blocked",
+            category="rest_subthreshold",
+            protocol="rest",
+            seed=1,
+            duration_ms=1,
+            split="train",
+        )
+        with self.assertRaisesRegex(RuntimeError, "run_v1_preflight"):
+            session.generate_dataset([protocol])
+
+    def test_preflight_hash_binds_the_exact_protocol_plan(self):
+        first = ProtocolTrajectory(
+            trajectory_id="first",
+            category="rest_subthreshold",
+            protocol="rest",
+            seed=1,
+            duration_ms=1,
+            split="train",
+        )
+        second = ProtocolTrajectory(
+            trajectory_id="second",
+            category="rest_subthreshold",
+            protocol="rest",
+            seed=2,
+            duration_ms=2,
+            split="validation",
+        )
+        digest = DiagnosticDatasetV1Session._protocol_plan_sha256(
+            [first, second]
+        )
+        self.assertEqual(
+            digest,
+            DiagnosticDatasetV1Session._protocol_plan_sha256([second, first]),
+        )
+        changed = ProtocolTrajectory(
+            trajectory_id="second",
+            category="rest_subthreshold",
+            protocol="rest",
+            seed=2,
+            duration_ms=3,
+            split="validation",
+        )
+        self.assertNotEqual(
+            digest,
+            DiagnosticDatasetV1Session._protocol_plan_sha256([first, changed]),
+        )
+        session = object.__new__(DiagnosticDatasetV1Session)
+        session.preflight_report = {
+            "valid": True,
+            "protocol_plan_sha256": digest,
+        }
+        with self.assertRaisesRegex(RuntimeError, "protocol plan changed"):
+            session.generate_dataset([first, changed])
+
     def test_extended_splits_keep_whole_trajectory_contract(self):
         for split in (
             "deterministic_test",

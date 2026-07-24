@@ -154,6 +154,8 @@ class DiagnosticDatasetSession:
         self.event_definitions: List[EventDefinition] = []
         self.calibrated_somatic_current_na: Optional[float] = None
         self.somatic_calibration_report: Dict[str, Any] = {}
+        self.calibrated_somatic_single_spike_current_na: Optional[float] = None
+        self.somatic_single_spike_calibration_report: Dict[str, Any] = {}
         self.equilibrium_snapshot_path = (
             self.snapshots_dir / "equilibrium_snapshot.neuron.bin"
         )
@@ -532,6 +534,12 @@ class DiagnosticDatasetSession:
         # snapshots produced by an older diagnostic run.
         self._disable_somatic_clamp()
         self._configure_rngs(random123_seed, rng_sequences)
+        # SaveState restores dynamic STATE values, but ASSIGNED currents and
+        # conductances can otherwise retain values from the trajectory that
+        # happened to run immediately before this restore.  Recompute them at
+        # the restored voltage before exposing a boundary state.  This is
+        # essential for trajectory-order-independent S_t and branching.
+        self.h.fcurrent()
 
     def _disable_somatic_clamp(self) -> None:
         """Leave the diagnostic current source in an inert, known state."""
@@ -574,6 +582,82 @@ class DiagnosticDatasetSession:
     ) -> Dict[str, Any]:
         """Select the smallest tested two-pulse current that evokes soma and AIS spikes."""
 
+        report = self._calibrate_somatic_current_protocol(
+            candidate_amplitudes_na,
+            pulse_steps=(1, 2),
+            duration_ms=4,
+            protocol_name="somatic_spike_current_calibration",
+            selection_rule=(
+                "smallest tested amplitude producing both somatic_spike and "
+                "axonal_spike during two 0.9 ms pulses"
+            ),
+        )
+        self.calibrated_somatic_current_na = report["selected_amplitude_na"]
+        self.somatic_calibration_report = report
+        write_json(
+            self.output_dir / "somatic_current_calibration.json",
+            report,
+        )
+        if not report["valid"]:
+            raise RuntimeError(
+                "somatic spike current calibration found no soma/AIS spike; "
+                "inspect somatic_current_calibration.json before expanding "
+                "the search"
+            )
+        return report
+
+    def calibrate_somatic_single_spike_current(
+        self,
+        candidate_amplitudes_na: Sequence[float] = (
+            0.5,
+            0.75,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            4.0,
+            6.0,
+        ),
+    ) -> Dict[str, Any]:
+        """Calibrate the actual one-pulse protocol used by v1 somatic trials."""
+
+        report = self._calibrate_somatic_current_protocol(
+            candidate_amplitudes_na,
+            pulse_steps=(1,),
+            duration_ms=6,
+            protocol_name="somatic_single_spike_current_calibration",
+            selection_rule=(
+                "smallest tested amplitude producing both somatic_spike and "
+                "axonal_spike during one 0.9 ms pulse"
+            ),
+        )
+        self.calibrated_somatic_single_spike_current_na = report[
+            "selected_amplitude_na"
+        ]
+        self.somatic_single_spike_calibration_report = report
+        write_json(
+            self.output_dir / "somatic_single_spike_current_calibration.json",
+            report,
+        )
+        if not report["valid"]:
+            raise RuntimeError(
+                "single-pulse current calibration found no soma/AIS spike; "
+                "inspect somatic_single_spike_current_calibration.json before "
+                "expanding the search"
+            )
+        return report
+
+    def _calibrate_somatic_current_protocol(
+        self,
+        candidate_amplitudes_na: Sequence[float],
+        *,
+        pulse_steps: Sequence[int],
+        duration_ms: int,
+        protocol_name: str,
+        selection_rule: str,
+    ) -> Dict[str, Any]:
+        """Measure one declared pulse pattern without extrapolating between patterns."""
+
         self._require_equilibrium()
         candidates = [float(value) for value in candidate_amplitudes_na]
         if not candidates or any(value <= 0.0 for value in candidates):
@@ -596,15 +680,15 @@ class DiagnosticDatasetSession:
             trajectory = ProtocolTrajectory(
                 f"somatic-calibration-{amplitude:g}",
                 "somatic_events",
-                "somatic_spike_current_calibration",
+                protocol_name,
                 self.seed,
-                4,
+                int(duration_ms),
                 "test",
             )
             time_ms = []
             traces = {label: [] for label in self.audit.representatives}
             delivered_current = []
-            for step_index in range(4):
+            for step_index in range(int(duration_ms)):
                 actions = (
                     [
                         InputAction(
@@ -614,7 +698,7 @@ class DiagnosticDatasetSession:
                             amplitude_na=amplitude,
                         )
                     ]
-                    if step_index in (1, 2)
+                    if step_index in set(map(int, pulse_steps))
                     else []
                 )
                 transition = self._run_transition(
@@ -659,27 +743,18 @@ class DiagnosticDatasetSession:
             if passed:
                 selected = amplitude
                 break
-        self.calibrated_somatic_current_na = selected
-        self.somatic_calibration_report = {
+        report = {
             "valid": selected is not None,
-            "selection_rule": (
-                "smallest tested amplitude producing both somatic_spike and "
-                "axonal_spike during two 0.9 ms pulses"
-            ),
+            "protocol_name": str(protocol_name),
+            "pulse_steps": list(map(int, pulse_steps)),
+            "pulse_count": len(tuple(pulse_steps)),
+            "pulse_duration_ms": 0.9,
+            "selection_rule": str(selection_rule),
             "selected_amplitude_na": selected,
             "candidate_amplitudes_na": candidates,
             "trials": trials,
         }
-        write_json(
-            self.output_dir / "somatic_current_calibration.json",
-            self.somatic_calibration_report,
-        )
-        if selected is None:
-            raise RuntimeError(
-                "somatic current calibration found no soma/AIS spike; inspect "
-                "somatic_current_calibration.json before expanding the search"
-            )
-        return self.somatic_calibration_report
+        return report
 
     def build_default_protocols(self) -> List[ProtocolTrajectory]:
         """Create 36 short trajectories spanning the four requested classes."""
@@ -1158,15 +1233,13 @@ class DiagnosticDatasetSession:
         )
         if snapshot_path is not None:
             self._write_native_snapshot(snapshot_path)
-        # IClamp discontinuities must be configured before re_init so CVODE
-        # sees the actual delay/duration boundaries.  NetCon events are queued
-        # afterwards because re_init clears the event queue.
-        self._configure_somatic_current(start_time, actions)
-        # SaveState cannot preserve adaptive solver history. Both dataset
-        # generation and replay therefore start the macro-step after re_init.
-        self.cvode.re_init()
-        public_actions = self._schedule_actions(start_time, actions)
-        micro = self._sample_transition_microtrace(start_time)
+        times, public_actions, samples = self._drive_one_ms(
+            start_time,
+            actions,
+            self._sample_transition_point,
+            sample_interval_ms=DEFAULT_MICROTRACE_STEP_MS,
+        )
+        micro = self._assemble_transition_microtrace(times, samples)
         state_t_plus_1 = self.capture_boundary_state()
         rng_t_plus_1 = self.np.asarray(
             self.audit._snapshot_rng_sequences(), dtype=float
@@ -1266,43 +1339,79 @@ class DiagnosticDatasetSession:
             public.append(item)
         return public
 
-    def _sample_transition_microtrace(self, start_time: float) -> Dict[str, Any]:
-        times = start_time + self.np.linspace(0.0, 1.0, 41)
-        selected = []
-        probes = []
-        all_voltage = []
-        somatic_current = []
-        protocol_observables = []
-        representative_ids = list(self.audit.representatives.values())
-        segment_ids = list(range(len(self.audit.live_segments)))
+    def _drive_one_ms(
+        self,
+        start_time: float,
+        actions: Sequence[InputAction],
+        observer: Any,
+        *,
+        sample_interval_ms: float = DEFAULT_MICROTRACE_STEP_MS,
+    ) -> Tuple[Any, List[Dict[str, Any]], List[Any]]:
+        """Canonical one-millisecond driver shared by calibration and storage."""
+
+        interval = float(sample_interval_ms)
+        sample_count = int(round(1.0 / interval)) + 1
+        if interval <= 0.0 or abs((sample_count - 1) * interval - 1.0) > 1e-9:
+            raise ValueError("sample interval must divide one millisecond")
+        self._disable_somatic_clamp()
+        # IClamp discontinuities must be configured before re_init so CVODE
+        # sees their delay/duration boundaries. NetCon events are queued after
+        # re_init because re_init clears the event queue.
+        self._configure_somatic_current(start_time, actions)
+        # SaveState cannot preserve adaptive solver history. Generation,
+        # calibration, and replay all enter the macro-step through this exact
+        # reinitialization path.
+        self.cvode.re_init()
+        public_actions = self._schedule_actions(start_time, actions)
+        times = self.np.linspace(
+            float(start_time), float(start_time) + 1.0, sample_count
+        )
+        samples = []
         for sample_time in times:
             self.audit._advance_exact(float(sample_time))
-            selected.append(self._read_variables(self.micro_variables))
-            probes.append(
-                [
-                    float(self.audit.live_segments[segment_id].v)
-                    for segment_id in representative_ids
-                ]
-            )
-            all_voltage.append(
-                [
-                    float(self.audit.live_segments[segment_id].v)
-                    for segment_id in segment_ids
-                ]
-            )
-            somatic_current.append(float(self.somatic_clamp.i))
-            if self.micro_observable_ids:
-                protocol_observables.append(
-                    self._read_protocol_micro_observables()
-                )
+            samples.append(observer())
+        return self.np.asarray(times, dtype=float), public_actions, samples
+
+    def _sample_transition_point(self) -> Dict[str, Any]:
+        representative_ids = list(self.audit.representatives.values())
+        segment_ids = list(range(len(self.audit.live_segments)))
+        return {
+            "selected": self._read_variables(self.micro_variables),
+            "probe_voltage": [
+                float(self.audit.live_segments[segment_id].v)
+                for segment_id in representative_ids
+            ],
+            "all_voltage": [
+                float(self.audit.live_segments[segment_id].v)
+                for segment_id in segment_ids
+            ],
+            "somatic_current": float(self.somatic_clamp.i),
+            "protocol_observables": (
+                self._read_protocol_micro_observables()
+                if self.micro_observable_ids
+                else []
+            ),
+        }
+
+    def _assemble_transition_microtrace(
+        self, times: Any, samples: Sequence[Mapping[str, Any]]
+    ) -> Dict[str, Any]:
         return {
             "time_ms": self.np.asarray(times, dtype=float),
-            "selected": self.np.asarray(selected, dtype=float),
-            "probe_voltage": self.np.asarray(probes, dtype=float),
-            "all_voltage": self.np.asarray(all_voltage, dtype=float),
-            "somatic_current": self.np.asarray(somatic_current, dtype=float),
+            "selected": self.np.asarray(
+                [row["selected"] for row in samples], dtype=float
+            ),
+            "probe_voltage": self.np.asarray(
+                [row["probe_voltage"] for row in samples], dtype=float
+            ),
+            "all_voltage": self.np.asarray(
+                [row["all_voltage"] for row in samples], dtype=float
+            ),
+            "somatic_current": self.np.asarray(
+                [row["somatic_current"] for row in samples], dtype=float
+            ),
             "protocol_observables": self.np.asarray(
-                protocol_observables, dtype=float
+                [row["protocol_observables"] for row in samples], dtype=float
             ).reshape(len(times), len(self.micro_observable_ids)),
         }
 
