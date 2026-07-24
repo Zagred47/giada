@@ -125,12 +125,22 @@ def state_metric_rows(
     for regime in sorted(set(regimes)):
         row_mask = np.asarray([value == regime for value in regimes])
         if row_mask.any():
+            regime_prediction = prediction[row_mask, voltage]
+            regime_target = target[row_mask, voltage]
+            predicted_peaks = np.max(regime_prediction, axis=1)
+            target_peaks = np.max(regime_target, axis=1)
             add(
                 "voltage_regime",
                 regime,
-                prediction[row_mask, voltage],
-                target[row_mask, voltage],
+                regime_prediction,
+                regime_target,
                 sample_count=int(row_mask.sum()),
+                mean_peak_error_mv=float(
+                    np.mean(predicted_peaks - target_peaks)
+                ),
+                mean_absolute_peak_error_mv=float(
+                    np.mean(np.abs(predicted_peaks - target_peaks))
+                ),
             )
 
     by_mechanism: Dict[str, List[int]] = defaultdict(list)
@@ -242,9 +252,14 @@ def binary_event_metric_rows(
     region_prediction: Optional[np.ndarray] = None,
     region_target: Optional[np.ndarray] = None,
     region_mask: Optional[np.ndarray] = None,
-    threshold: float = 0.5,
+    threshold: Any = 0.5,
 ) -> List[Dict[str, Any]]:
-    predicted = np.asarray(probabilities) >= float(threshold)
+    threshold_values = np.asarray(threshold, dtype=np.float64)
+    if threshold_values.ndim == 0:
+        threshold_values = np.full(len(EVENT_KINDS), float(threshold_values))
+    if threshold_values.shape != (len(EVENT_KINDS),):
+        raise ValueError("event threshold must be scalar or one value per event kind")
+    predicted = np.asarray(probabilities) >= threshold_values[None, :]
     targets = np.asarray(targets).astype(bool)
     rows = []
     for column, kind in enumerate(EVENT_KINDS):
@@ -258,7 +273,7 @@ def binary_event_metric_rows(
             "model": model_name,
             "split": split,
             "event_kind": kind,
-            "threshold": float(threshold),
+            "threshold": float(threshold_values[column]),
             "support": int(targets[:, column].sum()),
             "true_positive": true_positive,
             "false_positive": false_positive,

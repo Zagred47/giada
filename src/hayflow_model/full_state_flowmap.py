@@ -431,6 +431,10 @@ if nn is not None:
                 "delta": delta,
                 "global_hidden": global_hidden,
                 "segment_hidden": segment_hidden,
+                # Exposed for diagnostic auxiliary heads in notebook 02b. This
+                # adds no parameters and leaves the notebook 02 state dict
+                # contract unchanged.
+                "token_hidden": token_hidden,
             }
             result.update(self.event_heads(global_hidden))
             if self.privileged_decoder is not None:

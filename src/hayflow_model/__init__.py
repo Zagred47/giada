@@ -16,6 +16,12 @@ from .flowmap_experiment import (
     FlowmapExperimentConfig,
     FullStateFlowmapExperiment,
 )
+from .reconditioned_full_state import ReconditionedStructuredResidual
+from .reconditioned_experiment import (
+    ReconditionedExperimentConfig,
+    ReconditionedFlowmapExperiment,
+    ReconditionedRunSpec,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -30,4 +36,8 @@ __all__ = [
     "AuxiliaryNormalizer",
     "FlowmapExperimentConfig",
     "FullStateFlowmapExperiment",
+    "ReconditionedStructuredResidual",
+    "ReconditionedExperimentConfig",
+    "ReconditionedFlowmapExperiment",
+    "ReconditionedRunSpec",
 ]

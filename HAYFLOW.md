@@ -269,3 +269,47 @@ with a `GO`, `CONDITIONAL_GO`, or `NO_GO` decision. The report must be read with
 the stated limitation: 1,224 deliberately enriched transitions can reveal an
 apparent learnable signal and immediate rollout instability, but cannot
 establish high-dimensional generalization.
+
+## Reconditioned full-state flow-map baseline
+
+`notebooks/02b_reconditioned_full_state_flowmap_baseline.ipynb` repeats the
+diagnostic B0/B1/B3 comparison on the exact same dataset `1.0.1`, trajectories,
+splits, U1/U2 inputs, and B3 backbone. It is a controlled correction of the
+notebook 02 objective, not a new architecture experiment. The original 02
+artifact is a required read-only input and its dataset-manifest hash must match.
+
+The train split alone defines a variable-level distribution audit and the new
+normalization contract. Sparse transformed deltas use a documented numerical
+activity threshold, an activity head, and active-only value scaling; dense
+variables use a hybrid MAD/standard-deviation/RMS scale with an explicit floor.
+Gate logit transforms are compared with an identity ablation, positive
+quantities use `log1p`, and privileged quantities are normalized per variable
+while non-applicable entries are masked. Synaptic states are tested both as an
+early-stopping-independent metric-only block (S0) and with a hurdle objective
+(S1). The absent release outcome remains an explicit identifiability limit and
+is never inferred from `S_(t+1)` as a model input.
+
+The main objective stratifies subthreshold, somatic/axonal, dendritic, and
+near-threshold boundary windows. It reports both raw and effectively weighted
+shared-representation gradient norms, and refuses methodological validity if a
+single component still dominates. Learnable event classes use train-only
+support, dendritic oversampling and class weights; absent classes are marked
+`not_learnable_from_current_split`, and thresholds are calibrated on validation
+only. Privileged supervision is compared as P0, a small normalized fixed weight
+(P1a), and a gradient-capped weight (P1b).
+
+Early stopping uses operational validation quantities rather than the raw mean
+of state losses. Separate best one-step, event-fidelity, composite-selection,
+and 8 ms rollout checkpoints are saved. Every checkpoint is bound to dataset,
+schema, split, normalization, loss, model, code-commit, and seed fingerprints;
+stale checkpoints are rejected. Three common B3 seeds are aggregated as mean
+and standard deviation.
+
+The evaluation covers 2/4/8/16 ms rollouts, common and rare regimes, per-region
+drift, peak error/attenuation, lost and added event labels, recovery endpoints,
+physical-domain violations, and branching divergence retention. The final
+report separately states artifact validity, methodological validity, modeling
+result, identifiability limits, and answers the six predeclared comparisons
+against B1, U1, privileged supervision, the original negative drift, and
+branching collapse. It explicitly does not test Hines coupling, persistent
+latents, morphology reduction, Mamba, or S4.

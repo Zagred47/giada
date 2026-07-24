@@ -34,6 +34,12 @@ from .flowmap_dataset import (
     batch_iterator,
     prepare_flowmap_bundle,
 )
+from .reconditioned_flowmap import (
+    ReconditionedAuxiliaryNormalizer,
+    ReconditionedStateNormalizer,
+    ReconditioningConfig,
+    distribution_summary,
+)
 
 __all__ = [
     "BOUNDARY_INTERVAL_MS",
@@ -63,4 +69,8 @@ __all__ = [
     "StateNormalizer",
     "batch_iterator",
     "prepare_flowmap_bundle",
+    "ReconditionedAuxiliaryNormalizer",
+    "ReconditionedStateNormalizer",
+    "ReconditioningConfig",
+    "distribution_summary",
 ]
