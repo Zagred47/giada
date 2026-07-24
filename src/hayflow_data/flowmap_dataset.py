@@ -450,7 +450,10 @@ class StateNormalizer:
         log_mask = self.transform_codes == self.LOG1P
         logit_mask = self.transform_codes == self.LOGIT
         if log_mask.any():
-            result[..., log_mask] = np.maximum(np.expm1(result[..., log_mask]), 0.0)
+            # 30 is far outside the biological range represented here but keeps
+            # a divergent diagnostic model finite enough to score and reject.
+            log_values = np.clip(result[..., log_mask], -30.0, 30.0)
+            result[..., log_mask] = np.maximum(np.expm1(log_values), 0.0)
         if logit_mask.any():
             x = np.clip(result[..., logit_mask], -30.0, 30.0)
             result[..., logit_mask] = 1.0 / (1.0 + np.exp(-x))
@@ -498,6 +501,10 @@ class StateNormalizer:
                 "0": "identity",
                 "1": "log1p_nonnegative",
                 "2": "logit_clip_1e-6",
+            },
+            "inverse_numeric_guard": {
+                "log1p_transformed_clip": [-30.0, 30.0],
+                "purpose": "score divergent baselines without expm1 overflow",
             },
             "state_center": self.state_center.tolist(),
             "state_scale": self.state_scale.tolist(),

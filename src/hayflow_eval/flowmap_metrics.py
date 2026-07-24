@@ -17,8 +17,13 @@ def _errors(prediction: np.ndarray, target: np.ndarray) -> Dict[str, float]:
         target, dtype=np.float64
     )
     absolute = np.abs(error).reshape(-1)
+    maximum = float(np.max(absolute)) if len(absolute) else 0.0
+    if math.isfinite(maximum) and maximum > 0.0:
+        rmse = maximum * float(np.sqrt(np.mean((error / maximum) ** 2)))
+    else:
+        rmse = maximum
     return {
-        "rmse": float(np.sqrt(np.mean(error * error))),
+        "rmse": rmse,
         "mae": float(np.mean(absolute)),
         "absolute_error_p50": float(np.percentile(absolute, 50.0)),
         "absolute_error_p95": float(np.percentile(absolute, 95.0)),

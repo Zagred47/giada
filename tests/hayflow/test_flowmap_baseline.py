@@ -20,6 +20,7 @@ from src.hayflow_eval import (
 from src.hayflow_model import (
     DualRidgeBaseline,
     FlowmapExperimentConfig,
+    FullStateFlowmapExperiment,
     ridge_design_matrix,
     structured_arrays,
 )
@@ -110,6 +111,8 @@ class FlowmapBaselineTest(unittest.TestCase):
         reconstructed = normalizer.reconstruct(state_t, delta)
         np.testing.assert_allclose(reconstructed, state_t1, atol=1e-10)
         self.assertEqual(normalizer.transform_codes.tolist(), [0, 2, 1, 2])
+        extreme = normalizer.inverse(np.asarray([[0.0, 0.0, 1e6, 0.0]]))
+        self.assertTrue(np.isfinite(extreme).all())
 
     def test_batch_iterator_is_seeded_and_complete(self):
         first = list(
@@ -212,6 +215,29 @@ class FlowmapBaselineTest(unittest.TestCase):
             layout=layout,
         )
         self.assertGreater(row["outside_domain_fraction"], 0.0)
+
+    def test_neural_prediction_is_split_into_bounded_batches(self):
+        experiment = FullStateFlowmapExperiment.__new__(FullStateFlowmapExperiment)
+        experiment.config = FlowmapExperimentConfig(
+            evaluation_batch_size_b2=3,
+            evaluation_batch_size_b3=2,
+        )
+        calls = []
+
+        def fake_batch(model, indices, raw_state_override=None):
+            calls.append(len(indices))
+            values = np.asarray(indices, dtype=np.float32)[:, None]
+            return {"raw_state": values, "delta": values}
+
+        experiment._predict_neural_batch = fake_batch
+        model = type(
+            "FakeModel",
+            (),
+            {"config": type("Config", (), {"model_kind": "B3_structured"})()},
+        )()
+        result = experiment._predict_neural(model, np.arange(5))
+        self.assertEqual(calls, [2, 2, 1])
+        self.assertEqual(result["raw_state"].reshape(-1).tolist(), list(range(5)))
 
     def test_structured_child_padding_preserves_leaf_identity(self):
         layout = type(

@@ -62,6 +62,8 @@ class FlowmapExperimentConfig:
     early_stopping_patience: int = 8
     batch_size_b2: int = 8
     batch_size_b3: int = 2
+    evaluation_batch_size_b2: int = 8
+    evaluation_batch_size_b3: int = 2
     learning_rate: float = 3e-4
     weight_decay: float = 1e-5
     gradient_clip_norm: float = 1.0
@@ -87,6 +89,8 @@ class FlowmapExperimentConfig:
             self.early_stopping_patience,
             self.batch_size_b2,
             self.batch_size_b3,
+            self.evaluation_batch_size_b2,
+            self.evaluation_batch_size_b3,
         ) <= 0:
             raise ValueError("training counts must be positive")
         if any(horizon <= 0 for horizon in self.rollout_horizons_ms):
@@ -309,11 +313,27 @@ class FullStateFlowmapExperiment:
         auxiliary, layout = self.store.auxiliary_targets(train)
         self.auxiliary_layout = layout
         self.aux_normalizer = AuxiliaryNormalizer().fit(auxiliary, layout)
+        train_state_t = self.store.read_state(train, "t")
+        train_state_t1 = self.store.read_state(train, "t_plus_1")
+        normalized_delta = self.normalizer.normalize_delta(
+            train_state_t, train_state_t1
+        )
+        delta_diagnostics = {}
+        for category in DYNAMIC_CATEGORIES:
+            state_slice = self.layout.category_slices[category]
+            absolute = np.abs(normalized_delta[:, state_slice]).reshape(-1)
+            delta_diagnostics[category] = {
+                "absolute_p50": float(np.percentile(absolute, 50.0)),
+                "absolute_p95": float(np.percentile(absolute, 95.0)),
+                "absolute_p99": float(np.percentile(absolute, 99.0)),
+                "absolute_maximum": float(np.max(absolute)),
+            }
         write_json(
             self.output_dir / "normalization_schema.json",
             {
                 "state": self.normalizer.to_dict(),
                 "auxiliary": self.aux_normalizer.to_dict(),
+                "train_normalized_delta_diagnostics": delta_diagnostics,
             },
         )
         model_configs = [row.to_dict() for row in self._neural_configs()]
@@ -330,6 +350,7 @@ class FullStateFlowmapExperiment:
             "state_width": self.layout.state_width,
             "auxiliary_width": int(auxiliary.shape[1]),
             "release_contract": self.store.release_contract,
+            "train_normalized_delta_diagnostics": delta_diagnostics,
         }
 
     def preflight(self) -> Dict[str, Any]:
@@ -747,7 +768,15 @@ class FullStateFlowmapExperiment:
             self._event_pos_weight(), dtype=torch.float32, device=device
         )
         progress = Progress(model_id, self.config.maximum_epochs)
-        for epoch in range(start_epoch, self.config.maximum_epochs):
+        epoch_range: Iterable[int] = range(start_epoch, self.config.maximum_epochs)
+        if patience >= self.config.early_stopping_patience:
+            print(
+                f"[HayFlow 02][{model_id}] early stopping already reached; "
+                "resuming from best.pt for evaluation",
+                flush=True,
+            )
+            epoch_range = ()
+        for epoch in epoch_range:
             train_metrics = self._epoch(
                 model,
                 config,
@@ -804,7 +833,13 @@ class FullStateFlowmapExperiment:
             )
             progress.update(
                 epoch + 1,
-                f"train={train_metrics['total']:.4g} val={current:.4g}",
+                (
+                    f"train={train_metrics['total']:.4g} val={current:.4g} "
+                    f"val[V={validation_metrics['state_voltage']:.3g}, "
+                    f"STATE={validation_metrics['state_mechanism_states']:.3g}, "
+                    f"ions={validation_metrics['state_calcium_ions']:.3g}, "
+                    f"syn={validation_metrics['state_synapse_states']:.3g}]"
+                ),
             )
             if patience >= self.config.early_stopping_patience:
                 break
@@ -826,7 +861,7 @@ class FullStateFlowmapExperiment:
         }
         return model, history
 
-    def _predict_neural(
+    def _predict_neural_batch(
         self,
         model: Any,
         indices: Sequence[int],
@@ -859,6 +894,45 @@ class FullStateFlowmapExperiment:
             .cpu()
             .numpy(),
         }
+
+    def _predict_neural(
+        self,
+        model: Any,
+        indices: Sequence[int],
+        *,
+        raw_state_override: Optional[np.ndarray] = None,
+    ) -> Dict[str, np.ndarray]:
+        """Run inference in bounded GPU batches and preserve transition order."""
+
+        indices = np.asarray(indices, dtype=np.int64)
+        if not len(indices):
+            raise ValueError("neural prediction requires at least one transition")
+        if raw_state_override is not None:
+            raw_state_override = np.asarray(raw_state_override)
+            if len(raw_state_override) != len(indices):
+                raise ValueError("state override and transition indices must align")
+        config = model.config
+        batch_size = (
+            self.config.evaluation_batch_size_b2
+            if config.model_kind == "B2_flat_mlp"
+            else self.config.evaluation_batch_size_b3
+        )
+        pieces: Dict[str, List[np.ndarray]] = {}
+        for start in range(0, len(indices), batch_size):
+            stop = min(start + batch_size, len(indices))
+            override = (
+                raw_state_override[start:stop]
+                if raw_state_override is not None
+                else None
+            )
+            result = self._predict_neural_batch(
+                model,
+                indices[start:stop],
+                raw_state_override=override,
+            )
+            for key, value in result.items():
+                pieces.setdefault(key, []).append(value)
+        return {key: np.concatenate(values, axis=0) for key, values in pieces.items()}
 
     def evaluate_neural(self, model_id: str, model: Any) -> None:
         for split, indices in self.store.split_indices.items():
