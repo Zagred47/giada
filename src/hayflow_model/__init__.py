@@ -1,1 +1,33 @@
 """Full-state flow-map baselines and the future latent HayFlow model."""
+
+from .full_state_flowmap import (
+    DualRidgeBaseline,
+    FlatResidualMLP,
+    FlowmapModelConfig,
+    PersistenceBaseline,
+    StructuredSharedResidual,
+    parameter_count,
+    require_torch,
+    ridge_design_matrix,
+    structured_arrays,
+)
+from .flowmap_experiment import (
+    AuxiliaryNormalizer,
+    FlowmapExperimentConfig,
+    FullStateFlowmapExperiment,
+)
+
+__all__ = [
+    "DualRidgeBaseline",
+    "FlatResidualMLP",
+    "FlowmapModelConfig",
+    "PersistenceBaseline",
+    "StructuredSharedResidual",
+    "parameter_count",
+    "require_torch",
+    "ridge_design_matrix",
+    "structured_arrays",
+    "AuxiliaryNormalizer",
+    "FlowmapExperimentConfig",
+    "FullStateFlowmapExperiment",
+]

@@ -20,6 +20,20 @@ from .diagnostic_contract import (
     write_json,
 )
 from .hdf5_transition_store import TransitionH5Writer, validate_hdf5_store
+from .flowmap_dataset import (
+    DYNAMIC_CATEGORIES,
+    EVENT_KINDS,
+    EXPECTED_TEACHER_COMMIT,
+    U1_FEATURE_NAMES,
+    U2_EVENT_FEATURE_NAMES,
+    FlowmapBundle,
+    FlowmapContractError,
+    FlowmapLayout,
+    FlowmapTransitionStore,
+    StateNormalizer,
+    batch_iterator,
+    prepare_flowmap_bundle,
+)
 
 __all__ = [
     "BOUNDARY_INTERVAL_MS",
@@ -37,4 +51,16 @@ __all__ = [
     "validate_split_isolation",
     "validate_hdf5_store",
     "write_json",
+    "DYNAMIC_CATEGORIES",
+    "EVENT_KINDS",
+    "EXPECTED_TEACHER_COMMIT",
+    "U1_FEATURE_NAMES",
+    "U2_EVENT_FEATURE_NAMES",
+    "FlowmapBundle",
+    "FlowmapContractError",
+    "FlowmapLayout",
+    "FlowmapTransitionStore",
+    "StateNormalizer",
+    "batch_iterator",
+    "prepare_flowmap_bundle",
 ]

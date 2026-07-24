@@ -232,3 +232,40 @@ The v1 dataset:
 The `01b` ZIP or its extracted directory is a required input. This keeps the
 provenance check real: `01c` does not silently trust copied protocol names when
 the reference traces and their hashes are unavailable.
+
+## Full-state flow-map baseline
+
+`notebooks/02_full_state_flowmap_baseline.ipynb` consumes only the green
+diagnostic dataset schema `1.0.1`. It refuses schema `1.0.0`, an unexpected
+teacher commit, a non-green validation report, or any artifact whose size or
+SHA-256 differs from the hashed index. This notebook is a feasibility gate for
+the 1 ms macro-step; it is not the final HayFlow architecture.
+
+The experiment keeps the 17,220 dynamic variables semantically separated into
+voltage, mechanism state, calcium/ions, and synaptic state. Static morphology is
+an input, while the 9,182 currents/conductances and intra-step observations are
+training-only privileged targets. Random123 is retained for teacher replay and
+is never regressed. Because schema `1.0.1` does not expose release outcomes,
+both input encodings use the ordered scheduled events and record that limitation
+explicitly:
+
+- `U1` aggregates counts, weights, conductance, timing moments, and somatic
+  current per segment;
+- `U2` retains the ordered event list with time, segment, type, weight, and
+  release-availability mask.
+
+The notebook compares persistence (`B0`), dual ridge (`B1`), a deliberately
+small flat residual MLP sanity check (`B2`), and a shared structured residual
+model (`B3`). It runs voltage-only/full-state and `U1`/`U2` ablations, plus
+matched `P0` and `P1` versions where `P1` adds privileged decoders. All
+normalization statistics come only from the train split. Whole trajectories
+remain isolated across train, validation, deterministic, event-boundary, and
+branching tests.
+
+Outputs are written below `artifacts/full_state_flowmap_baseline/` and include
+resumable checkpoints, one-step/event/rollout/ablation Parquet tables,
+representative predictions, figures, and a conservative `final_report.json`
+with a `GO`, `CONDITIONAL_GO`, or `NO_GO` decision. The report must be read with
+the stated limitation: 1,224 deliberately enriched transitions can reveal an
+apparent learnable signal and immediate rollout instability, but cannot
+establish high-dimensional generalization.
