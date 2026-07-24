@@ -22,6 +22,7 @@ from .event_extractor import (
     default_event_definitions,
     event_ids_by_transition,
     extract_events,
+    annotate_backpropagation,
 )
 from .diagnostic_dataset import (
     DiagnosticDatasetSession,
@@ -49,8 +50,12 @@ from .diagnostic_dataset_v1 import (
     filter_synaptic_actions,
     validate_calibration_artifacts,
 )
+from .causal_release import CausalReleaseRecorder
+from .diagnostic_dataset_v1_1 import TargetedDiagnosticDatasetSession
 
 __all__ = [
+    "CausalReleaseRecorder",
+    "TargetedDiagnosticDatasetSession",
     "BoundaryState",
     "default_event_definitions",
     "detect_spikes",
@@ -77,6 +82,7 @@ __all__ = [
     "candidate_from_selected_protocol",
     "evenly_spaced_offsets",
     "extract_events",
+    "annotate_backpropagation",
     "expected_audit_hashes",
     "git_commit",
     "load_source_functions",

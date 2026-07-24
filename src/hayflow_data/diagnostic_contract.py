@@ -24,6 +24,12 @@ DIAGNOSTIC_SPLITS = {
     "deterministic_test",
     "event_boundary_test",
     "branching_test",
+    "held_out_branch_test",
+    "held_out_seed_test",
+    "branching_near_test",
+    "branching_far_test",
+    "release_identifiability_test",
+    "recovery_test",
 }
 
 

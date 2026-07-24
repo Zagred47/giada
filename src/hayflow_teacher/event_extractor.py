@@ -26,6 +26,7 @@ class EventDefinition:
     reference_window_ms: float = 1.0
     requires_kind: Optional[str] = None
     maximum_delay_ms: Optional[float] = None
+    maximum_event_duration_ms: Optional[float] = None
     unit: str = "mV"
     detector_version: str = EVENT_DETECTOR_VERSION
 
@@ -51,6 +52,13 @@ class EventDefinition:
             raise ValueError("reference_window_ms must be positive")
         if self.requires_kind and self.maximum_delay_ms is None:
             raise ValueError("linked events require maximum_delay_ms")
+        if (
+            self.maximum_event_duration_ms is not None
+            and self.maximum_event_duration_ms < self.min_duration_ms
+        ):
+            raise ValueError(
+                "maximum_event_duration_ms cannot be below min_duration_ms"
+            )
 
     def to_dict(self) -> Dict[str, Any]:
         self.validate()
@@ -158,6 +166,11 @@ def extract_events(
             cursor = max(offset_index + 1, onset_index + 1)
             if duration + 1e-12 < definition.min_duration_ms:
                 continue
+            if (
+                definition.maximum_event_duration_ms is not None
+                and duration > definition.maximum_event_duration_ms + 1e-12
+            ):
+                continue
 
             baseline_start = float(time[onset_index]) - definition.reference_window_ms
             baseline_mask = (time >= baseline_start) & (time < time[onset_index])
@@ -213,6 +226,90 @@ def extract_events(
             event["linked_delay_ms"] = float(min(valid))
             filtered.append(event)
     return sorted(filtered, key=lambda row: (row["onset_ms"], row["kind"]))
+
+
+def annotate_backpropagation(
+    time_ms: Sequence[float],
+    traces: Mapping[str, Sequence[float]],
+    events: Sequence[Mapping[str, Any]],
+    *,
+    regional_distances_um: Mapping[str, float],
+    threshold_mv: float = -20.0,
+    maximum_delay_ms: float = 5.0,
+) -> List[Dict[str, Any]]:
+    """Require outward temporal order and attach regional bAP propagation data."""
+
+    import numpy as np
+
+    time = np.asarray(time_ms, dtype=float)
+    path = [name for name in ("soma", "trunk", "nexus", "tuft") if name in traces]
+    basal_path = [name for name in ("soma", "basal") if name in traces]
+    result: List[Dict[str, Any]] = []
+    for raw in events:
+        if raw["kind"] != "backpropagating_ap":
+            result.append(dict(raw))
+            continue
+        event = dict(raw)
+        soma_onset = float(event["onset_ms"] - event.get("linked_delay_ms", 0.0))
+
+        def propagation_rows(labels: Sequence[str]) -> List[Dict[str, float]]:
+            rows = []
+            previous_onset = soma_onset - 1.0e-12
+            for label in labels:
+                values = np.asarray(traces[label], dtype=float)
+                mask = (
+                    (time >= soma_onset)
+                    & (time <= soma_onset + float(maximum_delay_ms))
+                    & (values >= float(threshold_mv))
+                )
+                indices = np.flatnonzero(mask)
+                if not indices.size:
+                    break
+                index = int(indices[0])
+                onset = float(time[index])
+                if onset + 1.0e-12 < previous_onset:
+                    break
+                local = (time >= onset) & (time <= soma_onset + maximum_delay_ms)
+                rows.append(
+                    {
+                        "region": label,
+                        "onset_ms": onset,
+                        "delay_from_soma_ms": onset - soma_onset,
+                        "peak_mv": float(np.max(values[local])),
+                        "distance_from_soma_um": float(
+                            regional_distances_um.get(label, 0.0)
+                        ),
+                    }
+                )
+                previous_onset = onset
+            return rows
+
+        apical = propagation_rows(path)
+        basal = propagation_rows(basal_path)
+        reached_trunk = any(row["region"] == "trunk" for row in apical)
+        if not reached_trunk:
+            continue
+        combined = apical + [row for row in basal if row["region"] != "soma"]
+        event.update(
+            {
+                "origin": "soma",
+                "propagation_rule": (
+                    "ordered regional threshold crossings after somatic spike"
+                ),
+                "regional_propagation": combined,
+                "maximum_distance_um": max(
+                    row["distance_from_soma_um"] for row in combined
+                ),
+                "propagation_failure": len(apical) < len(path),
+                "attenuation_mv": (
+                    float(apical[0]["peak_mv"] - apical[-1]["peak_mv"])
+                    if len(apical) > 1
+                    else 0.0
+                ),
+            }
+        )
+        result.append(event)
+    return sorted(result, key=lambda row: (row["onset_ms"], row["kind"]))
 
 
 def event_ids_by_transition(

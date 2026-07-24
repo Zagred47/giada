@@ -19,6 +19,25 @@ from .diagnostic_contract import (
     validate_split_isolation,
     write_json,
 )
+from .targeted_contract import (
+    CAUSAL_OBSERVATION_PHASE,
+    RELEASE_SCHEMA_VERSION,
+    TARGETED_DATASET_SCHEMA_VERSION,
+    TARGETED_EVENT_CLASSES,
+    TARGETED_SPLITS,
+    CausalReleaseOutcome,
+    build_input_views,
+    summarize_independent_support,
+    validate_minimum_support,
+)
+from .targeted_protocols import (
+    TargetedRecipe,
+    action_schedule_from_json,
+    append_specialized_test_episodes,
+    build_balanced_episode_plan,
+    select_adaptive_recipe_brackets,
+    split_assignment_key,
+)
 from .hdf5_transition_store import TransitionH5Writer, validate_hdf5_store
 from .flowmap_dataset import (
     DYNAMIC_CATEGORIES,
@@ -42,6 +61,21 @@ from .reconditioned_flowmap import (
 )
 
 __all__ = [
+    "CAUSAL_OBSERVATION_PHASE",
+    "CausalReleaseOutcome",
+    "RELEASE_SCHEMA_VERSION",
+    "TARGETED_DATASET_SCHEMA_VERSION",
+    "TARGETED_EVENT_CLASSES",
+    "TARGETED_SPLITS",
+    "build_input_views",
+    "summarize_independent_support",
+    "validate_minimum_support",
+    "TargetedRecipe",
+    "action_schedule_from_json",
+    "append_specialized_test_episodes",
+    "build_balanced_episode_plan",
+    "select_adaptive_recipe_brackets",
+    "split_assignment_key",
     "BOUNDARY_INTERVAL_MS",
     "BurnInCriteria",
     "DATASET_SCHEMA_VERSION",

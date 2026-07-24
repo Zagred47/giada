@@ -942,7 +942,7 @@ class DiagnosticDatasetSession:
             "generazione", total_transitions
         )
 
-        with TransitionH5Writer(
+        with self._make_transition_writer(
             self.transition_path,
             widths,
             len(micro_grid),
@@ -954,13 +954,13 @@ class DiagnosticDatasetSession:
             writer.set_microtrace_grid(micro_grid)
             for trajectory_number, trajectory in enumerate(protocols, start=1):
                 self._active_trajectory = trajectory
-                equilibrium_rng = json.loads(
-                    self.equilibrium_rng_path.read_text(encoding="utf-8")
+                initial_snapshot, initial_sequences, initial_seed = (
+                    self._trajectory_initial_state(trajectory)
                 )
                 self._restore_native_snapshot(
-                    self.equilibrium_snapshot_path,
-                    equilibrium_rng["sequences"],
-                    equilibrium_rng["random123_seed"],
+                    initial_snapshot,
+                    initial_sequences,
+                    initial_seed,
                 )
                 self._rekey_rngs(trajectory.seed)
                 trajectory_indices = []
@@ -1045,10 +1045,8 @@ class DiagnosticDatasetSession:
                         }
                     )
 
-                events = extract_events(
-                    trajectory_times,
-                    trajectory_traces,
-                    self.event_definitions,
+                events = self._extract_events(
+                    trajectory_times, trajectory_traces
                 )
                 starts = [
                     float(transition_rows[index]["start_time_ms"])
@@ -1222,6 +1220,25 @@ class DiagnosticDatasetSession:
         )
         return self.dataset_manifest
 
+    def _trajectory_initial_state(
+        self, trajectory: ProtocolTrajectory
+    ) -> Tuple[Path, Sequence[float], int]:
+        """Return the native state used to start one complete trajectory."""
+
+        equilibrium_rng = json.loads(
+            self.equilibrium_rng_path.read_text(encoding="utf-8")
+        )
+        return (
+            self.equilibrium_snapshot_path,
+            equilibrium_rng["sequences"],
+            int(equilibrium_rng["random123_seed"]),
+        )
+
+    def _make_transition_writer(self, *args: Any, **kwargs: Any) -> Any:
+        """Factory hook for versioned, backward-compatible HDF5 extensions."""
+
+        return TransitionH5Writer(*args, **kwargs)
+
     def _on_trajectory_complete(
         self,
         trajectory: ProtocolTrajectory,
@@ -1230,6 +1247,13 @@ class DiagnosticDatasetSession:
         events: Sequence[Mapping[str, Any]],
     ) -> None:
         """Extension hook for versioned diagnostic datasets."""
+
+    def _extract_events(
+        self,
+        time_ms: Sequence[float],
+        traces: Mapping[str, Sequence[float]],
+    ) -> List[Dict[str, Any]]:
+        return extract_events(time_ms, traces, self.event_definitions)
 
     def _run_transition(
         self,

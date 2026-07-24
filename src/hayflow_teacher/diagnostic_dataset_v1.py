@@ -1773,6 +1773,17 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                                 )
                             )
                         )
+                    if "release_outcomes" in handle:
+                        stored_release = json.loads(
+                            handle["release_outcomes/records_json"][index]
+                        )
+                        replay_release = replay.get("release_outcomes", [])
+                        if canonical_json_sha256(
+                            {"rows": stored_release}
+                        ) != canonical_json_sha256({"rows": replay_release}):
+                            errors["release_outcomes.exact_match"] = 1.0
+                        else:
+                            errors["release_outcomes.exact_match"] = 0.0
                     row_error = max(errors.values(), default=0.0)
                     maximum_error = max(maximum_error, row_error)
                     replayed += 1

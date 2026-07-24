@@ -20,6 +20,8 @@ class TransitionH5Writer:
         probe_count: int,
         *,
         micro_observable_names: Sequence[str] = (),
+        input_view_names: Sequence[str] = (),
+        store_release_outcomes: bool = False,
         compression: str = "gzip",
         compression_level: int = 4,
     ) -> None:
@@ -181,6 +183,18 @@ class TransitionH5Writer:
         self.input_json = inputs.create_dataset(
             "ordered_actions_json", shape=(0,), maxshape=(None,), dtype=strings
         )
+        self.input_view_json = {
+            name: inputs.create_dataset(
+                f"{name}_json", shape=(0,), maxshape=(None,), dtype=strings
+            )
+            for name in input_view_names
+        }
+        self.release_json = None
+        if store_release_outcomes:
+            releases = self.file.create_group("release_outcomes")
+            self.release_json = releases.create_dataset(
+                "records_json", shape=(0,), maxshape=(None,), dtype=strings
+            )
         events = self.file.create_group("events")
         self.event_json = events.create_dataset(
             "labels_json", shape=(0,), maxshape=(None,), dtype=strings
@@ -258,6 +272,25 @@ class TransitionH5Writer:
             self.input_json,
             json.dumps(row["inputs"], sort_keys=True, separators=(",", ":")),
         )
+        input_views = row.get("input_views", {})
+        for name, dataset in self.input_view_json.items():
+            self._append(
+                dataset,
+                json.dumps(
+                    input_views.get(name, []),
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
+            )
+        if self.release_json is not None:
+            self._append(
+                self.release_json,
+                json.dumps(
+                    row.get("release_outcomes", []),
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ),
+            )
         self._append(
             self.event_json,
             json.dumps(row.get("events", []), sort_keys=True, separators=(",", ":")),

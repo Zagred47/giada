@@ -67,6 +67,55 @@ class TransitionH5WriterTest(unittest.TestCase):
                     group["maximum_time_offset_ms"][0], [0.0, 1.0, 0.0]
                 )
 
+    def test_optional_release_contract_is_stored_without_changing_legacy_key(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "release.h5"
+            with TransitionH5Writer(
+                path,
+                {"voltage": 1, "rng_state": 1},
+                microtrace_samples=2,
+                microtrace_variable_count=1,
+                segment_count=1,
+                probe_count=1,
+                input_view_names=("U_scheduled", "U_rng", "U_realized"),
+                store_release_outcomes=True,
+            ) as writer:
+                writer.set_microtrace_grid([0.0, 1.0])
+                writer.append(
+                    {
+                        "state_t": {"voltage": [-70.0]},
+                        "state_t_plus_1": {"voltage": [-69.0]},
+                        "rng_t": [0.0],
+                        "rng_t_plus_1": [1.0],
+                        "micro_selected": [[0.0], [0.0]],
+                        "micro_probe_voltage": [[-70.0], [-69.0]],
+                        "micro_all_voltage": [[-70.0], [-69.0]],
+                        "micro_somatic_current": [0.0, 0.0],
+                        "metadata": {
+                            "transition_id": 0,
+                            "trajectory_id": "release",
+                            "category": "local_synaptic",
+                            "protocol": "release",
+                            "split": "release_identifiability_test",
+                            "seed": 1,
+                            "step_index": 0,
+                            "start_time_ms": 0.0,
+                            "native_snapshot_ref": "snapshot",
+                        },
+                        "inputs": [{"kind": "synaptic_event"}],
+                        "input_views": {
+                            "U_scheduled": [{"kind": "synaptic_event"}],
+                            "U_rng": [{"random123_stream_id": 1}],
+                            "U_realized": [{"release_success": True}],
+                        },
+                        "release_outcomes": [{"release_success": True}],
+                    }
+                )
+            with h5py.File(path, "r") as handle:
+                self.assertIn("ordered_actions_json", handle["inputs"])
+                self.assertIn("U_realized_json", handle["inputs"])
+                self.assertIn("records_json", handle["release_outcomes"])
+
 
 if __name__ == "__main__":
     unittest.main()
