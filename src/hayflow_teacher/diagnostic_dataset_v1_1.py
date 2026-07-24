@@ -12,6 +12,7 @@ from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 from ..hayflow_data import (
     TARGETED_DATASET_SCHEMA_VERSION,
+    RELEASE_SCHEMA_VERSION,
     CausalReleaseOutcome,
     InputAction,
     ProtocolTrajectory,
@@ -53,6 +54,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         self.active_random123_seed = int(self.seed)
         self._active_transition_id = -1
         self._last_release_outcomes: List[CausalReleaseOutcome] = []
+        self._last_release_verification: Dict[str, Any] = {}
         self._collect_release_rows = False
         self.release_rows: List[Dict[str, Any]] = []
         self.causal_release_pilot_report: Dict[str, Any] = {}
@@ -125,7 +127,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         )
         write_json(self.output_dir / "state_schema.json", self.state_schema)
         release_schema = {
-            "schema_version": "1.0.0",
+            "schema_version": RELEASE_SCHEMA_VERSION,
             "dataset_schema_version": TARGETED_DATASET_SCHEMA_VERSION,
             "teacher_commit": PINNED_TEACHER_COMMIT,
             "teacher_mechanisms_unchanged": True,
@@ -133,7 +135,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                 "ProbAMPANMDA2": {
                     "random_distribution": "negexp(1)",
                     "release_rule": "erand() < Pr",
-                    "direct_state_increments": [
+                    "causal_state_increments": [
                         "A_AMPA",
                         "B_AMPA",
                         "A_NMDA",
@@ -143,31 +145,50 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                 "ProbUDFsyn2": {
                     "random_distribution": "negexp(1)",
                     "release_rule": "erand() < Pr",
-                    "direct_state_increments": ["A", "B"],
+                    "causal_state_increments": ["A", "B"],
                 },
             },
             "causal_boundary": {
-                "pre": "callback at event timestamp before original NetCon delivery",
-                "decision": "unchanged original NET_RECEIVE",
+                "pre": (
+                    "boundary synapse state, ordered event schedule and cloned "
+                    "Random123 position"
+                ),
+                "decision": (
+                    "exact causal replay of the unchanged original NET_RECEIVE "
+                    "equations before membrane integration"
+                ),
                 "post": (
-                    "callback at the same timestamp after NET_RECEIVE and before "
-                    "membrane advancement under the new conductance"
+                    "predicted same-timestamp synapse state, independently checked "
+                    "against authentic teacher state and RNG at the 1 ms boundary"
                 ),
                 "forbidden_source": "S_(t+1) or any future membrane state",
             },
             "random_preview": {
-                "purpose": "validate the direct same-time state discontinuity",
+                "purpose": (
+                    "evaluate the causal front-end and validate it against the "
+                    "authentic teacher without advancing the teacher RNG"
+                ),
                 "method": (
                     "independent Random123 with identical seed, stream and seq; "
                     "the teacher RNG is never advanced by instrumentation"
+                ),
+            },
+            "boundary_verification": {
+                "point_state_atol": CausalReleaseRecorder.POINT_STATE_ATOL,
+                "netcon_state_atol": CausalReleaseRecorder.NETCON_STATE_ATOL,
+                "rng_sequence": "exact equality",
+                "role": (
+                    "validation only; S_(t+1) is never used to construct "
+                    "U_realized"
                 ),
             },
             "input_views": {
                 "U_scheduled": "ordered presynaptic schedule only",
                 "U_rng": "schedule plus causal Random123 identity and position",
                 "U_realized": (
-                    "successful releases and direct component increments emitted "
-                    "by the authentic synaptic front-end"
+                    "successful releases and component increments causally "
+                    "computed from the authentic front-end contract and verified "
+                    "against the unchanged teacher"
                 ),
             },
             "deployment_boundary": (
@@ -381,7 +402,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         *,
         sample_interval_ms: float = DEFAULT_MICROTRACE_STEP_MS,
     ) -> Tuple[Any, List[Dict[str, Any]], List[Any]]:
-        """Canonical driver plus non-invasive same-time release callbacks."""
+        """Canonical driver plus a causal, boundary-verified shadow front-end."""
 
         interval = float(sample_interval_ms)
         sample_count = int(round(1.0 / interval)) + 1
@@ -403,6 +424,9 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         for sample_time in times:
             self.audit._advance_exact(float(sample_time))
             samples.append(observer())
+        self._last_release_verification = recorder.verify_boundary(
+            float(start_time) + 1.0
+        )
         self._last_release_outcomes = recorder.outcomes()
         return self.np.asarray(times, dtype=float), public_actions, samples
 
@@ -416,6 +440,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
     ) -> Dict[str, Any]:
         self._active_transition_id = int(transition_id)
         self._last_release_outcomes = []
+        self._last_release_verification = {}
         row = super()._run_transition(
             transition_id,
             trajectory,
@@ -428,6 +453,9 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         row["inputs"] = views["U_scheduled"]
         row["input_views"] = views
         row["release_outcomes"] = releases
+        row["metadata"]["causal_release_boundary_verification"] = dict(
+            self._last_release_verification
+        )
         if self._collect_release_rows and int(transition_id) >= 0:
             for release in releases:
                 self.release_rows.append(
@@ -663,9 +691,27 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
             ),
             "different_seed_changes_causal_rng_stream": different_rng,
             "teacher_rng_advanced_only_by_original_net_receive": True,
-            "release_source": (
-                "direct same-timestamp pre/post NET_RECEIVE state discontinuity"
-            ),
+            "release_source": "exact causal replay of original NET_RECEIVE",
+            "boundary_verification": {
+                "maximum_point_state_error": max(
+                    float(row["metadata"]["causal_release_boundary_verification"].get(
+                        "maximum_point_state_error", 0.0
+                    ))
+                    for row in first
+                ),
+                "maximum_netcon_state_error": max(
+                    float(row["metadata"]["causal_release_boundary_verification"].get(
+                        "maximum_netcon_state_error", 0.0
+                    ))
+                    for row in first
+                ),
+                "all_transitions_valid": all(
+                    bool(row["metadata"]["causal_release_boundary_verification"].get(
+                        "valid", False
+                    ))
+                    for row in first
+                ),
+            },
             "future_state_used": False,
             "elapsed_seconds": elapsed,
             "seconds_per_transition": elapsed / len(first),
@@ -1871,7 +1917,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
             ).to_dict("records")
         release_valid = bool(release_rows) and all(
             not bool(row.get("future_state_used", False))
-            and row["source"] == "direct_same_timestamp_synapse_state_discontinuity"
+            and row["source"] == "exact_causal_replay_of_original_net_receive"
             for row in release_rows
         )
         episode_rows = self.pd.read_parquet(

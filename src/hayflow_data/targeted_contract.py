@@ -13,7 +13,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Sequence, Tuple
 
 
 TARGETED_DATASET_SCHEMA_VERSION = "1.1.0"
-RELEASE_SCHEMA_VERSION = "1.0.0"
+RELEASE_SCHEMA_VERSION = "1.1.0"
 TARGETED_EVENT_CLASSES: Tuple[str, ...] = (
     "axonal_spike",
     "somatic_spike",
@@ -35,17 +35,18 @@ TARGETED_SPLITS: Tuple[str, ...] = (
     "recovery_test",
 )
 
-CAUSAL_OBSERVATION_PHASE = "same_timestamp_after_net_receive_before_membrane_advance"
+CAUSAL_OBSERVATION_PHASE = "presynaptic_frontend_before_membrane_advance"
 
 
 @dataclass(frozen=True)
 class CausalReleaseOutcome:
     """One release decision observed at the synaptic event boundary.
 
-    ``pre_synapse_state`` is sampled by a callback inserted immediately before
-    ``NetCon.event``. ``post_synapse_state`` is sampled by a callback at the
-    same NEURON timestamp immediately after ``NET_RECEIVE``.  The membrane has
-    not advanced under the new conductance between those two observations.
+    ``pre_synapse_state`` and ``post_synapse_state`` are evaluated from the
+    boundary state by an independent, exact replay of the canonical
+    ``NET_RECEIVE`` equations and a cloned Random123 stream.  This causal
+    prediction is made before membrane integration and is verified against the
+    authentic teacher synapse states and RNG position at the next boundary.
     """
 
     transition_id: int
@@ -72,7 +73,7 @@ class CausalReleaseOutcome:
     pre_synapse_state: Mapping[str, float]
     post_synapse_state: Mapping[str, float]
     observation_phase: str = CAUSAL_OBSERVATION_PHASE
-    source: str = "direct_same_timestamp_synapse_state_discontinuity"
+    source: str = "exact_causal_replay_of_original_net_receive"
 
     def validate(self) -> None:
         if self.transition_id < -1:
@@ -98,7 +99,7 @@ class CausalReleaseOutcome:
         )
         observed_success = any(abs(value) > 1.0e-12 for value in increments)
         if bool(self.release_success) != observed_success:
-            raise ValueError("release flag disagrees with direct state discontinuity")
+            raise ValueError("release flag disagrees with causal state increment")
         if self.release_success and self.released_quantity <= 0.0:
             raise ValueError("successful release requires positive released quantity")
         if not self.release_success and abs(self.released_quantity) > 1.0e-12:

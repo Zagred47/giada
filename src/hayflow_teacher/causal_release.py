@@ -1,41 +1,48 @@
 """Causal observation of the canonical Hay probabilistic synapses.
 
-Instrumentation is implemented with same-time event callbacks around the
-original ``NET_RECEIVE`` call.  It does not patch or replace either canonical
-NMODL mechanism.
+The original NMODL mechanisms and their ``NetCon`` deliveries remain the only
+objects that drive the teacher.  Before a one-millisecond macro-step, this
+module independently evaluates the presynaptic ``NET_RECEIVE`` equations from
+the boundary state and cloned Random123 streams.  The resulting release
+decisions are therefore available before membrane integration.  At the next
+boundary the shadow synapse states and RNG positions are checked against the
+authentic teacher.
+
+This design deliberately avoids same-timestamp Python callbacks: NEURON does
+not promise that callbacks and ``NetCon`` deliveries with identical times are
+executed in the insertion order needed to bracket ``NET_RECEIVE``.
 """
 
 from __future__ import annotations
 
-from collections import defaultdict
-from typing import Any, Dict, List, Mapping, Sequence, Tuple
+import math
+from typing import Any, Dict, List, Mapping, MutableMapping, Sequence, Tuple
 
 from ..hayflow_data import CausalReleaseOutcome, InputAction
 
 
-_POINT_STATE_NAMES = {
+_DYNAMIC_POINT_STATE_NAMES = {
+    "ProbAMPANMDA2": ("A_AMPA", "B_AMPA", "A_NMDA", "B_NMDA"),
+    "ProbUDFsyn2": ("A", "B"),
+}
+
+_POINT_PARAMETER_NAMES = {
     "ProbAMPANMDA2": (
-        "A_AMPA",
-        "B_AMPA",
-        "A_NMDA",
-        "B_NMDA",
-        "g_AMPA",
-        "g_NMDA",
-        "i_AMPA",
-        "i_NMDA",
         "factor_AMPA",
         "factor_NMDA",
+        "tau_r_AMPA",
+        "tau_d_AMPA",
+        "tau_r_NMDA",
+        "tau_d_NMDA",
         "Use",
         "Dep",
         "Fac",
         "u0",
     ),
     "ProbUDFsyn2": (
-        "A",
-        "B",
-        "g",
-        "i",
         "factor",
+        "tau_r",
+        "tau_d",
         "Use",
         "Dep",
         "Fac",
@@ -56,9 +63,22 @@ _NETCON_WEIGHT_NAMES = {
     "ProbUDFsyn2": ("weight", "Pv", "Pr", "u", "tsyn_ms"),
 }
 
+_DECAY_CONSTANTS = {
+    "ProbAMPANMDA2": {
+        "A_AMPA": "tau_r_AMPA",
+        "B_AMPA": "tau_d_AMPA",
+        "A_NMDA": "tau_r_NMDA",
+        "B_NMDA": "tau_d_NMDA",
+    },
+    "ProbUDFsyn2": {"A": "tau_r", "B": "tau_d"},
+}
+
 
 class CausalReleaseRecorder:
-    """Bracket canonical NetCon deliveries and record their direct outcomes."""
+    """Run a causal shadow front-end and verify it against the teacher."""
+
+    POINT_STATE_ATOL = 1.0e-6
+    NETCON_STATE_ATOL = 1.0e-10
 
     def __init__(
         self,
@@ -69,154 +89,190 @@ class CausalReleaseRecorder:
     ) -> None:
         self.session = session
         self.h = session.h
-        self.cvode = session.cvode
         self.transition_id = int(transition_id)
         self.random123_seed = int(random123_seed)
-        self._pending: Dict[int, Dict[str, Any]] = {}
-        self._outcomes: Dict[int, CausalReleaseOutcome] = {}
-        self._callback_references: List[Any] = []
+        self._outcomes: List[CausalReleaseOutcome] = []
+        self._shadows: Dict[int, Dict[str, Any]] = {}
+        self._scheduled = False
+        self._verified = False
+        self.verification_report: Dict[str, Any] = {}
 
     @staticmethod
-    def _weight_values(record: Mapping[str, Any]) -> Dict[str, float]:
+    def _weight_values(record: Mapping[str, Any]) -> List[float]:
         names = _NETCON_WEIGHT_NAMES[str(record["class_name"])]
-        netcon = record["netcon"]
-        return {
-            f"netcon.{name}": float(netcon.weight[index])
-            for index, name in enumerate(names)
-        }
+        return [float(record["netcon"].weight[index]) for index in range(len(names))]
 
     @staticmethod
     def _point_values(record: Mapping[str, Any]) -> Dict[str, float]:
+        class_name = str(record["class_name"])
         point = record["point_process"]
-        values = {}
-        for name in _POINT_STATE_NAMES[str(record["class_name"])]:
-            if hasattr(point, name):
-                values[f"point_process.{name}"] = float(getattr(point, name))
-        return values
-
-    def _snapshot_synapse(self, record: Mapping[str, Any]) -> Dict[str, float]:
-        return {**self._weight_values(record), **self._point_values(record)}
-
-    def _preview_next_draw(
-        self, stream_id: int, sequence_before: float
-    ) -> float:
-        preview = self.h.Random()
-        preview.Random123(self.random123_seed, int(stream_id), 0)
-        preview.negexp(1.0)
-        preview.seq(float(sequence_before))
-        return float(preview.repick())
+        names = (
+            *_DYNAMIC_POINT_STATE_NAMES[class_name],
+            *_POINT_PARAMETER_NAMES[class_name],
+        )
+        return {name: float(getattr(point, name)) for name in names}
 
     @staticmethod
-    def _increment(
-        before: Mapping[str, float], after: Mapping[str, float], names: Sequence[str]
-    ) -> float:
-        values = [float(after[name]) - float(before[name]) for name in names]
-        if max(values) - min(values) > 1.0e-9:
-            raise RuntimeError(
-                f"same-time dual-exponential state increments disagree: {values}"
-            )
-        return float(sum(values) / len(values))
+    def _global_index(rng: Any) -> int:
+        value = int(rng.Random123_globalindex())
+        if value < 0:
+            raise RuntimeError("Random123 global index must be non-negative")
+        return value
 
-    def _before_group(
-        self, scheduled_time_ms: float, events: Sequence[Tuple[int, InputAction]]
-    ) -> None:
-        if abs(float(self.h.t) - float(scheduled_time_ms)) > 1.0e-9:
-            raise RuntimeError("pre-release callback ran at the wrong teacher time")
-        for event_index, action in events:
-            record = self.session.audit.synapse_records[int(action.synapse_id)]
-            sequence = float(record["rng"].seq())
-            stream_id = int(record["rng_stream_id"])
-            self._pending[event_index] = {
-                "action": action,
-                "record": record,
-                "scheduled_time_ms": float(scheduled_time_ms),
-                "pre": self._snapshot_synapse(record),
-                "rng_sequence_before": sequence,
-                "rng_preview_value": self._preview_next_draw(stream_id, sequence),
+    def _make_shadow(self, record: Mapping[str, Any], start_time_ms: float) -> Dict[str, Any]:
+        stream_id = int(record["rng_stream_id"])
+        sequence = float(record["rng"].seq())
+        preview = self.h.Random()
+        preview.Random123(self.random123_seed, stream_id, 0)
+        preview.negexp(1.0)
+        preview.seq(sequence)
+        return {
+            "record": record,
+            "class_name": str(record["class_name"]),
+            "time_ms": float(start_time_ms),
+            "point": self._point_values(record),
+            "weights": self._weight_values(record),
+            "rng": preview,
+            "global_index": self._global_index(record["rng"]),
+        }
+
+    @staticmethod
+    def _advance_point(shadow: MutableMapping[str, Any], target_time_ms: float) -> None:
+        target = float(target_time_ms)
+        delta = target - float(shadow["time_ms"])
+        if delta < -1.0e-12:
+            raise RuntimeError("causal synapse events are not time ordered")
+        if delta > 0.0:
+            point = shadow["point"]
+            for state_name, tau_name in _DECAY_CONSTANTS[shadow["class_name"]].items():
+                point[state_name] *= math.exp(-delta / point[tau_name])
+        shadow["time_ms"] = target
+
+    @staticmethod
+    def _state_view(shadow: Mapping[str, Any]) -> Dict[str, float]:
+        class_name = str(shadow["class_name"])
+        names = _NETCON_WEIGHT_NAMES[class_name]
+        values = {
+            f"netcon.{name}": float(value)
+            for name, value in zip(names, shadow["weights"])
+        }
+        values.update(
+            {
+                f"point_process.{name}": float(value)
+                for name, value in shadow["point"].items()
             }
+        )
+        return values
 
-    def _after_group(
-        self, scheduled_time_ms: float, events: Sequence[Tuple[int, InputAction]]
+    @staticmethod
+    def _apply_short_term_plasticity(shadow: MutableMapping[str, Any], event_time_ms: float) -> float:
+        class_name = str(shadow["class_name"])
+        point = shadow["point"]
+        weights = shadow["weights"]
+        if class_name == "ProbAMPANMDA2":
+            weights[1] = weights[0]
+            weights[2] = weights[0]
+            pv_index, pr_index, u_index, tsyn_index = 3, 4, 5, 6
+        elif class_name == "ProbUDFsyn2":
+            pv_index, pr_index, u_index, tsyn_index = 1, 2, 3, 4
+        else:
+            raise RuntimeError(f"unsupported probabilistic synapse {class_name}")
+
+        elapsed = float(event_time_ms) - float(weights[tsyn_index])
+        if elapsed < -1.0e-12:
+            raise RuntimeError("NET_RECEIVE tsyn lies after the scheduled event")
+        if point["Fac"] > 0.0:
+            u_value = weights[u_index] * math.exp(-elapsed / point["Fac"])
+            u_value += point["Use"] * (1.0 - u_value)
+        else:
+            u_value = point["Use"]
+        pv_available = 1.0 - (1.0 - weights[pv_index]) * math.exp(
+            -elapsed / point["Dep"]
+        )
+        probability = u_value * pv_available
+        weights[pv_index] = pv_available - u_value * pv_available
+        weights[pr_index] = probability
+        weights[u_index] = u_value
+        weights[tsyn_index] = float(event_time_ms)
+        return float(probability)
+
+    @staticmethod
+    def _apply_release(shadow: MutableMapping[str, Any], success: bool) -> Tuple[float, float, float]:
+        if not success:
+            return 0.0, 0.0, 0.0
+        point = shadow["point"]
+        weights = shadow["weights"]
+        if shadow["class_name"] == "ProbAMPANMDA2":
+            ampa = float(weights[1] * point["factor_AMPA"])
+            nmda = float(weights[2] * point["factor_NMDA"])
+            point["A_AMPA"] += ampa
+            point["B_AMPA"] += ampa
+            point["A_NMDA"] += nmda
+            point["B_NMDA"] += nmda
+            return ampa, nmda, 0.0
+        inhibitory = float(weights[0] * point["factor"])
+        point["A"] += inhibitory
+        point["B"] += inhibitory
+        return 0.0, 0.0, inhibitory
+
+    def _plan_event(
+        self,
+        event_index: int,
+        action: InputAction,
+        scheduled_time_ms: float,
     ) -> None:
-        if abs(float(self.h.t) - float(scheduled_time_ms)) > 1.0e-9:
-            raise RuntimeError("post-release callback ran at the wrong teacher time")
-        for event_index, action in events:
-            pending = self._pending[event_index]
-            record = pending["record"]
-            before = pending["pre"]
-            after = self._snapshot_synapse(record)
-            class_name = str(record["class_name"])
-            if class_name == "ProbAMPANMDA2":
-                ampa = self._increment(
-                    before,
-                    after,
-                    ("point_process.A_AMPA", "point_process.B_AMPA"),
-                )
-                nmda = self._increment(
-                    before,
-                    after,
-                    ("point_process.A_NMDA", "point_process.B_NMDA"),
-                )
-                inhibitory = 0.0
-                probability = float(after["netcon.Pr"])
-            elif class_name == "ProbUDFsyn2":
-                ampa = 0.0
-                nmda = 0.0
-                inhibitory = self._increment(
-                    before,
-                    after,
-                    ("point_process.A", "point_process.B"),
-                )
-                probability = float(after["netcon.Pr"])
-            else:
-                raise RuntimeError(f"unsupported probabilistic synapse {class_name}")
-            success = any(abs(value) > 1.0e-12 for value in (ampa, nmda, inhibitory))
-            predicted = float(pending["rng_preview_value"]) < probability
-            if bool(success) != bool(predicted):
-                raise RuntimeError(
-                    "Random123 preview and direct NET_RECEIVE state jump disagree; "
-                    "the causal release instrumentation is not valid"
-                )
-            sequence_after = float(record["rng"].seq())
-            sequence_before = float(pending["rng_sequence_before"])
-            outcome = CausalReleaseOutcome(
-                transition_id=self.transition_id,
-                event_index=int(event_index),
-                synapse_id=int(action.synapse_id),
-                scheduled_time_ms=float(scheduled_time_ms),
-                offset_ms=float(action.offset_ms),
-                synapse_type=class_name,
-                functional_type=str(record["functional_type"]),
-                weight=float(record["netcon"].weight[0]),
-                random123_seed=self.random123_seed,
-                random123_stream_id=int(record["rng_stream_id"]),
-                random123_global_index=int(round(sequence_before)),
-                rng_sequence_before=sequence_before,
-                rng_sequence_after=sequence_after,
-                rng_distribution="negexp(1)",
-                rng_preview_value=float(pending["rng_preview_value"]),
-                release_probability=probability,
-                release_success=bool(success),
-                released_quantity=1.0 if success else 0.0,
-                ampa_state_increment=ampa,
-                nmda_state_increment=nmda,
-                inhibitory_state_increment=inhibitory,
-                pre_synapse_state=before,
-                post_synapse_state=after,
-            )
-            outcome.validate()
-            self._outcomes[event_index] = outcome
+        synapse_id = int(action.synapse_id)
+        shadow = self._shadows[synapse_id]
+        self._advance_point(shadow, scheduled_time_ms)
+        pre = self._state_view(shadow)
+        sequence_before = float(shadow["rng"].seq())
+        probability = self._apply_short_term_plasticity(shadow, scheduled_time_ms)
+        draw = float(shadow["rng"].repick())
+        sequence_after = float(shadow["rng"].seq())
+        success = draw < probability
+        ampa, nmda, inhibitory = self._apply_release(shadow, success)
+        post = self._state_view(shadow)
+        record = shadow["record"]
+        outcome = CausalReleaseOutcome(
+            transition_id=self.transition_id,
+            event_index=int(event_index),
+            synapse_id=synapse_id,
+            scheduled_time_ms=float(scheduled_time_ms),
+            offset_ms=float(action.offset_ms),
+            synapse_type=str(record["class_name"]),
+            functional_type=str(record["functional_type"]),
+            weight=float(shadow["weights"][0]),
+            random123_seed=self.random123_seed,
+            random123_stream_id=int(record["rng_stream_id"]),
+            random123_global_index=int(shadow["global_index"]),
+            rng_sequence_before=sequence_before,
+            rng_sequence_after=sequence_after,
+            rng_distribution="negexp(1)",
+            rng_preview_value=draw,
+            release_probability=probability,
+            release_success=bool(success),
+            released_quantity=1.0 if success else 0.0,
+            ampa_state_increment=ampa,
+            nmda_state_increment=nmda,
+            inhibitory_state_increment=inhibitory,
+            pre_synapse_state=pre,
+            post_synapse_state=post,
+        )
+        outcome.validate()
+        self._outcomes.append(outcome)
 
     def schedule(
         self, start_time_ms: float, actions: Sequence[InputAction]
     ) -> List[Dict[str, Any]]:
-        """Schedule callbacks and original NetCon events in causal order."""
+        """Plan causal outcomes, then queue only the original NetCon events."""
 
+        if self._scheduled:
+            raise RuntimeError("causal release recorder may be scheduled only once")
         public_actions: List[Dict[str, Any]] = []
-        grouped: Dict[float, List[Tuple[int, InputAction]]] = defaultdict(list)
+        synaptic_events: List[Tuple[int, int, InputAction, float]] = []
         seen_synapse_times = set()
         synaptic_index = 0
-        for action in actions:
+        for action_order, action in enumerate(actions):
             action.validate()
             item = action.to_dict()
             item.pop("release_observed", None)
@@ -229,30 +285,114 @@ class CausalReleaseRecorder:
                     "v1.1 preserves canonical NetCon weights; protocol weight "
                     "sweeps must select calibrated canonical synapse groups"
                 )
+            synapse_id = int(action.synapse_id)
             scheduled = float(start_time_ms) + float(action.offset_ms)
-            key = (int(action.synapse_id), scheduled)
+            key = (synapse_id, scheduled)
             if key in seen_synapse_times:
                 raise ValueError(
                     "two events for one synapse at the exact same timestamp cannot "
                     "be attributed independently"
                 )
             seen_synapse_times.add(key)
-            grouped[scheduled].append((synaptic_index, action))
+            if synapse_id not in self._shadows:
+                record = self.session.audit.synapse_records[synapse_id]
+                self._shadows[synapse_id] = self._make_shadow(record, start_time_ms)
+            synaptic_events.append((synaptic_index, action_order, action, scheduled))
             synaptic_index += 1
 
-        for scheduled_time, events in sorted(grouped.items()):
-            before = lambda t=scheduled_time, rows=tuple(events): self._before_group(t, rows)
-            after = lambda t=scheduled_time, rows=tuple(events): self._after_group(t, rows)
-            self._callback_references.extend((before, after))
-            self.cvode.event(float(scheduled_time), before)
-            for _, action in events:
-                record = self.session.audit.synapse_records[int(action.synapse_id)]
-                record["netcon"].event(float(scheduled_time))
-            self.cvode.event(float(scheduled_time), after)
+        # Evaluate the presynaptic front-end before the membrane macro-step.
+        # Input order breaks ties exactly as it does when events are enqueued.
+        for event_index, _, action, scheduled in sorted(
+            synaptic_events, key=lambda row: (row[3], row[1])
+        ):
+            self._plan_event(event_index, action, scheduled)
+
+        # Queue the authentic teacher events in the original action order.
+        for _, _, action, scheduled in sorted(synaptic_events, key=lambda row: row[1]):
+            record = self.session.audit.synapse_records[int(action.synapse_id)]
+            record["netcon"].event(float(scheduled))
+        self._outcomes.sort(key=lambda row: row.event_index)
+        self._scheduled = True
         return public_actions
 
+    def verify_boundary(self, boundary_time_ms: float) -> Dict[str, Any]:
+        """Validate shadow states and RNG positions after teacher integration."""
+
+        if not self._scheduled:
+            raise RuntimeError("release outcomes must be planned before verification")
+        point_errors: List[Dict[str, Any]] = []
+        weight_errors: List[Dict[str, Any]] = []
+        rng_errors: List[Dict[str, Any]] = []
+        maximum_point_error = 0.0
+        maximum_weight_error = 0.0
+        for synapse_id, shadow in sorted(self._shadows.items()):
+            self._advance_point(shadow, boundary_time_ms)
+            record = shadow["record"]
+            point = record["point_process"]
+            for name in _DYNAMIC_POINT_STATE_NAMES[shadow["class_name"]]:
+                predicted = float(shadow["point"][name])
+                observed = float(getattr(point, name))
+                error = abs(predicted - observed)
+                maximum_point_error = max(maximum_point_error, error)
+                if error > self.POINT_STATE_ATOL:
+                    point_errors.append(
+                        {
+                            "synapse_id": synapse_id,
+                            "variable": name,
+                            "predicted": predicted,
+                            "observed": observed,
+                            "absolute_error": error,
+                        }
+                    )
+            observed_weights = self._weight_values(record)
+            for name, predicted, observed in zip(
+                _NETCON_WEIGHT_NAMES[shadow["class_name"]],
+                shadow["weights"],
+                observed_weights,
+            ):
+                error = abs(float(predicted) - float(observed))
+                maximum_weight_error = max(maximum_weight_error, error)
+                if error > self.NETCON_STATE_ATOL:
+                    weight_errors.append(
+                        {
+                            "synapse_id": synapse_id,
+                            "variable": name,
+                            "predicted": float(predicted),
+                            "observed": float(observed),
+                            "absolute_error": error,
+                        }
+                    )
+            predicted_sequence = float(shadow["rng"].seq())
+            observed_sequence = float(record["rng"].seq())
+            if predicted_sequence != observed_sequence:
+                rng_errors.append(
+                    {
+                        "synapse_id": synapse_id,
+                        "predicted": predicted_sequence,
+                        "observed": observed_sequence,
+                    }
+                )
+        valid = not point_errors and not weight_errors and not rng_errors
+        self.verification_report = {
+            "valid": valid,
+            "verified_synapse_count": len(self._shadows),
+            "maximum_point_state_error": maximum_point_error,
+            "point_state_atol": self.POINT_STATE_ATOL,
+            "maximum_netcon_state_error": maximum_weight_error,
+            "netcon_state_atol": self.NETCON_STATE_ATOL,
+            "point_state_mismatches": point_errors[:8],
+            "netcon_state_mismatches": weight_errors[:8],
+            "rng_sequence_mismatches": rng_errors[:8],
+        }
+        self._verified = True
+        if not valid:
+            raise RuntimeError(
+                "causal shadow NET_RECEIVE disagrees with the authentic teacher "
+                f"at the 1 ms boundary: {self.verification_report}"
+            )
+        return self.verification_report
+
     def outcomes(self) -> List[CausalReleaseOutcome]:
-        if self._pending.keys() != self._outcomes.keys():
-            missing = sorted(set(self._pending) - set(self._outcomes))
-            raise RuntimeError(f"release callbacks were not completed: {missing}")
-        return [self._outcomes[index] for index in sorted(self._outcomes)]
+        if self._shadows and not self._verified:
+            raise RuntimeError("causal release outcomes were not boundary-verified")
+        return list(self._outcomes)

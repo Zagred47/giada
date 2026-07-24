@@ -1,4 +1,5 @@
 import unittest
+import math
 
 from src.hayflow_data import (
     CAUSAL_OBSERVATION_PHASE,
@@ -18,6 +19,7 @@ from src.hayflow_teacher.event_extractor import (
     extract_events,
 )
 from src.hayflow_teacher import TargetedDiagnosticDatasetSession
+from src.hayflow_teacher.causal_release import CausalReleaseRecorder
 
 
 def outcome(success=True):
@@ -51,6 +53,56 @@ def outcome(success=True):
 
 
 class TargetedReleaseContractTest(unittest.TestCase):
+    def test_shadow_frontend_matches_canonical_excitatory_net_receive_equations(self):
+        shadow = {
+            "class_name": "ProbAMPANMDA2",
+            "time_ms": 5.0,
+            "point": {
+                "A_AMPA": 2.0,
+                "B_AMPA": 3.0,
+                "A_NMDA": 4.0,
+                "B_NMDA": 5.0,
+                "factor_AMPA": 2.5,
+                "factor_NMDA": 4.0,
+                "tau_r_AMPA": 0.2,
+                "tau_d_AMPA": 1.7,
+                "tau_r_NMDA": 0.29,
+                "tau_d_NMDA": 43.0,
+                "Use": 0.4,
+                "Dep": 100.0,
+                "Fac": 10.0,
+                "u0": 0.0,
+            },
+            "weights": [1.5, 0.0, 0.0, 0.7, 0.0, 0.2, 4.0],
+        }
+        CausalReleaseRecorder._advance_point(shadow, 6.0)
+        self.assertAlmostEqual(shadow["point"]["A_AMPA"], 2.0 * math.exp(-5.0))
+        probability = CausalReleaseRecorder._apply_short_term_plasticity(
+            shadow, 6.0
+        )
+        expected_u = 0.2 * math.exp(-0.2) + 0.4 * (
+            1.0 - 0.2 * math.exp(-0.2)
+        )
+        expected_pv = 1.0 - 0.3 * math.exp(-0.02)
+        self.assertAlmostEqual(probability, expected_u * expected_pv)
+        self.assertEqual(shadow["weights"][1:3], [1.5, 1.5])
+        ampa, nmda, inhibitory = CausalReleaseRecorder._apply_release(shadow, True)
+        self.assertAlmostEqual(ampa, 3.75)
+        self.assertAlmostEqual(nmda, 6.0)
+        self.assertEqual(inhibitory, 0.0)
+
+    def test_shadow_frontend_matches_canonical_inhibitory_release_increment(self):
+        shadow = {
+            "class_name": "ProbUDFsyn2",
+            "point": {"A": 0.0, "B": 0.0, "factor": 2.25},
+            "weights": [0.8, 1.0, 0.0, 0.0, 0.0],
+        }
+        ampa, nmda, inhibitory = CausalReleaseRecorder._apply_release(shadow, True)
+        self.assertEqual((ampa, nmda), (0.0, 0.0))
+        self.assertAlmostEqual(inhibitory, 1.8)
+        self.assertAlmostEqual(shadow["point"]["A"], 1.8)
+        self.assertAlmostEqual(shadow["point"]["B"], 1.8)
+
     def test_three_input_views_keep_realized_release_causal(self):
         actions = [
             {
@@ -66,6 +118,9 @@ class TargetedReleaseContractTest(unittest.TestCase):
         self.assertIn("random123_stream_id", views["U_rng"][0])
         self.assertNotIn("release_success", views["U_rng"][0])
         self.assertTrue(views["U_realized"][0]["release_success"])
+        self.assertEqual(
+            outcome(True).source, "exact_causal_replay_of_original_net_receive"
+        )
 
         failed = build_input_views(actions, [outcome(False)])
         self.assertEqual(failed["U_realized"], [])
