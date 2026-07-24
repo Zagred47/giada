@@ -174,7 +174,15 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                 ),
             },
             "boundary_verification": {
-                "point_state_atol": CausalReleaseRecorder.POINT_STATE_ATOL,
+                "point_state_absolute_error": (
+                    "reported diagnostically because CVODE numerically integrates "
+                    "the fast A/B states"
+                ),
+                "release_state_gate": (
+                    "for every event the observed boundary state must be closer "
+                    "to the RNG-selected path than to the path obtained by "
+                    "flipping that release outcome"
+                ),
                 "netcon_state_atol": CausalReleaseRecorder.NETCON_STATE_ATOL,
                 "rng_sequence": "exact equality",
                 "role": (

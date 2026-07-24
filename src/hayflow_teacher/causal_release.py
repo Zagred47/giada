@@ -89,6 +89,7 @@ class CausalReleaseRecorder:
         self.transition_id = int(transition_id)
         self.random123_seed = int(random123_seed)
         self._outcomes: List[CausalReleaseOutcome] = []
+        self._event_checks: List[Dict[str, Any]] = []
         self._shadows: Dict[int, Dict[str, Any]] = {}
         self._scheduled = False
         self._verified = False
@@ -258,6 +259,70 @@ class CausalReleaseRecorder:
         point["B"] += inhibitory
         return 0.0, 0.0, inhibitory
 
+    @staticmethod
+    def _potential_release_increments(
+        shadow: Mapping[str, Any]
+    ) -> Tuple[float, float, float]:
+        point = shadow["point"]
+        weights = shadow["weights"]
+        if shadow["class_name"] == "ProbAMPANMDA2":
+            return (
+                float(weights[1] * point["factor_AMPA"]),
+                float(weights[2] * point["factor_NMDA"]),
+                0.0,
+            )
+        return 0.0, 0.0, float(weights[0] * point["factor"])
+
+    @staticmethod
+    def _boundary_contribution(
+        class_name: str,
+        point: Mapping[str, float],
+        potential_increments: Tuple[float, float, float],
+        elapsed_ms: float,
+    ) -> Dict[str, float]:
+        ampa, nmda, inhibitory = potential_increments
+        if class_name == "ProbAMPANMDA2":
+            return {
+                "A_AMPA": ampa * math.exp(-elapsed_ms / point["tau_r_AMPA"]),
+                "B_AMPA": ampa * math.exp(-elapsed_ms / point["tau_d_AMPA"]),
+                "A_NMDA": nmda * math.exp(-elapsed_ms / point["tau_r_NMDA"]),
+                "B_NMDA": nmda * math.exp(-elapsed_ms / point["tau_d_NMDA"]),
+            }
+        return {
+            "A": inhibitory * math.exp(-elapsed_ms / point["tau_r"]),
+            "B": inhibitory * math.exp(-elapsed_ms / point["tau_d"]),
+        }
+
+    @staticmethod
+    def _counterfactual_errors(
+        observed: Mapping[str, float],
+        predicted: Mapping[str, float],
+        contribution: Mapping[str, float],
+        selected_success: bool,
+    ) -> Tuple[float, float]:
+        scalar_values = [
+            float(value)
+            for mapping in (observed, predicted, contribution)
+            for value in mapping.values()
+        ]
+        if not scalar_values or not all(math.isfinite(value) for value in scalar_values):
+            raise RuntimeError(
+                "non-finite synapse state cannot satisfy causal release validation"
+            )
+        selected_error = max(
+            abs(float(observed[name]) - float(predicted[name]))
+            for name in contribution
+        )
+        direction = -1.0 if selected_success else 1.0
+        counterfactual_error = max(
+            abs(
+                float(observed[name])
+                - (float(predicted[name]) + direction * float(contribution[name]))
+            )
+            for name in contribution
+        )
+        return float(selected_error), float(counterfactual_error)
+
     def _plan_event(
         self,
         event_index: int,
@@ -273,6 +338,7 @@ class CausalReleaseRecorder:
         draw = float(shadow["rng"].repick())
         sequence_after = float(shadow["rng"].seq())
         success = draw < probability
+        potential_increments = self._potential_release_increments(shadow)
         ampa, nmda, inhibitory = self._apply_release(shadow, success)
         post = self._state_view(shadow)
         record = shadow["record"]
@@ -303,6 +369,16 @@ class CausalReleaseRecorder:
         )
         outcome.validate()
         self._outcomes.append(outcome)
+        self._event_checks.append(
+            {
+                "event_index": int(event_index),
+                "synapse_id": synapse_id,
+                "scheduled_time_ms": float(scheduled_time_ms),
+                "class_name": str(record["class_name"]),
+                "release_success": bool(success),
+                "potential_increments": potential_increments,
+            }
+        )
 
     def schedule(
         self, start_time_ms: float, actions: Sequence[InputAction]
@@ -366,15 +442,28 @@ class CausalReleaseRecorder:
         point_errors: List[Dict[str, Any]] = []
         weight_errors: List[Dict[str, Any]] = []
         rng_errors: List[Dict[str, Any]] = []
+        boundary_states: Dict[int, Dict[str, Dict[str, float]]] = {}
         maximum_point_error = 0.0
         maximum_weight_error = 0.0
         for synapse_id, shadow in sorted(self._shadows.items()):
             self._advance_point(shadow, boundary_time_ms)
             record = shadow["record"]
             point = record["point_process"]
+            predicted_point = {
+                name: float(shadow["point"][name])
+                for name in _DYNAMIC_POINT_STATE_NAMES[shadow["class_name"]]
+            }
+            observed_point = {
+                name: float(getattr(point, name))
+                for name in _DYNAMIC_POINT_STATE_NAMES[shadow["class_name"]]
+            }
+            boundary_states[synapse_id] = {
+                "predicted": predicted_point,
+                "observed": observed_point,
+            }
             for name in _DYNAMIC_POINT_STATE_NAMES[shadow["class_name"]]:
-                predicted = float(shadow["point"][name])
-                observed = float(getattr(point, name))
+                predicted = predicted_point[name]
+                observed = observed_point[name]
                 error = abs(predicted - observed)
                 maximum_point_error = max(maximum_point_error, error)
                 if error > self.POINT_STATE_ATOL:
@@ -415,7 +504,44 @@ class CausalReleaseRecorder:
                         "observed": observed_sequence,
                     }
                 )
-        valid = not point_errors and not weight_errors and not rng_errors
+        release_discrimination_failures: List[Dict[str, Any]] = []
+        release_discrimination_rows: List[Dict[str, Any]] = []
+        for event in self._event_checks:
+            synapse_id = int(event["synapse_id"])
+            shadow = self._shadows[synapse_id]
+            contribution = self._boundary_contribution(
+                str(event["class_name"]),
+                shadow["point"],
+                event["potential_increments"],
+                float(boundary_time_ms) - float(event["scheduled_time_ms"]),
+            )
+            states = boundary_states[synapse_id]
+            selected_error, counterfactual_error = self._counterfactual_errors(
+                states["observed"],
+                states["predicted"],
+                contribution,
+                bool(event["release_success"]),
+            )
+            row = {
+                "event_index": int(event["event_index"]),
+                "synapse_id": synapse_id,
+                "release_success": bool(event["release_success"]),
+                "selected_path_error": selected_error,
+                "flipped_release_path_error": counterfactual_error,
+                "separation_margin": counterfactual_error - selected_error,
+                "maximum_boundary_release_signal": max(
+                    abs(float(value)) for value in contribution.values()
+                ),
+            }
+            release_discrimination_rows.append(row)
+            if counterfactual_error <= selected_error + 1.0e-12:
+                release_discrimination_failures.append(row)
+        valid = (
+            not weight_errors
+            and not rng_errors
+            and not release_discrimination_failures
+            and len(release_discrimination_rows) == len(self._outcomes)
+        )
         self.verification_report = {
             "valid": valid,
             "verified_synapse_count": len(self._shadows),
@@ -423,9 +549,12 @@ class CausalReleaseRecorder:
             "point_state_atol": self.POINT_STATE_ATOL,
             "maximum_netcon_state_error": maximum_weight_error,
             "netcon_state_atol": self.NETCON_STATE_ATOL,
+            "point_state_absolute_error_is_diagnostic_only": True,
             "point_state_mismatches": point_errors[:8],
             "netcon_state_mismatches": weight_errors[:8],
             "rng_sequence_mismatches": rng_errors[:8],
+            "release_counterfactual_checks": release_discrimination_rows,
+            "release_counterfactual_failures": release_discrimination_failures[:8],
         }
         self._verified = True
         if not valid:

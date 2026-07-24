@@ -133,6 +133,30 @@ class TargetedReleaseContractTest(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "strictly positive"):
             CausalReleaseRecorder._apply_short_term_plasticity(shadow, 10.0)
 
+    def test_release_gate_prefers_selected_path_over_flipped_counterfactual(self):
+        observed = {"A": 0.1012498441, "B": 1.0591680520}
+        predicted = {"A": 0.0925417357, "B": 1.0590840816}
+        contribution = {"A": 0.0925417357, "B": 1.0590840816}
+        selected, flipped = CausalReleaseRecorder._counterfactual_errors(
+            observed, predicted, contribution, True
+        )
+        self.assertLess(selected, flipped)
+
+    def test_release_gate_detects_wrong_selected_outcome(self):
+        observed = {"A": 0.0, "B": 0.0}
+        predicted = {"A": 0.5, "B": 1.0}
+        contribution = {"A": 0.5, "B": 1.0}
+        selected, flipped = CausalReleaseRecorder._counterfactual_errors(
+            observed, predicted, contribution, True
+        )
+        self.assertGreater(selected, flipped)
+
+    def test_release_gate_rejects_non_finite_boundary_state(self):
+        with self.assertRaisesRegex(RuntimeError, "non-finite"):
+            CausalReleaseRecorder._counterfactual_errors(
+                {"A": float("nan")}, {"A": 0.0}, {"A": 1.0}, True
+            )
+
     def test_three_input_views_keep_realized_release_causal(self):
         actions = [
             {

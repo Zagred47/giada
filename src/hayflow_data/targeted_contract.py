@@ -13,7 +13,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Sequence, Tuple
 
 
 TARGETED_DATASET_SCHEMA_VERSION = "1.1.0"
-RELEASE_SCHEMA_VERSION = "1.1.0"
+RELEASE_SCHEMA_VERSION = "1.2.0"
 TARGETED_EVENT_CLASSES: Tuple[str, ...] = (
     "axonal_spike",
     "somatic_spike",
