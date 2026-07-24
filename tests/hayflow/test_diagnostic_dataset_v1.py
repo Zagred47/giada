@@ -3,6 +3,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import numpy as np
+
 from src.hayflow_data import ProtocolTrajectory
 from src.hayflow_teacher import (
     DiagnosticDatasetV1Session,
@@ -15,6 +17,51 @@ from src.hayflow_teacher.audit import sha256_file
 
 
 class DiagnosticDatasetV1ContractTest(unittest.TestCase):
+    def test_prefix_comparison_keeps_event_probe_distinct_from_tuft_probe(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            reference = root / "reference.npz"
+            np.savez_compressed(
+                reference,
+                time_ms=np.asarray([100.0, 100.025]),
+                voltage_tuft_cluster_center_mv=np.asarray([-70.0, -69.0]),
+                voltage_event_probe_mv=np.asarray([-60.0, -58.0]),
+            )
+            session = object.__new__(DiagnosticDatasetV1Session)
+            session.np = np
+            session.output_dir = root
+            session.calibration_root = root
+            session.reference_trace_by_protocol_seed = {
+                ("calcium", 1): reference
+            }
+            session.audit = type(
+                "Audit",
+                (),
+                {"representatives": {"tuft_cluster_center": 460}},
+            )()
+            trajectory = ProtocolTrajectory(
+                trajectory_id="calcium-seed1",
+                category="dendritic_events",
+                protocol="calcium",
+                protocol_id="calcium",
+                seed=1,
+                duration_ms=1,
+                split="train",
+            )
+            comparison = session._compare_reference_prefix(
+                trajectory,
+                [100.0, 100.025],
+                {
+                    "tuft_cluster_center": [-70.0, -69.0],
+                    "voltage_event_probe_mv": [-60.0, -58.0],
+                },
+                0.025,
+                reference_path=reference,
+                reference_kind="test",
+            )
+            self.assertTrue(comparison["valid"])
+            self.assertEqual(comparison["maximum_absolute_error"], 0.0)
+
     def test_generation_requires_a_green_preflight(self):
         session = object.__new__(DiagnosticDatasetV1Session)
         session.preflight_report = {}

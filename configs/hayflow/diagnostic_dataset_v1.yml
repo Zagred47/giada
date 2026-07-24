@@ -67,7 +67,8 @@ validation:
 
 preflight:
   confirmed_prefix_duration_ms: 6
-  require_exact_01b_overlap: true
+  require_exact_corrected_runtime_overlap: true
+  historical_01b_traces_are_hash_verified_provenance_only: true
   require_single_pulse_soma_and_ais_spike: true
   require_identical_branching_initial_state: true
 

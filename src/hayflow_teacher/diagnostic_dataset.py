@@ -968,6 +968,11 @@ class DiagnosticDatasetSession:
                 trajectory_traces = {
                     label: [] for label in self.audit.representatives
                 }
+                event_probe_segment_id = trajectory.metadata.get(
+                    "event_probe_segment_id"
+                )
+                if event_probe_segment_id is not None:
+                    trajectory_traces["voltage_event_probe_mv"] = []
                 trajectory_traces.update(
                     {label: [] for label in self.micro_observable_ids}
                 )
@@ -1015,6 +1020,15 @@ class DiagnosticDatasetSession:
                         if step_index:
                             values = values[1:]
                         trajectory_traces[label].extend(values.tolist())
+                    if event_probe_segment_id is not None:
+                        values = row["micro_all_voltage"][
+                            :, int(event_probe_segment_id)
+                        ]
+                        if step_index:
+                            values = values[1:]
+                        trajectory_traces["voltage_event_probe_mv"].extend(
+                            values.tolist()
+                        )
                     for observable_index, label in enumerate(
                         self.micro_observable_ids
                     ):

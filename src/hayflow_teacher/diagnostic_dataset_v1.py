@@ -197,6 +197,10 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         self.prefix_overlap_rows: List[Dict[str, Any]] = []
         self.preflight_report: Dict[str, Any] = {}
         self.reference_trace_by_protocol_seed: Dict[Tuple[str, int], Path] = {}
+        self.runtime_reference_trace_by_protocol_seed: Dict[
+            Tuple[str, int], Path
+        ] = {}
+        self.preflight_prefix_duration_ms = 0
         self.alternate_tuft_selection: Dict[str, Any] = {}
         self.micro_observable_ids = [
             "cai_event_probe_mM",
@@ -961,7 +965,11 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         self._rekey_rngs(trajectory.seed)
         times: List[float] = []
         traces = {label: [] for label in self.audit.representatives}
+        traces["voltage_event_probe_mv"] = []
         traces.update({label: [] for label in self.micro_observable_ids})
+        event_probe_segment_id = trajectory.metadata.get(
+            "event_probe_segment_id"
+        )
         self._active_trajectory = trajectory
         preflight_snapshot = self.output_dir / "_preflight_checkpoint.neuron.bin"
         try:
@@ -980,6 +988,12 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                 for probe_index, label in enumerate(self.audit.representatives):
                     traces[label].extend(
                         transition["micro_probe_voltage"][keep, probe_index].tolist()
+                    )
+                if event_probe_segment_id is not None:
+                    traces["voltage_event_probe_mv"].extend(
+                        transition["micro_all_voltage"][
+                            keep, int(event_probe_segment_id)
+                        ].tolist()
                     )
                 for observable_index, label in enumerate(
                     self.micro_observable_ids
@@ -1000,9 +1014,15 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         time_ms: Sequence[float],
         traces: Mapping[str, Sequence[float]],
         duration_ms: float,
+        *,
+        reference_path: Optional[Path] = None,
+        reference_kind: str = "historical_01b",
+        tolerance: float = 0.0,
     ) -> Dict[str, Any]:
         key = (str(trajectory.protocol_id), int(trajectory.seed))
-        reference_path = self.reference_trace_by_protocol_seed.get(key)
+        reference_path = reference_path or self.reference_trace_by_protocol_seed.get(
+            key
+        )
         if reference_path is None:
             raise KeyError(f"no 01b reference trace for {key}")
         with self.np.load(reference_path) as reference:
@@ -1018,11 +1038,7 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                 else float(self.np.max(self.np.abs(new_time - old_time)))
             )
             for label in self.audit.representatives:
-                reference_key = (
-                    "voltage_event_probe_mv"
-                    if label == "tuft_cluster_center"
-                    else f"voltage_{label}_mv"
-                )
+                reference_key = f"voltage_{label}_mv"
                 if reference_key not in reference:
                     continue
                 current = self.np.asarray(
@@ -1032,6 +1048,23 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                     reference[reference_key][:sample_count], dtype=float
                 )
                 errors[reference_key] = (
+                    1.0e300
+                    if current.shape != expected.shape
+                    else float(self.np.max(self.np.abs(current - expected)))
+                )
+            if (
+                "voltage_event_probe_mv" in reference
+                and "voltage_event_probe_mv" in traces
+            ):
+                current = self.np.asarray(
+                    traces["voltage_event_probe_mv"][:sample_count],
+                    dtype=float,
+                )
+                expected = self.np.asarray(
+                    reference["voltage_event_probe_mv"][:sample_count],
+                    dtype=float,
+                )
+                errors["voltage_event_probe_mv"] = (
                     1.0e300
                     if current.shape != expected.shape
                     else float(self.np.max(self.np.abs(current - expected)))
@@ -1070,11 +1103,16 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
             "protocol_id": trajectory.protocol_id,
             "seed": trajectory.seed,
             "duration_ms": float(duration_ms),
+            "reference_kind": str(reference_kind),
+            "tolerance": float(tolerance),
             "maximum_absolute_error": maximum,
             "per_variable_max_absolute_error": errors,
-            "valid": maximum == 0.0,
-            "reference_trace": str(
-                reference_path.relative_to(self.calibration_root)
+            "valid": maximum <= float(tolerance),
+            "reference_trace": (
+                str(reference_path.relative_to(self.calibration_root))
+                if self.calibration_root is not None
+                and reference_path.is_relative_to(self.calibration_root)
+                else str(reference_path.relative_to(self.output_dir))
             ),
         }
 
@@ -1098,17 +1136,66 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
             raise RuntimeError(
                 f"preflight expected 6 confirmed prefixes, found {len(prefix_protocols)}"
             )
+        runtime_root = self.output_dir / "preflight_runtime_references"
+        if runtime_root.exists():
+            shutil.rmtree(runtime_root)
+        calibrator = DendriticProtocolCalibrator(
+            self,
+            output_dir=runtime_root,
+            sample_interval_ms=0.025,
+        )
+        self.runtime_reference_trace_by_protocol_seed = {}
+        self.preflight_prefix_duration_ms = int(prefix_duration_ms)
         prefix_rows = []
+        historical_rows = []
         for trajectory in prefix_protocols:
+            selected = next(
+                row
+                for row in self.selected_protocols.values()
+                if str(row["candidate_id"]) == str(trajectory.protocol_id)
+            )
+            trial = calibrator.run_trial(
+                candidate_from_selected_protocol(selected),
+                int(trajectory.seed),
+                int(prefix_duration_ms),
+                trace_directory=calibrator.traces_dir,
+            )
+            runtime_reference = runtime_root / str(trial["trace_path"])
+            key = (str(trajectory.protocol_id), int(trajectory.seed))
+            self.runtime_reference_trace_by_protocol_seed[key] = runtime_reference
             times, traces = self._run_trajectory_prefix_in_memory(
                 trajectory, prefix_duration_ms
             )
-            prefix_rows.append(
+            runtime_comparison = self._compare_reference_prefix(
+                trajectory,
+                times,
+                traces,
+                float(prefix_duration_ms),
+                reference_path=runtime_reference,
+                reference_kind="corrected_runtime_01b_vs_storage",
+                tolerance=0.0,
+            )
+            expected_schedule = {
+                str(step): [action.to_dict() for action in actions]
+                for step, actions in sorted(trajectory.actions_by_step.items())
+            }
+            schedule_match = (
+                canonical_json_sha256({"schedule": expected_schedule})
+                == canonical_json_sha256({"schedule": trial["input_schedule"]})
+            )
+            runtime_comparison["input_schedule_exact"] = schedule_match
+            runtime_comparison["valid"] = bool(
+                runtime_comparison["valid"] and schedule_match
+            )
+            prefix_rows.append(runtime_comparison)
+            historical_rows.append(
                 self._compare_reference_prefix(
                     trajectory,
                     times,
                     traces,
                     float(prefix_duration_ms),
+                    reference_kind="historical_01b_before_assigned_state_fix",
+                    tolerance=0.0,
                 )
             )
 
@@ -1179,6 +1266,26 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                 ),
                 "comparisons": prefix_rows,
             },
+            "historical_01b_trace_drift": {
+                "gating": False,
+                "reason": (
+                    "The archived 01b traces predate the post-restore fcurrent() "
+                    "fix. They remain hash-verified provenance, but exact runtime "
+                    "identity is tested against freshly regenerated 01b traces "
+                    "using the corrected canonical driver."
+                ),
+                "all_historical_traces_still_exact": all(
+                    row["valid"] for row in historical_rows
+                ),
+                "maximum_error": max(
+                    (
+                        row["maximum_absolute_error"]
+                        for row in historical_rows
+                    ),
+                    default=1.0e300,
+                ),
+                "comparisons": historical_rows,
+            },
             "single_spike": {
                 "valid": single_valid,
                 "trajectory_id": single.trajectory_id,
@@ -1210,7 +1317,15 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
             return
         self.prefix_overlap_rows.append(
             self._compare_reference_prefix(
-                trajectory, time_ms, traces, 35.0
+                trajectory,
+                time_ms,
+                traces,
+                float(self.preflight_prefix_duration_ms),
+                reference_path=self.runtime_reference_trace_by_protocol_seed.get(
+                    (str(trajectory.protocol_id), int(trajectory.seed))
+                ),
+                reference_kind="preflight_corrected_runtime",
+                tolerance=0.0,
             )
         )
 

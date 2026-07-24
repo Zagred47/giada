@@ -200,8 +200,10 @@ The v1 dataset:
 - calibrates paired somatic stimulation and a genuine single-pulse spike
   protocol separately rather than extrapolating one threshold from the other;
 - runs a mandatory six-prefix/single-spike/branching preflight before creating
-  the expensive HDF5 store, and binds the green preflight to an exact hash of
-  the subsequent trajectory plan;
+  the expensive HDF5 store; the six confirmed schedules are replayed once
+  through the corrected calibration path and once through the storage path,
+  with exact identity required between those current-runtime traces, and the
+  green preflight is bound to an exact hash of the subsequent trajectory plan;
 - reuses the two selected schedules exactly on seeds 310001--310003;
 - includes rest, subthreshold, somatic spiking, confirmed tuft NMDA plateau,
   confirmed paired hot-zone calcium spike, near-threshold controls, and five
@@ -218,7 +220,8 @@ The v1 dataset:
   splits, and branching, together with a storage cost report;
 - exhaustively replays every transition and requires uncensored positive
   events, clean whole-trajectory splits, stable segment/state schemas, exact
-  first-35-ms overlap with `01b`, and valid hashes for all 88 calibration
+  overlap with the corrected-runtime preflight references, and valid hashes
+  for all 88 historical `01b` calibration
   artifacts;
 - produces stimulus-relative figures with separate axes for voltage, calcium,
   calcium current, NMDA conductance, and NMDA current.
