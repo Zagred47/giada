@@ -28,8 +28,6 @@ _DYNAMIC_POINT_STATE_NAMES = {
 
 _POINT_PARAMETER_NAMES = {
     "ProbAMPANMDA2": (
-        "factor_AMPA",
-        "factor_NMDA",
         "tau_r_AMPA",
         "tau_d_AMPA",
         "tau_r_NMDA",
@@ -40,7 +38,6 @@ _POINT_PARAMETER_NAMES = {
         "u0",
     ),
     "ProbUDFsyn2": (
-        "factor",
         "tau_r",
         "tau_d",
         "Use",
@@ -110,7 +107,42 @@ class CausalReleaseRecorder:
             *_DYNAMIC_POINT_STATE_NAMES[class_name],
             *_POINT_PARAMETER_NAMES[class_name],
         )
-        return {name: float(getattr(point, name)) for name in names}
+        values = {name: float(getattr(point, name)) for name in names}
+        # The normalization factors are ASSIGNED variables, not RANGE
+        # variables, in the canonical MOD files and are therefore not exposed
+        # through the Python point-process object.  Recompute the exact INITIAL
+        # expression without modifying the teacher.
+        if class_name == "ProbAMPANMDA2":
+            values["factor_AMPA"] = CausalReleaseRecorder._dual_exp_factor(
+                values["tau_r_AMPA"], values["tau_d_AMPA"]
+            )
+            values["factor_NMDA"] = CausalReleaseRecorder._dual_exp_factor(
+                values["tau_r_NMDA"], values["tau_d_NMDA"]
+            )
+        else:
+            values["factor"] = CausalReleaseRecorder._dual_exp_factor(
+                values["tau_r"], values["tau_d"]
+            )
+        return values
+
+    @staticmethod
+    def _dual_exp_factor(tau_rise_ms: float, tau_decay_ms: float) -> float:
+        tau_rise = float(tau_rise_ms)
+        tau_decay = float(tau_decay_ms)
+        if not 0.0 < tau_rise < tau_decay:
+            raise RuntimeError(
+                "canonical dual-exponential synapse requires 0 < tau_rise < tau_decay"
+            )
+        time_to_peak = (
+            tau_rise
+            * tau_decay
+            / (tau_decay - tau_rise)
+            * math.log(tau_decay / tau_rise)
+        )
+        return 1.0 / (
+            -math.exp(-time_to_peak / tau_rise)
+            + math.exp(-time_to_peak / tau_decay)
+        )
 
     @staticmethod
     def _global_index(rng: Any) -> int:

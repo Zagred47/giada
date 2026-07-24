@@ -53,6 +53,14 @@ def outcome(success=True):
 
 
 class TargetedReleaseContractTest(unittest.TestCase):
+    def test_hidden_mod_normalization_factor_is_reconstructed_from_range_taus(self):
+        factor = CausalReleaseRecorder._dual_exp_factor(0.2, 1.7)
+        time_to_peak = 0.2 * 1.7 / 1.5 * math.log(1.7 / 0.2)
+        expected = 1.0 / (
+            -math.exp(-time_to_peak / 0.2) + math.exp(-time_to_peak / 1.7)
+        )
+        self.assertAlmostEqual(factor, expected)
+
     def test_shadow_frontend_matches_canonical_excitatory_net_receive_equations(self):
         shadow = {
             "class_name": "ProbAMPANMDA2",
