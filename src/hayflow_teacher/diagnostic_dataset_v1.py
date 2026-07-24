@@ -937,11 +937,14 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
 
     def _read_protocol_micro_observables(self) -> Sequence[float]:
         trajectory = self._active_trajectory
-        contract = (
-            self.protocol_registry.get(trajectory.trajectory_id, {})
-            if trajectory is not None
-            else {}
-        )
+        contract = {}
+        if trajectory is not None:
+            # Targeted/recovery trajectories are constructed after the static
+            # v1 registry.  Their immutable metadata carries the same local
+            # probe contract and is the correct fallback during in-memory
+            # replay and final generation.
+            contract.update(dict(trajectory.metadata))
+            contract.update(self.protocol_registry.get(trajectory.trajectory_id, {}))
         segment_id = contract.get("event_probe_segment_id")
         if segment_id is None:
             segment_id = int(self.audit.representatives["hot_zone"])

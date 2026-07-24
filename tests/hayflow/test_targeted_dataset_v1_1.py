@@ -208,6 +208,46 @@ class TargetedReleaseContractTest(unittest.TestCase):
         self.assertEqual(len(extract_events(time, {"tuft": short}, [definition])), 1)
         self.assertEqual(len(extract_events(time, {"tuft": long}, [definition])), 0)
 
+    def test_nmda_plateau_is_a_hierarchical_nmda_spike(self):
+        spike = EventDefinition(
+            "nmda_spike", "tuft", 1, "tuft", -40.0, -50.0, min_duration_ms=1.0
+        )
+        plateau = EventDefinition(
+            "nmda_plateau", "tuft", 1, "tuft", -40.0, -50.0, min_duration_ms=10.0
+        )
+        time = list(range(13))
+        long = [-70, -35] + [-35] * 10 + [-55]
+        kinds = {
+            row["kind"]
+            for row in extract_events(time, {"tuft": long}, [spike, plateau])
+        }
+        self.assertEqual(kinds, {"nmda_spike", "nmda_plateau"})
+
+    def test_plateau_from_a_distinct_probe_gets_parent_spike_label(self):
+        plateau = {
+            "kind": "nmda_plateau",
+            "segment_id": 9,
+            "onset_ms": 3.0,
+            "offset_ms": 20.0,
+            "parameters": {"kind": "nmda_plateau", "min_duration_ms": 10.0},
+        }
+        rows = TargetedDiagnosticDatasetSession._enforce_nmda_event_hierarchy(
+            [plateau]
+        )
+        self.assertEqual({row["kind"] for row in rows}, {"nmda_spike", "nmda_plateau"})
+        parent = next(row for row in rows if row["kind"] == "nmda_spike")
+        self.assertEqual(parent["derived_from_event_kind"], "nmda_plateau")
+
+    def test_recovery_uses_lazy_pv_available_at_next_event(self):
+        available = TargetedDiagnosticDatasetSession._available_pv_at_event(
+            stored_pv=0.0, elapsed_ms=20.0, depression_tau_ms=0.0
+        )
+        self.assertEqual(available, 1.0)
+        partial = TargetedDiagnosticDatasetSession._available_pv_at_event(
+            stored_pv=0.0, elapsed_ms=10.0, depression_tau_ms=100.0
+        )
+        self.assertAlmostEqual(partial, 1.0 - math.exp(-0.1))
+
     def test_bap_annotation_requires_outward_temporal_order(self):
         time = [0.0, 0.5, 1.0, 1.5, 2.0]
         event = {

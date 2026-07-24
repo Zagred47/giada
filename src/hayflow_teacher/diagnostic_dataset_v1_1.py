@@ -1,10 +1,11 @@
-"""Targeted HayFlow diagnostic transition dataset, schema 1.1.0."""
+"""Targeted HayFlow diagnostic transition dataset, schema 1.1.1."""
 
 from __future__ import annotations
 
 import json
 import time
 import hashlib
+import math
 from collections import Counter
 from dataclasses import replace
 from pathlib import Path
@@ -99,15 +100,12 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         """Prepare v1.0.1 first, then add only versioned v1.1 metadata."""
 
         base = self.prepare_v1_contract()
-        self.event_definitions = [
-            replace(
-                row,
-                maximum_event_duration_ms=9.975,
-            )
-            if row.kind == "nmda_spike"
-            else row
-            for row in self.event_definitions
-        ]
+        # NMDA event classes are hierarchical.  A sustained local regenerative
+        # event is both an NMDA spike and, when it lasts at least 10 ms, an
+        # NMDA plateau.  The initial mutually-exclusive <=9.975 ms rule was
+        # rejected empirically: the canonical slow-NMDA teacher moved directly
+        # from subthreshold responses to sustained events in the targeted
+        # sweep, leaving no positive short-spike support.
         base_layout = {
             "index_contract": self.state_schema["index_contract"],
             "categories": self.state_schema["categories"],
@@ -214,7 +212,8 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                 "status": "targeted_configurable_thresholds",
                 "definitions": [row.to_dict() for row in self.event_definitions],
                 "nmda_regime_policy": (
-                    "nmda_spike duration <= 9.975 ms; nmda_plateau duration >= 10 ms"
+                    "hierarchical labels: nmda_spike duration >= 1 ms; "
+                    "nmda_plateau is the sustained subset with duration >= 10 ms"
                 ),
                 "bap_policy": (
                     "somatic origin plus ordered soma-to-trunk regional propagation"
@@ -236,7 +235,34 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         time_ms: Sequence[float],
         traces: Mapping[str, Sequence[float]],
     ) -> List[Dict[str, Any]]:
-        events = extract_events(time_ms, traces, self.event_definitions)
+        definitions = list(self.event_definitions)
+        trajectory = self._active_trajectory
+        if trajectory is not None and "voltage_event_probe_mv" in traces:
+            probe_segment_id = trajectory.metadata.get("event_probe_segment_id")
+            probe_kinds = set(
+                trajectory.metadata.get(
+                    "event_probe_kinds", ("nmda_spike", "nmda_plateau")
+                )
+            )
+            if probe_segment_id is not None:
+                definitions = [
+                    replace(
+                        definition,
+                        signal="voltage_event_probe_mv",
+                        segment_id=int(probe_segment_id),
+                        region=str(
+                            trajectory.metadata.get(
+                                "event_probe_region", "stimulus_cluster"
+                            )
+                        ),
+                    )
+                    if definition.kind in probe_kinds
+                    else definition
+                    for definition in definitions
+                ]
+        events = self._enforce_nmda_event_hierarchy(
+            extract_events(time_ms, traces, definitions)
+        )
         distances = {}
         for label in ("soma", "basal", "trunk", "nexus", "tuft"):
             segment_id = self.audit.representatives.get(label)
@@ -253,11 +279,78 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
             regional_distances_um=distances,
         )
 
+    @staticmethod
+    def _enforce_nmda_event_hierarchy(
+        events: Sequence[Mapping[str, Any]],
+    ) -> List[Dict[str, Any]]:
+        """Guarantee that every plateau also carries its NMDA-spike parent label."""
+
+        rows = [dict(row) for row in events]
+        spikes = [row for row in rows if row.get("kind") == "nmda_spike"]
+        for plateau in [row for row in rows if row.get("kind") == "nmda_plateau"]:
+            matched = any(
+                int(spike["segment_id"]) == int(plateau["segment_id"])
+                and float(spike["onset_ms"]) <= float(plateau["offset_ms"])
+                and float(plateau["onset_ms"]) <= float(spike["offset_ms"])
+                for spike in spikes
+            )
+            if matched:
+                continue
+            parent = dict(plateau)
+            parent["kind"] = "nmda_spike"
+            parent["rule"] = "hierarchical_parent_of_nmda_plateau"
+            parent["derived_from_event_kind"] = "nmda_plateau"
+            parameters = dict(parent.get("parameters", {}))
+            parameters.update(
+                {
+                    "kind": "nmda_spike",
+                    "min_duration_ms": 1.0,
+                    "maximum_event_duration_ms": None,
+                }
+            )
+            parent["parameters"] = parameters
+            rows.append(parent)
+            spikes.append(parent)
+        return rows
+
+    def _extract_trajectory_events(
+        self,
+        trajectory: ProtocolTrajectory,
+        time_ms: Sequence[float],
+        traces: Mapping[str, Sequence[float]],
+    ) -> List[Dict[str, Any]]:
+        """Extract with the trajectory-local probe contract still in scope."""
+
+        previous = self._active_trajectory
+        self._active_trajectory = trajectory
+        try:
+            return self._extract_events(time_ms, traces)
+        finally:
+            self._active_trajectory = previous
+
     def _configure_rngs(
         self, seed: int, sequences: Sequence[float]
     ) -> None:
         super()._configure_rngs(seed, sequences)
         self.active_random123_seed = int(seed)
+
+    @staticmethod
+    def _available_pv_at_event(
+        stored_pv: float, elapsed_ms: float, depression_tau_ms: float
+    ) -> float:
+        """Evaluate the canonical lazy STP recovery immediately before an event."""
+
+        elapsed = float(elapsed_ms)
+        depression_tau = float(depression_tau_ms)
+        if elapsed < 0.0:
+            raise ValueError("prospective synaptic event precedes stored tsyn")
+        if depression_tau == 0.0:
+            if elapsed <= 0.0:
+                raise ValueError("Dep=0 recovery requires a positive event interval")
+            return 1.0
+        return 1.0 - (1.0 - float(stored_pv)) * math.exp(
+            -elapsed / depression_tau
+        )
 
     def _trajectory_initial_state(
         self, trajectory: ProtocolTrajectory
@@ -764,6 +857,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         trials: List[Dict[str, Any]] = []
         nmda_cfg = config["nmda_sweep"]
         calcium_cfg = config["calcium_sweep"]
+        bap_cfg = config.get("bap_sweep", {})
         base_trial_total = len(seeds) * (
             len(nmda_cfg["synapse_counts"])
             * len(nmda_cfg["burst_counts"])
@@ -772,6 +866,8 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
             * len(calcium_cfg["paired"])
             * len(calcium_cfg["event_windows_ms"])
             + len(config["somatic_current_factors"])
+            + len(bap_cfg.get("current_factors", ()))
+            * len(bap_cfg.get("pulse_counts", ()))
         )
         pilot_progress = _ConsoleProgress("pilot biologico", base_trial_total)
 
@@ -872,7 +968,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                 times, traces = self._run_trajectory_prefix_in_memory(
                     trajectory, somatic_duration
                 )
-                events = self._extract_events(times, traces)
+                events = self._extract_trajectory_events(trajectory, times, traces)
                 trials.append(
                     {
                         "candidate_id": candidate_id,
@@ -898,6 +994,130 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                         f"eventi={','.join(trials[-1]['event_kinds']) or 'nessuno'}"
                     ),
                 )
+
+        if bap_cfg:
+            assist_id = str(bap_cfg["assist_candidate_id"])
+            assist_by_seed = {
+                int(row["seed"]): row
+                for row in trials
+                if row.get("candidate_id") == assist_id
+            }
+            if set(assist_by_seed) != set(seeds):
+                raise RuntimeError(
+                    "BAP assist candidate is missing one or more biological-pilot seeds"
+                )
+            if self.calibrated_somatic_current_na is None:
+                self.calibrate_somatic_spike_current()
+            bap_base_current = float(self.calibrated_somatic_current_na)
+            bap_duration = int(bap_cfg.get("duration_ms", duration_ms))
+            for pulse_count in map(int, bap_cfg["pulse_counts"]):
+                if pulse_count <= 0:
+                    raise ValueError("BAP pulse count must be positive")
+                for factor in map(float, bap_cfg["current_factors"]):
+                    candidate_id = (
+                        f"targeted_bap-assisted-p{pulse_count}-factor{factor:.4f}"
+                    )
+                    for seed in seeds:
+                        source = assist_by_seed[seed]
+                        schedule = {
+                            step: list(actions)
+                            for step, actions in action_schedule_from_json(
+                                source["input_schedule"]
+                            ).items()
+                        }
+                        first_synaptic_step = min(schedule)
+                        if factor > 0.0:
+                            first_current_step = max(0, first_synaptic_step - 1)
+                            for pulse_index in range(pulse_count):
+                                step = first_current_step + pulse_index
+                                schedule.setdefault(step, []).append(
+                                    InputAction(
+                                        "somatic_current",
+                                        0.05,
+                                        duration_ms=0.9,
+                                        amplitude_na=bap_base_current * factor,
+                                    )
+                                )
+                        ordered_schedule = {
+                            int(step): tuple(
+                                sorted(
+                                    actions,
+                                    key=lambda action: (
+                                        float(action.offset_ms),
+                                        action.kind,
+                                        -1
+                                        if action.synapse_id is None
+                                        else int(action.synapse_id),
+                                    ),
+                                )
+                            )
+                            for step, actions in schedule.items()
+                        }
+                        probe_segment_id = int(source["event_probe_segment_id"])
+                        trajectory = ProtocolTrajectory(
+                            trajectory_id=f"pilot-{candidate_id}-seed{seed}",
+                            category="dendritic_events",
+                            protocol="targeted_bap",
+                            protocol_id=candidate_id,
+                            protocol_variant=(
+                                "somatic_spikes_with_subthreshold_hot_zone_assist"
+                            ),
+                            seed=int(seed),
+                            duration_ms=bap_duration,
+                            split="event_boundary_test",
+                            actions_by_step=ordered_schedule,
+                            stimulus_onset_step=min(ordered_schedule),
+                            metadata={
+                                "event_probe_segment_id": probe_segment_id,
+                                "event_probe_kinds": ["calcium_spike"],
+                                "event_probe_region": str(
+                                    source.get("event_probe_region", "hot_zone")
+                                ),
+                            },
+                        )
+                        times, traces = self._run_trajectory_prefix_in_memory(
+                            trajectory, bap_duration
+                        )
+                        events = self._extract_trajectory_events(
+                            trajectory, times, traces
+                        )
+                        trials.append(
+                            {
+                                "candidate_id": candidate_id,
+                                "family": "targeted_bap",
+                                "seed": int(seed),
+                                "event_kinds": sorted(
+                                    {str(row["kind"]) for row in events}
+                                ),
+                                "events": events,
+                                "stimulus_scalar": float(factor * pulse_count),
+                                "duration_ms": bap_duration,
+                                "branch_id": (
+                                    "soma-assisted-" + str(source["branch_id"])
+                                ),
+                                "event_probe_segment_id": probe_segment_id,
+                                "event_probe_region": str(
+                                    source.get("event_probe_region", "hot_zone")
+                                ),
+                                "event_probe_kinds": ["calcium_spike"],
+                                "selected_synapse_ids": list(
+                                    source["selected_synapse_ids"]
+                                ),
+                                "input_schedule": {
+                                    str(step): [
+                                        action.to_dict() for action in actions
+                                    ]
+                                    for step, actions in ordered_schedule.items()
+                                },
+                            }
+                        )
+                        pilot_progress.update(
+                            len(trials),
+                            detail=(
+                                f"{candidate_id}; seed={seed}; "
+                                f"eventi={','.join(trials[-1]['event_kinds']) or 'nessuno'}"
+                            ),
+                        )
 
         pilot_progress.update(
             min(len(trials), base_trial_total),
@@ -964,13 +1184,15 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                     metadata={
                         "event_probe_segment_id": int(
                             self.alternate_tuft_selection["center_segment_id"]
-                        )
+                        ),
+                        "event_probe_region": "held_out_tuft_stimulus_cluster",
+                        "event_probe_kinds": ["nmda_spike", "nmda_plateau"],
                     },
                 )
                 times, traces = self._run_trajectory_prefix_in_memory(
                     trajectory, duration_ms
                 )
-                events = self._extract_events(times, traces)
+                events = self._extract_trajectory_events(trajectory, times, traces)
                 trials.append(
                     {
                         "candidate_id": candidate_id,
@@ -986,6 +1208,12 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                             "segment-"
                             f"{self.alternate_tuft_selection['center_segment_id']}"
                         ),
+                        "event_probe_segment_id": int(
+                            self.alternate_tuft_selection["center_segment_id"]
+                        ),
+                        "event_probe_region": "held_out_tuft_stimulus_cluster",
+                        "event_probe_kinds": ["nmda_spike", "nmda_plateau"],
+                        "selected_synapse_ids": list(replacement.values()),
                         "input_schedule": {
                             str(step): [action.to_dict() for action in actions]
                             for step, actions in replaced.items()
@@ -1046,6 +1274,18 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                     metadata={
                         "boundary_distance_by_class": distances,
                         "pilot_seed_count": len(seeds),
+                        "event_probe_segment_id": reference.get(
+                            "event_probe_segment_id"
+                        ),
+                        "event_probe_region": reference.get(
+                            "event_probe_region"
+                        ),
+                        "event_probe_kinds": list(
+                            reference.get("event_probe_kinds", ())
+                        ),
+                        "selected_synapse_ids": list(
+                            reference.get("selected_synapse_ids", ())
+                        ),
                     },
                 )
             )
@@ -1099,6 +1339,21 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                     metadata={
                         "train_eligible": False,
                         "pilot_seed_count": len(heldout_group),
+                        "event_probe_segment_id": reference.get(
+                            "event_probe_segment_id"
+                        ),
+                        "event_probe_region": reference.get(
+                            "event_probe_region", "held_out_tuft_stimulus_cluster"
+                        ),
+                        "event_probe_kinds": list(
+                            reference.get(
+                                "event_probe_kinds",
+                                ("nmda_spike", "nmda_plateau"),
+                            )
+                        ),
+                        "selected_synapse_ids": list(
+                            reference.get("selected_synapse_ids", ())
+                        ),
                     },
                 )
             )
@@ -1107,6 +1362,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         # configurable interval. Only empirically recovered variants enter the
         # recipe catalog.
         recovery_recipes: List[TargetedRecipe] = []
+        recovery_trials: List[Dict[str, Any]] = []
         recovery_duration = int(config.get("recovery_duration_ms", 100))
         recovery_candidates = [row for row in recipes if row.positive_for]
         recovery_delays = list(
@@ -1132,6 +1388,84 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                 for step, actions in recipe.actions_by_step.items():
                     schedule[int(step) + shift] = tuple(actions)
                 candidate_id = f"{recipe.recipe_id}-recovery-{delay}ms"
+                trajectory_metadata = {
+                    key: value
+                    for key, value in dict(recipe.metadata).items()
+                    if value is not None
+                }
+                selected_synapses = sorted(
+                    {
+                        int(action.synapse_id)
+                        for actions in recipe.actions_by_step.values()
+                        for action in actions
+                        if action.kind == "synaptic_event"
+                    }
+                )
+
+                # Run only the first stimulus up to the boundary immediately
+                # preceding the repeated probe.  Pv in these MOD mechanisms is
+                # lazily recovered inside NET_RECEIVE, so reading it after the
+                # second event would incorrectly see the newly depleted value.
+                pre_probe_step = first_step + shift
+                pre_probe_trajectory = ProtocolTrajectory(
+                    trajectory_id=f"pilot-{candidate_id}-pre-probe-seed{seeds[0]}",
+                    category=(
+                        "somatic_events"
+                        if recipe.family == "targeted_somatic_bap"
+                        else "dendritic_events"
+                    ),
+                    protocol=recipe.family,
+                    protocol_id=f"{candidate_id}-pre-probe",
+                    protocol_variant="recovery_pre_probe_state",
+                    seed=seeds[0],
+                    duration_ms=pre_probe_step,
+                    split="recovery_test",
+                    actions_by_step=recipe.actions_by_step,
+                    stimulus_onset_step=first_step,
+                    metadata=trajectory_metadata,
+                )
+                self._run_trajectory_prefix_in_memory(
+                    pre_probe_trajectory, pre_probe_step
+                )
+                pre_probe_boundary_time = float(self.h.t)
+                first_repeated_event: Dict[int, Tuple[int, float]] = {}
+                for step, actions in recipe.actions_by_step.items():
+                    repeated_step = int(step) + shift
+                    for action in actions:
+                        if action.kind != "synaptic_event":
+                            continue
+                        synapse_id = int(action.synapse_id)
+                        candidate_time = (repeated_step, float(action.offset_ms))
+                        if (
+                            synapse_id not in first_repeated_event
+                            or candidate_time < first_repeated_event[synapse_id]
+                        ):
+                            first_repeated_event[synapse_id] = candidate_time
+                available_pv = []
+                for synapse_id in selected_synapses:
+                    record = self.audit.synapse_records[synapse_id]
+                    class_name = str(record["class_name"])
+                    pv_index = 3 if class_name == "ProbAMPANMDA2" else 1
+                    tsyn_index = 6 if class_name == "ProbAMPANMDA2" else 4
+                    repeated_step, offset_ms = first_repeated_event[synapse_id]
+                    event_time = (
+                        pre_probe_boundary_time
+                        + float(repeated_step - pre_probe_step)
+                        + offset_ms
+                    )
+                    available_pv.append(
+                        self._available_pv_at_event(
+                            float(record["netcon"].weight[pv_index]),
+                            event_time
+                            - float(record["netcon"].weight[tsyn_index]),
+                            float(record["point_process"].Dep),
+                        )
+                    )
+                minimum_available_pv = min(available_pv, default=1.0)
+                synapse_recovered = minimum_available_pv >= float(
+                    config.get("recovery_min_pv", 0.75)
+                )
+
                 trajectory = ProtocolTrajectory(
                     trajectory_id=f"pilot-{candidate_id}-seed{seeds[0]}",
                     category=(
@@ -1147,11 +1481,12 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                     split="recovery_test",
                     actions_by_step=schedule,
                     stimulus_onset_step=first_step,
+                    metadata=trajectory_metadata,
                 )
                 times, traces = self._run_trajectory_prefix_in_memory(
                     trajectory, recovery_duration
                 )
-                events = self._extract_events(times, traces)
+                events = self._extract_trajectory_events(trajectory, times, traces)
                 observed = {str(row["kind"]) for row in events}
                 event_counts = Counter(str(row["kind"]) for row in events)
                 uncensored = all(not bool(row["right_censored"]) for row in events)
@@ -1179,26 +1514,42 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                     )
                 else:
                     calcium_recovered = False
-                selected_synapses = sorted(
-                    {
-                        int(action.synapse_id)
-                        for actions in recipe.actions_by_step.values()
-                        for action in actions
-                        if action.kind == "synaptic_event"
-                    }
-                )
-                final_pv = []
-                for synapse_id in selected_synapses:
-                    record = self.audit.synapse_records[synapse_id]
-                    pv_index = 3 if record["class_name"] == "ProbAMPANMDA2" else 1
-                    final_pv.append(float(record["netcon"].weight[pv_index]))
-                synapse_recovered = not final_pv or min(final_pv) >= float(
-                    config.get("recovery_min_pv", 0.75)
-                )
                 repeated_response = all(
                     event_counts.get(kind, 0) >= 2
                     for kind in recipe.positive_for
                 )
+                criteria = {
+                    "required_events_observed": set(recipe.positive_for).issubset(
+                        observed
+                    ),
+                    "events_uncensored": uncensored,
+                    "voltage_recovered": voltage_recovered,
+                    "calcium_recovered": calcium_recovered,
+                    "synapse_recovered_before_second_probe": synapse_recovered,
+                    "repeated_probe_response": repeated_response,
+                }
+                recovery_valid = all(criteria.values())
+                recovery_trials.append(
+                    {
+                        "candidate_id": candidate_id,
+                        "source_recipe_id": recipe.recipe_id,
+                        "delay_ms": delay,
+                        "positive_for": list(recipe.positive_for),
+                        "event_counts": dict(sorted(event_counts.items())),
+                        "minimum_available_pv_before_second_probe": (
+                            minimum_available_pv
+                        ),
+                        "criteria": criteria,
+                        "valid": recovery_valid,
+                    }
+                )
+                if not recovery_valid:
+                    failed = [name for name, passed in criteria.items() if not passed]
+                    recovery_progress.update(
+                        recovery_trial_index,
+                        detail=f"{candidate_id}; fail={','.join(failed)}",
+                    )
+                    continue
                 if not (
                     set(recipe.positive_for).issubset(observed)
                     and uncensored
@@ -1207,11 +1558,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                     and synapse_recovered
                     and repeated_response
                 ):
-                    recovery_progress.update(
-                        recovery_trial_index,
-                        detail=f"{candidate_id}; non recuperato",
-                    )
-                    continue
+                    raise AssertionError("recovery criteria aggregation is inconsistent")
                 recovery_recipes.append(
                     TargetedRecipe(
                         recipe_id=candidate_id,
@@ -1233,7 +1580,9 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                             "calcium_recovered": True,
                             "synapse_recovered": True,
                             "repeated_probe_response": True,
-                            "minimum_final_pv": min(final_pv, default=1.0),
+                            "minimum_available_pv_before_second_probe": (
+                                minimum_available_pv
+                            ),
                             "events_uncensored": True,
                         },
                     )
@@ -1259,6 +1608,12 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
             "trial_count": len(trials),
             "candidate_count": len(by_candidate),
             "seeds": seeds,
+            "nmda_label_hierarchy": {
+                "nmda_spike_minimum_duration_ms": 1.0,
+                "nmda_plateau_minimum_duration_ms": 10.0,
+                "plateau_is_nmda_spike_subset": True,
+            },
+            "bap_sweep": dict(bap_cfg),
             "adaptive_brackets": brackets,
             "recipe_count": len(recipes),
             "heldout_branch_recipe_count": sum(
@@ -1267,6 +1622,7 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
                 for row in recipes
             ),
             "recovery_recipe_count": len(recovery_recipes),
+            "recovery_trials": recovery_trials,
             "recipes": [
                 {
                     "recipe_id": row.recipe_id,
@@ -1313,7 +1669,9 @@ class TargetedDiagnosticDatasetSession(DiagnosticDatasetV1Session):
         )
         if not report["valid"]:
             raise RuntimeError(
-                "targeted biological pilot did not bracket every event class; "
+                "targeted biological pilot is not valid; "
+                f"adaptive_blockers={brackets['blockers']}; "
+                f"valid_recovery_recipes={len(recovery_recipes)}; "
                 f"inspect {pilot_dir / 'pilot_report.json'}"
             )
         return report

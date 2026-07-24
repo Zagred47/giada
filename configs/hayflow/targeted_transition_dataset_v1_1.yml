@@ -1,4 +1,4 @@
-schema_version: 1.1.0
+schema_version: 1.1.1
 
 teacher:
   repository: https://github.com/SelfishGene/neuron_as_deep_net.git
@@ -11,7 +11,8 @@ teacher:
   microtrace_interval_ms: 0.025
 
 release_contract:
-  observation: same_timestamp_pre_and_post_original_NET_RECEIVE
+  observation: exact_causal_replay_of_original_NET_RECEIVE
+  boundary_validation: exact_rng_and_netcon_plus_release_counterfactual
   infer_from_t_plus_1: false
   rng: Random123
   rng_distribution: negexp(1)
@@ -19,11 +20,20 @@ release_contract:
   deployment_boundary: authentic_synaptic_frontend_before_learned_membrane_core
   pilot_transition_count: 8
 
+event_labels:
+  nmda_spike: local_regenerative_event_duration_at_least_1_ms
+  nmda_plateau: sustained_nmda_spike_subset_duration_at_least_10_ms
+
 biological_pilot:
   seeds: [510001, 510002, 510003]
   dendritic_duration_ms: 80
   somatic_duration_ms: 20
   somatic_current_factors: [0.60, 0.75, 0.90, 1.00, 1.10, 1.25]
+  bap_sweep:
+    assist_candidate_id: targeted_calcium-hot_zone-n10-b3-r1-unpaired-nearest-w800
+    current_factors: [0.00, 0.75, 1.00, 1.25, 1.50, 2.00, 3.00]
+    pulse_counts: [2, 3]
+    duration_ms: 80
   nmda_sweep:
     synapse_counts: [4, 6, 8, 10, 12]
     burst_counts: [1, 2]
