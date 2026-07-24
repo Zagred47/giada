@@ -111,6 +111,28 @@ class TargetedReleaseContractTest(unittest.TestCase):
         self.assertAlmostEqual(shadow["point"]["A"], 1.8)
         self.assertAlmostEqual(shadow["point"]["B"], 1.8)
 
+    def test_canonical_zero_dep_and_fac_use_the_positive_time_limit(self):
+        shadow = {
+            "class_name": "ProbUDFsyn2",
+            "point": {"Use": 1.0, "Dep": 0.0, "Fac": 0.0},
+            "weights": [1.0, 0.0, 0.0, 0.0, 10.0],
+        }
+        first = CausalReleaseRecorder._apply_short_term_plasticity(shadow, 10.2)
+        self.assertEqual(first, 1.0)
+        self.assertEqual(shadow["weights"][1:], [0.0, 1.0, 1.0, 10.2])
+        second = CausalReleaseRecorder._apply_short_term_plasticity(shadow, 11.2)
+        self.assertEqual(second, 1.0)
+        self.assertEqual(shadow["weights"][1:], [0.0, 1.0, 1.0, 11.2])
+
+    def test_zero_dep_rejects_same_synapse_at_identical_time(self):
+        shadow = {
+            "class_name": "ProbUDFsyn2",
+            "point": {"Use": 1.0, "Dep": 0.0, "Fac": 0.0},
+            "weights": [1.0, 1.0, 0.0, 0.0, 10.0],
+        }
+        with self.assertRaisesRegex(RuntimeError, "strictly positive"):
+            CausalReleaseRecorder._apply_short_term_plasticity(shadow, 10.0)
+
     def test_three_input_views_keep_realized_release_causal(self):
         actions = [
             {

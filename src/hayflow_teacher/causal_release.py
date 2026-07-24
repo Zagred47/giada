@@ -218,9 +218,20 @@ class CausalReleaseRecorder:
             u_value += point["Use"] * (1.0 - u_value)
         else:
             u_value = point["Use"]
-        pv_available = 1.0 - (1.0 - weights[pv_index]) * math.exp(
-            -elapsed / point["Dep"]
-        )
+        depression_tau = float(point["Dep"])
+        if depression_tau == 0.0:
+            if elapsed <= 0.0:
+                raise RuntimeError(
+                    "canonical Dep=0 requires a strictly positive interval "
+                    "between events for the same synapse"
+                )
+            # Exact positive-time limit of the NMODL expression
+            # exp(-(t-tsyn)/Dep).  The upstream factories intentionally set
+            # Dep=0 for AMPA/NMDA and GABA_A synapses.
+            recovery_factor = 0.0
+        else:
+            recovery_factor = math.exp(-elapsed / depression_tau)
+        pv_available = 1.0 - (1.0 - weights[pv_index]) * recovery_factor
         probability = u_value * pv_available
         weights[pv_index] = pv_available - u_value * pv_available
         weights[pr_index] = probability
