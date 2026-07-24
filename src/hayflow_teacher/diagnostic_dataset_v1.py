@@ -51,6 +51,30 @@ REQUIRED_SPLITS = {
 }
 
 
+def _summarize_negative_control_outcomes(
+    outcomes: Sequence[Mapping[str, Any]],
+) -> Dict[str, Any]:
+    """Require every declared negative, not just one per family, to be negative."""
+
+    family_coverage = {
+        protocol_id: any(
+            row["control_of"] == protocol_id
+            and not bool(row["target_event_present"])
+            for row in outcomes
+        )
+        for protocol_id in CONFIRMED_PROTOCOL_IDS
+    }
+    all_declared_suppress_target = bool(outcomes) and all(
+        not bool(row["target_event_present"]) for row in outcomes
+    )
+    return {
+        "family_coverage": family_coverage,
+        "all_declared_suppress_target_event": all_declared_suppress_target,
+        "valid": all(family_coverage.values())
+        and all_declared_suppress_target,
+    }
+
+
 def canonical_json_sha256(payload: Mapping[str, Any]) -> str:
     encoded = json.dumps(
         payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False
@@ -740,17 +764,19 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
         )
         self._register(
             plans,
-            trajectory_id="validation-plateau-wider-window-seed311002",
+            trajectory_id=(
+                "validation-plateau-boundary-positive-wider-window-seed311002"
+            ),
             category="dendritic_events",
-            protocol="plateau_negative_wider_window_w800",
-            protocol_id="plateau_negative_wider_window_w800",
-            protocol_variant="near_threshold_timing",
+            protocol="plateau_boundary_positive_wider_window_w800",
+            protocol_id="plateau_boundary_positive_wider_window_w800",
+            protocol_variant="suprathreshold_timing_perturbation",
             seed=311002,
             duration_ms=dendritic_duration_ms,
             split="validation",
             actions_by_step=wider_actions,
             stimulus_onset_step=int(plateau["burst_start_ms"]),
-            negative_control=True,
+            required_event_kinds=("nmda_plateau",),
             event_probe_label="tuft_cluster_center",
             event_probe_segment_id=int(plateau["event_probe_segment_id"]),
             control_of=PLATEAU_PROTOCOL_ID,
@@ -1911,14 +1937,10 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
                     "target_event_present": present,
                 }
             )
-        negative_family_coverage = {
-            protocol_id: any(
-                row["control_of"] == protocol_id
-                and not row["target_event_present"]
-                for row in negative_outcomes
-            )
-            for protocol_id in CONFIRMED_PROTOCOL_IDS
-        }
+        negative_summary = _summarize_negative_control_outcomes(
+            negative_outcomes
+        )
+        negative_family_coverage = negative_summary["family_coverage"]
 
         initial_error = 0.0
         if branching_initial_states:
@@ -1974,9 +1996,10 @@ class DiagnosticDatasetV1Session(DiagnosticDatasetSession):
             "right_censored_required_events": required_censored,
             "negative_control_outcomes": negative_outcomes,
             "negative_family_coverage": negative_family_coverage,
-            "negative_controls_valid": all(
-                negative_family_coverage.values()
+            "all_declared_negative_controls_suppress_target_event": (
+                negative_summary["all_declared_suppress_target_event"]
             ),
+            "negative_controls_valid": negative_summary["valid"],
             "event_bounds_valid": event_bounds_valid,
             "input_offsets_half_open_valid": input_offsets_valid,
             "required_splits": sorted(REQUIRED_SPLITS),

@@ -1629,6 +1629,9 @@ class DiagnosticDatasetSession:
                     "category": decode(handle["metadata/category"][index]),
                     "protocol": decode(handle["metadata/protocol"][index]),
                     "split": decode(handle["metadata/split"][index]),
+                    "negative_control": bool(
+                        handle["metadata/negative_control"][index]
+                    ),
                     "commanded_current_pulse_count": 0,
                     "observed_peak_absolute_current_na": 0.0,
                     "soma_minimum_mv": float("inf"),
@@ -1706,8 +1709,12 @@ class DiagnosticDatasetSession:
                 somatic_trajectories_without_spikes.append(
                     row["trajectory_id"]
                 )
-            if row["category"] == "dendritic_events" and not any(
-                event_counts.get(kind, 0) for kind in dendritic_kinds
+            if (
+                row["category"] == "dendritic_events"
+                and not row["negative_control"]
+                and not any(
+                    event_counts.get(kind, 0) for kind in dendritic_kinds
+                )
             ):
                 dendritic_trajectories_without_candidates.append(
                     row["trajectory_id"]

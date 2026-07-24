@@ -1,4 +1,4 @@
-schema_version: 1.0.0
+schema_version: 1.0.1
 
 teacher:
   repository: https://github.com/SelfishGene/neuron_as_deep_net.git
@@ -11,7 +11,8 @@ provenance:
   calibration_notebook: notebooks/01b_dendritic_protocol_calibration.ipynb
   required_calibration_artifact_count: 88
   require_artifact_sha256_validation: true
-  require_exact_first_35_ms_overlap: true
+  require_exact_corrected_runtime_prefix_overlap_ms: 6
+  historical_01b_traces_are_hash_verified_provenance_only: true
 
 confirmed_protocols:
   nmda_plateau:
@@ -28,13 +29,17 @@ confirmed_protocols:
 negative_controls:
   nmda_plateau:
     - fewer_synapses_n8
-    - wider_event_window_w800
     - alternate_tuft_branch_n8
   paired_calcium_spike:
     - unpaired
     - fewer_synapses_n8
   preserve_confirmed_positive_schedule: true
   change_canonical_netcon_weights: false
+  require_every_declared_negative_to_suppress_target_event: true
+
+boundary_positive_variants:
+  nmda_plateau:
+    - wider_event_window_w800
 
 storage:
   format: hdf5

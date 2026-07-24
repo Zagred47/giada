@@ -206,8 +206,9 @@ The v1 dataset:
   green preflight is bound to an exact hash of the subsequent trajectory plan;
 - reuses the two selected schedules exactly on seeds 310001--310003;
 - includes rest, subthreshold, somatic spiking, confirmed tuft NMDA plateau,
-  confirmed paired hot-zone calcium spike, near-threshold controls, and five
-  futures from a common branching state;
+  confirmed paired hot-zone calcium spike, true near-threshold negative
+  controls, the wider-window NMDA timing perturbation as an explicitly
+  positive boundary case, and five futures from a common branching state;
 - keeps all 17,220 core state variables at every boundary and stores the 9,182
   current/conductance observables as a separate privileged category;
 - stores all 642 voltage microtraces plus canonical probes, the confirmed tuft
@@ -223,6 +224,8 @@ The v1 dataset:
   overlap with the corrected-runtime preflight references, and valid hashes
   for all 88 historical `01b` calibration
   artifacts;
+- requires every trajectory declared as a negative control to suppress its
+  target event; one successful negative per family is no longer sufficient;
 - produces stimulus-relative figures with separate axes for voltage, calcium,
   calcium current, NMDA conductance, and NMDA current.
 

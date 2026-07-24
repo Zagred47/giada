@@ -14,9 +14,40 @@ from src.hayflow_teacher import (
     validate_calibration_artifacts,
 )
 from src.hayflow_teacher.audit import sha256_file
+from src.hayflow_teacher.diagnostic_dataset_v1 import (
+    CALCIUM_PROTOCOL_ID,
+    PLATEAU_PROTOCOL_ID,
+    _summarize_negative_control_outcomes,
+)
 
 
 class DiagnosticDatasetV1ContractTest(unittest.TestCase):
+    def test_every_declared_negative_must_suppress_its_target_event(self):
+        outcomes = [
+            {
+                "control_of": PLATEAU_PROTOCOL_ID,
+                "target_event_present": False,
+            },
+            {
+                "control_of": PLATEAU_PROTOCOL_ID,
+                "target_event_present": True,
+            },
+            {
+                "control_of": CALCIUM_PROTOCOL_ID,
+                "target_event_present": False,
+            },
+        ]
+        summary = _summarize_negative_control_outcomes(outcomes)
+        self.assertTrue(all(summary["family_coverage"].values()))
+        self.assertFalse(summary["all_declared_suppress_target_event"])
+        self.assertFalse(summary["valid"])
+
+        corrected = _summarize_negative_control_outcomes(
+            [row for row in outcomes if not row["target_event_present"]]
+        )
+        self.assertTrue(corrected["all_declared_suppress_target_event"])
+        self.assertTrue(corrected["valid"])
+
     def test_prefix_comparison_keeps_event_probe_distinct_from_tuft_probe(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

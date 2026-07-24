@@ -14,7 +14,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 
 DATASET_SCHEMA_VERSION = "0.2.0"
-DIAGNOSTIC_DATASET_V1_SCHEMA_VERSION = "1.0.0"
+DIAGNOSTIC_DATASET_V1_SCHEMA_VERSION = "1.0.1"
 BOUNDARY_INTERVAL_MS = 1.0
 
 DIAGNOSTIC_SPLITS = {
