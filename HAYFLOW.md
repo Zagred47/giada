@@ -373,3 +373,51 @@ fidelity, regional drift, peak attenuation, near/far/release branching,
 recovery, state sufficiency, and episode bootstrap intervals.  The report can
 recommend the first HayFlow-Hines prototype but does not implement Hines,
 latents, morphology reduction, S4, Mamba, CUDA kernels, or mixed precision.
+
+## HayFlow-Hines recurrent prototype
+
+`notebooks/05_hayflow_hines_prototype.ipynb` is the first implementation of a
+HayFlow core rather than another B3 regression ablation.  It consumes the same
+immutable logical composite through `composite_dataset_manifest.json`, uses
+only causal `U_realized` inputs, and requires the notebook-04 report as a
+read-only numerical reference.  No teacher simulation or dataset generation
+occurs in notebook 05.
+
+The forward path encodes the complete teacher state only at initialization.
+It then maintains explicit voltage, compact per-segment calcium and authentic
+synapse-state views, a persistent local latent for every one of the 642
+segments, and a persistent global latent.  The synaptic front-end retains
+ordered successes and failures and keeps AMPA, NMDA, GABAA, and GABAB
+statistics separate.  Existing double-exponential A/B state is propagated
+across the macro-step and combined with the new exact causal increments; NMDA
+magnesium block is evaluated causally from the boundary voltage.
+
+The local recurrent cell predicts a non-negative effective conductance and a
+source current.  Authentic capacitance, passive leak, axial coupling, reversal
+potential, and parent/child topology construct one tree system per macro-step.
+`DifferentiableHinesSolve` performs functional leaf-to-root elimination and
+root-to-leaf substitution.  Independent tests compare it with a dense solve,
+run PyTorch gradcheck, enforce positive pivots, and exercise the full canonical
+morphology.  H0 uses only this solve, H1 adds a bounded continuous closure, and
+H2 also adds a morphology-masked event-conditioned jump.
+
+Six independent event heads use dedicated anatomical masks and predict
+presence, timing, region, segment, and amplitude.  Local and global GRU-like
+commits receive predicted voltage and event information, so teacher state is
+not re-encoded during rollout.  Selective biologically motivated state/current
+decoders and five-anchor microtrace decoders are training-only.  A fixed-order
+ConvGRU with a similar compact recurrent budget is included as a deliberately
+non-morphological control.
+
+Before the full curriculum, both H2 and ConvGRU must attempt a balanced overfit
+canary containing somatic, BAP, calcium, NMDA, plateau, hard-negative, and
+counterfactual branching support.  Full training is refused unless H2 reaches
+the preregistered voltage, event, peak, and branching thresholds.  If allowed,
+training progresses from teacher-forced one-step to recurrent 2/4/8 ms and
+then 16/32 ms windows, using episode-and-regime-stratified sampling and a
+relative branching loss.  One-step, event, and rollout checkpoints are stored
+separately and fingerprinted against data, normalization, code, seed, and
+configuration.  Outputs under `artifacts/hayflow_hines_prototype/` include the
+canary verdict, Hines tests, H0/H1/H2 and ConvGRU metrics, B3 comparison,
+regional drift, peak attenuation, branching, recovery, out-of-domain rates,
+checkpoint registry, and final A/B/C/D scenario classification.

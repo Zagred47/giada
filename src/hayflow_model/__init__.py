@@ -27,6 +27,26 @@ from .release_identifiability_experiment import (
     ReleaseIdentifiabilityExperiment,
     ReleaseRunSpec,
 )
+from .hines_layer import (
+    DifferentiableHinesSolve,
+    HinesDiagnostics,
+    morphology_arrays,
+    tree_depths,
+)
+from .hayflow_hines import (
+    HINES_SYNAPTIC_FEATURE_NAMES,
+    SYNAPTIC_COMPONENTS,
+    SYNAPTIC_STATISTICS,
+    HayFlowHines,
+    HayFlowHinesConfig,
+    OrderedSegmentConvGRU,
+    hayflow_hines_arrays,
+    model_parameter_count,
+)
+from .hines_experiment import (
+    HayFlowHinesExperiment,
+    HinesPrototypeExperimentConfig,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -48,4 +68,18 @@ __all__ = [
     "ReleaseExperimentConfig",
     "ReleaseIdentifiabilityExperiment",
     "ReleaseRunSpec",
+    "DifferentiableHinesSolve",
+    "HinesDiagnostics",
+    "morphology_arrays",
+    "tree_depths",
+    "HINES_SYNAPTIC_FEATURE_NAMES",
+    "SYNAPTIC_COMPONENTS",
+    "SYNAPTIC_STATISTICS",
+    "HayFlowHines",
+    "HayFlowHinesConfig",
+    "OrderedSegmentConvGRU",
+    "hayflow_hines_arrays",
+    "model_parameter_count",
+    "HayFlowHinesExperiment",
+    "HinesPrototypeExperimentConfig",
 ]

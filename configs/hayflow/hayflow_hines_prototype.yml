@@ -1,0 +1,68 @@
+schema_version: "05-config-v1"
+experiment:
+  profile: diagnostic_full
+  seeds: [17, 29, 43]
+  batch_size: 2
+  sequence_batch_size: 2
+  learning_rate: 0.0002
+  canary_learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+
+  # The full curriculum is gated by the mandatory balanced overfit canary.
+  canary_epochs: 300
+  canary_patience: 80
+  canary_episode_per_class: 1
+  canary_max_transitions: 128
+  canary_voltage_rmse_mv: 1.0
+  canary_event_f1: 0.90
+  canary_peak_error_mv: 5.0
+  canary_branching_retention: 0.50
+
+  phase1_epochs: 35
+  phase2_epochs: 18
+  phase3_epochs: 12
+  phase1_transitions_per_episode: 4
+  rollout_windows_per_epoch: 48
+  evaluation_transitions: 2048
+  evaluation_windows_per_regime: 8
+  normalization_transitions: 2048
+  rollout_horizons_ms: [2, 4, 8, 16, 32]
+
+  lambda_voltage: 1.0
+  lambda_peak: 0.25
+  lambda_event: 1.0
+  lambda_timing: 0.05
+  lambda_state: 0.10
+  lambda_rollout: 0.50
+  lambda_branching: 0.25
+  lambda_privileged: 0.01
+  lambda_microtrace: 0.02
+
+  model:
+    local_latent_dim: 16
+    global_latent_dim: 32
+    region_embedding_dim: 8
+    token_embedding_dim: 8
+    hidden_width: 96
+    residual_blocks: 2
+    synaptic_hidden_width: 32
+    dt_ms: 1.0
+    effective_conductance_scale_us: 0.02
+    source_current_scale_na: 5.0
+    continuous_residual_limit_mv: 12.0
+    event_jump_limit_mv: 120.0
+    calcium_state_dim: 1
+    synapse_state_dim: 4
+    dropout: 0.0
+
+methodology:
+  dataset: logical composite targeted v1.1
+  primary_input: U_realized
+  teacher_encoder_during_rollout: false
+  hines_solves_per_macro_step: 1
+  rollout_sampling: episode-and-regime-stratified
+  conventional_control: fixed-segment-order ConvGRU
+  b3_role: numerical reference only
+  mixed_precision: false
+  custom_cuda: false
