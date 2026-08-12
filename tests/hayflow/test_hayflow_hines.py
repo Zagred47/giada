@@ -8,6 +8,7 @@ import numpy as np
 import pytest
 import src.hayflow_model.hines_isolation_experiment as isolation_module
 import src.hayflow_model.hines_conditioning_experiment as conditioning_module
+import src.hayflow_model.hines_capacity_experiment as capacity_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -32,6 +33,13 @@ from src.hayflow_model.hines_conditioning_experiment import (
     EXPECTED_05C_ARCHIVE_SHA256,
     HinesConditioningConfig,
     HinesResidualConditioningExperiment,
+)
+from src.hayflow_model.hines_capacity_experiment import (
+    EXPECTED_05D_ARCHIVE_SHA256,
+    HinesCapacityConfig,
+    HinesSegmentCapacityExperiment,
+    segment_conditioned_rank_path,
+    solve_linear_probe,
 )
 
 
@@ -145,6 +153,27 @@ def test_05d_notebook_is_gated_and_uses_the_browser_blob_download():
     assert "FileLink" not in source
 
 
+def test_05e_notebook_is_closed_form_gated_and_uses_blob_download():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (
+            root / "notebooks/05e_hayflow_hines_segment_capacity_probe.ipynb"
+        ).read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "bundle.report" not in source
+    assert "bundle.manifest" in source
+    assert "hayflow_hines_residual_conditioning.zip" in source
+    assert "session.run_capacity_probes()" in source
+    assert "session.run_full" not in source
+    assert "assert not final_report['full_training_authorized']" in source
+    assert "base64.b64encode" in source
+    assert "new Blob" in source
+    assert "FileLink" not in source
+
+
 def test_isolation_config_is_nested_and_binds_the_05b_archive():
     config = HinesIsolationConfig()
     config.validate()
@@ -173,6 +202,47 @@ def test_05d_conditioning_config_preserves_the_preregistered_ladder():
         HinesConditioningConfig(
             unfreezing_stages=("base_dynamics", "head_only")
         ).validate()
+
+
+def test_05e_capacity_config_and_closed_form_solver_are_deterministic():
+    config = HinesCapacityConfig()
+    config.validate()
+    assert config.rank_candidates[-1] == 96
+    assert len(EXPECTED_05D_ARCHIVE_SHA256) == 64
+    with pytest.raises(ValueError, match="unique and increasing"):
+        HinesCapacityConfig(rank_candidates=(2, 1)).validate()
+    design = np.asarray([
+        [1.0, 0.0], [0.0, 1.0], [1.0, 1.0], [2.0, -1.0], [-1.0, 2.0]
+    ])
+    target = 2.0 * design[:, 0] - 3.0 * design[:, 1]
+    coefficients, prediction, report = solve_linear_probe(
+        design, target, config.svd_rcond
+    )
+    np.testing.assert_allclose(coefficients, [2.0, -3.0], atol=1e-10)
+    np.testing.assert_allclose(prediction, target, atol=1e-10)
+    assert report["numerical_rank"] == 2
+    assert report["irreducible_rmse"] < 1e-10
+
+
+def test_segment_conditioned_rank_path_separates_static_and_dynamic_terms():
+    rng = np.random.default_rng(12)
+    temporal_features = rng.normal(size=(3, 4))
+    temporal_features -= temporal_features.mean(axis=0, keepdims=True)
+    features = np.tile(temporal_features[:, None, :], (1, 5, 1))
+    segment_factor = np.linspace(0.5, 1.5, 5)
+    feature_factor = np.asarray([0.2, -0.4, 0.7, 0.1])
+    coefficients = np.outer(segment_factor, feature_factor)
+    static_bias = np.linspace(-2.0, 2.0, 5)
+    target = static_bias[None, :] + np.einsum(
+        "nsf,sf->ns", features, coefficients
+    )
+    rows, diagnostics = segment_conditioned_rank_path(
+        features, target, ranks=(1, 2), rcond=1e-12
+    )
+    assert diagnostics["locally_unidentifiable_segment_count"] == 0
+    assert diagnostics["coefficient_matrix_rank"] == 1
+    np.testing.assert_allclose(rows[0]["predicted_residual"], target, atol=1e-10)
+    assert rows[0]["dynamic_residual_rmse_mv"] < 1e-10
 
 
 def test_05c_accepts_a_hash_verified_kaggle_extracted_artifact(
@@ -223,6 +293,34 @@ def test_05d_accepts_a_hash_verified_kaggle_extracted_05c_artifact(
     experiment.artifact_05c_source = root
     report, contract = experiment._read_05c_source()
     assert report["diagnosis"] == "ENCODER_OR_OPTIMIZATION_BOTTLENECK"
+    assert contract["source_kind"] == "kaggle_extracted_directory"
+    assert contract["archive_sha256"] is None
+    assert contract["verified_member_sha256"] == expected
+
+
+def test_05e_accepts_a_hash_verified_kaggle_extracted_05d_artifact(
+    tmp_path, monkeypatch
+):
+    final = json.dumps({
+        "diagnosis": "SHARED_REPRESENTATION_BOTTLENECK",
+        "full_training_authorized": False,
+    }).encode()
+    free = b"free-control"
+    expected = {
+        "final_report.json": hashlib.sha256(final).hexdigest(),
+        "free_residual_report.json": hashlib.sha256(free).hexdigest(),
+    }
+    monkeypatch.setattr(capacity_module, "EXPECTED_05D_MEMBER_SHA256", expected)
+    root = tmp_path / "hayflow_hines_residual_conditioning"
+    root.mkdir()
+    (root / "final_report.json").write_bytes(final)
+    (root / "free_residual_report.json").write_bytes(free)
+    experiment = HinesSegmentCapacityExperiment.__new__(
+        HinesSegmentCapacityExperiment
+    )
+    experiment.artifact_05d_source = root
+    report, contract = experiment._read_05d_source()
+    assert report["diagnosis"] == "SHARED_REPRESENTATION_BOTTLENECK"
     assert contract["source_kind"] == "kaggle_extracted_directory"
     assert contract["archive_sha256"] is None
     assert contract["verified_member_sha256"] == expected

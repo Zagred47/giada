@@ -1,0 +1,123 @@
+schema_version: "05e-config-v1"
+
+model_experiment:
+  profile: diagnostic_full
+  seeds: [17, 29, 43]
+  batch_size: 2
+  sequence_batch_size: 2
+  learning_rate: 0.0002
+  canary_learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  canary_epochs: 300
+  canary_voltage_epochs: 120
+  canary_event_epochs: 120
+  canary_joint_epochs: 60
+  canary_evaluation_interval: 10
+  canary_patience: 80
+  canary_episode_per_class: 2
+  canary_max_transitions: 128
+  canary_voltage_rmse_mv: 1.0
+  canary_event_f1: 0.90
+  canary_peak_error_mv: 5.0
+  canary_branching_retention: 0.50
+  phase1_epochs: 35
+  phase2_epochs: 18
+  phase3_epochs: 12
+  phase1_transitions_per_episode: 4
+  rollout_windows_per_epoch: 48
+  evaluation_transitions: 2048
+  evaluation_windows_per_regime: 8
+  normalization_transitions: 2048
+  rollout_horizons_ms: [2, 4, 8, 16, 32]
+  lambda_voltage: 1.0
+  lambda_peak: 0.25
+  lambda_event: 1.0
+  lambda_timing: 0.05
+  lambda_state: 0.10
+  lambda_rollout: 0.50
+  lambda_branching: 0.25
+  lambda_privileged: 0.01
+  lambda_microtrace: 0.02
+  model:
+    local_latent_dim: 16
+    global_latent_dim: 32
+    region_embedding_dim: 8
+    token_embedding_dim: 8
+    hidden_width: 96
+    residual_blocks: 2
+    synaptic_hidden_width: 32
+    dt_ms: 1.0
+    effective_conductance_scale_us: 0.02
+    source_current_scale_na: 5.0
+    continuous_residual_limit_mv: 12.0
+    event_jump_limit_mv: 120.0
+    event_spatial_temperature: 0.25
+    event_boundary_decay_per_ms: 4.0
+    convgru_voltage_delta_limit_mv: 120.0
+    calcium_state_dim: 1
+    synapse_state_dim: 4
+    dropout: 0.0
+
+isolation:
+  subset_sizes: [1, 8, 32, 76]
+  subset_epochs: [120, 100, 60, 40]
+  modes: [timed_masked, direct_residual]
+  batch_size: 4
+  learning_rate: 0.001
+  gradient_clip_norm: 10.0
+  branch_epochs: 160
+  seed: 1705
+  tail_segment_count: 16
+  diagnostic_one_transition_rmse_mv: 0.25
+  diagnostic_one_transition_peak_error_mv: 1.0
+
+conditioning:
+  free_residual_epochs: 5
+  free_residual_learning_rate: 1.0
+  decoder_epochs: 300
+  decoder_parameterizations: [linear, scaled_linear, tanh]
+  decoder_learning_rates: [0.01, 0.001, 0.0001]
+  scaled_linear_factor_mv: 10.0
+  tanh_limit_mv: 120.0
+  unfreezing_stages: [head_only, local_features, base_dynamics]
+  one_transition_epochs: 400
+  branch_pair_epochs: 600
+  model_learning_rate: 0.00001
+  branch_loss_weight: 1.0
+  feature_epsilon: 0.00001
+  evaluation_interval: 20
+  early_stop_confirmations: 3
+  seed: 2705
+  one_transition_rmse_mv: 0.25
+  one_transition_max_error_mv: 1.0
+  pair_rmse_mv: 1.0
+  pair_max_error_mv: 5.0
+  pair_retention_minimum: 0.90
+  pair_retention_maximum: 1.10
+  free_rmse_mv: 0.05
+  free_max_error_mv: 0.20
+
+capacity:
+  rank_candidates: [1, 2, 4, 8, 16, 32, 64, 96]
+  feature_epsilon: 0.00000001
+  svd_rcond: 0.0000000001
+  one_transition_rmse_mv: 0.25
+  one_transition_max_error_mv: 1.0
+  pair_rmse_mv: 1.0
+  pair_max_error_mv: 5.0
+  pair_retention_minimum: 0.90
+  pair_retention_maximum: 1.10
+
+methodology:
+  full_training_authorized: false
+  source_checkpoint: exact_hayflow_hines_canary_v2
+  source_diagnoses:
+    - exact_hayflow_hines_causal_isolation
+    - exact_hayflow_hines_residual_conditioning
+  iterative_optimizer_used: false
+  float64_closed_form: true
+  static_segment_identity_separated_from_branch_discrimination: true
+  rank_path_is_truncated_svd_of_per_segment_dynamic_coefficients: true
+  same_absolute_voltage_and_branching_gates_as_05d: true
+  test_split_used_for_fit: false

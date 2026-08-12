@@ -534,3 +534,28 @@ current 05b features, shared 97-parameter decoder, and registered optimization
 budget; it does not reject the HayFlow architecture family. Full training
 remains prohibited. The authorized 05e diagnostic is a closed-form and
 segment-conditioned capacity probe.
+
+### Notebook 05e: closed-form segment-capacity probe
+
+`notebooks/05e_hayflow_hines_segment_capacity_probe.ipynb` consumes the same
+logical composite and the exact 05b, 05c, and 05d artifacts. Every upstream
+binary is accepted as an original ZIP or Kaggle-extracted directory and is
+verified against its registered SHA-256 contract before any probe runs.
+
+05e removes iterative optimization from the experiment. In float64 it solves a
+shared linear decoder, a segment-bias-only control, and a shared decoder with
+explicit segment biases. It records the design rank, complete singular
+spectrum, nonzero condition number, and irreducible least-squares residual.
+For the authentic counterfactual pair it then separates the mean residual of
+each segment from the branch-dependent residual. Per-segment dynamic
+coefficients are solved in closed form and truncated by SVD at preregistered
+ranks from 1 through 96. This produces a deployable low-rank factorization of
+segment identity by frozen H2 features and reveals the smallest rank that can
+meet the unchanged 05d voltage and branching gates.
+
+The segment-bias control may memorize one transition by construction; this is
+reported explicitly as static memorization and is never interpreted as causal
+branch discrimination. Only the centered counterfactual component measures
+whether the frozen features distinguish the two future inputs. 05e cannot run
+or authorize full training. Even a passing closed-form probe only authorizes a
+fresh zero-initialized segment-conditioned neural micro-canary.

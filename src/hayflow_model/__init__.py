@@ -60,6 +60,15 @@ from .hines_conditioning_experiment import (
     HinesResidualConditioningExperiment,
     ZeroInitializedBoundaryDecoder,
 )
+from .hines_capacity_experiment import (
+    EXPECTED_05D_ARCHIVE_SHA256,
+    HinesCapacityConfig,
+    HinesSegmentCapacityExperiment,
+    design_spectrum,
+    segment_conditioned_rank_path,
+    solve_linear_probe,
+    standardize_design,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -104,4 +113,11 @@ __all__ = [
     "HinesConditioningConfig",
     "HinesResidualConditioningExperiment",
     "ZeroInitializedBoundaryDecoder",
+    "EXPECTED_05D_ARCHIVE_SHA256",
+    "HinesCapacityConfig",
+    "HinesSegmentCapacityExperiment",
+    "design_spectrum",
+    "segment_conditioned_rank_path",
+    "solve_linear_probe",
+    "standardize_design",
 ]
