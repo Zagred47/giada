@@ -243,9 +243,12 @@ class TransitionH5Writer:
             self.micro_voltage_summary["maximum_mv"],
             self.np.max(all_voltage, axis=0),
         )
+        integrate = getattr(self.np, "trapezoid", None)
+        if integrate is None:  # NumPy 1.23 teacher environments.
+            integrate = self.np.trapz
         self._append(
             self.micro_voltage_summary["integral_mv_ms"],
-            self.np.trapz(all_voltage, micro_time, axis=0),
+            integrate(all_voltage, micro_time, axis=0),
         )
         self._append(
             self.micro_voltage_summary["minimum_time_offset_ms"],

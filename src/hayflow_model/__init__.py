@@ -75,6 +75,13 @@ from .hines_segment_canary_experiment import (
     HinesSegmentMicroCanaryExperiment,
     ZeroOutputSpectralSegmentResidual,
 )
+from .hines_optimization_audit import (
+    EXPECTED_05F_ARCHIVE_SHA256,
+    HinesOptimizationAuditConfig,
+    HinesSegmentOptimizationAudit,
+    bounded_segment_prediction,
+    dual_ridge_segment_coefficients,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -130,4 +137,9 @@ __all__ = [
     "HinesSegmentCanaryConfig",
     "HinesSegmentMicroCanaryExperiment",
     "ZeroOutputSpectralSegmentResidual",
+    "EXPECTED_05F_ARCHIVE_SHA256",
+    "HinesOptimizationAuditConfig",
+    "HinesSegmentOptimizationAudit",
+    "bounded_segment_prediction",
+    "dual_ridge_segment_coefficients",
 ]

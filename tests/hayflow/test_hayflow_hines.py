@@ -10,6 +10,7 @@ import src.hayflow_model.hines_isolation_experiment as isolation_module
 import src.hayflow_model.hines_conditioning_experiment as conditioning_module
 import src.hayflow_model.hines_capacity_experiment as capacity_module
 import src.hayflow_model.hines_segment_canary_experiment as segment_canary_module
+import src.hayflow_model.hines_optimization_audit as optimization_audit_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -47,6 +48,100 @@ from src.hayflow_model.hines_segment_canary_experiment import (
     HinesSegmentCanaryConfig,
     HinesSegmentMicroCanaryExperiment,
 )
+from src.hayflow_model.hines_optimization_audit import (
+    HinesOptimizationAuditConfig,
+    HinesSegmentOptimizationAudit,
+    bounded_segment_prediction,
+    dual_ridge_segment_coefficients,
+)
+
+
+def test_05g_notebook_enforces_train_first_bounded_audit_contract():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05g_hayflow_hines_optimization_audit.ipynb").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "bundle.report" not in source
+    assert "run_regularized_train_audit" in source
+    assert "reveal_heldout_if_safe" in source
+    assert "assert not final_report['full_training_authorized']" in source
+    assert "application/zip" in source and "base64.b64encode" in source
+    assert "rglob('/kaggle" not in source
+
+
+def test_05g_config_rejects_unregistered_ranks_and_accepts_default():
+    HinesOptimizationAuditConfig().validate()
+    with pytest.raises(ValueError, match="ranks 64 and 96"):
+        HinesOptimizationAuditConfig(ranks=(32, 96)).validate()
+
+
+def test_dual_ridge_recovers_centered_segment_map_and_bounds_residual():
+    rng = np.random.default_rng(17)
+    features = rng.normal(size=(24, 3, 4))
+    coefficients = rng.normal(size=(3, 4))
+    bias = np.asarray([1.5, -2.0, 0.25])
+    target = bias[None, :] + np.einsum("nsf,sf->ns", features, coefficients)
+    target_mean, feature_mean, fitted, diagnostics = dual_ridge_segment_coefficients(
+        features, target, 1e-10
+    )
+    fitted_bias = target_mean - np.einsum("sf,sf->s", feature_mean, fitted)
+    predicted, safety = bounded_segment_prediction(
+        features, fitted_bias, fitted, residual_limit_mv=120.0
+    )
+    np.testing.assert_allclose(predicted, target, atol=1e-7, rtol=1e-7)
+    assert diagnostics["minimum_local_rank"] == 4
+    assert safety["clipped_fraction"] == 0.0
+    clipped, clipped_safety = bounded_segment_prediction(
+        features, np.full(3, 500.0), fitted, residual_limit_mv=120.0
+    )
+    assert np.max(np.abs(clipped)) == 120.0
+    assert clipped_safety["clipped_fraction"] > 0.0
+
+
+def test_05g_accepts_only_member_verified_extracted_05f(tmp_path, monkeypatch):
+    payloads = {
+        "artifact_index.json": b"{}",
+        "micro_canary_config.json": b"{}",
+        "pair_plan.json": b"{}",
+        "feature_contract.json": b"{}",
+        "spectral_basis_report.json": b"{}",
+        "micro_canary_report.json": b"{}",
+        "rank_64_report.json": b"{}",
+        "rank_96_report.json": b"{}",
+        "final_report.json": b'{"diagnosis":"test"}',
+    }
+    expected = {}
+    for name, payload in payloads.items():
+        (tmp_path / name).write_bytes(payload)
+        expected[name] = hashlib.sha256(payload).hexdigest()
+    monkeypatch.setattr(optimization_audit_module, "EXPECTED_05F_MEMBER_SHA256", expected)
+    experiment = object.__new__(HinesSegmentOptimizationAudit)
+    experiment.artifact_05f_source = tmp_path
+    report, contract = experiment._read_05f_source()
+    assert report["diagnosis"] == "test"
+    assert contract["source_kind"] == "kaggle_extracted_directory"
+    assert contract["verified_member_sha256"] == expected
+
+
+def test_05g_protocol_family_does_not_require_optional_metadata_column():
+    experiment = object.__new__(HinesSegmentOptimizationAudit)
+    experiment.store = SimpleNamespace(
+        metadata={
+            "trajectory_id": np.asarray(["episode-a"]),
+            "protocol": np.asarray(["fallback-protocol"]),
+        },
+        episode_by_trajectory={
+            "episode-a": {"protocol": "targeted-bap", "protocol_variant": "paired"}
+        },
+    )
+    assert experiment._protocol_family(0) == "targeted-bap|paired"
+    experiment.store.episode_by_trajectory = {}
+    assert experiment._protocol_family(0) == "fallback-protocol|unknown_variant"
 
 
 def test_05b_notebook_uses_composite_bundle_public_api():

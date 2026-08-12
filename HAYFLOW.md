@@ -620,3 +620,37 @@ The authorized 05g diagnostic must audit projected-feature scales, replace the
 unregularized spectral basis with a regularized bounded construction, add
 multi-pair oracle controls, and determine whether protocol-diverse training
 pairs are available before any further held-out claim.
+
+### Notebook 05g: regularized optimization audit
+
+`notebooks/05g_hayflow_hines_optimization_audit.ipynb` is the controlled
+follow-up to the 05f optimization failure. It consumes the immutable composite,
+the exact 05b--05e upstream artifacts, and the member-hashed 05f diagnostic.
+It searches farther through `train` for independent counterfactual support,
+excludes the registered development pair, and reports explicitly whether more
+than one protocol family is actually available instead of assuming diversity.
+
+The H2 base and boundary-feature extractor remain frozen. Feature location and
+scale are fitted only on train inputs, standardized values are clipped to a
+declared range, and raw plus standardized norms are audited for train,
+development, and held-out inputs. Boundary-voltage targets for held-out pairs
+remain sealed during this stage. A direct per-transition residual oracle first
+checks multi-pair target and metric plumbing; a segment-bias control separately
+measures how much can be explained by static memorization.
+
+The actual audit uses float64 dual ridge regression, which is appropriate for
+the small number of examples relative to 96 local features, across a fixed
+regularization path. Every coefficient field is independently truncated to
+rank 64 and rank 96, with the centering correction folded into its segment
+intercept. Predictions are bounded to +/-120 mV and candidates are rejected for
+non-finite scales, excessive coefficient norm, any boundary clipping, or
+failure of the unchanged absolute voltage and branching gates on train and the
+pre-registered development pair.
+
+Only a candidate that passes all of those gates may cause held-out boundary
+voltages to be loaded. The held-out set is then evaluated once; it is never used
+for normalization, regularization selection, coefficient fitting, or safety
+thresholds. 05g contains neither rollout nor a full-training path. Its output
+is therefore a diagnostic decision about optimization, representation, and
+generalization, and full HayFlow training remains prohibited regardless of the
+outcome.
