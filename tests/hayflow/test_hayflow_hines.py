@@ -115,6 +115,33 @@ def test_05d_experimental_record_scopes_the_representation_no_go():
     assert not record["next_step"]["full_training_authorized"]
 
 
+def test_05e_experimental_record_limits_the_capacity_go_to_a_micro_canary():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (
+            root
+            / "experiments/hayflow/05e_hayflow_hines_segment_capacity/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert record["status"] == "complete"
+    assert record["decision"] == "DIAGNOSTIC_ONLY_NO_FULL_TRAINING"
+    assert record["diagnosis"] == "SEGMENT_CONDITIONED_CAPACITY_SUFFICIENT"
+    assert record["artifact"]["sha256"] == (
+        "a8e47a979678cef19ca45e5647528bf82dab4f49923dd4d5400705abbe104a48"
+    )
+    assert record["artifact_integrity"]["all_indexed_members_verified"]
+    assert record["artifact_integrity"]["all_indexed_sizes_verified"]
+    assert record["one_transition"]["segment_bias_only"]["passed"]
+    assert not record["branch_pair_base_probes"]["segment_bias_only"]["passed"]
+    rank_path = {row["rank"]: row for row in record["segment_conditioned_rank_path"]}
+    assert not rank_path[64]["passed"]
+    assert rank_path[96]["passed"]
+    assert record["interpretation"]["maximum_tested_rank_required"]
+    assert not record["interpretation"]["compact_low_rank_solution_demonstrated"]
+    assert not record["interpretation"]["out_of_sample_generalization_demonstrated"]
+    assert not record["next_step"]["full_training_authorized"]
+
+
 def test_05c_notebook_has_no_full_training_path_and_uses_public_bundle_api():
     root = Path(__file__).resolve().parents[2]
     notebook = json.loads(

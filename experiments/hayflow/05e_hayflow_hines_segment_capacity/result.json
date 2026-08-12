@@ -1,0 +1,214 @@
+{
+  "schema_version": "hayflow-experiment-record-v1",
+  "experiment_id": "05e_hayflow_hines_segment_capacity",
+  "executed_at_local": "2026-08-12T16:53:04+02:00",
+  "status": "complete",
+  "decision": "DIAGNOSTIC_ONLY_NO_FULL_TRAINING",
+  "diagnosis": "SEGMENT_CONDITIONED_CAPACITY_SUFFICIENT",
+  "artifact": {
+    "filename": "hayflow_hines_segment_capacity.zip",
+    "size_bytes": 341281,
+    "sha256": "a8e47a979678cef19ca45e5647528bf82dab4f49923dd4d5400705abbe104a48",
+    "committed_to_git": false,
+    "retention": "external binary artifact retained by the experiment operator"
+  },
+  "artifact_integrity": {
+    "artifact_index_size_bytes": 1578,
+    "artifact_index_sha256": "9796e3fdb22bc8b9fe1b2a9be1ecf633a956ee5eddc7b329f876c65ed0a76a8f",
+    "indexed_artifact_count": 9,
+    "all_indexed_sizes_verified": true,
+    "all_indexed_members_verified": true,
+    "key_members": {
+      "capacity_config.json": "486d6ce90e84a7b37be21e92d952e3c3387749c81a08f299f411d493f0aa6043",
+      "capacity_probe_report.json": "8a290db42e1a12d4dc8edd7ced27b8c6f89e226569d5edae5239801ae31198fb",
+      "capacity_probe_metrics.parquet": "19bad32b2408b5bf1b2ab9b68ce39d04132f488b335c646830e235d02bf0dc2d",
+      "capacity_diagnostics.png": "a2b5798cc84aad11a6942e86da57822b0fcf127ab2f9a204fc33912c93895773",
+      "final_report.json": "0cab22303747c2df2e2f4b6865774d0f7b2d76fbae090ee73b67f3f109a902d0"
+    }
+  },
+  "provenance": {
+    "implementation_commit": "9696ca494f9298a10069173afa55e456768c71e8",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "source_05b_checkpoint_sha256": "5fe46579aa05143e30a252ca78995e15d4fafe0c510967ac0c59b3e0344bd06f",
+    "source_05b_logical_indices_sha256": "e79dad4ae40ab1a130026d0c45e7910073275475e4bd50c75c493a730080d4c9",
+    "source_forms": {
+      "05b": "kaggle_extracted_directory",
+      "05c": "kaggle_extracted_directory",
+      "05d": "kaggle_extracted_directory"
+    },
+    "worst_transition": 5364,
+    "worst_segment": 437,
+    "training_branch_pair": [9122, 5282]
+  },
+  "methodology": {
+    "iterative_optimizer_used": false,
+    "float64_closed_form": true,
+    "static_segment_identity_separated_from_branch_discrimination": true,
+    "same_absolute_gates_as_05d": true,
+    "test_split_used_for_training": false
+  },
+  "one_transition": {
+    "shared_linear": {
+      "parameter_count": 97,
+      "voltage_rmse_mv": 1.5153406483333123,
+      "maximum_segment_error_mv": 18.693803126516443,
+      "maximum_peak_error_mv": 12.143670375051599,
+      "passed": false
+    },
+    "segment_bias_only": {
+      "parameter_count": 642,
+      "voltage_rmse_mv": 0.0,
+      "maximum_segment_error_mv": 0.0,
+      "maximum_peak_error_mv": 0.0,
+      "passed": true,
+      "interpretation": "exact static memorization control, not a causal model"
+    },
+    "segment_bias_plus_shared_linear": {
+      "parameter_count": 738,
+      "voltage_rmse_mv": 2.4164263481155924e-12,
+      "maximum_segment_error_mv": 1.6370904631912708e-11,
+      "maximum_peak_error_mv": 5.2580162446247414e-12,
+      "passed": true
+    }
+  },
+  "branch_pair_base_probes": {
+    "shared_linear": {
+      "parameter_count": 97,
+      "voltage_rmse_mv": 16.3230914717415,
+      "maximum_segment_error_mv": 69.78254227488988,
+      "maximum_peak_error_mv": 45.449403990636554,
+      "branching_retention": 0.23623847837934128,
+      "static_residual_rmse_mv": 4.145031983529848,
+      "branch_delta_residual_rmse_mv": 31.576068472839022,
+      "passed": false
+    },
+    "segment_bias_only": {
+      "parameter_count": 642,
+      "voltage_rmse_mv": 15.805915931394614,
+      "maximum_segment_error_mv": 50.711119651794434,
+      "maximum_peak_error_mv": 41.96676540374756,
+      "branching_retention": 0.21982058921469086,
+      "static_residual_rmse_mv": 0.0,
+      "branch_delta_residual_rmse_mv": 31.611831862789227,
+      "passed": false
+    },
+    "segment_bias_plus_shared_linear": {
+      "parameter_count": 738,
+      "voltage_rmse_mv": 12.481329167824377,
+      "maximum_segment_error_mv": 42.530153408646584,
+      "maximum_peak_error_mv": 33.75956930220127,
+      "branching_retention": 0.6495147140543173,
+      "static_residual_rmse_mv": 2.5598968637241526e-6,
+      "branch_delta_residual_rmse_mv": 24.962658335648225,
+      "passed": false
+    }
+  },
+  "design_diagnostics": {
+    "shared_design": {
+      "rows": 1284,
+      "columns": 97,
+      "numerical_rank": 97,
+      "condition_number_nonzero": 4574674.551152894,
+      "irreducible_rmse_mv": 16.3230914717415
+    },
+    "segment_bias_plus_shared_design": {
+      "columns": 738,
+      "numerical_rank": 738,
+      "condition_number_nonzero": 7461914561.097008,
+      "irreducible_rmse_mv": 12.481329167824377
+    },
+    "segment_conditioned_coefficient_rank": 96,
+    "locally_unidentifiable_segment_count": 0
+  },
+  "segment_conditioned_rank_path": [
+    {
+      "rank": 1,
+      "parameter_count": 1380,
+      "voltage_rmse_mv": 11.298690552196472,
+      "maximum_segment_error_mv": 50.404072935681306,
+      "branching_retention": 0.56106532856111,
+      "passed": false
+    },
+    {
+      "rank": 2,
+      "parameter_count": 2118,
+      "voltage_rmse_mv": 9.607633713266344,
+      "maximum_segment_error_mv": 45.136214045820246,
+      "branching_retention": 0.6197297957211977,
+      "passed": false
+    },
+    {
+      "rank": 4,
+      "parameter_count": 3594,
+      "voltage_rmse_mv": 6.796930327474985,
+      "maximum_segment_error_mv": 33.30455540135131,
+      "branching_retention": 0.7191544014958201,
+      "passed": false
+    },
+    {
+      "rank": 8,
+      "parameter_count": 6546,
+      "voltage_rmse_mv": 3.7837699100406597,
+      "maximum_segment_error_mv": 22.550210475550053,
+      "branching_retention": 0.8342634026554544,
+      "passed": false
+    },
+    {
+      "rank": 16,
+      "parameter_count": 12450,
+      "voltage_rmse_mv": 1.746422764243669,
+      "maximum_segment_error_mv": 15.71777861838439,
+      "branching_retention": 0.9230112920072616,
+      "passed": false
+    },
+    {
+      "rank": 32,
+      "parameter_count": 24258,
+      "voltage_rmse_mv": 0.7548972983474197,
+      "maximum_segment_error_mv": 13.171591485711076,
+      "branching_retention": 0.9724554207276853,
+      "passed": false
+    },
+    {
+      "rank": 64,
+      "parameter_count": 47874,
+      "voltage_rmse_mv": 0.2495992610862992,
+      "maximum_segment_error_mv": 6.043063893829199,
+      "maximum_peak_error_mv": 0.029656318109502422,
+      "branching_retention": 0.9955804876338362,
+      "passed": false,
+      "failure_reason": "maximum segment error exceeds the 5 mV gate"
+    },
+    {
+      "rank": 96,
+      "parameter_count": 71490,
+      "voltage_rmse_mv": 1.1114893931707648e-7,
+      "maximum_segment_error_mv": 2.8162554954747065e-6,
+      "maximum_peak_error_mv": 1.1368683772161603e-13,
+      "branching_retention": 1.000000000686357,
+      "branch_delta_residual_rmse_mv": 2.2229747709474861e-7,
+      "passed": true
+    }
+  ],
+  "interpretation": {
+    "frozen_features_contain_pair_discriminating_information": true,
+    "static_segment_identity_alone_sufficient": false,
+    "compact_low_rank_solution_demonstrated": false,
+    "maximum_tested_rank_required": true,
+    "out_of_sample_generalization_demonstrated": false,
+    "architecture_family_proven": false,
+    "scope": "The positive result is an in-sample capacity proof on the registered worst transition and one authentic counterfactual pair."
+  },
+  "next_step": {
+    "experiment": "05f_zero_initialized_segment_conditioned_micro_canary",
+    "full_training_authorized": false,
+    "requirements": [
+      "initialize a neural segment-conditioned residual at exactly zero",
+      "train on more than one branch pair while preserving episode and split boundaries",
+      "evaluate on held-out counterfactual pairs not used by the closed-form fit",
+      "compare rank 64 and rank 96 capacity under the same absolute gates",
+      "retain the unchanged 05b base path and forbid teacher encoding during rollout",
+      "do not start full training unless the fresh neural micro-canary generalizes"
+    ]
+  }
+}

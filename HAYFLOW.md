@@ -559,3 +559,18 @@ branch discrimination. Only the centered counterfactual component measures
 whether the frozen features distinguish the two future inputs. 05e cannot run
 or authorize full training. Even a passing closed-form probe only authorizes a
 fresh zero-initialized segment-conditioned neural micro-canary.
+
+The completed 05e run is registered in
+`experiments/hayflow/05e_hayflow_hines_segment_capacity/result.json`. The
+shared linear, segment-bias-only, and segment-bias-plus-shared probes all
+failed the authentic branch pair. The segment-conditioned path improved
+monotonically; rank 64 nearly passed but exceeded the 5 mV maximum-error gate,
+while rank 96 reproduced the pair at numerical precision with branching
+retention 1.0. This is a positive in-sample capacity result, not a
+generalization result: rank 96 is the maximum tested rank, uses 71,490
+parameters, and was fitted on two transitions. It establishes that the frozen
+features retain pair-discriminating information when coupled to explicit
+segment-specific coefficients, but it does not establish a compact surrogate.
+Full training remains prohibited. The only authorized follow-up is the 05f
+zero-initialized segment-conditioned neural micro-canary with held-out
+counterfactual evaluation.
