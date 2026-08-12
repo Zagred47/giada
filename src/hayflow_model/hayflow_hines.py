@@ -47,6 +47,9 @@ class HayFlowHinesConfig:
     source_current_scale_na: float = 5.0
     continuous_residual_limit_mv: float = 12.0
     event_jump_limit_mv: float = 120.0
+    event_spatial_temperature: float = 0.25
+    event_boundary_decay_per_ms: float = 4.0
+    convgru_voltage_delta_limit_mv: float = 120.0
     calcium_state_dim: int = 1
     synapse_state_dim: int = 4
     dropout: float = 0.0
@@ -72,6 +75,9 @@ class HayFlowHinesConfig:
             self.source_current_scale_na,
             self.continuous_residual_limit_mv,
             self.event_jump_limit_mv,
+            self.event_spatial_temperature,
+            self.event_boundary_decay_per_ms,
+            self.convgru_voltage_delta_limit_mv,
         ) <= 0.0:
             raise ValueError("physical output scales must be positive")
 
@@ -331,10 +337,17 @@ if nn is not None:
             global_dim: int,
             region_count: int,
             event_allowed_mask: np.ndarray,
+            *,
+            spatial_temperature: float = 0.25,
+            boundary_decay_per_ms: float = 4.0,
+            boundary_limit_mv: float = 120.0,
         ) -> None:
             super().__init__()
             self.event_count = len(EVENT_KINDS)
             self.region_count = int(region_count)
+            self.spatial_temperature = float(spatial_temperature)
+            self.boundary_decay_per_ms = float(boundary_decay_per_ms)
+            self.boundary_limit_mv = float(boundary_limit_mv)
             self.register_buffer(
                 "allowed", torch.as_tensor(event_allowed_mask, dtype=torch.float32)
             )
@@ -353,6 +366,9 @@ if nn is not None:
             self.timing = nn.ModuleList([nn.Linear(hidden, 4) for _ in EVENT_KINDS])
             self.region = nn.ModuleList([nn.Linear(hidden, region_count) for _ in EVENT_KINDS])
             self.amplitude = nn.ModuleList([nn.Linear(hidden, 1) for _ in EVENT_KINDS])
+            self.boundary_voltage = nn.ModuleList(
+                [nn.Linear(hidden, 1) for _ in EVENT_KINDS]
+            )
 
         def forward(
             self,
@@ -367,6 +383,7 @@ if nn is not None:
             amplitudes = []
             segment_logits = []
             local_gate = []
+            boundary_delta = []
             anchors = torch.stack(
                 [
                     voltage_t.mean(1), voltage_t.amax(1),
@@ -378,22 +395,43 @@ if nn is not None:
                 scores = torch.einsum("bnh,h->bn", local_features, self.queries[index])
                 mask = self.allowed[index].view(1, -1)
                 masked_scores = scores.masked_fill(mask == 0, -1e4)
-                attention = torch.softmax(masked_scores, dim=1)
+                attention = torch.softmax(
+                    masked_scores / self.spatial_temperature, dim=1
+                )
                 pooled = torch.einsum("bn,bnh->bh", attention, local_features)
                 hidden = self.heads[index](torch.cat([pooled, global_state, anchors], dim=-1))
                 logit = self.presence[index](hidden).squeeze(-1)
                 presence.append(logit)
                 raw_timing = self.timing[index](hidden)
-                timing.append(
-                    torch.cat(
-                        [torch.sigmoid(raw_timing[:, :3]), functional.softplus(raw_timing[:, 3:4])],
-                        dim=-1,
-                    )
+                decoded_timing = torch.cat(
+                    [
+                        torch.sigmoid(raw_timing[:, :3]),
+                        functional.softplus(raw_timing[:, 3:4]),
+                    ],
+                    dim=-1,
                 )
+                timing.append(decoded_timing)
                 regions.append(self.region[index](hidden))
                 amplitudes.append(functional.softplus(self.amplitude[index](hidden).squeeze(-1)))
                 segment_logits.append(masked_scores)
-                local_gate.append(torch.sigmoid(logit).unsqueeze(-1) * attention)
+                # A probability distribution sums to one and therefore made a
+                # 100 mV spike correction vanish when spread over hundreds of
+                # segments.  Preserve the attention for localisation, but
+                # normalise its maximum to one for a physical local jump.
+                spatial_gate = attention / attention.amax(1, keepdim=True).clamp_min(1e-8)
+                local_gate.append(
+                    torch.sigmoid(logit).unsqueeze(-1) * spatial_gate
+                )
+                # The event amplitude and the voltage remaining at t+1 are
+                # different quantities.  Decode a signed boundary correction
+                # and attenuate events whose predicted offset precedes the
+                # macro-step boundary.
+                raw_boundary = torch.tanh(
+                    self.boundary_voltage[index](hidden).squeeze(-1)
+                ) * self.boundary_limit_mv
+                remaining = (1.0 - decoded_timing[:, 2]).clamp_min(0.0)
+                survival = torch.exp(-self.boundary_decay_per_ms * remaining)
+                boundary_delta.append(raw_boundary * survival)
             return {
                 "event_logits": torch.stack(presence, dim=1),
                 "event_timing": torch.stack(timing, dim=1),
@@ -401,6 +439,7 @@ if nn is not None:
                 "event_amplitude": torch.stack(amplitudes, dim=1),
                 "event_segment_logits": torch.stack(segment_logits, dim=1),
                 "event_local_gate": torch.stack(local_gate, dim=-1),
+                "event_boundary_delta_mv": torch.stack(boundary_delta, dim=1),
             }
 
 
@@ -484,6 +523,9 @@ if nn is not None:
                 config.global_latent_dim,
                 self.region_count,
                 arrays["event_allowed_mask"],
+                spatial_temperature=config.event_spatial_temperature,
+                boundary_decay_per_ms=config.event_boundary_decay_per_ms,
+                boundary_limit_mv=config.event_jump_limit_mv,
             )
             local_commit_input = config.hidden_width + 2 + len(EVENT_KINDS) + config.synaptic_hidden_width
             self.local_commit = nn.GRUCell(local_commit_input, config.local_latent_dim)
@@ -633,9 +675,8 @@ if nn is not None:
             jump = torch.zeros_like(voltage)
             if ablation == "H2":
                 gates = event_output["event_local_gate"]
-                amplitudes = torch.tanh(event_output["event_amplitude"] / 20.0)
-                amplitudes = amplitudes * self.config.event_jump_limit_mv
-                jump = (gates * amplitudes.unsqueeze(1)).sum(-1)
+                boundary_delta = event_output["event_boundary_delta_mv"]
+                jump = (gates * boundary_delta.unsqueeze(1)).sum(-1)
                 jump = 0.5 * jump + 0.25 * jump[:, self.parent_ids] + 0.25 * self._child_mean(jump)
             voltage_next = voltage_star + continuous + jump
             slow = 0.1 * torch.tanh(self.slow_state_delta(hidden))
@@ -734,6 +775,9 @@ if nn is not None:
             self.events = MorphologyEventHeads(
                 config.hidden_width, config.global_latent_dim,
                 len(metadata["region_names"]), arrays["event_allowed_mask"],
+                spatial_temperature=config.event_spatial_temperature,
+                boundary_decay_per_ms=config.event_boundary_decay_per_ms,
+                boundary_limit_mv=config.event_jump_limit_mv,
             )
             self.global_projection = nn.Linear(config.local_latent_dim * 2, config.global_latent_dim)
 
@@ -769,7 +813,9 @@ if nn is not None:
                 ordered.reshape(-1, ordered.shape[-1]),
                 state["local"].reshape(-1, state["local"].shape[-1]),
             ).reshape_as(state["local"])
-            delta = 30.0 * torch.tanh(self.voltage(local).squeeze(-1))
+            delta = self.config.convgru_voltage_delta_limit_mv * torch.tanh(
+                self.voltage(local).squeeze(-1)
+            )
             voltage = state["voltage"] + delta
             global_state = torch.tanh(
                 self.global_projection(torch.cat([local.mean(1), local.amax(1)], dim=-1))

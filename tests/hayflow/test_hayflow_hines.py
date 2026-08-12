@@ -26,8 +26,29 @@ def test_hines_config_smoke_profile_is_explicitly_non_decisional():
     ).effective()
     assert config.seeds == (17,)
     assert config.canary_epochs == 5
+    assert config.canary_voltage_epochs == 2
+    assert config.canary_event_epochs == 2
+    assert config.canary_joint_epochs == 1
     assert config.rollout_horizons_ms == (2, 4)
     assert config.model.local_latent_dim == 8
+
+
+def test_canary_checkpoint_score_tracks_acceptance_metrics_not_training_loss():
+    experiment = object.__new__(HayFlowHinesExperiment)
+    experiment.config = HinesPrototypeExperimentConfig()
+    poor = {
+        "voltage_rmse_mv": 6.0,
+        "maximum_peak_error_mv": 50.0,
+        "minimum_present_event_f1": 0.8,
+        "branching_retention": 0.2,
+    }
+    good = {
+        "voltage_rmse_mv": 0.8,
+        "maximum_peak_error_mv": 4.0,
+        "minimum_present_event_f1": 0.95,
+        "branching_retention": 0.6,
+    }
+    assert experiment._canary_selection_score(good) < experiment._canary_selection_score(poor)
 
 
 def test_explicit_teacher_views_scatter_by_segment_and_component():
@@ -224,6 +245,12 @@ def test_hayflow_hines_and_convgru_support_real_forward_and_backward():
     assert output["voltage"].shape == (batch_size, segment_count)
     assert output["event_logits"].shape == (batch_size, 6)
     assert output["event_segment_logits"].shape == (batch_size, 6, segment_count)
+    assert output["event_boundary_delta_mv"].shape == (batch_size, 6)
+    expected_presence = torch.sigmoid(output["event_logits"])
+    torch.testing.assert_close(
+        output["event_local_gate"].amax(1), expected_presence,
+        atol=1e-5, rtol=1e-5,
+    )
     objective = (
         output["voltage"].mean() + output["event_logits"].mean()
         + output["selected_state"].mean() + output["selected_privileged"].mean()
@@ -236,3 +263,8 @@ def test_hayflow_hines_and_convgru_support_real_forward_and_backward():
     control_output = control(batch)
     (control_output["voltage"].mean() + control_output["event_logits"].mean()).backward()
     assert control.input.weight.grad is not None
+    with torch.no_grad():
+        control.voltage[-1].weight.zero_()
+        control.voltage[-1].bias.fill_(10.0)
+        unconstrained_spike = control(batch)["voltage"] - batch["voltage_t"]
+    assert float(unconstrained_spike.max()) > 100.0

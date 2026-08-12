@@ -121,7 +121,11 @@ class HinesPrototypeExperimentConfig:
     gradient_clip_norm: float = 1.0
     canary_epochs: int = 300
     canary_patience: int = 80
-    canary_episode_per_class: int = 1
+    canary_voltage_epochs: int = 120
+    canary_event_epochs: int = 120
+    canary_joint_epochs: int = 60
+    canary_evaluation_interval: int = 10
+    canary_episode_per_class: int = 2
     canary_max_transitions: int = 128
     phase1_epochs: int = 35
     phase2_epochs: int = 18
@@ -151,6 +155,21 @@ class HinesPrototypeExperimentConfig:
         if self.profile not in {"smoke", "diagnostic_full"}:
             raise ValueError("profile must be smoke or diagnostic_full")
         self.model.validate()
+        if min(
+            self.canary_voltage_epochs,
+            self.canary_event_epochs,
+            self.canary_joint_epochs,
+            self.canary_evaluation_interval,
+            self.canary_episode_per_class,
+        ) <= 0:
+            raise ValueError("canary stage lengths, interval and support must be positive")
+        if self.profile == "diagnostic_full" and (
+            self.canary_voltage_epochs
+            + self.canary_event_epochs
+            + self.canary_joint_epochs
+            != self.canary_epochs
+        ):
+            raise ValueError("canary stage epochs must sum to canary_epochs")
         if self.profile == "diagnostic_full":
             return self
         values = asdict(self)
@@ -158,6 +177,11 @@ class HinesPrototypeExperimentConfig:
             seeds=(self.seeds[0],),
             canary_epochs=5,
             canary_patience=5,
+            canary_voltage_epochs=2,
+            canary_event_epochs=2,
+            canary_joint_epochs=1,
+            canary_evaluation_interval=1,
+            canary_episode_per_class=1,
             canary_max_transitions=24,
             phase1_epochs=2,
             phase2_epochs=1,
@@ -468,6 +492,9 @@ class HayFlowHinesExperiment:
         if include_targets:
             raw_t1 = self.store.read_state(indices, "t_plus_1")
             normalized_t1 = self.normalizer.normalize_state(raw_t1).astype(np.float32)
+            normalized_delta, state_activity = self.normalizer.delta_and_activity(
+                raw_t, raw_t1
+            )
             calcium_t1, synapse_t1 = explicit_teacher_views(
                 normalized_t1,
                 self.arrays,
@@ -476,6 +503,11 @@ class HayFlowHinesExperiment:
                 synapse_dim=self.config.model.synapse_state_dim,
             )
             selected_core = self.arrays["selected_core_indices"]
+            selected_sparse = self.normalizer.sparse_mask[selected_core]
+            selected_state_mask = (
+                ~selected_sparse.reshape(1, -1)
+                | state_activity[:, selected_core]
+            )
             selected_privileged = self.arrays["selected_privileged_indices"]
             privileged = self.store.read_privileged(indices)[:, selected_privileged].astype(np.float32)
             if len(selected_privileged):
@@ -485,7 +517,11 @@ class HayFlowHinesExperiment:
                 voltage_target=raw_t1[:, : self.layout.segment_count].astype(np.float32),
                 calcium_target=calcium_t1,
                 synapse_state_target=synapse_t1,
-                selected_state_target=normalized_t1[:, selected_core],
+                # The decoder predicts the 1 ms transition, not the absolute
+                # transformed state.  Sparse variables contribute regression
+                # loss only when they actually change.
+                selected_state_target=normalized_delta[:, selected_core],
+                selected_state_mask=selected_state_mask,
                 selected_privileged_target=privileged,
             )
             if include_microtrace:
@@ -498,7 +534,10 @@ class HayFlowHinesExperiment:
         import torch
 
         integer = {"indices", "event_region", "event_segment", "anchor_segment_ids"}
-        boolean = {"event_timing_mask", "event_region_mask", "probe_microtrace_mask"}
+        boolean = {
+            "event_timing_mask", "event_region_mask", "probe_microtrace_mask",
+            "selected_state_mask",
+        }
         excluded = {"raw_state_t", "raw_state_t_plus_1"}
         result: Dict[str, Any] = {}
         for key, value in raw.items():
@@ -537,6 +576,7 @@ class HayFlowHinesExperiment:
         event_pos_weight: Any,
         include_privileged: bool,
         rollout_factor: float = 0.0,
+        objective_weights: Optional[Mapping[str, float]] = None,
     ) -> Tuple[Any, Dict[str, float]]:
         import torch
         import torch.nn.functional as F
@@ -570,7 +610,14 @@ class HayFlowHinesExperiment:
         ) if bool(amplitude_mask.any()) else voltage.new_zeros(())
         state = voltage.new_zeros(())
         if "selected_state" in output:
-            state = state + F.smooth_l1_loss(output["selected_state"], batch["selected_state_target"])
+            state_mask = batch.get("selected_state_mask")
+            if state_mask is None or bool(state_mask.any()):
+                prediction = output["selected_state"]
+                target = batch["selected_state_target"]
+                if state_mask is not None:
+                    prediction = prediction[state_mask]
+                    target = target[state_mask]
+                state = state + F.smooth_l1_loss(prediction, target)
             state = state + F.smooth_l1_loss(output["calcium"], batch["calcium_target"])
             state = state + 0.25 * F.smooth_l1_loss(output["synapse"], batch["synapse_state_target"])
         privileged = voltage.new_zeros(())
@@ -584,22 +631,36 @@ class HayFlowHinesExperiment:
                     output["probe_microtrace"][mask] / 10.0,
                     batch["probe_microtrace_target"][mask] / 10.0,
                 )
+        weights = {
+            "voltage": self.config.lambda_voltage,
+            "peak": self.config.lambda_peak,
+            "event": self.config.lambda_event,
+            "timing": self.config.lambda_timing,
+            "state": self.config.lambda_state,
+            "privileged": self.config.lambda_privileged,
+            "microtrace": self.config.lambda_microtrace,
+        }
+        if objective_weights is not None:
+            weights.update({key: float(value) for key, value in objective_weights.items()})
         total = (
-            self.config.lambda_voltage * voltage
-            + self.config.lambda_peak * peak
-            + self.config.lambda_event * event
-            + self.config.lambda_timing * (
+            weights["voltage"] * voltage
+            + weights["peak"] * peak
+            + weights["event"] * event
+            + weights["timing"] * (
                 timing + 0.25 * region + 0.25 * segment + 0.25 * amplitude
             )
-            + self.config.lambda_state * state
-            + self.config.lambda_privileged * privileged
-            + self.config.lambda_microtrace * microtrace
+            + weights["state"] * state
+            + weights["privileged"] * privileged
+            + weights["microtrace"] * microtrace
         )
         total = total * (1.0 + self.config.lambda_rollout * float(rollout_factor))
         return total, {
             "voltage": float(voltage.detach()), "peak": float(peak.detach()),
             "event": float(event.detach()), "timing": float(timing.detach()),
-            "state": float(state.detach()), "privileged": float(privileged.detach()),
+            "region": float(region.detach()), "segment": float(segment.detach()),
+            "amplitude": float(amplitude.detach()), "state": float(state.detach()),
+            "privileged": float(privileged.detach()),
+            "microtrace": float(microtrace.detach()),
         }
 
     def _canary_indices(self) -> Tuple[np.ndarray, Optional[Tuple[int, int]]]:
@@ -760,6 +821,47 @@ class HayFlowHinesExperiment:
             "branching_retention": retention,
         }
 
+    def _canary_selection_score(self, metrics: Mapping[str, float]) -> float:
+        """Metric-aligned checkpoint score; lower is better."""
+
+        voltage = float(metrics["voltage_rmse_mv"]) / self.config.canary_voltage_rmse_mv
+        peak = float(metrics["maximum_peak_error_mv"]) / self.config.canary_peak_error_mv
+        f1 = float(metrics["minimum_present_event_f1"])
+        branching = float(metrics["branching_retention"])
+        f1_deficit = max(0.0, self.config.canary_event_f1 - f1) / self.config.canary_event_f1
+        branch_deficit = (
+            max(0.0, self.config.canary_branching_retention - branching)
+            / self.config.canary_branching_retention
+            if math.isfinite(branching) else 2.0
+        )
+        return voltage + peak + 2.0 * f1_deficit + 2.0 * branch_deficit
+
+    @staticmethod
+    def _canary_target_audit(raw: Mapping[str, Any]) -> Dict[str, Any]:
+        voltage_delta = np.asarray(raw["voltage_target"]) - np.asarray(raw["voltage_t"])
+        state = np.asarray(raw["selected_state_target"])
+        state_mask = np.asarray(raw["selected_state_mask"], dtype=bool)
+        selected = np.abs(state[state_mask]) if state_mask.any() else np.zeros(1)
+        return {
+            "voltage_delta_absolute_mv": {
+                "p50": float(np.percentile(np.abs(voltage_delta), 50)),
+                "p95": float(np.percentile(np.abs(voltage_delta), 95)),
+                "p99": float(np.percentile(np.abs(voltage_delta), 99)),
+                "maximum": float(np.max(np.abs(voltage_delta))),
+            },
+            "selected_state_delta_normalized_absolute": {
+                "p50": float(np.percentile(selected, 50)),
+                "p95": float(np.percentile(selected, 95)),
+                "p99": float(np.percentile(selected, 99)),
+                "maximum": float(np.max(selected)),
+                "regression_mask_fraction": float(state_mask.mean()),
+            },
+            "contract": (
+                "selected biological targets are normalized 1 ms deltas; "
+                "sparse targets are regressed only when active"
+            ),
+        }
+
     def _train_canary_model(self, name: str, model: Any, indices: np.ndarray, pair: Optional[Tuple[int, int]], device: Any) -> Dict[str, Any]:
         import torch
 
@@ -768,73 +870,167 @@ class HayFlowHinesExperiment:
             model.parameters(), lr=self.config.canary_learning_rate, weight_decay=0.0
         )
         positive_weight = self._event_pos_weight(indices, device)
-        progress = Progress(f"canary {name}", self.config.canary_epochs)
-        best = math.inf
+        stages = (
+            (
+                "voltage_peak",
+                self.config.canary_voltage_epochs,
+                {
+                    "voltage": 4.0, "peak": 2.0, "event": 0.0,
+                    "timing": 0.0, "state": 0.0,
+                    "privileged": 0.0, "microtrace": 0.0,
+                },
+                0.0,
+            ),
+            (
+                "events_branching",
+                self.config.canary_event_epochs,
+                {
+                    "voltage": 2.0, "peak": 1.0, "event": 1.0,
+                    "timing": self.config.lambda_timing, "state": 0.0,
+                    "privileged": 0.0, "microtrace": 0.0,
+                },
+                self.config.lambda_branching,
+            ),
+            (
+                "joint_with_biological_deltas",
+                self.config.canary_joint_epochs,
+                {
+                    "voltage": 2.0, "peak": 1.0, "event": 1.0,
+                    "timing": self.config.lambda_timing,
+                    "state": min(self.config.lambda_state, 0.01),
+                    "privileged": 0.0, "microtrace": 0.0,
+                },
+                self.config.lambda_branching,
+            ),
+        )
+        total_epochs = sum(int(row[1]) for row in stages)
+        progress = Progress(f"canary-v2 {name}", total_epochs)
+        best_score = math.inf
         best_state = None
-        patience = 0
+        best_epoch = None
+        best_stage = None
         history = []
         rng = np.random.default_rng(9103)
         # Materialise the deliberately tiny canary once.  Re-reading 17,220
         # state variables and JSON event records for every epoch would turn an
         # overfit unit test into an I/O benchmark.
         cached_raw = self._batch(indices, include_targets=True, include_microtrace=False)
+        target_audit = self._canary_target_audit(cached_raw)
         index_position = {int(value): position for position, value in enumerate(indices)}
-        for epoch in range(self.config.canary_epochs):
-            order = indices.copy()
-            rng.shuffle(order)
-            model.train()
-            losses = []
-            for start in range(0, len(order), self.config.batch_size):
-                selected = order[start : start + self.config.batch_size]
-                positions = np.asarray([index_position[int(value)] for value in selected], dtype=np.int64)
-                raw = {}
-                for key, value in cached_raw.items():
-                    if isinstance(value, np.ndarray) and value.ndim and value.shape[0] == len(indices) and key != "anchor_segment_ids":
-                        raw[key] = value[positions]
-                    else:
-                        raw[key] = value
-                batch = self._torch_batch(raw, device)
-                optimizer.zero_grad(set_to_none=True)
-                output = model(batch, ablation=ablation, decode_teacher=name.startswith("HayFlow"))
-                loss, _ = self._loss(
-                    output, batch, event_pos_weight=positive_weight,
-                    include_privileged=False,
+        completed = 0
+        stop = False
+        for stage, stage_epochs, objective_weights, branch_weight in stages:
+            for stage_epoch in range(int(stage_epochs)):
+                order = indices.copy()
+                rng.shuffle(order)
+                model.train()
+                losses: List[float] = []
+                gradients: List[float] = []
+                components: Dict[str, List[float]] = {}
+                for start in range(0, len(order), self.config.batch_size):
+                    selected = order[start : start + self.config.batch_size]
+                    positions = np.asarray(
+                        [index_position[int(value)] for value in selected],
+                        dtype=np.int64,
+                    )
+                    raw = {}
+                    for key, value in cached_raw.items():
+                        if (
+                            isinstance(value, np.ndarray) and value.ndim
+                            and value.shape[0] == len(indices)
+                            and key != "anchor_segment_ids"
+                        ):
+                            raw[key] = value[positions]
+                        else:
+                            raw[key] = value
+                    batch = self._torch_batch(raw, device)
+                    optimizer.zero_grad(set_to_none=True)
+                    output = model(
+                        batch, ablation=ablation,
+                        decode_teacher=name.startswith("HayFlow"),
+                    )
+                    loss, terms = self._loss(
+                        output, batch, event_pos_weight=positive_weight,
+                        include_privileged=False,
+                        objective_weights=objective_weights,
+                    )
+                    loss.backward()
+                    gradient = torch.nn.utils.clip_grad_norm_(
+                        model.parameters(), self.config.gradient_clip_norm
+                    )
+                    optimizer.step()
+                    losses.append(float(loss.detach()))
+                    gradients.append(float(gradient.detach()))
+                    for key, value in terms.items():
+                        components.setdefault(key, []).append(float(value))
+                branch_value = 0.0
+                if pair is not None and branch_weight > 0.0:
+                    optimizer.zero_grad(set_to_none=True)
+                    branch = branch_weight * self._branch_loss(
+                        model, pair, device, ablation
+                    )
+                    branch.backward()
+                    gradient = torch.nn.utils.clip_grad_norm_(
+                        model.parameters(), self.config.gradient_clip_norm
+                    )
+                    optimizer.step()
+                    branch_value = float(branch.detach())
+                    gradients.append(float(gradient.detach()))
+                completed += 1
+                loss_value = float(np.mean(losses)) if losses else math.nan
+                row: Dict[str, Any] = {
+                    "epoch": completed - 1,
+                    "stage": stage,
+                    "stage_epoch": stage_epoch,
+                    "loss": loss_value,
+                    "branching_loss_weighted": branch_value,
+                    "gradient_norm_pre_clip": float(np.mean(gradients)),
+                }
+                row.update(
+                    {f"loss_{key}": float(np.mean(value)) for key, value in components.items()}
                 )
-                loss.backward()
-                torch.nn.utils.clip_grad_norm_(model.parameters(), self.config.gradient_clip_norm)
-                optimizer.step()
-                losses.append(float(loss.detach()))
-            if pair is not None:
-                optimizer.zero_grad(set_to_none=True)
-                branch = self.config.lambda_branching * self._branch_loss(
-                    model, pair, device, ablation
+                evaluate = (
+                    completed == 1
+                    or completed % self.config.canary_evaluation_interval == 0
+                    or stage_epoch + 1 == int(stage_epochs)
                 )
-                branch.backward()
-                torch.nn.utils.clip_grad_norm_(
-                    model.parameters(), self.config.gradient_clip_norm
-                )
-                optimizer.step()
-                losses.append(float(branch.detach()))
-            score = float(np.mean(losses))
-            history.append({"epoch": epoch, "loss": score})
-            if score < best - 1e-6:
-                best = score
-                best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
-                patience = 0
-            else:
-                patience += 1
-            if (epoch + 1) % max(1, self.config.canary_epochs // 20) == 0 or epoch == 0:
-                metrics = self._canary_metrics(model, indices, pair, device, ablation)
-                progress.update(epoch + 1, f"loss={score:.4g} V={metrics['voltage_rmse_mv']:.3g} F1min={metrics['minimum_present_event_f1']:.3f}")
-                if (
-                    metrics["voltage_rmse_mv"] < self.config.canary_voltage_rmse_mv
-                    and metrics["minimum_present_event_f1"] > self.config.canary_event_f1
-                    and metrics["maximum_peak_error_mv"] < self.config.canary_peak_error_mv
-                    and metrics["branching_retention"] > self.config.canary_branching_retention
-                ):
-                    best_state = {key: value.detach().cpu().clone() for key, value in model.state_dict().items()}
+                if evaluate:
+                    metrics = self._canary_metrics(model, indices, pair, device, ablation)
+                    selection_score = self._canary_selection_score(metrics)
+                    row.update(
+                        selection_score=selection_score,
+                        voltage_rmse_mv=metrics["voltage_rmse_mv"],
+                        minimum_present_event_f1=metrics["minimum_present_event_f1"],
+                        maximum_peak_error_mv=metrics["maximum_peak_error_mv"],
+                        branching_retention=metrics["branching_retention"],
+                    )
+                    if selection_score < best_score:
+                        best_score = selection_score
+                        best_epoch = completed - 1
+                        best_stage = stage
+                        best_state = {
+                            key: value.detach().cpu().clone()
+                            for key, value in model.state_dict().items()
+                        }
+                    progress.update(
+                        completed,
+                        f"stage={stage} loss={loss_value:.4g} "
+                        f"V={metrics['voltage_rmse_mv']:.3g} "
+                        f"peak={metrics['maximum_peak_error_mv']:.3g} "
+                        f"F1min={metrics['minimum_present_event_f1']:.3f} "
+                        f"branch={metrics['branching_retention']:.3f}",
+                    )
+                    if stage == "joint_with_biological_deltas" and (
+                        metrics["voltage_rmse_mv"] < self.config.canary_voltage_rmse_mv
+                        and metrics["minimum_present_event_f1"] > self.config.canary_event_f1
+                        and metrics["maximum_peak_error_mv"] < self.config.canary_peak_error_mv
+                        and metrics["branching_retention"] > self.config.canary_branching_retention
+                    ):
+                        stop = True
+                history.append(row)
+                if stop:
                     break
-            if patience >= self.config.canary_patience:
+            if stop:
                 break
         if best_state is not None:
             model.load_state_dict(best_state)
@@ -846,6 +1042,10 @@ class HayFlowHinesExperiment:
             and metrics["branching_retention"] > self.config.canary_branching_retention
         )
         metrics["epochs_completed"] = len(history)
+        metrics["best_checkpoint_epoch"] = best_epoch
+        metrics["best_checkpoint_stage"] = best_stage
+        metrics["best_checkpoint_selection_score"] = best_score
+        metrics["target_audit"] = target_audit
         metrics["history"] = history
         return metrics
 
@@ -875,7 +1075,7 @@ class HayFlowHinesExperiment:
         else:
             scenario = "C_NEITHER_MODEL_OVERFITS_CANARY"
         report = {
-            "schema_version": "05-canary-v1",
+            "schema_version": "05b-canary-v2",
             "valid": True,
             "scenario": scenario,
             "proceed_to_full_training": bool(hines),
@@ -883,6 +1083,14 @@ class HayFlowHinesExperiment:
             "logical_indices_sha256": hashlib.sha256(indices.tobytes()).hexdigest(),
             "event_support": dict(zip(EVENT_KINDS, self.store.event_targets(indices)["event_presence"].sum(0).astype(int).tolist())),
             "branch_pair": list(pair) if pair else None,
+            "curriculum": [
+                {"stage": "voltage_peak", "epochs": self.config.canary_voltage_epochs},
+                {"stage": "events_branching", "epochs": self.config.canary_event_epochs},
+                {
+                    "stage": "joint_with_biological_deltas",
+                    "epochs": self.config.canary_joint_epochs,
+                },
+            ],
             "criteria": {
                 "voltage_rmse_mv_below": self.config.canary_voltage_rmse_mv,
                 "minimum_present_event_f1_above": self.config.canary_event_f1,

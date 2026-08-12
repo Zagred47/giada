@@ -421,3 +421,32 @@ configuration.  Outputs under `artifacts/hayflow_hines_prototype/` include the
 canary verdict, Hines tests, H0/H1/H2 and ConvGRU metrics, B3 comparison,
 regional drift, peak attenuation, branching, recovery, out-of-domain rates,
 checkpoint registry, and final A/B/C/D scenario classification.
+
+### Notebook 05b: corrected architecture canary
+
+`notebooks/05b_hayflow_hines_canary_revision.ipynb` is the controlled follow-up
+to the first 05 canary. The original run showed that H2 outperformed the
+fixed-order ConvGRU but that neither model could satisfy the absolute overfit
+contract. It also exposed three confounds: 2,048 auxiliary absolute-state
+targets dominated the H2 loss, the event jump was diluted by a probability
+distribution over 642 segments, and checkpoints were selected by aggregate
+training loss instead of the four acceptance metrics.
+
+05b keeps the scientific thresholds unchanged and corrects the diagnostic:
+
+- the canary is staged into voltage/peak, events/branching, and joint phases;
+- biological auxiliary decoders predict normalized 1 ms deltas, with sparse
+  regression evaluated only on active variables;
+- event localisation uses sharpened attention with unit peak, while a separate
+  signed boundary-voltage decoder is attenuated by predicted event timing;
+- the ConvGRU control can express the full configured 120 mV macro-step change;
+- each epoch records unweighted loss components and the pre-clipping gradient
+  norm;
+- the retained checkpoint minimises a score derived from voltage RMSE, boundary
+  peak error, minimum event F1, and branching retention;
+- event support uses two independent training episodes per class;
+- the notebook ends after the canary and packages its model checkpoints.
+
+Only the targeted v1.1 base dataset and BAP validation top-up v3 are required.
+The B3 result is not an input because 05b performs neither final comparison nor
+full training.
