@@ -47,6 +47,12 @@ from .hines_experiment import (
     HayFlowHinesExperiment,
     HinesPrototypeExperimentConfig,
 )
+from .hines_isolation_experiment import (
+    BOUNDARY_MODES,
+    EXPECTED_05B_ARCHIVE_SHA256,
+    HinesCausalIsolationExperiment,
+    HinesIsolationConfig,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -82,4 +88,8 @@ __all__ = [
     "model_parameter_count",
     "HayFlowHinesExperiment",
     "HinesPrototypeExperimentConfig",
+    "BOUNDARY_MODES",
+    "EXPECTED_05B_ARCHIVE_SHA256",
+    "HinesCausalIsolationExperiment",
+    "HinesIsolationConfig",
 ]

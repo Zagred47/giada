@@ -384,6 +384,7 @@ if nn is not None:
             segment_logits = []
             local_gate = []
             boundary_delta = []
+            boundary_raw_delta = []
             anchors = torch.stack(
                 [
                     voltage_t.mean(1), voltage_t.amax(1),
@@ -431,6 +432,7 @@ if nn is not None:
                 ) * self.boundary_limit_mv
                 remaining = (1.0 - decoded_timing[:, 2]).clamp_min(0.0)
                 survival = torch.exp(-self.boundary_decay_per_ms * remaining)
+                boundary_raw_delta.append(raw_boundary)
                 boundary_delta.append(raw_boundary * survival)
             return {
                 "event_logits": torch.stack(presence, dim=1),
@@ -439,6 +441,9 @@ if nn is not None:
                 "event_amplitude": torch.stack(amplitudes, dim=1),
                 "event_segment_logits": torch.stack(segment_logits, dim=1),
                 "event_local_gate": torch.stack(local_gate, dim=-1),
+                "event_boundary_raw_delta_mv": torch.stack(
+                    boundary_raw_delta, dim=1
+                ),
                 "event_boundary_delta_mv": torch.stack(boundary_delta, dim=1),
             }
 
@@ -513,6 +518,7 @@ if nn is not None:
                 config.hidden_width, config.calcium_state_dim + config.synapse_state_dim
             )
             self.continuous_residual = nn.Linear(config.hidden_width, 1)
+            self.direct_boundary_residual = nn.Linear(config.hidden_width, 1)
             self.hines = DifferentiableHinesSolve(arrays["parent_ids"])
             global_input = config.local_latent_dim * 3 + 5
             self.global_encoder = nn.Sequential(
@@ -618,7 +624,17 @@ if nn is not None:
             *,
             ablation: str = "H2",
             decode_teacher: bool = True,
+            boundary_mode: str = "timed_masked",
         ) -> Dict[str, torch.Tensor]:
+            valid_boundary_modes = {
+                "timed_masked", "untimed_masked", "no_event_jump",
+                "direct_residual",
+            }
+            if boundary_mode not in valid_boundary_modes:
+                raise ValueError(
+                    f"unknown boundary_mode {boundary_mode!r}; expected one of "
+                    f"{sorted(valid_boundary_modes)}"
+                )
             if ablation not in {"H0", "H1", "H2"}:
                 raise ValueError("ablation must be H0, H1 or H2")
             voltage = recurrent["voltage"]
@@ -673,11 +689,22 @@ if nn is not None:
             if ablation == "H0":
                 continuous = torch.zeros_like(continuous)
             jump = torch.zeros_like(voltage)
-            if ablation == "H2":
+            raw_boundary_delta = event_output["event_boundary_raw_delta_mv"]
+            boundary_delta = (
+                event_output["event_boundary_delta_mv"]
+                if boundary_mode == "timed_masked" else raw_boundary_delta
+            )
+            direct_boundary = self.config.event_jump_limit_mv * torch.tanh(
+                self.direct_boundary_residual(hidden).squeeze(-1)
+            )
+            if ablation == "H2" and boundary_mode in {
+                "timed_masked", "untimed_masked"
+            }:
                 gates = event_output["event_local_gate"]
-                boundary_delta = event_output["event_boundary_delta_mv"]
                 jump = (gates * boundary_delta.unsqueeze(1)).sum(-1)
                 jump = 0.5 * jump + 0.25 * jump[:, self.parent_ids] + 0.25 * self._child_mean(jump)
+            elif ablation == "H2" and boundary_mode == "direct_residual":
+                jump = direct_boundary
             voltage_next = voltage_star + continuous + jump
             slow = 0.1 * torch.tanh(self.slow_state_delta(hidden))
             calcium_next = calcium + slow[..., : self.config.calcium_state_dim]
@@ -713,6 +740,7 @@ if nn is not None:
                 "voltage_star": voltage_star,
                 "continuous_residual": continuous,
                 "event_jump": jump,
+                "direct_boundary_residual": direct_boundary,
                 "local": local_next,
                 "global": global_next,
                 "calcium": calcium_next,
@@ -744,9 +772,13 @@ if nn is not None:
             *,
             ablation: str = "H2",
             decode_teacher: bool = True,
+            boundary_mode: str = "timed_masked",
         ) -> Dict[str, torch.Tensor]:
             state = self.initialise(batch) if recurrent is None else dict(recurrent)
-            return self.step(state, batch, ablation=ablation, decode_teacher=decode_teacher)
+            return self.step(
+                state, batch, ablation=ablation,
+                decode_teacher=decode_teacher, boundary_mode=boundary_mode,
+            )
 
 
     class OrderedSegmentConvGRU(nn.Module):

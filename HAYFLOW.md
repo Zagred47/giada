@@ -456,3 +456,26 @@ The completed 05b run is registered in
 checkpoint files remain external, while the record commits their SHA-256
 identities, dataset fingerprint, exact acceptance metrics, `NO-GO` decision,
 and the authorized 05c causal-isolation follow-up.
+
+### Notebook 05c: causal isolation of the boundary error
+
+`notebooks/05c_hayflow_hines_causal_isolation.ipynb` consumes the unchanged
+targeted composite and the cryptographically bound 05b artifact. It cannot run
+the full curriculum. First, it reloads the H2 checkpoint and identifies the
+exact transition and segment responsible for the maximum boundary-peak error.
+For that transition it exports the teacher boundary, Hines `V_star`, continuous
+closure, event jump, final prediction, event localisation, raw event-boundary
+delta, and timing-attenuated delta.
+
+The notebook then trains fresh H2 instances on nested 1/8/32/76 transition
+sets. It compares the 05b timed/morphology-masked event path against a direct
+per-segment boundary residual. Auxiliary biological targets are excluded, so
+the experiment answers only whether the event bottleneck or the shared
+encoder/optimizer prevents exact voltage memorisation. A final two-transition
+experiment isolates the authentic training counterfactual pair with explicit
+branching supervision.
+
+05c writes per-transition and per-segment Parquet diagnostics, progressive and
+branch histories, micro-checkpoints, a final non-authorizing diagnosis, and an
+SHA-256 artifact index. Its result chooses the scope of 05d; it never converts
+diagnostic success into permission for full training.

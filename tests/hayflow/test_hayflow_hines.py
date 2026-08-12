@@ -20,6 +20,10 @@ from src.hayflow_model.hines_experiment import (
     HayFlowHinesExperiment,
     HinesPrototypeExperimentConfig,
 )
+from src.hayflow_model.hines_isolation_experiment import (
+    EXPECTED_05B_ARCHIVE_SHA256,
+    HinesIsolationConfig,
+)
 
 
 def test_05b_notebook_uses_composite_bundle_public_api():
@@ -51,6 +55,37 @@ def test_05b_experimental_record_is_hashed_and_keeps_full_training_blocked():
     assert len(record["artifact"]["sha256"]) == 64
     assert len(record["artifact_members"]["checkpoints/canary_models.pt"]["sha256"]) == 64
     assert not record["models"]["HayFlow-Hines-H2"]["passed"]
+
+
+def test_05c_notebook_has_no_full_training_path_and_uses_public_bundle_api():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05c_hayflow_hines_causal_isolation.ipynb").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "bundle.report" not in source
+    assert "bundle.manifest" in source
+    assert "session.run_full" not in source
+    assert "assert not final_report['full_training_authorized']" in source
+    assert "hayflow_hines_canary_v2.zip" in source
+
+
+def test_isolation_config_is_nested_and_binds_the_05b_archive():
+    config = HinesIsolationConfig()
+    config.validate()
+    assert config.subset_sizes == (1, 8, 32, 76)
+    assert config.modes == ("timed_masked", "direct_residual")
+    assert len(EXPECTED_05B_ARCHIVE_SHA256) == 64
+    with pytest.raises(ValueError, match="increasing"):
+        HinesIsolationConfig(subset_sizes=(8, 1), subset_epochs=(1, 1)).validate()
+    with pytest.raises(ValueError, match="increasing"):
+        HinesIsolationConfig(subset_sizes=(1, 1), subset_epochs=(1, 1)).validate()
+    with pytest.raises(ValueError, match="non-empty and unique"):
+        HinesIsolationConfig(modes=()).validate()
 
 
 def test_hines_config_smoke_profile_is_explicitly_non_decisional():
@@ -279,6 +314,7 @@ def test_hayflow_hines_and_convgru_support_real_forward_and_backward():
     assert output["event_logits"].shape == (batch_size, 6)
     assert output["event_segment_logits"].shape == (batch_size, 6, segment_count)
     assert output["event_boundary_delta_mv"].shape == (batch_size, 6)
+    assert output["event_boundary_raw_delta_mv"].shape == (batch_size, 6)
     expected_presence = torch.sigmoid(output["event_logits"])
     torch.testing.assert_close(
         output["event_local_gate"].amax(1), expected_presence,
@@ -292,6 +328,20 @@ def test_hayflow_hines_and_convgru_support_real_forward_and_backward():
     objective.backward()
     assert model.effective_conductance.weight.grad is not None
     assert torch.isfinite(model.effective_conductance.weight.grad).all()
+    no_jump = model(
+        batch, ablation="H2", decode_teacher=False,
+        boundary_mode="no_event_jump",
+    )
+    assert torch.count_nonzero(no_jump["event_jump"]) == 0
+    direct = model(
+        batch, ablation="H2", decode_teacher=False,
+        boundary_mode="direct_residual",
+    )
+    torch.testing.assert_close(
+        direct["event_jump"], direct["direct_boundary_residual"]
+    )
+    with pytest.raises(ValueError, match="unknown boundary_mode"):
+        model(batch, boundary_mode="invalid")
     control = OrderedSegmentConvGRU(config, metadata, arrays)
     control_output = control(batch)
     (control_output["voltage"].mean() + control_output["event_logits"].mean()).backward()
