@@ -9,6 +9,7 @@ import pytest
 import src.hayflow_model.hines_isolation_experiment as isolation_module
 import src.hayflow_model.hines_conditioning_experiment as conditioning_module
 import src.hayflow_model.hines_capacity_experiment as capacity_module
+import src.hayflow_model.hines_segment_canary_experiment as segment_canary_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -40,6 +41,11 @@ from src.hayflow_model.hines_capacity_experiment import (
     HinesSegmentCapacityExperiment,
     segment_conditioned_rank_path,
     solve_linear_probe,
+)
+from src.hayflow_model.hines_segment_canary_experiment import (
+    EXPECTED_05E_ARCHIVE_SHA256,
+    HinesSegmentCanaryConfig,
+    HinesSegmentMicroCanaryExperiment,
 )
 
 
@@ -201,6 +207,29 @@ def test_05e_notebook_is_closed_form_gated_and_uses_blob_download():
     assert "FileLink" not in source
 
 
+def test_05f_notebook_uses_disjoint_pairs_and_has_no_full_training_path():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (
+            root / "notebooks/05f_hayflow_hines_segment_micro_canary.ipynb"
+        ).read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "bundle.report" not in source
+    assert "bundle.manifest" in source
+    assert "hayflow_hines_segment_capacity.zip" in source
+    assert "session.build_pair_plan()" in source
+    assert "session.run_micro_canary()" in source
+    assert "development_pair_excluded_from_training" in source
+    assert "session.run_full" not in source
+    assert "assert not final_report['full_training_authorized']" in source
+    assert "base64.b64encode" in source
+    assert "new Blob" in source
+    assert "FileLink" not in source
+
+
 def test_isolation_config_is_nested_and_binds_the_05b_archive():
     config = HinesIsolationConfig()
     config.validate()
@@ -270,6 +299,52 @@ def test_segment_conditioned_rank_path_separates_static_and_dynamic_terms():
     assert diagnostics["coefficient_matrix_rank"] == 1
     np.testing.assert_allclose(rows[0]["predicted_residual"], target, atol=1e-10)
     assert rows[0]["dynamic_residual_rmse_mv"] < 1e-10
+
+
+def test_05f_config_and_disjoint_pair_selection_preserve_the_preregistered_roles():
+    config = HinesSegmentCanaryConfig()
+    config.validate()
+    assert config.ranks == (64, 96)
+    assert config.minimum_train_pair_count > 1
+    assert config.minimum_heldout_split_count == 2
+    assert "train" not in config.heldout_splits
+    assert len(EXPECTED_05E_ARCHIVE_SHA256) == 64
+    with pytest.raises(ValueError, match="ranks 64 and 96"):
+        HinesSegmentCanaryConfig(ranks=(96, 64)).validate()
+    candidates = [
+        {
+            "left_index": 2 * row,
+            "right_index": 2 * row + 1,
+            "left_episode_id": f"left-{row}",
+            "right_episode_id": f"right-{row}",
+        }
+        for row in range(4)
+    ]
+    selected = HinesSegmentMicroCanaryExperiment._select_disjoint_pairs(
+        candidates, 2, excluded_indices=(0, 1),
+        excluded_episode_ids=("left-2", "right-2"),
+    )
+    assert len(selected) == 2
+    assert all(row["left_index"] not in {0, 1} for row in selected)
+    assert all(row["left_episode_id"] != "left-2" for row in selected)
+
+
+@pytest.mark.skipif(importlib.util.find_spec("torch") is None, reason="PyTorch is not installed locally")
+def test_05f_segment_residual_starts_at_exactly_zero():
+    import torch
+    from src.hayflow_model.hines_segment_canary_experiment import (
+        ZeroOutputSpectralSegmentResidual,
+    )
+
+    basis = np.eye(4, 6, dtype=np.float32)
+    model = ZeroOutputSpectralSegmentResidual(5, 6, 4, basis)
+    features = torch.randn(3, 2, 5, 6)
+    residual = model(features)
+    assert residual.shape == (3, 2, 5)
+    assert torch.count_nonzero(residual) == 0
+    residual.sum().backward()
+    assert model.segment_bias.grad is not None
+    assert model.segment_factors.grad is not None
 
 
 def test_05c_accepts_a_hash_verified_kaggle_extracted_artifact(
@@ -348,6 +423,36 @@ def test_05e_accepts_a_hash_verified_kaggle_extracted_05d_artifact(
     experiment.artifact_05d_source = root
     report, contract = experiment._read_05d_source()
     assert report["diagnosis"] == "SHARED_REPRESENTATION_BOTTLENECK"
+    assert contract["source_kind"] == "kaggle_extracted_directory"
+    assert contract["archive_sha256"] is None
+    assert contract["verified_member_sha256"] == expected
+
+
+def test_05f_accepts_a_hash_verified_kaggle_extracted_05e_artifact(
+    tmp_path, monkeypatch
+):
+    final = json.dumps({
+        "diagnosis": "SEGMENT_CONDITIONED_CAPACITY_SUFFICIENT",
+        "full_training_authorized": False,
+    }).encode()
+    capacity = b"capacity-probe"
+    expected = {
+        "final_report.json": hashlib.sha256(final).hexdigest(),
+        "capacity_probe_report.json": hashlib.sha256(capacity).hexdigest(),
+    }
+    monkeypatch.setattr(
+        segment_canary_module, "EXPECTED_05E_MEMBER_SHA256", expected
+    )
+    root = tmp_path / "hayflow_hines_segment_capacity"
+    root.mkdir()
+    (root / "final_report.json").write_bytes(final)
+    (root / "capacity_probe_report.json").write_bytes(capacity)
+    experiment = HinesSegmentMicroCanaryExperiment.__new__(
+        HinesSegmentMicroCanaryExperiment
+    )
+    experiment.artifact_05e_source = root
+    report, contract = experiment._read_05e_source()
+    assert report["diagnosis"] == "SEGMENT_CONDITIONED_CAPACITY_SUFFICIENT"
     assert contract["source_kind"] == "kaggle_extracted_directory"
     assert contract["archive_sha256"] is None
     assert contract["verified_member_sha256"] == expected

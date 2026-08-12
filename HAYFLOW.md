@@ -574,3 +574,29 @@ segment-specific coefficients, but it does not establish a compact surrogate.
 Full training remains prohibited. The only authorized follow-up is the 05f
 zero-initialized segment-conditioned neural micro-canary with held-out
 counterfactual evaluation.
+
+### Notebook 05f: segment-conditioned neural micro-canary
+
+`notebooks/05f_hayflow_hines_segment_micro_canary.ipynb` is the generalization
+test authorized by 05e. It consumes the immutable composite, exact 05b H2
+checkpoint, and the registered 05c--05e artifacts. The 05e development pair is
+excluded from optimization. Multiple counterfactual pairs are selected from
+`train`, while held-out pairs come only from the dedicated branching and
+release-identifiability test splits. Every pair must have matching complete
+boundary state, different causal `U_realized`, distinct episodes, and a
+nontrivial teacher separation. Episode overlap across train and held-out roles
+is forbidden and the complete pair plan is hashed.
+
+The H2 base and feature extractor remain frozen. Train-only data determine the
+feature normalization and the spectral feature bases. Rank-64 and rank-96
+segment-conditioned heads then restart independently with zero segment factors
+and zero segment biases, so their initial contribution is exactly 0 mV. Only
+those factors and biases are optimized. The held-out targets do not influence
+normalization, spectral initialization, optimization, checkpoint selection, or
+early stopping; they are read only for the final fixed-checkpoint evaluation.
+
+Passing requires every held-out pair to meet the unchanged absolute voltage
+and branching gates. Even success authorizes only a separate multistep
+micro-rollout experiment. 05f contains no rollout and no full-training path;
+failure distinguishes train overfit from an optimization failure and keeps
+full training prohibited.

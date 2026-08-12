@@ -69,6 +69,12 @@ from .hines_capacity_experiment import (
     solve_linear_probe,
     standardize_design,
 )
+from .hines_segment_canary_experiment import (
+    EXPECTED_05E_ARCHIVE_SHA256,
+    HinesSegmentCanaryConfig,
+    HinesSegmentMicroCanaryExperiment,
+    ZeroOutputSpectralSegmentResidual,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -120,4 +126,8 @@ __all__ = [
     "segment_conditioned_rank_path",
     "solve_linear_probe",
     "standardize_design",
+    "EXPECTED_05E_ARCHIVE_SHA256",
+    "HinesSegmentCanaryConfig",
+    "HinesSegmentMicroCanaryExperiment",
+    "ZeroOutputSpectralSegmentResidual",
 ]
