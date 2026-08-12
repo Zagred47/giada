@@ -1,0 +1,116 @@
+{
+  "schema_version": "hayflow-experiment-record-v1",
+  "experiment_id": "05c_hayflow_hines_causal_isolation",
+  "executed_at_local": "2026-08-12T15:17:18+02:00",
+  "status": "complete",
+  "decision": "DIAGNOSTIC_ONLY_NO_FULL_TRAINING",
+  "diagnosis": "ENCODER_OR_OPTIMIZATION_BOTTLENECK",
+  "artifact": {
+    "filename": "hayflow_hines_causal_isolation.zip",
+    "size_bytes": 11124290,
+    "sha256": "b6a2e222529fd293fd75602bdac3b0feca8729832f371fadd24c9aa3b96b0d70",
+    "committed_to_git": false,
+    "retention": "external binary artifact retained by the experiment operator"
+  },
+  "artifact_integrity": {
+    "artifact_index_size_bytes": 6079,
+    "artifact_index_sha256": "cbde016c9a79b583caa8adf80fee3e2432c93f017239f38f5dc5b01e2decc579",
+    "indexed_artifact_count": 35,
+    "all_indexed_members_verified": true,
+    "key_members": {
+      "final_report.json": "f5287ee6f099350af4c79bb45234783d0348a81fd3b7b3e001014a027494a48b",
+      "checkpoint_forensics.json": "d8cbdd8f5041dc329ba0e832c6b0dc16e281128aca34d8113cc60a862b429c65",
+      "progressive_isolation_report.json": "63305dd6f68c42b2756f6117ede30d02476065ea72ba03cd227f2e992cbe76a4",
+      "progressive_overfit_metrics.parquet": "e25869ed4cfbbbb24e4a6f3cbb6943b14ed6f617a9ef0f47e41c98fec0ed50c8",
+      "branch_isolation_report.json": "8d97bf31d11b10101afc9c7175ff674fffe0cd5075ce636a561c8e3d79ffefb5",
+      "branch_isolation_metrics.parquet": "095e2d7ee50a62ff5caa64185e7f02b1121f8ebff2a6ab0504a5a67e886865cd",
+      "worst_transition_events.json": "f853929279a9dbe56f04304de89a50ffa8593c5f6bcc0ccfc3d7533ccf5a978a",
+      "worst_transition_segment_decomposition.parquet": "1e83224920ead2edca41288e61d412f9510c25e42596ccb26d21639ea097dcaf"
+    }
+  },
+  "provenance": {
+    "implementation_commit": "da93828",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "dataset_transition_count": 29880,
+    "dataset_episode_count": 369,
+    "checkpoint_source_kind": "kaggle_extracted_directory",
+    "source_05b_checkpoint_sha256": "5fe46579aa05143e30a252ca78995e15d4fafe0c510967ac0c59b3e0344bd06f",
+    "source_05b_logical_indices_sha256": "e79dad4ae40ab1a130026d0c45e7910073275475e4bd50c75c493a730080d4c9",
+    "training_branch_pair": [9122, 5282],
+    "verified_05b_member_count": 6
+  },
+  "checkpoint_forensics": {
+    "worst_transition": 5364,
+    "worst_segment": 437,
+    "worst_transition_has_teacher_event": false,
+    "teacher_boundary_peak_mv": -67.35008239746094,
+    "timed_masked_predicted_boundary_peak_mv": -12.000212669372559,
+    "timed_masked_boundary_peak_error_mv": 55.34986877441406,
+    "timed_masked_mean_rmse_mv": 4.032625737943147,
+    "no_event_jump_mean_rmse_mv": 4.024286329746246,
+    "no_event_jump_maximum_peak_error_mv": 55.34986877441406,
+    "untimed_masked_mean_rmse_mv": 4.286745808626476,
+    "untimed_masked_maximum_peak_error_mv": 87.24497985839844
+  },
+  "progressive_micro_overfit": {
+    "criteria": {
+      "one_transition_voltage_rmse_mv_below": 0.25,
+      "one_transition_peak_error_mv_below": 1.0
+    },
+    "timed_masked": {
+      "1": {"voltage_rmse_mv": 10.029671669006348, "maximum_peak_error_mv": 7.664051055908203, "maximum_segment_error_mv": 111.68814849853516},
+      "8": {"voltage_rmse_mv": 33.64675521850586, "maximum_peak_error_mv": 144.3459014892578, "maximum_segment_error_mv": 297.15673828125},
+      "32": {"voltage_rmse_mv": 12.748091697692871, "maximum_peak_error_mv": 234.482177734375, "maximum_segment_error_mv": 236.49429321289062},
+      "76": {"voltage_rmse_mv": 9.182551383972168, "maximum_peak_error_mv": 79.34984588623047, "maximum_segment_error_mv": 99.67518615722656}
+    },
+    "direct_residual": {
+      "1": {"voltage_rmse_mv": 73.84489440917969, "maximum_peak_error_mv": 183.66090393066406, "maximum_segment_error_mv": 253.20062255859375},
+      "8": {"voltage_rmse_mv": 23.695539474487305, "maximum_peak_error_mv": 24.688491821289062, "maximum_segment_error_mv": 261.9566345214844},
+      "32": {"voltage_rmse_mv": 17.041549682617188, "maximum_peak_error_mv": 311.0023193359375, "maximum_segment_error_mv": 313.0144348144531},
+      "76": {"voltage_rmse_mv": 9.688959121704102, "maximum_peak_error_mv": 29.58456039428711, "maximum_segment_error_mv": 109.78585052490234}
+    },
+    "timed_one_transition_passed": false,
+    "direct_one_transition_passed": false
+  },
+  "counterfactual_branch_isolation": {
+    "teacher_distance_mv": 35.48301696777344,
+    "timed_masked": {
+      "voltage_rmse_mv": 19.542665481567383,
+      "maximum_peak_error_mv": 10.373298645019531,
+      "predicted_distance_mv": 10.456302642822266,
+      "retention": 0.29468471219115727
+    },
+    "direct_residual": {
+      "voltage_rmse_mv": 21.048839569091797,
+      "maximum_peak_error_mv": 14.752937316894531,
+      "predicted_distance_mv": 3.527930498123169,
+      "retention": 0.09942588876609121
+    }
+  },
+  "optimization_diagnostics": {
+    "timed_n1_initial_gradient_norm_pre_clip": 6288.53173828125,
+    "timed_n1_final_gradient_norm_pre_clip": 218.78253173828125,
+    "direct_n1_initial_gradient_norm_pre_clip": 58992.62890625,
+    "direct_n1_final_gradient_norm_pre_clip": 8318.392578125,
+    "gradient_clip_norm": 10.0,
+    "direct_control_is_numerically_confounded": true
+  },
+  "interpretation": {
+    "event_timing_or_spatial_mask_is_primary_failure": false,
+    "base_hines_continuous_path_or_shared_encoder_remains_implicated": true,
+    "current_run_distinguishes_encoder_from_optimizer": false,
+    "reason": "The direct residual control was randomly initialized, tanh-bounded, and jointly optimized with the complete random model while pre-clipping gradients remained orders of magnitude above the clipping threshold."
+  },
+  "next_step": {
+    "experiment": "05d_zero_initialized_residual_conditioning",
+    "full_training_authorized": false,
+    "requirements": [
+      "fit a free 642-value boundary residual to one fixed transition as an optimizer sanity control",
+      "zero-initialize the direct residual and prevent initial perturbation of the base prediction",
+      "freeze the base Hines and encoder paths before progressively unfreezing modules",
+      "compare linear unbounded, safely scaled, and tanh-bounded residual parameterizations",
+      "report saturation fractions and per-module gradient norms before and after clipping",
+      "repeat the one-transition and counterfactual-pair gates before any larger training"
+    ]
+  }
+}

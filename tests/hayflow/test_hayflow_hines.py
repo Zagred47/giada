@@ -60,6 +60,26 @@ def test_05b_experimental_record_is_hashed_and_keeps_full_training_blocked():
     assert not record["models"]["HayFlow-Hines-H2"]["passed"]
 
 
+def test_05c_experimental_record_preserves_the_diagnostic_no_go():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (
+            root
+            / "experiments/hayflow/05c_hayflow_hines_causal_isolation/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert record["status"] == "complete"
+    assert record["decision"] == "DIAGNOSTIC_ONLY_NO_FULL_TRAINING"
+    assert record["diagnosis"] == "ENCODER_OR_OPTIMIZATION_BOTTLENECK"
+    assert record["artifact"]["sha256"] == (
+        "b6a2e222529fd293fd75602bdac3b0feca8729832f371fadd24c9aa3b96b0d70"
+    )
+    assert record["artifact_integrity"]["all_indexed_members_verified"]
+    assert not record["progressive_micro_overfit"]["timed_one_transition_passed"]
+    assert not record["progressive_micro_overfit"]["direct_one_transition_passed"]
+    assert not record["next_step"]["full_training_authorized"]
+
+
 def test_05c_notebook_has_no_full_training_path_and_uses_public_bundle_api():
     root = Path(__file__).resolve().parents[2]
     notebook = json.loads(

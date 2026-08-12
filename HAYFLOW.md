@@ -482,3 +482,15 @@ branching supervision.
 branch histories, micro-checkpoints, a final non-authorizing diagnosis, and an
 SHA-256 artifact index. Its result chooses the scope of 05d; it never converts
 diagnostic success into permission for full training.
+
+The completed 05c run is registered in
+`experiments/hayflow/05c_hayflow_hines_causal_isolation/result.json`. It
+classified the failure as `ENCODER_OR_OPTIMIZATION_BOTTLENECK` and retained the
+full-training prohibition. The worst transition had no teacher event, and
+removing the entire event jump left the 55.35 mV maximum peak error unchanged;
+the timed event bottleneck is therefore not the primary cause. Neither path
+overfit one transition. The direct residual control was itself numerically
+confounded by very large clipped gradients and its bounded random
+initialization, so 05c does not yet separate representation from optimization.
+The next authorized diagnostic is a zero-initialized residual-conditioning
+test, beginning with a free 642-value oracle and a frozen base path.
