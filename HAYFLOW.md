@@ -600,3 +600,23 @@ and branching gates. Even success authorizes only a separate multistep
 micro-rollout experiment. 05f contains no rollout and no full-training path;
 failure distinguishes train overfit from an optimization failure and keeps
 full training prohibited.
+
+The completed 05f run is registered in
+`experiments/hayflow/05f_hayflow_hines_segment_micro_canary/result.json`. Its
+pair plan was leakage-free and contract-valid, but both rank-64 and rank-96
+heads failed to fit even the eight training pairs: RMSE remained about
+15.79 mV and branching retention about 0.236 after 1,200 epochs. Held-out
+absolute predictions then diverged into millions of millivolts. The eight
+training pairs were episode-independent but all came from the same targeted-BAP
+protocol. More importantly, each 96-feature local design had rank only 13--15;
+the unregularized per-segment pseudoinverses produced a coefficient spectrum of
+order 1e8--1e9. The resulting train-only spectral basis was therefore severely
+underdetermined and unsafe for extrapolation.
+
+The registered diagnosis is
+`SEGMENT_CONDITIONED_MICRO_CANARY_OPTIMIZATION_FAILURE`, not a rejection of the
+segment-conditioned architecture family. Full training remains prohibited.
+The authorized 05g diagnostic must audit projected-feature scales, replace the
+unregularized spectral basis with a regularized bounded construction, add
+multi-pair oracle controls, and determine whether protocol-diverse training
+pairs are available before any further held-out claim.

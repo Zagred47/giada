@@ -148,6 +148,36 @@ def test_05e_experimental_record_limits_the_capacity_go_to_a_micro_canary():
     assert not record["next_step"]["full_training_authorized"]
 
 
+def test_05f_experimental_record_scopes_the_optimization_failure():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (
+            root
+            / "experiments/hayflow/05f_hayflow_hines_segment_micro_canary/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert record["status"] == "complete"
+    assert record["decision"] == "DIAGNOSTIC_ONLY_NO_FULL_TRAINING"
+    assert record["diagnosis"] == (
+        "SEGMENT_CONDITIONED_MICRO_CANARY_OPTIMIZATION_FAILURE"
+    )
+    assert record["artifact"]["sha256"] == (
+        "3a641d10ede14d426c640964cf0a6491259f6297403564db0d694f544da22239"
+    )
+    assert record["artifact_integrity"]["all_indexed_members_verified"]
+    assert record["artifact_integrity"]["all_indexed_sizes_verified"]
+    assert record["pair_plan"]["development_pair_excluded_from_training"]
+    assert record["pair_plan"]["train_heldout_episode_overlap"] == []
+    assert record["pair_plan"]["all_training_pairs_share_protocol"]
+    assert record["feature_and_spectral_contract"]["minimum_local_design_rank"] == 13
+    assert record["feature_and_spectral_contract"]["maximum_local_design_rank"] == 15
+    assert not record["runs"]["rank_64"]["train"]["all_pairs_passed"]
+    assert not record["runs"]["rank_96"]["heldout"]["all_pairs_passed"]
+    assert record["interpretation"]["catastrophic_absolute_heldout_extrapolation"]
+    assert not record["interpretation"]["architecture_family_proven_impossible"]
+    assert not record["next_step"]["full_training_authorized"]
+
+
 def test_05c_notebook_has_no_full_training_path_and_uses_public_bundle_api():
     root = Path(__file__).resolve().parents[2]
     notebook = json.loads(

@@ -1,0 +1,165 @@
+{
+  "schema_version": "hayflow-experiment-record-v1",
+  "experiment_id": "05f_hayflow_hines_segment_micro_canary",
+  "executed_at_local": "2026-08-12T20:13:46+02:00",
+  "status": "complete",
+  "decision": "DIAGNOSTIC_ONLY_NO_FULL_TRAINING",
+  "diagnosis": "SEGMENT_CONDITIONED_MICRO_CANARY_OPTIMIZATION_FAILURE",
+  "artifact": {
+    "filename": "hayflow_hines_segment_micro_canary.zip",
+    "size_bytes": 776082,
+    "sha256": "3a641d10ede14d426c640964cf0a6491259f6297403564db0d694f544da22239",
+    "committed_to_git": false,
+    "retention": "external binary artifact retained by the experiment operator"
+  },
+  "artifact_integrity": {
+    "artifact_index_size_bytes": 3205,
+    "artifact_index_sha256": "1e5b515ebf2e6c0d178d54ee07c1abc85b5c4ca2dc94c211bcfac75bb8f336c8",
+    "indexed_artifact_count": 19,
+    "all_indexed_sizes_verified": true,
+    "all_indexed_members_verified": true,
+    "key_members": {
+      "micro_canary_config.json": "822cf3726e0621550a890768ed3e443fea182bc2b9b81ffdc7497b1f1ff5e7cc",
+      "pair_plan.json": "d8754be4f46208e896a9c38eab37fdf95c2d3e7c66f1e6e129db82a600780a1a",
+      "pair_plan.parquet": "d6ca78bbbf802b0c04b9fdac53f68db2b10441dc0ced494799ee19bd635b78e4",
+      "feature_contract.json": "a3c9328e8f1162d7b47306f22b51b01eb319a013fba947d31891734de914b7f9",
+      "spectral_basis_report.json": "ea2b8aa396f3196cf104ac7e3b30f8ae09c6a33672e56fd9ffe7dc54664f1e82",
+      "micro_canary_report.json": "02a880eb9389ef19abe9c82b4283214a7850277aba82c0d6b3716cfdc4b125d3",
+      "micro_canary_metrics.parquet": "b6b7f7210504b671030f9e9aef840dc26e56138d91aa7ed4970dafebf8bd6b29",
+      "micro_canary_training_history.parquet": "c664caec3816c7846eee46e53df90749e34c54c5bef7d153b160cae04eae8e24",
+      "rank_64_report.json": "3fc13a6c1f25ae7121f8e248ac385df65136952b6721dbb8eedbedf963bb697d",
+      "rank_96_report.json": "2ed349c49611d73386f7259ad00d8490c36b12d27fd2a59a06a6ac3b1be959b3",
+      "checkpoints/rank_64.pt": "1fbbbf93f2a7620eca752a5bd680bc253a7b70f0d29da910696669200ebef653",
+      "checkpoints/rank_96.pt": "d6bda06eab00f26610c9a06c5471b64dd48b5bb9a1214e32f600a1fd835e2c01",
+      "final_report.json": "7f56a0adef6dc75edd5fc1eb3328e073cf2f3e30fb4f6f5f4412873c773a463a"
+    }
+  },
+  "provenance": {
+    "implementation_commit": "30952818609562f35542d168d13810db93280efb",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "pair_plan_sha256": "55e8c7dfa4e8be5160b669d2d489a7fb2259ac4975f780df90b867a91d0b7b90",
+    "source_forms": {
+      "05b": "kaggle_extracted_directory",
+      "05c": "kaggle_extracted_directory",
+      "05d": "kaggle_extracted_directory",
+      "05e": "kaggle_extracted_directory"
+    }
+  },
+  "pair_plan": {
+    "valid": true,
+    "blockers": [],
+    "train_pair_count": 8,
+    "heldout_pair_count": 2,
+    "heldout_splits": [
+      "branching_near_test",
+      "release_identifiability_test"
+    ],
+    "development_pair_excluded_from_training": true,
+    "train_heldout_episode_overlap": [],
+    "all_training_pairs_share_protocol": true,
+    "training_protocol": "targeted_bap-soma-only-p2-factor3.0000",
+    "interpretation": "episode-independent but protocol-homogeneous optimization support"
+  },
+  "feature_and_spectral_contract": {
+    "base_h2_frozen": true,
+    "teacher_encoder_updated": false,
+    "heldout_targets_used_for_normalization": false,
+    "heldout_targets_used_for_spectral_basis": false,
+    "feature_count": 96,
+    "segment_count": 642,
+    "minimum_raw_feature_std": 0.3963963548024666,
+    "maximum_raw_feature_std": 33.906219954349794,
+    "constant_feature_count": 0,
+    "coefficient_matrix_rank": 96,
+    "minimum_local_design_rank": 13,
+    "maximum_local_design_rank": 15,
+    "largest_coefficient_singular_value": 2216546074.227338,
+    "smallest_coefficient_singular_value": 88588238.72567406,
+    "interpretation": "96-dimensional local coefficient fits are underdetermined by 16 train transitions and numerically extreme"
+  },
+  "runs": {
+    "rank_64": {
+      "zero_initialized": true,
+      "zero_output_max_absolute_mv": 0.0,
+      "nonfinite": false,
+      "epochs_completed": 1200,
+      "best_epoch_by_train_loss": 1200,
+      "best_train_loss": 1246.7611083984375,
+      "deployed_parameter_count": 47874,
+      "train": {
+        "pair_count": 8,
+        "aggregate_voltage_rmse_mv": 15.79117992079678,
+        "maximum_segment_error_mv": 51.04815101623535,
+        "median_branching_retention": 0.23614777975819007,
+        "all_pairs_passed": false
+      },
+      "development": {
+        "aggregate_voltage_rmse_mv": 15.788669274969772,
+        "maximum_segment_error_mv": 50.73310089111328,
+        "median_branching_retention": 0.23641357171402597,
+        "all_pairs_passed": false
+      },
+      "heldout": {
+        "pair_count": 2,
+        "aggregate_voltage_rmse_mv": 4692340.766459407,
+        "maximum_segment_error_mv": 164031242.14925385,
+        "maximum_peak_error_mv": 164031239.9099121,
+        "minimum_branching_retention": 1.1221738448277427,
+        "median_branching_retention": 1.1642751976357049,
+        "all_pairs_passed": false
+      }
+    },
+    "rank_96": {
+      "zero_initialized": true,
+      "zero_output_max_absolute_mv": 0.0,
+      "nonfinite": false,
+      "epochs_completed": 1200,
+      "best_epoch_by_train_loss": 1200,
+      "best_train_loss": 1246.757080078125,
+      "deployed_parameter_count": 71490,
+      "train": {
+        "pair_count": 8,
+        "aggregate_voltage_rmse_mv": 15.791117148036314,
+        "maximum_segment_error_mv": 51.06506538391113,
+        "median_branching_retention": 0.23614936301688222,
+        "all_pairs_passed": false
+      },
+      "development": {
+        "aggregate_voltage_rmse_mv": 15.788920481891685,
+        "maximum_segment_error_mv": 50.82290458679199,
+        "median_branching_retention": 0.23641771076001186,
+        "all_pairs_passed": false
+      },
+      "heldout": {
+        "pair_count": 2,
+        "aggregate_voltage_rmse_mv": 6929118.494110142,
+        "maximum_segment_error_mv": 246368250.14925385,
+        "maximum_peak_error_mv": 246368247.9099121,
+        "minimum_branching_retention": 1.2070480595535733,
+        "median_branching_retention": 1.2894918820980643,
+        "all_pairs_passed": false
+      }
+    }
+  },
+  "interpretation": {
+    "training_fit_succeeded": false,
+    "heldout_generalization_demonstrated": false,
+    "catastrophic_absolute_heldout_extrapolation": true,
+    "leakage_detected": false,
+    "architecture_family_proven_impossible": false,
+    "result_is_decision_grade_for_05f_contract": true,
+    "scope": "The failure applies to the train-only unregularized spectral basis, homogeneous eight-pair training support, frozen H2 features, and registered optimizer budget."
+  },
+  "next_step": {
+    "experiment": "05g_segment_conditioning_optimization_audit",
+    "full_training_authorized": false,
+    "requirements": [
+      "replace underdetermined per-segment pseudoinverses with a regularized and scale-controlled basis",
+      "measure train, development, and held-out projected-feature norms before optimization",
+      "construct protocol-diverse training pairs or explicitly report that the current dataset cannot supply them",
+      "include bias-only and direct train-residual oracle controls for the complete multi-pair training set",
+      "use a bounded residual or trust-region control to prevent catastrophic absolute extrapolation",
+      "do not retry held-out generalization or full training until the model fits the train pairs stably"
+    ]
+  }
+}
