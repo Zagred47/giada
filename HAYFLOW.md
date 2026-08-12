@@ -460,7 +460,10 @@ and the authorized 05c causal-isolation follow-up.
 ### Notebook 05c: causal isolation of the boundary error
 
 `notebooks/05c_hayflow_hines_causal_isolation.ipynb` consumes the unchanged
-targeted composite and the cryptographically bound 05b artifact. It cannot run
+targeted composite and the cryptographically bound 05b artifact. The latter
+may be supplied as the original ZIP or as Kaggle's extracted directory: the
+ZIP hash is checked when available and all required member hashes are checked
+in both forms. It cannot run
 the full curriculum. First, it reloads the H2 checkpoint and identifies the
 exact transition and segment responsible for the maximum boundary-peak error.
 For that transition it exports the teacher boundary, Hines `V_star`, continuous

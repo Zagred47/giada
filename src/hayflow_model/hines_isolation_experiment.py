@@ -33,6 +33,14 @@ EXPECTED_05B_ARCHIVE_SHA256 = (
 EXPECTED_05B_CHECKPOINT_SHA256 = (
     "5fe46579aa05143e30a252ca78995e15d4fafe0c510967ac0c59b3e0344bd06f"
 )
+EXPECTED_05B_MEMBER_SHA256 = {
+    "model_configurations.json": "f2b4687743696b02b791cbafda2a6397f2ea01b8ea67d693f4eb90a08fb2dd78",
+    "canary_overfit_report.json": "0b7a9443f448a4dde4d241e5f603f99297d0c014d64103f65a623a68be77af3e",
+    "hines_layer_tests.json": "65ed328887980e125de57bb9c8f79b71e89d3408003b539d4c793f4f561a9758",
+    "composite_loader_report.json": "75a30398ed71e3d670c341e6ea4b8753269d4ddd42ffb8584d1ecd36c6c89842",
+    "normalization_schema.json": "70ee2c3741d9273d5ce54a722b016a4964b84e7b8757730f724d3b149b771690",
+    "checkpoints/canary_models.pt": EXPECTED_05B_CHECKPOINT_SHA256,
+}
 BOUNDARY_MODES = ("timed_masked", "untimed_masked", "no_event_jump", "direct_residual")
 
 
@@ -101,12 +109,12 @@ class HinesCausalIsolationExperiment(HayFlowHinesExperiment):
         output_dir: Path,
         model_config: HinesPrototypeExperimentConfig,
         isolation_config: HinesIsolationConfig,
-        checkpoint_archive: Path,
+        checkpoint_source: Path,
     ) -> None:
         super().__init__(bundle, output_dir, model_config)
         isolation_config.validate()
         self.isolation = isolation_config
-        self.checkpoint_archive = Path(checkpoint_archive).resolve()
+        self.checkpoint_source = Path(checkpoint_source).resolve()
         self.checkpoint_contract: Dict[str, Any] = {}
         self.canary_indices: Optional[np.ndarray] = None
         self.branch_pair: Optional[Tuple[int, int]] = None
@@ -117,22 +125,8 @@ class HinesCausalIsolationExperiment(HayFlowHinesExperiment):
 
     def prepare_isolation(self) -> Dict[str, Any]:
         base = self.prepare()
-        archive_hash = sha256_file(self.checkpoint_archive)
-        if archive_hash != EXPECTED_05B_ARCHIVE_SHA256:
-            raise RuntimeError(
-                "05b archive SHA-256 mismatch; refusing checkpoint diagnosis"
-            )
-        with zipfile.ZipFile(self.checkpoint_archive) as archive:
-            names = [
-                name for name in archive.namelist()
-                if name.endswith("checkpoints/canary_models.pt")
-            ]
-            if len(names) != 1:
-                raise RuntimeError(f"expected one 05b canary checkpoint, found {names}")
-            checkpoint_bytes = archive.read(names[0])
+        checkpoint_bytes, source_contract = self._read_05b_source()
         checkpoint_hash = hashlib.sha256(checkpoint_bytes).hexdigest()
-        if checkpoint_hash != EXPECTED_05B_CHECKPOINT_SHA256:
-            raise RuntimeError("05b canary checkpoint SHA-256 mismatch")
         indices, pair = self._canary_indices()
         if len(indices) != max(self.isolation.subset_sizes):
             raise RuntimeError(
@@ -143,9 +137,8 @@ class HinesCausalIsolationExperiment(HayFlowHinesExperiment):
         self.branch_pair = pair
         self._checkpoint_bytes = checkpoint_bytes
         self.checkpoint_contract = {
-            "archive_sha256": archive_hash,
+            **source_contract,
             "checkpoint_sha256": checkpoint_hash,
-            "checkpoint_member": names[0],
             "logical_indices_sha256": hashlib.sha256(indices.tobytes()).hexdigest(),
             "transition_count": int(len(indices)),
             "branch_pair": list(pair) if pair else None,
@@ -158,6 +151,76 @@ class HinesCausalIsolationExperiment(HayFlowHinesExperiment):
             "full_training_authorized": False,
         })
         return {**base, "checkpoint": self.checkpoint_contract}
+
+    def _read_05b_source(self) -> Tuple[bytes, Dict[str, Any]]:
+        """Read either the original ZIP or Kaggle's extracted artifact tree."""
+
+        source = self.checkpoint_source
+        if source.is_file():
+            archive_hash = sha256_file(source)
+            if archive_hash != EXPECTED_05B_ARCHIVE_SHA256:
+                raise RuntimeError(
+                    "05b archive SHA-256 mismatch; refusing checkpoint diagnosis"
+                )
+            with zipfile.ZipFile(source) as archive:
+                members: Dict[str, bytes] = {}
+                resolved_names: Dict[str, str] = {}
+                for suffix in EXPECTED_05B_MEMBER_SHA256:
+                    matches = [
+                        name for name in archive.namelist()
+                        if name.replace("\\", "/").endswith(suffix)
+                    ]
+                    if len(matches) != 1:
+                        raise RuntimeError(
+                            f"expected one 05b member ending in {suffix!r}, "
+                            f"found {matches}"
+                        )
+                    resolved_names[suffix] = matches[0]
+                    members[suffix] = archive.read(matches[0])
+            source_contract: Dict[str, Any] = {
+                "source_kind": "original_zip",
+                "source_path": str(source),
+                "archive_sha256": archive_hash,
+                "checkpoint_member": resolved_names["checkpoints/canary_models.pt"],
+            }
+        elif source.is_dir():
+            members = {}
+            resolved_names = {}
+            for suffix in EXPECTED_05B_MEMBER_SHA256:
+                parts = tuple(Path(suffix).parts)
+                matches = [
+                    path for path in source.rglob(parts[-1])
+                    if tuple(path.parts[-len(parts):]) == parts
+                ]
+                if len(matches) != 1:
+                    raise RuntimeError(
+                        f"expected one extracted 05b member ending in {suffix!r}, "
+                        f"found {[str(path) for path in matches]}"
+                    )
+                resolved_names[suffix] = matches[0].relative_to(source).as_posix()
+                members[suffix] = matches[0].read_bytes()
+            source_contract = {
+                "source_kind": "kaggle_extracted_directory",
+                "source_path": str(source),
+                "archive_sha256": None,
+                "checkpoint_member": resolved_names["checkpoints/canary_models.pt"],
+            }
+        else:
+            raise RuntimeError(f"05b artifact source does not exist: {source}")
+
+        observed_hashes = {
+            name: hashlib.sha256(payload).hexdigest()
+            for name, payload in members.items()
+        }
+        mismatches = {
+            name: {"expected": EXPECTED_05B_MEMBER_SHA256[name], "observed": value}
+            for name, value in observed_hashes.items()
+            if value != EXPECTED_05B_MEMBER_SHA256[name]
+        }
+        if mismatches:
+            raise RuntimeError(f"05b artifact member SHA-256 mismatch: {mismatches}")
+        source_contract["verified_member_sha256"] = observed_hashes
+        return members["checkpoints/canary_models.pt"], source_contract
 
     def _load_h2_checkpoint(self, device: Any) -> Tuple[Any, Dict[str, Any]]:
         import torch

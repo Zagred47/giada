@@ -1,10 +1,12 @@
 from types import SimpleNamespace
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
 
 import numpy as np
 import pytest
+import src.hayflow_model.hines_isolation_experiment as isolation_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -22,6 +24,7 @@ from src.hayflow_model.hines_experiment import (
 )
 from src.hayflow_model.hines_isolation_experiment import (
     EXPECTED_05B_ARCHIVE_SHA256,
+    HinesCausalIsolationExperiment,
     HinesIsolationConfig,
 )
 
@@ -86,6 +89,31 @@ def test_isolation_config_is_nested_and_binds_the_05b_archive():
         HinesIsolationConfig(subset_sizes=(1, 1), subset_epochs=(1, 1)).validate()
     with pytest.raises(ValueError, match="non-empty and unique"):
         HinesIsolationConfig(modes=()).validate()
+
+
+def test_05c_accepts_a_hash_verified_kaggle_extracted_artifact(
+    tmp_path, monkeypatch
+):
+    report = b'{"scenario":"C_NEITHER_MODEL_OVERFITS_CANARY"}'
+    checkpoint = b"synthetic-checkpoint"
+    expected = {
+        "canary_overfit_report.json": hashlib.sha256(report).hexdigest(),
+        "checkpoints/canary_models.pt": hashlib.sha256(checkpoint).hexdigest(),
+    }
+    monkeypatch.setattr(isolation_module, "EXPECTED_05B_MEMBER_SHA256", expected)
+    root = tmp_path / "hayflow_hines_canary_v2"
+    (root / "checkpoints").mkdir(parents=True)
+    (root / "canary_overfit_report.json").write_bytes(report)
+    (root / "checkpoints/canary_models.pt").write_bytes(checkpoint)
+    experiment = HinesCausalIsolationExperiment.__new__(
+        HinesCausalIsolationExperiment
+    )
+    experiment.checkpoint_source = root
+    payload, contract = experiment._read_05b_source()
+    assert payload == checkpoint
+    assert contract["source_kind"] == "kaggle_extracted_directory"
+    assert contract["archive_sha256"] is None
+    assert contract["verified_member_sha256"] == expected
 
 
 def test_hines_config_smoke_profile_is_explicitly_non_decisional():
