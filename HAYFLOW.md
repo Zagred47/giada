@@ -494,3 +494,30 @@ confounded by very large clipped gradients and its bounded random
 initialization, so 05c does not yet separate representation from optimization.
 The next authorized diagnostic is a zero-initialized residual-conditioning
 test, beginning with a free 642-value oracle and a frozen base path.
+
+### Notebook 05d: residual conditioning ladder
+
+`notebooks/05d_hayflow_hines_residual_conditioning.ipynb` is the controlled
+follow-up to the registered 05c diagnosis. It consumes the same logical
+composite, the exact 05b checkpoint, and the exact 05c artifact. Both external
+artifacts are accepted as original ZIPs or Kaggle-extracted directories and
+are bound by their preregistered member hashes.
+
+The first gate fits a free boundary residual with one independent parameter
+per segment. It uses the quadratic `0.5 * sum(error^2)` objective and unit-step
+SGD, whose exact solution is reached in one update, so target magnitude cannot
+create a false optimizer failure. It is a target, loss, update, and metric
+plumbing check rather than a neural-model result. If it fails, no neural conditioning run occurs and
+the diagnostic artifact remains downloadable. If it passes, nine
+zero-initialized shared decoders compare linear, scaled-linear, and tanh
+parameterizations at three learning rates while the complete 05b base and its
+features remain frozen.
+
+The best frozen parameterization then enters an independent unfreezing ladder
+on the worst transition and the authentic counterfactual pair. Every stage
+restarts from the same 05b checkpoint and zero decoder: head only, local feature
+path, then base dynamics. There is no gradient clipping; non-finite loss or
+gradient terminates a run, while per-run histories retain gradient norms and
+tanh saturation fractions. Passing requires both absolute voltage accuracy
+and 0.9--1.1 counterfactual retention. The notebook cannot invoke full
+training and its final report only selects the scope of 05e.

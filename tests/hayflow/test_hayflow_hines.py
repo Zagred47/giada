@@ -7,6 +7,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 import src.hayflow_model.hines_isolation_experiment as isolation_module
+import src.hayflow_model.hines_conditioning_experiment as conditioning_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -26,6 +27,11 @@ from src.hayflow_model.hines_isolation_experiment import (
     EXPECTED_05B_ARCHIVE_SHA256,
     HinesCausalIsolationExperiment,
     HinesIsolationConfig,
+)
+from src.hayflow_model.hines_conditioning_experiment import (
+    EXPECTED_05C_ARCHIVE_SHA256,
+    HinesConditioningConfig,
+    HinesResidualConditioningExperiment,
 )
 
 
@@ -97,6 +103,27 @@ def test_05c_notebook_has_no_full_training_path_and_uses_public_bundle_api():
     assert "hayflow_hines_canary_v2.zip" in source
 
 
+def test_05d_notebook_is_gated_and_uses_the_browser_blob_download():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (
+            root / "notebooks/05d_hayflow_hines_residual_conditioning.ipynb"
+        ).read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "bundle.report" not in source
+    assert "bundle.manifest" in source
+    assert "RUN_NEURAL_LADDER = bool(free_report['passed'])" in source
+    assert "session.run_full" not in source
+    assert "assert not final_report['full_training_authorized']" in source
+    assert "hayflow_hines_causal_isolation.zip" in source
+    assert "base64.b64encode" in source
+    assert "new Blob" in source
+    assert "FileLink" not in source
+
+
 def test_isolation_config_is_nested_and_binds_the_05b_archive():
     config = HinesIsolationConfig()
     config.validate()
@@ -109,6 +136,22 @@ def test_isolation_config_is_nested_and_binds_the_05b_archive():
         HinesIsolationConfig(subset_sizes=(1, 1), subset_epochs=(1, 1)).validate()
     with pytest.raises(ValueError, match="non-empty and unique"):
         HinesIsolationConfig(modes=()).validate()
+
+
+def test_05d_conditioning_config_preserves_the_preregistered_ladder():
+    config = HinesConditioningConfig()
+    config.validate()
+    assert config.unfreezing_stages == (
+        "head_only", "local_features", "base_dynamics"
+    )
+    assert config.decoder_parameterizations == (
+        "linear", "scaled_linear", "tanh"
+    )
+    assert len(EXPECTED_05C_ARCHIVE_SHA256) == 64
+    with pytest.raises(ValueError, match="preregistered order"):
+        HinesConditioningConfig(
+            unfreezing_stages=("base_dynamics", "head_only")
+        ).validate()
 
 
 def test_05c_accepts_a_hash_verified_kaggle_extracted_artifact(
@@ -131,6 +174,34 @@ def test_05c_accepts_a_hash_verified_kaggle_extracted_artifact(
     experiment.checkpoint_source = root
     payload, contract = experiment._read_05b_source()
     assert payload == checkpoint
+    assert contract["source_kind"] == "kaggle_extracted_directory"
+    assert contract["archive_sha256"] is None
+    assert contract["verified_member_sha256"] == expected
+
+
+def test_05d_accepts_a_hash_verified_kaggle_extracted_05c_artifact(
+    tmp_path, monkeypatch
+):
+    final = json.dumps({
+        "diagnosis": "ENCODER_OR_OPTIMIZATION_BOTTLENECK",
+        "full_training_authorized": False,
+    }).encode()
+    forensics = b"forensics"
+    expected = {
+        "final_report.json": hashlib.sha256(final).hexdigest(),
+        "checkpoint_forensics.json": hashlib.sha256(forensics).hexdigest(),
+    }
+    monkeypatch.setattr(conditioning_module, "EXPECTED_05C_MEMBER_SHA256", expected)
+    root = tmp_path / "hayflow_hines_causal_isolation"
+    root.mkdir()
+    (root / "final_report.json").write_bytes(final)
+    (root / "checkpoint_forensics.json").write_bytes(forensics)
+    experiment = HinesResidualConditioningExperiment.__new__(
+        HinesResidualConditioningExperiment
+    )
+    experiment.artifact_05c_source = root
+    report, contract = experiment._read_05c_source()
+    assert report["diagnosis"] == "ENCODER_OR_OPTIMIZATION_BOTTLENECK"
     assert contract["source_kind"] == "kaggle_extracted_directory"
     assert contract["archive_sha256"] is None
     assert contract["verified_member_sha256"] == expected
@@ -363,6 +434,9 @@ def test_hayflow_hines_and_convgru_support_real_forward_and_backward():
     assert output["event_segment_logits"].shape == (batch_size, 6, segment_count)
     assert output["event_boundary_delta_mv"].shape == (batch_size, 6)
     assert output["event_boundary_raw_delta_mv"].shape == (batch_size, 6)
+    assert output["boundary_features"].shape == (
+        batch_size, segment_count, config.hidden_width
+    )
     expected_presence = torch.sigmoid(output["event_logits"])
     torch.testing.assert_close(
         output["event_local_gate"].amax(1), expected_presence,
@@ -390,6 +464,26 @@ def test_hayflow_hines_and_convgru_support_real_forward_and_backward():
     )
     with pytest.raises(ValueError, match="unknown boundary_mode"):
         model(batch, boundary_mode="invalid")
+    from src.hayflow_model.hines_conditioning_experiment import (
+        ZeroInitializedBoundaryDecoder,
+    )
+    for parameterization in ("linear", "scaled_linear", "tanh"):
+        decoder = ZeroInitializedBoundaryDecoder(
+            config.hidden_width,
+            parameterization,
+            scaled_linear_factor_mv=10.0,
+            tanh_limit_mv=120.0,
+        )
+        residual, raw = decoder(output["boundary_features"].detach())
+        assert torch.count_nonzero(residual) == 0
+        assert torch.count_nonzero(raw) == 0
+    target_residual = torch.linspace(-300.0, 300.0, segment_count).view(1, -1)
+    free_residual = torch.nn.Parameter(torch.zeros_like(target_residual))
+    optimizer = torch.optim.SGD([free_residual], lr=1.0)
+    optimizer.zero_grad()
+    (0.5 * torch.sum((free_residual - target_residual).square())).backward()
+    optimizer.step()
+    torch.testing.assert_close(free_residual, target_residual)
     control = OrderedSegmentConvGRU(config, metadata, arrays)
     control_output = control(batch)
     (control_output["voltage"].mean() + control_output["event_logits"].mean()).backward()

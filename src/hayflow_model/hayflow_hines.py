@@ -741,6 +741,9 @@ if nn is not None:
                 "continuous_residual": continuous,
                 "event_jump": jump,
                 "direct_boundary_residual": direct_boundary,
+                # Diagnostic feature surface used by 05d. Exposing it does
+                # not alter the forward path or checkpoint compatibility.
+                "boundary_features": hidden,
                 "local": local_next,
                 "global": global_next,
                 "calcium": calcium_next,

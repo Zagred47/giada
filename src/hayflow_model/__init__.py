@@ -53,6 +53,13 @@ from .hines_isolation_experiment import (
     HinesCausalIsolationExperiment,
     HinesIsolationConfig,
 )
+from .hines_conditioning_experiment import (
+    DECODER_PARAMETERIZATIONS,
+    EXPECTED_05C_ARCHIVE_SHA256,
+    HinesConditioningConfig,
+    HinesResidualConditioningExperiment,
+    ZeroInitializedBoundaryDecoder,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -92,4 +99,9 @@ __all__ = [
     "EXPECTED_05B_ARCHIVE_SHA256",
     "HinesCausalIsolationExperiment",
     "HinesIsolationConfig",
+    "DECODER_PARAMETERIZATIONS",
+    "EXPECTED_05C_ARCHIVE_SHA256",
+    "HinesConditioningConfig",
+    "HinesResidualConditioningExperiment",
+    "ZeroInitializedBoundaryDecoder",
 ]
