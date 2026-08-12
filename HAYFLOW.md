@@ -450,3 +450,9 @@ training loss instead of the four acceptance metrics.
 Only the targeted v1.1 base dataset and BAP validation top-up v3 are required.
 The B3 result is not an input because 05b performs neither final comparison nor
 full training.
+
+The completed 05b run is registered in
+`experiments/hayflow/05b_hayflow_hines_canary_v2/result.json`. Generated ZIP and
+checkpoint files remain external, while the record commits their SHA-256
+identities, dataset fingerprint, exact acceptance metrics, `NO-GO` decision,
+and the authorized 05c causal-isolation follow-up.

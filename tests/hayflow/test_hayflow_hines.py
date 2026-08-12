@@ -37,6 +37,22 @@ def test_05b_notebook_uses_composite_bundle_public_api():
     assert "bundle.transition_count" in source
 
 
+def test_05b_experimental_record_is_hashed_and_keeps_full_training_blocked():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (
+            root
+            / "experiments/hayflow/05b_hayflow_hines_canary_v2/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert record["decision"] == "NO_GO_FULL_TRAINING"
+    assert not record["next_step"]["full_training_authorized"]
+    assert record["provenance"]["dataset_transition_count"] == 29880
+    assert len(record["artifact"]["sha256"]) == 64
+    assert len(record["artifact_members"]["checkpoints/canary_models.pt"]["sha256"]) == 64
+    assert not record["models"]["HayFlow-Hines-H2"]["passed"]
+
+
 def test_hines_config_smoke_profile_is_explicitly_non_decisional():
     config = HinesPrototypeExperimentConfig(
         profile="smoke", model=HayFlowHinesConfig(local_latent_dim=8)

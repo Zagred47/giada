@@ -1,0 +1,105 @@
+{
+  "schema_version": "hayflow-experiment-record-v1",
+  "experiment_id": "05b_hayflow_hines_canary_v2",
+  "executed_at_local": "2026-08-12T12:43:40+02:00",
+  "status": "complete",
+  "decision": "NO_GO_FULL_TRAINING",
+  "scenario": "C_NEITHER_MODEL_OVERFITS_CANARY",
+  "artifact": {
+    "filename": "hayflow_hines_canary_v2.zip",
+    "size_bytes": 1847322,
+    "sha256": "f653bf8f0048134994727593237067ab1faf91d7f42f17d70150ff8dc339bca5",
+    "committed_to_git": false,
+    "retention": "external binary artifact retained by the experiment operator"
+  },
+  "artifact_members": {
+    "model_configurations.json": {
+      "size_bytes": 2567,
+      "sha256": "f2b4687743696b02b791cbafda2a6397f2ea01b8ea67d693f4eb90a08fb2dd78"
+    },
+    "canary_overfit_report.json": {
+      "size_bytes": 426528,
+      "sha256": "0b7a9443f448a4dde4d241e5f603f99297d0c014d64103f65a623a68be77af3e"
+    },
+    "hines_layer_tests.json": {
+      "size_bytes": 854,
+      "sha256": "65ed328887980e125de57bb9c8f79b71e89d3408003b539d4c793f4f561a9758"
+    },
+    "composite_loader_report.json": {
+      "size_bytes": 1682,
+      "sha256": "75a30398ed71e3d670c341e6ea4b8753269d4ddd42ffb8584d1ecd36c6c89842"
+    },
+    "normalization_schema.json": {
+      "size_bytes": 1959225,
+      "sha256": "70ee2c3741d9273d5ce54a722b016a4964b84e7b8757730f724d3b149b771690"
+    },
+    "checkpoints/canary_models.pt": {
+      "size_bytes": 2707243,
+      "sha256": "5fe46579aa05143e30a252ca78995e15d4fafe0c510967ac0c59b3e0344bd06f"
+    }
+  },
+  "provenance": {
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "dataset_episode_count": 369,
+    "dataset_transition_count": 29880,
+    "training_branch_pair": [9122, 5282],
+    "primary_input": "U_realized",
+    "model_implementation_commit": "eb34c77",
+    "model_implementation_commit_basis": "last commit changing the 05b model and experiment implementation",
+    "runtime_head_embedded_in_artifact": false,
+    "notebook_preflight_fix_commit": "eb4207f",
+    "preflight_fix_changes_model_numerics": false
+  },
+  "acceptance_thresholds": {
+    "voltage_rmse_mv_below": 1.0,
+    "minimum_present_event_f1_above": 0.9,
+    "maximum_peak_error_mv_below": 5.0,
+    "branching_retention_above": 0.5
+  },
+  "models": {
+    "HayFlow-Hines-H2": {
+      "passed": false,
+      "voltage_rmse_mv": 6.321410655975342,
+      "minimum_present_event_f1": 0.8571428571428571,
+      "maximum_peak_error_mv": 55.34986877441406,
+      "branching_retention": 0.2700631661445376,
+      "best_checkpoint_epoch": 289,
+      "best_checkpoint_stage": "joint_with_biological_deltas"
+    },
+    "ConvGRU": {
+      "passed": false,
+      "voltage_rmse_mv": 8.635907173156738,
+      "minimum_present_event_f1": 0.9230769230769231,
+      "maximum_peak_error_mv": 29.861480712890625,
+      "branching_retention": 0.14390775409980583,
+      "best_checkpoint_epoch": 299,
+      "best_checkpoint_stage": "joint_with_biological_deltas"
+    }
+  },
+  "diagnostic_findings": {
+    "h2_outperforms_convgru_on_voltage": true,
+    "h2_outperforms_convgru_on_branching": true,
+    "convgru_passes_event_f1_only": true,
+    "h2_peak_error_repeats_05_value": true,
+    "selected_state_normalized_delta_absolute_maximum": 23111.93359375,
+    "selected_state_normalized_delta_absolute_p99": 14.025574684143066,
+    "selected_state_regression_mask_fraction": 0.2556280838815789,
+    "voltage_delta_absolute_maximum_mv": 107.4529037475586,
+    "voltage_delta_absolute_p99_mv": 40.83161163330078,
+    "gradient_clipping_is_frequently_active": true,
+    "h2_boundary_head_parameters_updated": true
+  },
+  "next_step": {
+    "experiment": "05c_hayflow_hines_causal_isolation",
+    "full_training_authorized": false,
+    "requirements": [
+      "progressive overfit at 1, 8, 32 and 76 transitions",
+      "identify the exact transition and segment causing the 55.35 mV peak error",
+      "export V_t, Hines V_star, continuous residual, event jump and V_t_plus_1",
+      "isolate spatial mask, temporal attenuation and direct boundary residual",
+      "train the counterfactual branch pair separately",
+      "exclude auxiliary biological loss until the primary voltage/event gate passes",
+      "replace the auxiliary outlier-sensitive loss with a preregistered robust contract"
+    ]
+  }
+}
