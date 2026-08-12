@@ -654,3 +654,37 @@ thresholds. 05g contains neither rollout nor a full-training path. Its output
 is therefore a diagnostic decision about optimization, representation, and
 generalization, and full HayFlow training remains prohibited regardless of the
 outcome.
+
+The completed 05g run is registered in
+`experiments/hayflow/05g_hayflow_hines_optimization_audit/result.json`. It
+found 776 valid train counterfactual candidates and selected 12 independent
+pairs spanning all six available protocol-family combinations, so the 05f
+protocol-homogeneity concern was resolved. The direct residual oracle reproduced
+all train targets exactly, whereas a segment-bias-only control failed with
+11.83 mV RMSE and branching retention 0.254. Target and metric plumbing are
+therefore working and the multi-pair task is not reducible to static segment
+memorization.
+
+None of the 16 float64 ridge candidates passed the train gates. The best train
+fit used rank 96 and ridge lambda 1e-8, reaching 9.49 mV RMSE, 72.81 mV maximum
+segment error, and branching retention 0.689; its coefficient Frobenius norm
+was also unsafe at about 785,024. Numerically safer regularization reduced the
+coefficient norm but made the already insufficient fit worse. Ranks 64 and 96
+were nearly indistinguishable on the safe part of the path, while local design
+ranks remained only 13--23. Thus the 05f failure is not attributable to Adam
+alone: a bounded linear segment-conditioned residual cannot fit the diverse
+train support using the exact frozen H2 features. This conclusion is scoped to
+that frozen linear representation and does not reject nonlinear heads,
+controlled feature adaptation, causal feature augmentation, or HayFlow as a
+whole.
+
+No candidate reached the held-out reveal gate, so held-out boundary-voltage
+targets remained sealed. A separate raw-scale caveat was discovered: although
+the implemented post-clipping gate reported `scale_safe=true`, the maximum raw
+held-out feature was about 32.2 million versus 1,215 on train, and the maximum
+raw segment-feature norm was about 29,172 times the train maximum. Clipping to
++/-8 concealed this excursion. It does not change the train-fit diagnosis, but
+it is an explicit OOD blocker for the next experiment. The authorized 05h must
+perform pre-clipping scale and projection-residual forensics, then compare
+bounded nonlinear or tightly adapted causal representations on train and
+development only. Rollout and full training remain prohibited.

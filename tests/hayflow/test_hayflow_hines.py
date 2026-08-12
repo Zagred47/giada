@@ -74,6 +74,37 @@ def test_05g_notebook_enforces_train_first_bounded_audit_contract():
     assert "rglob('/kaggle" not in source
 
 
+def test_05g_experimental_record_preserves_scoped_no_go_and_raw_ood_caveat():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (
+            root
+            / "experiments/hayflow/05g_hayflow_hines_optimization_audit/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert record["status"] == "complete"
+    assert record["diagnosis"] == (
+        "REGULARIZED_FROZEN_FEATURES_CANNOT_FIT_TRAIN_SUPPORT"
+    )
+    assert record["artifact"]["sha256"] == (
+        "f369723f0d7184ea672e90fd4f530c8ad301eed088788067dae6a5d0524be66d"
+    )
+    assert record["artifact_integrity"]["all_indexed_members_verified"]
+    assert record["support"]["selected_protocol_family_count"] == 6
+    assert record["oracle_controls"]["direct_per_transition_residual"][
+        "all_pairs_passed"
+    ]
+    assert record["regularized_audit"]["train_passing_candidate_count"] == 0
+    assert not record["heldout_gate"]["revealed"]
+    assert (
+        record["feature_scale_contract"][
+            "raw_heldout_to_train_maximum_segment_norm_ratio"
+        ]
+        > 29_000
+    )
+    assert not record["next_step"]["full_training_authorized"]
+
+
 def test_05g_config_rejects_unregistered_ranks_and_accepts_default():
     HinesOptimizationAuditConfig().validate()
     with pytest.raises(ValueError, match="ranks 64 and 96"):

@@ -1,0 +1,154 @@
+{
+  "schema_version": "hayflow-experiment-record-v1",
+  "experiment_id": "05g_hayflow_hines_optimization_audit",
+  "executed_at_local": "2026-08-12T20:50:26+02:00",
+  "status": "complete",
+  "decision": "DIAGNOSTIC_ONLY_NO_FULL_TRAINING",
+  "diagnosis": "REGULARIZED_FROZEN_FEATURES_CANNOT_FIT_TRAIN_SUPPORT",
+  "artifact": {
+    "filename": "hayflow_hines_optimization_audit.zip",
+    "size_bytes": 8003920,
+    "sha256": "f369723f0d7184ea672e90fd4f530c8ad301eed088788067dae6a5d0524be66d",
+    "committed_to_git": false,
+    "retention": "external binary artifact retained by the experiment operator"
+  },
+  "artifact_integrity": {
+    "artifact_index_size_bytes": 3078,
+    "artifact_index_sha256": "01e8f723e11133b50657f3039e4f4a8a170cfbad7a80ee3e8aa2f9ab67d61db1",
+    "indexed_artifact_count": 18,
+    "all_indexed_sizes_verified": true,
+    "all_indexed_members_verified": true,
+    "key_members": {
+      "optimization_audit_config.json": "adb7268215a6153eca462ec50f5bac93aef96736bf2eda780dc9535a00a6fb3b",
+      "optimization_support.json": "885263c3fbc1d39909be4e54c3a04e5c0e28cdc29e1d006932563322fac0f2eb",
+      "optimization_support.parquet": "bac83312eb5524380772ff851238c7d801cea026ed95438c4eb7143a48179b14",
+      "feature_scale_audit.json": "cd37e60c67eb0ded52b8e4f38dca5ddefaa72df40ef222c6f257ea7786b1c188",
+      "feature_normalization.npz": "7c067fff1f46faeb92fc7531689991442a0303b02bba1116b7866aef33f07480",
+      "oracle_controls.json": "171a8e27b7af6071cfe041c617c2b0ad46415abae343e56a8fd07aeceaf30ec1",
+      "regularized_train_audit.json": "fd04c42469296a03c78294ba135274f33ca6d1f4d888e9d7f347a5673c158225",
+      "regularized_audit_metrics.parquet": "0f61bebc748a7566456785e8cf4964f493f00bfd774e38e1de2fc67b87f7cd40",
+      "regularized_candidate_models.npz": "9c695b874d7a4478b0b3aff71fa74d1cc048dcf78ea4545e277160238f41d176",
+      "heldout_gate_report.json": "9705b5d4be6177c7e7c8c7f0102f231fca27475475d25f4f01ca3d41d78af723",
+      "final_report.json": "597d20ede9c45445e5818bb92c36a1a6e531c96f911470e801c9dec699710018"
+    }
+  },
+  "provenance": {
+    "implementation_commit": "3517413942dc03a8fb790d61e1814401830f3c4c",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "optimization_support_sha256": "cbf3753657a0edd98ca55830821018fdf00c4ed2cd5b0292953e6168828fc6ea",
+    "source_forms": {
+      "05b": "kaggle_extracted_directory",
+      "05c": "kaggle_extracted_directory",
+      "05d": "kaggle_extracted_directory",
+      "05e": "kaggle_extracted_directory",
+      "05f": "kaggle_extracted_directory"
+    }
+  },
+  "support": {
+    "valid": true,
+    "candidate_pair_count": 776,
+    "selected_train_pair_count": 12,
+    "selected_transition_count": 24,
+    "available_protocol_family_count": 6,
+    "selected_protocol_family_count": 6,
+    "protocol_diversity_available": true,
+    "protocol_diversity_selected": true,
+    "development_pair_count": 1,
+    "heldout_pair_count": 2,
+    "interpretation": "The 05f protocol-homogeneity concern was resolved: the train-first failure persists on independent support spanning all six available counterfactual protocol-family combinations."
+  },
+  "feature_scale_contract": {
+    "feature_count": 96,
+    "segment_count": 642,
+    "minimum_raw_train_std": 0.521059695312118,
+    "maximum_raw_train_std": 25.655386981270812,
+    "reported_scale_safe": true,
+    "reported_heldout_to_train_standardized_clipped_norm_ratio": 13.856399506769401,
+    "maximum_allowed_standardized_clipped_ratio": 20.0,
+    "train_raw_maximum_absolute_feature": 1215.24853515625,
+    "development_raw_maximum_absolute_feature": 1215.0130615234375,
+    "heldout_raw_maximum_absolute_feature": 32169600.0,
+    "train_raw_maximum_segment_norm": 3670.6889533225217,
+    "heldout_raw_maximum_segment_norm": 107080127.43378897,
+    "raw_heldout_to_train_maximum_segment_norm_ratio": 29171.67016749416,
+    "nonfinite_count": 0,
+    "caveat": "The registered scale_safe gate is computed after standardization and clipping to +/-8. The clipping masks a severe raw held-out feature excursion and therefore cannot support a claim that held-out H2 features are in distribution. This does not affect the train-fit diagnosis because no candidate reached the held-out reveal gate."
+  },
+  "oracle_controls": {
+    "valid": true,
+    "direct_per_transition_residual": {
+      "aggregate_voltage_rmse_mv": 0.0,
+      "maximum_segment_error_mv": 0.0,
+      "median_branching_retention": 1.0,
+      "all_pairs_passed": true
+    },
+    "segment_bias_only": {
+      "aggregate_voltage_rmse_mv": 11.825887795943547,
+      "maximum_segment_error_mv": 77.81514835357666,
+      "median_branching_retention": 0.25411202802917143,
+      "all_pairs_passed": false
+    },
+    "interpretation": "Target and metric plumbing are correct across all 12 train pairs, while static segment memorization is insufficient."
+  },
+  "regularized_audit": {
+    "candidate_count": 16,
+    "ranks": [64, 96],
+    "ridge_lambdas": [1e-08, 1e-06, 0.0001, 0.01, 0.1, 1.0, 10.0, 100.0],
+    "minimum_local_design_rank": 13,
+    "maximum_local_design_rank": 23,
+    "train_passing_candidate_count": 0,
+    "numerically_safe_train_candidate_count": 0,
+    "development_passing_candidate_count": 0,
+    "safe_candidate_count": 0,
+    "best_train_candidate": {
+      "rank": 96,
+      "ridge_lambda": 1e-08,
+      "aggregate_voltage_rmse_mv": 9.486149661938365,
+      "maximum_segment_error_mv": 72.80860625299101,
+      "median_branching_retention": 0.6892026611569345,
+      "coefficient_frobenius_norm": 785023.7005809267,
+      "coefficient_safe": false,
+      "all_pairs_passed": false
+    },
+    "representative_numerically_safe_candidate": {
+      "rank": 96,
+      "ridge_lambda": 0.0001,
+      "aggregate_voltage_rmse_mv": 10.446779890397487,
+      "maximum_segment_error_mv": 83.46739448969481,
+      "median_branching_retention": 0.6676031857342994,
+      "coefficient_frobenius_norm": 17871.974931489447,
+      "all_pairs_passed": false
+    },
+    "rank_comparison": "Rank 64 and rank 96 are nearly indistinguishable once regularization is numerically safe, so rank truncation is not the operative bottleneck in this audit.",
+    "interpretation": "Closed-form float64 optimization improves over 05f Adam but remains far outside every absolute train gate. The failure is therefore not explained by the iterative optimizer alone."
+  },
+  "heldout_gate": {
+    "revealed": false,
+    "heldout_boundary_voltage_targets_materialized": false,
+    "reason": "No candidate passed train, development, coefficient, clipping, and feature-scale gates.",
+    "leakage_detected": false
+  },
+  "interpretation": {
+    "adam_only_failure_hypothesis_rejected": true,
+    "linear_segment_conditioning_on_frozen_h2_features_fits_train_support": false,
+    "heldout_generalization_tested": false,
+    "architecture_family_proven_impossible": false,
+    "nonlinear_or_adapted_representation_still_open": true,
+    "result_is_decision_grade_for_05g_contract": true,
+    "scope": "The no-go applies to a bounded linear segment-conditioned residual on the exact frozen H2 boundary features, the registered 12-pair six-family train support, ranks 64/96, and the declared ridge path. It does not reject nonlinear heads, causal feature augmentation, controlled feature adaptation, or the wider HayFlow architecture."
+  },
+  "next_step": {
+    "experiment": "05h_feature_representation_and_raw_scale_forensics",
+    "full_training_authorized": false,
+    "requires_new_notebook": true,
+    "requirements": [
+      "measure pre-clipping standardized excursions and clipping fractions by role, segment, feature, protocol, and pair",
+      "treat the approximately 29,172-fold raw held-out maximum segment-norm excursion as an explicit OOD blocker",
+      "map the irreducible per-segment train projection residual and relate it to local design rank and morphology",
+      "separate frozen-H2 feature insufficiency from H2 checkpoint instability using causal input and morphology controls",
+      "compare a bounded nonlinear local head and a tightly controlled feature-adapter or causal-feature augmentation on train and development only",
+      "keep held-out boundary-voltage targets sealed until all train, development, raw-scale, coefficient, and clipping gates pass",
+      "do not begin rollout or full training"
+    ]
+  }
+}
