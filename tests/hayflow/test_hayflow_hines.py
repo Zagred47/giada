@@ -1,5 +1,7 @@
 from types import SimpleNamespace
 import importlib.util
+import json
+from pathlib import Path
 
 import numpy as np
 import pytest
@@ -18,6 +20,21 @@ from src.hayflow_model.hines_experiment import (
     HayFlowHinesExperiment,
     HinesPrototypeExperimentConfig,
 )
+
+
+def test_05b_notebook_uses_composite_bundle_public_api():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05b_hayflow_hines_canary_revision.ipynb").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "bundle.report" not in source
+    assert "bundle.manifest" in source
+    assert "bundle.transition_count" in source
 
 
 def test_hines_config_smoke_profile_is_explicitly_non_decisional():
