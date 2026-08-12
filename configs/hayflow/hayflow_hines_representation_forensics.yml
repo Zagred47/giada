@@ -1,0 +1,42 @@
+schema_version: "05h-config-v1"
+
+representation_forensics:
+  standardized_clip: 8.0
+  bounded_feature_scale: 4.0
+  feature_epsilon: 0.000001
+  raw_heldout_norm_ratio_limit: 100.0
+  standardized_heldout_max_limit: 100.0
+  maximum_allowed_clipping_fraction: 0.001
+  projection_rcond: 0.0000000001
+  hidden_width: 64
+  segment_embedding_dim: 8
+  epochs: 800
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 5.0
+  evaluation_interval: 20
+  patience: 160
+  seeds: [17, 29, 43]
+  input_families: [h2, causal, h2_causal]
+  residual_limit_mv: 120.0
+  branch_loss_weight: 1.0
+  pair_rmse_mv: 1.0
+  pair_max_error_mv: 5.0
+  pair_retention_minimum: 0.90
+  pair_retention_maximum: 1.10
+
+methodology:
+  full_training_authorized: false
+  exact_05g_support_reused: true
+  heldout_boundary_voltage_targets_materialized: false
+  heldout_frozen_h2_feature_extraction_performed: true
+  heldout_candidate_head_inference_performed: false
+  normalization_fit_on_train_only: true
+  pre_clipping_scale_audit: true
+  frozen_h2_zero_causal_control: true
+  unrestricted_linear_projection_oracle_train_only: true
+  bounded_nonlinear_controls: [h2, causal, h2_causal]
+  model_selection_roles: [train, development]
+  base_h2_frozen: true
+  rollout_performed: false
+  teacher_encoder_updated: false

@@ -455,7 +455,14 @@ class HayFlowHinesExperiment:
             mask[row] = True
         return output, mask
 
-    def _batch(self, indices: Sequence[int], *, include_targets: bool = True, include_microtrace: bool = False) -> Dict[str, Any]:
+    def _batch(
+        self,
+        indices: Sequence[int],
+        *,
+        include_targets: bool = True,
+        include_event_targets: bool = True,
+        include_microtrace: bool = False,
+    ) -> Dict[str, Any]:
         if self.normalizer is None:
             raise RuntimeError("prepare() must be called first")
         indices = np.asarray(indices, dtype=np.int64)
@@ -486,9 +493,10 @@ class HayFlowHinesExperiment:
                 raw_state_t=raw_t,
             )
         )
-        result.update(self.store.event_targets(indices))
-        amplitude, segment = self._event_amplitude_targets(indices)
-        result.update(event_amplitude=amplitude, event_segment=segment)
+        if include_event_targets:
+            result.update(self.store.event_targets(indices))
+            amplitude, segment = self._event_amplitude_targets(indices)
+            result.update(event_amplitude=amplitude, event_segment=segment)
         if include_targets:
             raw_t1 = self.store.read_state(indices, "t_plus_1")
             normalized_t1 = self.normalizer.normalize_state(raw_t1).astype(np.float32)

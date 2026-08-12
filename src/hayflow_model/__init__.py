@@ -82,6 +82,14 @@ from .hines_optimization_audit import (
     bounded_segment_prediction,
     dual_ridge_segment_coefficients,
 )
+from .hines_representation_forensics import (
+    EXPECTED_05G_ARCHIVE_SHA256,
+    BoundedLocalResidualHead,
+    HinesRepresentationForensics,
+    HinesRepresentationForensicsConfig,
+    local_linear_projection,
+    robust_bounded_features,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -142,4 +150,10 @@ __all__ = [
     "HinesSegmentOptimizationAudit",
     "bounded_segment_prediction",
     "dual_ridge_segment_coefficients",
+    "EXPECTED_05G_ARCHIVE_SHA256",
+    "BoundedLocalResidualHead",
+    "HinesRepresentationForensics",
+    "HinesRepresentationForensicsConfig",
+    "local_linear_projection",
+    "robust_bounded_features",
 ]

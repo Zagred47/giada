@@ -688,3 +688,44 @@ it is an explicit OOD blocker for the next experiment. The authorized 05h must
 perform pre-clipping scale and projection-residual forensics, then compare
 bounded nonlinear or tightly adapted causal representations on train and
 development only. Rollout and full training remain prohibited.
+
+### Notebook 05h: representation and raw-scale forensics
+
+`notebooks/05h_hayflow_hines_representation_forensics.ipynb` implements the
+forensic follow-up authorized by 05g. It consumes and member-verifies the exact
+05g artifact, then reuses its hashed 12-pair, six-family train support without
+performing a new selection. The registered development pair remains separate.
+The frozen H2 checkpoint is evaluated on held-out inputs only to extract the
+feature surfaces required by the OOD audit. Held-out boundary-voltage targets
+and held-out event labels are never materialized, and no newly fitted candidate
+head is run on held-out inputs for predictive evaluation. The shared batch
+loader exposes an explicit input-only mode for this purpose.
+
+The first stage measures three surfaces before clipping: frozen H2 boundary
+features, the same H2 path with all causal synaptic/current inputs set to zero,
+and the direct causal input tensor. Train-only centers and scales are used to
+report unbounded standardized excursions, clipping fractions, raw norm ratios,
+and the exact logical index, segment, and feature of the largest outliers. The
+direct causal tensor includes both authentic synaptic state already present at
+S_t and realized events in the next millisecond. Normalized teacher-state,
+initial voltage, H2 boundary voltage, and zero-causal boundary voltage are
+reported separately. The zero-causal counterfactual therefore distinguishes
+normalizer/state OOD, frozen state-path amplification, causal-front-end OOD,
+and causal-drive amplification inside H2.
+
+The second stage computes an unrestricted, segment-local linear projection
+oracle on train only. Per-segment design rank, condition number, irreducible
+projection error, coefficient norm, region, and morphology location are saved.
+This determines whether the 05g ridge failure is merely a safety/regularization
+tradeoff or whether the frozen feature surface lacks a linear direction needed
+by the teacher residual.
+
+Finally, three compact zero-output nonlinear controls compare bounded H2,
+bounded direct causal features, and their concatenation. Each uses a shared
+two-layer local head plus a small segment embedding and a +/-120 mV output
+bound. Three fixed seeds are trained on the exact train support; checkpoint
+selection and early stopping use only the registered development pair. H2 is
+never updated. Regardless of the result, 05h cannot reveal held-out targets,
+perform rollout, or authorize full training. A raw held-out OOD finding takes
+precedence over apparent train/development success and requires a separate
+scale-repair experiment.

@@ -11,6 +11,7 @@ import src.hayflow_model.hines_conditioning_experiment as conditioning_module
 import src.hayflow_model.hines_capacity_experiment as capacity_module
 import src.hayflow_model.hines_segment_canary_experiment as segment_canary_module
 import src.hayflow_model.hines_optimization_audit as optimization_audit_module
+import src.hayflow_model.hines_representation_forensics as representation_forensics_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -54,6 +55,89 @@ from src.hayflow_model.hines_optimization_audit import (
     bounded_segment_prediction,
     dual_ridge_segment_coefficients,
 )
+from src.hayflow_model.hines_representation_forensics import (
+    HinesRepresentationForensics,
+    HinesRepresentationForensicsConfig,
+    local_linear_projection,
+    robust_bounded_features,
+)
+
+
+def test_05h_notebook_keeps_heldout_targets_and_inference_sealed():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05h_hayflow_hines_representation_forensics.ipynb").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "run_raw_scale_forensics" in source
+    assert "run_projection_forensics" in source
+    assert "run_bounded_representation_controls" in source
+    assert "assert not controls_report['heldout_candidate_head_inference_performed']" in source
+    assert "assert final_report['heldout_contract']['frozen_h2_feature_extraction_performed']" in source
+    assert "assert not raw_report['heldout_event_targets_materialized']" in source
+    assert "assert not final_report['full_training_authorized']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "rglob('/kaggle" not in source
+
+
+def test_05h_config_accepts_registered_controls_and_rejects_missing_family():
+    HinesRepresentationForensicsConfig().validate()
+    with pytest.raises(ValueError, match="h2, causal, and h2_causal"):
+        HinesRepresentationForensicsConfig(input_families=("h2", "causal")).validate()
+
+
+def test_05h_robust_bounding_preserves_unclipped_forensic_surface():
+    values = np.asarray([[[0.0, 1.0], [1000.0, -1000.0]]])
+    mean = np.zeros((1, 1, 2))
+    scale = np.ones((1, 1, 2))
+    standardized, bounded = robust_bounded_features(values, mean, scale, 4.0)
+    assert standardized[0, 1, 0] == 1000.0
+    assert np.max(np.abs(bounded)) <= 1.0
+    assert bounded[0, 1, 0] > 0.999
+
+
+def test_05h_local_projection_reports_irreducible_segment_error():
+    feature = np.asarray([
+        [[0.0], [0.0]], [[1.0], [0.0]], [[2.0], [0.0]], [[3.0], [0.0]],
+    ])
+    target = np.asarray([
+        [1.0, 0.0], [3.0, 1.0], [5.0, 0.0], [7.0, 1.0],
+    ])
+    prediction, rows = local_linear_projection(feature, target, 1e-12)
+    np.testing.assert_allclose(prediction[:, 0], target[:, 0], atol=1e-10)
+    assert rows[0]["projection_rmse_mv"] < 1e-10
+    assert rows[1]["projection_rmse_mv"] > 0.4
+
+
+def test_05h_accepts_member_verified_extracted_05g(tmp_path, monkeypatch):
+    payloads = {
+        "artifact_index.json": b"{}",
+        "optimization_audit_config.json": b"{}",
+        "optimization_support.json": b'{"valid":true}',
+        "feature_scale_audit.json": b"{}",
+        "oracle_controls.json": b"{}",
+        "regularized_train_audit.json": b"{}",
+        "heldout_gate_report.json": b"{}",
+        "final_report.json": b'{"diagnosis":"test"}',
+    }
+    expected = {}
+    for name, payload in payloads.items():
+        (tmp_path / name).write_bytes(payload)
+        expected[name] = hashlib.sha256(payload).hexdigest()
+    monkeypatch.setattr(
+        representation_forensics_module, "EXPECTED_05G_MEMBER_SHA256", expected
+    )
+    experiment = object.__new__(HinesRepresentationForensics)
+    experiment.artifact_05g_source = tmp_path
+    report, support, contract = experiment._read_05g_source()
+    assert report["diagnosis"] == "test"
+    assert support["valid"]
+    assert contract["source_kind"] == "kaggle_extracted_directory"
+    assert contract["verified_member_sha256"] == expected
 
 
 def test_05g_notebook_enforces_train_first_bounded_audit_contract():
