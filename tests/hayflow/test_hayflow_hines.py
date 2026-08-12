@@ -86,6 +86,27 @@ def test_05c_experimental_record_preserves_the_diagnostic_no_go():
     assert not record["next_step"]["full_training_authorized"]
 
 
+def test_05d_experimental_record_scopes_the_representation_no_go():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (
+            root
+            / "experiments/hayflow/05d_hayflow_hines_residual_conditioning/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert record["status"] == "complete"
+    assert record["decision"] == "DIAGNOSTIC_ONLY_NO_FULL_TRAINING"
+    assert record["diagnosis"] == "SHARED_REPRESENTATION_BOTTLENECK"
+    assert record["artifact"]["sha256"] == (
+        "61bf814a22c313093c18a7a555d76515d3d3db741eebae167b8ff479b8d7309c"
+    )
+    assert record["artifact_integrity"]["all_indexed_members_verified"]
+    assert record["free_residual_control"]["passed"]
+    assert record["frozen_decoder_sweep"]["passed_run_count"] == 0
+    assert not record["interpretation"]["architecture_family_proven_impossible"]
+    assert not record["next_step"]["full_training_authorized"]
+
+
 def test_05c_notebook_has_no_full_training_path_and_uses_public_bundle_api():
     root = Path(__file__).resolve().parents[2]
     notebook = json.loads(

@@ -521,3 +521,16 @@ gradient terminates a run, while per-run histories retain gradient norms and
 tanh saturation fractions. Passing requires both absolute voltage accuracy
 and 0.9--1.1 counterfactual retention. The notebook cannot invoke full
 training and its final report only selects the scope of 05e.
+
+The completed 05d run is registered in
+`experiments/hayflow/05d_hayflow_hines_residual_conditioning/result.json`.
+The free 642-value residual reached numerical precision on both the worst
+transition and the authentic branch pair, validating the target, loss, update,
+and metric path. All nine frozen shared decoders failed the absolute gates, and
+progressively unfreezing local features and base dynamics improved but did not
+resolve either memorisation or counterfactual retention. The resulting
+`SHARED_REPRESENTATION_BOTTLENECK` diagnosis is deliberately limited to the
+current 05b features, shared 97-parameter decoder, and registered optimization
+budget; it does not reject the HayFlow architecture family. Full training
+remains prohibited. The authorized 05e diagnostic is a closed-form and
+segment-conditioned capacity probe.

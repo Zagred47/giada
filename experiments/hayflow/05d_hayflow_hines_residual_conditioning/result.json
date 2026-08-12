@@ -1,0 +1,164 @@
+{
+  "schema_version": "hayflow-experiment-record-v1",
+  "experiment_id": "05d_hayflow_hines_residual_conditioning",
+  "executed_at_local": "2026-08-12T16:03:04+02:00",
+  "status": "complete",
+  "decision": "DIAGNOSTIC_ONLY_NO_FULL_TRAINING",
+  "diagnosis": "SHARED_REPRESENTATION_BOTTLENECK",
+  "artifact": {
+    "filename": "hayflow_hines_residual_conditioning.zip",
+    "size_bytes": 2060791,
+    "sha256": "61bf814a22c313093c18a7a555d76515d3d3db741eebae167b8ff479b8d7309c",
+    "committed_to_git": false,
+    "retention": "external binary artifact retained by the experiment operator"
+  },
+  "artifact_integrity": {
+    "artifact_index_size_bytes": 8251,
+    "artifact_index_sha256": "aa177bdea706e705f8cbd1b7d96b0d66397a145390fbb2fa08719dfed6c690f1",
+    "indexed_artifact_count": 46,
+    "all_indexed_members_verified": true,
+    "key_members": {
+      "conditioning_config.json": "01ab26de245eabeb67278636b3577228aae7b8868e97711d30a78f0790d8eeca",
+      "final_report.json": "df3b97191fbb93c663ded2830d53a0ea0077838a0636b499273d17696ca9bbbf",
+      "free_residual_report.json": "ad43f8f3b093ee58f7242732896e04947fcd5212bb2c93f2dba92e4a59a82f2a",
+      "free_residual_history.parquet": "adc795a6107225ca2ca5d9c7e4132578acbb392c8e779887b9c481fb1e6bec47",
+      "frozen_decoder_sweep_report.json": "0002f34079ac8d977bdf9c83a2fff5bf5cbf88de8e05777558ec9749abc93670",
+      "frozen_decoder_sweep.parquet": "28eae26c839149a78f80f4f6f47e4e24a20cd3510263cb5b77a81dd91789b49c",
+      "unfreezing_ladder_report.json": "9d250734b8714dc9370ed494fad66534b5de489c1e37e70c14a96ea4c1695dd3",
+      "unfreezing_ladder_metrics.parquet": "7eac5801675dff05bfad1c02bc4204574fb420c68232ffacc105ce32f97a98d0",
+      "unfreezing_ladder_history.parquet": "55502f8abfceb8470a0c317112d9c9d069131ad216076cea57a9cbce0655bd30"
+    }
+  },
+  "provenance": {
+    "implementation_commit": "e6d7d2d14f517815b644e86ca405019ab7befeab",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "source_05b_checkpoint_sha256": "5fe46579aa05143e30a252ca78995e15d4fafe0c510967ac0c59b3e0344bd06f",
+    "source_05b_logical_indices_sha256": "e79dad4ae40ab1a130026d0c45e7910073275475e4bd50c75c493a730080d4c9",
+    "source_05c_final_report_sha256": "f5287ee6f099350af4c79bb45234783d0348a81fd3b7b3e001014a027494a48b",
+    "source_05c_archive_sha256": "b6a2e222529fd293fd75602bdac3b0feca8729832f371fadd24c9aa3b96b0d70",
+    "source_forms": {
+      "05b": "kaggle_extracted_directory",
+      "05c": "kaggle_extracted_directory"
+    },
+    "worst_transition": 5364,
+    "worst_segment": 437,
+    "training_branch_pair": [9122, 5282]
+  },
+  "free_residual_control": {
+    "passed": true,
+    "contract": "independent 642-value residual, zero initialized, exact quadratic SGD update",
+    "one_transition": {
+      "voltage_rmse_mv": 0.0,
+      "maximum_segment_error_mv": 0.0,
+      "maximum_peak_error_mv": 0.0
+    },
+    "branch_pair": {
+      "voltage_rmse_mv": 5.166655228094896e-7,
+      "maximum_segment_error_mv": 3.814697265625e-6,
+      "maximum_peak_error_mv": 1.9073486328125e-6,
+      "teacher_distance_mv": 35.48301696777344,
+      "predicted_distance_mv": 35.48301696777344,
+      "branching_retention": 1.0
+    }
+  },
+  "frozen_decoder_sweep": {
+    "run_count": 9,
+    "nonfinite_run_count": 0,
+    "passed_run_count": 0,
+    "shared_decoder_parameter_count": 97,
+    "best": {
+      "parameterization": "tanh",
+      "learning_rate": 0.001,
+      "voltage_rmse_mv": 3.6818957328796387,
+      "maximum_segment_error_mv": 37.09577178955078,
+      "maximum_peak_error_mv": 35.52515411376953,
+      "saturation_fraction": 0.0
+    },
+    "feature_standardization": {
+      "minimum_std_before_floor": 52.15542221069336,
+      "maximum_std_before_floor": 178419.875,
+      "epsilon": 1e-5
+    }
+  },
+  "unfreezing_ladder": {
+    "selected_decoder": {
+      "parameterization": "tanh",
+      "learning_rate": 0.001
+    },
+    "one_transition": {
+      "head_only": {
+        "voltage_rmse_mv": 3.681605339050293,
+        "maximum_segment_error_mv": 37.08949279785156,
+        "maximum_peak_error_mv": 35.51887512207031,
+        "passed": false
+      },
+      "local_features": {
+        "voltage_rmse_mv": 3.2333173751831055,
+        "maximum_segment_error_mv": 34.04330825805664,
+        "maximum_peak_error_mv": 32.47269058227539,
+        "passed": false
+      },
+      "base_dynamics": {
+        "voltage_rmse_mv": 3.1942896842956543,
+        "maximum_segment_error_mv": 33.735443115234375,
+        "maximum_peak_error_mv": 32.164825439453125,
+        "passed": false
+      }
+    },
+    "branch_pair": {
+      "head_only": {
+        "voltage_rmse_mv": 18.663047790527344,
+        "maximum_segment_error_mv": 151.078125,
+        "maximum_peak_error_mv": 21.570960998535156,
+        "branching_retention": 0.22229108214378357,
+        "passed": false
+      },
+      "local_features": {
+        "voltage_rmse_mv": 14.82123851776123,
+        "maximum_segment_error_mv": 72.64014434814453,
+        "maximum_peak_error_mv": 58.53428649902344,
+        "branching_retention": 0.6471595168113708,
+        "passed": false
+      },
+      "base_dynamics": {
+        "voltage_rmse_mv": 14.767468452453613,
+        "maximum_segment_error_mv": 72.11543273925781,
+        "maximum_peak_error_mv": 58.946266174316406,
+        "branching_retention": 0.6521543860435486,
+        "passed": false
+      }
+    }
+  },
+  "optimization_diagnostics": {
+    "all_runs_finite": true,
+    "gradient_clipping_applied": false,
+    "one_transition_head_initial_gradient_norm": 12897.751953125,
+    "one_transition_head_final_gradient_norm": 1.4845380783081055,
+    "one_transition_base_final_gradient_norm": 129.06414794921875,
+    "branch_pair_head_initial_gradient_norm": 3306.082275390625,
+    "branch_pair_head_final_gradient_norm": 15.790507316589355,
+    "branch_pair_base_final_gradient_norm": 1703.1339111328125,
+    "selected_tanh_saturation_fraction_one_transition": 0.0,
+    "selected_tanh_saturation_fraction_branch_pair": 0.0007788161747157574
+  },
+  "interpretation": {
+    "target_loss_metric_update_plumbing_valid": true,
+    "frozen_shared_feature_linear_readout_sufficient": false,
+    "tested_progressive_unfreezing_sufficient": false,
+    "branching_partially_improves_with_unfreezing": true,
+    "architecture_family_proven_impossible": false,
+    "scope": "The diagnosis applies to the current 05b feature representation, shared 97-parameter boundary decoder, and preregistered optimization budget."
+  },
+  "next_step": {
+    "experiment": "05e_segment_conditioned_capacity_probe",
+    "full_training_authorized": false,
+    "requirements": [
+      "solve the frozen shared linear probe by closed-form least squares to remove optimizer ambiguity",
+      "measure design-matrix rank, singular spectrum, condition number, and irreducible residual",
+      "compare shared linear, per-segment bias, and segment-conditioned low-rank residuals",
+      "fit the worst transition and counterfactual pair with identical absolute gates",
+      "separate static segment memorization from input-conditioned branch discrimination",
+      "do not start a full neural canary until the smallest segment-conditioned probe passes"
+    ]
+  }
+}
