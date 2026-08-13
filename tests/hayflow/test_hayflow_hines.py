@@ -19,6 +19,7 @@ import src.hayflow_model.hines_repaired_representation_recheck as repaired_reche
 import src.hayflow_model.hines_repaired_representation_revision as repaired_revision_module
 import src.hayflow_model.hines_spatial_support_revision as spatial_support_module
 import src.hayflow_model.hines_trainable_topology_canary as topology_canary_module
+import src.hayflow_model.hines_architecture_reassessment as reassessment_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -108,6 +109,78 @@ from src.hayflow_model.hines_trainable_topology_canary import (
     TrainableTopologyResidualHead,
     deterministic_stratified_pair_split,
 )
+from src.hayflow_model.hines_architecture_reassessment import (
+    HinesArchitectureReassessmentConfig,
+    apply_segment_affine,
+    error_energy_concentration,
+    fit_segment_affine_calibrator,
+)
+
+
+def test_05je_segment_affine_recovers_fit_only_bias_and_scale():
+    rng = np.random.default_rng(91)
+    prediction = rng.normal(size=(30, 4))
+    slopes = np.asarray([0.5, 1.0, 1.5, 2.0])
+    intercepts = np.asarray([-2.0, -1.0, 1.0, 3.0])
+    target = prediction * slopes + intercepts
+    fitted_slope, fitted_intercept = fit_segment_affine_calibrator(
+        prediction, target, 1e-12
+    )
+    calibrated = apply_segment_affine(prediction, fitted_slope, fitted_intercept)
+    np.testing.assert_allclose(calibrated, target, atol=1e-10)
+
+
+def test_05je_error_energy_concentration_is_ranked_and_normalized():
+    error = np.zeros((3, 10)); error[:, 7] = 4.0; error[:, 2] = 2.0
+    report = error_energy_concentration(error, 0.10)
+    assert report["top_segment_count"] == 1
+    assert report["top_segment_ids"] == [7]
+    assert report["top_segment_error_energy_fraction"] == pytest.approx(0.8)
+
+
+def test_05je_config_is_frozen_to_registered_canary():
+    HinesArchitectureReassessmentConfig().validate()
+    with pytest.raises(ValueError, match="direct-tree"):
+        HinesArchitectureReassessmentConfig(audited_family="ridge_corrected_tree").validate()
+    with pytest.raises(ValueError, match="registered three seeds"):
+        HinesArchitectureReassessmentConfig(seeds=(17, 29, 44)).validate()
+
+
+def test_05je_exact_05jd_hashes_match_registered_result():
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (root / "experiments/hayflow/05j_d_trainable_topology_decoder_micro_canary/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == reassessment_module.EXPECTED_05JD_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == reassessment_module.EXPECTED_05JD_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == reassessment_module.EXPECTED_05JD_FINAL_SHA256
+    assert not result["trainable_topology_canary_passed"]
+
+
+def test_05je_notebook_is_forensic_and_keeps_future_data_sealed():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_e_architecture_reassessment.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "prepare_architecture_reassessment" in source
+    assert "reconstruct_frozen_checkpoints" in source
+    assert "run_error_anatomy" in source
+    assert "run_bias_and_capacity_controls" in source
+    assert "run_branch_identifiability_audit" in source
+    assert "EXPECTED_05JD_INDEX_SHA256" in source
+    assert "assert not final_report['methodology']['retraining_performed']" in source
+    assert "assert not final_report['methodology']['development_used_for_model_selection']" in source
+    assert "assert not final_report['methodology']['heldout_inputs_extracted']" in source
+    assert "assert not final_report['methodology']['rollout_performed']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "run_rollout" not in source
+    assert "run_trainable_topology_canary" not in source
+    assert "rglob('/kaggle" not in source
 
 
 def test_05jd_stratified_split_is_deterministic_complete_and_disjoint():

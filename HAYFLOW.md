@@ -1135,3 +1135,22 @@ The registered route is therefore `05j_e_architecture_reassessment`. That
 reassessment must explain both facts: nonlinear topology decoding contains
 real signal, while the present learning target/support contract remains far
 from the required segment-level accuracy.
+
+### Notebook 05j-e: architecture reassessment
+
+`notebooks/05j_e_architecture_reassessment.ipynb` is a frozen-checkpoint
+forensic experiment. It verifies the exact 05j-d artifact, reconstructs the
+registered 36/12/development design and reproduces all six saved model metrics
+within a fixed numerical tolerance. It does not train or select a new model.
+
+The direct-tree seed ensemble is analyzed by segment, region and morphology
+frequency. Seed disagreement distinguishes optimization variance from a shared
+systematic error; top-segment energy identifies spatial concentration. A
+fit-only per-segment affine oracle tests whether static offsets or gains could
+repair the result, but is explicitly prohibited from authorizing a candidate.
+A paired-future audit then compares multiscale feature distance with teacher
+branch separation to detect remaining representational collisions.
+
+The resulting causal diagnosis selects the narrow 05j-f branch. Development
+is diagnostic only and fits no transform or checkpoint. Held-out data, rollout,
+05k and full training remain sealed.

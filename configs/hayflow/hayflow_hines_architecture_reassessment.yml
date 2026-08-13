@@ -1,0 +1,35 @@
+schema_version: "05j-e-config-v1"
+
+architecture_reassessment:
+  audited_family: direct_tree
+  seeds: [17, 29, 43]
+  expected_fit_pair_count: 36
+  expected_calibration_pair_count: 12
+  expected_development_pair_count: 1
+  collision_quantile: 0.10
+  large_branch_target_mv: 5.0
+  minimum_large_target_given_collision_fraction: 0.05
+  systematic_disagreement_ratio: 0.25
+  material_improvement_fraction: 0.20
+  concentrated_segment_fraction: 0.10
+  concentrated_error_energy_fraction: 0.50
+  high_frequency_energy_fraction: 0.50
+  affine_ridge: 0.0001
+  metric_atol: 0.0001
+
+methodology:
+  exact_05jd_artifact_and_checkpoints_verified: true
+  mode: frozen_checkpoint_forensics_no_retraining
+  audited_family: direct_tree
+  analyses:
+    - seed_ensemble_and_disagreement
+    - segment_and_region_error_anatomy
+    - morphology_frequency_decomposition
+    - fit_only_segment_affine_oracle
+    - paired_future_feature_identifiability
+  diagnostic_transform_fit_role: fit_only
+  calibration_used_for_model_selection: false
+  development_used_for_model_selection: false
+  heldout_inputs_extracted: false
+  rollout_performed: false
+  full_training_authorized: false

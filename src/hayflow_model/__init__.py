@@ -142,6 +142,14 @@ from .hines_trainable_topology_canary import (
     TrainableTopologyResidualHead,
     deterministic_stratified_pair_split,
 )
+from .hines_architecture_reassessment import (
+    EXPECTED_05JD_ARCHIVE_SHA256,
+    HinesArchitectureReassessment,
+    HinesArchitectureReassessmentConfig,
+    apply_segment_affine,
+    error_energy_concentration,
+    fit_segment_affine_calibrator,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -246,4 +254,10 @@ __all__ = [
     "HinesTrainableTopologyCanaryConfig",
     "TrainableTopologyResidualHead",
     "deterministic_stratified_pair_split",
+    "EXPECTED_05JD_ARCHIVE_SHA256",
+    "HinesArchitectureReassessment",
+    "HinesArchitectureReassessmentConfig",
+    "apply_segment_affine",
+    "error_energy_concentration",
+    "fit_segment_affine_calibrator",
 ]
