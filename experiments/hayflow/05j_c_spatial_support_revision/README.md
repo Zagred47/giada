@@ -1,6 +1,9 @@
 # HayFlow 05j-c - spatial context and support revision
 
-Status: implementation ready; execution pending on Kaggle.
+Status: completed on Kaggle. Expanded support and non-local morphology context
+both produced large, consistent improvements, but no candidate met every
+original pairwise gate. The result authorizes only
+`05j_d_trainable_topology_decoder_micro_canary`.
 
 05j-b ruled out simple feature-tail saturation and ordinary numerical
 instability. Stable segment-local ridge decoders still failed, while paired
@@ -41,3 +44,38 @@ trainable topology-decoder micro-canary. Full training is never authorized by
 this notebook.
 
 Expected artifact: `hayflow_hines_spatial_support_revision.zip`.
+
+## Registered result
+
+The completed run used code revision
+`f42f366bfda5f9ba2614c1cb14349d8055a68228`. The downloaded archive and all
+22 indexed members passed independent SHA-256 and size verification. The exact
+05i-c normalizer fingerprint was retained. The expanded support contained the
+original 12 pairs plus 36 deterministic additions from 776 eligible train
+candidates, covered all six protocol families, remained episode-disjoint and
+had no development overlap. Held-out data remained sealed.
+
+Support expansion and topology were both material on train cross-validation
+and development. Relative to the preregistered factorial controls, expanded
+support improved RMSE by `58.87%` on cross-validation and `64.46%` on
+development; non-local context improved it by `58.57%` and `84.89%`. Both
+effects exceed the fixed 20% threshold on both roles.
+
+The strongest balanced candidate was expanded support with multiscale tree
+context. It reached cross-validation RMSE `2.3932 mV`, train RMSE `1.4017 mV`
+and development RMSE `2.6936 mV`. Development branching retention was
+`0.9739`, now inside the required `0.9--1.1` interval. However, development
+maximum segment error remained `16.9684 mV`, and only 14/48 cross-validation
+pairs and 23/48 train-fit pairs passed all gates jointly. Thus the result is
+not a representation pass.
+
+Adding global region broadcasts slightly improved development RMSE and maximum
+error (`2.6397 mV`, `14.3959 mV`) but degraded cross-validation branching and
+overall robustness. Fixed multiscale tree context is therefore the cleaner
+candidate for the next test.
+
+The result establishes that local features were missing a necessary spatial
+information path and that 12 pairs were insufficient. It does not yet establish
+the required voltage accuracy. The next experiment may train only a small
+topology-aware decoder micro-canary on the 48-pair support; rollout and full
+training remain prohibited.

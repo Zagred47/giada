@@ -1,0 +1,117 @@
+{
+  "schema_version": "05j-c-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_spatial_support_revision.zip",
+    "size_bytes": 558752,
+    "sha256": "ad42576074fd52d836184a7bee08b655e927e3995285d5a27b78e8ae76b6ef36",
+    "artifact_index_sha256": "0d47899e86efaaee27f885167afb79f379b702cb60881a2e1af82aef92b620f7",
+    "final_report_sha256": "b901bf72b4d2f83d55ecdca98995b0f4a5ac1aeb8a107cd6861a41944dd61c1f",
+    "indexed_member_count": 22,
+    "verified_member_count": 22
+  },
+  "code_revision": "f42f366bfda5f9ba2614c1cb14349d8055a68228",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "spatial_support_revision_passed": false,
+  "diagnosis": "NONLOCAL_CONTEXT_HELPS_BUT_MAPPING_REMAINS_BELOW_GATE",
+  "decision": "TRAIN_ONLY_SPATIAL_SUPPORT_DIAGNOSTIC",
+  "input_and_split_contract": {
+    "normalizer_fingerprint": "35a07b7fa9433ee34146fdce13539f20e98288a733a6e2d3266b3917f08dcfe6",
+    "matches_verified_05ic_fingerprint": true,
+    "original_pair_count": 12,
+    "expanded_pair_count": 48,
+    "added_pair_count": 36,
+    "eligible_candidate_pair_count": 776,
+    "protocol_family_count": 6,
+    "expanded_support_sha256": "d29cb062f4e9c5bb169af7d94593f93977c4fbc1386bf5fdd031ca0be209d125",
+    "all_expanded_pairs_from_train": true,
+    "all_expanded_pairs_episode_disjoint": true,
+    "development_episode_overlap": [],
+    "development_used_for_model_selection": false,
+    "heldout_inputs_extracted": false,
+    "heldout_targets_materialized": false
+  },
+  "factorial_diagnosis": {
+    "material_improvement_threshold": 0.2,
+    "expanded_support_cross_validation_rmse_improvement_fraction": 0.5886754464030802,
+    "expanded_support_development_rmse_improvement_fraction": 0.6445573354886986,
+    "expanded_support_material_on_both_roles": true,
+    "topology_cross_validation_rmse_improvement_fraction": 0.5857496221230785,
+    "topology_development_rmse_improvement_fraction": 0.8488869169688481,
+    "topology_material_on_both_roles": true
+  },
+  "candidate_summary": [
+    {
+      "support": "original",
+      "context": "local",
+      "cross_validation_rmse_mv": 13.142263871248037,
+      "development_rmse_mv": 17.256048219964892,
+      "development_branching_retention": 0.23524680849914759,
+      "candidate_passed": false
+    },
+    {
+      "support": "original",
+      "context": "tree",
+      "cross_validation_rmse_mv": 10.157776545594952,
+      "development_rmse_mv": 9.706475777816284,
+      "development_branching_retention": 0.6346850885562199,
+      "candidate_passed": false
+    },
+    {
+      "support": "original",
+      "context": "tree_global",
+      "cross_validation_rmse_mv": 9.60466951149852,
+      "development_rmse_mv": 7.426590563601263,
+      "development_branching_retention": 0.6730639645294592,
+      "candidate_passed": false
+    },
+    {
+      "support": "expanded",
+      "context": "local",
+      "cross_validation_rmse_mv": 9.53683233678752,
+      "development_rmse_mv": 17.468554576553377,
+      "development_branching_retention": 0.25050882263254054,
+      "candidate_passed": false
+    },
+    {
+      "support": "expanded",
+      "context": "tree",
+      "cross_validation_rmse_mv": 2.393174463310903,
+      "train_rmse_mv": 1.401747242155371,
+      "development_rmse_mv": 2.693619544435277,
+      "development_maximum_segment_error_mv": 16.968350913063446,
+      "development_branching_retention": 0.9738959349531197,
+      "cross_validation_joint_passing_pair_count": 14,
+      "train_joint_passing_pair_count": 23,
+      "pair_count": 48,
+      "numerically_stable": true,
+      "candidate_passed": false
+    },
+    {
+      "support": "expanded",
+      "context": "tree_global",
+      "cross_validation_rmse_mv": 3.9506363992630744,
+      "train_rmse_mv": 1.6188988049169637,
+      "development_rmse_mv": 2.63972713816092,
+      "development_maximum_segment_error_mv": 14.395922993438106,
+      "development_branching_retention": 0.9468116255250082,
+      "cross_validation_joint_passing_pair_count": 4,
+      "train_joint_passing_pair_count": 14,
+      "pair_count": 48,
+      "numerically_stable": true,
+      "candidate_passed": false
+    }
+  ],
+  "interpretation": {
+    "support_expansion_is_material": true,
+    "nonlocal_morphology_context_is_material": true,
+    "local_surface_alone_is_insufficient": true,
+    "development_branching_is_recovered_by_expanded_tree_context": true,
+    "voltage_accuracy_gate_remains_unsatisfied": true,
+    "global_region_broadcast_improves_development_peak_error_but_degrades_cross_validation_branching": true
+  },
+  "rollout_performed": false,
+  "full_training_authorized": false,
+  "next_step": "05j_d_trainable_topology_decoder_micro_canary"
+}

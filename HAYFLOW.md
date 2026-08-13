@@ -1066,3 +1066,28 @@ only 05k micro-rollout. A material but
 incomplete topology improvement can authorize only a separate trainable
 topology-decoder micro-canary. Neither outcome directly authorizes full
 training.
+
+The completed 05j-c run is registered in
+`experiments/hayflow/05j_c_spatial_support_revision/result.json`. The archive
+and all 22 indexed members passed integrity verification. The original 12
+pairs were preserved and expanded to 48 episode-disjoint train pairs spanning
+all six available protocol families, with no development overlap and no
+held-out access.
+
+Both preregistered factors produced material, role-consistent gains. Expanded
+support improved RMSE by `58.87%` in grouped train cross-validation and
+`64.46%` on development. Non-local morphology context improved the same roles
+by `58.57%` and `84.89%`; all values exceed the fixed 20% threshold.
+
+No candidate passed every original pair gate. The expanded multiscale-tree
+candidate nevertheless reduced cross-validation/train/development RMSE to
+`2.3932/1.4017/2.6936 mV` and recovered development branching retention to
+`0.9739`. Its remaining blockers were voltage accuracy and worst-segment error:
+development maximum error was `16.9684 mV`, and only 14/48 cross-validation
+pairs passed jointly. The tree-plus-global variant reached `2.6397 mV` and
+`14.3959 mV` on development but generalized less robustly across train folds.
+
+05j-c therefore identifies topology and support as necessary rather than
+sufficient. It authorizes only
+`05j_d_trainable_topology_decoder_micro_canary`, using the expanded support and
+fixed tree context. 05k rollout and full training remain prohibited.
