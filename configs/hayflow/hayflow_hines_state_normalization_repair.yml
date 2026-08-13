@@ -1,0 +1,40 @@
+schema_version: "05i-config-v1"
+
+state_normalization_repair:
+  pooling_quantile: 0.25
+  exact_group_multiplier: 0.25
+  mechanism_group_multiplier: 0.15
+  category_group_multiplier: 0.10
+  transform_group_multiplier: 0.05
+  identity_absolute_floor: 0.001
+  voltage_absolute_floor_mv: 1.0
+  synapse_time_absolute_floor_ms: 1.0
+  log1p_absolute_floor: 0.0001
+  logit_absolute_floor: 0.3
+  baseline_minimum_scale: 0.00000001
+  clipping_threshold: 8.0
+  standardized_maximum: 100.0
+  maximum_clipping_fraction: 0.01
+  h2_raw_norm_ratio_maximum: 100.0
+  h2_standardized_maximum: 100.0
+  h2_maximum_clipping_fraction: 0.01
+  feature_epsilon: 0.000001
+  physical_voltage_absolute_maximum_mv: 200.0
+  top_coordinate_count: 200
+
+methodology:
+  normalization_fit_split: train
+  development_or_heldout_used_to_fit: false
+  teacher_transform_unchanged: true
+  teacher_state_modified: false
+  hierarchical_pooling_order: [exact_variable, mechanism, category, transform]
+  pre_clipping_support_audit: true
+  heldout_boundary_voltage_targets_materialized: false
+  heldout_event_targets_materialized: false
+  heldout_frozen_h2_feature_extraction_performed: true
+  heldout_candidate_head_inference_performed: false
+  base_h2_frozen: true
+  zero_causal_control: true
+  candidate_head_training_performed: false
+  rollout_performed: false
+  full_training_authorized: false

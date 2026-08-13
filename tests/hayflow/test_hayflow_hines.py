@@ -12,6 +12,7 @@ import src.hayflow_model.hines_capacity_experiment as capacity_module
 import src.hayflow_model.hines_segment_canary_experiment as segment_canary_module
 import src.hayflow_model.hines_optimization_audit as optimization_audit_module
 import src.hayflow_model.hines_representation_forensics as representation_forensics_module
+import src.hayflow_model.hines_state_normalization_repair as normalization_repair_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -61,6 +62,83 @@ from src.hayflow_model.hines_representation_forensics import (
     local_linear_projection,
     robust_bounded_features,
 )
+from src.hayflow_model.hines_state_normalization_repair import (
+    HinesStateNormalizationRepair,
+    HinesStateNormalizationRepairConfig,
+    semantic_state_scale_repair,
+)
+
+
+def _state_record(category, mechanism, variable, owner_id):
+    return {
+        "category": category,
+        "scope": "segment",
+        "owner_id": owner_id,
+        "mechanism": mechanism,
+        "variable": variable,
+        "kind": "state",
+    }
+
+
+def test_05i_semantic_scale_repair_is_train_only_and_hierarchical():
+    records = [
+        _state_record("mechanism_states", "NaTa_t", "m", 0),
+        _state_record("mechanism_states", "NaTa_t", "m", 1),
+        _state_record("mechanism_states", "NaTa_t", "h", 0),
+        _state_record("calcium_ions", "cad", "cai", 0),
+    ]
+    original = np.asarray([1e-8, 4.0, 1e-8, 1e-8])
+    codes = np.asarray([2, 2, 2, 1], dtype=np.int8)
+    config = HinesStateNormalizationRepairConfig(
+        pooling_quantile=0.25,
+        exact_group_multiplier=0.25,
+        mechanism_group_multiplier=0.15,
+        category_group_multiplier=0.10,
+        transform_group_multiplier=0.05,
+    )
+    repaired, rows = semantic_state_scale_repair(records, codes, original, config)
+    assert repaired[0] == pytest.approx(1.0)
+    assert rows[0]["floor_source"] == "exact_train_pool"
+    assert repaired[1] == pytest.approx(4.0)
+    assert repaired[2] == pytest.approx(0.6)
+    assert rows[2]["floor_source"] == "mechanism_train_pool"
+    assert repaired[3] == pytest.approx(config.log1p_absolute_floor)
+    assert rows[3]["floor_source"] == "absolute_semantic_floor"
+
+
+def test_05i_config_rejects_posthoc_or_unbounded_contracts():
+    HinesStateNormalizationRepairConfig().validate()
+    with pytest.raises(ValueError, match="pooling_quantile"):
+        HinesStateNormalizationRepairConfig(pooling_quantile=0.0).validate()
+    with pytest.raises(ValueError, match="maximum_clipping_fraction"):
+        HinesStateNormalizationRepairConfig(maximum_clipping_fraction=1.0).validate()
+
+
+def test_05i_logit_floor_bounds_the_registered_transform_span():
+    config = HinesStateNormalizationRepairConfig()
+    transformed_span = 2.0 * np.log((1.0 - 1e-6) / 1e-6)
+    assert transformed_span / config.logit_absolute_floor < config.standardized_maximum
+
+
+def test_05i_notebook_seals_targets_heads_rollout_and_uses_browser_zip():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05i_teacher_state_normalization_repair.ipynb").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "run_coordinate_scale_repair" in source
+    assert "run_repaired_frozen_h2_audit" in source
+    assert "assert not final_report['heldout_contract']['boundary_targets_materialized']" in source
+    assert "assert not final_report['heldout_contract']['candidate_head_inference_performed']" in source
+    assert "assert not final_report['full_training_authorized']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "run_bounded_representation_controls" not in source
+    assert "run_rollout" not in source
+    assert "rglob('/kaggle" not in source
 
 
 def test_05h_notebook_keeps_heldout_targets_and_inference_sealed():

@@ -768,3 +768,34 @@ therefore 05i state-normalization repair: it must identify the exact offending
 schema coordinates and introduce semantic, transform-aware scale floors before
 any candidate head is retrained. Held-out future targets, rollout, and full
 training remain prohibited.
+
+### Notebook 05i: teacher-state normalization repair
+
+`notebooks/05i_teacher_state_normalization_repair.ipynb` implements the scoped
+repair required by 05h. It preserves the teacher state, state centers, semantic
+transforms, delta normalization, dataset, support plan, and frozen H2 weights.
+Only the scale used to encode the current teacher state is replaced. The fit is
+strictly train-only: scales with usable train variation are pooled
+hierarchically by exact `(category, mechanism, variable, transform)`, then by
+mechanism, category, and transform family. Each pool contributes a
+pre-registered fraction of its lower-quartile scale, with a final absolute
+floor determined by the semantic transform. Development and input-only
+held-out states cannot influence any fitted quantity.
+
+The notebook emits a row for every one of the 17,220 state coordinates. Each
+row records category, scope, owner/segment, mechanism, variable, transform,
+original and repaired scales, floor source and support count, plus raw,
+transformed, and pre-clipping standardized support for fit-train, audit-train,
+development, and held-out inputs. Group and top-outlier Parquet tables make the
+repair auditable rather than collapsing it into a single maximum. No clipping
+is applied to obtain the reported support metrics.
+
+After the coordinate contract is measured, the registered H2 checkpoint is
+run once with repaired state inputs and once with all causal inputs zeroed.
+H2 remains frozen. This checks both direct hidden-feature support and whether a
+state-path excursion remains without the synaptic frontend. Held-out future
+voltages and event labels are never loaded, and candidate heads are never
+trained or evaluated. Passing 05i can authorize only a separate 05j
+train/development representation recheck; it cannot authorize rollout or full
+training. A failed input contract instead requires a new, explicitly registered
+semantic scale policy and must not be patched post hoc in the same run.

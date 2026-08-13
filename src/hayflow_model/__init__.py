@@ -90,6 +90,12 @@ from .hines_representation_forensics import (
     local_linear_projection,
     robust_bounded_features,
 )
+from .hines_state_normalization_repair import (
+    EXPECTED_05H_ARCHIVE_SHA256,
+    HinesStateNormalizationRepair,
+    HinesStateNormalizationRepairConfig,
+    semantic_state_scale_repair,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -156,4 +162,8 @@ __all__ = [
     "HinesRepresentationForensicsConfig",
     "local_linear_projection",
     "robust_bounded_features",
+    "EXPECTED_05H_ARCHIVE_SHA256",
+    "HinesStateNormalizationRepair",
+    "HinesStateNormalizationRepairConfig",
+    "semantic_state_scale_repair",
 ]
