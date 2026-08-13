@@ -1,0 +1,114 @@
+{
+  "schema_version": "05j-b-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_repaired_representation_revision.zip",
+    "size_bytes": 392521,
+    "sha256": "b6356194fbc7cd061a8f401b0f7798effb61f10d729749993837769fd6d91bd8",
+    "artifact_index_sha256": "ff5811d8c2d21e08daaab754403aa8644e0ef2f0ac045f8732fc8f2b6ecedc0c",
+    "final_report_sha256": "2448943efa0264dacd04369dce98941e1791728ba0291b66b99a9f27be5fc13e",
+    "indexed_member_count": 21,
+    "verified_member_count": 21
+  },
+  "code_revision": "e8d0a43d73beb9c0379bd85e9297723db5775014",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "representation_revision_passed": false,
+  "diagnosis": "REPAIRED_FEATURE_SURFACE_FAILS_REGULARIZED_TRAIN_FIT",
+  "decision": "SEGMENT_DECODER_AND_FEATURE_TRANSFORM_REVISION_ONLY",
+  "input_and_split_contract": {
+    "normalizer_fingerprint": "35a07b7fa9433ee34146fdce13539f20e98288a733a6e2d3266b3917f08dcfe6",
+    "matches_verified_05ic_fingerprint": true,
+    "normalizer_fit_roles": ["train"],
+    "train_pair_count": 12,
+    "development_pair_count": 1,
+    "train_development_episode_overlap": [],
+    "development_used_for_model_selection": false,
+    "heldout_inputs_extracted": false,
+    "heldout_targets_materialized": false
+  },
+  "candidate_summary": [
+    {
+      "family": "h2",
+      "transform": "tanh",
+      "selected_ridge_lambda": 0.001,
+      "train_rmse_mv": 9.493844849958409,
+      "development_rmse_mv": 13.063715185912807,
+      "development_branching_retention": 0.49539859435959716,
+      "numerically_stable": true,
+      "candidate_passed": false
+    },
+    {
+      "family": "h2",
+      "transform": "asinh",
+      "selected_ridge_lambda": 0.001,
+      "train_rmse_mv": 9.45673179052476,
+      "development_rmse_mv": 12.984183564577036,
+      "development_branching_retention": 0.4970666331217179,
+      "numerically_stable": true,
+      "candidate_passed": false
+    },
+    {
+      "family": "causal",
+      "transform": "tanh",
+      "selected_ridge_lambda": 1.0,
+      "train_rmse_mv": 11.247214588257235,
+      "development_rmse_mv": 17.26586966407544,
+      "development_branching_retention": 0.23727794892396775,
+      "numerically_stable": true,
+      "candidate_passed": false
+    },
+    {
+      "family": "causal",
+      "transform": "asinh",
+      "selected_ridge_lambda": 1.0,
+      "train_rmse_mv": 11.244928243386,
+      "development_rmse_mv": 17.257465715486653,
+      "development_branching_retention": 0.2391120495672132,
+      "numerically_stable": true,
+      "candidate_passed": false
+    },
+    {
+      "family": "h2_causal",
+      "transform": "tanh",
+      "selected_ridge_lambda": 1.0,
+      "train_rmse_mv": 11.04317421514698,
+      "development_rmse_mv": 16.946821615027716,
+      "development_branching_retention": 0.24963871917526223,
+      "numerically_stable": true,
+      "candidate_passed": false
+    },
+    {
+      "family": "h2_causal",
+      "transform": "asinh",
+      "selected_ridge_lambda": 1.0,
+      "train_rmse_mv": 11.017739982749001,
+      "development_rmse_mv": 16.897210981247916,
+      "development_branching_retention": 0.2502601673857737,
+      "numerically_stable": true,
+      "candidate_passed": false
+    }
+  ],
+  "geometry_diagnosis": {
+    "h2_median_counterfactual_pair_delta_l2_tanh": 2.1717727536440883e-7,
+    "h2_median_counterfactual_pair_delta_l2_asinh": 2.799151912816607e-7,
+    "causal_median_counterfactual_pair_delta_l2": 7.629394538355427e-8,
+    "h2_design_rank_range": [22, 24],
+    "causal_median_design_rank": 3.0,
+    "interpretation": "Tail-preserving asinh does not materially repair the mapping. Stable segment-local decoders receive extremely weak local counterfactual differences and cannot represent the non-local propagation needed to match teacher futures."
+  },
+  "best_candidate": {
+    "family": "h2",
+    "transform": "asinh",
+    "train_rmse_mv": 9.45673179052476,
+    "train_maximum_segment_error_mv": 57.96875527129356,
+    "development_rmse_mv": 12.984183564577036,
+    "development_maximum_segment_error_mv": 52.67783923039278,
+    "development_branching_retention": 0.4970666331217179,
+    "maximum_regularized_condition_number": 2606384.3380258717,
+    "maximum_segment_coefficient_l2_norm": 24.174599334798703
+  },
+  "rollout_performed": false,
+  "full_training_authorized": false,
+  "next_step": "05j_c_support_and_decoder_revision"
+}

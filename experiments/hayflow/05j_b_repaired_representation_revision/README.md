@@ -1,6 +1,9 @@
 # HayFlow 05j-b - repaired representation revision
 
-Status: implementation ready; execution pending on Kaggle.
+Status: completed on Kaggle; all six regularized segment-local candidates
+failed the unchanged train/development gates. The next scoped experiment is
+`05j_c_support_and_decoder_revision`; rollout and full training remain
+prohibited.
 
 05j validly established that the repaired 05i-c numerical input contract is
 not sufficient for any of the three registered compact shared heads: all nine
@@ -44,3 +47,33 @@ separate 05j-c support/decoder revision and does not invalidate the teacher,
 dataset or successful 05i-c input-domain repair.
 
 Expected artifact: `hayflow_hines_repaired_representation_revision.zip`.
+
+## Registered result
+
+The completed run used code revision
+`e8d0a43d73beb9c0379bd85e9297723db5775014`. The downloaded archive and all
+21 indexed artifacts passed independent SHA-256 and size verification. The
+05i-c normalizer fingerprint matched exactly, the 12 train pairs and single
+development pair remained episode-disjoint, and leave-one-pair-out selected
+regularization without using development. Held-out data remained sealed.
+
+No candidate passed even the complete train-pair gate. The best candidate was
+H2 with the tail-preserving `asinh` transform: train RMSE `9.4567 mV`,
+development RMSE `12.9842 mV`, development maximum segment error `52.6778 mV`
+and branching retention `0.4971`. The corresponding `tanh` control reached
+`9.4938/13.0637 mV` train/development and retention `0.4954`. The difference
+is too small to identify saturation as the primary blocker. Causal-only and
+combined candidates were worse, with development RMSE `16.90--17.27 mV` and
+retention `0.237--0.250`.
+
+All selected ridge systems passed the registered numerical-stability gates.
+The failure is therefore not optimizer divergence or an exploding affine
+solution. Geometry is instead the important clue: the median local H2 distance
+between paired counterfactual futures was only `2.17e-7` under `tanh` and
+`2.80e-7` under `asinh`; the causal-only local distance was `7.63e-8`, and its
+median per-segment design rank was only three. A segment-local decoder cannot
+recover the teacher's large non-local change from such weak local differences.
+
+This localizes the next question to support and spatial/topological decoder
+structure. It does not invalidate the teacher, the dataset or the repaired
+05i-c numerical input domain. 05k is not authorized.

@@ -1015,3 +1015,25 @@ primary blocker. If both transform families pass, decoder sharing/capacity is
 localized instead. If train fits but development fails, the evidence points to
 support/generalization instability. A complete pass authorizes only the
 separate 05k micro-rollout, never full training; failure routes to 05j-c.
+
+The completed 05j-b run is registered in
+`experiments/hayflow/05j_b_repaired_representation_revision/result.json`. The
+archive and all 21 indexed members passed integrity verification. The exact
+05i-c normalizer fingerprint, train-only fitting, episode-disjoint development
+pair and sealed held-out contract were all preserved.
+
+All six candidates failed the unchanged gates, including on train. The best
+candidate was segment-local H2 with `asinh`: train RMSE `9.4567 mV`,
+development RMSE `12.9842 mV`, maximum development segment error `52.6778 mV`
+and branching retention `0.4971`. Its `tanh` control was nearly identical at
+`9.4938/13.0637 mV` and retention `0.4954`; therefore tail saturation is not
+the principal explanation. Causal-only and combined surfaces remained worse.
+
+Every selected ridge solution was numerically inside the preregistered
+condition-number and coefficient-norm limits. The geometry audit instead found
+median paired-future local H2 distances of only `2.17e-7` (`tanh`) and
+`2.80e-7` (`asinh`), while causal-local features reached `7.63e-8` and median
+rank three. This points to a missing non-local/spatial information path for a
+segment-local decoder, not simple optimizer instability. The scoped next step
+is `05j_c_support_and_decoder_revision`; 05k rollout and full training remain
+prohibited.
