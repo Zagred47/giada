@@ -1,0 +1,46 @@
+schema_version: "05j-d-config-v1"
+
+trainable_topology_canary:
+  fit_pair_count: 36
+  calibration_pair_count: 12
+  minimum_protocol_family_count: 6
+  families: [direct_tree, ridge_corrected_tree]
+  seeds: [17, 29, 43]
+  hidden_width: 96
+  segment_embedding_dim: 16
+  epochs: 1200
+  evaluation_interval: 20
+  patience: 240
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 5.0
+  target_residual_limit_mv: 120.0
+  target_atanh_margin: 0.000001
+  error_scale_mv: 20.0
+  branch_loss_weight: 1.0
+  tail_loss_weight: 0.25
+  tail_fraction: 0.05
+  ridge_cross_validation_folds: 6
+  ridge_lambdas: [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+  selection_max_error_weight: 0.05
+  selection_branch_log_weight: 2.0
+  minimum_passing_seeds: 2
+  material_improvement_fraction: 0.20
+
+methodology:
+  exact_05jc_artifact_verified: true
+  expanded_support_pair_count: 48
+  fit_pair_count: 36
+  internal_calibration_pair_count: 12
+  split_stratified_by_protocol_family: true
+  split_episode_disjoint: true
+  normalization_fit_role: fit_only
+  checkpoint_selection_role: internal_calibration_only
+  development_inference_after_checkpoint_freeze: true
+  development_used_for_model_selection: false
+  model_families: [direct_tree, ridge_corrected_tree]
+  robust_gate: at_least_2_of_3_seeds
+  heldout_inputs_extracted: false
+  rollout_performed: false
+  base_h2_frozen: true
+  full_training_authorized: false

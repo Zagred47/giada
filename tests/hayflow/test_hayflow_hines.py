@@ -18,6 +18,7 @@ import src.hayflow_model.hines_synaptic_domain_repair as synaptic_domain_module
 import src.hayflow_model.hines_repaired_representation_recheck as repaired_recheck_module
 import src.hayflow_model.hines_repaired_representation_revision as repaired_revision_module
 import src.hayflow_model.hines_spatial_support_revision as spatial_support_module
+import src.hayflow_model.hines_trainable_topology_canary as topology_canary_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -102,6 +103,82 @@ from src.hayflow_model.hines_spatial_support_revision import (
     deterministic_pca_components,
     region_global_context,
 )
+from src.hayflow_model.hines_trainable_topology_canary import (
+    HinesTrainableTopologyCanaryConfig,
+    TrainableTopologyResidualHead,
+    deterministic_stratified_pair_split,
+)
+
+
+def test_05jd_stratified_split_is_deterministic_complete_and_disjoint():
+    counts = [6, 5, 4, 11, 11, 11]
+    rows = [
+        {"protocol_family": f"family-{family}"}
+        for family, count in enumerate(counts)
+        for _ in range(count)
+    ]
+    first = deterministic_stratified_pair_split(rows, 12)
+    second = deterministic_stratified_pair_split(rows, 12)
+    assert first == second
+    assert len(first["fit_pair_positions"]) == 36
+    assert len(first["calibration_pair_positions"]) == 12
+    assert not set(first["fit_pair_positions"]) & set(first["calibration_pair_positions"])
+    assert sorted(first["fit_pair_positions"] + first["calibration_pair_positions"]) == list(range(48))
+    assert first["fit_family_count"] == first["calibration_family_count"] == 6
+
+
+def test_05jd_zero_initialized_heads_preserve_registered_baselines():
+    torch = pytest.importorskip("torch")
+    model = TrainableTopologyResidualHead(9, 7, 12, 3, 120.0)
+    features = torch.randn(4, 7, 9)
+    direct = model(features)
+    assert torch.count_nonzero(direct) == 0
+    baseline = torch.linspace(-90.0, 90.0, 28).reshape(4, 7)
+    corrected = model(features, baseline)
+    torch.testing.assert_close(corrected, baseline, atol=2e-5, rtol=2e-6)
+
+
+def test_05jd_config_requires_registered_partition_and_robust_seeds():
+    HinesTrainableTopologyCanaryConfig().validate()
+    with pytest.raises(ValueError, match="48-pair"):
+        HinesTrainableTopologyCanaryConfig(fit_pair_count=35).validate()
+    with pytest.raises(ValueError, match="distinct seeds"):
+        HinesTrainableTopologyCanaryConfig(seeds=(17, 17, 29)).validate()
+
+
+def test_05jd_exact_05jc_hashes_match_registered_result():
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (root / "experiments/hayflow/05j_c_spatial_support_revision/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == topology_canary_module.EXPECTED_05JC_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == topology_canary_module.EXPECTED_05JC_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == topology_canary_module.EXPECTED_05JC_FINAL_SHA256
+    assert result["diagnosis"] == "NONLOCAL_CONTEXT_HELPS_BUT_MAPPING_REMAINS_BELOW_GATE"
+
+
+def test_05jd_notebook_seals_development_heldout_and_rollout():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_d_trainable_topology_decoder_micro_canary.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "prepare_trainable_topology_canary" in source
+    assert "prepare_topology_canary_designs" in source
+    assert "fit_fixed_tree_ridge_baseline" in source
+    assert "run_trainable_topology_canary" in source
+    assert "EXPECTED_05JC_INDEX_SHA256" in source
+    assert "assert not design_report['development_used_for_checkpoint_selection']" in source
+    assert "assert not canary_report['development_used_for_checkpoint_selection']" in source
+    assert "assert not final_report['heldout_contract']['inputs_extracted']" in source
+    assert "assert not final_report['methodology']['rollout_performed']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "run_rollout" not in source
+    assert "rglob('/kaggle" not in source
 
 
 def test_05jc_tree_diffusion_preserves_constants_and_spreads_delta():

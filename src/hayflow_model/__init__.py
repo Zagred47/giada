@@ -135,6 +135,13 @@ from .hines_spatial_support_revision import (
     deterministic_pca_components,
     region_global_context,
 )
+from .hines_trainable_topology_canary import (
+    EXPECTED_05JC_ARCHIVE_SHA256,
+    HinesTrainableTopologyCanary,
+    HinesTrainableTopologyCanaryConfig,
+    TrainableTopologyResidualHead,
+    deterministic_stratified_pair_split,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -234,4 +241,9 @@ __all__ = [
     "deterministic_pair_folds",
     "deterministic_pca_components",
     "region_global_context",
+    "EXPECTED_05JC_ARCHIVE_SHA256",
+    "HinesTrainableTopologyCanary",
+    "HinesTrainableTopologyCanaryConfig",
+    "TrainableTopologyResidualHead",
+    "deterministic_stratified_pair_split",
 ]

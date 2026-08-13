@@ -1091,3 +1091,27 @@ pairs passed jointly. The tree-plus-global variant reached `2.6397 mV` and
 sufficient. It authorizes only
 `05j_d_trainable_topology_decoder_micro_canary`, using the expanded support and
 fixed tree context. 05k rollout and full training remain prohibited.
+
+### Notebook 05j-d: trainable topology decoder micro-canary
+
+`notebooks/05j_d_trainable_topology_decoder_micro_canary.ipynb` implements the
+narrow follow-up authorized by 05j-c. It verifies the exact registered 05j-c
+artifact, reconstructs the same 48 train-only pairs and makes a deterministic,
+family-stratified, episode-disjoint split into 36 fit pairs and 12 internal
+calibration pairs. The verified 05i-c synaptic normalizer remains frozen, while
+every newly introduced topology-design normalizer and PCA sketch is fit on the
+36 fit pairs only.
+
+The notebook freezes the multiscale axial-tree representation and first fits a
+grouped-CV ridge reference without using calibration or development for ridge
+selection. It then compares two small nonlinear shared decoders over three
+seeds: a direct bounded topology head and a bounded correction initialized
+exactly at the ridge prediction. Their loss combines pointwise voltage,
+paired-future differences and a worst-segment tail term.
+
+Only the internal-calibration subset selects an epoch. Development inference
+occurs after each checkpoint is frozen and cannot affect model selection. A
+family must pass the unchanged pairwise RMSE, maximum-error and branching gates
+on fit, calibration and development for at least two of three seeds. Even a
+robust pass authorizes only a separate 05k micro-rollout. Held-out inputs,
+rollout and full training remain sealed.
