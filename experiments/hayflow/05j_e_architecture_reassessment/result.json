@@ -1,0 +1,95 @@
+{
+  "schema_version": "05j-e-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_architecture_reassessment.zip",
+    "size_bytes": 415894,
+    "sha256": "baa35dd2eb605c0b74a3f0b98bd2d80118ea81fa95ce6823b7b2b63df82bb82f",
+    "artifact_index_sha256": "c35c23a9920e27926a78dd0485b4f1624370ed172b2af2b00b4b28c268bc2115",
+    "final_report_sha256": "76b917bed38c88e7bab29c6b14b7737bae54c8a3bdfdd130e3780df806ec7a3f",
+    "indexed_member_count": 31,
+    "verified_member_count": 31
+  },
+  "code_revision": "20423ba709d29b784e5e88d7eb789bef660adf06",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "diagnosis": "LOCALIZED_MORPHOLOGY_REGIME_ERROR_DOMINATES",
+  "decision": "FROZEN_CHECKPOINT_ARCHITECTURE_REASSESSMENT",
+  "checkpoint_reconstruction": {
+    "run_count": 6,
+    "valid_run_count": 6,
+    "maximum_registered_metric_error": 0.00008296966552734375,
+    "metric_tolerance": 0.0001,
+    "retraining_performed": false
+  },
+  "direct_tree_ensemble": {
+    "fit_rmse_mv": 1.742700615226225,
+    "calibration_rmse_mv": 1.5556663885047202,
+    "development_rmse_mv": 2.9953064994523704,
+    "development_maximum_segment_error_mv": 18.70104217529297,
+    "development_branching_retention": 0.9942625514432453,
+    "development_seed_disagreement_rmse_mv": 0.8367910705789638,
+    "development_disagreement_to_error_ratio": 0.2793674272505848
+  },
+  "error_localization": {
+    "top_segment_fraction": 0.10,
+    "top_segment_error_energy_fraction": {
+      "fit": 0.6389614506005288,
+      "calibration": 0.5672743891216395,
+      "development": 0.7339907792001883
+    },
+    "development_high_frequency_error_energy_fraction": 0.011819452393153036,
+    "development_region_summary": [
+      {
+        "region": "other",
+        "segment_count": 163,
+        "rmse_mv": 4.810677,
+        "maximum_absolute_error_mv": 18.701042,
+        "error_energy_fraction": 0.654911
+      },
+      {
+        "region": "apical_trunk",
+        "segment_count": 21,
+        "rmse_mv": 7.134127,
+        "maximum_absolute_error_mv": 17.670281,
+        "error_energy_fraction": 0.185560
+      },
+      {
+        "region": "basal",
+        "segment_count": 262,
+        "rmse_mv": 1.799353,
+        "maximum_absolute_error_mv": 8.568973,
+        "error_energy_fraction": 0.147271
+      },
+      {
+        "region": "tuft",
+        "segment_count": 192,
+        "rmse_mv": 0.572793,
+        "maximum_absolute_error_mv": 2.990743,
+        "error_energy_fraction": 0.010937
+      }
+    ],
+    "dominant_segment_ids": [274, 273, 272, 305, 560, 306, 292, 561, 275, 293],
+    "development_protocol_family": "targeted_bap_soma_only|adaptive_hard_negative <> targeted_calcium|adaptive_hard_negative",
+    "development_regenerative_regime": true
+  },
+  "alternative_explanations": {
+    "static_affine_repair_material": false,
+    "affine_calibration_rmse_improvement_fraction": 0.01026960189055049,
+    "affine_development_rmse_improvement_fraction": 0.009012091905900957,
+    "affine_development_maximum_error_improvement_fraction": -0.06914036821939497,
+    "large_branch_feature_collisions": false,
+    "large_target_collision_count_fit": 0,
+    "large_target_collision_count_calibration": 0,
+    "large_target_collision_count_development": 0,
+    "prediction_target_branch_correlation_calibration": 0.9845781155264419,
+    "prediction_target_branch_correlation_development": 0.984034828011995,
+    "high_frequency_error_dominant": false,
+    "systematic_seed_consensus_under_registered_threshold": false
+  },
+  "interpretation": "The decoder preserves paired-future branching but loses absolute voltage accuracy in a spatially concentrated regenerative BAP/calcium regime, chiefly in apical-trunk and adjacent segments. The failure is not explained by simple per-segment gain/offset bias, representational collisions in the registered tree features, or morphology-high-frequency noise.",
+  "canary_passed": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "next_step": "05j_f_region_mechanism_expert_revision"
+}

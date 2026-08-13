@@ -1154,3 +1154,27 @@ branch separation to detect remaining representational collisions.
 The resulting causal diagnosis selects the narrow 05j-f branch. Development
 is diagnostic only and fits no transform or checkpoint. Held-out data, rollout,
 05k and full training remain sealed.
+
+The completed 05j-e run is registered in
+`experiments/hayflow/05j_e_architecture_reassessment/result.json`. All six
+frozen checkpoints reproduced their 05j-d metrics within `1e-4`, and all 31
+indexed artifact members passed integrity verification.
+
+The dominant failure is spatially localized and tied to a regenerative mixed
+BAP/calcium regime. The top 10% of segments account for `73.40%` of development
+error energy, led by segments 274, 273, 272, 305, 560 and nearby segments.
+`other` and `apical_trunk` contribute `65.49%` and `18.56%` of that energy,
+whereas tuft RMSE is only `0.5728 mV`. Branching retention remains `0.9943`, so
+the model distinguishes the paired futures while missing their absolute local
+voltage in the affected morphology.
+
+Simple alternatives were ruled out. A fit-only per-segment affine oracle
+improves diagnostic RMSE by only about 1% and worsens maximum errors. No large
+teacher branch separation appears among nearly identical feature pairs, and
+predicted-versus-teacher branch amplitudes correlate above `0.984`. The error
+is also spatially smooth rather than a high-frequency morphology artifact.
+
+The registered next step is therefore
+`05j_f_region_mechanism_expert_revision`: a scoped region/mechanism expert
+revision aimed at regenerative trunk and adjacent compartments. This does not
+authorize 05k rollout or full training.
