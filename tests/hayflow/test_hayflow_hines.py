@@ -120,6 +120,36 @@ def test_05i_logit_floor_bounds_the_registered_transform_span():
     assert transformed_span / config.logit_absolute_floor < config.standardized_maximum
 
 
+def test_05i_experimental_record_localizes_netcon_timestamp_semantics():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (
+            root
+            / "experiments/hayflow/05i_teacher_state_normalization_repair/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert record["status"] == "complete"
+    assert record["diagnosis"] == "STATE_NORMALIZATION_REPAIR_INSUFFICIENT"
+    assert record["artifact"]["sha256"] == (
+        "76f94225937e8946c3142753604b0d6eb6c30771dba5d64970099dff83952943"
+    )
+    assert record["artifact_integrity"]["all_indexed_members_verified"]
+    assert record["coordinate_scale_repair"]["heldout_improvement_factor"] > 6_000_000
+    assert record["coordinate_scale_repair"][
+        "coordinate_count_above_standardized_maximum_on_heldout"
+    ] == 2
+    assert record["residual_outlier_diagnosis"]["primary_cause"] == (
+        "NETCON_SLOT_SEMANTICS_COLLAPSED_BY_RAW_WEIGHT_INDEX"
+    )
+    assert all(
+        row["semantic_variable"] == "ProbUDFsyn2.tsyn"
+        for row in record["residual_outlier_diagnosis"]["failing_coordinates"]
+    )
+    assert record["repaired_frozen_h2_audit"]["input_contract_passed"]
+    assert not record["interpretation"]["candidate_head_recheck_authorized"]
+    assert not record["next_step"]["full_training_authorized"]
+
+
 def test_05i_notebook_seals_targets_heads_rollout_and_uses_browser_zip():
     root = Path(__file__).resolve().parents[2]
     notebook = json.loads(

@@ -1,0 +1,187 @@
+{
+  "schema_version": "hayflow-experiment-record-v1",
+  "experiment_id": "05i_teacher_state_normalization_repair",
+  "executed_at_local": "2026-08-13",
+  "status": "complete",
+  "decision": "INPUT_CONTRACT_ONLY_NO_HEAD_TRAINING",
+  "diagnosis": "STATE_NORMALIZATION_REPAIR_INSUFFICIENT",
+  "artifact": {
+    "filename": "hayflow_hines_state_normalization_repair.zip",
+    "size_bytes": 2023500,
+    "sha256": "76f94225937e8946c3142753604b0d6eb6c30771dba5d64970099dff83952943",
+    "committed_to_git": false,
+    "retention": "external binary artifact retained by the experiment operator"
+  },
+  "artifact_integrity": {
+    "artifact_index_size_bytes": 2976,
+    "artifact_index_sha256": "d0c3023f734b219302571b34bbb31e687677b94a8ddccc21db67b13789623780",
+    "indexed_artifact_count": 17,
+    "all_indexed_sizes_verified": true,
+    "all_indexed_members_verified": true,
+    "key_members": {
+      "coordinate_scale_repair.json": "763161ead7033566f87823e7b308a0716d03b2618f44bba64f4e52a870790e76",
+      "repaired_frozen_h2_audit.json": "662e8531b0b46b15b24be8cc0b5db04256e8440e401527eeda44d197bb453e92",
+      "repaired_normalization_schema.json": "75ec4b9eb2a5deba60f4dd21f012e6942a198975f91ab376e70072b06a1735bb",
+      "state_coordinate_scale_audit.parquet": "3e9db4fa4c3855d21824964605bde42810afca20acc71d8a270f0de561f712cb",
+      "state_scale_group_audit.parquet": "26d1917076361d11c31b775bf2e7a5683429c911cf8f03f79518a8f3d03dde68",
+      "state_scale_top_outliers.parquet": "348753c7c21c626d90205ae76cb303a323c0d7af26805bafe2dbf2228588c8ff",
+      "state_normalization_repair.png": "2e70e547e29430396672dba183e66659cdede9110064c2b9dfbdf5698f2a981a",
+      "final_report.json": "15912aa1e503f63bfc4d073d8f6c7e6deb63f68130af8298b9cd09bc9feec792"
+    }
+  },
+  "provenance": {
+    "implementation_commit": "acedcea93e01c2c5092f0970894ae9c9fa07e5c2",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "repaired_normalizer_fingerprint": "69bc92e61e595f91abe6fcf2b6b869a75f715793d56fe6ff617da6b92db80574",
+    "artifact_05h_verified": true
+  },
+  "heldout_contract": {
+    "boundary_targets_materialized": false,
+    "event_targets_materialized": false,
+    "frozen_h2_feature_extraction_performed": true,
+    "candidate_head_inference_performed": false,
+    "reveal_authorized": false,
+    "leakage_detected": false
+  },
+  "coordinate_scale_repair": {
+    "state_input_contract_passed": false,
+    "state_width": 17220,
+    "original_minimum_scale_count": 11888,
+    "lifted_coordinate_count": 12507,
+    "minimum_original_scale": 1e-08,
+    "minimum_repaired_scale": 0.0001,
+    "heldout_improvement_factor": 6126613.396678415,
+    "thresholds": {
+      "standardized_maximum": 100.0,
+      "clipping_threshold": 8.0,
+      "maximum_global_clipping_fraction": 0.01
+    },
+    "role_metrics": {
+      "fit_train": {
+        "transition_count": 864,
+        "original_maximum_absolute_standardized": 8.950339290812042,
+        "repaired_maximum_absolute_standardized": 7.618659294511503,
+        "repaired_global_clipping_fraction": 0.0
+      },
+      "audit_train": {
+        "transition_count": 24,
+        "original_maximum_absolute_standardized": 8.129620001135548,
+        "repaired_maximum_absolute_standardized": 8.129620001135548,
+        "repaired_global_clipping_fraction": 9.678668215253581e-06
+      },
+      "development": {
+        "transition_count": 2,
+        "original_maximum_absolute_standardized": 4.889834355949453,
+        "repaired_maximum_absolute_standardized": 4.889834355949453,
+        "repaired_global_clipping_fraction": 0.0
+      },
+      "heldout_input": {
+        "transition_count": 4,
+        "original_maximum_absolute_standardized": 696757958.0627803,
+        "repaired_maximum_absolute_standardized": 113.72644444001187,
+        "repaired_global_clipping_fraction": 0.0008130081300813008
+      }
+    },
+    "nonfinite_count_all_roles": 0,
+    "coordinate_count_above_standardized_maximum_on_heldout": 2,
+    "coordinate_count_above_clipping_threshold_on_heldout": 28,
+    "failed_categories": [
+      "synapse_states"
+    ]
+  },
+  "residual_outlier_diagnosis": {
+    "primary_cause": "NETCON_SLOT_SEMANTICS_COLLAPSED_BY_RAW_WEIGHT_INDEX",
+    "failing_coordinate_count": 2,
+    "failing_coordinates": [
+      {
+        "state_index": 13139,
+        "synapse_id": 767,
+        "segment_id": 384,
+        "region": "tuft",
+        "stored_variable": "NetCon.weight[4]",
+        "semantic_variable": "ProbUDFsyn2.tsyn",
+        "heldout_raw_maximum_ms": 1060.65,
+        "current_transform": "log1p_nonnegative",
+        "current_repaired_scale": 0.061266,
+        "heldout_maximum_absolute_standardized": 113.72644444001187
+      },
+      {
+        "state_index": 14067,
+        "synapse_id": 883,
+        "segment_id": 442,
+        "region": "tuft",
+        "stored_variable": "NetCon.weight[4]",
+        "semantic_variable": "ProbUDFsyn2.tsyn",
+        "heldout_raw_maximum_ms": 1060.65,
+        "current_transform": "log1p_nonnegative",
+        "current_repaired_scale": 0.061266,
+        "heldout_maximum_absolute_standardized": 113.72644444001187
+      }
+    ],
+    "known_layouts": {
+      "ProbAMPANMDA2": {
+        "weight[1]": "weight_AMPA",
+        "weight[2]": "weight_NMDA",
+        "weight[3]": "Pv",
+        "weight[4]": "Pr",
+        "weight[5]": "u",
+        "weight[6]": "tsyn"
+      },
+      "ProbUDFsyn2": {
+        "weight[1]": "Pv",
+        "weight[2]": "Pr",
+        "weight[3]": "u",
+        "weight[4]": "tsyn"
+      }
+    },
+    "interpretation": "The raw variable label weight[4] combines Pr for excitatory ProbAMPANMDA2 synapses with the absolute last-event timestamp tsyn for inhibitory ProbUDFsyn2 synapses. Pooling by raw index therefore mixes different physical variables. The remaining miss is a semantic encoding defect, not evidence that the repaired H2 representation is unstable.",
+    "threshold_relaxation_justified": false,
+    "global_multiplier_only_fix_recommended": false
+  },
+  "repaired_frozen_h2_audit": {
+    "input_contract_passed": true,
+    "heldout_h2": {
+      "raw_max_norm_to_train_ratio": 0.3314060075375764,
+      "maximum_absolute_train_standardized": 18.858619376434124,
+      "clipping_fraction_at_8": 0.001131717289719626,
+      "nonfinite_count": 0
+    },
+    "heldout_zero_causal_h2": {
+      "raw_max_norm_to_train_ratio": 0.698167546000324,
+      "maximum_absolute_train_standardized": 14.087853844270635,
+      "clipping_fraction_at_8": 0.000300168743509865,
+      "nonfinite_count": 0
+    },
+    "heldout_physical_voltage_maximum_mv": {
+      "state": 82.02203369140625,
+      "h2_boundary": 83.49256896972656,
+      "zero_causal_boundary": 83.49256896972656
+    },
+    "interpretation": "The six-million-fold state-scale improvement is sufficient to remove the catastrophic hidden H2 OOD excursion. Both authentic-causal and zero-causal frozen-H2 input contracts pass without target access."
+  },
+  "interpretation": {
+    "initial_semantic_pooling_effective": true,
+    "catastrophic_state_ood_removed": true,
+    "absolute_state_gate_passed": false,
+    "frozen_h2_input_gate_passed": true,
+    "failure_is_narrow_and_semantically_localized": true,
+    "candidate_head_recheck_authorized": false,
+    "rollout_authorized": false,
+    "full_training_authorized": false
+  },
+  "next_step": {
+    "experiment": "05i_b_netcon_semantic_state_repair",
+    "requires_new_notebook": true,
+    "full_training_authorized": false,
+    "requirements": [
+      "decode every NetCon weight slot using the point-process-specific KNOWN_NET_RECEIVE_STATE_LAYOUT instead of the raw weight[index] label",
+      "encode Pv, Pr, and u as bounded probabilities and keep AMPA/NMDA amplitude weights as nonnegative magnitudes",
+      "replace absolute tsyn input with a causal boundary-relative representation such as last-event age or registered kinetic recovery factors, retaining a documented reversible path when exact teacher restore is required",
+      "derive boundary-relative inputs without changing the raw teacher snapshot or using future information",
+      "keep the 05i thresholds unchanged; do not obtain a pass by relaxing the |z|=100 gate or by a global multiplier-only patch",
+      "repeat coordinate-level train, development, and input-only heldout support audits",
+      "rerun frozen H2 with authentic and zeroed causal inputs only after the semantic state contract passes",
+      "keep heldout future voltages and event labels sealed and perform no candidate-head training or rollout"
+    ]
+  }
+}

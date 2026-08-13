@@ -799,3 +799,32 @@ trained or evaluated. Passing 05i can authorize only a separate 05j
 train/development representation recheck; it cannot authorize rollout or full
 training. A failed input contract instead requires a new, explicitly registered
 semantic scale policy and must not be patched post hoc in the same run.
+
+The completed 05i run is registered in
+`experiments/hayflow/05i_teacher_state_normalization_repair/result.json`. Its
+archive and all 17 indexed members passed hash and size verification. The
+train-only repair lifted 12,507 coordinates and reduced the held-out maximum
+standardized teacher-state value from about `6.97e8` to `113.73`, a factor of
+about `6.13e6`. No raw, transformed, or standardized value was nonfinite. The
+global held-out fraction above `|z|=8` fell to `0.0813%`, below the registered
+`1%` gate, but the absolute `|z| <= 100` gate still failed.
+
+The remaining failure is narrow and semantically localized. Exactly two
+coordinates exceed 100: `NetCon.weight[4]` for inhibitory `ProbUDFsyn2`
+synapses 767 and 883, both carrying the absolute last-event timestamp `tsyn`.
+The raw label `weight[4]` is ambiguous: in `ProbAMPANMDA2` it denotes the
+bounded release probability `Pr`, while in `ProbUDFsyn2` it denotes `tsyn` in
+milliseconds. The first repair pooled these physically different variables by
+raw slot name. Raising the pooling multiplier or relaxing the threshold would
+hide this schema defect rather than repair it.
+
+Importantly, the repaired frozen-H2 contract already passes. The held-out/train
+maximum-norm ratio is 0.331 with authentic causal input and 0.698 with causal
+input zeroed; maximum train-standardized held-out features are 18.86 and 14.09
+respectively, with no nonfinite values and bounded physical voltages. The
+catastrophic H2 OOD excursion identified in 05h is therefore removed. The next
+authorized activity is a separate 05i-b semantic NetCon repair: decode slots by
+point-process class and represent `tsyn` causally relative to the current
+boundary time (or through registered recovery variables). The raw teacher
+snapshot must remain unchanged, thresholds must remain fixed, and no head
+training or rollout is authorized yet.
