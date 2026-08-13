@@ -1,0 +1,156 @@
+{
+  "schema_version": "hayflow-experiment-record-v1",
+  "experiment_id": "05h_hayflow_hines_representation_forensics",
+  "executed_at_local": "2026-08-13T11:41:37+02:00",
+  "status": "complete",
+  "decision": "DIAGNOSTIC_ONLY_NO_FULL_TRAINING",
+  "diagnosis": "FROZEN_H2_HELDOUT_INPUT_OOD",
+  "representation_diagnosis": "BOUNDED_REPRESENTATION_CONTROLS_FAIL_TRAIN_OR_DEVELOPMENT",
+  "artifact": {
+    "filename": "hayflow_hines_representation_forensics.zip",
+    "size_bytes": 1063495,
+    "sha256": "a471b49740154239821de9f9f71096e78bfcd1a9866026500615bae6b6c9524d",
+    "committed_to_git": false,
+    "retention": "external binary artifact retained by the experiment operator"
+  },
+  "artifact_integrity": {
+    "artifact_index_size_bytes": 6159,
+    "artifact_index_sha256": "ceefd6faf219ea8d09d77bce3e596f5c23975e1a1165e9c95beb2dd966e3e538",
+    "indexed_artifact_count": 36,
+    "all_indexed_sizes_verified": true,
+    "all_indexed_members_verified": true,
+    "key_members": {
+      "representation_forensics_config.json": "502342fa09824491d9682e5233983b1ec0be077dbfb86f3a6e778c2c8ed411cf",
+      "raw_scale_forensics.json": "f630bcbc661656f8352d048a5c72cea0377d73263ee5edcb0624450d5a6e847a",
+      "raw_scale_outliers.parquet": "1691bd5fa9e3c581ad06e1f7427d4d3bab88745634a37c00d021d0544f10f19b",
+      "raw_scale_group_metrics.parquet": "2027cdc568d4888b038dcc93a730dbb57f0a6e9ac809050379c6a330ade6fe83",
+      "projection_forensics.json": "f3ba5586ef91adada564f8e62836d606602f9efab194a2c14552ec15d3ffb8c9",
+      "projection_by_segment.parquet": "d7c2ed6ae815de8840d1b22bd73a08aabe76043d0b019340a66b0b95c264baf4",
+      "bounded_representation_controls.json": "fbbb7e4a97b222ea5da61db974af292b231faf76eef29d1ddcd7e54324389d80",
+      "bounded_representation_summary.parquet": "0fe87d18af6b77fb3f84aa75268aea717a19f6a41964b467fc9c2cf35aa679c7",
+      "representation_forensics.png": "0b2b48d2d6e3545f1985f9060ff2ff2e05f073c02c20223e52f813630bd1bd1d",
+      "final_report.json": "b41c32a3836152054bba1ab45bc59e642af029653f841aee7630663dffa75c2d"
+    }
+  },
+  "provenance": {
+    "implementation_commit": "d18a75821d46fee30c2ea1b6f6733f2520efcf07",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "optimization_support_sha256": "cbf3753657a0edd98ca55830821018fdf00c4ed2cd5b0292953e6168828fc6ea",
+    "registered_05g_support_reused_exactly": true
+  },
+  "heldout_contract": {
+    "boundary_targets_materialized": false,
+    "event_targets_materialized": false,
+    "frozen_h2_feature_extraction_performed": true,
+    "candidate_head_inference_performed": false,
+    "reveal_authorized": false,
+    "leakage_detected": false
+  },
+  "raw_scale_forensics": {
+    "raw_heldout_ood_blocker": true,
+    "inferred_anomaly_origin": "NORMALIZED_TEACHER_STATE_OOD",
+    "normalized_teacher_state_max_absolute": {
+      "train": 8.129619598388672,
+      "development": 4.889834403991699,
+      "heldout": 696757952.0
+    },
+    "normalized_teacher_state_heldout_to_train_max_ratio": 85706095.29357323,
+    "h2_raw_heldout_to_train_max_norm_ratio": 29171.67016749416,
+    "zero_causal_h2_heldout_to_train_max_norm_ratio": 3008648.8231095537,
+    "causal_raw_heldout_to_train_max_norm_ratio": 0.6838048622116039,
+    "heldout_h2_maximum_absolute_standardized_feature": 27554840.904824972,
+    "heldout_h2_clipping_fraction_at_8": 0.004246982087227414,
+    "heldout_zero_causal_h2_maximum_absolute_standardized_feature": 111319586.98048256,
+    "heldout_zero_causal_h2_clipping_fraction_at_8": 0.003301856178608515,
+    "normalizer_posthoc_audit": {
+      "state_width": 17220,
+      "minimum_state_scale": 1e-8,
+      "variable_count_at_minimum_scale": 11888,
+      "sparse_variable_count": 12080,
+      "interpretation": "The train-fitted normalizer assigns its minimum scale to most state variables because they are constant in the normalization sample. Counterfactual held-out states activate some of those coordinates, creating normalized values of order 1e8 before H2."
+    },
+    "causal_frontend_is_primary_ood_source": false,
+    "zero_causal_control_preserves_ood": true,
+    "h2_boundary_voltage_remains_numerically_bounded": true,
+    "interpretation": "The OOD excursion precedes the causal frontend and candidate heads. It originates in the normalized full teacher state and is then amplified in hidden H2 features."
+  },
+  "linear_projection_forensics": {
+    "input_surface": "unclipped train-standardized frozen H2",
+    "sample_count": 24,
+    "feature_count": 96,
+    "minimum_local_design_rank": 20,
+    "maximum_local_design_rank": 24,
+    "aggregate_voltage_rmse_mv": 0.0025728868059502956,
+    "maximum_segment_error_mv": 0.22024345398634892,
+    "median_branching_retention": 1.000000000008217,
+    "all_train_pairs_passed": true,
+    "median_design_condition_number": 94384830.0,
+    "maximum_design_condition_number": 4488008911.947306,
+    "median_coefficient_l2_norm": 66543530.0,
+    "maximum_coefficient_l2_norm": 831049144.5956829,
+    "segment_count_with_projection_rmse_above_1mv": 0,
+    "worst_segment": {
+      "segment_id": 0,
+      "region": "soma",
+      "projection_rmse_mv": 0.06519108269571851,
+      "projection_max_error_mv": 0.22024345398634892,
+      "design_rank": 20,
+      "condition_number": 4488008911.947306
+    },
+    "interpretation": "An unconstrained per-segment linear interpolant can memorize the 24 train transitions, so the frozen H2 surface contains train-discriminating directions. However, the design is underdetermined and extremely ill-conditioned, requiring coefficient norms up to 8.31e8. This is not evidence of a safe or generalizable representation and explains the 05g ridge safety-versus-fit tradeoff."
+  },
+  "bounded_nonlinear_controls": {
+    "valid": true,
+    "families": ["h2", "causal", "h2_causal"],
+    "seeds": [17, 29, 43],
+    "epochs_maximum": 800,
+    "train_passing_run_count": 0,
+    "development_passing_run_count": 0,
+    "summary": {
+      "h2": {
+        "parameter_count": 16657,
+        "median_train_rmse_mv": 10.851746541645483,
+        "median_development_rmse_mv": 16.038569143599357
+      },
+      "causal": {
+        "parameter_count": 13393,
+        "median_train_rmse_mv": 11.291841934921862,
+        "median_development_rmse_mv": 16.81670323086153
+      },
+      "h2_causal": {
+        "parameter_count": 19537,
+        "median_train_rmse_mv": 10.819929974056594,
+        "median_development_rmse_mv": 15.581713864682387
+      }
+    },
+    "target_residual_bound_valid": true,
+    "maximum_absolute_train_target_residual_mv": 100.1289234161377,
+    "maximum_absolute_development_target_residual_mv": 99.76068687438965,
+    "interpretation": "All compact bounded shared heads fail both the absolute train and development gates. H2 plus causal inputs is marginally best on development but remains about 15.6 mV RMSE, so the difference is not a pass or evidence for full training."
+  },
+  "interpretation": {
+    "05g_absence_of_linear_direction_hypothesis_rejected": true,
+    "05g_regularization_conditioning_tradeoff_confirmed": true,
+    "safe_compact_shared_head_demonstrated": false,
+    "heldout_generalization_tested": false,
+    "architecture_family_proven_impossible": false,
+    "normalization_contract_is_primary_blocker": true,
+    "result_is_decision_grade_for_05h_contract": true,
+    "scope": "The result establishes a normalization-induced held-out input OOD failure and the failure of the registered compact bounded train/development controls. It does not reject HayFlow after a semantically correct state normalization repair."
+  },
+  "next_step": {
+    "experiment": "05i_teacher_state_normalization_repair",
+    "full_training_authorized": false,
+    "requires_new_notebook": true,
+    "requirements": [
+      "identify the exact state-schema coordinates producing the order-1e8 normalized values, including mechanism, variable, segment, category, transform, and sparse status",
+      "replace data-dependent 1e-8 scales for constant or sparse variables with semantic or transform-aware floors without modifying the teacher state",
+      "fit normalization only on train but validate raw and transformed support on train, development, and input-only held-out views",
+      "require zero nonfinite values, bounded pre-clipping standardized magnitudes, and declared clipping fractions by state category and mechanism",
+      "rerun the frozen H2 and zero-causal feature audit after normalization repair",
+      "do not retrain candidate heads until the repaired input contract passes",
+      "keep held-out future voltages and event labels sealed",
+      "do not perform rollout or full training"
+    ]
+  }
+}

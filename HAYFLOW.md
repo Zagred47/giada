@@ -729,3 +729,42 @@ never updated. Regardless of the result, 05h cannot reveal held-out targets,
 perform rollout, or authorize full training. A raw held-out OOD finding takes
 precedence over apparent train/development success and requires a separate
 scale-repair experiment.
+
+The completed 05h run is registered in
+`experiments/hayflow/05h_hayflow_hines_representation_forensics/result.json`.
+Its artifact and all 36 indexed members passed hash and size verification. The
+input-only held-out contract also held: future boundary voltages and event
+labels were never materialized, and the fitted candidate heads were never run
+on held-out examples.
+
+The dominant OOD source was localized to the normalized full teacher state,
+not to the causal synaptic frontend. The maximum normalized teacher-state value
+was 8.13 on train, 4.89 on development, and about 6.97e8 on held-out input
+states. The causal-input maximum norm was actually smaller on held-out than on
+train (ratio 0.684), whereas H2 features still diverged when all causal inputs
+were zeroed (maximum-norm ratio about 3.01e6). A post-hoc audit of the saved
+normalizer found that 11,888 of 17,220 coordinates had been assigned the
+minimum scale 1e-8 because they were constant in the train normalization
+sample. Counterfactual held-out states activate some of those coordinates,
+creating the order-1e8 transformed values before H2. The physical boundary
+voltage remained bounded, but the internal H2 surface did not.
+
+The train-only unrestricted projection oracle also refines the 05g diagnosis.
+It interpolated all 12 pairs at 0.00257 mV aggregate RMSE with maximum error
+0.220 mV and branching retention approximately 1.0. Thus a linear direction is
+present on the 24 train transitions. The fit is not usable evidence of
+generalization: local ranks are only 20--24 for 96 features, median condition
+number is about 9.44e7, the maximum is 4.49e9, and coefficient norms reach
+8.31e8. The 05g result is therefore a regularization-versus-ill-conditioning
+tradeoff, rather than proof that frozen H2 contains no train-discriminating
+direction.
+
+None of the nine bounded nonlinear controls passed train or development. The
+median train/development RMSE values were respectively 10.85/16.04 mV for H2,
+11.29/16.82 mV for causal-only, and 10.82/15.58 mV for H2 plus causal inputs.
+The small improvement of the combined input remains far outside the absolute
+gates and does not authorize a larger training run. The next experiment is
+therefore 05i state-normalization repair: it must identify the exact offending
+schema coordinates and introduce semantic, transform-aware scale floors before
+any candidate head is retrained. Held-out future targets, rollout, and full
+training remain prohibited.

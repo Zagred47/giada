@@ -84,6 +84,35 @@ def test_05h_notebook_keeps_heldout_targets_and_inference_sealed():
     assert "rglob('/kaggle" not in source
 
 
+def test_05h_experimental_record_prioritizes_normalization_repair():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (
+            root
+            / "experiments/hayflow/05h_hayflow_hines_representation_forensics/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert record["status"] == "complete"
+    assert record["diagnosis"] == "FROZEN_H2_HELDOUT_INPUT_OOD"
+    assert record["artifact"]["sha256"] == (
+        "a471b49740154239821de9f9f71096e78bfcd1a9866026500615bae6b6c9524d"
+    )
+    assert record["artifact_integrity"]["all_indexed_members_verified"]
+    assert not record["heldout_contract"]["boundary_targets_materialized"]
+    assert not record["heldout_contract"]["event_targets_materialized"]
+    assert not record["heldout_contract"]["candidate_head_inference_performed"]
+    assert record["raw_scale_forensics"][
+        "normalized_teacher_state_heldout_to_train_max_ratio"
+    ] > 85_000_000
+    assert record["raw_scale_forensics"]["normalizer_posthoc_audit"][
+        "variable_count_at_minimum_scale"
+    ] == 11888
+    assert record["linear_projection_forensics"]["all_train_pairs_passed"]
+    assert record["bounded_nonlinear_controls"]["train_passing_run_count"] == 0
+    assert record["interpretation"]["normalization_contract_is_primary_blocker"]
+    assert not record["next_step"]["full_training_authorized"]
+
+
 def test_05h_config_accepts_registered_controls_and_rejects_missing_family():
     HinesRepresentationForensicsConfig().validate()
     with pytest.raises(ValueError, match="h2, causal, and h2_causal"):
