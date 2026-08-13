@@ -935,3 +935,27 @@ Held-out future targets, candidate heads and rollout remained sealed.
 `05j_repaired_representation_train_development_recheck`. It does not authorize
 full training directly: 05j must recheck the repaired representation using
 train/development only before any candidate-head path is reopened.
+
+### Notebook 05j: repaired representation train/development recheck
+
+`notebooks/05j_repaired_representation_train_development_recheck.ipynb`
+reopens only the compact diagnostic head path after the complete 05i-c input
+contract pass. The exact 12 counterfactual train pairs and the separate single
+development pair registered in 05g are reused, with episode-disjointness
+checked again. The repaired 05i-c normalizer is reconstructed solely from its
+train-only rules and must reproduce the fingerprint contained in the exact
+verified 05i-c artifact.
+
+05j deliberately does not extract held-out inputs at all. It materializes
+voltage targets only for train and development and does not request event
+targets. Frozen-H2, causal-only and combined H2-plus-causal bounded heads use
+the same architecture, seeds and pair gates as the original 05h controls.
+Heads train on train only; development selects the checkpoint. A feature
+family is considered robust only if at least two of the three registered seeds
+pass both roles. The unrestricted local projection remains a train-only
+diagnostic rather than a deployable candidate.
+
+Passing 05j can authorize only a separate 05k repaired-representation
+micro-rollout. It cannot authorize full training, test evaluation or held-out
+reveal. Failure is interpreted as a scoped compact-head/representation result;
+it does not revoke the successful 05i-c numerical input contract.

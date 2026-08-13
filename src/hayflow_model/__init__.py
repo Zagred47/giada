@@ -109,6 +109,12 @@ from .hines_synaptic_domain_repair import (
     HinesSynapticDomainRepair,
     HinesSynapticDomainRepairConfig,
 )
+from .hines_repaired_representation_recheck import (
+    EXPECTED_05IC_ARCHIVE_SHA256,
+    HinesRepairedRepresentationRecheck,
+    HinesRepairedRepresentationRecheckConfig,
+    summarize_robust_family_gate,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -188,4 +194,8 @@ __all__ = [
     "BoundedSynapticStateEncoder",
     "HinesSynapticDomainRepair",
     "HinesSynapticDomainRepairConfig",
+    "EXPECTED_05IC_ARCHIVE_SHA256",
+    "HinesRepairedRepresentationRecheck",
+    "HinesRepairedRepresentationRecheckConfig",
+    "summarize_robust_family_gate",
 ]

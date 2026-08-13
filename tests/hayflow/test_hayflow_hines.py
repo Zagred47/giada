@@ -15,6 +15,7 @@ import src.hayflow_model.hines_representation_forensics as representation_forens
 import src.hayflow_model.hines_state_normalization_repair as normalization_repair_module
 import src.hayflow_model.hines_netcon_semantic_repair as netcon_repair_module
 import src.hayflow_model.hines_synaptic_domain_repair as synaptic_domain_module
+import src.hayflow_model.hines_repaired_representation_recheck as repaired_recheck_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -78,6 +79,10 @@ from src.hayflow_model.hines_netcon_semantic_repair import (
 from src.hayflow_model.hines_synaptic_domain_repair import (
     BoundedSynapticStateEncoder,
     HinesSynapticDomainRepairConfig,
+)
+from src.hayflow_model.hines_repaired_representation_recheck import (
+    HinesRepairedRepresentationRecheckConfig,
+    summarize_robust_family_gate,
 )
 
 
@@ -266,6 +271,88 @@ def test_05ic_notebook_keeps_targets_heads_rollout_and_thresholds_sealed():
     assert "assert not final_report['heldout_contract']['boundary_targets_materialized']" in source
     assert "assert not final_report['heldout_contract']['candidate_head_inference_performed']" in source
     assert "run_rollout" not in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "rglob('/kaggle" not in source
+
+
+def test_05j_robust_gate_requires_two_of_three_seeds():
+    config = HinesRepairedRepresentationRecheckConfig()
+    config.validate()
+    assert config.minimum_joint_passing_seed_count == 2
+    assert config.expected_seed_count == 3
+    with pytest.raises(ValueError, match="cannot exceed"):
+        HinesRepairedRepresentationRecheckConfig(
+            minimum_joint_passing_seed_count=4
+        ).validate()
+    with pytest.raises(ValueError, match="must not extract"):
+        HinesRepairedRepresentationRecheckConfig(
+            forbid_heldout_input_extraction=False
+        ).validate()
+
+
+def test_05j_robust_family_gate_requires_joint_passes():
+    runs = []
+    for seed, train_pass, development_pass, rmse in (
+        (17, True, True, 0.5),
+        (29, True, True, 0.7),
+        (43, True, False, 1.2),
+    ):
+        runs.append({
+            "family": "h2_causal",
+            "seed": seed,
+            "train_passed": train_pass,
+            "development_passed": development_pass,
+            "train": {"aggregate_voltage_rmse_mv": rmse},
+            "development": {"aggregate_voltage_rmse_mv": rmse + 0.1},
+        })
+    row = summarize_robust_family_gate(
+        runs, ["h2_causal"],
+        expected_seed_count=3,
+        minimum_joint_passing_seed_count=2,
+    )[0]
+    assert row["joint_passing_seed_count"] == 2
+    assert row["robust_family_passed"]
+    runs[1]["development_passed"] = False
+    row = summarize_robust_family_gate(
+        runs, ["h2_causal"],
+        expected_seed_count=3,
+        minimum_joint_passing_seed_count=2,
+    )[0]
+    assert row["joint_passing_seed_count"] == 1
+    assert not row["robust_family_passed"]
+def test_05ic_registered_result_authorizes_only_05j_recheck():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (root / "experiments/hayflow/05i_c_synaptic_domain_repair/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert record["archive"]["sha256"] == repaired_recheck_module.EXPECTED_05IC_ARCHIVE_SHA256
+    assert record["input_contract_passed"]
+    assert record["coordinate_support"]["coordinate_count_above_standardized_limit"] == 0
+    assert record["next_step"] == "05j_repaired_representation_train_development_recheck"
+    assert not record["full_training_authorized"]
+
+
+def test_05j_notebook_never_extracts_heldout_and_has_no_rollout():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (
+            root
+            / "notebooks/05j_repaired_representation_train_development_recheck.ipynb"
+        ).read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "apply_verified_synaptic_domain_normalizer" in source
+    assert "prepare_train_development_features" in source
+    assert "run_projection_forensics" in source
+    assert "run_repaired_bounded_controls" in source
+    assert "run_coordinate_scale_repair" not in source
+    assert "run_raw_scale_forensics" not in source
+    assert "run_rollout" not in source
+    assert "assert not feature_report['heldout_inputs_extracted']" in source
+    assert "assert not final_report['heldout_contract']['inputs_extracted']" in source
     assert "base64.b64encode" in source and "application/zip" in source
     assert "rglob('/kaggle" not in source
 

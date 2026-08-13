@@ -1,0 +1,31 @@
+schema_version: "05j-config-v1"
+
+repaired_representation_recheck:
+  required_train_pair_count: 12
+  required_development_pair_count: 1
+  minimum_joint_passing_seed_count: 2
+  expected_seed_count: 3
+  expected_input_family_count: 3
+  forbid_heldout_input_extraction: true
+  forbid_heldout_target_materialization: true
+
+methodology:
+  exact_05g_train_support_reused: true
+  train_pair_count: 12
+  development_pair_count: 1
+  train_development_episode_overlap_allowed: false
+  repaired_normalizer_source: exact_verified_05ic_train_only_reconstruction
+  feature_normalization_fit_role: train
+  input_families: [h2, causal, h2_causal]
+  fixed_seeds: [17, 29, 43]
+  candidate_head_training_roles: [train]
+  candidate_head_selection_roles: [development]
+  robust_family_gate: at_least_2_of_3_joint_train_and_development_passes
+  heldout_inputs_extracted: false
+  heldout_boundary_voltage_targets_materialized: false
+  heldout_event_targets_materialized: false
+  heldout_candidate_head_inference_performed: false
+  base_h2_frozen: true
+  teacher_encoder_updated: false
+  rollout_performed: false
+  full_training_authorized: false
