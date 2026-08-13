@@ -1,0 +1,85 @@
+{
+  "schema_version": "05j-d-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_trainable_topology_decoder_micro_canary.zip",
+    "size_bytes": 1361344,
+    "sha256": "566e0d8bdf945e9abd55c7d1e74883d017b13db50dfc1ec2c143f224f935426e",
+    "artifact_index_sha256": "ccf988c8568fdff4e6f7f5a2e92785d1bd944576401a57852e97e69d52ee081b",
+    "final_report_sha256": "c3d97bf2df6bfd41605f34f130a41e7fcca52e474e8c7f4b5219b62e1aa01f92",
+    "indexed_member_count": 35,
+    "verified_member_count": 35
+  },
+  "code_revision": "7c6c23de0f18d024e2553cd02d37f4dc4d3d323e",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "trainable_topology_canary_passed": false,
+  "diagnosis": "TRAINABLE_TOPOLOGY_DECODER_FAILS_MICRO_CANARY",
+  "decision": "TRAIN_ONLY_TOPOLOGY_DECODER_MICRO_CANARY",
+  "input_and_split_contract": {
+    "fit_pair_count": 36,
+    "calibration_pair_count": 12,
+    "development_pair_count": 1,
+    "feature_width": 226,
+    "fit_protocol_family_count": 6,
+    "calibration_protocol_family_count": 6,
+    "fit_calibration_episode_overlap": [],
+    "new_normalization_fit_roles": ["fit"],
+    "development_used_for_checkpoint_selection": false,
+    "heldout_inputs_extracted": false,
+    "rollout_performed": false
+  },
+  "fixed_tree_ridge_reference": {
+    "selected_lambda": 0.1,
+    "cross_validation_rmse_mv": 3.4886091410310534,
+    "fit_rmse_mv": 2.204498296294371,
+    "calibration_rmse_mv": 2.023233034107354,
+    "development_rmse_mv": 4.159210437443624,
+    "development_maximum_segment_error_mv": 23.048689365386963,
+    "development_branching_retention": 0.9324651796806133,
+    "all_roles_passed": false
+  },
+  "family_summary": [
+    {
+      "family": "direct_tree",
+      "best_epochs_by_seed": {"17": 1040, "29": 640, "43": 1200},
+      "median_fit_rmse_mv": 1.744602536646917,
+      "median_calibration_rmse_mv": 1.58135767699647,
+      "median_development_rmse_mv": 2.9637674666370426,
+      "median_development_maximum_segment_error_mv": 19.36204719543457,
+      "median_development_branching_retention": 0.9947414157414665,
+      "calibration_rmse_improvement_vs_split_ridge_fraction": 0.21840062398241666,
+      "development_rmse_improvement_vs_split_ridge_fraction": 0.2874206508149986,
+      "passing_seed_count": 0,
+      "robust_gate_passed": false
+    },
+    {
+      "family": "ridge_corrected_tree",
+      "best_epochs_by_seed": {"17": 260, "29": 40, "43": 40},
+      "median_fit_rmse_mv": 2.1799586354320346,
+      "median_calibration_rmse_mv": 2.039085165250512,
+      "median_development_rmse_mv": 4.229551365640944,
+      "median_development_maximum_segment_error_mv": 22.865720748901367,
+      "median_development_branching_retention": 0.960796723987618,
+      "calibration_rmse_improvement_vs_split_ridge_fraction": -0.007835049584464595,
+      "development_rmse_improvement_vs_split_ridge_fraction": -0.01691208686246551,
+      "passing_seed_count": 0,
+      "robust_gate_passed": false
+    }
+  ],
+  "interpretation": {
+    "absolute_gate_blockers": [
+      "no seed passed all fit, calibration and development pair gates",
+      "development RMSE remained between 2.7963 and 4.2446 mV",
+      "development maximum segment error remained between 18.2947 and 23.1056 mV",
+      "every development pair failed both the 1 mV RMSE and 5 mV maximum-error limits"
+    ],
+    "qualified_signal": "The direct tree decoder improved median calibration and development RMSE by 21.84% and 28.74% relative to the same-split ridge reference, and development branching retention was near one for all seeds. This is a real nonlinear signal but not a gate pass and not a rescue relative to the stronger 05j-c all-48-pair fixed-tree result.",
+    "ridge_correction_result": "The ridge-corrected family did not improve the frozen ridge reference and selected very early checkpoints for two seeds.",
+    "routing_note": "The preregistered finalizer bases its material-improvement fallback on ridge_corrected_tree. Its architecture-reassessment route is therefore internally consistent. The direct-tree secondary signal must be retained as evidence during reassessment, without retroactively changing the pass criterion."
+  },
+  "passing_families": [],
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "next_step": "05j_e_architecture_reassessment"
+}

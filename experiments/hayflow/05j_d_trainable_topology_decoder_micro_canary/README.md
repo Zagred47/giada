@@ -40,3 +40,31 @@ rollout and full training remain prohibited in every outcome.
 
 Expected artifact:
 `hayflow_hines_trainable_topology_decoder_micro_canary.zip`.
+
+## Registered result
+
+The Kaggle run completed validly at code revision
+`7c6c23de0f18d024e2553cd02d37f4dc4d3d323e`. The archive and all 35 indexed
+members passed independent SHA-256 and size verification. The 36/12 split was
+episode-disjoint, both sides covered all six protocol families, all newly
+introduced transforms were fit-only, development did not select a checkpoint,
+and held-out data and rollout remained sealed.
+
+No family passed the robust gate. The fixed same-split ridge reference reached
+`2.0232 mV` on calibration and `4.1592 mV` on development. The
+`ridge_corrected_tree` family failed to improve it: median RMSE was
+`2.0391/4.2296 mV`, with zero passing seeds.
+
+The direct decoder showed a qualified but insufficient signal. Its median
+calibration/development RMSE was `1.5814/2.9638 mV`, improvements of `21.84%`
+and `28.74%` over the same-split ridge reference. Development branching
+retention stayed near one across all seeds. Nevertheless, development maximum
+segment error remained `18.29--19.56 mV`, and every seed failed both the
+original `1 mV` RMSE and `5 mV` maximum-error gates on the development pair.
+Fit and calibration also retained widespread pairwise failures.
+
+This does not authorize 05k. It says that nonlinear topology decoding carries
+some reproducible signal, but the current target, support and decoder contract
+still cannot meet the required local accuracy. The preregistered fallback is
+`05j_e_architecture_reassessment`; that reassessment must retain the direct
+decoder result as evidence rather than treating the canary as featureless.

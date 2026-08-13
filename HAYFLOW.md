@@ -1115,3 +1115,23 @@ family must pass the unchanged pairwise RMSE, maximum-error and branching gates
 on fit, calibration and development for at least two of three seeds. Even a
 robust pass authorizes only a separate 05k micro-rollout. Held-out inputs,
 rollout and full training remain sealed.
+
+The completed 05j-d run is registered in
+`experiments/hayflow/05j_d_trainable_topology_decoder_micro_canary/result.json`.
+The archive and all 35 indexed members passed integrity verification, and the
+fit/calibration/development separation remained valid. No model family passed
+the absolute gate, so neither 05k nor full training is authorized.
+
+The ridge-corrected decoder did not improve its same-split ridge reference.
+The direct decoder did show a reproducible secondary signal: its median
+calibration and development RMSE improved by `21.84%` and `28.74%` relative to
+that reference, reaching `1.5814 mV` and `2.9638 mV`, with development
+branching retention near one. However, worst-segment development errors stayed
+between `18.29` and `19.56 mV`; all three seeds failed the original `1 mV`
+RMSE and `5 mV` maximum-error limits. This is not a gate pass and does not
+outperform the stronger all-48-pair fixed-tree diagnostic from 05j-c.
+
+The registered route is therefore `05j_e_architecture_reassessment`. That
+reassessment must explain both facts: nonlinear topology decoding contains
+real signal, while the present learning target/support contract remains far
+from the required segment-level accuracy.
