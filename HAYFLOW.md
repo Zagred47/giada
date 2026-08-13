@@ -959,3 +959,26 @@ Passing 05j can authorize only a separate 05k repaired-representation
 micro-rollout. It cannot authorize full training, test evaluation or held-out
 reveal. Failure is interpreted as a scoped compact-head/representation result;
 it does not revoke the successful 05i-c numerical input contract.
+
+The completed 05j run is registered in
+`experiments/hayflow/05j_repaired_representation_recheck/result.json`. The
+archive and all 38 indexed artifacts passed independent integrity checks. The
+05i-c normalizer fingerprint was reproduced exactly, train and development
+episodes were disjoint, normalization used train only, and no held-out input
+or target was accessed.
+
+The representation recheck failed. Across H2, causal-only and combined
+H2-plus-causal families, zero of three seeds passed jointly on train and
+development; the robust gate required at least two. Median development RMSE
+remained `15.6233--16.8328 mV`, development branching retention only
+`0.2960--0.4049`, and development maximum segment errors
+`69.20--76.89 mV`. All nine runs also failed the train pair gates.
+
+An unrestricted train-only linear projection interpolated the tiny support
+with maximum per-segment RMSE `0.0636 mV`, but its design condition number
+reached `4.60e9` and coefficient norms were correspondingly extreme. This is
+evidence of algebraic information on the sampled surface, not a stable
+learnable or deployable mapping, and cannot supersede the failed compact-head
+gate. The valid 05i-c input contract remains intact, while 05k rollout and full
+training remain prohibited. The next authorized experiment is the separate
+`05j_b_repaired_representation_revision`.

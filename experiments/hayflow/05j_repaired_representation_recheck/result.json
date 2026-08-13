@@ -1,0 +1,86 @@
+{
+  "schema_version": "05j-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_repaired_representation_recheck.zip",
+    "size_bytes": 922060,
+    "sha256": "78d77d601fb85ca078fdf807c66c19014b6884ddb2596a1bcc1dbb461520d508",
+    "artifact_index_sha256": "7f7f6dcc5d8b4e20736782648dd6d29cff71bddd9a9664b3a7ca53ae147472cb",
+    "final_report_sha256": "2bc021d5a14f1bdc04d4a196a02b58ba67659baf63188e00f44e3dbc2a414423",
+    "indexed_member_count": 38,
+    "verified_member_count": 38
+  },
+  "code_revision": "4cd8ff005647ca1c4159c030cbd69b16bc0287d0",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "representation_recheck_passed": false,
+  "diagnosis": "REPAIRED_REPRESENTATION_CONTROLS_FAIL_ROBUST_GATE",
+  "decision": "TRAIN_DEVELOPMENT_REPRESENTATION_RECHECK_ONLY",
+  "input_and_split_contract": {
+    "normalizer_fingerprint": "35a07b7fa9433ee34146fdce13539f20e98288a733a6e2d3266b3917f08dcfe6",
+    "matches_verified_05ic_fingerprint": true,
+    "normalizer_fit_roles": [
+      "train"
+    ],
+    "train_pair_count": 12,
+    "development_pair_count": 1,
+    "train_development_episode_overlap": [],
+    "heldout_inputs_extracted": false,
+    "heldout_targets_materialized": false,
+    "heldout_candidate_head_inference_performed": false
+  },
+  "family_gate": {
+    "minimum_joint_passing_seed_count": 2,
+    "passing_families": [],
+    "families": [
+      {
+        "family": "h2",
+        "joint_passing_seed_count": 0,
+        "seed_count": 3,
+        "median_train_rmse_mv": 10.812638907756043,
+        "median_development_rmse_mv": 15.679549266782361
+      },
+      {
+        "family": "causal",
+        "joint_passing_seed_count": 0,
+        "seed_count": 3,
+        "median_train_rmse_mv": 11.374475640244015,
+        "median_development_rmse_mv": 16.832797642954603
+      },
+      {
+        "family": "h2_causal",
+        "joint_passing_seed_count": 0,
+        "seed_count": 3,
+        "median_train_rmse_mv": 10.848295283040883,
+        "median_development_rmse_mv": 15.623259485002372
+      }
+    ],
+    "train_maximum_segment_error_range_mv": [
+      69.19580602645874,
+      77.7995491027832
+    ],
+    "development_maximum_segment_error_range_mv": [
+      69.19580793380737,
+      76.89384937286377
+    ],
+    "development_branching_retention_range": [
+      0.2960114188190512,
+      0.4048814578630367
+    ]
+  },
+  "projection_diagnostic": {
+    "train_only": true,
+    "heldout_targets_used": false,
+    "segment_count_with_projection_rmse_above_1mv": 0,
+    "maximum_projection_rmse_mv": 0.06357880872115639,
+    "design_rank_range": [
+      21,
+      24
+    ],
+    "maximum_observed_design_condition_number": 4599862285.989628,
+    "interpretation": "The frozen-H2 train surface can interpolate the tiny support, but only through an extremely ill-conditioned unrestricted projection; this is not evidence of a stable deployable representation."
+  },
+  "rollout_performed": false,
+  "full_training_authorized": false,
+  "next_step": "05j_b_repaired_representation_revision"
+}
