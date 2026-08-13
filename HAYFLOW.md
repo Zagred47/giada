@@ -882,3 +882,31 @@ revision. It must preregister a bounded, causal recency/recovery coordinate for
 The teacher snapshot, fixed thresholds, train-only policy and sealed held-out
 future targets must remain unchanged. Relaxing the gate, training a candidate
 head, or starting rollout is not authorized by this result.
+
+### Notebook 05i-c: bounded recency and synaptic-domain repair
+
+`notebooks/05i_c_synaptic_domain_repair.ipynb` implements the separate
+representation revision authorized by the failed 05i-b input gate. It does
+not reinterpret the raw NetCon layout again. Instead it replaces model-facing
+last-event age by the bounded causal coordinate
+`recency = tau / (tau + age)`. For each synapse, `tau` is the largest of the
+registered 1 ms minimum and its positive authentic `Dep` and `Fac`
+parameters. The inverse reconstructs age and `tsyn` at the current boundary;
+the raw teacher snapshot remains unchanged.
+
+Because recency lies in `(0, 1]`, its scale floor is preregistered as `1/50`.
+The largest possible full-domain displacement is therefore 50 standardized
+units, leaving margin below the unchanged limit of 100 independently of the
+held-out examples. Dynamic double-exponential point-process states
+`A_AMPA`, `B_AMPA`, `A_NMDA`, `B_NMDA`, `A`, and `B` retain `log1p`; their
+scale floor is `log1p(1)/35`, derived from a unit release increment. These
+domain floors supplement rather than replace the 05i train-only hierarchical
+repair and are fixed before the held-out input audit.
+
+05i-c verifies the exact 05i-b artifact, repeats the reversible recency audit,
+the complete 17,220-coordinate pre-clipping support audit, an explicit domain
+floor audit and the frozen-H2 authentic/zero-causal audit. Thresholds are
+compared byte-for-value with 05i-b and cannot be relaxed. Held-out future
+voltages and event labels remain sealed; no candidate head, rollout or full
+training path exists. A complete pass can authorize only a separate 05j
+train/development representation recheck.

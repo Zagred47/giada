@@ -1,0 +1,32 @@
+schema_version: "05i-c-config-v1"
+
+synaptic_domain_repair:
+  tsyn_representation: bounded_rational_recency
+  minimum_recency_time_ms: 1.0
+  bounded_recency_target_standardized_span: 50.0
+  trace_reference_raw_increment: 1.0
+  trace_reference_target_standardized_span: 35.0
+  roundtrip_atol: 0.000000001
+  recency_domain_atol: 0.000000000001
+  expected_tsyn_coordinate_count: 1278
+  expected_dynamic_trace_coordinate_count: 3834
+
+methodology:
+  recency_formula: tau_ms / (tau_ms + boundary_time_ms - tsyn_ms)
+  recency_inverse: boundary_time_ms - tau_ms * (1 / recency - 1)
+  recency_tau_source: max(minimum_recency_time_ms, positive teacher Dep, positive teacher Fac)
+  bounded_recency_domain: "(0, 1]"
+  bounded_recency_scale_floor_derivation: unit_span / 50
+  dynamic_trace_transform: log1p_nonnegative
+  dynamic_trace_scale_floor_derivation: log1p(single_unit_increment) / 35
+  development_or_heldout_used_to_fit: false
+  teacher_snapshot_modified: false
+  thresholds_inherited_from_05ib_unchanged: true
+  heldout_boundary_voltage_targets_materialized: false
+  heldout_event_targets_materialized: false
+  heldout_candidate_head_inference_performed: false
+  base_h2_frozen: true
+  zero_causal_control: true
+  candidate_head_training_performed: false
+  rollout_performed: false
+  full_training_authorized: false

@@ -354,17 +354,31 @@ class HinesStateNormalizationRepair(HinesRepresentationForensics):
     def _normalization_records(self) -> Sequence[Mapping[str, Any]]:
         return self.layout.core_records
 
+    def _repair_state_scales(
+        self, original_scale: np.ndarray
+    ) -> Tuple[np.ndarray, List[Dict[str, Any]]]:
+        """Return the registered train-only scale repair for this experiment.
+
+        Subclasses may add preregistered semantic domain floors without
+        copying the coordinate-audit implementation.  Development and
+        held-out values are deliberately absent from this hook.
+        """
+
+        if self.normalizer is None:
+            raise RuntimeError("prepare_scale_repair() must run first")
+        return semantic_state_scale_repair(
+            self._normalization_records(),
+            self.normalizer.transform_codes,
+            original_scale,
+            self.repair,
+        )
+
     def run_coordinate_scale_repair(self) -> Dict[str, Any]:
         if self.normalizer is None:
             raise RuntimeError("prepare_scale_repair() must run first")
         self.repair_roles = self._role_indices()
         original = np.asarray(self.normalizer.state_scale, dtype=np.float64).copy()
-        repaired, rows = semantic_state_scale_repair(
-            self._normalization_records(),
-            self.normalizer.transform_codes,
-            original,
-            self.repair,
-        )
+        repaired, rows = self._repair_state_scales(original)
         self.original_state_scale = original
         self.repaired_state_scale = repaired
         repair_digest = hashlib.sha256()

@@ -14,6 +14,7 @@ import src.hayflow_model.hines_optimization_audit as optimization_audit_module
 import src.hayflow_model.hines_representation_forensics as representation_forensics_module
 import src.hayflow_model.hines_state_normalization_repair as normalization_repair_module
 import src.hayflow_model.hines_netcon_semantic_repair as netcon_repair_module
+import src.hayflow_model.hines_synaptic_domain_repair as synaptic_domain_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -73,6 +74,10 @@ from src.hayflow_model.hines_netcon_semantic_repair import (
     HinesNetConSemanticRepairConfig,
     NetConSemanticStateEncoder,
     netcon_semantic_records,
+)
+from src.hayflow_model.hines_synaptic_domain_repair import (
+    BoundedSynapticStateEncoder,
+    HinesSynapticDomainRepairConfig,
 )
 
 
@@ -144,6 +149,122 @@ def test_05ib_notebook_keeps_thresholds_targets_heads_and_rollout_sealed():
     assert "assert not final_report['heldout_contract']['boundary_targets_materialized']" in source
     assert "assert not final_report['heldout_contract']['candidate_head_inference_performed']" in source
     assert "run_bounded_representation_controls" not in source
+    assert "run_rollout" not in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "rglob('/kaggle" not in source
+
+
+def _synaptic_domain_layout_for_test():
+    records = []
+    synapse_type = {0: "ProbAMPANMDA2", 1: "ProbUDFsyn2"}
+    for variable in ("A_AMPA", "B_AMPA", "A_NMDA", "B_NMDA"):
+        records.append({
+            "category": "synapse_states", "scope": "synapse", "owner_id": 0,
+            "mechanism": "ProbAMPANMDA2", "variable": variable, "kind": "state",
+        })
+    for slot in range(1, 7):
+        records.append({
+            "category": "synapse_states", "scope": "synapse", "owner_id": 0,
+            "mechanism": "NetCon", "variable": f"weight[{slot}]", "kind": "state",
+        })
+    for variable in ("A", "B"):
+        records.append({
+            "category": "synapse_states", "scope": "synapse", "owner_id": 1,
+            "mechanism": "ProbUDFsyn2", "variable": variable, "kind": "state",
+        })
+    for slot in range(1, 5):
+        records.append({
+            "category": "synapse_states", "scope": "synapse", "owner_id": 1,
+            "mechanism": "NetCon", "variable": f"weight[{slot}]", "kind": "state",
+        })
+    synapses = [
+        {"id": 0, "parameters": {"Dep": 100.0, "Fac": 10.0}},
+        {"id": 1, "parameters": {"Dep": 0.0, "Fac": 0.0}},
+    ]
+    return SimpleNamespace(
+        core_records=records, synapse_type=synapse_type, synapses=synapses
+    )
+
+
+def test_05ic_bounded_recency_is_causal_parameter_aware_and_reversible():
+    layout = _synaptic_domain_layout_for_test()
+    encoder = BoundedSynapticStateEncoder(
+        layout,
+        HinesNetConSemanticRepairConfig(
+            expected_synapse_count_per_class=1,
+            expected_netcon_coordinate_count=10,
+            expected_tsyn_coordinate_count=2,
+            expected_probability_coordinate_count=6,
+            expected_amplitude_coordinate_count=2,
+        ),
+        HinesSynapticDomainRepairConfig(
+            expected_tsyn_coordinate_count=2,
+            expected_dynamic_trace_coordinate_count=6,
+        ),
+    )
+    raw = np.asarray([[
+        0.1, 0.2, 0.3, 0.4,
+        1.0, 1.0, 0.8, 0.2, 0.5, 90.0,
+        0.6, 0.7,
+        0.7, 0.3, 0.4, 99.5,
+    ]])
+    semantic = encoder.encode(raw, [100.0])
+    assert encoder.recency_time_ms.tolist() == [100.0, 1.0]
+    assert semantic[0, 9] == pytest.approx(100.0 / 110.0)
+    assert semantic[0, 15] == pytest.approx(1.0 / 1.5)
+    np.testing.assert_allclose(encoder.decode(semantic, [100.0]), raw, atol=1e-12)
+    normalizer = SimpleNamespace(
+        transform_codes=np.zeros(16, dtype=np.int8), IDENTITY=0, LOG1P=1, LOGIT=2
+    )
+    encoder.configure_transform_codes(normalizer)
+    assert normalizer.transform_codes.tolist() == [
+        1, 1, 1, 1, 1, 1, 2, 2, 2, 0, 1, 1, 2, 2, 2, 0
+    ]
+    with pytest.raises(ValueError, match="after the causal boundary"):
+        encoder.encode(raw, [80.0])
+
+
+def test_05ic_domain_floors_are_preregistered_below_the_global_gate():
+    config = HinesSynapticDomainRepairConfig()
+    assert 1.0 / config.bounded_recency_scale_floor == pytest.approx(50.0)
+    assert (
+        np.log1p(config.trace_reference_raw_increment)
+        / config.synaptic_trace_log1p_scale_floor
+    ) == pytest.approx(35.0)
+    assert config.bounded_recency_target_standardized_span < 100.0
+
+
+def test_05ib_registered_result_requires_separate_domain_revision():
+    root = Path(__file__).resolve().parents[2]
+    record = json.loads(
+        (root / "experiments/hayflow/05i_b_netcon_semantic_state_repair/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert record["archive"]["sha256"] == synaptic_domain_module.EXPECTED_05IB_ARCHIVE_SHA256
+    assert record["netcon_semantic_roundtrip"]["maximum_roundtrip_absolute_error"] == 0.0
+    assert record["coordinate_support"]["coordinate_count_above_standardized_limit"] == 7
+    assert not record["input_contract_passed"]
+    assert record["next_step"] == "05i_c_netcon_semantic_revision"
+
+
+def test_05ic_notebook_keeps_targets_heads_rollout_and_thresholds_sealed():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05i_c_synaptic_domain_repair.ipynb").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "run_bounded_recency_roundtrip_audit" in source
+    assert "run_coordinate_scale_repair" in source
+    assert "run_synaptic_domain_floor_audit" in source
+    assert "run_repaired_frozen_h2_audit" in source
+    assert "assert prepare_report['threshold_contract']['unchanged']" in source
+    assert "assert domain_floor_report['domain_floor_contract_passed']" not in source
+    assert "assert not final_report['heldout_contract']['boundary_targets_materialized']" in source
+    assert "assert not final_report['heldout_contract']['candidate_head_inference_performed']" in source
     assert "run_rollout" not in source
     assert "base64.b64encode" in source and "application/zip" in source
     assert "rglob('/kaggle" not in source

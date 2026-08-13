@@ -103,6 +103,12 @@ from .hines_netcon_semantic_repair import (
     NetConSemanticStateEncoder,
     netcon_semantic_records,
 )
+from .hines_synaptic_domain_repair import (
+    EXPECTED_05IB_ARCHIVE_SHA256,
+    BoundedSynapticStateEncoder,
+    HinesSynapticDomainRepair,
+    HinesSynapticDomainRepairConfig,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -178,4 +184,8 @@ __all__ = [
     "HinesNetConSemanticRepairConfig",
     "NetConSemanticStateEncoder",
     "netcon_semantic_records",
+    "EXPECTED_05IB_ARCHIVE_SHA256",
+    "BoundedSynapticStateEncoder",
+    "HinesSynapticDomainRepair",
+    "HinesSynapticDomainRepairConfig",
 ]
