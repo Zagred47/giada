@@ -1037,3 +1037,32 @@ rank three. This points to a missing non-local/spatial information path for a
 segment-local decoder, not simple optimizer instability. The scoped next step
 is `05j_c_support_and_decoder_revision`; 05k rollout and full training remain
 prohibited.
+
+### Notebook 05j-c: spatial context and support revision
+
+`notebooks/05j_c_spatial_support_revision.ipynb` tests the two scoped factors
+left by 05j-b: non-local morphology context and train-support size. It verifies
+the exact 05j-b artifact, preserves the original 12 train pairs and selects 36
+additional episode-disjoint train pairs round-robin across the six available
+protocol families. The resulting 48-pair support remains train-only and excludes
+the development episode; held-out inputs and targets remain sealed.
+
+Frozen H2 and causal channels are reduced to deterministic train-only PCA
+sketches. Local features are compared against fixed symmetric axial-neighbour
+diffusion at 0, 1, 2, 4, 8, 16 and 32 tree steps, with a third context adding
+causal region summaries broadcast across the morphology. Crossing these three
+contexts with original and expanded support produces six controlled candidates.
+
+Every candidate retains the 120 mV bounded target, unit branching weight,
+segment-specific ridge decoder and numerical-stability limits of 05j-b. Ridge
+selection uses six-fold grouped pair cross-validation on train only; development
+is evaluated after selection and cannot affect the chosen hyperparameter. The
+original RMSE, maximum-error and branching-retention gates are unchanged.
+
+A preregistered 20% improvement threshold separates topology and support
+effects, and must be met on both train cross-validation and development; a
+gain on only one role is reported as inconclusive. A complete pass can authorize
+only 05k micro-rollout. A material but
+incomplete topology improvement can authorize only a separate trainable
+topology-decoder micro-canary. Neither outcome directly authorizes full
+training.

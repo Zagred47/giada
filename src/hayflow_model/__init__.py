@@ -125,6 +125,16 @@ from .hines_repaired_representation_revision import (
     pair_gate_selection_score,
     revised_feature_transform,
 )
+from .hines_spatial_support_revision import (
+    EXPECTED_05JB_ARCHIVE_SHA256,
+    HinesSpatialSupportRevision,
+    HinesSpatialSupportRevisionConfig,
+    apply_channel_pca,
+    axial_tree_diffusion,
+    deterministic_pair_folds,
+    deterministic_pca_components,
+    region_global_context,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -216,4 +226,12 @@ __all__ = [
     "dual_ridge_path_predict",
     "pair_gate_selection_score",
     "revised_feature_transform",
+    "EXPECTED_05JB_ARCHIVE_SHA256",
+    "HinesSpatialSupportRevision",
+    "HinesSpatialSupportRevisionConfig",
+    "apply_channel_pca",
+    "axial_tree_diffusion",
+    "deterministic_pair_folds",
+    "deterministic_pca_components",
+    "region_global_context",
 ]

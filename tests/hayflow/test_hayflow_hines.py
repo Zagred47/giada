@@ -17,6 +17,7 @@ import src.hayflow_model.hines_netcon_semantic_repair as netcon_repair_module
 import src.hayflow_model.hines_synaptic_domain_repair as synaptic_domain_module
 import src.hayflow_model.hines_repaired_representation_recheck as repaired_recheck_module
 import src.hayflow_model.hines_repaired_representation_revision as repaired_revision_module
+import src.hayflow_model.hines_spatial_support_revision as spatial_support_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -93,6 +94,101 @@ from src.hayflow_model.hines_repaired_representation_revision import (
     pair_gate_selection_score,
     revised_feature_transform,
 )
+from src.hayflow_model.hines_spatial_support_revision import (
+    HinesSpatialSupportRevisionConfig,
+    apply_channel_pca,
+    axial_tree_diffusion,
+    deterministic_pair_folds,
+    deterministic_pca_components,
+    region_global_context,
+)
+
+
+def test_05jc_tree_diffusion_preserves_constants_and_spreads_delta():
+    parents = np.asarray([0, 0, 1, 1])
+    axial = np.asarray([0.0, 1.0, 2.0, 1.0])
+    constant = np.ones((2, 4, 1))
+    preserved = axial_tree_diffusion(constant, parents, axial, [0, 1, 2], 0.5)
+    np.testing.assert_allclose(preserved, 1.0)
+    delta = np.zeros((1, 4, 1)); delta[:, 3] = 1.0
+    spread = axial_tree_diffusion(delta, parents, axial, [0, 1, 2], 0.5)
+    assert spread.shape == (1, 4, 3)
+    assert spread[0, 1, 1] > 0.0
+    assert spread[0, 0, 2] > 0.0
+
+
+def test_05jc_channel_pca_is_deterministic_and_finite():
+    rng = np.random.default_rng(51)
+    values = rng.normal(size=(8, 5, 6))
+    mean_a, components_a = deterministic_pca_components(values, 3)
+    mean_b, components_b = deterministic_pca_components(values, 3)
+    np.testing.assert_allclose(mean_a, mean_b)
+    np.testing.assert_allclose(components_a, components_b)
+    projected = apply_channel_pca(values, mean_a, components_a)
+    assert projected.shape == (8, 5, 3)
+    assert np.isfinite(projected).all()
+
+
+def test_05jc_region_context_broadcasts_all_region_summaries():
+    values = np.asarray([[[1.0], [3.0], [2.0], [6.0]]])
+    context = region_global_context(values, [0, 0, 1, 1])
+    assert context.shape == (1, 4, 2)
+    np.testing.assert_allclose(context[:, 0], context[:, 3])
+    np.testing.assert_allclose(context[0, 0], [4 / np.sqrt(2), 8 / np.sqrt(2)])
+
+
+def test_05jc_pair_folds_are_complete_and_disjoint():
+    folds = deterministic_pair_folds(48, 6)
+    assert all(len(fold) == 8 for fold in folds)
+    np.testing.assert_array_equal(
+        np.sort(np.concatenate(folds)), np.arange(48)
+    )
+    assert not any(set(left) & set(right) for i, left in enumerate(folds) for right in folds[i + 1:])
+
+
+def test_05jc_config_rejects_nonexpanded_or_posthoc_contexts():
+    HinesSpatialSupportRevisionConfig().validate()
+    with pytest.raises(ValueError, match="materially larger"):
+        HinesSpatialSupportRevisionConfig(minimum_expanded_pair_count=12).validate()
+    with pytest.raises(ValueError, match="contexts"):
+        HinesSpatialSupportRevisionConfig(contexts=("tree",)).validate()
+
+
+def test_05jc_notebook_seals_heldout_and_uses_grouped_train_cv():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_c_spatial_support_revision.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "prepare_spatial_support_revision" in source
+    assert "build_expanded_train_support" in source
+    assert "run_spatial_design_audit" in source
+    assert "run_spatial_support_controls" in source
+    assert "train_grouped_pair_cross_validation" in source
+    assert "assert not controls_report['development_used_for_selection']" in source
+    assert "assert not final_report['heldout_contract']['inputs_extracted']" in source
+    assert "assert not final_report['methodology']['rollout_performed']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "run_rollout" not in source
+    assert "rglob('/kaggle" not in source
+
+
+def test_05jc_exact_05jb_hashes_match_registered_result():
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (
+            root
+            / "experiments/hayflow/05j_b_repaired_representation_revision/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == spatial_support_module.EXPECTED_05JB_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == spatial_support_module.EXPECTED_05JB_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == spatial_support_module.EXPECTED_05JB_FINAL_SHA256
+    assert not result["representation_revision_passed"]
+    assert result["next_step"] == "05j_c_support_and_decoder_revision"
 
 
 def test_05jb_tail_transform_preserves_order_without_saturating():

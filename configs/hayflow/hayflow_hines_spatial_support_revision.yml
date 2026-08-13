@@ -1,0 +1,44 @@
+schema_version: "05j-c-config-v1"
+
+spatial_support_revision:
+  original_pair_count: 12
+  expanded_pair_count: 48
+  minimum_expanded_pair_count: 36
+  minimum_protocol_family_count: 6
+  pca_rank_h2: 16
+  pca_rank_causal: 16
+  diffusion_scales: [0, 1, 2, 4, 8, 16, 32]
+  diffusion_self_weight: 0.5
+  contexts: [local, tree, tree_global]
+  support_roles: [original, expanded]
+  cross_validation_fold_count: 6
+  ridge_lambdas: [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+  branch_fit_weight: 1.0
+  target_residual_limit_mv: 120.0
+  target_atanh_margin: 0.000001
+  input_asinh_reference_z: 8.0
+  feature_epsilon: 0.000001
+  maximum_regularized_condition_number: 100000000.0
+  maximum_segment_coefficient_l2_norm: 100000.0
+  selection_max_error_weight: 0.05
+  selection_branch_log_weight: 2.0
+  material_improvement_fraction: 0.20
+
+methodology:
+  exact_05jb_artifact_verified: true
+  original_12_pair_support_preserved: true
+  expanded_support_source: train_only_counterfactual_candidates
+  expanded_support_episode_disjoint: true
+  expanded_support_protocol_balanced: true
+  development_excluded_from_support_and_selection: true
+  channel_compression_fit_role: candidate_train_support
+  morphology_context: fixed_axial_neighbour_diffusion
+  diffusion_scales: [0, 1, 2, 4, 8, 16, 32]
+  global_context: causal_region_pooling
+  candidate_selection: train_grouped_pair_cross_validation
+  heldout_inputs_extracted: false
+  heldout_targets_materialized: false
+  rollout_performed: false
+  base_h2_frozen: true
+  teacher_encoder_updated: false
+  full_training_authorized: false
