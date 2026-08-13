@@ -1178,3 +1178,24 @@ The registered next step is therefore
 `05j_f_region_mechanism_expert_revision`: a scoped region/mechanism expert
 revision aimed at regenerative trunk and adjacent compartments. This does not
 authorize 05k rollout or full training.
+
+### Notebook 05j-f: region/mechanism expert revision
+
+`notebooks/05j_f_region_mechanism_expert_revision.ipynb` tests whether the
+localized 05j-e failure requires biological specialization rather than merely
+more decoder parameters. For each seed it freezes the registered direct-tree
+prediction and trains a zero-initialized bounded correction.
+
+The factorial control holds capacity constant. Both families contain eight
+identical expert MLPs. The uniform control averages all experts at all segments;
+the structured candidate gates them using only canonical region and mechanism
+metadata: general, apical trunk, basal, tuft, soma/axon, calcium regenerative,
+sodium regenerative and repolarization/Ih. No target or development error map
+is used to construct these masks.
+
+The 36/12/development split, voltage/branch/tail loss and three seeds remain
+unchanged. Calibration alone chooses checkpoints. A robust absolute pass can
+authorize only 05k micro-rollout. A weaker signal must improve each seed over
+its own frozen baseline and outperform the parameter-matched uniform control
+on both calibration and development. Held-out data, rollout and full training
+remain sealed.

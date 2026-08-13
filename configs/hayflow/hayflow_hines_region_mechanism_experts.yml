@@ -1,0 +1,47 @@
+schema_version: "05j-f-config-v1"
+
+region_mechanism_experts:
+  families: [uniform_expert_control, region_mechanism_experts]
+  expert_names:
+    - general
+    - apical_trunk
+    - basal
+    - tuft
+    - soma_axon
+    - calcium_regenerative
+    - sodium_regenerative
+    - repolarization_and_h
+  seeds: [17, 29, 43]
+  expert_hidden_width: 32
+  segment_embedding_dim: 16
+  epochs: 1000
+  evaluation_interval: 20
+  patience: 240
+  learning_rate: 0.0008
+  weight_decay: 0.00001
+  gradient_clip_norm: 5.0
+  target_residual_limit_mv: 120.0
+  error_scale_mv: 20.0
+  branch_loss_weight: 1.0
+  tail_loss_weight: 0.25
+  tail_fraction: 0.05
+  selection_max_error_weight: 0.05
+  selection_branch_log_weight: 2.0
+  minimum_passing_seeds: 2
+  minimum_signal_seeds: 2
+  within_seed_rmse_improvement_fraction: 0.15
+  within_seed_max_error_improvement_fraction: 0.10
+  expert_vs_uniform_improvement_fraction: 0.10
+
+methodology:
+  exact_05je_artifact_verified: true
+  base_model: frozen_direct_tree_per_seed
+  comparison: capacity_matched_uniform_vs_metadata_gated_experts
+  expert_gate_source: teacher_region_and_mechanism_metadata_only
+  target_derived_expert_masks: false
+  fit_calibration_split_unchanged: true
+  checkpoint_selection_role: internal_calibration_only
+  development_used_for_model_selection: false
+  heldout_inputs_extracted: false
+  rollout_performed: false
+  full_training_authorized: false

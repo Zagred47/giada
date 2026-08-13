@@ -150,6 +150,15 @@ from .hines_architecture_reassessment import (
     error_energy_concentration,
     fit_segment_affine_calibrator,
 )
+from .hines_region_mechanism_experts import (
+    EXPECTED_05JE_ARCHIVE_SHA256,
+    EXPERT_NAMES,
+    GatedExpertCorrection,
+    HinesRegionMechanismExpertConfig,
+    HinesRegionMechanismExpertRevision,
+    region_mechanism_expert_gates,
+    uniform_expert_gates,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -260,4 +269,11 @@ __all__ = [
     "apply_segment_affine",
     "error_energy_concentration",
     "fit_segment_affine_calibrator",
+    "EXPECTED_05JE_ARCHIVE_SHA256",
+    "EXPERT_NAMES",
+    "GatedExpertCorrection",
+    "HinesRegionMechanismExpertConfig",
+    "HinesRegionMechanismExpertRevision",
+    "region_mechanism_expert_gates",
+    "uniform_expert_gates",
 ]

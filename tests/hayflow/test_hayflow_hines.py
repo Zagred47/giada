@@ -20,6 +20,7 @@ import src.hayflow_model.hines_repaired_representation_revision as repaired_revi
 import src.hayflow_model.hines_spatial_support_revision as spatial_support_module
 import src.hayflow_model.hines_trainable_topology_canary as topology_canary_module
 import src.hayflow_model.hines_architecture_reassessment as reassessment_module
+import src.hayflow_model.hines_region_mechanism_experts as expert_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -115,6 +116,95 @@ from src.hayflow_model.hines_architecture_reassessment import (
     error_energy_concentration,
     fit_segment_affine_calibrator,
 )
+from src.hayflow_model.hines_region_mechanism_experts import (
+    EXPERT_NAMES,
+    GatedExpertCorrection,
+    HinesRegionMechanismExpertConfig,
+    region_mechanism_expert_gates,
+    uniform_expert_gates,
+)
+
+
+def test_05jf_metadata_gates_are_normalized_and_target_independent():
+    layout = SimpleNamespace(
+        segment_count=5,
+        segments=[
+            {"region": "apical_trunk"}, {"region": "basal"},
+            {"region": "tuft"}, {"region": "soma"}, {"region": "other"},
+        ],
+        core_segment_ids=np.asarray([0, 0, 1, 2, 3, 4]),
+        core_records=[
+            {"mechanism": "Ca_HVA"}, {"mechanism": "SKv3_1"},
+            {"mechanism": "Ih"}, {"mechanism": "Ca_LVAst"},
+            {"mechanism": "NaTa_t"}, {"mechanism": "pas"},
+        ],
+    )
+    gates, report = region_mechanism_expert_gates(layout)
+    assert gates.shape == (5, len(EXPERT_NAMES))
+    np.testing.assert_allclose(gates.sum(axis=1), 1.0)
+    assert report["expert_segment_counts"]["apical_trunk"] == 1
+    assert report["expert_segment_counts"]["calcium_regenerative"] == 2
+    assert report["expert_segment_counts"]["sodium_regenerative"] == 1
+    assert not report["target_values_used"] and not report["development_values_used"]
+
+
+def test_05jf_uniform_control_matches_expert_parameterization_shape():
+    gates = uniform_expert_gates(7, len(EXPERT_NAMES))
+    assert gates.shape == (7, len(EXPERT_NAMES))
+    np.testing.assert_allclose(gates, 1.0 / len(EXPERT_NAMES))
+
+
+def test_05jf_zero_initialized_experts_preserve_frozen_baseline():
+    torch = pytest.importorskip("torch")
+    gates = uniform_expert_gates(7, len(EXPERT_NAMES))
+    model = GatedExpertCorrection(9, 7, 8, 3, gates, 120.0)
+    features = torch.randn(4, 7, 9)
+    baseline = torch.linspace(-90.0, 90.0, 28).reshape(4, 7)
+    torch.testing.assert_close(model(features, baseline), baseline, atol=2e-5, rtol=2e-6)
+
+
+def test_05jf_config_requires_capacity_matched_control_and_registered_seeds():
+    HinesRegionMechanismExpertConfig().validate()
+    with pytest.raises(ValueError, match="uniform and structured"):
+        HinesRegionMechanismExpertConfig(families=("region_mechanism_experts",)).validate()
+    with pytest.raises(ValueError, match="registered three seeds"):
+        HinesRegionMechanismExpertConfig(seeds=(17, 29, 44)).validate()
+
+
+def test_05jf_exact_05je_hashes_match_registered_result():
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (root / "experiments/hayflow/05j_e_architecture_reassessment/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == expert_module.EXPECTED_05JE_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == expert_module.EXPECTED_05JE_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == expert_module.EXPECTED_05JE_FINAL_SHA256
+    assert result["diagnosis"] == "LOCALIZED_MORPHOLOGY_REGIME_ERROR_DOMINATES"
+
+
+def test_05jf_notebook_compares_capacity_matched_experts_and_seals_future_data():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_f_region_mechanism_expert_revision.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "prepare_region_mechanism_expert_revision" in source
+    assert "prepare_expert_gates" in source
+    assert "run_region_mechanism_expert_canary" in source
+    assert "finalize_region_mechanism_expert_revision" in source
+    assert "uniform_expert_control" in source
+    assert "EXPECTED_05JE_INDEX_SHA256" in source
+    assert "assert not gate_report['target_values_used']" in source
+    assert "assert not final_report['methodology']['development_used_for_checkpoint_selection']" in source
+    assert "assert not final_report['methodology']['heldout_inputs_extracted']" in source
+    assert "assert not final_report['methodology']['rollout_performed']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "run_rollout" not in source
+    assert "rglob('/kaggle" not in source
 
 
 def test_05je_segment_affine_recovers_fit_only_bias_and_scale():
