@@ -855,3 +855,30 @@ all prior provenance. Held-out future voltages and event labels remain sealed;
 there is no candidate-head training, rollout, threshold relaxation, or global
 scale-multiplier shortcut. A complete pass can authorize only the separate 05j
 train/development representation recheck, never full training directly.
+
+The completed 05i-b run is registered in
+`experiments/hayflow/05i_b_netcon_semantic_state_repair/result.json`. The
+downloaded archive and all 19 indexed members passed independent hash and size
+verification. The semantic mapping itself passed completely: all 6,390 NetCon
+coordinates were decoded by point-process class, no slots were unmapped, and
+the boundary-relative `tsyn` transform reconstructed the raw timestamps with
+maximum absolute error `0.0`. The frozen-H2 authentic and zero-causal audits
+also passed with finite features and bounded voltages.
+
+The overall input contract did not pass. The input-only held-out teacher state
+reached `|z| = 223.622915` against the unchanged limit of 100, although only
+`0.0813%` of values exceeded the clipping diagnostic threshold of 8. Exactly
+seven coordinates exceeded 100. Four are correctly decoded `tsyn` ages: their
+fit-train support is dominated by old ages around 1061--1140 ms, whereas the
+held-out inputs contain recent events at ages 2.35--3.75 ms. The other three
+are authentic `ProbAMPANMDA2` AMPA/NMDA trace states that are exactly zero in
+the selected fit-train support but active in held-out inputs. Consequently,
+05i-b resolves the raw-slot collision but demonstrates a remaining
+inactive/active and recency representation problem.
+
+The next authorized activity is a separate 05i-c input-representation
+revision. It must preregister a bounded, causal recency/recovery coordinate for
+`tsyn` and domain-calibrated scaling for nonnegative synaptic trace states.
+The teacher snapshot, fixed thresholds, train-only policy and sealed held-out
+future targets must remain unchanged. Relaxing the gate, training a candidate
+head, or starting rollout is not authorized by this result.

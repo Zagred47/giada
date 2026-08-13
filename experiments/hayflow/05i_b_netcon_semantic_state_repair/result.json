@@ -1,0 +1,56 @@
+{
+  "schema_version": "05i-b-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_netcon_semantic_state_repair.zip",
+    "size_bytes": 2552440,
+    "sha256": "7b0c1f97d325a1edf8bdf9d57b5c85188a1cd0561be2e959956fb1eeea152b62",
+    "artifact_index_sha256": "a1084f12e85d51bab2079af1c4995e523f2766c92e7e2a2c358a5137ade2fb20",
+    "final_report_sha256": "dd97b7336b1dd23d38c5d39046acb600dc04fdf5926336fc1974aea5feb9b72b",
+    "indexed_member_count": 19,
+    "verified_member_count": 19
+  },
+  "code_revision": "59563704889d081f82d4e69947ed8d3a5aa2db3e",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "input_contract_passed": false,
+  "diagnosis": "NETCON_SEMANTIC_INPUT_REPAIR_INSUFFICIENT",
+  "decision": "SEMANTIC_INPUT_CONTRACT_ONLY_NO_HEAD_TRAINING",
+  "netcon_semantic_roundtrip": {
+    "valid": true,
+    "mapped_coordinate_count": 6390,
+    "unmapped_coordinate_count": 0,
+    "maximum_roundtrip_absolute_error": 0.0,
+    "minimum_age_ms": 0.34999999999990905
+  },
+  "coordinate_support": {
+    "fit_split": "train",
+    "thresholds_unchanged": true,
+    "standardized_maximum_limit": 100.0,
+    "clipping_threshold": 8.0,
+    "maximum_clipping_fraction_limit": 0.01,
+    "heldout_maximum_absolute_standardized": 223.6229151333528,
+    "heldout_clipping_fraction": 0.0008130081300813008,
+    "coordinate_count_above_standardized_limit": 7,
+    "heldout_improvement_factor": 12356076.79088774,
+    "state_input_contract_passed": false,
+    "failing_coordinate_families": {
+      "recent_event_tsyn_age": 4,
+      "synaptic_trace_state": 3
+    }
+  },
+  "frozen_h2": {
+    "valid": true,
+    "input_contract_passed": true,
+    "heldout_authentic_standardized_maximum": 19.001120017038104,
+    "heldout_zero_causal_standardized_maximum": 50.658363231501816,
+    "heldout_authentic_raw_norm_to_train_ratio": 0.33145234588641226,
+    "heldout_zero_causal_raw_norm_to_train_ratio": 1.8324291898772151,
+    "heldout_boundary_maximum_absolute_mv": 83.12006378173828
+  },
+  "heldout_future_targets_materialized": false,
+  "candidate_head_training_performed": false,
+  "rollout_performed": false,
+  "full_training_authorized": false,
+  "next_step": "05i_c_netcon_semantic_revision"
+}
