@@ -1,0 +1,37 @@
+schema_version: "05j-g-config-v1"
+
+regenerative_state_decomposition:
+  state_groups:
+    - calcium_channel
+    - calcium_homeostasis
+    - sodium_channel
+    - potassium_channel
+    - h_current
+    - nmda_synaptic
+    - other_synaptic
+  state_statistics: [signed_mean, rms, maximum_absolute]
+  ridge_lambdas: [0.001, 0.01, 0.1, 1.0, 10.0]
+  cross_validation_folds: 6
+  branch_fit_weight: 1.0
+  selection_max_error_weight: 0.05
+  selection_branch_log_weight: 2.0
+  feature_epsilon: 0.000001
+  spatial_shift_segments: 1
+  material_rmse_improvement_fraction: 0.20
+  material_max_error_improvement_fraction: 0.10
+  oracle_specificity_improvement_fraction: 0.15
+
+methodology:
+  exact_05jf_artifact_verified: true
+  base_prediction: frozen_direct_tree_three_seed_ensemble
+  voltage_target_coordinate_excluded_from_every_state_probe: true
+  causal_probe: boundary_t_state_only
+  oracle_probe: non_voltage_teacher_state_delta_t_to_t_plus_1
+  oracle_candidate_authorization: false
+  capacity_control: spatially_shifted_oracle_same_width
+  static_bias_control: per_segment_intercept_only
+  ridge_selection_role: fit_grouped_pair_cross_validation_only
+  development_used_for_model_selection: false
+  heldout_inputs_extracted: false
+  rollout_performed: false
+  full_training_authorized: false

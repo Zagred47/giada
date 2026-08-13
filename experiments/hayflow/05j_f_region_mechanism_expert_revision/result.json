@@ -1,0 +1,54 @@
+{
+  "schema_version": "05j-f-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_region_mechanism_expert_revision.zip",
+    "size_bytes": 2248354,
+    "sha256": "c16c87a113bb4e246d7a32a5491b8c6e66368a269b3d989a86d335a0534eb298",
+    "artifact_index_sha256": "7cd5716746e2e316f65a4077dc0eb3f33b625a6b718fdb6a89e1d52838b2f25e",
+    "final_report_sha256": "a53c90f005540efcfd10c63ddee8bdce8af97821bab30ef77d357e78455b20aa",
+    "indexed_member_count": 39,
+    "verified_member_count": 39
+  },
+  "code_revision": "364e451170538f1562f8a83b1c91f9c321447a5d",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "decision": "TRAIN_ONLY_REGION_MECHANISM_EXPERT_CANARY",
+  "diagnosis": "REGION_MECHANISM_EXPERTS_DO_NOT_RESCUE_LOCALIZED_ERROR",
+  "family_summary": {
+    "uniform_expert_control": {
+      "median_fit_rmse_mv": 1.4926206391688859,
+      "median_calibration_rmse_mv": 1.4173834165827677,
+      "median_development_rmse_mv": 2.665738431219576,
+      "median_calibration_maximum_error_mv": 16.472137451171875,
+      "median_development_maximum_error_mv": 17.892340660095215,
+      "absolute_passing_seed_count": 0,
+      "signal_passing_seed_count": 0
+    },
+    "region_mechanism_experts": {
+      "median_fit_rmse_mv": 1.6071466241228483,
+      "median_calibration_rmse_mv": 1.4968046456148856,
+      "median_development_rmse_mv": 2.9632758256961105,
+      "median_calibration_maximum_error_mv": 18.150541305541992,
+      "median_development_maximum_error_mv": 18.955245971679688,
+      "absolute_passing_seed_count": 0,
+      "signal_passing_seed_count": 0
+    }
+  },
+  "expert_vs_uniform": {
+    "calibration_rmse_improvement_fraction": -0.056033694272787565,
+    "development_rmse_improvement_fraction": -0.1116153749339956,
+    "specialization_specific_material_improvement": false
+  },
+  "checkpoint_reconstruction": {
+    "valid": true,
+    "metric_tolerance": 0.0002,
+    "historical_05je_metric_tolerance": 0.0001,
+    "explicit_local_override": true,
+    "retraining_performed": false
+  },
+  "expert_canary_passed": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "next_step": "05j_g_regenerative_state_target_decomposition"
+}

@@ -1,6 +1,13 @@
 # HayFlow 05j-f - region/mechanism expert revision
 
-Status: implemented; Kaggle execution pending.
+Status: completed on Kaggle; valid negative result.
+
+The exact artifact is registered in `result.json`. All 39 indexed members were
+verified. Region/mechanism experts failed every robust gate and were worse than
+the capacity-matched uniform control by 5.6% on median calibration RMSE and
+11.2% on median development RMSE. This rules out simple metadata-gated
+specialization as the repair and routes the work to 05j-g state-target
+decomposition.
 
 05j-e showed that the direct-tree decoder preserves paired-future separation
 but concentrates absolute-voltage error in regenerative trunk and adjacent

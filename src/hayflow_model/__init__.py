@@ -159,6 +159,16 @@ from .hines_region_mechanism_experts import (
     region_mechanism_expert_gates,
     uniform_expert_gates,
 )
+from .hines_regenerative_state_decomposition import (
+    EXPECTED_05JF_ARCHIVE_SHA256,
+    STATE_GROUPS,
+    STATE_STATISTICS,
+    HinesRegenerativeStateDecompositionConfig,
+    HinesRegenerativeStateTargetDecomposition,
+    aggregate_state_groups,
+    regenerative_state_group,
+    semantic_group_ids,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -276,4 +286,12 @@ __all__ = [
     "HinesRegionMechanismExpertRevision",
     "region_mechanism_expert_gates",
     "uniform_expert_gates",
+    "EXPECTED_05JF_ARCHIVE_SHA256",
+    "STATE_GROUPS",
+    "STATE_STATISTICS",
+    "HinesRegenerativeStateDecompositionConfig",
+    "HinesRegenerativeStateTargetDecomposition",
+    "aggregate_state_groups",
+    "regenerative_state_group",
+    "semantic_group_ids",
 ]

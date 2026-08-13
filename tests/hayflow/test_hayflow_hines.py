@@ -22,6 +22,7 @@ import src.hayflow_model.hines_spatial_support_revision as spatial_support_modul
 import src.hayflow_model.hines_trainable_topology_canary as topology_canary_module
 import src.hayflow_model.hines_architecture_reassessment as reassessment_module
 import src.hayflow_model.hines_region_mechanism_experts as expert_module
+import src.hayflow_model.hines_regenerative_state_decomposition as decomposition_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -124,6 +125,92 @@ from src.hayflow_model.hines_region_mechanism_experts import (
     region_mechanism_expert_gates,
     uniform_expert_gates,
 )
+from src.hayflow_model.hines_regenerative_state_decomposition import (
+    STATE_GROUPS,
+    HinesRegenerativeStateDecompositionConfig,
+    aggregate_state_groups,
+    regenerative_state_group,
+    semantic_group_ids,
+)
+
+
+def test_05jg_semantic_groups_are_exclusive_and_exclude_voltage():
+    records = [
+        {"category": "voltage", "mechanism": "membrane", "variable": "v"},
+        {"category": "mechanism_states", "mechanism": "Ca_HVA", "variable": "m"},
+        {"category": "calcium_ions", "mechanism": "cadynamics", "variable": "cai"},
+        {"category": "mechanism_states", "mechanism": "NaTa_t", "variable": "m"},
+        {"category": "mechanism_states", "mechanism": "SKv3_1", "variable": "m"},
+        {"category": "mechanism_states", "mechanism": "Ih", "variable": "m"},
+        {"category": "synapse_states", "mechanism": "ProbAMPANMDA2", "variable": "A_NMDA"},
+        {"category": "synapse_states", "mechanism": "ProbAMPANMDA2", "variable": "A_AMPA"},
+        {"category": "synapse_states", "mechanism": "ProbGABAAB_EMS", "variable": "A"},
+    ]
+    assert [regenerative_state_group(row) for row in records] == [
+        None,
+        "calcium_channel",
+        "calcium_homeostasis",
+        "sodium_channel",
+        "potassium_channel",
+        "h_current",
+        "nmda_synaptic",
+        "other_synaptic",
+        "other_synaptic",
+    ]
+    ids = semantic_group_ids(records)
+    assert ids[0] == -1
+    assert sorted(set(ids[1:].tolist())) == list(range(len(STATE_GROUPS)))
+
+
+def test_05jg_state_aggregation_keeps_segment_and_group_alignment():
+    values = np.asarray([[1.0, 3.0, 2.0, -4.0], [2.0, 4.0, 6.0, -8.0]])
+    aggregated = aggregate_state_groups(
+        values,
+        np.asarray([0, 0, 1, 1]),
+        np.asarray([0, 0, 1, 1]),
+        segment_count=2,
+        group_count=2,
+    ).reshape(2, 2, 2, 3)
+    np.testing.assert_allclose(aggregated[:, 0, 0, 0], [2.0, 3.0])
+    np.testing.assert_allclose(aggregated[:, 1, 1, 2], [4.0, 8.0])
+    np.testing.assert_allclose(aggregated[:, 0, 1], 0.0)
+
+
+def test_05jg_config_and_exact_05jf_hashes_match_registered_result():
+    HinesRegenerativeStateDecompositionConfig().validate()
+    with pytest.raises(ValueError, match="state groups"):
+        HinesRegenerativeStateDecompositionConfig(state_groups=("calcium_channel",)).validate()
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (root / "experiments/hayflow/05j_f_region_mechanism_expert_revision/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == decomposition_module.EXPECTED_05JF_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == decomposition_module.EXPECTED_05JF_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == decomposition_module.EXPECTED_05JF_FINAL_SHA256
+    assert result["diagnosis"] == "REGION_MECHANISM_EXPERTS_DO_NOT_RESCUE_LOCALIZED_ERROR"
+
+
+def test_05jg_notebook_keeps_oracle_diagnostic_and_future_data_sealed():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_g_regenerative_state_target_decomposition.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "prepare_regenerative_state_target_decomposition" in source
+    assert "prepare_state_target_surfaces" in source
+    assert "run_state_target_probes" in source
+    assert "finalize_regenerative_state_target_decomposition" in source
+    assert "voltage_coordinate_count_excluded'] == 642" in source
+    assert "future_state_delta_used_as_diagnostic_oracle_only" in source
+    assert "not final_report['candidate_model_authorized']" in source
+    assert "assert not final_report['methodology']['heldout_inputs_extracted']" in source
+    assert "assert not final_report['methodology']['rollout_performed']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "rglob('/kaggle" not in source
 
 
 def test_05jf_metadata_gates_are_normalized_and_target_independent():
