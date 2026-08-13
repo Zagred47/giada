@@ -910,3 +910,28 @@ compared byte-for-value with 05i-b and cannot be relaxed. Held-out future
 voltages and event labels remain sealed; no candidate head, rollout or full
 training path exists. A complete pass can authorize only a separate 05j
 train/development representation recheck.
+
+The completed 05i-c run is registered in
+`experiments/hayflow/05i_c_synaptic_domain_repair/result.json`. The downloaded
+archive and all 20 indexed members passed independent SHA-256 and size
+verification. The bounded-recency transform reconstructed the raw timestamps
+with maximum absolute error `0.0`; all 1,278 recency coordinates and all 3,834
+dynamic synaptic traces satisfied their preregistered domain-floor contracts.
+
+The complete input contract passed without changing any threshold. The
+input-only held-out maximum standardized teacher-state value fell from
+`223.622915` in 05i-b to `39.813518`, below the fixed limit of 100. Bounded
+recency reached at most `14.879954` and dynamic traces at most `39.813518`.
+The global held-out fraction beyond the diagnostic `|z|=8` threshold remained
+`0.0813%`, below the fixed 1% gate, and no coordinate remained above 100.
+
+The frozen-H2 contract passed with authentic and zeroed causal inputs. Their
+held-out/train maximum-norm ratios were `0.331327` and `0.698655`; maximum
+standardized H2 values were `18.821954` and `14.344117`. Physical voltage was
+bounded at `83.379829 mV` absolute maximum and no nonfinite value was observed.
+Held-out future targets, candidate heads and rollout remained sealed.
+
+05i-c therefore authorizes the separate
+`05j_repaired_representation_train_development_recheck`. It does not authorize
+full training directly: 05j must recheck the repaired representation using
+train/development only before any candidate-head path is reopened.

@@ -1,0 +1,58 @@
+{
+  "schema_version": "05i-c-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_synaptic_domain_repair.zip",
+    "size_bytes": 2459832,
+    "sha256": "dd2fc744760196b8fc5fd52f980a18a6d533ff0816103592725d6ad5c4e2e6df",
+    "artifact_index_sha256": "1554a04b9c6361f68169a616e785c395deee724ac38ba911e7cb4825e6568ad3",
+    "final_report_sha256": "5faca3a30ca132c4aa54e53997cea68f3a0c4b1e267e01924588250b48bd795e",
+    "indexed_member_count": 20,
+    "verified_member_count": 20
+  },
+  "code_revision": "2f38632d9d0e0abebe649f790118f78868d2784d",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "input_contract_passed": true,
+  "diagnosis": "SYNAPTIC_DOMAIN_INPUT_CONTRACT_REPAIRED",
+  "decision": "SYNAPTIC_DOMAIN_INPUT_CONTRACT_ONLY_NO_HEAD_TRAINING",
+  "bounded_recency": {
+    "valid": true,
+    "coordinate_count": 1278,
+    "maximum_roundtrip_absolute_error": 0.0,
+    "heldout_maximum_absolute_standardized": 14.879953541446724,
+    "minimum_repaired_scale": 0.02
+  },
+  "dynamic_synaptic_trace": {
+    "valid": true,
+    "coordinate_count": 3834,
+    "heldout_maximum_absolute_standardized": 39.81351763003574,
+    "minimum_repaired_scale": 0.01980420515885558
+  },
+  "coordinate_support": {
+    "fit_split": "train",
+    "thresholds_unchanged": true,
+    "standardized_maximum_limit": 100.0,
+    "clipping_threshold": 8.0,
+    "maximum_clipping_fraction_limit": 0.01,
+    "heldout_maximum_absolute_standardized": 39.81351763003574,
+    "heldout_clipping_fraction": 0.0008130081300813008,
+    "heldout_improvement_factor": 69401099.82910341,
+    "coordinate_count_above_standardized_limit": 0,
+    "state_input_contract_passed": true
+  },
+  "frozen_h2": {
+    "valid": true,
+    "input_contract_passed": true,
+    "heldout_authentic_standardized_maximum": 18.821953710876024,
+    "heldout_zero_causal_standardized_maximum": 14.34411677503965,
+    "heldout_authentic_raw_norm_to_train_ratio": 0.3313269883647277,
+    "heldout_zero_causal_raw_norm_to_train_ratio": 0.6986550377462822,
+    "heldout_boundary_maximum_absolute_mv": 83.37982940673828
+  },
+  "heldout_future_targets_materialized": false,
+  "candidate_head_training_performed": false,
+  "rollout_performed": false,
+  "full_training_authorized": false,
+  "next_step": "05j_repaired_representation_train_development_recheck"
+}

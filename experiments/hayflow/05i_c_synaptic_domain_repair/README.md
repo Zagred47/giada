@@ -1,6 +1,8 @@
 # HayFlow 05i-c - bounded recency and synaptic-domain repair
 
-Status: implementation ready; execution pending on Kaggle.
+Status: completed on Kaggle; all registered input-contract gates passed. A
+separate 05j train/development representation recheck is authorized, while
+full training remains prohibited.
 
 05i-b proved that all NetCon slots can be decoded class-wise and that the
 frozen H2 path is numerically supported, but seven teacher-state coordinates
@@ -26,3 +28,28 @@ unchanged. Held-out future voltages and event labels remain sealed. No
 candidate head is trained or evaluated and no rollout is performed.
 
 Expected artifact: `hayflow_hines_synaptic_domain_repair.zip`.
+
+## Registered result
+
+The completed run used code revision `2f38632d9d0e0abebe649f790118f78868d2784d`.
+The downloaded archive and all 20 indexed members passed independent SHA-256
+and size verification. Bounded recency was exactly reversible with maximum
+round-trip error `0.0`; all 1,278 recency coordinates and all 3,834 dynamic
+synaptic traces satisfied their preregistered domain floors.
+
+The complete 17,220-coordinate input contract passed. The held-out maximum
+fell from the 05i-b value of `223.622915` to `39.813518`, below the unchanged
+limit of 100. The recency family reached at most `14.879954` and the dynamic
+trace family at most `39.813518`. Only `0.0813%` of the held-out standardized
+values exceeded the diagnostic threshold of 8, below the fixed 1% limit. No
+raw, transformed, standardized or H2 feature value was nonfinite.
+
+The frozen-H2 authentic and zero-causal audits also passed. The held-out/train
+maximum-norm ratios were `0.331327` and `0.698655`, while maximum standardized
+H2 values were `18.821954` and `14.344117`. Physical boundary voltage remained
+bounded at `83.379829 mV` absolute maximum.
+
+This result authorizes only the separate
+`05j_repaired_representation_train_development_recheck`. Held-out future
+targets remain sealed and no candidate-head training, rollout or full training
+is authorized directly by 05i-c.
