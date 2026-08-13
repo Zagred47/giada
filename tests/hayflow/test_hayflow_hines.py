@@ -168,6 +168,9 @@ def test_05jc_notebook_seals_heldout_and_uses_grouped_train_cv():
     assert "run_spatial_design_audit" in source
     assert "run_spatial_support_controls" in source
     assert "train_grouped_pair_cross_validation" in source
+    assert "artifact_index_matches" in source
+    assert "EXPECTED_05H_INDEX_SHA256" in source
+    assert "EXPECTED_05JB_INDEX_SHA256" in source
     assert "assert not controls_report['development_used_for_selection']" in source
     assert "assert not final_report['heldout_contract']['inputs_extracted']" in source
     assert "assert not final_report['methodology']['rollout_performed']" in source
