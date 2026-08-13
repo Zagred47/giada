@@ -1,0 +1,34 @@
+schema_version: "05j-b-config-v1"
+
+repaired_representation_revision:
+  input_families: [h2, causal, h2_causal]
+  feature_transforms: [tanh, asinh]
+  ridge_lambdas: [0.000001, 0.00001, 0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+  expected_train_pair_count: 12
+  expected_development_pair_count: 1
+  target_residual_limit_mv: 120.0
+  target_atanh_margin: 0.000001
+  asinh_reference_z: 8.0
+  maximum_regularized_condition_number: 100000000.0
+  maximum_segment_coefficient_l2_norm: 100000.0
+  branch_fit_weight: 1.0
+  lopo_max_error_weight: 0.05
+  lopo_branch_log_weight: 2.0
+  minimum_passing_candidate_count: 1
+
+methodology:
+  source_05j_artifact_verified_exactly: true
+  exact_05g_train_development_support_reused: true
+  feature_normalization_fit_role: train
+  ridge_selection_role: train_leave_one_pair_out
+  development_used_for_selection: false
+  feature_transform_control: [registered_tanh, tail_preserving_asinh]
+  decoder_control: segment_specific_dual_ridge
+  bounded_target_parameterization: atanh_120mv
+  heldout_inputs_extracted: false
+  heldout_boundary_voltage_targets_materialized: false
+  heldout_event_targets_materialized: false
+  rollout_performed: false
+  base_h2_frozen: true
+  teacher_encoder_updated: false
+  full_training_authorized: false

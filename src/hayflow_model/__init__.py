@@ -115,6 +115,16 @@ from .hines_repaired_representation_recheck import (
     HinesRepairedRepresentationRecheckConfig,
     summarize_robust_family_gate,
 )
+from .hines_repaired_representation_revision import (
+    EXPECTED_05J_ARCHIVE_SHA256,
+    HinesRepairedRepresentationRevision,
+    HinesRepairedRepresentationRevisionConfig,
+    bounded_target_decode,
+    bounded_target_encode,
+    dual_ridge_path_predict,
+    pair_gate_selection_score,
+    revised_feature_transform,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -198,4 +208,12 @@ __all__ = [
     "HinesRepairedRepresentationRecheck",
     "HinesRepairedRepresentationRecheckConfig",
     "summarize_robust_family_gate",
+    "EXPECTED_05J_ARCHIVE_SHA256",
+    "HinesRepairedRepresentationRevision",
+    "HinesRepairedRepresentationRevisionConfig",
+    "bounded_target_decode",
+    "bounded_target_encode",
+    "dual_ridge_path_predict",
+    "pair_gate_selection_score",
+    "revised_feature_transform",
 ]

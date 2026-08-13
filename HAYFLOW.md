@@ -982,3 +982,36 @@ learnable or deployable mapping, and cannot supersede the failed compact-head
 gate. The valid 05i-c input contract remains intact, while 05k rollout and full
 training remain prohibited. The next authorized experiment is the separate
 `05j_b_repaired_representation_revision`.
+
+### Notebook 05j-b: repaired representation revision
+
+`notebooks/05j_b_repaired_representation_revision.ipynb` investigates the
+specific discrepancy left by 05j: an unrestricted local projection can
+interpolate the tiny train support, but all compact shared heads fail even on
+train. It verifies the exact 05j artifact and reuses the exact 12 train pairs
+and one episode-disjoint development pair. The repaired 05i-c normalizer is
+reconstructed again from train-only quantities. No held-out input or target is
+read, and neither rollout nor full training is present.
+
+05j-b separates feature geometry from decoder sharing. The unchanged
+`tanh(z/4)` representation is compared with the monotone tail-preserving map
+`asinh(z)/asinh(8)`. For each transform it fits segment-specific affine ridge
+decoders for H2, causal-only and H2-plus-causal inputs. This removes the shared
+MLP and low-dimensional segment embedding as confounders without pretending
+that 642 independent decoders are the final HayFlow architecture.
+
+The residual target uses an invertible bounded coordinate with the unchanged
+120 mV physical limit. Ridge values are selected using leave-one-pair-out on
+train only; the development pair is excluded from hyperparameter selection and
+evaluated once after fitting the selected candidate on all train pairs. Each
+ridge fit uses both pointwise observations and paired-future difference rows
+with the same unit branch weighting used in 05j. The
+original RMSE, maximum-error and branching-retention gates remain unchanged,
+and candidates must also satisfy explicit condition-number and coefficient-norm
+limits.
+
+If only `asinh` candidates pass, the saturating feature map is localized as the
+primary blocker. If both transform families pass, decoder sharing/capacity is
+localized instead. If train fits but development fails, the evidence points to
+support/generalization instability. A complete pass authorizes only the
+separate 05k micro-rollout, never full training; failure routes to 05j-c.

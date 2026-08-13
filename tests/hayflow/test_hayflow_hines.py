@@ -16,6 +16,7 @@ import src.hayflow_model.hines_state_normalization_repair as normalization_repai
 import src.hayflow_model.hines_netcon_semantic_repair as netcon_repair_module
 import src.hayflow_model.hines_synaptic_domain_repair as synaptic_domain_module
 import src.hayflow_model.hines_repaired_representation_recheck as repaired_recheck_module
+import src.hayflow_model.hines_repaired_representation_revision as repaired_revision_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -84,6 +85,119 @@ from src.hayflow_model.hines_repaired_representation_recheck import (
     HinesRepairedRepresentationRecheckConfig,
     summarize_robust_family_gate,
 )
+from src.hayflow_model.hines_repaired_representation_revision import (
+    HinesRepairedRepresentationRevisionConfig,
+    bounded_target_decode,
+    bounded_target_encode,
+    dual_ridge_path_predict,
+    pair_gate_selection_score,
+    revised_feature_transform,
+)
+
+
+def test_05jb_tail_transform_preserves_order_without_saturating():
+    values = np.asarray([-100.0, -10.0, 0.0, 10.0, 100.0])
+    tanh = revised_feature_transform(
+        values, "tanh", tanh_scale=4.0, asinh_reference_z=8.0
+    )
+    asinh = revised_feature_transform(
+        values, "asinh", tanh_scale=4.0, asinh_reference_z=8.0
+    )
+    assert np.all(np.diff(asinh) > 0)
+    assert asinh[-1] > 1.0
+    assert tanh[-1] == pytest.approx(1.0)
+
+
+def test_05jb_bounded_target_parameterization_roundtrips():
+    values = np.asarray([-100.0, -5.0, 0.0, 5.0, 100.0])
+    encoded = bounded_target_encode(values, 120.0, 1e-6)
+    np.testing.assert_allclose(
+        bounded_target_decode(encoded, 120.0), values, atol=1e-10
+    )
+    with pytest.raises(RuntimeError, match="decoder domain"):
+        bounded_target_encode(np.asarray([120.0]), 120.0, 1e-6)
+
+
+def test_05jb_dual_ridge_path_fits_segment_specific_affine_surface():
+    rng = np.random.default_rng(123)
+    features = rng.normal(size=(10, 4, 5))
+    coefficient = rng.normal(size=(4, 5))
+    target = np.einsum("nsf,sf->ns", features, coefficient) + 0.25
+    prediction, diagnostics = dual_ridge_path_predict(
+        features, target, features, [1e-8, 1.0], pair_branch_weight=1.0
+    )
+    assert prediction.shape == (2, 10, 4)
+    assert np.sqrt(np.mean((prediction[0] - target) ** 2)) < 1e-6
+    assert diagnostics[1]["maximum_regularized_condition_number"] < diagnostics[0][
+        "maximum_regularized_condition_number"
+    ]
+    assert diagnostics[0]["fit_row_count"] == 15
+    assert diagnostics[0]["pair_branch_weight"] == 1.0
+
+
+def test_05jb_selection_score_penalizes_branch_collapse():
+    healthy = {
+        "aggregate_voltage_rmse_mv": 1.0,
+        "maximum_segment_error_mv": 2.0,
+        "pair_metrics": [{"branching_retention": 1.0}],
+    }
+    collapsed = {
+        **healthy,
+        "pair_metrics": [{"branching_retention": 0.1}],
+    }
+    assert pair_gate_selection_score(
+        collapsed, max_error_weight=0.05, branch_log_weight=2.0
+    ) > pair_gate_selection_score(
+        healthy, max_error_weight=0.05, branch_log_weight=2.0
+    )
+
+
+def test_05jb_config_rejects_posthoc_family_or_lambda_changes():
+    HinesRepairedRepresentationRevisionConfig().validate()
+    with pytest.raises(ValueError, match="retain h2"):
+        HinesRepairedRepresentationRevisionConfig(
+            input_families=("h2", "h2_causal")
+        ).validate()
+    with pytest.raises(ValueError, match="increasing"):
+        HinesRepairedRepresentationRevisionConfig(
+            ridge_lambdas=(1.0, 0.1)
+        ).validate()
+
+
+def test_05jb_notebook_seals_heldout_rollout_and_uses_browser_zip():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_b_repaired_representation_revision.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "prepare_repaired_representation_revision" in source
+    assert "run_transform_geometry_audit" in source
+    assert "run_segmentwise_regularized_revision" in source
+    assert "train_leave_one_pair_out" in source
+    assert "assert not revision_report['development_used_for_selection']" in source
+    assert "assert not final_report['heldout_contract']['inputs_extracted']" in source
+    assert "assert not final_report['methodology']['rollout_performed']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "run_rollout" not in source
+    assert "rglob('/kaggle" not in source
+
+
+def test_05jb_exact_05j_hashes_match_registered_result():
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (
+            root
+            / "experiments/hayflow/05j_repaired_representation_recheck/result.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == repaired_revision_module.EXPECTED_05J_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == repaired_revision_module.EXPECTED_05J_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == repaired_revision_module.EXPECTED_05J_FINAL_SHA256
+    assert not result["representation_recheck_passed"]
+    assert result["next_step"] == "05j_b_repaired_representation_revision"
 
 
 def _netcon_layout_for_test():
