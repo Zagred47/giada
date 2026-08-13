@@ -78,6 +78,7 @@ class HinesRegionMechanismExpertConfig:
     within_seed_rmse_improvement_fraction: float = 0.15
     within_seed_max_error_improvement_fraction: float = 0.10
     expert_vs_uniform_improvement_fraction: float = 0.10
+    checkpoint_reconstruction_metric_atol: float = 2e-4
 
     def validate(self) -> None:
         if tuple(self.families) != (
@@ -97,6 +98,7 @@ class HinesRegionMechanismExpertConfig:
             self.evaluation_interval, self.patience, self.learning_rate,
             self.gradient_clip_norm, self.target_residual_limit_mv,
             self.error_scale_mv, self.branch_loss_weight,
+            self.checkpoint_reconstruction_metric_atol,
         )
         if min(positive) <= 0:
             raise ValueError("05j-f configuration values must be positive")

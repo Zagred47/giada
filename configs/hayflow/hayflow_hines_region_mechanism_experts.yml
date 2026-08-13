@@ -32,9 +32,11 @@ region_mechanism_experts:
   within_seed_rmse_improvement_fraction: 0.15
   within_seed_max_error_improvement_fraction: 0.10
   expert_vs_uniform_improvement_fraction: 0.10
+  checkpoint_reconstruction_metric_atol: 0.0002
 
 methodology:
   exact_05je_artifact_verified: true
+  checkpoint_reconstruction_metric_atol: 0.0002
   base_model: frozen_direct_tree_per_seed
   comparison: capacity_matched_uniform_vs_metadata_gated_experts
   expert_gate_source: teacher_region_and_mechanism_metadata_only

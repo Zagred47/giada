@@ -1,6 +1,7 @@
 from types import SimpleNamespace
 import hashlib
 import importlib.util
+import inspect
 import json
 from pathlib import Path
 
@@ -164,7 +165,9 @@ def test_05jf_zero_initialized_experts_preserve_frozen_baseline():
 
 
 def test_05jf_config_requires_capacity_matched_control_and_registered_seeds():
-    HinesRegionMechanismExpertConfig().validate()
+    config = HinesRegionMechanismExpertConfig()
+    config.validate()
+    assert config.checkpoint_reconstruction_metric_atol == pytest.approx(2e-4)
     with pytest.raises(ValueError, match="uniform and structured"):
         HinesRegionMechanismExpertConfig(families=("region_mechanism_experts",)).validate()
     with pytest.raises(ValueError, match="registered three seeds"):
@@ -198,6 +201,8 @@ def test_05jf_notebook_compares_capacity_matched_experts_and_seals_future_data()
     assert "finalize_region_mechanism_expert_revision" in source
     assert "uniform_expert_control" in source
     assert "EXPECTED_05JE_INDEX_SHA256" in source
+    assert "metric_atol=expert_config.checkpoint_reconstruction_metric_atol" in source
+    assert "explicit_metric_atol_override" in source
     assert "assert not gate_report['target_values_used']" in source
     assert "assert not final_report['methodology']['development_used_for_checkpoint_selection']" in source
     assert "assert not final_report['methodology']['heldout_inputs_extracted']" in source
@@ -205,6 +210,14 @@ def test_05jf_notebook_compares_capacity_matched_experts_and_seals_future_data()
     assert "base64.b64encode" in source and "application/zip" in source
     assert "run_rollout" not in source
     assert "rglob('/kaggle" not in source
+
+
+def test_05jf_reconstruction_tolerance_is_explicit_without_changing_05je_default():
+    signature = inspect.signature(
+        reassessment_module.HinesArchitectureReassessment.reconstruct_frozen_checkpoints
+    )
+    assert signature.parameters["metric_atol"].default is None
+    assert HinesArchitectureReassessmentConfig().metric_atol == pytest.approx(1e-4)
 
 
 def test_05je_segment_affine_recovers_fit_only_bias_and_scale():

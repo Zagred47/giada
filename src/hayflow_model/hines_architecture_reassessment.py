@@ -256,11 +256,19 @@ class HinesArchitectureReassessment(HinesTrainableTopologyCanary):
             raise RuntimeError("05j-d extracted root is unavailable")
         return (self._artifact_05jd_root / relative_path).read_bytes()
 
-    def reconstruct_frozen_checkpoints(self) -> Dict[str, Any]:
+    def reconstruct_frozen_checkpoints(
+        self, *, metric_atol: float | None = None
+    ) -> Dict[str, Any]:
         require_torch()
         if not self.topology_designs:
             raise RuntimeError("prepare_topology_canary_designs() must run first")
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        tolerance = (
+            self.reassessment.metric_atol
+            if metric_atol is None else float(metric_atol)
+        )
+        if tolerance <= 0:
+            raise ValueError("checkpoint reconstruction tolerance must be positive")
         registered_runs = self.artifact_05jd_report["trainable_topology_canary"]["runs"]
         reconstructed = []
         progress = Progress("05j-e frozen checkpoint reconstruction", len(registered_runs))
@@ -305,7 +313,7 @@ class HinesArchitectureReassessment(HinesTrainableTopologyCanary):
                 "family": family, "seed": seed,
                 "checkpoint": row["checkpoint"],
                 "maximum_registered_metric_error": maximum_metric_error,
-                "valid": maximum_metric_error <= self.reassessment.metric_atol,
+                "valid": maximum_metric_error <= tolerance,
             })
             progress.update(position + 1, f"{family} seed={seed} error={maximum_metric_error:.3g}")
             del model
@@ -313,6 +321,9 @@ class HinesArchitectureReassessment(HinesTrainableTopologyCanary):
             "schema_version": "05j-e-checkpoint-reconstruction-v1",
             "valid": all(row["valid"] for row in reconstructed),
             "device": str(device), "runs": reconstructed,
+            "metric_atol": tolerance,
+            "default_registered_metric_atol": self.reassessment.metric_atol,
+            "explicit_metric_atol_override": metric_atol is not None,
             "retraining_performed": False,
             "development_used_for_model_selection": False,
             "heldout_inputs_extracted": False,

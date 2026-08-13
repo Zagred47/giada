@@ -12,6 +12,11 @@ frozen. A zero-initialized correction is trained around that prediction. Both
 candidate families contain the same eight expert networks and therefore the
 same trainable parameter count:
 
+Checkpoint metrics are reproduced with a 05j-f-local absolute tolerance of
+`2e-4`, which accommodates sub-microvolt GPU-kernel variation while remaining
+orders of magnitude below every biological accuracy gate. The historical
+05j-e tolerance and registered result are not modified.
+
 1. `uniform_expert_control` averages all experts uniformly at every segment;
 2. `region_mechanism_experts` gates the same networks using fixed metadata-only
    membership in general, apical trunk, basal, tuft, soma/axon, calcium
