@@ -96,6 +96,13 @@ from .hines_state_normalization_repair import (
     HinesStateNormalizationRepairConfig,
     semantic_state_scale_repair,
 )
+from .hines_netcon_semantic_repair import (
+    EXPECTED_05I_ARCHIVE_SHA256,
+    HinesNetConSemanticRepair,
+    HinesNetConSemanticRepairConfig,
+    NetConSemanticStateEncoder,
+    netcon_semantic_records,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -166,4 +173,9 @@ __all__ = [
     "HinesStateNormalizationRepair",
     "HinesStateNormalizationRepairConfig",
     "semantic_state_scale_repair",
+    "EXPECTED_05I_ARCHIVE_SHA256",
+    "HinesNetConSemanticRepair",
+    "HinesNetConSemanticRepairConfig",
+    "NetConSemanticStateEncoder",
+    "netcon_semantic_records",
 ]

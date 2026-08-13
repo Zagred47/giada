@@ -1,0 +1,35 @@
+schema_version: "05i-b-config-v1"
+
+netcon_semantic_repair:
+  tsyn_representation: boundary_relative_age_ms
+  roundtrip_atol: 0.000000001
+  negative_age_atol: 0.000000001
+  probability_domain_atol: 0.000000001
+  nonnegative_domain_atol: 0.000000000001
+  expected_synapse_count_per_class: 639
+  expected_netcon_coordinate_count: 6390
+  expected_tsyn_coordinate_count: 1278
+  expected_probability_coordinate_count: 3834
+  expected_amplitude_coordinate_count: 1278
+
+methodology:
+  netcon_layout_source: KNOWN_NET_RECEIVE_STATE_LAYOUT
+  slot_mapping_point_process_specific: true
+  probability_slots: [Pv, Pr, u]
+  nonnegative_amplitude_slots: [weight_AMPA, weight_NMDA]
+  timestamp_slot: tsyn
+  timestamp_input_representation: boundary_time_ms_minus_tsyn_ms
+  timestamp_inverse: boundary_time_ms_minus_age_ms
+  boundary_time_source: transition_metadata_start_time_ms
+  future_information_used: false
+  teacher_snapshot_modified: false
+  thresholds_inherited_from_05i_unchanged: true
+  global_multiplier_only_patch: false
+  heldout_boundary_voltage_targets_materialized: false
+  heldout_event_targets_materialized: false
+  heldout_candidate_head_inference_performed: false
+  base_h2_frozen: true
+  zero_causal_control: true
+  candidate_head_training_performed: false
+  rollout_performed: false
+  full_training_authorized: false

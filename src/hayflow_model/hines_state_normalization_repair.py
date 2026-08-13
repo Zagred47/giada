@@ -192,6 +192,13 @@ def semantic_state_scale_repair(
             "owner_id": int(record["owner_id"]),
             "mechanism": str(record["mechanism"]),
             "variable": str(record["variable"]),
+            "stored_mechanism": str(
+                record.get("stored_mechanism", record["mechanism"])
+            ),
+            "stored_variable": str(
+                record.get("stored_variable", record["variable"])
+            ),
+            "point_process_class": record.get("point_process_class"),
             "kind": str(record["kind"]),
             "transform_code": int(codes[index]),
             "transform_name": {
@@ -344,13 +351,16 @@ class HinesStateNormalizationRepair(HinesRepresentationForensics):
             ),
         }
 
+    def _normalization_records(self) -> Sequence[Mapping[str, Any]]:
+        return self.layout.core_records
+
     def run_coordinate_scale_repair(self) -> Dict[str, Any]:
         if self.normalizer is None:
             raise RuntimeError("prepare_scale_repair() must run first")
         self.repair_roles = self._role_indices()
         original = np.asarray(self.normalizer.state_scale, dtype=np.float64).copy()
         repaired, rows = semantic_state_scale_repair(
-            self.layout.core_records,
+            self._normalization_records(),
             self.normalizer.transform_codes,
             original,
             self.repair,
@@ -371,12 +381,15 @@ class HinesStateNormalizationRepair(HinesRepresentationForensics):
         progress = Progress("state support audit", len(self.repair_roles))
         for position, (role, indices) in enumerate(self.repair_roles.items(), start=1):
             raw = self.store.read_state(indices, "t")
-            transformed = self.normalizer.transform(raw)
+            semantic_raw = self._state_input_view(raw, indices, "t")
+            transformed = self.normalizer.transform(semantic_raw)
             original_z = (transformed - self.normalizer.state_center) / original
             repaired_z = (transformed - self.normalizer.state_center) / repaired
             role_coordinate[role] = {
                 "raw_min": np.min(raw, axis=0),
                 "raw_max": np.max(raw, axis=0),
+                "semantic_raw_min": np.min(semantic_raw, axis=0),
+                "semantic_raw_max": np.max(semantic_raw, axis=0),
                 "transformed_min": np.min(transformed, axis=0),
                 "transformed_max": np.max(transformed, axis=0),
                 "original_max_abs_z": np.max(np.abs(original_z), axis=0),

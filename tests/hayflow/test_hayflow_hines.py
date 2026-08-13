@@ -13,6 +13,7 @@ import src.hayflow_model.hines_segment_canary_experiment as segment_canary_modul
 import src.hayflow_model.hines_optimization_audit as optimization_audit_module
 import src.hayflow_model.hines_representation_forensics as representation_forensics_module
 import src.hayflow_model.hines_state_normalization_repair as normalization_repair_module
+import src.hayflow_model.hines_netcon_semantic_repair as netcon_repair_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -67,6 +68,85 @@ from src.hayflow_model.hines_state_normalization_repair import (
     HinesStateNormalizationRepairConfig,
     semantic_state_scale_repair,
 )
+from src.hayflow_model.hines_netcon_semantic_repair import (
+    HinesNetConSemanticRepair,
+    HinesNetConSemanticRepairConfig,
+    NetConSemanticStateEncoder,
+    netcon_semantic_records,
+)
+
+
+def _netcon_layout_for_test():
+    records = []
+    synapse_type = {0: "ProbAMPANMDA2", 1: "ProbUDFsyn2"}
+    for synapse_id, width in ((0, 6), (1, 4)):
+        for slot in range(1, width + 1):
+            records.append({
+                "category": "synapse_states",
+                "scope": "synapse",
+                "owner_id": synapse_id,
+                "mechanism": "NetCon",
+                "variable": f"weight[{slot}]",
+                "kind": "state",
+            })
+    return SimpleNamespace(core_records=records, synapse_type=synapse_type)
+
+
+def test_05ib_netcon_slots_are_decoded_by_point_process_class():
+    records, report = netcon_semantic_records(_netcon_layout_for_test())
+    assert not report["unmapped"]
+    assert [row["variable"] for row in records[:6]] == [
+        "weight_AMPA", "weight_NMDA", "Pv", "Pr", "u", "tsyn"
+    ]
+    assert [row["variable"] for row in records[6:]] == ["Pv", "Pr", "u", "tsyn"]
+    assert records[3]["point_process_class"] == "ProbAMPANMDA2"
+    assert records[9]["point_process_class"] == "ProbUDFsyn2"
+
+
+def test_05ib_tsyn_age_encoding_is_causal_and_reversible():
+    encoder = NetConSemanticStateEncoder(
+        _netcon_layout_for_test(), HinesNetConSemanticRepairConfig(
+            expected_synapse_count_per_class=1,
+            expected_netcon_coordinate_count=10,
+            expected_tsyn_coordinate_count=2,
+            expected_probability_coordinate_count=6,
+            expected_amplitude_coordinate_count=2,
+        )
+    )
+    raw = np.asarray([[1.0, 1.0, 0.8, 0.2, 0.5, 90.0, 0.7, 0.3, 0.4, 99.5]])
+    semantic = encoder.encode(raw, [100.0])
+    assert semantic[0, 5] == pytest.approx(10.0)
+    assert semantic[0, 9] == pytest.approx(0.5)
+    np.testing.assert_allclose(encoder.decode(semantic, [100.0]), raw, atol=1e-12)
+    normalizer = SimpleNamespace(
+        transform_codes=np.zeros(10, dtype=np.int8), LOG1P=1, LOGIT=2
+    )
+    encoder.configure_transform_codes(normalizer)
+    assert normalizer.transform_codes.tolist() == [1, 1, 2, 2, 2, 1, 2, 2, 2, 1]
+    with pytest.raises(ValueError, match="after the causal boundary"):
+        encoder.encode(raw, [80.0])
+
+
+def test_05ib_notebook_keeps_thresholds_targets_heads_and_rollout_sealed():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05i_b_netcon_semantic_state_repair.ipynb").read_text(
+            encoding="utf-8"
+        )
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "run_netcon_semantic_roundtrip_audit" in source
+    assert "run_coordinate_scale_repair" in source
+    assert "run_repaired_frozen_h2_audit" in source
+    assert "assert prepare_report['thresholds_inherited_unchanged']" in source
+    assert "assert not final_report['heldout_contract']['boundary_targets_materialized']" in source
+    assert "assert not final_report['heldout_contract']['candidate_head_inference_performed']" in source
+    assert "run_bounded_representation_controls" not in source
+    assert "run_rollout" not in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "rglob('/kaggle" not in source
 
 
 def _state_record(category, mechanism, variable, owner_id):

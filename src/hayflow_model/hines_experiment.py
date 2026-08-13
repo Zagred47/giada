@@ -258,6 +258,28 @@ class HayFlowHinesExperiment:
         row = self.store.episode_by_trajectory.get(trajectory, {})
         return classify_regime(row, self.store.metadata["category"][int(index)])
 
+    def _state_input_view(
+        self,
+        raw_state: np.ndarray,
+        indices: Sequence[int],
+        boundary: str,
+    ) -> np.ndarray:
+        """Return the causal state representation consumed by the model.
+
+        The canonical experiment uses the raw teacher state unchanged.
+        Diagnostic subclasses may override this hook for a reversible,
+        boundary-time-aware semantic representation while retaining the raw
+        snapshot for replay and authentic causal input construction.
+        """
+
+        del indices, boundary
+        return np.asarray(raw_state, dtype=np.float64)
+
+    def _configure_state_normalizer(self, normalizer: Any) -> None:
+        """Allow a diagnostic subclass to register semantic transform codes."""
+
+        del normalizer
+
     def _stratified_indices(
         self,
         split: str,
@@ -301,6 +323,8 @@ class HayFlowHinesExperiment:
         )
         raw_t = self.store.read_state(sample, "t")
         raw_t1 = self.store.read_state(sample, "t_plus_1")
+        input_t = self._state_input_view(raw_t, sample, "t")
+        input_t1 = self._state_input_view(raw_t1, sample, "t_plus_1")
         voltage_sample = np.concatenate(
             [raw_t[:, : self.layout.segment_count], raw_t1[:, : self.layout.segment_count]],
             axis=0,
@@ -315,7 +339,9 @@ class HayFlowHinesExperiment:
                 minimum_scale=1e-8,
                 gate_transform="logit",
             ),
-        ).fit(raw_t, raw_t1)
+        )
+        self._configure_state_normalizer(self.normalizer)
+        self.normalizer.fit(input_t, input_t1)
         selected_privileged = self.arrays["selected_privileged_indices"]
         if len(selected_privileged):
             privileged = self.store.read_privileged(sample)[:, selected_privileged]
@@ -467,7 +493,8 @@ class HayFlowHinesExperiment:
             raise RuntimeError("prepare() must be called first")
         indices = np.asarray(indices, dtype=np.int64)
         raw_t = self.store.read_state(indices, "t")
-        normalized_t = self.normalizer.normalize_state(raw_t).astype(np.float32)
+        input_t = self._state_input_view(raw_t, indices, "t")
+        normalized_t = self.normalizer.normalize_state(input_t).astype(np.float32)
         voltage_t = raw_t[:, : self.layout.segment_count].astype(np.float32)
         calcium_t, synapse_t = explicit_teacher_views(
             normalized_t,
@@ -499,9 +526,10 @@ class HayFlowHinesExperiment:
             result.update(event_amplitude=amplitude, event_segment=segment)
         if include_targets:
             raw_t1 = self.store.read_state(indices, "t_plus_1")
-            normalized_t1 = self.normalizer.normalize_state(raw_t1).astype(np.float32)
+            input_t1 = self._state_input_view(raw_t1, indices, "t_plus_1")
+            normalized_t1 = self.normalizer.normalize_state(input_t1).astype(np.float32)
             normalized_delta, state_activity = self.normalizer.delta_and_activity(
-                raw_t, raw_t1
+                input_t, input_t1
             )
             calcium_t1, synapse_t1 = explicit_teacher_views(
                 normalized_t1,

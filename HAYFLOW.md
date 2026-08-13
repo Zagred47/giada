@@ -828,3 +828,30 @@ point-process class and represent `tsyn` causally relative to the current
 boundary time (or through registered recovery variables). The raw teacher
 snapshot must remain unchanged, thresholds must remain fixed, and no head
 training or rollout is authorized yet.
+
+### Notebook 05i-b: class-aware NetCon semantic state repair
+
+`notebooks/05i_b_netcon_semantic_state_repair.ipynb` implements the narrow
+semantic correction localized by 05i. It resolves every raw NetCon
+`weight[index]` through `KNOWN_NET_RECEIVE_STATE_LAYOUT` and the owning
+synapse's point-process class. For `ProbAMPANMDA2`, slots 1--6 become
+`weight_AMPA`, `weight_NMDA`, `Pv`, `Pr`, `u`, and `tsyn`; for
+`ProbUDFsyn2`, slots 1--4 become `Pv`, `Pr`, `u`, and `tsyn`. Thus identical
+raw indices can no longer pool physically different quantities.
+
+Probability slots use the registered bounded logit transform. AMPA/NMDA
+amplitude weights remain nonnegative. The absolute `tsyn` timestamp is replaced
+only in the model-facing state view by causal last-event age,
+`age_ms = boundary_time_ms - tsyn_ms`, where `boundary_time_ms` comes from the
+transition's stored `start_time_ms` metadata. The inverse is explicit:
+`tsyn_ms = boundary_time_ms - age_ms`. The notebook checks this round trip on
+fit-train, audit-train, development, and input-only held-out states at an
+absolute tolerance of `1e-9`; the raw teacher snapshot itself is never edited.
+
+The original 05i gates remain unchanged. After the semantic round-trip audit,
+05i-b repeats the full 17,220-coordinate pre-clipping support audit and the
+frozen-H2 authentic/zero-causal checks. It verifies the exact 05i artifact and
+all prior provenance. Held-out future voltages and event labels remain sealed;
+there is no candidate-head training, rollout, threshold relaxation, or global
+scale-multiplier shortcut. A complete pass can authorize only the separate 05j
+train/development representation recheck, never full training directly.
