@@ -248,7 +248,7 @@ class HinesArchitectureReassessment(HinesTrainableTopologyCanary):
         _write_json(self.output_dir / "architecture_reassessment_config.json", payload)
         return {**base, **payload}
 
-    def _checkpoint_bytes(self, relative_path: str) -> bytes:
+    def _read_05jd_checkpoint_bytes(self, relative_path: str) -> bytes:
         if self.artifact_05jd_source.is_file():
             with zipfile.ZipFile(self.artifact_05jd_source) as archive:
                 return archive.read(self._artifact_05jd_zip_root + relative_path)
@@ -267,7 +267,9 @@ class HinesArchitectureReassessment(HinesTrainableTopologyCanary):
         for position, row in enumerate(registered_runs):
             family, seed = str(row["family"]), int(row["seed"])
             checkpoint = torch.load(
-                io.BytesIO(self._checkpoint_bytes(str(row["checkpoint"]))),
+                io.BytesIO(
+                    self._read_05jd_checkpoint_bytes(str(row["checkpoint"]))
+                ),
                 map_location=device, weights_only=False,
             )
             if checkpoint["family"] != family or int(checkpoint["seed"]) != seed:

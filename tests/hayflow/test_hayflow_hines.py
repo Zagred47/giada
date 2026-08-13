@@ -146,6 +146,11 @@ def test_05je_config_is_frozen_to_registered_canary():
         HinesArchitectureReassessmentConfig(seeds=(17, 29, 44)).validate()
 
 
+def test_05je_checkpoint_reader_does_not_shadow_inherited_checkpoint_bytes():
+    assert callable(reassessment_module.HinesArchitectureReassessment._read_05jd_checkpoint_bytes)
+    assert "_checkpoint_bytes" not in reassessment_module.HinesArchitectureReassessment.__dict__
+
+
 def test_05je_exact_05jd_hashes_match_registered_result():
     root = Path(__file__).resolve().parents[2]
     result = json.loads(
