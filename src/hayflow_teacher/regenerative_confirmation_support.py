@@ -67,8 +67,8 @@ class RegenerativeConfirmationConfig:
     low_arm_keep_fraction: float = 0.5
     near_lower_mv: float = -45.0
     near_upper_mv: float = -20.0
-    pilot_source_lower_mv: float = -60.0
-    pilot_source_upper_mv: float = 10.0
+    pilot_source_lower_mv: float = -100.0
+    pilot_source_upper_mv: float = 80.0
     pilot_required_near_fraction: float = 1.0
     minimum_teacher_distance_mv: float = 0.01
     seed_gap: int = 20_000
@@ -120,7 +120,14 @@ def discover_pilot_templates(
         family = str(row.get("family", ""))
         if family not in {"targeted_nmda", "targeted_calcium"}:
             continue
-        if not bool(row.get("train_eligible", True)):
+        eligibility = row.get("train_eligible", True)
+        if isinstance(eligibility, str):
+            eligibility = eligibility.strip().lower() not in {
+                "false", "0", "no", "null", "none", "nan", ""
+            }
+        elif isinstance(eligibility, float) and np.isnan(eligibility):
+            eligibility = True
+        if not bool(eligibility):
             continue
         peak = row.get("event_probe_peak_voltage_mv")
         if peak is None or not np.isfinite(float(peak)):
@@ -314,10 +321,49 @@ class RegenerativeConfirmationSupportSession(BapValidationSupportTopupSession):
         path = self.base_dataset / "targeted_pilot" / "candidate_trials.parquet"
         if not path.is_file():
             raise RuntimeError("base targeted pilot candidate_trials.parquet is missing")
-        rows = self.pd.read_parquet(path).to_dict("records")
+        frame = self.pd.read_parquet(path)
+        rows = frame.to_dict("records")
         templates = discover_pilot_templates(rows, self.confirmation_config)
+        dendritic_rows = [
+            row for row in rows
+            if str(row.get("family", "")) in {"targeted_nmda", "targeted_calcium"}
+        ]
+        finite_peaks = [
+            float(row["event_probe_peak_voltage_mv"])
+            for row in dendritic_rows
+            if row.get("event_probe_peak_voltage_mv") is not None
+            and np.isfinite(float(row["event_probe_peak_voltage_mv"]))
+        ]
+        discovery = {
+            "schema_version": REGENERATIVE_CONFIRMATION_SCHEMA_VERSION,
+            "table_path": str(path),
+            "row_count": len(rows),
+            "columns": list(map(str, frame.columns)),
+            "family_counts": {
+                family: sum(str(row.get("family", "")) == family for row in rows)
+                for family in sorted({str(row.get("family", "")) for row in rows})
+            },
+            "dendritic_row_count": len(dendritic_rows),
+            "dendritic_rows_with_schedule": sum(
+                bool(_json_value(row.get("input_schedule"), {}))
+                for row in dendritic_rows
+            ),
+            "finite_event_probe_peak_count": len(finite_peaks),
+            "finite_event_probe_peak_range_mv": (
+                [min(finite_peaks), max(finite_peaks)] if finite_peaks else []
+            ),
+            "source_voltage_filter_mv": [
+                self.confirmation_config.pilot_source_lower_mv,
+                self.confirmation_config.pilot_source_upper_mv,
+            ],
+            "discovered_template_count": len(templates),
+        }
+        write_json(self.output_dir / "source_template_discovery.json", discovery)
         if not templates:
-            raise RuntimeError("no canonical dendritic schedules passed source discovery")
+            raise RuntimeError(
+                "no canonical dendritic schedules passed source discovery; "
+                f"diagnostics={discovery}"
+            )
         write_json(
             self.output_dir / "source_template_candidates.json",
             {
