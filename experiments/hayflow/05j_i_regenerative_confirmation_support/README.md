@@ -27,3 +27,8 @@ The complete shard is structurally checked and exhaustively replayed. This
 notebook performs no model training, no rollout and no held-out reveal.
 
 Expected artifact: `hayflow_regenerative_confirmation_support.zip`.
+
+Required Kaggle inputs are the complete targeted v1.1 base dataset, the 01b
+dataset `alessandrobelli/hayflow-dendritic-protocol-calibration`, and the exact
+05j-h artifact. The notebook accepts the 01b calibration either as an extracted
+Kaggle directory or as a ZIP containing `selected_dendritic_protocols.json`.
