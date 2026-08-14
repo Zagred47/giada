@@ -1,6 +1,21 @@
 # HayFlow 05j-j - independent regenerative-state confirmation
 
-Status: implemented; Kaggle execution pending.
+Status: completed on Kaggle; valid execution with a non-interpretable oracle
+transport failure.
+
+The exact artifact is registered in `result.json`; all 41 indexed members
+passed independent size and SHA-256 verification. The frozen 05j-h result was
+reproduced before the new support was touched (specificity error
+`3.83e-7`). All 24 preregistered 05j-i pairs were then evaluated without
+selection or retraining.
+
+The formal preregistered decision rejected both the causal-boundary and
+future-state-delta explanations. However, the aligned oracle extrapolated to
+`695.67 mV` RMSE and `22,949.78 mV` maximum error, while the intercept and
+spatial-shift control remained near `24 mV`. This is a numerical transport
+failure, not an ordinary negative result. Therefore 05j-k first audits
+feature-support and voltage-objective mismatch before the project accepts the
+registered route to a decoder reassessment.
 
 05j-i acquired 24 outcome-blind, snapshot-matched causal pairs, of which 23
 landed in the missing near-regenerative voltage band. This notebook applies the

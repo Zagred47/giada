@@ -1,0 +1,23 @@
+schema_version: "05j-k-config-v1"
+
+voltage_objective_reassessment:
+  feature_abs_z_warning: 10.0
+  feature_abs_z_blocker: 50.0
+  feature_outside_fit_envelope_fraction: 0.05
+  oracle_explosion_ratio: 5.0
+  target_delta_shift_ratio: 2.0
+  external_to_fit_rmse_ratio: 4.0
+  branch_amplification_threshold: 2.0
+  activation_voltage_threshold_mv: -45.0
+  residual_limit_fraction_warning: 0.8
+
+methodology:
+  exact_05jj_artifact_verified: true
+  formal_05jj_decision_preserved: true
+  interpretation_audit_is_post_result: true
+  new_support_used_for_training: false
+  candidate_training_performed: false
+  feature_or_probe_selection_performed: false
+  heldout_inputs_extracted: false
+  rollout_performed: false
+  full_training_authorized: false

@@ -25,6 +25,7 @@ import src.hayflow_model.hines_region_mechanism_experts as expert_module
 import src.hayflow_model.hines_regenerative_state_decomposition as decomposition_module
 import src.hayflow_model.hines_regenerative_support_expansion as support_expansion_module
 import src.hayflow_model.hines_regenerative_confirmation as confirmation_module
+import src.hayflow_model.hines_voltage_objective_reassessment as objective_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -143,6 +144,61 @@ from src.hayflow_model.hines_regenerative_confirmation import (
     HinesRegenerativeConfirmationConfig,
     confirmation_decision,
 )
+from src.hayflow_model.hines_voltage_objective_reassessment import (
+    HinesVoltageObjectiveReassessmentConfig,
+    feature_transport_summary,
+    voltage_error_summary,
+)
+
+
+def test_05jk_transport_summary_detects_external_extrapolation():
+    fit = np.asarray([[[0.0], [1.0]], [[1.0], [2.0]], [[2.0], [3.0]]])
+    external = np.asarray([[[100.0], [120.0]]])
+    report = feature_transport_summary(fit, external, epsilon=1e-6)
+    assert report["finite"]
+    assert report["external_outside_fit_envelope_fraction"] == 1.0
+    assert report["external_abs_z"]["maximum"] > 50.0
+
+
+def test_05jk_voltage_error_summary_is_exact():
+    report = voltage_error_summary(
+        np.asarray([[1.0, 3.0]]), np.asarray([[0.0, 1.0]])
+    )
+    assert report["rmse_mv"] == pytest.approx(np.sqrt(2.5))
+    assert report["mae_mv"] == pytest.approx(1.5)
+    assert report["maximum_absolute_error_mv"] == 2.0
+
+
+def test_05jj_registered_hashes_match_05jk_contract():
+    HinesVoltageObjectiveReassessmentConfig().validate()
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (root / "experiments/hayflow/05j_j_regenerative_state_confirmation/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == objective_module.EXPECTED_05JJ_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == objective_module.EXPECTED_05JJ_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == objective_module.EXPECTED_05JJ_FINAL_SHA256
+    assert result["fixed_probes"]["aligned_oracle_rmse_mv"] > 20 * result["fixed_probes"]["intercept_rmse_mv"]
+
+
+def test_05jk_notebook_is_post_result_and_never_trains_on_confirmation():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_k_voltage_decoder_objective_reassessment.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "prepare_voltage_objective_reassessment" in source
+    assert "audit_oracle_transport" in source
+    assert "audit_voltage_objective" in source
+    assert "formal_05jj_decision_preserved" in source
+    assert "not objective_report['new_support_used_for_training']" in source
+    assert "not objective_report['candidate_training_performed']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "FileLink" not in source and "rglob('/kaggle" not in source
 
 
 def test_05jj_registered_decision_is_fixed_and_requires_spatial_specificity():

@@ -1,0 +1,51 @@
+{
+  "schema_version": "05j-j-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_regenerative_confirmation.zip",
+    "size_bytes": 555356,
+    "sha256": "3c883f7f8d6b744857e91a467228111ce73fcdc267849df8563d8fc41d9b7e5e",
+    "artifact_index_sha256": "1c7591ddfcc585364160493a541519b5b4eea1e07fed8a4222f03c61aa6dc257",
+    "final_report_sha256": "f7ba0fa5b81dfe3f8b9466ad03be4a17a5363eb0f4cb08b935805f219b5c0a7c",
+    "indexed_member_count": 41,
+    "verified_member_count": 41
+  },
+  "code_revision": "ca8ff2db734278d920b31e60f058686e2d1db37a",
+  "experiment_completed_validly": true,
+  "decision": "INDEPENDENT_REGENERATIVE_STATE_CONFIRMATION",
+  "formal_diagnosis": "INDEPENDENT_SUPPORT_REJECTS_REGENERATIVE_STATE_EXPLANATION",
+  "registered_05jh_reproduction": {
+    "valid": true,
+    "registered_specificity_fraction": 0.08345212759769333,
+    "reproduced_specificity_fraction": 0.08345251087406086,
+    "absolute_error": 3.832763675326589e-7
+  },
+  "external_support": {
+    "pair_count": 24,
+    "all_preregistered_pairs_used": true,
+    "near_regenerative_pair_count": 23,
+    "subthreshold_pair_count": 1
+  },
+  "frozen_direct_tree": {
+    "external_rmse_mv": 23.31938265315743,
+    "external_maximum_segment_error_mv": 66.99353790283203,
+    "median_branching_retention": 5.523185110719093
+  },
+  "fixed_probes": {
+    "intercept_rmse_mv": 23.712146493558823,
+    "causal_rmse_mv": 24.087235645892026,
+    "aligned_oracle_rmse_mv": 695.6706480343682,
+    "aligned_oracle_maximum_segment_error_mv": 22949.776798831885,
+    "spatial_shift_rmse_mv": 24.302646300825334,
+    "aligned_vs_shifted_improvement_fraction": -27.625304397848343,
+    "aligned_pairwise_win_count": 0,
+    "aligned_pairwise_pair_count": 24
+  },
+  "causal_boundary_state_confirmed": false,
+  "regenerative_state_transition_confirmed": false,
+  "candidate_model_authorized": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "interpretability_warning": "The aligned oracle diverged by orders of magnitude on independent support; audit feature transport before treating the formal rejection as biological evidence.",
+  "registered_next_step": "05j_k_voltage_decoder_objective_reassessment"
+}

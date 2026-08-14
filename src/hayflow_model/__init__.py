@@ -183,6 +183,13 @@ from .hines_regenerative_confirmation import (
     HinesRegenerativeStateConfirmation,
     confirmation_decision,
 )
+from .hines_voltage_objective_reassessment import (
+    EXPECTED_05JJ_ARCHIVE_SHA256,
+    HinesVoltageDecoderObjectiveReassessment,
+    HinesVoltageObjectiveReassessmentConfig,
+    feature_transport_summary,
+    voltage_error_summary,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -318,4 +325,9 @@ __all__ = [
     "HinesRegenerativeConfirmationConfig",
     "HinesRegenerativeStateConfirmation",
     "confirmation_decision",
+    "EXPECTED_05JJ_ARCHIVE_SHA256",
+    "HinesVoltageDecoderObjectiveReassessment",
+    "HinesVoltageObjectiveReassessmentConfig",
+    "feature_transport_summary",
+    "voltage_error_summary",
 ]
