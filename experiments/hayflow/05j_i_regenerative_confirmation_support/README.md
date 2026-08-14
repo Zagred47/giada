@@ -11,7 +11,8 @@ This notebook creates a separate, validation-only teacher shard rather than
 changing the gate or training another decoder. Candidate dendritic schedules
 come only from the already completed biological pilot in the immutable base
 dataset. A short pilot with a seed namespace disjoint from both base and new
-acquisition identifies canonical-synapse schedules that put a causal one-step
+acquisition evaluates every historical canonical dendritic schedule and
+identifies schedules that put a causal one-step
 branch inside the missing voltage band. No NetCon weight is rescaled: low and
 high arms differ only by a deterministic subset of authentic synaptic events.
 

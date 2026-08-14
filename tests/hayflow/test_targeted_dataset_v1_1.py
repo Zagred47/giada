@@ -103,7 +103,9 @@ class RegenerativeConfirmationSupportTest(unittest.TestCase):
         )
 
     def test_05ji_config_and_registered_05jh_hashes_are_exact(self):
-        RegenerativeConfirmationConfig().validate()
+        config = RegenerativeConfirmationConfig()
+        config.validate()
+        self.assertGreaterEqual(config.pilot_candidate_limit, 46)
         with self.assertRaisesRegex(ValueError, "below the near-regenerative minimum"):
             RegenerativeConfirmationConfig(pair_count=10).validate()
         root = Path(__file__).resolve().parents[2]

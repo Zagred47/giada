@@ -75,7 +75,7 @@ class RegenerativeConfirmationConfig:
     pair_count: int = 24
     minimum_near_pair_count: int = 18
     pilot_seed_count: int = 3
-    pilot_candidate_limit: int = 24
+    pilot_candidate_limit: int = 64
     selected_template_count: int = 4
     episode_duration_ms: int = 12
     post_branch_ms: int = 6
