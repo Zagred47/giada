@@ -176,6 +176,10 @@ class HinesRegenerativeSupportExpansion(HinesRegenerativeStateTargetDecompositio
         self.artifact_05jg_source = Path(artifact_05jg_source).resolve()
         self.artifact_05jg_contract: Dict[str, Any] = {}
         self.regenerative_support: Dict[str, Any] = {}
+        # Kept so a later, strictly external confirmation shard can be encoded
+        # with the exact transform fitted on the original 05j-d support.  The
+        # transform is never refitted on confirmation data.
+        self.expanded_topology_transform: Dict[str, Any] = {}
 
     def _read_verified_05jg(self) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         source = self.artifact_05jg_source
@@ -481,6 +485,7 @@ class HinesRegenerativeSupportExpansion(HinesRegenerativeStateTargetDecompositio
             raise RuntimeError("build_regenerative_support() must run first")
         require_torch()
         transform = self._fit_registered_topology_transform()
+        self.expanded_topology_transform = transform
         original_development_role = self.topology_roles["development"]
         original_development_design = self.topology_designs["development"].copy()
         indices = {

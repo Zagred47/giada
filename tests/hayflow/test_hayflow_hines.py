@@ -24,6 +24,7 @@ import src.hayflow_model.hines_architecture_reassessment as reassessment_module
 import src.hayflow_model.hines_region_mechanism_experts as expert_module
 import src.hayflow_model.hines_regenerative_state_decomposition as decomposition_module
 import src.hayflow_model.hines_regenerative_support_expansion as support_expansion_module
+import src.hayflow_model.hines_regenerative_confirmation as confirmation_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -138,6 +139,71 @@ from src.hayflow_model.hines_regenerative_support_expansion import (
     regenerative_stratum,
     select_disjoint_stratified_pairs,
 )
+from src.hayflow_model.hines_regenerative_confirmation import (
+    HinesRegenerativeConfirmationConfig,
+    confirmation_decision,
+)
+
+
+def test_05jj_registered_decision_is_fixed_and_requires_spatial_specificity():
+    config = HinesRegenerativeConfirmationConfig()
+    config.validate()
+    diagnosis, next_step, causal, oracle = confirmation_decision(
+        causal_rmse_gain=0.0,
+        causal_max_gain=0.0,
+        oracle_rmse_gain=0.30,
+        oracle_max_gain=0.20,
+        specificity_gain=0.16,
+        pair_win_fraction=0.75,
+        config=config,
+    )
+    assert diagnosis == "INDEPENDENT_SUPPORT_CONFIRMS_REGENERATIVE_STATE_TRANSITION_SIGNAL"
+    assert next_step == "05j_k_joint_regenerative_state_transition_canary"
+    assert not causal and oracle
+    diagnosis, _, causal, oracle = confirmation_decision(
+        causal_rmse_gain=0.0,
+        causal_max_gain=0.0,
+        oracle_rmse_gain=0.30,
+        oracle_max_gain=0.20,
+        specificity_gain=0.14,
+        pair_win_fraction=0.75,
+        config=config,
+    )
+    assert diagnosis == "INDEPENDENT_REGENERATIVE_SIGNAL_IS_NOT_SPATIALLY_SPECIFIC"
+    assert not causal and not oracle
+
+
+def test_05ji_registered_artifact_hashes_match_05jj_contract():
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (root / "experiments/hayflow/05j_i_regenerative_confirmation_support/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == confirmation_module.EXPECTED_05JI_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == confirmation_module.EXPECTED_05JI_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == confirmation_module.EXPECTED_05JI_FINAL_SHA256
+    assert result["transition_store"]["sha256"] == confirmation_module.EXPECTED_05JI_TRANSITION_SHA256
+    assert result["support"]["near_regenerative_pair_count"] >= 18
+
+
+def test_05jj_notebook_uses_independent_support_only_for_fixed_confirmation():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_j_regenerative_state_confirmation.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "validate_registered_05jh_reproduction" in source
+    assert "prepare_external_confirmation_roles" in source
+    assert "run_fixed_external_probes" in source
+    assert "all_24_preregistered_pairs" in source
+    assert "not external_probes['confirmation_used_for_selection']" in source
+    assert "not external_probes['candidate_training_performed']" in source
+    assert "not final_report['micro_rollout_authorized']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "FileLink" not in source and "rglob('/kaggle" not in source
 
 
 def test_05jh_regenerative_strata_respect_registered_thresholds():

@@ -177,6 +177,12 @@ from .hines_regenerative_support_expansion import (
     regenerative_stratum,
     select_disjoint_stratified_pairs,
 )
+from .hines_regenerative_confirmation import (
+    EXPECTED_05JI_ARCHIVE_SHA256,
+    HinesRegenerativeConfirmationConfig,
+    HinesRegenerativeStateConfirmation,
+    confirmation_decision,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -308,4 +314,8 @@ __all__ = [
     "HinesRegenerativeSupportExpansionConfig",
     "regenerative_stratum",
     "select_disjoint_stratified_pairs",
+    "EXPECTED_05JI_ARCHIVE_SHA256",
+    "HinesRegenerativeConfirmationConfig",
+    "HinesRegenerativeStateConfirmation",
+    "confirmation_decision",
 ]

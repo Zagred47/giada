@@ -1,0 +1,30 @@
+schema_version: "05j-j-config-v1"
+
+independent_confirmation:
+  registered_pair_count: 24
+  minimum_near_regenerative_pairs: 18
+  minimum_pair_win_fraction: 0.6666666666666666
+  material_rmse_improvement_fraction: 0.20
+  material_max_error_improvement_fraction: 0.10
+  oracle_specificity_improvement_fraction: 0.15
+  registered_05jh_specificity_fraction: 0.08345212759769333
+  reproduction_atol: 0.00002
+
+methodology:
+  primary_support: all_24_preregistered_05ji_pairs
+  near_only_subset: descriptive_only
+  fit_support: unchanged_05jh_train_fit_pairs
+  direct_tree_checkpoints: frozen_05jd_three_seed_ensemble
+  feature_transform: frozen_05jd_transform
+  probe_families:
+    - intercept_only_control
+    - causal_current_all
+    - oracle_delta_aligned_all
+    - oracle_delta_spatial_shift_control
+  feature_and_probe_normalizers_fit_on: unchanged_05jh_train_fit_pairs
+  independent_confirmation_used_for_selection: false
+  future_state_delta_diagnostic_oracle_only: true
+  candidate_training_performed: false
+  heldout_inputs_extracted: false
+  rollout_performed: false
+  full_training_authorized: false

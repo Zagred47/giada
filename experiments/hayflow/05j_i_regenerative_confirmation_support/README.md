@@ -1,6 +1,17 @@
 # HayFlow 05j-i - regenerative confirmation support
 
-Status: implemented; Kaggle execution pending.
+Status: completed on Kaggle; valid independent-support acquisition.
+
+The exact artifact is registered in `result.json`. All 166 indexed members
+passed independent size and SHA-256 verification. The exhaustive teacher replay
+reproduced all 576 transitions with a maximum error of
+`3.8146719560927522e-06`, below the registered `1e-5` tolerance.
+
+All 24 preregistered snapshot-matched pairs and all 48 episodes were retained.
+Twenty-three pairs realized the missing near-regenerative band and one remained
+subthreshold, comfortably exceeding the preregistered minimum of 18. The
+acquisition therefore resolves the support blocker from 05j-h and routes to
+05j-j, where the unchanged frozen diagnostic is evaluated on this shard.
 
 05j-h found 48 regenerative and 24 subthreshold train branching pairs but no
 pair whose one-step target peak lies in the pre-registered intermediate band
