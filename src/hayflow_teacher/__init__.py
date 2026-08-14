@@ -63,6 +63,11 @@ from .regenerative_confirmation_support import (
     discover_pilot_templates,
     low_arm_actions,
 )
+from .regenerative_training_support import (
+    RegenerativeTrainingSupportConfig,
+    RegenerativeTrainingSupportSession,
+    build_regenerative_support_plans,
+)
 
 __all__ = [
     "CausalReleaseRecorder",
@@ -74,6 +79,9 @@ __all__ = [
     "RegenerativeConfirmationSupportSession",
     "discover_pilot_templates",
     "low_arm_actions",
+    "RegenerativeTrainingSupportConfig",
+    "RegenerativeTrainingSupportSession",
+    "build_regenerative_support_plans",
     "BoundaryState",
     "default_event_definitions",
     "detect_spikes",

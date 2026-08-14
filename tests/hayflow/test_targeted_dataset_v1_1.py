@@ -42,6 +42,13 @@ from src.hayflow_teacher.regenerative_confirmation_support import (
     discover_pilot_templates,
     low_arm_actions,
 )
+from src.hayflow_teacher.regenerative_training_support import (
+    EXPECTED_05JL_ARCHIVE_SHA256,
+    EXPECTED_05JL_FINAL_SHA256,
+    EXPECTED_05JL_INDEX_SHA256,
+    RegenerativeTrainingSupportConfig,
+    build_regenerative_support_plans,
+)
 
 
 class RegenerativeConfirmationSupportTest(unittest.TestCase):
@@ -87,6 +94,76 @@ class RegenerativeConfirmationSupportTest(unittest.TestCase):
             excluded, RegenerativeConfirmationConfig()
         )
         self.assertEqual({row["family"] for row in filtered}, {"targeted_calcium"})
+
+    def test_05jm_plans_freeze_disjoint_train_and_fresh_test_namespaces(self):
+        schedule = self._schedule()
+        actions = schedule["3"]
+        template = {
+            "candidate_id": "targeted_nmda-canonical",
+            "family": "targeted_nmda",
+            "branch_id": "segment-460",
+            "branch_step": 3,
+            "event_probe_segment_id": 460,
+            "event_probe_region": "tuft",
+            "selected_synapse_ids": [11, 12, 13, 14],
+            "input_schedule": schedule,
+            "low_actions": actions[:2],
+            "high_actions": actions,
+        }
+        config = RegenerativeTrainingSupportConfig(
+            train_pair_count=4,
+            fresh_test_pair_count=16,
+            minimum_train_near_pair_count=3,
+            train_seed_start=900001,
+            fresh_test_seed_start=1100001,
+        )
+        train, fresh, contract = build_regenerative_support_plans(
+            [template], config
+        )
+        self.assertEqual(len(train), 8)
+        self.assertEqual(len(fresh), 32)
+        self.assertEqual({row.split for row in train}, {"train"})
+        self.assertEqual({row.split for row in fresh}, {"test"})
+        self.assertFalse({row.seed for row in train} & {row.seed for row in fresh})
+        self.assertEqual(contract["seed_overlap"], [])
+        self.assertFalse(contract["fresh_test"]["outcomes_generated"])
+        self.assertTrue(contract["fresh_test"]["must_not_be_loaded_during_training"])
+        self.assertEqual(len(contract["fresh_test"]["protocol_plan_sha256"]), 64)
+        self.assertEqual(
+            contract,
+            build_regenerative_support_plans([template], config)[2],
+        )
+
+    def test_05jm_registers_exact_05jl_provenance(self):
+        self.assertEqual(
+            EXPECTED_05JL_ARCHIVE_SHA256,
+            "f4685a3322dd868aaf2c271e7e8cb949e5ba81ca8d6b3631eb470fe473adb40c",
+        )
+        self.assertEqual(
+            EXPECTED_05JL_INDEX_SHA256,
+            "dbe30639cb88dfafcf2349a56d91489bf765aa425c0d47c35fefb973cef58c82",
+        )
+        self.assertEqual(
+            EXPECTED_05JL_FINAL_SHA256,
+            "2eed425e145307ad6f4a93f035a21490ae749397163281b3b61b22e14cb785f0",
+        )
+
+    def test_05jm_notebook_generates_train_only_and_uses_blob_download(self):
+        root = Path(__file__).resolve().parents[2]
+        notebook = json.loads(
+            (root / "notebooks/05j_m_regenerative_training_support.ipynb")
+            .read_text(encoding="utf-8")
+        )
+        source = "\n".join(
+            "".join(cell.get("source", [])) for cell in notebook["cells"]
+        )
+        self.assertIn("generate_training_shard(train_protocols)", source)
+        self.assertNotIn("generate_dataset(fresh", source)
+        self.assertIn("outcomes_generated'] is False", source)
+        self.assertIn("shutil.make_archive", source)
+        self.assertIn("base64.b64encode", source)
+        self.assertIn("new Blob", source)
+        self.assertNotIn("FileLink", source)
 
     def test_05ji_low_arm_drops_events_without_rescaling_canonical_weights(self):
         actions = tuple(

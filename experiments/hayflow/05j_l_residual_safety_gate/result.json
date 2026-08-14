@@ -1,0 +1,39 @@
+{
+  "schema_version": "05j-l-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_residual_safety_gate.zip",
+    "size_bytes": 446215,
+    "sha256": "f4685a3322dd868aaf2c271e7e8cb949e5ba81ca8d6b3631eb470fe473adb40c",
+    "artifact_index_sha256": "dbe30639cb88dfafcf2349a56d91489bf765aa425c0d47c35fefb973cef58c82",
+    "final_report_sha256": "2eed425e145307ad6f4a93f035a21490ae749397163281b3b61b22e14cb785f0",
+    "indexed_member_count": 37,
+    "verified_member_count": 37
+  },
+  "code_revision": "36dd8853ce1d06d084678f5d8f3ba70985ea67dd",
+  "experiment_completed_validly": true,
+  "decision": "FROZEN_RESIDUAL_SAFETY_GATE_CANARY",
+  "diagnosis": "FIT_ONLY_SAFETY_GATE_DOES_NOT_RESCUE_EXTERNAL_DECODER",
+  "selection": {
+    "support": "original_05jh_fit_only",
+    "family": "sample_energy_scale",
+    "quantile": 1.0,
+    "candidate_count": 18
+  },
+  "rmse_mv": {
+    "fit": {"h2": 7.742558306074276, "direct_tree": 1.3982746678744709, "gated": 1.3982746678744709},
+    "development": {"h2": 21.742515961931183, "direct_tree": 2.995302663925365, "gated": 2.995302663925365},
+    "external_near_regenerative": {"h2": 2.736353763749702, "direct_tree": 23.319383996179784, "gated": 23.319383996179784}
+  },
+  "gate_activity": {
+    "clipped_coordinate_fraction": 0.0,
+    "scaled_sample_fraction": 0.0,
+    "uncertainty_fallback_fraction": 0.0,
+    "external_improvement_fraction": 0.0
+  },
+  "candidate_authorized": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "registered_next_step": "05j_m_acquire_train_and_fresh_test_near_regenerative_support",
+  "refined_next_step": "05j_m_acquire_train_support_and_preregister_fresh_test"
+}

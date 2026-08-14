@@ -1,0 +1,29 @@
+schema_version: "05j-m-config-v1"
+
+regenerative_training_support:
+  train_pair_count: 96
+  fresh_test_pair_count: 32
+  minimum_train_near_pair_count: 72
+  episode_duration_ms: 12
+  post_branch_ms: 6
+  conditioning_ms: 4
+  train_seed_start: 900001
+  fresh_test_seed_start: 1100001
+  minimum_teacher_distance_mv: 0.01
+  near_lower_mv: -45.0
+  near_upper_mv: -20.0
+
+methodology:
+  source_teacher: canonical_Hay_NEURON
+  source_templates: exact_05j_i_frozen_boundary_pilot
+  motivation: exact_05j_l_fit_only_gate_failure
+  generated_shard_role: train_only_near_regenerative_support
+  prior_05j_i_role: development_only_after_observation
+  fresh_test_policy: plan_frozen_now_outcomes_generated_only_after_model_freeze
+  all_train_pairs_retained: true
+  canonical_netcon_weights_preserved: true
+  weight_multiplier_sweeps_used: false
+  input_views: [U_scheduled, U_rng, U_realized]
+  exhaustive_replay_required: true
+  candidate_training_performed: false
+  rollout_performed: false
