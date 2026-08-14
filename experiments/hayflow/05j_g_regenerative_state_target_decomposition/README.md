@@ -1,6 +1,15 @@
 # HayFlow 05j-g - regenerative state-target decomposition
 
-Status: implemented; Kaggle execution pending.
+Status: completed on Kaggle; valid conditional result.
+
+The exact artifact is registered in `result.json`; all 29 indexed members were
+verified. Causal boundary-state summaries did not improve the frozen ensemble.
+The aligned future-state oracle improved calibration/development RMSE by
+40.3%/52.1% versus the intercept control, but its advantage over the
+capacity-matched spatial-shift null was only 10.8%/13.2%, below the registered
+15% specificity gate. Calcium-channel and sodium-channel deltas carried the
+strongest single-group signal. The result therefore routes to a train-only
+regenerative support expansion rather than authorizing a candidate model.
 
 05j-f established that adding region/mechanism expert capacity does not repair
 the localized regenerative voltage error. This notebook asks a narrower causal

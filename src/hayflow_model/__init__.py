@@ -169,6 +169,14 @@ from .hines_regenerative_state_decomposition import (
     regenerative_state_group,
     semantic_group_ids,
 )
+from .hines_regenerative_support_expansion import (
+    EXPECTED_05JG_ARCHIVE_SHA256,
+    REGENERATIVE_STRATA,
+    HinesRegenerativeSupportExpansion,
+    HinesRegenerativeSupportExpansionConfig,
+    regenerative_stratum,
+    select_disjoint_stratified_pairs,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -294,4 +302,10 @@ __all__ = [
     "aggregate_state_groups",
     "regenerative_state_group",
     "semantic_group_ids",
+    "EXPECTED_05JG_ARCHIVE_SHA256",
+    "REGENERATIVE_STRATA",
+    "HinesRegenerativeSupportExpansion",
+    "HinesRegenerativeSupportExpansionConfig",
+    "regenerative_stratum",
+    "select_disjoint_stratified_pairs",
 ]

@@ -1,0 +1,34 @@
+schema_version: "05j-h-config-v1"
+
+regenerative_support_expansion:
+  target_pair_count: 72
+  minimum_pair_count: 36
+  minimum_materially_expanded_pair_count: 56
+  confirmation_pair_count: 18
+  regenerative_peak_threshold_mv: -20.0
+  near_regenerative_peak_threshold_mv: -45.0
+  minimum_regenerative_pairs: 12
+  minimum_near_regenerative_pairs: 8
+  minimum_subthreshold_pairs: 8
+  minimum_protocol_family_count: 6
+  minimum_confirmation_pair_win_fraction: 0.6666666666666666
+  material_rmse_improvement_fraction: 0.20
+  material_max_error_improvement_fraction: 0.10
+  oracle_specificity_improvement_fraction: 0.15
+
+methodology:
+  exact_05jg_artifact_verified: true
+  support_source: train_branch_pairs_only
+  support_selection: biological_target_peak_regime_not_model_error
+  support_target_pairs: 72
+  confirmation_pairs: 18
+  fit_confirmation_episode_disjoint: true
+  registered_05jg_probe_unchanged: true
+  registered_05jd_feature_transform_reused: true
+  future_voltage_coordinate_excluded: true
+  future_state_delta_diagnostic_oracle_only: true
+  candidate_model_training_performed: false
+  development_used_for_model_selection: false
+  heldout_inputs_extracted: false
+  rollout_performed: false
+  full_training_authorized: false

@@ -23,6 +23,7 @@ import src.hayflow_model.hines_trainable_topology_canary as topology_canary_modu
 import src.hayflow_model.hines_architecture_reassessment as reassessment_module
 import src.hayflow_model.hines_region_mechanism_experts as expert_module
 import src.hayflow_model.hines_regenerative_state_decomposition as decomposition_module
+import src.hayflow_model.hines_regenerative_support_expansion as support_expansion_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -132,6 +133,87 @@ from src.hayflow_model.hines_regenerative_state_decomposition import (
     regenerative_state_group,
     semantic_group_ids,
 )
+from src.hayflow_model.hines_regenerative_support_expansion import (
+    HinesRegenerativeSupportExpansionConfig,
+    regenerative_stratum,
+    select_disjoint_stratified_pairs,
+)
+
+
+def test_05jh_regenerative_strata_respect_registered_thresholds():
+    assert regenerative_stratum(-19.9) == "regenerative"
+    assert regenerative_stratum(-20.0) == "regenerative"
+    assert regenerative_stratum(-20.1) == "near_regenerative"
+    assert regenerative_stratum(-45.0) == "near_regenerative"
+    assert regenerative_stratum(-45.1) == "subthreshold"
+
+
+def test_05jh_pair_selection_is_deterministic_stratified_and_episode_disjoint():
+    rows = []
+    for stratum_index, stratum in enumerate(
+        ("regenerative", "near_regenerative", "subthreshold")
+    ):
+        for position in range(5):
+            base = 100 * stratum_index + 2 * position
+            rows.append({
+                "left_index": base,
+                "right_index": base + 1,
+                "left_episode_id": f"episode-{base}",
+                "right_episode_id": f"episode-{base + 1}",
+                "regenerative_stratum": stratum,
+            })
+    first = select_disjoint_stratified_pairs(rows, 9)
+    second = select_disjoint_stratified_pairs(rows, 9)
+    assert first == second and len(first) == 9
+    assert {row["regenerative_stratum"] for row in first} == {
+        "regenerative", "near_regenerative", "subthreshold"
+    }
+    episodes = [
+        value for row in first
+        for value in (row["left_episode_id"], row["right_episode_id"])
+    ]
+    assert len(episodes) == len(set(episodes))
+
+
+def test_05jh_config_and_exact_05jg_hashes_match_registered_result():
+    HinesRegenerativeSupportExpansionConfig().validate()
+    with pytest.raises(ValueError, match="thresholds are reversed"):
+        HinesRegenerativeSupportExpansionConfig(
+            regenerative_peak_threshold_mv=-50.0
+        ).validate()
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (root / "experiments/hayflow/05j_g_regenerative_state_target_decomposition/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == support_expansion_module.EXPECTED_05JG_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == support_expansion_module.EXPECTED_05JG_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == support_expansion_module.EXPECTED_05JG_FINAL_SHA256
+    assert result["diagnosis"] == "REGENERATIVE_STATE_LINK_NOT_CONFIRMED_ON_DEVELOPMENT"
+
+
+def test_05jh_notebook_expands_train_support_without_unsealing_future_data():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_h_regenerative_support_expansion.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "prepare_regenerative_support_expansion" in source
+    assert "build_regenerative_support" in source
+    assert "prepare_expanded_regenerative_roles" in source
+    assert "reconstruct_expanded_direct_tree_ensemble" in source
+    assert "run_state_target_probes" in source
+    assert "finalize_regenerative_support_expansion" in source
+    assert "assert not support_report['selection_uses_model_error']" in source
+    assert "registered_05jg_probe_unchanged" in source
+    assert "not final_report['candidate_model_authorized']" in source
+    assert "assert not final_report['methodology']['heldout_inputs_extracted']" in source
+    assert "assert not final_report['methodology']['rollout_performed']" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "rglob('/kaggle" not in source
 
 
 def test_05jg_semantic_groups_are_exclusive_and_exclude_voltage():

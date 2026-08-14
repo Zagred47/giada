@@ -1,0 +1,64 @@
+{
+  "schema_version": "05j-g-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_regenerative_state_decomposition.zip",
+    "size_bytes": 457569,
+    "sha256": "6ec384d6e549878ee52bdf1562b071e87596a09acb5241f9fdbb2e0f86d0c569",
+    "artifact_index_sha256": "c8ba42a67859bb7ceb83630bae4b453b4967680a02c98a66374ce7633aad60a0",
+    "final_report_sha256": "8c54566d33b2cfd034d81266709997c02a1c43f3d43fc6b0926cb02a763a43b8",
+    "indexed_member_count": 29,
+    "verified_member_count": 29
+  },
+  "code_revision": "fc68a2d2b46e3f4905f4fd793c719e45523d6321",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "decision": "DIAGNOSTIC_STATE_TARGET_DECOMPOSITION_ONLY",
+  "diagnosis": "REGENERATIVE_STATE_LINK_NOT_CONFIRMED_ON_DEVELOPMENT",
+  "baseline": {
+    "calibration_rmse_mv": 1.5556660911396207,
+    "development_rmse_mv": 2.9953092036612308
+  },
+  "causal_current_all": {
+    "calibration_rmse_mv": 1.552156781912942,
+    "development_rmse_mv": 3.0286630957724685,
+    "calibration_improvement_vs_intercept_fraction": 0.014494886088292044,
+    "development_improvement_vs_intercept_fraction": -0.0012845093968471464,
+    "material": false
+  },
+  "oracle_delta_aligned_all": {
+    "calibration_rmse_mv": 0.9403964178801266,
+    "development_rmse_mv": 1.4485125127081884,
+    "calibration_improvement_vs_intercept_fraction": 0.402917611336316,
+    "development_improvement_vs_intercept_fraction": 0.5211177028350553,
+    "calibration_max_error_improvement_vs_intercept_fraction": 0.22367759011150457,
+    "development_max_error_improvement_vs_intercept_fraction": 0.5227619515026519
+  },
+  "oracle_delta_spatial_shift_control": {
+    "calibration_rmse_mv": 1.0546027844790418,
+    "development_rmse_mv": 1.6694984125043102
+  },
+  "aligned_vs_spatial_shift_rmse_improvement_fraction": {
+    "fit": 0.13768545186067532,
+    "calibration": 0.10829325342179084,
+    "development": 0.13236664266402906,
+    "registered_threshold": 0.15,
+    "passed": false
+  },
+  "strongest_single_group": {
+    "family": "oracle_delta_calcium_channel",
+    "calibration_rmse_improvement_vs_intercept_fraction": 0.28545104870562665,
+    "development_rmse_improvement_vs_intercept_fraction": 0.4713202897485035
+  },
+  "second_signal": {
+    "family": "oracle_delta_sodium_channel",
+    "calibration_rmse_improvement_vs_intercept_fraction": 0.2725408710837958,
+    "development_rmse_improvement_vs_intercept_fraction": 0.4797325950255994
+  },
+  "causal_current_material": false,
+  "oracle_state_delta_material": false,
+  "candidate_model_authorized": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "next_step": "05j_h_regenerative_support_expansion"
+}
