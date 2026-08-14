@@ -34,6 +34,96 @@ from src.hayflow_teacher import (
     select_causal_bap_assist,
 )
 from src.hayflow_teacher.causal_release import CausalReleaseRecorder
+from src.hayflow_teacher.regenerative_confirmation_support import (
+    EXPECTED_05JH_ARCHIVE_SHA256,
+    EXPECTED_05JH_FINAL_SHA256,
+    EXPECTED_05JH_INDEX_SHA256,
+    RegenerativeConfirmationConfig,
+    discover_pilot_templates,
+    low_arm_actions,
+)
+
+
+class RegenerativeConfirmationSupportTest(unittest.TestCase):
+    @staticmethod
+    def _schedule():
+        return {
+            "3": [
+                InputAction("synaptic_event", 0.2, synapse_id=11).to_dict(),
+                InputAction("synaptic_event", 0.4, synapse_id=12).to_dict(),
+                InputAction("synaptic_event", 0.6, synapse_id=13).to_dict(),
+                InputAction("synaptic_event", 0.8, synapse_id=14).to_dict(),
+            ]
+        }
+
+    def test_05ji_source_discovery_is_historical_deterministic_and_family_diverse(self):
+        rows = []
+        for family_index, family in enumerate(("targeted_nmda", "targeted_calcium")):
+            for seed in (510001, 510002, 510003):
+                rows.append(
+                    {
+                        "candidate_id": f"{family}-candidate",
+                        "family": family,
+                        "seed": seed,
+                        "event_probe_peak_voltage_mv": -31.0 - family_index,
+                        "event_probe_segment_id": 100 + family_index,
+                        "event_probe_region": family,
+                        "selected_synapse_ids": json.dumps([11, 12, 13, 14]),
+                        "input_schedule": json.dumps(self._schedule()),
+                    }
+                )
+        first = discover_pilot_templates(rows, RegenerativeConfirmationConfig())
+        second = discover_pilot_templates(rows, RegenerativeConfirmationConfig())
+        self.assertEqual(first, second)
+        self.assertEqual({row["family"] for row in first}, {"targeted_nmda", "targeted_calcium"})
+        self.assertTrue(all(row["source_seed_count"] == 3 for row in first))
+
+    def test_05ji_low_arm_drops_events_without_rescaling_canonical_weights(self):
+        actions = tuple(
+            InputAction("synaptic_event", 0.1 * index, synapse_id=20 + index)
+            for index in range(1, 7)
+        )
+        low = low_arm_actions(actions, 0.5)
+        self.assertEqual(len(low), 3)
+        self.assertTrue(all(action.weight_multiplier == 1.0 for action in low))
+        self.assertEqual(low, low_arm_actions(actions, 0.5))
+        source_keys = {(action.synapse_id, action.offset_ms) for action in actions}
+        self.assertTrue(
+            {(action.synapse_id, action.offset_ms) for action in low}.issubset(source_keys)
+        )
+
+    def test_05ji_config_and_registered_05jh_hashes_are_exact(self):
+        RegenerativeConfirmationConfig().validate()
+        with self.assertRaisesRegex(ValueError, "below the near-regenerative minimum"):
+            RegenerativeConfirmationConfig(pair_count=10).validate()
+        root = Path(__file__).resolve().parents[2]
+        result = json.loads(
+            (root / "experiments/hayflow/05j_h_regenerative_support_expansion/result.json")
+            .read_text(encoding="utf-8")
+        )
+        self.assertEqual(result["archive"]["sha256"], EXPECTED_05JH_ARCHIVE_SHA256)
+        self.assertEqual(result["archive"]["artifact_index_sha256"], EXPECTED_05JH_INDEX_SHA256)
+        self.assertEqual(result["archive"]["final_report_sha256"], EXPECTED_05JH_FINAL_SHA256)
+        self.assertEqual(result["support"]["near_regenerative_pair_count"], 0)
+
+    def test_05ji_notebook_freezes_all_pairs_and_uses_blob_download(self):
+        root = Path(__file__).resolve().parents[2]
+        notebook = json.loads(
+            (root / "notebooks/05j_i_regenerative_confirmation_support.ipynb")
+            .read_text(encoding="utf-8")
+        )
+        source = "\n".join(
+            "".join(cell.get("source", [])) for cell in notebook["cells"]
+        )
+        self.assertIn("run_boundary_template_pilot", source)
+        self.assertIn("build_confirmation_plan", source)
+        self.assertIn("generate_confirmation_shard", source)
+        self.assertIn("validate_confirmation_shard", source)
+        self.assertIn("all_registered_episodes_retained", source)
+        self.assertIn("base64.b64encode", source)
+        self.assertIn("application/zip", source)
+        self.assertNotIn("FileLink", source)
+        self.assertNotIn("torch.cuda", source)
 
 
 def outcome(success=True):

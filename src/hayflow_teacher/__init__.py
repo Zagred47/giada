@@ -57,6 +57,12 @@ from .diagnostic_dataset_v1_1 import (
     select_causal_bap_assist,
 )
 from .bap_support_topup import BapValidationSupportTopupSession
+from .regenerative_confirmation_support import (
+    RegenerativeConfirmationConfig,
+    RegenerativeConfirmationSupportSession,
+    discover_pilot_templates,
+    low_arm_actions,
+)
 
 __all__ = [
     "CausalReleaseRecorder",
@@ -64,6 +70,10 @@ __all__ = [
     "assess_causal_bap",
     "select_causal_bap_assist",
     "BapValidationSupportTopupSession",
+    "RegenerativeConfirmationConfig",
+    "RegenerativeConfirmationSupportSession",
+    "discover_pilot_templates",
+    "low_arm_actions",
     "BoundaryState",
     "default_event_definitions",
     "detect_spikes",

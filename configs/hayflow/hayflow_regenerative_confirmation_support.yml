@@ -1,0 +1,33 @@
+schema_version: "05j-i-config-v1"
+
+regenerative_confirmation_support:
+  pair_count: 24
+  minimum_near_pair_count: 18
+  pilot_seed_count: 3
+  pilot_candidate_limit: 24
+  selected_template_count: 4
+  episode_duration_ms: 12
+  post_branch_ms: 6
+  low_arm_keep_fraction: 0.5
+  near_lower_mv: -45.0
+  near_upper_mv: -20.0
+  pilot_source_lower_mv: -60.0
+  pilot_source_upper_mv: 10.0
+  pilot_required_near_fraction: 1.0
+  minimum_teacher_distance_mv: 0.01
+  seed_gap: 20000
+  conditioning_ms: 4
+
+methodology:
+  source_teacher: canonical_Hay_NEURON
+  source_result: exact_05j_h_regenerative_support_expansion
+  shard_role: validation_only_regenerative_confirmation
+  selection_outcome_blind_to_acquisition: true
+  all_registered_pairs_retained: true
+  canonical_netcon_weights_preserved: true
+  weight_multiplier_sweeps_used: false
+  input_views: [U_scheduled, U_rng, U_realized]
+  exhaustive_replay_required: true
+  candidate_training_performed: false
+  rollout_performed: false
+  heldout_inputs_extracted: false

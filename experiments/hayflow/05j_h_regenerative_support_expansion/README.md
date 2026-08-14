@@ -1,6 +1,21 @@
 # HayFlow 05j-h - regenerative support expansion
 
-Status: implemented; Kaggle execution pending.
+Status: completed on Kaggle; valid support-insufficiency result.
+
+The exact result is registered in `result.json`. All 34 indexed members passed
+independent size and SHA-256 verification. The expanded train-only search found
+72 episode-disjoint pairs, but their biological strata were 48 regenerative,
+zero near-regenerative and 24 subthreshold. Therefore the pre-registered
+minimum of eight near-regenerative pairs was not met, despite six protocol
+families and the requested total pair count.
+
+On the reserved 18-pair confirmation role, the aligned future-state oracle beat
+the spatially shifted control on 16/18 individual pairs, but only by 8.35% in
+aggregate RMSE. That remains below the registered 15% spatial-specificity gate.
+This is not evidence against the state-transition hypothesis because the
+required intermediate-voltage regime is absent. No candidate, rollout or full
+training is authorized. The registered next step is a separate, outcome-blind
+teacher shard targeted to near-regenerative causal branch pairs.
 
 05j-g found a large calcium/sodium state-transition oracle signal, but the
 aligned oracle did not beat its spatially shifted equal-width control by the

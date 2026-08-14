@@ -1,0 +1,29 @@
+# HayFlow 05j-i - regenerative confirmation support
+
+Status: implemented; Kaggle execution pending.
+
+05j-h found 48 regenerative and 24 subthreshold train branching pairs but no
+pair whose one-step target peak lies in the pre-registered intermediate band
+`[-45, -20) mV`. Therefore its 8.35% aggregate aligned-oracle advantage cannot
+decide the regenerative-state hypothesis against the 15% specificity gate.
+
+This notebook creates a separate, validation-only teacher shard rather than
+changing the gate or training another decoder. Candidate dendritic schedules
+come only from the already completed biological pilot in the immutable base
+dataset. A short pilot with a seed namespace disjoint from both base and new
+acquisition identifies canonical-synapse schedules that put a causal one-step
+branch inside the missing voltage band. No NetCon weight is rescaled: low and
+high arms differ only by a deterministic subset of authentic synaptic events.
+
+The acquisition plan is persisted before any new support outcome is observed.
+It contains 24 snapshot-matched causal pairs (48 episodes), and every registered
+episode is retained regardless of its realized voltage stratum. Eighteen
+near-regenerative pairs are required for scientific sufficiency. Falling below
+that number is a valid, downloadable acquisition result and routes to a second
+adaptive acquisition; it never permits post-hoc cherry-picking.
+
+Every transition stores the full v1.1 teacher state and causal release views.
+The complete shard is structurally checked and exhaustively replayed. This
+notebook performs no model training, no rollout and no held-out reveal.
+
+Expected artifact: `hayflow_regenerative_confirmation_support.zip`.

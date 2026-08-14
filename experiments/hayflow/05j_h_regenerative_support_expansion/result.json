@@ -1,0 +1,41 @@
+{
+  "schema_version": "05j-h-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_regenerative_support_expansion.zip",
+    "size_bytes": 584245,
+    "sha256": "b51137b6f73656f9d637a9a1948dc40ac2795e1c8c480148caf5d1831e0d228c",
+    "artifact_index_sha256": "6336704675d1c69a71c0fa55db9d61d85bd6679c9f27a40963489ee3d9b93090",
+    "final_report_sha256": "8ea2abf9ee0366b8c2341e0602613f5b4409fa832481e9e8bd8371430a9c8e5a",
+    "indexed_member_count": 34,
+    "verified_member_count": 34
+  },
+  "code_revision": "49e362fb56bb7d47e3c80012d75d9e4f98c597fa",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "experiment_completed_validly": true,
+  "decision": "TRAIN_ONLY_REGENERATIVE_SUPPORT_CONFIRMATION",
+  "diagnosis": "EXISTING_DATASET_LACKS_INDEPENDENT_REGENERATIVE_CONFIRMATION_SUPPORT",
+  "support": {
+    "candidate_pair_count": 776,
+    "selected_pair_count": 72,
+    "fit_pair_count": 54,
+    "confirmation_pair_count": 18,
+    "regenerative_pair_count": 48,
+    "near_regenerative_pair_count": 0,
+    "subthreshold_pair_count": 24,
+    "protocol_family_count": 6,
+    "biological_support_sufficient": false
+  },
+  "confirmation_aligned_vs_shifted": {
+    "aggregate_rmse_improvement_fraction": 0.08345212759769333,
+    "pairwise_win_count": 16,
+    "pairwise_pair_count": 18,
+    "pairwise_win_fraction": 0.8888888888888888,
+    "registered_aggregate_threshold": 0.15,
+    "passed": false
+  },
+  "candidate_model_authorized": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "next_step": "05j_i_generate_regenerative_confirmation_support"
+}
