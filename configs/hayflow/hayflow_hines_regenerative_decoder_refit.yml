@@ -1,0 +1,33 @@
+schema_version: "05j-n-config-v1"
+
+regenerative_decoder_refit:
+  old_fit_calibration_pair_count: 11
+  new_train_calibration_pair_count: 19
+  expected_old_fit_pair_count: 54
+  expected_new_train_pair_count: 96
+  seeds: [17, 29, 43]
+  epochs: 1200
+  evaluation_interval: 20
+  patience: 240
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 5.0
+  minimum_internal_improvement_vs_h2_fraction: 0.10
+  minimum_development_improvement_vs_best_baseline_fraction: 0.05
+  minimum_development_branching_retention: 0.5
+  maximum_development_branching_retention: 2.0
+  maximum_development_error_ratio_vs_h2: 1.0
+  minimum_passing_seeds: 2
+
+methodology:
+  base_h2_frozen: true
+  decoder_family: registered_direct_tree
+  representation_refit_support: internal_fit_only
+  decoder_weight_fit_support: internal_fit_only
+  checkpoint_selection_support: internal_calibration_only
+  prior_05j_i_role: development_only_after_checkpoint_freeze
+  fresh_test_inputs_extracted: false
+  fresh_test_outcomes_generated: false
+  architecture_search_performed: false
+  rollout_performed: false
+  full_training_authorized: false

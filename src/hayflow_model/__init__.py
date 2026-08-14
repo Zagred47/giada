@@ -198,6 +198,18 @@ from .hines_residual_safety_gate import (
     apply_residual_safety_gate,
     residual_gate_thresholds,
 )
+from .hines_regenerative_decoder_refit import (
+    EXPECTED_05JL_ARCHIVE_SHA256,
+    EXPECTED_05JL_FINAL_SHA256,
+    EXPECTED_05JL_INDEX_SHA256,
+    EXPECTED_05JM_ARCHIVE_SHA256,
+    EXPECTED_05JM_FINAL_SHA256,
+    EXPECTED_05JM_INDEX_SHA256,
+    EXPECTED_05JM_TRANSITION_SHA256,
+    HinesRegenerativeDecoderRefit,
+    HinesRegenerativeDecoderRefitConfig,
+    deterministic_pair_partition,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -344,4 +356,14 @@ __all__ = [
     "HinesResidualSafetyGateConfig",
     "apply_residual_safety_gate",
     "residual_gate_thresholds",
+    "EXPECTED_05JL_ARCHIVE_SHA256",
+    "EXPECTED_05JL_FINAL_SHA256",
+    "EXPECTED_05JL_INDEX_SHA256",
+    "EXPECTED_05JM_ARCHIVE_SHA256",
+    "EXPECTED_05JM_FINAL_SHA256",
+    "EXPECTED_05JM_INDEX_SHA256",
+    "EXPECTED_05JM_TRANSITION_SHA256",
+    "HinesRegenerativeDecoderRefit",
+    "HinesRegenerativeDecoderRefitConfig",
+    "deterministic_pair_partition",
 ]

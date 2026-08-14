@@ -1,0 +1,45 @@
+{
+  "schema_version": "05j-m-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_regenerative_training_support.zip",
+    "size_bytes": 493292768,
+    "sha256": "70010063448be6de8c7478037398f58fbd2d4cd8d81a14fade1d1561b47bcf20",
+    "artifact_index_sha256": "90a46ddab7d27cc00f70e177f30ba97e8147a14f8fca390b809ed8eb81c868a1",
+    "final_report_sha256": "27eb696bfee58efa118a6929d8630ccc8141f558ed42d9394d6e0e8a00fed795",
+    "indexed_member_count": 524,
+    "verified_member_count": 524
+  },
+  "code_revision": "6f4199d91a20dba46c5f4c10d2c5ff6c3bbbd703",
+  "experiment_completed_validly": true,
+  "decision": "ACQUIRE_REGENERATIVE_TRAIN_SUPPORT_AND_SEAL_FRESH_TEST",
+  "diagnosis": "TRAIN_SUPPORT_ACQUIRED_FRESH_TEST_PLAN_SEALED",
+  "training_shard": {
+    "transition_store_sha256": "97eb347e5348cfcb2198352dd654a09104cd78acfc790433ff471b42e60ab302",
+    "episode_count": 192,
+    "transition_count": 2304,
+    "registered_pair_count": 96,
+    "retained_pair_count": 96,
+    "split": "train",
+    "realized_stratum_counts": {
+      "near_regenerative": 85,
+      "subthreshold": 11,
+      "regenerative": 0
+    },
+    "minimum_near_regenerative_pair_count": 72,
+    "exhaustive_replay_count": 2304,
+    "exhaustive_replay_maximum_error": 3.8146951908402116e-06,
+    "exhaustive_replay_tolerance": 1e-05
+  },
+  "fresh_test": {
+    "registered_pair_count": 32,
+    "protocol_plan_sha256": "31b42befaa2a3cf6b76e304a45daef133371f87f2c069a76ade030c4a68ec642",
+    "sealed_plan_sha256": "52d27b314dd719cff376f640202457b2aaf4266a422d1390f9e84b9484ef087f",
+    "outcomes_generated": false,
+    "seeds_absent_from_training_shard": true
+  },
+  "candidate_model_authorized": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "registered_next_step": "05j_n_refit_decoder_on_expanded_train_support_before_fresh_test"
+}
