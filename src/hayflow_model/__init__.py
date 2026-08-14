@@ -190,6 +190,14 @@ from .hines_voltage_objective_reassessment import (
     feature_transport_summary,
     voltage_error_summary,
 )
+from .hines_residual_safety_gate import (
+    EXPECTED_05JK_ARCHIVE_SHA256,
+    SAFETY_FAMILIES,
+    HinesResidualSafetyGateCanary,
+    HinesResidualSafetyGateConfig,
+    apply_residual_safety_gate,
+    residual_gate_thresholds,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -330,4 +338,10 @@ __all__ = [
     "HinesVoltageObjectiveReassessmentConfig",
     "feature_transport_summary",
     "voltage_error_summary",
+    "EXPECTED_05JK_ARCHIVE_SHA256",
+    "SAFETY_FAMILIES",
+    "HinesResidualSafetyGateCanary",
+    "HinesResidualSafetyGateConfig",
+    "apply_residual_safety_gate",
+    "residual_gate_thresholds",
 ]

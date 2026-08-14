@@ -26,6 +26,7 @@ import src.hayflow_model.hines_regenerative_state_decomposition as decomposition
 import src.hayflow_model.hines_regenerative_support_expansion as support_expansion_module
 import src.hayflow_model.hines_regenerative_confirmation as confirmation_module
 import src.hayflow_model.hines_voltage_objective_reassessment as objective_module
+import src.hayflow_model.hines_residual_safety_gate as safety_module
 
 from src.hayflow_data.hines_inputs import (
     canonical_anchor_segment_ids,
@@ -149,6 +150,56 @@ from src.hayflow_model.hines_voltage_objective_reassessment import (
     feature_transport_summary,
     voltage_error_summary,
 )
+from src.hayflow_model.hines_residual_safety_gate import (
+    HinesResidualSafetyGateConfig,
+    apply_residual_safety_gate,
+    residual_gate_thresholds,
+)
+
+
+def test_05jl_residual_gate_clips_and_falls_back_deterministically():
+    fit = np.asarray([[1.0, 2.0], [2.0, 4.0], [-1.0, -2.0]])
+    disagreement = np.asarray([[0.1, 0.2], [0.2, 0.4], [0.1, 0.2]])
+    thresholds = residual_gate_thresholds(fit, disagreement, 1.0)
+    candidate = np.asarray([[8.0, 3.0]])
+    candidate_disagreement = np.asarray([[0.1, 2.0]])
+    output, report = apply_residual_safety_gate(
+        candidate, candidate_disagreement, thresholds, "combined_clip_uncertainty"
+    )
+    np.testing.assert_allclose(output, [[2.0, 0.0]])
+    assert report["clipped_coordinate_fraction"] == 0.5
+    assert report["uncertainty_fallback_fraction"] == 0.5
+
+
+def test_05jk_registered_hashes_match_05jl_contract():
+    HinesResidualSafetyGateConfig().validate()
+    root = Path(__file__).resolve().parents[2]
+    result = json.loads(
+        (root / "experiments/hayflow/05j_k_voltage_decoder_objective_reassessment/result.json")
+        .read_text(encoding="utf-8")
+    )
+    assert result["archive"]["sha256"] == safety_module.EXPECTED_05JK_ARCHIVE_SHA256
+    assert result["archive"]["artifact_index_sha256"] == safety_module.EXPECTED_05JK_INDEX_SHA256
+    assert result["archive"]["final_report_sha256"] == safety_module.EXPECTED_05JK_FINAL_SHA256
+    assert result["voltage_baselines"]["frozen_h2_rmse_mv"] < result["voltage_baselines"]["frozen_direct_tree_rmse_mv"]
+
+
+def test_05jl_notebook_selects_gate_without_using_05ji():
+    root = Path(__file__).resolve().parents[2]
+    notebook = json.loads(
+        (root / "notebooks/05j_l_residual_safety_gate.ipynb")
+        .read_text(encoding="utf-8")
+    )
+    source = "\n".join(
+        "".join(cell.get("source", [])) for cell in notebook["cells"]
+    )
+    assert "select_gate_on_fit_cross_validation" in source
+    assert "evaluate_frozen_gate" in source
+    assert "not selection['05ji_used_for_selection']" in source
+    assert "not evaluation['external_descriptive']['used_for_authorization']" in source
+    assert "fresh_test_required_before_authorization" in source
+    assert "base64.b64encode" in source and "application/zip" in source
+    assert "FileLink" not in source and "rglob('/kaggle" not in source
 
 
 def test_05jk_transport_summary_detects_external_extrapolation():

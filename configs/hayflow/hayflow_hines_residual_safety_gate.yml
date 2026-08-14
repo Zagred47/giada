@@ -1,0 +1,29 @@
+schema_version: "05j-l-config-v1"
+
+residual_safety_gate:
+  quantiles: [0.95, 0.99, 1.0]
+  cross_validation_folds: 6
+  near_best_cv_tolerance_fraction: 0.02
+  external_h2_tolerance_fraction: 0.25
+  minimum_external_improvement_vs_direct_tree_fraction: 0.80
+  family_priority:
+    - combined_all
+    - combined_clip_uncertainty
+    - sample_energy_scale
+    - segment_clip
+    - uncertainty_fallback
+    - identity_direct_tree
+
+methodology:
+  exact_05jk_artifact_verified: true
+  safety_thresholds_fit_on_original_05jh_fit_only: true
+  family_and_quantile_selection: grouped_pair_cross_validation_on_original_fit_only
+  near_best_tie_break: most_conservative_registered_family
+  05ji_support_role: descriptive_post_result_only
+  fresh_test_required_before_authorization: true
+  base_h2_frozen: true
+  direct_tree_checkpoints_frozen: true
+  gradient_training_performed: false
+  heldout_inputs_extracted: false
+  rollout_performed: false
+  full_training_authorized: false

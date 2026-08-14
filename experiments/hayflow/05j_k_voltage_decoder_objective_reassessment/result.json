@@ -1,0 +1,46 @@
+{
+  "schema_version": "05j-k-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_voltage_objective_reassessment.zip",
+    "size_bytes": 344785,
+    "sha256": "e18bf9ee7ee3037d209e1f36b180b86c3dadca357f3df3a4d7de21f37c71e85e",
+    "artifact_index_sha256": "18f02c2ccc963649dafcdf32853058ad3e78c34d57a03d312414514ccbc2ef6c",
+    "final_report_sha256": "220de838a245a38fb322a832685cf4454e2cc0b800819510464e690d046bf0d1",
+    "indexed_member_count": 37,
+    "verified_member_count": 37
+  },
+  "code_revision": "e7f2c8a9dd597afe5b0fd15a5eed6c81d676e555",
+  "experiment_completed_validly": true,
+  "decision": "POST_RESULT_INTERPRETABILITY_AND_VOLTAGE_OBJECTIVE_AUDIT",
+  "diagnosis": "NEAR_REGENERATIVE_SUPPORT_AND_OBJECTIVE_MISMATCH_DOMINATES",
+  "formal_05jj_result_preserved": true,
+  "oracle_transport": {
+    "feature_transport_ood": true,
+    "numerical_oracle_explosion": true,
+    "biological_rejection_interpretable": false,
+    "delta_external_max_abs_z": 26780.884934685804,
+    "delta_external_abs_z_gt_50_fraction": 0.0010986871384067647,
+    "aligned_condition_number_maximum": 4468665.267806013,
+    "shifted_to_aligned_ridge_ratio": 1000.0
+  },
+  "voltage_baselines": {
+    "persistence_rmse_mv": 2.4806782366241658,
+    "frozen_h2_rmse_mv": 2.7363537591958824,
+    "frozen_direct_tree_rmse_mv": 23.319384424058818,
+    "frozen_direct_tree_fit_rmse_mv": 1.3982749135803967,
+    "direct_tree_external_to_fit_rmse_ratio": 16.677252947596433,
+    "median_branching_amplification": 5.523185110719093
+  },
+  "teacher_transition": {
+    "external_to_fit_p99_ratio": 0.44483959986045973,
+    "residual_limit_is_blocker": false,
+    "maximum_absolute_target_residual_mv": 39.190494537353516,
+    "configured_limit_mv": 120.0
+  },
+  "candidate_model_authorized": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "registered_next_step": "05j_l_acquire_train_and_fresh_test_near_regenerative_support",
+  "refined_next_step": "05j_l_frozen_residual_safety_gate_canary_then_fresh_test"
+}
