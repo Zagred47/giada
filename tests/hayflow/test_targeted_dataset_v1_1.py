@@ -70,6 +70,7 @@ class RegenerativeConfirmationSupportTest(unittest.TestCase):
                         "event_probe_region": family,
                         "selected_synapse_ids": json.dumps([11, 12, 13, 14]),
                         "input_schedule": json.dumps(self._schedule()),
+                        "train_eligible": None,
                     }
                 )
         first = discover_pilot_templates(rows, RegenerativeConfirmationConfig())
@@ -77,6 +78,15 @@ class RegenerativeConfirmationSupportTest(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertEqual({row["family"] for row in first}, {"targeted_nmda", "targeted_calcium"})
         self.assertTrue(all(row["source_seed_count"] == 3 for row in first))
+
+        excluded = [dict(row) for row in rows]
+        for row in excluded:
+            if row["family"] == "targeted_nmda":
+                row["train_eligible"] = False
+        filtered = discover_pilot_templates(
+            excluded, RegenerativeConfirmationConfig()
+        )
+        self.assertEqual({row["family"] for row in filtered}, {"targeted_calcium"})
 
     def test_05ji_low_arm_drops_events_without_rescaling_canonical_weights(self):
         actions = tuple(

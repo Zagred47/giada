@@ -55,6 +55,21 @@ def _canonical_schedule(value: Any) -> str:
     return json.dumps(schedule, sort_keys=True, separators=(",", ":"))
 
 
+def _historical_train_eligible(value: Any) -> bool:
+    """Missing Parquet values mean ordinary train-eligible pilot rows."""
+
+    if value is None:
+        return True
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized in {"", "null", "none", "nan", "<na>"}:
+            return True
+        return normalized not in {"false", "0", "no"}
+    if isinstance(value, float) and np.isnan(value):
+        return True
+    return bool(value)
+
+
 @dataclass(frozen=True)
 class RegenerativeConfirmationConfig:
     pair_count: int = 24
@@ -120,14 +135,7 @@ def discover_pilot_templates(
         family = str(row.get("family", ""))
         if family not in {"targeted_nmda", "targeted_calcium"}:
             continue
-        eligibility = row.get("train_eligible", True)
-        if isinstance(eligibility, str):
-            eligibility = eligibility.strip().lower() not in {
-                "false", "0", "no", "null", "none", "nan", ""
-            }
-        elif isinstance(eligibility, float) and np.isnan(eligibility):
-            eligibility = True
-        if not bool(eligibility):
+        if not _historical_train_eligible(row.get("train_eligible")):
             continue
         peak = row.get("event_probe_peak_voltage_mv")
         if peak is None or not np.isfinite(float(peak)):
