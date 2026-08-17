@@ -1,0 +1,45 @@
+{
+  "schema_version": "05j-n-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_regenerative_decoder_refit.zip",
+    "size_bytes": 989231,
+    "sha256": "1d7e5aab979be1c7bf5dcbc5016861a5186769b4ad98a18edd556366419d89f4",
+    "artifact_index_sha256": "c3c4199b0a6da73b8f0ec3b986e22a7f2a9999cc74947039ac72811583c8e610",
+    "final_report_sha256": "4575983a8a81b2ee6b0160bcde06738a00ec689bb6c8c3f8d4957333b563c5cd",
+    "indexed_member_count": 45,
+    "verified_member_count": 45
+  },
+  "code_revision": "b44e2dc698b6ec90d6e1ba5d1dd4657a0733514a",
+  "experiment_completed_validly": true,
+  "decision": "REGISTERED_DECODER_REFIT_ON_EXPANDED_TRAIN_SUPPORT",
+  "diagnosis": "REFIT_PASSES_DEVELOPMENT_FRESH_TEST_GENERATION_AUTHORIZED",
+  "role_contract": {
+    "old_fit_pair_count": 54,
+    "new_train_pair_count": 96,
+    "combined_internal_fit_pair_count": 120,
+    "combined_internal_calibration_pair_count": 30,
+    "development_pair_count": 24,
+    "internal_fit_calibration_episode_overlap": [],
+    "maximum_new_pair_boundary_state_error": 0.0
+  },
+  "baselines": {
+    "fit_h2_rmse_mv": 5.286136,
+    "calibration_h2_rmse_mv": 4.521151,
+    "development_h2_rmse_mv": 2.736354,
+    "development_persistence_rmse_mv": 2.480678
+  },
+  "runs": [
+    {"seed": 17, "best_epoch": 960, "fit_rmse_mv": 0.950777, "calibration_rmse_mv": 0.921276, "development_rmse_mv": 0.368057, "development_maximum_segment_error_mv": 6.602425, "development_branching_retention": 1.130409, "passed": true, "checkpoint_sha256": "4e9677cc2651348a2d8ef47f3549a9ef0ecdbe95fa0bb5da320b62a63776d5e4"},
+    {"seed": 29, "best_epoch": 1120, "fit_rmse_mv": 0.862791, "calibration_rmse_mv": 0.812529, "development_rmse_mv": 0.334722, "development_maximum_segment_error_mv": 6.353369, "development_branching_retention": 1.034271, "passed": true, "checkpoint_sha256": "6049877905ed31309b8475acde6e34b0446c25663a5d10580ad5df6f44e2eaab"},
+    {"seed": 43, "best_epoch": 1140, "fit_rmse_mv": 0.814583, "calibration_rmse_mv": 0.815115, "development_rmse_mv": 0.354341, "development_maximum_segment_error_mv": 8.401674, "development_branching_retention": 1.121284, "passed": true, "checkpoint_sha256": "3edba6b0ef7c3c4e7a3bc3216979387fa0469efc2e6ecee75948899c5da9f1ad"}
+  ],
+  "passing_seed_count": 3,
+  "minimum_passing_seed_count": 2,
+  "robust_gate_passed": true,
+  "fresh_test_generation_authorized": true,
+  "candidate_model_authorized": false,
+  "micro_rollout_authorized": false,
+  "full_training_authorized": false,
+  "registered_next_step": "05j_o_generate_and_evaluate_preregistered_fresh_test"
+}

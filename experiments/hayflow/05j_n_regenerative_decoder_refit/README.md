@@ -1,6 +1,6 @@
 # HayFlow 05j-n - regenerative decoder refit
 
-Status: implemented; Kaggle execution pending.
+Status: completed and fully verified.
 
 05j-m supplied 96 complete train-only boundary pairs from the previously
 missing near-regenerative domain while keeping a disjoint 32-pair fresh test
@@ -25,3 +25,20 @@ This notebook performs no architecture search, no rollout and no full model
 training. It neither extracts nor generates fresh-test outcomes.
 
 Expected artifact: `hayflow_hines_regenerative_decoder_refit.zip`.
+
+## Result
+
+All 45 indexed members passed size and SHA-256 verification. The registered
+120/30 internal fit/calibration split remained episode-disjoint, and the
+24-pair 05j-i support was evaluated only after checkpoint freezing. All three
+seeds passed the robust development gate (the preregistered minimum was two).
+
+Development RMSE was 0.3681, 0.3347 and 0.3543 mV for seeds 17, 29 and 43,
+respectively, versus 2.7364 mV for frozen H2 and 2.4807 mV for persistence.
+Median branching retention stayed close to one (1.1304, 1.0343 and 1.1213).
+No fresh-test input or outcome was accessed during fitting.
+
+The result authorizes exactly one next operation: generate all 32 pairs from
+the previously sealed fresh-test plan and evaluate the three frozen
+checkpoints without selection, tuning or retraining. It does not yet authorize
+a candidate, rollout or full training.

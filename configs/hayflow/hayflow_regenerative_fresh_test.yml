@@ -1,0 +1,32 @@
+schema_version: "05j-o-config-v1"
+
+regenerative_fresh_test:
+  pair_count: 32
+  episode_count: 64
+  transition_count: 768
+  episode_duration_ms: 12
+  conditioning_ms: 4
+  seed_start: 1100001
+  minimum_teacher_distance_mv: 0.01
+  boundary_state_atol: 0.00001
+
+frozen_model_gate:
+  seeds: [17, 29, 43]
+  minimum_improvement_vs_best_baseline_fraction: 0.05
+  minimum_branching_retention: 0.5
+  maximum_branching_retention: 2.0
+  maximum_segment_error_ratio_vs_h2: 1.0
+  minimum_passing_seeds: 2
+  transform_reproduction_atol: 0.000001
+
+methodology:
+  plan_source: sealed_05j_m_fresh_test
+  generation_authority: exact_05j_n_robust_gate
+  all_pairs_retained: true
+  checkpoint_family: frozen_05j_n_direct_tree_refit
+  checkpoint_selection_performed: false
+  retraining_performed: false
+  fresh_test_used_for_model_selection: false
+  candidate_authorization_scope: one_step_only
+  rollout_performed: false
+  full_training_authorized: false

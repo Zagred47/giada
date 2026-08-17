@@ -68,6 +68,11 @@ from .regenerative_training_support import (
     RegenerativeTrainingSupportSession,
     build_regenerative_support_plans,
 )
+from .regenerative_fresh_test import (
+    RegenerativeFreshTestConfig,
+    RegenerativeFreshTestSession,
+    protocol_from_frozen_row,
+)
 
 __all__ = [
     "CausalReleaseRecorder",
@@ -82,6 +87,9 @@ __all__ = [
     "RegenerativeTrainingSupportConfig",
     "RegenerativeTrainingSupportSession",
     "build_regenerative_support_plans",
+    "RegenerativeFreshTestConfig",
+    "RegenerativeFreshTestSession",
+    "protocol_from_frozen_row",
     "BoundaryState",
     "default_event_definitions",
     "detect_spikes",

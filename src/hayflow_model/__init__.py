@@ -210,6 +210,10 @@ from .hines_regenerative_decoder_refit import (
     HinesRegenerativeDecoderRefitConfig,
     deterministic_pair_partition,
 )
+from .hines_regenerative_fresh_test import (
+    HinesRegenerativeFreshTestConfig,
+    HinesRegenerativeFreshTestEvaluation,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -366,4 +370,6 @@ __all__ = [
     "HinesRegenerativeDecoderRefit",
     "HinesRegenerativeDecoderRefitConfig",
     "deterministic_pair_partition",
+    "HinesRegenerativeFreshTestConfig",
+    "HinesRegenerativeFreshTestEvaluation",
 ]
