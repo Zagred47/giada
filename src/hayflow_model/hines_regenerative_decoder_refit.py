@@ -65,13 +65,22 @@ _05JM_TRAINING_MEMBERS = frozenset(
     {
         "acquisition_contract.json",
         "artifact_index.json",
+        "branching_pairs.parquet",
         "dataset_manifest.json",
+        "dataset_card.json",
         "episodes.parquet",
+        "event_definition_config.json",
+        "events.parquet",
         "final_report.json",
         "manifest.json",
+        "release_outcomes.parquet",
+        "segments.parquet",
+        "splits.json",
         "state_schema.json",
+        "synapses.parquet",
         "training_pairs.parquet",
         "transition_dataset.h5",
+        "validation_report.json",
     }
 )
 
