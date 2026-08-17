@@ -99,6 +99,16 @@ def test_05jn_verifies_but_does_not_materialize_sealed_fresh_test(
     assert contract["fresh_test_member_parsed"] is False
 
 
+def test_05jn_training_cache_stamp_changes_with_loader_dependencies(monkeypatch):
+    original = refit_module._training_cache_stamp("same-archive")
+    monkeypatch.setattr(
+        refit_module,
+        "_05JM_TRAINING_MEMBERS",
+        refit_module._05JM_TRAINING_MEMBERS | {"new_loader_dependency.json"},
+    )
+    assert refit_module._training_cache_stamp("same-archive") != original
+
+
 def test_05jn_notebook_refits_only_registered_decoder_and_keeps_test_sealed():
     notebook = json.loads(
         (ROOT / "notebooks/05j_n_regenerative_decoder_refit.ipynb")

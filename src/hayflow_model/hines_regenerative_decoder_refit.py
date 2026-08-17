@@ -95,6 +95,16 @@ def _stream_sha256(handle: Any, block_size: int = 16 * 1024 * 1024) -> str:
     return digest.hexdigest()
 
 
+def _training_cache_stamp(source_fingerprint: str) -> str:
+    payload = {
+        "source_fingerprint": str(source_fingerprint),
+        "materialized_members": sorted(_05JM_TRAINING_MEMBERS),
+    }
+    return hashlib.sha256(
+        json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+
+
 def _verified_training_artifact_root(
     source: Path, cache_dir: Path
 ) -> Tuple[Path, Dict[str, Any], Dict[str, Any]]:
@@ -144,8 +154,9 @@ def _verified_training_artifact_root(
                     row["sha256"]
                 ):
                     raise RuntimeError(f"05j-m indexed member mismatch: {relative}")
+            cache_stamp = _training_cache_stamp(observed_archive)
             marker = cache_dir / ".training_source_sha256"
-            if not marker.is_file() or marker.read_text().strip() != observed_archive:
+            if not marker.is_file() or marker.read_text().strip() != cache_stamp:
                 if cache_dir.exists():
                     shutil.rmtree(cache_dir)
                 root = cache_dir / "hayflow_regenerative_training_support"
@@ -158,7 +169,7 @@ def _verified_training_artifact_root(
                         root / basename
                     ).open("wb") as dst:
                         shutil.copyfileobj(src, dst, length=16 * 1024 * 1024)
-                marker.write_text(observed_archive + "\n")
+                marker.write_text(cache_stamp + "\n")
             root = cache_dir / "hayflow_regenerative_training_support"
         source_kind = "original_zip_training_members_only"
     elif source.is_dir():
@@ -185,7 +196,7 @@ def _verified_training_artifact_root(
                 or sha256_file(path) != str(row["sha256"])
             ):
                 raise RuntimeError(f"05j-m indexed member mismatch: {row['path']}")
-        stamp = EXPECTED_05JM_INDEX_SHA256
+        stamp = _training_cache_stamp(EXPECTED_05JM_INDEX_SHA256)
         marker = cache_dir / ".training_source_sha256"
         if not marker.is_file() or marker.read_text().strip() != stamp:
             if cache_dir.exists():
