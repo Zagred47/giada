@@ -1,5 +1,6 @@
 import ast
 import hashlib
+import inspect
 import json
 from pathlib import Path
 
@@ -107,6 +108,15 @@ def test_05jn_training_cache_stamp_changes_with_loader_dependencies(monkeypatch)
         refit_module._05JM_TRAINING_MEMBERS | {"new_loader_dependency.json"},
     )
     assert refit_module._training_cache_stamp("same-archive") != original
+
+
+def test_05jn_preserves_inherited_metrics_method_contract():
+    # Historical 05j-d reconstruction calls _metrics(role_mapping, residual).
+    # 05j-n must not override that method with a role-name API.
+    assert "_metrics" not in refit_module.HinesRegenerativeDecoderRefit.__dict__
+    signature = inspect.signature(refit_module.HinesRegenerativeDecoderRefit._metrics)
+    assert list(signature.parameters)[:3] == ["self", "role", "residual"]
+    assert "_refit_metrics" in refit_module.HinesRegenerativeDecoderRefit.__dict__
 
 
 def test_05jn_notebook_refits_only_registered_decoder_and_keeps_test_sealed():

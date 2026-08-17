@@ -676,7 +676,7 @@ class HinesRegenerativeDecoderRefit(HinesResidualSafetyGateCanary):
             raise RuntimeError("05j-n refit role contract failed")
         return report
 
-    def _metrics(self, role: str, residual: np.ndarray) -> Dict[str, Any]:
+    def _refit_metrics(self, role: str, residual: np.ndarray) -> Dict[str, Any]:
         state = self.refit_roles[role]
         return self._pair_set_metrics(
             (np.asarray(state["base"]) + np.asarray(residual)).reshape(-1, 2, self.layout.segment_count),
@@ -734,7 +734,7 @@ class HinesRegenerativeDecoderRefit(HinesResidualSafetyGateCanary):
                     model.eval()
                     with torch.no_grad():
                         residual = model(tensors["calibration"]["features"]).cpu().numpy()
-                    metrics = self._metrics("calibration", residual)
+                    metrics = self._refit_metrics("calibration", residual)
                     score = pair_gate_selection_score(metrics, max_error_weight=self.topology.selection_max_error_weight, branch_log_weight=self.topology.selection_branch_log_weight)
                     history.append({
                         "seed": seed, "epoch": epoch, "training_loss": float(loss.detach().cpu()),
@@ -757,7 +757,9 @@ class HinesRegenerativeDecoderRefit(HinesResidualSafetyGateCanary):
             role_metrics = {}
             with torch.no_grad():
                 for role in self.refit_roles:
-                    role_metrics[role] = self._metrics(role, model(tensors[role]["features"]).cpu().numpy())
+                    role_metrics[role] = self._refit_metrics(
+                        role, model(tensors[role]["features"]).cpu().numpy()
+                    )
             internal_h2 = baselines["calibration"]["h2"]
             development_h2 = baselines["development"]["h2"]
             development_best = min(
