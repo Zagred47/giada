@@ -1,0 +1,27 @@
+schema_version: "05k-b-config-v1"
+
+autoregressive_failure_reassessment:
+  seeds: [17, 29, 43]
+  horizons_ms: [2, 4, 8]
+  intervention_modes:
+    - teacher_boundary_reset
+    - teacher_voltage_clamp
+    - teacher_latent_reset
+    - decoder_no_feedback
+    - residual_first_step_only
+  material_error_reduction_fraction: 0.25
+  strong_error_reduction_fraction: 0.50
+  physical_voltage_min_mv: -150.0
+  physical_voltage_max_mv: 100.0
+  stored_prediction_atol_mv: 1.0e-6
+
+methodology:
+  input_artifact: exact_failed_05k_micro_rollout
+  frozen_checkpoints: [17, 29, 43]
+  retraining_performed: false
+  checkpoint_selection_performed: false
+  oracle_interventions_are_diagnostic_only: true
+  fresh_test_used_for_new_model_selection: false
+  candidate_reinstatement_authorized: false
+  training_authorized: false
+  full_training_authorized: false

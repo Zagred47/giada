@@ -220,6 +220,12 @@ from .hines_frozen_candidate_micro_rollout import (
     rollout_voltage_metrics,
     verified_fresh_test_artifact_root,
 )
+from .hines_autoregressive_failure_reassessment import (
+    HinesAutoregressiveFailureReassessment,
+    HinesAutoregressiveFailureReassessmentConfig,
+    classify_autoregressive_failure,
+    verified_micro_rollout_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -382,4 +388,8 @@ __all__ = [
     "HinesFrozenCandidateMicroRolloutConfig",
     "rollout_voltage_metrics",
     "verified_fresh_test_artifact_root",
+    "HinesAutoregressiveFailureReassessment",
+    "HinesAutoregressiveFailureReassessmentConfig",
+    "classify_autoregressive_failure",
+    "verified_micro_rollout_artifact_root",
 ]

@@ -1,0 +1,27 @@
+{
+  "schema_version": "05k-registered-result-v1",
+  "artifact_archive_sha256": "0e28e16e9f4b7e14830495ae74382d2981ba6b402e95fd200b537dafaabe4ceb",
+  "artifact_index_sha256": "a471bac2fbb643018aea760269087082408063245028a319cceb58e05ff25a95",
+  "final_report_sha256": "2136c05fd459f529953ea0fe5e4e0ad7c1c428125905267f6b94beab594c39a5",
+  "micro_rollout_report_sha256": "e0af4b102123d4bdcae8cf6830867ca01ca61dcf66ad2e8a1a4504f091586a4b",
+  "code_revision": "22c41b2c838784926dd72c0b26a9e3b80ff189eb",
+  "valid": true,
+  "diagnosis": "FROZEN_CANDIDATE_FAILS_AUTOREGRESSIVE_MICRO_ROLLOUT",
+  "passing_seed_count": 0,
+  "minimum_passing_seed_count": 2,
+  "seed_passed_all_horizons": {
+    "17": false,
+    "29": false,
+    "43": false
+  },
+  "endpoint_rmse_mv": {
+    "17": {"2": 14.627626725189376, "4": 49.52758495571994, "8": 76.7009732216467},
+    "29": {"2": 16.576816759865743, "4": 56.38632061887555, "8": 95.46554635973264},
+    "43": {"2": 13.7780103543309, "4": 48.90992837513588, "8": 62.722191855809704}
+  },
+  "candidate_retained": false,
+  "limited_rollout_aware_training_canary_authorized": false,
+  "full_training_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "next_step": "05k_b_autoregressive_failure_reassessment"
+}

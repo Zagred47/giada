@@ -1,6 +1,6 @@
 # HayFlow 05k - frozen candidate micro-rollout
 
-Status: implemented and locally verified; Kaggle execution pending.
+Status: completed on Kaggle; autoregressive gate failed.
 
 The 05j-o preregistered fresh test confirmed all three frozen decoder seeds as
 one-step candidates. This experiment now evaluates the same unchanged
@@ -23,7 +23,14 @@ retention in [0.5, 2.0], remain below the H2 maximum segment error and avoid
 non-finite or physically invalid voltages. The equal-weight ensemble is
 descriptive and does not participate in the gate.
 
-A pass may authorize only a separate limited rollout-aware training canary. It
-does not authorize full training or mass dataset generation.
+A pass could have authorized only a separate limited rollout-aware training
+canary. The observed result was instead a robust failure: zero of three seeds
+passed all horizons. Endpoint RMSE was 13.78--16.58 mV at 2 ms and
+62.72--95.47 mV at 8 ms, with a strong positive drift and non-physical
+voltages at 8 ms. Persistence remained substantially better. No training or
+mass dataset generation is authorized.
+
+The registered next step is the diagnostic-only
+`05k_b_autoregressive_failure_reassessment`.
 
 Expected artifact: `hayflow_hines_frozen_candidate_micro_rollout.zip`.
