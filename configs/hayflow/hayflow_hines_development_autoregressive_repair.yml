@@ -1,0 +1,23 @@
+schema_version: "05k-c-config-v1"
+
+development_autoregressive_repair:
+  seeds: [17, 29, 43]
+  horizons_ms: [2, 4, 8]
+  gate_horizons_ms: [4, 8]
+  development_pair_count: 24
+  minimum_error_reduction_vs_standard_fraction: 0.25
+  maximum_segment_error_ratio_vs_standard: 1.0
+  minimum_passing_seeds: 2
+  physical_voltage_min_mv: -150.0
+  physical_voltage_max_mv: 100.0
+  transform_reproduction_atol: 1.0e-6
+
+methodology:
+  evaluation_role: existing_independent_development_confirmation
+  fresh_05jo_state_or_outcomes_loaded: false
+  fixed_repair: corrected_voltage_recommit_into_local_and_global_state
+  retraining_performed: false
+  checkpoint_selection_performed: false
+  all_frozen_seeds_evaluated: true
+  teacher_boundary_reset_role: descriptive_oracle_only
+  full_training_authorized: false
