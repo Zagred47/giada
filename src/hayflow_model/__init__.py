@@ -214,6 +214,12 @@ from .hines_regenerative_fresh_test import (
     HinesRegenerativeFreshTestConfig,
     HinesRegenerativeFreshTestEvaluation,
 )
+from .hines_frozen_candidate_micro_rollout import (
+    HinesFrozenCandidateMicroRollout,
+    HinesFrozenCandidateMicroRolloutConfig,
+    rollout_voltage_metrics,
+    verified_fresh_test_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -372,4 +378,8 @@ __all__ = [
     "deterministic_pair_partition",
     "HinesRegenerativeFreshTestConfig",
     "HinesRegenerativeFreshTestEvaluation",
+    "HinesFrozenCandidateMicroRollout",
+    "HinesFrozenCandidateMicroRolloutConfig",
+    "rollout_voltage_metrics",
+    "verified_fresh_test_artifact_root",
 ]

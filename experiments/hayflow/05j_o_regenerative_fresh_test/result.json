@@ -1,0 +1,44 @@
+{
+  "schema_version": "05j-o-registered-result-v1",
+  "status": "completed",
+  "archive": {
+    "filename": "hayflow_hines_regenerative_fresh_test.zip",
+    "size_bytes": 166804547,
+    "sha256": "88310745dde29a17ba3073c01be127b5630c56e591e36b56cdd50e9280d1cc6d",
+    "artifact_index_sha256": "56143bea1bb66cd238d04cd30d3c32af0c0101b94616ee4cfcfea3e29860880d",
+    "final_report_sha256": "f6276b0448c0e24f434685e0d68baeb348fdea1e66420d66a27c21956506b9db",
+    "indexed_member_count": 243,
+    "verified_member_count": 243
+  },
+  "code_revision": "c1b48feda239f56371482606d723f8ef51fffd11",
+  "teacher": {
+    "valid": true,
+    "pair_count": 32,
+    "episode_count": 64,
+    "transition_count": 768,
+    "transition_store_sha256": "667b7dd3a866de9d9f6fc9eaed7d61941673957e0c1676ff2f43644841aab47e",
+    "exhaustive_replay_maximum_error": 0.000003814695659798417,
+    "exhaustive_replay_tolerance": 0.00001
+  },
+  "frozen_model_evaluation": {
+    "h2_rmse_mv": 2.7445487777125455,
+    "persistence_rmse_mv": 2.5762716329918827,
+    "runs": [
+      {"seed": 17, "rmse_mv": 0.40365529085402385, "maximum_segment_error_mv": 7.978437423706055, "median_branching_retention": 1.1132960152769924, "improvement_vs_best_baseline_fraction": 0.8433180392607709, "passed": true},
+      {"seed": 29, "rmse_mv": 0.3773627471653612, "maximum_segment_error_mv": 9.048107147216797, "median_branching_retention": 1.097611468995523, "improvement_vs_best_baseline_fraction": 0.8535236958972678, "passed": true},
+      {"seed": 43, "rmse_mv": 0.3775308167729107, "maximum_segment_error_mv": 7.707235813140869, "median_branching_retention": 1.1389399003291683, "improvement_vs_best_baseline_fraction": 0.8534584583635401, "passed": true}
+    ],
+    "passing_seed_count": 3,
+    "minimum_passing_seed_count": 2,
+    "ensemble_mean_rmse_mv": 0.33083894195481345,
+    "maximum_transform_reproduction_error": 2.2755049580713838e-08
+  },
+  "diagnosis": "FRESH_TEST_CONFIRMS_REFIT_ONE_STEP_CANDIDATE",
+  "candidate_model_authorized": true,
+  "candidate_authorization_scope": "one_step_only",
+  "micro_rollout_authorized": true,
+  "full_training_authorized": false,
+  "checkpoint_selection_performed": false,
+  "retraining_performed": false,
+  "registered_next_step": "05k_frozen_candidate_micro_rollout"
+}
