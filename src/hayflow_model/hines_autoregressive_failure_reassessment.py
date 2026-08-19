@@ -16,6 +16,7 @@ from .hines_frozen_candidate_micro_rollout import (
     rollout_voltage_metrics,
 )
 from .hines_layer import require_torch
+from .hines_isolation_experiment import sha256_file
 from .hines_regenerative_confirmation import _verified_artifact_root
 
 try:
@@ -105,8 +106,6 @@ def verified_micro_rollout_artifact_root(
         final_sha256=EXPECTED_05K_FINAL_SHA256,
     )
     micro_path = root / "micro_rollout_report.json"
-    from .hines_isolation_experiment import sha256_file
-
     if not micro_path.is_file() or sha256_file(micro_path) != EXPECTED_05K_MICRO_SHA256:
         raise RuntimeError("05k micro-rollout report SHA-256 mismatch")
     return root, report, contract
@@ -481,8 +480,28 @@ class HinesAutoregressiveFailureReassessment(HinesFrozenCandidateMicroRollout):
             "next_step": "05k_c_development_only_autoregressive_repair_design",
         }
         _write_json(self.output_dir / "final_report.json", report)
-        self._write_artifact_index()
+        self._write_failure_artifact_index()
         return report
+
+    def _write_failure_artifact_index(self) -> None:
+        records = []
+        for path in sorted(self.output_dir.rglob("*")):
+            if path.is_file() and path.name != "artifact_index.json":
+                records.append(
+                    {
+                        "path": path.relative_to(self.output_dir).as_posix(),
+                        "size_bytes": path.stat().st_size,
+                        "sha256": sha256_file(path),
+                    }
+                )
+        _write_json(
+            self.output_dir / "artifact_index.json",
+            {
+                "schema_version": "05k-b-artifact-index-v1",
+                "artifact_count": len(records),
+                "artifacts": records,
+            },
+        )
 
 
 __all__ = [

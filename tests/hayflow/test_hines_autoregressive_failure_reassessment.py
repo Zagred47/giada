@@ -108,6 +108,27 @@ def test_interventions_do_not_train_or_select_checkpoints():
     assert 'mode == "decoder_no_feedback"' in rollout
 
 
+def test_finalize_writes_a_self_contained_artifact_index(tmp_path):
+    session = object.__new__(HinesAutoregressiveFailureReassessment)
+    session.output_dir = tmp_path
+    session.code_revision = "test-revision"
+    session.artifact_05k_contract = {"artifact_index_sha256": EXPECTED_05K_INDEX_SHA256}
+    (tmp_path / "diagnostic.json").write_text('{"valid": true}\n', encoding="utf-8")
+    final = session.finalize_failure_reassessment(
+        {
+            "valid": True,
+            "attribution": {"diagnosis": "VOLTAGE_FEEDBACK_DOMINANT_INSTABILITY"},
+        }
+    )
+    index = json.loads((tmp_path / "artifact_index.json").read_text(encoding="utf-8"))
+    assert final["valid"]
+    assert index["schema_version"] == "05k-b-artifact-index-v1"
+    assert {row["path"] for row in index["artifacts"]} == {
+        "diagnostic.json",
+        "final_report.json",
+    }
+
+
 def test_notebook_is_valid_compact_and_uses_browser_blob_download():
     notebook = json.loads(NOTEBOOK.read_text(encoding="utf-8"))
     for cell in notebook["cells"]:
