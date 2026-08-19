@@ -117,6 +117,11 @@ def test_notebook_is_valid_compact_and_uses_browser_blob_download():
     assert "HinesAutoregressiveFailureReassessment" in source
     assert "failure_reassessment_config=autoregressive_config" in source
     assert "artifact_05k_source=ARTIFACT_05K_SOURCE" in source
+    assert "def index_matches(path,expected)" in source
+    assert "def exact_artifact(env,name,marker,expected)" in source
+    assert "EXPECTED_05JO_INDEX_SHA256" in source
+    assert "EXPECTED_05K_INDEX_SHA256" in source
+    assert "globals()[variable]=exact_artifact" in source
     assert "display(report)" not in source
     assert "display(final_report)" not in source
     assert "base64.b64encode" in source
