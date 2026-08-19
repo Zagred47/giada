@@ -140,6 +140,11 @@ def test_05jo_notebook_has_exact_fresh_test_and_browser_blob_download_contract()
     assert "not final_report['full_training_authorized']" in source
     assert "base64.b64encode" in source and "application/zip" in source
     assert "FileLink" not in source and "rglob('/kaggle" not in source
+    assert "'snapshots':snapshot_report" not in source
+    assert "snapshot_report['snapshots']" not in source.replace(
+        "# Non mostrare snapshot_report['snapshots']", ""
+    )
+    assert "'validation':teacher_fresh_report" not in source
     for cell in notebook["cells"]:
         if cell["cell_type"] == "code":
             ast.parse("".join(cell.get("source", [])))
