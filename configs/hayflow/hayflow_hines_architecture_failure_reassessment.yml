@@ -1,0 +1,19 @@
+schema_version: "05k-d-config-v1"
+
+architecture_failure_reassessment:
+  horizon_ms: 8
+  expected_seed_count: 3
+  maximum_recommit_improvement_fraction: 0.10
+  minimum_h2_to_persistence_rmse_ratio: 3.0
+  maximum_oracle_to_persistence_rmse_ratio: 0.75
+  proposed_canary_families:
+    - morphology_graph_gru
+    - ordered_convgru_control
+
+methodology:
+  source: exact_05k_c_development_only_artifact
+  fresh_05jo_loaded: false
+  training_performed: false
+  model_selection_performed: false
+  decision_role: architecture_family_preregistration_only
+  full_training_authorized: false

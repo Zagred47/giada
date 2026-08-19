@@ -1,6 +1,6 @@
 # HayFlow 05k-c - development-only autoregressive repair
 
-Status: implemented and locally verified; Kaggle execution pending.
+Status: completed on Kaggle; state-consistent recommit gate failed.
 
 The 05k-b causal matrix showed a coupled voltage/latent closed-loop state
 shift. This experiment evaluates one fixed architectural repair on the
@@ -21,3 +21,8 @@ it does not reinstate the candidate or authorize full training. Any later
 candidate requires a new sealed test.
 
 Expected artifact: `hayflow_hines_development_autoregressive_repair.zip`.
+
+The fixed repair improved 8 ms endpoint RMSE by only 0.5--3.6%; zero of three
+seeds passed. H2 remained far worse than persistence, while the teacher-reset
+oracle stayed at 2.8--3.9 mV. This retires local/global recommit timing as a
+sufficient repair and sends the project to architecture reassessment.

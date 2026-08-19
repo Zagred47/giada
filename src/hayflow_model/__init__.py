@@ -231,6 +231,11 @@ from .hines_development_autoregressive_repair import (
     HinesDevelopmentAutoregressiveRepairConfig,
     verified_failure_reassessment_artifact_root,
 )
+from .hines_architecture_failure_reassessment import (
+    HinesArchitectureFailureReassessment,
+    HinesArchitectureFailureReassessmentConfig,
+    verified_development_repair_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -400,4 +405,7 @@ __all__ = [
     "HinesDevelopmentAutoregressiveRepair",
     "HinesDevelopmentAutoregressiveRepairConfig",
     "verified_failure_reassessment_artifact_root",
+    "HinesArchitectureFailureReassessment",
+    "HinesArchitectureFailureReassessmentConfig",
+    "verified_development_repair_artifact_root",
 ]
