@@ -270,6 +270,12 @@ from .nonlinear_observability_reassessment import (
     NonlinearObservabilityReassessmentConfig,
     verified_graph_state_reassessment_artifact_root,
 )
+from .axial_rich_state_recurrent_canary import (
+    AxialRichStateGraphGRU,
+    AxialRichStateRecurrentCanary,
+    AxialRichStateRecurrentCanaryConfig,
+    verified_nonlinear_observability_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -468,4 +474,8 @@ __all__ = [
     "NonlinearObservabilityReassessment",
     "NonlinearObservabilityReassessmentConfig",
     "verified_graph_state_reassessment_artifact_root",
+    "AxialRichStateGraphGRU",
+    "AxialRichStateRecurrentCanary",
+    "AxialRichStateRecurrentCanaryConfig",
+    "verified_nonlinear_observability_artifact_root",
 ]
