@@ -244,9 +244,17 @@ from .rollout_aware_architecture_canary import (
     RolloutAwareArchitectureCanaryConfig,
     artifact_index_matches,
     discover_indexed_artifact_source,
+    disjoint_episode_components_by_regime,
     disjoint_episode_roles,
     encode_causal_realized_drive,
     verified_architecture_failure_artifact_root,
+)
+from .topology_controlled_recurrence_expansion import (
+    TopologyControlledRecurrenceConfig,
+    TopologyControlledRecurrenceExpansion,
+    expanded_train_episode_roles,
+    topology_relabelled_parent_ids,
+    verified_rollout_architecture_artifact_root,
 )
 
 __all__ = [
@@ -427,7 +435,13 @@ __all__ = [
     "RolloutAwareArchitectureCanaryConfig",
     "artifact_index_matches",
     "discover_indexed_artifact_source",
+    "disjoint_episode_components_by_regime",
     "disjoint_episode_roles",
     "encode_causal_realized_drive",
     "verified_architecture_failure_artifact_root",
+    "TopologyControlledRecurrenceConfig",
+    "TopologyControlledRecurrenceExpansion",
+    "expanded_train_episode_roles",
+    "topology_relabelled_parent_ids",
+    "verified_rollout_architecture_artifact_root",
 ]

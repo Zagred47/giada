@@ -437,6 +437,39 @@ def disjoint_episode_roles(
 ) -> Dict[str, List[Dict[str, Any]]]:
     """Partition original train episodes while keeping seed/snapshot components intact."""
 
+    grouped = disjoint_episode_components_by_regime(
+        episode_rows, role_seed=config.role_seed
+    )
+    roles: Dict[str, List[Dict[str, Any]]] = {
+        "fit": [], "calibration": [], "development": []
+    }
+    requested = {
+        "fit": config.fit_groups_per_regime,
+        "calibration": config.calibration_groups_per_regime,
+        "development": config.development_groups_per_regime,
+    }
+    for regime in sorted(grouped):
+        components_for_regime = grouped[regime]
+        cursor = 0
+        for role in ("fit", "calibration", "development"):
+            for component in components_for_regime[
+                cursor : cursor + requested[role]
+            ]:
+                for row in component:
+                    row = dict(row)
+                    row["05l_regime"] = regime
+                    roles[role].append(row)
+            cursor += requested[role]
+    if any(not rows_for_role for rows_for_role in roles.values()):
+        raise RuntimeError("05l could not construct all three disjoint roles")
+    return roles
+
+
+def disjoint_episode_components_by_regime(
+    episode_rows: Sequence[Mapping[str, Any]], *, role_seed: int
+) -> Dict[str, List[List[Dict[str, Any]]]]:
+    """Return deterministic train-only seed/snapshot-connected components."""
+
     rows = [dict(row) for row in episode_rows if str(row.get("split")) == "train"]
     if not rows:
         raise RuntimeError("05l found no original train episodes")
@@ -471,38 +504,18 @@ def disjoint_episode_roles(
             first = component[0]
             regime = classify_regime(first, first.get("category", ""))
         grouped.setdefault(regime, []).append(component)
-    roles: Dict[str, List[Dict[str, Any]]] = {
-        "fit": [], "calibration": [], "development": []
-    }
-    requested = {
-        "fit": config.fit_groups_per_regime,
-        "calibration": config.calibration_groups_per_regime,
-        "development": config.development_groups_per_regime,
-    }
     for regime in sorted(grouped):
-        components_for_regime = sorted(
+        grouped[regime] = sorted(
             grouped[regime],
             key=lambda component: hashlib.sha256(
                 (
-                    str(config.role_seed)
+                    str(role_seed)
                     + "|"
                     + "|".join(sorted(str(row["trajectory_id"]) for row in component))
                 ).encode()
             ).hexdigest(),
         )
-        cursor = 0
-        for role in ("fit", "calibration", "development"):
-            for component in components_for_regime[
-                cursor : cursor + requested[role]
-            ]:
-                for row in component:
-                    row = dict(row)
-                    row["05l_regime"] = regime
-                    roles[role].append(row)
-            cursor += requested[role]
-    if any(not rows_for_role for rows_for_role in roles.values()):
-        raise RuntimeError("05l could not construct all three disjoint roles")
-    return roles
+    return grouped
 
 
 class RolloutAwareArchitectureCanary:
@@ -1015,6 +1028,7 @@ __all__ = [
     "RolloutAwareArchitectureCanary",
     "RolloutAwareArchitectureCanaryConfig",
     "artifact_index_matches",
+    "disjoint_episode_components_by_regime",
     "discover_indexed_artifact_source",
     "disjoint_episode_roles",
     "encode_causal_realized_drive",

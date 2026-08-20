@@ -1,6 +1,21 @@
 # HayFlow 05l - rollout-aware GraphGRU versus ConvGRU canary
 
-Status: implemented; execution pending.
+Status: completed; artifact independently verified.
+
+Verified artifact:
+
+- archive SHA-256: `9a5c423aba80da51830a57c6f97808a3366069c6e42807193143d49de13be634`;
+- artifact-index SHA-256: `03e77d8a7104a25b2636f05f406031b01b81604c9e15d1dcb4d12a859ac0d757`;
+- final-report SHA-256: `a43227c545088b7bc1f9dbf2bafbac9f73534504033cbd365b9e6fe805cca930`;
+- all nine indexed members passed size and digest verification.
+
+Both families passed all three registered seeds.  At 8 ms the median
+development endpoint RMSE was 18.296 mV for the morphology GraphGRU and
+18.599 mV for the ordered ConvGRU, against 21.021 mV for persistence.  The
+GraphGRU gain over ConvGRU was only 1.63%, below the preregistered 5%
+morphology-materiality threshold.  The resulting diagnosis is therefore
+`ROLLOUT_AWARE_RECURRENCE_SIGNAL_TOPOLOGY_UNRESOLVED`, which authorizes only
+the train-only topology-controlled 05m expansion.
 
 05k-d retired the free-running H2 latent recurrence while preserving evidence
 that the local one-millisecond map is useful under teacher boundary resets.
