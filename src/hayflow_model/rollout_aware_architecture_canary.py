@@ -18,6 +18,7 @@ import math
 from pathlib import Path
 import random
 import time
+import zipfile
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 import numpy as np
@@ -134,6 +135,80 @@ def verified_architecture_failure_artifact_root(
         index_sha256=EXPECTED_05KD_INDEX_SHA256,
         final_sha256=EXPECTED_05KD_FINAL_SHA256,
     )
+
+
+def artifact_index_matches(source: Path, expected_sha256: str) -> bool:
+    """Match an artifact by its immutable index, regardless of Kaggle naming."""
+
+    source = Path(source)
+    try:
+        if source.is_file():
+            with zipfile.ZipFile(source) as archive:
+                members = [
+                    member
+                    for member in archive.namelist()
+                    if Path(member.replace("\\", "/")).name == "artifact_index.json"
+                ]
+                return any(
+                    hashlib.sha256(archive.read(member)).hexdigest()
+                    == expected_sha256
+                    for member in members
+                )
+        if source.is_dir():
+            return any(
+                hashlib.sha256(candidate.read_bytes()).hexdigest()
+                == expected_sha256
+                for candidate in source.rglob("artifact_index.json")
+            )
+    except (OSError, zipfile.BadZipFile):
+        return False
+    return False
+
+
+def discover_indexed_artifact_source(
+    input_root: Path,
+    expected_index_sha256: str,
+    *,
+    override: Optional[Path] = None,
+) -> Optional[Path]:
+    """Find an exact ZIP or extracted artifact under a Kaggle input tree.
+
+    Kaggle may preserve the original archive name, rename it to ``archive.zip``,
+    or expose its members as a directory.  Candidate names are therefore not
+    trusted; the artifact index digest is the sole selection criterion.
+    """
+
+    input_root = Path(input_root)
+    candidates: List[Path] = []
+    if override is not None:
+        candidates.append(Path(override).expanduser())
+    if input_root.is_dir():
+        candidates.extend(input_root.rglob("*.zip"))
+        candidates.extend(
+            candidate.parent
+            for candidate in input_root.rglob("artifact_index.json")
+        )
+        candidates.extend(
+            candidate.parent
+            for candidate in input_root.rglob(
+                "architecture_failure_reassessment_config.json"
+            )
+        )
+    seen = set()
+    for candidate in candidates:
+        try:
+            resolved = candidate.resolve()
+        except OSError:
+            continue
+        key = str(resolved)
+        if key in seen:
+            continue
+        seen.add(key)
+        if resolved.exists() and artifact_index_matches(
+            resolved, expected_index_sha256
+        ):
+            return resolved
+    return None
 
 
 try:  # PyTorch is optional for data-contract-only imports.
@@ -939,6 +1014,8 @@ __all__ = [
     "OrderedConvGRUControl",
     "RolloutAwareArchitectureCanary",
     "RolloutAwareArchitectureCanaryConfig",
+    "artifact_index_matches",
+    "discover_indexed_artifact_source",
     "disjoint_episode_roles",
     "encode_causal_realized_drive",
     "model_parameter_count",

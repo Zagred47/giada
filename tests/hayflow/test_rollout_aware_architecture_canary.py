@@ -13,10 +13,33 @@ from src.hayflow_model.rollout_aware_architecture_canary import (
     MorphologyGraphGRU,
     OrderedConvGRUControl,
     RolloutAwareArchitectureCanaryConfig,
+    artifact_index_matches,
+    discover_indexed_artifact_source,
     disjoint_episode_roles,
     encode_causal_realized_drive,
     model_parameter_count,
 )
+
+
+def test_artifact_discovery_accepts_kaggle_archive_name_and_extracted_root(tmp_path):
+    import hashlib
+    import zipfile
+
+    index = b'{"schema_version":"test"}'
+    digest = hashlib.sha256(index).hexdigest()
+    archive = tmp_path / "dataset-slug" / "archive.zip"
+    archive.parent.mkdir()
+    with zipfile.ZipFile(archive, "w") as handle:
+        handle.writestr("nested/artifact_index.json", index)
+        handle.writestr("nested/architecture_failure_reassessment_config.json", "{}")
+    assert artifact_index_matches(archive, digest)
+    assert discover_indexed_artifact_source(tmp_path, digest) == archive.resolve()
+
+    archive.unlink()
+    extracted = archive.parent / "nested"
+    extracted.mkdir()
+    (extracted / "artifact_index.json").write_bytes(index)
+    assert discover_indexed_artifact_source(tmp_path, digest) == extracted.resolve()
 
 
 ROOT = Path(__file__).resolve().parents[2]
