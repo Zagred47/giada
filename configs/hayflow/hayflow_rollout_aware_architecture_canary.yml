@@ -1,0 +1,23 @@
+rollout_aware_architecture_canary:
+  horizons_ms: [2, 4, 8]
+  seeds: [17, 29, 43]
+  fit_groups_per_regime: 3
+  calibration_groups_per_regime: 1
+  development_groups_per_regime: 1
+  windows_per_episode: 3
+  hidden_width: 32
+  epochs: 60
+  batch_size: 4
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  evaluation_interval: 5
+  progress_interval: 10
+  voltage_delta_limit_mv: 120.0
+  minimum_improvement_vs_persistence_fraction: 0.10
+  minimum_passing_seed_count: 2
+  maximum_parameter_ratio: 1.05
+  topology_materiality_fraction: 0.05
+  physical_voltage_floor_mv: -150.0
+  physical_voltage_ceiling_mv: 100.0
+  role_seed: 51057

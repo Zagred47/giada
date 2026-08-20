@@ -236,6 +236,16 @@ from .hines_architecture_failure_reassessment import (
     HinesArchitectureFailureReassessmentConfig,
     verified_development_repair_artifact_root,
 )
+from .rollout_aware_architecture_canary import (
+    CAUSAL_DRIVE_FEATURES,
+    MorphologyGraphGRU,
+    OrderedConvGRUControl,
+    RolloutAwareArchitectureCanary,
+    RolloutAwareArchitectureCanaryConfig,
+    disjoint_episode_roles,
+    encode_causal_realized_drive,
+    verified_architecture_failure_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -408,4 +418,12 @@ __all__ = [
     "HinesArchitectureFailureReassessment",
     "HinesArchitectureFailureReassessmentConfig",
     "verified_development_repair_artifact_root",
+    "CAUSAL_DRIVE_FEATURES",
+    "MorphologyGraphGRU",
+    "OrderedConvGRUControl",
+    "RolloutAwareArchitectureCanary",
+    "RolloutAwareArchitectureCanaryConfig",
+    "disjoint_episode_roles",
+    "encode_causal_realized_drive",
+    "verified_architecture_failure_artifact_root",
 ]
