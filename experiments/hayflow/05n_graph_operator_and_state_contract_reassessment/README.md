@@ -1,6 +1,22 @@
 # HayFlow 05n - graph-operator and state-contract reassessment
 
-Status: implemented; execution pending.
+Status: completed; artifact independently verified.
+
+Verified artifact:
+
+- archive SHA-256: `495c4419d2205c9a3e4c58fb0cf67da534d9ada38e9e28b393ba8dbc97b80316`;
+- artifact-index SHA-256: `975c8b0741d8639d19095447d1b06c06795020e478b21a036e5e3aadc60bd627`;
+- final-report SHA-256: `2460f61579d972464159dfe60f7d73e02e9ce0c9245138dc750253655db9ab30`;
+- all eight indexed members passed size and digest verification.
+
+The best development RMSE was 2.201 mV for voltage/input plus axial features,
+versus 2.214 mV for the local contract.  Median axial gain was 0.63% overall
+and 3.97% on regenerative rows, below the registered 5% gate.  The rich-state
+sketch changed RMSE by -0.07% overall and -0.06% on regenerative rows.  Every
+lambda ladder was essentially flat and selected the smallest registered
+lambda, so the negative result is not a regularization accident.  Diagnosis:
+`NO_LINEAR_GRAPH_OR_STATE_CONTRACT_SIGNAL`; only 05o nonlinear observability
+reassessment is authorized.
 
 05m replicated the rollout-aware recurrent signal but rejected a morphology
 claim: authentic topology lost to the isomorphic relabelled-tree control in

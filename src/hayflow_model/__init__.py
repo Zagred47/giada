@@ -264,6 +264,12 @@ from .graph_state_contract_reassessment import (
     sketch_normalized_state,
     verified_topology_expansion_artifact_root,
 )
+from .nonlinear_observability_reassessment import (
+    FixedWidthObservabilityProbe,
+    NonlinearObservabilityReassessment,
+    NonlinearObservabilityReassessmentConfig,
+    verified_graph_state_reassessment_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -458,4 +464,8 @@ __all__ = [
     "semantic_state_projection",
     "sketch_normalized_state",
     "verified_topology_expansion_artifact_root",
+    "FixedWidthObservabilityProbe",
+    "NonlinearObservabilityReassessment",
+    "NonlinearObservabilityReassessmentConfig",
+    "verified_graph_state_reassessment_artifact_root",
 ]
