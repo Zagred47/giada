@@ -1,0 +1,10 @@
+graph_state_contract_reassessment:
+  state_sketch_dim: 16
+  state_clip: 8.0
+  ridge_lambdas: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0]
+  regenerative_delta_threshold_mv: 5.0
+  regenerative_voltage_threshold_mv: -20.0
+  calibration_regenerative_weight: 0.25
+  material_gain_fraction: 0.05
+  noninferiority_margin_fraction: 0.01
+  sketch_seed: 510071
