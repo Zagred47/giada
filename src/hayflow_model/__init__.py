@@ -292,6 +292,11 @@ from .mechanism_state_encoder_canary import (
     shared_semantic_state_projection,
     verified_temporal_representation_artifact_root,
 )
+from .consolidated_autoregressive_go_no_go import (
+    ConsolidatedAutoregressiveGoNoGo,
+    ConsolidatedAutoregressiveGoNoGoConfig,
+    verified_mechanism_encoder_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -504,4 +509,7 @@ __all__ = [
     "MechanismStateEncoderCanaryConfig",
     "shared_semantic_state_projection",
     "verified_temporal_representation_artifact_root",
+    "ConsolidatedAutoregressiveGoNoGo",
+    "ConsolidatedAutoregressiveGoNoGoConfig",
+    "verified_mechanism_encoder_artifact_root",
 ]
