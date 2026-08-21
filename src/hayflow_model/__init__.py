@@ -286,6 +286,12 @@ from .temporal_representation_reassessment import (
     TemporalRepresentationReassessmentConfig,
     verified_temporal_observability_artifact_root,
 )
+from .mechanism_state_encoder_canary import (
+    MechanismStateEncoderCanary,
+    MechanismStateEncoderCanaryConfig,
+    shared_semantic_state_projection,
+    verified_temporal_representation_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -494,4 +500,8 @@ __all__ = [
     "TemporalRepresentationReassessment",
     "TemporalRepresentationReassessmentConfig",
     "verified_temporal_observability_artifact_root",
+    "MechanismStateEncoderCanary",
+    "MechanismStateEncoderCanaryConfig",
+    "shared_semantic_state_projection",
+    "verified_temporal_representation_artifact_root",
 ]
