@@ -1,0 +1,41 @@
+temporal_representation_reassessment:
+  horizons_ms: [2, 4, 8]
+  seeds: [17, 29, 43]
+  fit_groups_per_regime: 3
+  calibration_groups_per_regime: 1
+  development_groups_per_regime: 1
+  windows_per_episode: 3
+  hidden_width: 32
+  epochs: 30
+  batch_size: 4
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  evaluation_interval: 5
+  progress_interval: 10
+  voltage_delta_limit_mv: 120.0
+  minimum_improvement_vs_persistence_fraction: 0.10
+  minimum_passing_seed_count: 2
+  maximum_parameter_ratio: 1.0
+  topology_materiality_fraction: 0.05
+  physical_voltage_floor_mv: -150.0
+  physical_voltage_ceiling_mv: 100.0
+  role_seed: 51057
+  maximum_extra_fit_components_per_regime: 8
+  topology_relabel_seed_offset: 905100
+  minimum_topology_gain_fraction: 0.05
+  minimum_paired_topology_win_count: 2
+  state_sketch_dim: 64
+  state_clip: 8.0
+  material_gain_fraction: 0.05
+  regenerative_noninferiority_margin_fraction: 0.01
+  minimum_paired_win_count: 2
+  permutation_seed: 510073
+  checkpoint_reproduction_atol_mv: 0.0001
+  joint_material_gain_fraction: 0.05
+  ablation_material_degradation_fraction: 0.05
+  state_identity_degradation_fraction: 0.02
+  minimum_counterfactual_seed_count: 2
+  category_ablation_materiality_fraction: 0.02
+  temporal_shift_materiality_fraction: 0.02
+  sketch_reconstruction_atol: 0.00001

@@ -1,6 +1,22 @@
 # HayFlow 05q - temporal-observability contract reassessment
 
-Status: implemented; independent Kaggle execution pending.
+Status: completed; artifact independently verified.
+
+Verified artifact:
+
+- archive SHA-256: `73ed6fc3e244f49fe5172e5e917b253519e0bd7b614ab88584f1f8a06b41e0ec`;
+- artifact-index SHA-256: `26ed1c29cded7a53f2d2dfce0519b19f6dfa5b9f4945a2d0867f046a51ac5d9b`;
+- final-report SHA-256: `51a29770690b9fd52306d5946bb5611649da03a702f06c72be27b392166cd94e`;
+- all four indexed members passed size and digest verification.
+
+Frozen checkpoints reproduced with exactly 0.0 mV error.  The joint model
+beat voltage-only by 7.49% median closed-loop RMSE and 9.09% with teacher
+voltage boundaries.  Correct state was material: zeroing it degraded RMSE by
+5.97%, while within-regime permutation degraded it by 11.18%.  Removing the
+axial block degraded RMSE by only 2.63%, below the registered 5% gate.  The
+result therefore rejects symmetric graph/state synergy and registers
+`FROZEN_COUNTERFACTUALS_DO_NOT_SUPPORT_TEMPORAL_SYNERGY`, authorizing only a
+frozen 05r temporal-representation reassessment.
 
 05p found a robust joint recurrent candidate but failed its deliberately
 strict independent-signal gate: axial and rich-state blocks were weak alone,
