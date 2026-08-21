@@ -276,6 +276,11 @@ from .axial_rich_state_recurrent_canary import (
     AxialRichStateRecurrentCanaryConfig,
     verified_nonlinear_observability_artifact_root,
 )
+from .temporal_observability_reassessment import (
+    TemporalObservabilityContractReassessment,
+    TemporalObservabilityReassessmentConfig,
+    verified_axial_rich_state_canary_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -478,4 +483,7 @@ __all__ = [
     "AxialRichStateRecurrentCanary",
     "AxialRichStateRecurrentCanaryConfig",
     "verified_nonlinear_observability_artifact_root",
+    "TemporalObservabilityContractReassessment",
+    "TemporalObservabilityReassessmentConfig",
+    "verified_axial_rich_state_canary_artifact_root",
 ]

@@ -1,6 +1,22 @@
 # HayFlow 05p - axial GraphGRU and rich-state micro-canary
 
-Status: implemented; independent Kaggle execution pending.
+Status: completed; artifact independently verified.
+
+Verified artifact:
+
+- archive SHA-256: `f133ed92009464a6bc120a13860669230605245b245d6adcb2da946c58f3020e`;
+- artifact-index SHA-256: `8e5e81a6af86fef15e07da589a4ca2d03c23c8d8caeb37b0545992e4d27b63f6`;
+- final-report SHA-256: `feb189283547a2143069ac8f74de54284b2f9383e7778e66fa1e8479a4bc3f3a`;
+- all fifteen indexed members passed size and digest verification.
+
+All four families beat 8 ms persistence in all three seeds without physical
+violations.  The joint model achieved 16.16, 16.92 and 17.31 mV RMSE versus
+17.96, 18.29 and 18.49 mV for voltage-only.  Axial or state information alone
+added only 0.63% and 0.99% median gain, but each added 6.57% and 6.91% when
+conditioned on the other block.  The strict independent-signal gate therefore
+failed and registered `NONLINEAR_ONE_STEP_SIGNAL_DID_NOT_TRANSFER_TO_ROLLOUT`.
+The interaction pattern authorizes only a frozen 05q temporal-observability
+reassessment; it does not justify retraining or an architecture claim.
 
 05o found strong and seed-consistent nonlinear one-step information in both
 the authentic axial-voltage block and the 64-dimensional semantic initial
