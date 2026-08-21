@@ -1199,3 +1199,39 @@ authorize only 05k micro-rollout. A weaker signal must improve each seed over
 its own frozen baseline and outperform the parameter-matched uniform control
 on both calibration and development. Held-out data, rollout and full training
 remain sealed.
+
+## Phase 06: explicit-state architecture redesign
+
+The verified 05t consolidated result closes the fixed-boundary-state GraphGRU
+branch. Semantically aligned state improved the 8 ms rollout, but both frozen
+candidates failed the preregistered 16--32 ms stability gate. The result is not
+evidence that teacher state is useless: 05q--05s established that its identity
+is predictive, localized most of the useful signal to mechanism STATE
+variables and measured a robust benefit from semantic alignment. The failure
+is that this information is injected only at the first boundary rather than
+updated as part of the autoregressive state.
+
+Phase 06 introduces the `HayFlow-ESI` explicit-state integrator. Its canonical
+state is `(voltage, mechanism STATE, ions, synaptic state)` at every 1 ms
+boundary. The intended full model separates causal synaptic kinetics, shared
+local mechanism-state evolution, privileged membrane-current supervision and
+an authentic morphology-aware implicit/Hines voltage solve. No global latent,
+morphology reduction or aggressive state compression is introduced before
+the explicit-state baseline is learnable.
+
+`notebooks/06a_atomic_state_dynamics_playground.ipynb` implements the first
+bounded question. It uses only original train episodes and creates
+seed/snapshot-disjoint fit, calibration and development roles. A
+zero-initialized semantic residual updater predicts each transformed
+mechanism-state delta from its current value, causal local ion concentrations,
+realized input and voltage. Two parameter-identical arms compare causal start
+voltage with a diagnostic-only teacher interval-voltage oracle. Recursive
+mechanism-state rollouts are measured at 1, 2, 4 and 8 ms while membrane
+voltage remains teacher-forced.
+
+06a is a single-seed technical pilot and performs no candidate selection. A
+failure even with teacher interval voltage directs work back to the state
+contract, normalization or missing local context. Success only in that arm
+directs 06b toward explicit voltage/state coupling. Success in the causal arm
+authorizes a multi-seed explicit-state updater canary. Validation, tests,
+fresh-test generation, full training and mass data remain prohibited.

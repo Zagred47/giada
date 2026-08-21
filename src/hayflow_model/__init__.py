@@ -297,6 +297,16 @@ from .consolidated_autoregressive_go_no_go import (
     ConsolidatedAutoregressiveGoNoGoConfig,
     verified_mechanism_encoder_artifact_root,
 )
+from .atomic_state_dynamics_playground import (
+    AtomicStateDynamicsConfig,
+    AtomicStateDynamicsPlayground,
+    SemanticMechanismStateUpdater,
+    build_atomic_episode_roles,
+    fit_mechanism_statistics,
+    inverse_mechanism_logit,
+    mechanism_logit,
+    verified_05t_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -512,4 +522,12 @@ __all__ = [
     "ConsolidatedAutoregressiveGoNoGo",
     "ConsolidatedAutoregressiveGoNoGoConfig",
     "verified_mechanism_encoder_artifact_root",
+    "AtomicStateDynamicsConfig",
+    "AtomicStateDynamicsPlayground",
+    "SemanticMechanismStateUpdater",
+    "build_atomic_episode_roles",
+    "fit_mechanism_statistics",
+    "inverse_mechanism_logit",
+    "mechanism_logit",
+    "verified_05t_artifact_root",
 ]

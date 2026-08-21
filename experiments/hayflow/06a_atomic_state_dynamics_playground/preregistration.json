@@ -1,0 +1,88 @@
+{
+  "schema_version": "06a-preregistration-v1",
+  "status": "implemented_awaiting_execution",
+  "experiment": "atomic_state_dynamics_playground",
+  "architecture_family": "HayFlow-ESI",
+  "scientific_question": "Are canonical mechanism STATE variables learnable as an explicit one-millisecond recurrent state before voltage and morphology are composed?",
+  "source_authority": {
+    "experiment": "05t_consolidated_autoregressive_go_no_go",
+    "artifact_index_sha256": "84221c3c4dde34e909ab81024c6ab3d44606db00ca44b76edd1374138c95fd34",
+    "final_report_sha256": "7f061b3b58f9d0d8654873ae607084c62e2ebc26b4ccc17de6dc4d8d7f9a4ffe",
+    "required_diagnosis": "AUTOREGRESSIVE_REPRESENTATION_NO_GO"
+  },
+  "causal_contract": {
+    "input_view": "U_realized",
+    "boundary_inputs": [
+      "mechanism_STATE_t",
+      "local_ion_concentrations_t",
+      "voltage_t",
+      "realized_synaptic_and_current_input_over_interval"
+    ],
+    "target": "mechanism_STATE_t_plus_1",
+    "teacher_interval_voltage_arm": "diagnostic_only",
+    "deployment_input_claimed": false
+  },
+  "roles": {
+    "source_split": "train_only",
+    "names": [
+      "fit",
+      "calibration",
+      "development"
+    ],
+    "isolation": [
+      "trajectory",
+      "seed_connected_component",
+      "snapshot_connected_component"
+    ],
+    "validation_state_access_forbidden": true,
+    "test_state_access_forbidden": true
+  },
+  "paired_arms": [
+    {
+      "name": "causal_start_voltage",
+      "voltage_features": [
+        "voltage_t"
+      ]
+    },
+    {
+      "name": "teacher_interval_voltage",
+      "voltage_features": [
+        "voltage_t",
+        "voltage_t_plus_1_minus_voltage_t"
+      ],
+      "interpretation": "diagnostic upper-bound on voltage-state coupling"
+    }
+  ],
+  "alignment": {
+    "same_model_capacity": true,
+    "same_initialization_seed": 61017,
+    "same_data_order": true,
+    "same_optimizer": true,
+    "same_training_steps": 300,
+    "candidate_selection_performed": false
+  },
+  "metrics": [
+    "one_step_normalized_delta_rmse",
+    "one_step_active_delta_rmse",
+    "improvement_over_persistence",
+    "recursive_normalized_state_rmse_at_1_2_4_8_ms",
+    "state_domain_violations",
+    "nonfinite_count"
+  ],
+  "technical_gate": {
+    "minimum_teacher_interval_one_step_improvement_over_persistence_fraction": 0.02,
+    "decision_grade": false
+  },
+  "registered_interpretation": {
+    "teacher_interval_arm_fails": "inspect_state_contract_normalization_or_missing_local_context",
+    "teacher_interval_passes_causal_fails": "06b_voltage_state_coupling_canary",
+    "causal_arm_passes": "06b_explicit_state_updater_canary"
+  },
+  "not_authorized": [
+    "full_neuron_training",
+    "validation_model_selection",
+    "test_access",
+    "fresh_test_generation",
+    "mass_dataset_generation"
+  ]
+}
