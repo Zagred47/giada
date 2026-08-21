@@ -1,0 +1,43 @@
+{
+  "schema_version": "05t-registered-result-v1",
+  "archive_sha256": "ef222130c1b6e33b302e99755a6083ea113fad63efed743bbc4e938e58c7e1f1",
+  "artifact_index_sha256": "84221c3c4dde34e909ab81024c6ab3d44606db00ca44b76edd1374138c95fd34",
+  "final_report_sha256": "7f061b3b58f9d0d8654873ae607084c62e2ebc26b4ccc17de6dc4d8d7f9a4ffe",
+  "indexed_member_count": 7,
+  "integrity_valid": true,
+  "valid": true,
+  "decision_grade": true,
+  "diagnosis": "AUTOREGRESSIVE_REPRESENTATION_NO_GO",
+  "maximum_source_metric_reproduction_error_mv": 0.0,
+  "candidate_pass": {
+    "semantic_full": false,
+    "semantic_mechanism_states": false
+  },
+  "selected_representation": null,
+  "semantic_full_median_rmse_gain_vs_legacy": {
+    "8_ms": 0.06908140421393749,
+    "16_ms": -0.23735263574926102,
+    "32_ms": -0.29949988286046714
+  },
+  "semantic_mechanism_median_rmse_gain_vs_legacy": {
+    "8_ms": 0.03127647991989824,
+    "16_ms": -0.02398692368395805,
+    "32_ms": 0.1940709913572377
+  },
+  "semantic_full_maximum_absolute_drift_mv": {
+    "8_ms": 2.805417776107788,
+    "16_ms": 21.39238166809082,
+    "32_ms": 85.63190460205078
+  },
+  "semantic_mechanism_maximum_absolute_drift_mv": {
+    "8_ms": 5.537687301635742,
+    "16_ms": 7.473631858825684,
+    "32_ms": 24.921585083007812
+  },
+  "new_sealed_test_required_if_go": false,
+  "fresh_sealed_test_generation_authorized": false,
+  "full_training_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "next_step": "stop_current_state_encoder_branch",
+  "code_revision": "b8229ef12e893b2517ed3cca7c1b7868323372d0"
+}
