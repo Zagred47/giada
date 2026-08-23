@@ -1,0 +1,70 @@
+{
+  "schema_version": "06a-b-preregistration-v1",
+  "status": "implemented_awaiting_execution",
+  "experiment": "atomic_voltage_path_identifiability",
+  "architecture_family": "HayFlow-ESI",
+  "scientific_question": "Was the failed 06a gate caused by insufficient optimization or by loss of the intra-millisecond voltage path?",
+  "source_authority": {
+    "experiment": "06a_atomic_state_dynamics_playground",
+    "archive_sha256": "b2aaa071925c0eea4c34f7e116d491faeea52f9fc166a8b6370e085c6532983d",
+    "artifact_index_sha256": "ad28ed4666e8bd99fb0be5f5d2230e7b731868e20740e94fdd7537aa56e96cb5",
+    "final_report_sha256": "fa72141a9ca50ceb2582d6eec1852dcd5af7d83e6e34b7e408750a48bf518fa2",
+    "required_diagnosis": "ATOMIC_STATE_UPDATE_NOT_YET_LEARNABLE"
+  },
+  "factorial_design": {
+    "optimization_budgets": [300, 1200],
+    "voltage_contexts": [
+      "linear interpolation between teacher boundary voltages",
+      "authentic teacher voltage microtrace at 0.125 ms intervals"
+    ],
+    "same_initialization_seed": 61017,
+    "same_data_order": true,
+    "same_optimizer": true,
+    "same_parameter_count_across_voltage_arms": true,
+    "maximum_parameter_count": 7238,
+    "model_capacity_growth": false
+  },
+  "voltage_path": {
+    "teacher_sample_indices": [5, 10, 15, 20, 25, 30, 35, 40],
+    "teacher_offsets_ms": [0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0],
+    "input_status": "privileged_diagnostic_only",
+    "deployment_input_claimed": false
+  },
+  "roles": {
+    "source_split": "train_only",
+    "names": ["fit", "calibration", "development"],
+    "role_partition_identical_to_06a": true,
+    "checkpoint_selection": "best train-derived calibration checkpoint within each fixed budget",
+    "validation_state_access_forbidden": true,
+    "test_state_access_forbidden": true
+  },
+  "evaluation": {
+    "primary_metric": "development coordinate-weighted one-step normalized-delta RMSE improvement over persistence",
+    "secondary_metrics": [
+      "semantic-macro normalized-delta RMSE",
+      "active-coordinate normalized-delta RMSE",
+      "recursive normalized-state RMSE"
+    ],
+    "rollout_horizons_ms": [1, 2, 4, 8],
+    "rollout_window_policy": "all horizons are prefixes of the same deterministically selected 8 ms development windows"
+  },
+  "registered_thresholds": {
+    "minimum_absolute_gain_over_persistence_fraction": 0.02,
+    "minimum_factor_effect_fraction": 0.01,
+    "calibration_plateau_relative_improvement_fraction": 0.002
+  },
+  "decision_rules": {
+    "path_information_identified": "teacher-path long-budget gain is at least 2% and exceeds endpoint long-budget gain by at least 1 percentage point",
+    "optimization_budget_identified": "a long-budget arm reaches 2% and gains at least 1 percentage point over its paired short checkpoint",
+    "neither": "no long-budget arm reaches the 2% gate",
+    "factor_unresolved": "a long-budget arm reaches 2% without either preregistered factor effect"
+  },
+  "not_authorized": [
+    "architecture_capacity_sweep",
+    "full_neuron_training",
+    "validation_model_selection",
+    "test_access",
+    "fresh_test_generation",
+    "mass_dataset_generation"
+  ]
+}

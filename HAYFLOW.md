@@ -1255,3 +1255,23 @@ does not form a comparable scaling curve. One bounded train-only
 optimization budget from fixed voltage-path information on nested windows.
 Model-capacity growth, validation access and full-neuron composition remain
 prohibited.
+
+### 06a-b atomic voltage-path identifiability
+
+`notebooks/06a_b_atomic_voltage_path_identifiability.ipynb` implements the
+bounded forensic authorized by the registered 06a failure. It retains the
+exact train-only role partition, paired seed and optimizer, and crosses a
+300/1200-step checkpoint budget with two equally wide privileged voltage
+representations: linear interpolation between teacher boundary voltages and
+the authentic voltage microtrace sampled every 0.125 ms. The hidden width is
+automatically reduced as necessary so both arms share one parameter count no
+larger than the 7,238-parameter 06a updater.
+
+The one-step primary metric remains improvement over persistence. A 2% absolute
+gain and a preregistered one-percentage-point paired factor effect are required
+to identify optimization or voltage-path information. Semantic-macro and
+active-coordinate scores are secondary. Recursive 1/2/4/8 ms measurements now
+use prefixes of the same deterministically selected 8 ms windows. All voltage
+microtraces are diagnostic teacher information; no deployment claim is made.
+Validation/test access, capacity sweeps, full-neuron training, fresh tests and
+mass data remain prohibited.

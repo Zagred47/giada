@@ -307,6 +307,18 @@ from .atomic_state_dynamics_playground import (
     mechanism_logit,
     verified_05t_artifact_root,
 )
+from .atomic_voltage_path_identifiability import (
+    BUDGET_LABELS,
+    EXPECTED_06A_ARCHIVE_SHA256,
+    EXPECTED_06A_FINAL_SHA256,
+    EXPECTED_06A_INDEX_SHA256,
+    VOLTAGE_CONTEXT_ARMS,
+    AtomicVoltagePathConfig,
+    AtomicVoltagePathIdentifiability,
+    VoltagePathMechanismStateUpdater,
+    verified_06a_artifact_root,
+    voltage_path_features,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -530,4 +542,14 @@ __all__ = [
     "inverse_mechanism_logit",
     "mechanism_logit",
     "verified_05t_artifact_root",
+    "BUDGET_LABELS",
+    "EXPECTED_06A_ARCHIVE_SHA256",
+    "EXPECTED_06A_FINAL_SHA256",
+    "EXPECTED_06A_INDEX_SHA256",
+    "VOLTAGE_CONTEXT_ARMS",
+    "AtomicVoltagePathConfig",
+    "AtomicVoltagePathIdentifiability",
+    "VoltagePathMechanismStateUpdater",
+    "verified_06a_artifact_root",
+    "voltage_path_features",
 ]
