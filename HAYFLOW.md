@@ -1275,3 +1275,27 @@ use prefixes of the same deterministically selected 8 ms windows. All voltage
 microtraces are diagnostic teacher information; no deployment claim is made.
 Validation/test access, capacity sweeps, full-neuron training, fresh tests and
 mass data remain prohibited.
+
+The completed 06a-b artifact is registered in
+`experiments/hayflow/06a_b_atomic_voltage_path_identifiability/result.json`.
+All 13 indexed members passed integrity verification. Raising the optimizer
+budget from 300 to 1200 steps increased one-step gain over persistence from
+about `2.8%` to `16.1%` in both equally sized arms. The paired budget effects
+were `13.31` and `13.08` percentage points, whereas the authentic teacher path
+was `0.16` points worse than linear endpoint interpolation. The preregistered
+diagnosis is therefore `ATOMIC_STATE_WAS_OPTIMIZATION_LIMITED`, not a voltage
+microtrajectory information deficit.
+
+The long-budget result remains positive under semantic-macro (`7.44%`) and
+active-coordinate (`16.60%`) summaries. Common-window recursive gains reached
+`14.1/16.9/17.4/21.1%` at 1/2/4/8 ms for the linear endpoint arm, without
+non-finite or state-domain violations. Neither calibration curve had plateaued
+at 1200 steps.
+
+Both 06a-b voltage arms are privileged because they know the teacher endpoint.
+Consequently this result does not yet establish a deployment-compatible causal
+state updater. The authorized 06b canary must restore `causal_start_voltage` as
+its primary arm, retain the endpoint representation only as a paired reference,
+use multiple optimization seeds, preserve common nested windows and report
+semantic-group robustness. Full-neuron training and held-out access remain
+unauthorized.

@@ -1,27 +1,39 @@
 # HayFlow 06a-b - atomic voltage-path identifiability
 
-Status: implemented and preregistered; awaiting Kaggle execution.
+Status: completed; artifact independently verified; optimization factor identified.
 
-The valid 06a pilot missed its registered 2% one-step gate, but two causes were
-still confounded: both learning curves were improving at 300 steps, and neither
-input represented the voltage trajectory inside the millisecond. Voltage-gated
-mechanism kinetics depend on that trajectory, not only on its endpoints.
+Verified artifact:
 
-This forensic crosses two fixed factors. Each voltage context is trained once
-to 1200 optimizer steps and evaluated at its best calibration checkpoint within
-the first 300 and 1200 steps. The endpoint control receives eight values from a
-linear interpolation between teacher boundary voltages. The path arm receives
-the authentic teacher voltage at the same eight offsets. Their input width and
-parameter count are identical, and the automatically narrowed hidden layer
-keeps both models at or below the 7,238-parameter 06a ceiling.
+- archive SHA-256: `935c5114c553ddc8658032cf8cac10f868f28929055d87c636967de398f01b1f`;
+- artifact-index SHA-256: `95d348e1bc7d4a7709592f32fc41354544993ca715e284fbb07df498469f52f5`;
+- final-report SHA-256: `4a4bdfa7660fe8f128c7e15a9be148ebd1a8876fa836a86b53a7ee471461ff22`;
+- all 13 indexed members passed size and digest verification.
 
-Only the original train-derived fit, calibration and development roles are
-read. The microtrace is explicitly privileged diagnostic information and makes
-no deployment claim. Recursive state is evaluated on one common set of 8 ms
-windows; 1, 2 and 4 ms results are prefixes of those exact windows rather than
-independently sampled sets.
+The run is valid and registered as `ATOMIC_STATE_WAS_OPTIMIZATION_LIMITED`.
+Increasing the fixed budget from 300 to 1200 steps raised one-step improvement
+over persistence from `2.82%` to `16.12%` in the linear-endpoint arm and from
+`2.88%` to `15.96%` in the teacher-microtrace arm. The paired optimization
+effects (`13.31` and `13.08` percentage points) exceed the preregistered
+one-point threshold. The teacher path was `0.16` points worse than linear
+endpoint interpolation, so intra-ms path information was not identified.
 
-The preregistered 2% absolute gate and 1-percentage-point factor effects decide
-whether optimization budget, the intra-ms voltage path, both, or neither
-explain the 06a result. The experiment cannot authorize full training, held-out
-access, fresh tests, capacity growth or mass data generation.
+The result is not confined to abundant coordinates. At the long budget,
+semantic-macro gain is about `7.44%` and active-coordinate gain about `16.60%`.
+Nested long-budget rollout gains are `14.1%`, `16.9%`, `17.4%` and `21.1%` for
+the linear endpoint arm at 1/2/4/8 ms, with no non-finite or state-domain
+violations. Neither calibration curve reached the registered plateau.
+
+This experiment remains privileged: both arms know the teacher endpoint
+voltage. It establishes that the detailed intra-ms path adds no benefit once
+that endpoint is known, but it does not establish that the purely causal
+start-voltage updater is learnable at the longer budget. The registered next
+step, `06b_optimized_explicit_state_updater_canary`, must therefore restore a
+causal deployment-compatible arm and retain the endpoint arm only as a paired
+diagnostic reference. It must also use multiple seeds and report semantic-group
+robustness. Full-neuron training and held-out access remain unauthorized.
+
+The downloaded artifact contains one harmless documentary inconsistency:
+`voltage_path_contract.json` inherited the old 06a names in `arms`. The correct
+operational field, `voltage_context_arms`, names the two arms actually executed,
+and all reports/checkpoints agree with it. The implementation now overrides the
+legacy field for future runs; no rerun of 06a-b is required.

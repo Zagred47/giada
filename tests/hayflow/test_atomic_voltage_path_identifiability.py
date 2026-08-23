@@ -23,6 +23,7 @@ PREREGISTRATION = (
     / "06a_b_atomic_voltage_path_identifiability"
     / "preregistration.json"
 )
+RESULT = PREREGISTRATION.with_name("result.json")
 
 
 def test_registered_06a_authority_is_exact():
@@ -102,6 +103,32 @@ def test_preregistration_forbids_capacity_and_heldout_sweeps():
         "all horizons are prefixes"
     )
     assert "validation_model_selection" in registered["not_authorized"]
+
+
+def test_registered_result_preserves_success_and_causal_limit():
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["archive_sha256"] == (
+        "935c5114c553ddc8658032cf8cac10f868f28929055d87c636967de398f01b1f"
+    )
+    assert result["artifact_index_sha256"] == (
+        "95d348e1bc7d4a7709592f32fc41354544993ca715e284fbb07df498469f52f5"
+    )
+    assert result["integrity_valid"] and result["valid"]
+    assert result["diagnosis"] == "ATOMIC_STATE_WAS_OPTIMIZATION_LIMITED"
+    assert result["optimization_budget_identified"]
+    assert not result["path_information_identified"]
+    assert result["factor_effects"]["linear_endpoint_optimization_budget"] > 0.13
+    assert (
+        result["one_step_gain_vs_persistence"]["linear_endpoint_path"]["long"]
+        > 0.16
+    )
+    assert not result["methodological_limits"][
+        "causal_start_voltage_long_budget_tested"
+    ]
+    assert not result["methodological_limits"][
+        "deployment_compatible_updater_established"
+    ]
+    assert not result["full_training_authorized"]
 
 
 def test_06ab_notebook_is_compact_and_uses_stable_blob_download():

@@ -340,6 +340,7 @@ class AtomicVoltagePathIdentifiability(atomic.AtomicStateDynamicsPlayground):
             "schema_version": "06a-b-voltage-path-contract-v1",
             "experiment": "atomic_voltage_path_identifiability",
             "source_06a": source_06a,
+            "arms": list(VOLTAGE_CONTEXT_ARMS),
             "voltage_context_arms": list(VOLTAGE_CONTEXT_ARMS),
             "budget_steps": {
                 "short": self.config.short_training_steps,
@@ -362,6 +363,7 @@ class AtomicVoltagePathIdentifiability(atomic.AtomicStateDynamicsPlayground):
             "microtrace_boundary_error_mv": self.microtrace_boundary_error_mv,
             "rollout_windows_nested": True,
         }
+        contract.pop("teacher_interval_voltage_is_diagnostic_only", None)
         atomic._write_json(self.output_dir / "voltage_path_contract.json", contract)
         return contract
 

@@ -1,0 +1,82 @@
+{
+  "schema_version": "06a-b-registered-result-v1",
+  "archive_sha256": "935c5114c553ddc8658032cf8cac10f868f28929055d87c636967de398f01b1f",
+  "artifact_index_sha256": "95d348e1bc7d4a7709592f32fc41354544993ca715e284fbb07df498469f52f5",
+  "final_report_sha256": "4a4bdfa7660fe8f128c7e15a9be148ebd1a8876fa836a86b53a7ee471461ff22",
+  "indexed_member_count": 13,
+  "integrity_valid": true,
+  "valid": true,
+  "decision_grade": false,
+  "diagnosis": "ATOMIC_STATE_WAS_OPTIMIZATION_LIMITED",
+  "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+  "parameter_count": 7212,
+  "parameter_ceiling": 7238,
+  "one_step_gain_vs_persistence": {
+    "linear_endpoint_path": {
+      "short": 0.02815442034782767,
+      "long": 0.16123732125719747,
+      "long_semantic_macro": 0.07437771414843253,
+      "long_active_coordinates": 0.16605201135384673
+    },
+    "teacher_microtrace_path": {
+      "short": 0.02879501257911654,
+      "long": 0.1596099036412968,
+      "long_semantic_macro": 0.07440737584794244,
+      "long_active_coordinates": 0.16598076449683408
+    }
+  },
+  "factor_effects": {
+    "linear_endpoint_optimization_budget": 0.1330829009093698,
+    "teacher_path_optimization_budget": 0.13081489106218025,
+    "teacher_path_over_linear_endpoint": -0.0016274176159006837,
+    "minimum_registered_effect": 0.01
+  },
+  "linear_endpoint_long_nested_rollout_gain": {
+    "1_ms": 0.1411564733946874,
+    "2_ms": 0.16901418424788595,
+    "4_ms": 0.174320148778631,
+    "8_ms": 0.2105292391541368
+  },
+  "teacher_microtrace_long_nested_rollout_gain": {
+    "1_ms": 0.14229453698511096,
+    "2_ms": 0.1653671603000788,
+    "4_ms": 0.16378628531810002,
+    "8_ms": 0.18768603925963656
+  },
+  "rollout_windows_nested": true,
+  "common_rollout_window_count": 16,
+  "common_rollout_window_sha256": "d10443d183657680292598b73a29019879fa02ab959c4da9fedc23a12cd320c2",
+  "calibration_plateau_reached": {
+    "linear_endpoint_path": false,
+    "teacher_microtrace_path": false
+  },
+  "nonfinite_count": 0,
+  "domain_violation_count": 0,
+  "path_information_identified": false,
+  "optimization_budget_identified": true,
+  "methodological_limits": {
+    "both_voltage_arms_use_teacher_endpoint": true,
+    "causal_start_voltage_long_budget_tested": false,
+    "deployment_compatible_updater_established": false,
+    "artifact_voltage_path_contract_inherited_stale_arms_field": true,
+    "stale_arms_field_affects_execution": false,
+    "correct_operational_field": "voltage_context_arms"
+  },
+  "state_and_outcome_splits_read": [
+    "train"
+  ],
+  "validation_state_accessed": false,
+  "test_state_accessed": false,
+  "next_step": "06b_optimized_explicit_state_updater_canary",
+  "next_step_requirements": [
+    "restore causal_start_voltage as the deployment-compatible primary arm",
+    "retain linear_endpoint_path only as a privileged paired reference",
+    "use multiple optimization seeds",
+    "report per-semantic-group robustness",
+    "keep common nested rollout windows"
+  ],
+  "full_training_authorized": false,
+  "fresh_test_generation_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "code_revision": "60a431d6b0299de91df06c5daf78a0208e02cd79"
+}
