@@ -1299,3 +1299,20 @@ its primary arm, retain the endpoint representation only as a paired reference,
 use multiple optimization seeds, preserve common nested windows and report
 semantic-group robustness. Full-neuron training and held-out access remain
 unauthorized.
+
+### 06b optimized explicit-state updater canary
+
+`notebooks/06b_optimized_explicit_state_updater_canary.ipynb` tests the causal
+gap left by 06a-b. Three paired optimization seeds train a deployment-compatible
+`causal_start_voltage` updater and an equally sized privileged endpoint
+reference for 1200 steps. The primary arm reads no teacher endpoint or voltage
+microtrace. All state/outcome roles remain train-derived and disjoint.
+
+The preregistered component gate requires every causal seed to beat persistence
+by at least 2%, a 10% median gain, 3% semantic-macro gain, 10% active-coordinate
+gain, positive improvement in at least 70% of semantic groups, 70% retention
+relative to the endpoint reference, positive rollout gain for every seed and
+horizon, and at least 10% median gain at 8 ms. All runs use the same nested
+development windows. A pass authorizes only a coupled voltage/state
+micro-canary; full-neuron training, held-out access and mass data remain
+prohibited.

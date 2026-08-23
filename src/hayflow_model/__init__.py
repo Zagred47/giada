@@ -319,6 +319,15 @@ from .atomic_voltage_path_identifiability import (
     verified_06a_artifact_root,
     voltage_path_features,
 )
+from .optimized_explicit_state_updater_canary import (
+    CAUSAL_CANARY_ARMS,
+    EXPECTED_06AB_ARCHIVE_SHA256,
+    EXPECTED_06AB_FINAL_SHA256,
+    EXPECTED_06AB_INDEX_SHA256,
+    OptimizedExplicitStateCanaryConfig,
+    OptimizedExplicitStateUpdaterCanary,
+    verified_06ab_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -552,4 +561,11 @@ __all__ = [
     "VoltagePathMechanismStateUpdater",
     "verified_06a_artifact_root",
     "voltage_path_features",
+    "CAUSAL_CANARY_ARMS",
+    "EXPECTED_06AB_ARCHIVE_SHA256",
+    "EXPECTED_06AB_FINAL_SHA256",
+    "EXPECTED_06AB_INDEX_SHA256",
+    "OptimizedExplicitStateCanaryConfig",
+    "OptimizedExplicitStateUpdaterCanary",
+    "verified_06ab_artifact_root",
 ]

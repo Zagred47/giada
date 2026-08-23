@@ -1,0 +1,76 @@
+{
+  "schema_version": "06b-preregistration-v1",
+  "status": "implemented_awaiting_execution",
+  "experiment": "optimized_explicit_state_updater_canary",
+  "architecture_family": "HayFlow-ESI",
+  "scientific_question": "Is the optimized atomic mechanism-state updater robust when its primary arm receives only deployment-compatible causal boundary information?",
+  "source_authority": {
+    "experiment": "06a_b_atomic_voltage_path_identifiability",
+    "archive_sha256": "935c5114c553ddc8658032cf8cac10f868f28929055d87c636967de398f01b1f",
+    "artifact_index_sha256": "95d348e1bc7d4a7709592f32fc41354544993ca715e284fbb07df498469f52f5",
+    "final_report_sha256": "4a4bdfa7660fe8f128c7e15a9be148ebd1a8876fa836a86b53a7ee471461ff22",
+    "required_diagnosis": "ATOMIC_STATE_WAS_OPTIMIZATION_LIMITED"
+  },
+  "paired_arms": [
+    {
+      "name": "causal_start_voltage",
+      "role": "primary deployment-compatible arm",
+      "voltage_inputs": ["voltage_t"],
+      "teacher_endpoint_used": false
+    },
+    {
+      "name": "linear_endpoint_path",
+      "role": "privileged diagnostic reference",
+      "voltage_inputs": ["voltage_t", "voltage_t_plus_1"],
+      "teacher_endpoint_used": true
+    }
+  ],
+  "alignment": {
+    "optimization_seeds": [61017, 61029, 61043],
+    "training_steps_per_seed_and_arm": 1200,
+    "same_seed_initialization_within_pairs": true,
+    "same_data_order_within_pairs": true,
+    "same_optimizer": true,
+    "same_parameter_count": true,
+    "maximum_parameter_count": 7238,
+    "future_microtraces_read": false
+  },
+  "roles": {
+    "source_split": "train_only",
+    "names": ["fit", "calibration", "development"],
+    "partition_identical_to_06a_and_06a_b": true,
+    "checkpoint_selection": "best train-derived calibration checkpoint within 1200 steps",
+    "validation_state_access_forbidden": true,
+    "test_state_access_forbidden": true
+  },
+  "registered_causal_gate": {
+    "minimum_gain_each_seed": 0.02,
+    "minimum_median_one_step_gain": 0.10,
+    "minimum_median_semantic_macro_gain": 0.03,
+    "minimum_median_active_coordinate_gain": 0.10,
+    "minimum_median_positive_semantic_group_fraction": 0.70,
+    "minimum_median_retention_vs_endpoint": 0.70,
+    "all_seed_horizon_rollout_gains_positive": true,
+    "minimum_median_eight_ms_rollout_gain": 0.10
+  },
+  "rollout": {
+    "horizons_ms": [1, 2, 4, 8],
+    "window_policy": "all horizons and all runs use prefixes of the same deterministic 8 ms development windows",
+    "mechanism_state_is_recursive": true,
+    "membrane_voltage_is_teacher_forced": true
+  },
+  "decision_rules": {
+    "causal_gate_passes": "authorize only a coupled voltage-state micro-canary",
+    "endpoint_robust_causal_fails": "explicit voltage-state coupling is required before composition",
+    "causal_median_above_2_percent_but_full_gate_fails": "replicate or repair the causal updater",
+    "both_fail": "the optimized atomic gain was not robust"
+  },
+  "not_authorized": [
+    "full_neuron_training",
+    "validation_model_selection",
+    "test_access",
+    "fresh_test_generation",
+    "mass_dataset_generation",
+    "capacity_sweep"
+  ]
+}

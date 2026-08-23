@@ -482,6 +482,27 @@ class AtomicVoltagePathIdentifiability(atomic.AtomicStateDynamicsPlayground):
         group_persistence = np.sqrt(
             group_persistence_sse / np.maximum(group_examples, 1)
         )
+        semantic_names = sorted(
+            {
+                f"{row['mechanism']}|{row['variable']}|{row['kind']}"
+                for row in self.mechanism_records
+            }
+        )
+        if len(semantic_names) != group_count:
+            raise RuntimeError("06a-b semantic group vocabulary changed during evaluation")
+        semantic_groups = {
+            name: {
+                "normalized_delta_rmse": float(group_rmse[group]),
+                "persistence_normalized_delta_rmse": float(
+                    group_persistence[group]
+                ),
+                "improvement_vs_persistence_fraction": 1.0
+                - float(group_rmse[group])
+                / max(float(group_persistence[group]), 1e-12),
+                "coordinate_example_count": int(group_examples[group]),
+            }
+            for group, name in enumerate(semantic_names)
+        }
         macro_rmse = float(np.mean(group_rmse))
         macro_persistence = float(np.mean(group_persistence))
         active_rmse = math.sqrt(active_squared_error / max(active_count, 1))
@@ -501,6 +522,7 @@ class AtomicVoltagePathIdentifiability(atomic.AtomicStateDynamicsPlayground):
             "coordinate_example_count": count,
             "active_coordinate_example_count": active_count,
             "semantic_group_count": group_count,
+            "semantic_groups": semantic_groups,
         }
 
     def _train_context(self, arm: str, device: Any) -> Dict[str, Any]:
