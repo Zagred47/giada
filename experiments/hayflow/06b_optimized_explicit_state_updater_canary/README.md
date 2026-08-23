@@ -1,20 +1,32 @@
 # HayFlow 06b - optimized explicit-state updater canary
 
-Status: implemented and preregistered; awaiting Kaggle execution.
+Status: completed; artifact independently verified; explicit voltage coupling required.
 
-06a-b established a large optimization-budget effect when the teacher endpoint
-voltage was available, but it did not establish a causal updater. This canary
-restores `causal_start_voltage` as the primary arm and retains the linear
-teacher-endpoint representation only as a privileged paired reference.
+Verified artifact:
 
-Both arms use the same 7,238-parameter ceiling, 1200-step budget, train-derived
-fit/calibration/development roles and three paired optimization seeds. No
-voltage microtrace is read. Each causal run must clear the 2% floor; the median
-must reach 10%, retain at least 70% of the endpoint gain and remain positive in
-at least 70% of the 18 semantic mechanism groups. Semantic-macro, active-state
-and common-window recursive rollout gates prevent an aggregate-only success.
+- archive SHA-256: `0d44d0f6aeb90c7df67a65cd2f92ffbdad9c9163acc11af92ab90f1c52d785ec`;
+- artifact-index SHA-256: `0fe4985566f7276c333bd288280b3756751e82f02353d2e43c791374f126a612`;
+- final-report SHA-256: `89512fc5cd37a06c21d59d9d5d74d6418f40afa0d09a3bbaf7a8bf2ff1e4ccc7`;
+- all 19 indexed members passed size and digest verification.
 
-Passing 06b does not authorize the full neuron. It authorizes only a small
-coupled voltage/state canary in which the explicit state updater and membrane
-solver are composed and tested for autoregressive consistency. Validation,
-tests, fresh data, capacity sweeps and mass generation remain sealed.
+The component-decision-grade result is valid and registered as
+`ATOMIC_STATE_REQUIRES_EXPLICIT_VOLTAGE_COUPLING`. Every causal seed learned a
+real signal: one-step gains were `7.85%`, `7.64%` and `7.93%`; the median
+semantic-macro gain was `5.10%`; `94.4%` of semantic groups improved; all
+seed/horizon rollout gains were positive; and median 8 ms gain was `14.94%`.
+There were no non-finite values or state-domain violations.
+
+The full causal gate nevertheless failed three preregistered requirements. Its
+median one-step gain was `7.85%` rather than `10%`, median active-coordinate
+gain was `8.20%` rather than `10%`, and it retained only `44.3%` of the endpoint
+reference gain rather than `70%`. The endpoint arm was robust across all three
+seeds, with a median one-step gain of `17.54%`. Thus the missing endpoint is a
+material causal variable, not seed noise or an aggregate-only artifact.
+
+All six calibration curves were still improving at step 1200, but the causal
+and endpoint curves retained a large, consistent separation across seeds.
+Longer optimization alone is therefore not the registered next action. The
+authorized `06b_b_causal_voltage_state_coupling_forensic` must test a bounded
+causal co-evolution mechanism for voltage and STATE, using paired/frozen
+controls so a gain cannot be attributed merely to more parameters or training.
+It must remain train-only and cannot authorize the full neuron.

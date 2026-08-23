@@ -1,0 +1,101 @@
+{
+  "schema_version": "06b-registered-result-v1",
+  "archive_sha256": "0d44d0f6aeb90c7df67a65cd2f92ffbdad9c9163acc11af92ab90f1c52d785ec",
+  "artifact_index_sha256": "0fe4985566f7276c333bd288280b3756751e82f02353d2e43c791374f126a612",
+  "final_report_sha256": "89512fc5cd37a06c21d59d9d5d74d6418f40afa0d09a3bbaf7a8bf2ff1e4ccc7",
+  "indexed_member_count": 19,
+  "integrity_valid": true,
+  "valid": true,
+  "decision_grade": false,
+  "component_decision_grade": true,
+  "diagnosis": "ATOMIC_STATE_REQUIRES_EXPLICIT_VOLTAGE_COUPLING",
+  "causal_updater_confirmed": false,
+  "endpoint_reference_robust": true,
+  "parameter_count": 7212,
+  "parameter_ceiling": 7238,
+  "per_seed": {
+    "61017": {
+      "causal_one_step_gain": 0.07846898497554056,
+      "causal_semantic_macro_gain": 0.0492811176832193,
+      "causal_active_gain": 0.08201529189663481,
+      "positive_semantic_group_fraction": 0.9444444444444444,
+      "causal_retention_vs_endpoint": 0.4866676298248026,
+      "causal_eight_ms_rollout_gain": 0.14936950217184863,
+      "endpoint_one_step_gain": 0.16123732125719747
+    },
+    "61029": {
+      "causal_one_step_gain": 0.07641710831349979,
+      "causal_semantic_macro_gain": 0.05098634551452019,
+      "causal_active_gain": 0.0796130442166878,
+      "positive_semantic_group_fraction": 0.9444444444444444,
+      "causal_retention_vs_endpoint": 0.43572827573776696,
+      "causal_eight_ms_rollout_gain": 0.13099067084715155,
+      "endpoint_one_step_gain": 0.17537789619944166
+    },
+    "61043": {
+      "causal_one_step_gain": 0.07925744003493318,
+      "causal_semantic_macro_gain": 0.051000526598606766,
+      "causal_active_gain": 0.0819940229220214,
+      "positive_semantic_group_fraction": 0.9444444444444444,
+      "causal_retention_vs_endpoint": 0.44340217912214014,
+      "causal_eight_ms_rollout_gain": 0.15659055033774827,
+      "endpoint_one_step_gain": 0.1787484224634377
+    }
+  },
+  "aggregate": {
+    "median_causal_one_step_gain": 0.07846898497554056,
+    "median_endpoint_one_step_gain": 0.17537789619944166,
+    "median_causal_semantic_macro_gain": 0.05098634551452019,
+    "median_causal_active_gain": 0.0819940229220214,
+    "median_positive_semantic_group_fraction": 0.9444444444444444,
+    "median_causal_retention_vs_endpoint": 0.44340217912214014,
+    "median_causal_rollout_gain": {
+      "1_ms": 0.035774767387983575,
+      "2_ms": 0.06375052939877024,
+      "4_ms": 0.08915015102525115,
+      "8_ms": 0.14936950217184863
+    }
+  },
+  "gate_checks": {
+    "every_seed_one_step_at_least_2_percent": true,
+    "median_one_step_at_least_10_percent": false,
+    "median_semantic_macro_at_least_3_percent": true,
+    "median_active_at_least_10_percent": false,
+    "median_positive_group_fraction_at_least_70_percent": true,
+    "median_retention_at_least_70_percent": false,
+    "all_seed_horizon_rollout_gains_positive": true,
+    "median_eight_ms_rollout_at_least_10_percent": true
+  },
+  "calibration_plateau_reached": {
+    "causal_seed61017": false,
+    "causal_seed61029": false,
+    "causal_seed61043": false,
+    "endpoint_seed61017": false,
+    "endpoint_seed61029": false,
+    "endpoint_seed61043": false
+  },
+  "rollout_windows_nested": true,
+  "common_rollout_window_count": 16,
+  "common_rollout_window_sha256": "d10443d183657680292598b73a29019879fa02ab959c4da9fedc23a12cd320c2",
+  "nonfinite_count": 0,
+  "domain_violation_count": 0,
+  "future_microtraces_read": false,
+  "primary_arm_uses_teacher_endpoint": false,
+  "state_and_outcome_splits_read": [
+    "train"
+  ],
+  "validation_state_accessed": false,
+  "test_state_accessed": false,
+  "next_step": "06b_b_causal_voltage_state_coupling_forensic",
+  "next_step_requirements": [
+    "test a bounded causal voltage-state co-evolution mechanism",
+    "reuse frozen 06b checkpoints as controls",
+    "separate coupling information from parameter-count and optimization effects",
+    "preserve paired seeds and common nested rollout windows",
+    "remain train-only"
+  ],
+  "full_training_authorized": false,
+  "fresh_test_generation_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "code_revision": "e8c5fc34378cfd0a8eb6006ae5a34ab10d7d3df7"
+}

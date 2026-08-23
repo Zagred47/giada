@@ -1316,3 +1316,24 @@ horizon, and at least 10% median gain at 8 ms. All runs use the same nested
 development windows. A pass authorizes only a coupled voltage/state
 micro-canary; full-neuron training, held-out access and mass data remain
 prohibited.
+
+The completed 06b artifact is registered in
+`experiments/hayflow/06b_optimized_explicit_state_updater_canary/result.json`.
+All 19 indexed members passed integrity verification. The causal updater
+learned consistently across all three seeds (`7.64--7.93%` one-step gain),
+improved `94.4%` of semantic groups and reached `13.10--15.66%` gain at 8 ms
+without numerical or domain violations. This is robust evidence that causal
+boundary information contains useful mechanism-state dynamics.
+
+The preregistered component gate nevertheless failed: median one-step gain was
+`7.85%` versus `10%`, active-coordinate gain was `8.20%` versus `10%`, and
+retention relative to the robust endpoint reference was `44.3%` versus `70%`.
+The decision-grade component diagnosis is
+`ATOMIC_STATE_REQUIRES_EXPLICIT_VOLTAGE_COUPLING`. The missing endpoint is a
+material causal variable rather than seed noise or an aggregate-only effect.
+
+The authorized next experiment is one bounded train-only
+`06b_b_causal_voltage_state_coupling_forensic`. It must reuse frozen 06b
+checkpoints as controls, separate coupling information from additional capacity
+or optimization, and preserve paired seeds and common nested rollout windows.
+It cannot yet train the full neuron or access held-out state.

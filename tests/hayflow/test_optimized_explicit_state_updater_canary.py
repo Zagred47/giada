@@ -21,6 +21,7 @@ PREREGISTRATION = (
     / "06b_optimized_explicit_state_updater_canary"
     / "preregistration.json"
 )
+RESULT = PREREGISTRATION.with_name("result.json")
 
 
 def test_registered_06ab_authority_is_exact():
@@ -56,6 +57,27 @@ def test_preregistration_keeps_primary_arm_causal_and_heldout_sealed():
     assert registered["roles"]["source_split"] == "train_only"
     assert "test_access" in registered["not_authorized"]
     assert "full_neuron_training" in registered["not_authorized"]
+
+
+def test_registered_result_preserves_partial_success_and_failed_full_gate():
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["archive_sha256"] == (
+        "0d44d0f6aeb90c7df67a65cd2f92ffbdad9c9163acc11af92ab90f1c52d785ec"
+    )
+    assert result["artifact_index_sha256"] == (
+        "0fe4985566f7276c333bd288280b3756751e82f02353d2e43c791374f126a612"
+    )
+    assert result["integrity_valid"] and result["valid"]
+    assert result["component_decision_grade"]
+    assert result["diagnosis"] == "ATOMIC_STATE_REQUIRES_EXPLICIT_VOLTAGE_COUPLING"
+    assert not result["causal_updater_confirmed"]
+    assert result["endpoint_reference_robust"]
+    assert result["gate_checks"]["every_seed_one_step_at_least_2_percent"]
+    assert result["gate_checks"]["median_semantic_macro_at_least_3_percent"]
+    assert not result["gate_checks"]["median_one_step_at_least_10_percent"]
+    assert not result["gate_checks"]["median_active_at_least_10_percent"]
+    assert not result["gate_checks"]["median_retention_at_least_70_percent"]
+    assert not result["full_training_authorized"]
 
 
 def test_canary_materialization_explicitly_bypasses_future_microtrace_reader():
