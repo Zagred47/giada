@@ -24,6 +24,7 @@ PREREGISTRATION = (
     / "06b_b_causal_voltage_state_coupling_forensic"
     / "preregistration.json"
 )
+RESULT = PREREGISTRATION.with_name("result.json")
 
 
 def test_registered_06b_authority_is_exact():
@@ -69,6 +70,27 @@ def test_preregistration_freezes_state_updaters_and_requires_causal_control():
     assert not registered["rollout_contract"]["autonomous_voltage_rollout_claimed"]
     assert "reading validation or test state/outcomes" in registered["prohibited"]
     assert "training the full neuron" in registered["prohibited"]
+
+
+def test_registered_result_preserves_causal_signal_and_recursive_no_go():
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["archive_sha256"] == (
+        "d652c3fdf088569b212c6fc710185ab4f870857e5e84cc2947459b7f456bb349"
+    )
+    assert result["artifact_index_sha256"] == (
+        "824cc0fdfb977c69fed7bbf3dfcea691f6c1346c84fadedd988aa20c12c56986"
+    )
+    assert result["integrity_valid"] and result["valid"]
+    assert result["component_decision_grade"]
+    assert result["diagnosis"] == "CAUSAL_VOLTAGE_BRIDGE_NOT_PREDICTIVE"
+    assert not result["coupling_identified"]
+    assert result["gate_checks"]["predicted_beats_frozen_causal"]
+    assert result["gate_checks"]["predicted_beats_shuffled_control"]
+    assert result["gate_checks"]["oracle_gap_recovered"]
+    assert not result["gate_checks"]["bridge_predictive"]
+    assert not result["gate_checks"]["eight_ms_rollout_recovered"]
+    assert result["interpretation"]["causal_alignment_signal_identified"]
+    assert not result["full_training_authorized"]
 
 
 def test_coupling_forensic_bypasses_microtraces_and_freezes_state_checkpoints():

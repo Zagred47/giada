@@ -1369,3 +1369,26 @@ the causal and shuffled controls, recovery of at least 20% of the endpoint
 oracle gap, and at least two points of gain over the causal path at 8 ms. A pass
 authorizes only `06c_coupled_voltage_state_micro_canary`. Held-out access,
 full-neuron training, fresh-test generation and mass data remain prohibited.
+
+The completed 06b-b artifact is registered in
+`experiments/hayflow/06b_b_causal_voltage_state_coupling_forensic/result.json`.
+All 14 indexed members passed integrity verification. The predicted endpoint
+improved one-step frozen-STATE gain over the causal updater in every seed by
+`2.75--4.91` percentage points and beat the identical shuffled predictions by
+`8.79--14.38` points. It recovered `33.3--49.3%` of the teacher-endpoint oracle
+gap. This identifies a real, transition-aligned causal voltage signal rather
+than a generic capacity effect.
+
+The bridge did not pass the complete component gate. Median global voltage gain
+was `7.12%` rather than `10%`, and its 8 ms STATE gain relative to the frozen
+causal updater was negative in two seeds (`-9.57%`, `-5.80%`, `+3.50%`). The
+registered diagnosis is `CAUSAL_VOLTAGE_BRIDGE_NOT_PREDICTIVE`: one-step
+coupling is useful, but the present local voltage representation is not stable
+enough for recursive composition.
+
+The authorized next step is a bounded train-only
+`06b_c_voltage_bridge_representation_forensic`. It must keep the six 06b STATE
+updaters frozen and cross optimization budget with topology/axial support under
+paired seeds and the same shuffled control. It cannot authorize 06c, held-out
+access or full-neuron training unless the registered causal and recursive gates
+are subsequently met.

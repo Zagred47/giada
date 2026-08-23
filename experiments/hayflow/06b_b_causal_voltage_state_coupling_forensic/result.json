@@ -1,0 +1,92 @@
+{
+  "schema_version": "06b-b-registered-result-v1",
+  "experiment": "causal_voltage_state_coupling_forensic",
+  "status": "completed_and_independently_verified",
+  "archive_sha256": "d652c3fdf088569b212c6fc710185ab4f870857e5e84cc2947459b7f456bb349",
+  "artifact_index_sha256": "824cc0fdfb977c69fed7bbf3dfcea691f6c1346c84fadedd988aa20c12c56986",
+  "final_report_sha256": "41a1fc65c2bc1b812e06758f171983e8201b2627905fdd6a7b0813c442bacc2e",
+  "indexed_member_count": 14,
+  "indexed_member_failures": [],
+  "integrity_valid": true,
+  "valid": true,
+  "component_decision_grade": true,
+  "code_revision": "cf69ceaab18a2a3e5da23ed81b4104da796a830c",
+  "diagnosis": "CAUSAL_VOLTAGE_BRIDGE_NOT_PREDICTIVE",
+  "coupling_identified": false,
+  "bridge_parameter_count": 8985,
+  "bridge_parameter_ceiling": 12000,
+  "frozen_state_checkpoint_count": 6,
+  "state_updater_retraining_performed": false,
+  "gate_checks": {
+    "bridge_predictive": false,
+    "predicted_beats_frozen_causal": true,
+    "predicted_beats_shuffled_control": true,
+    "oracle_gap_recovered": true,
+    "eight_ms_rollout_recovered": false
+  },
+  "median": {
+    "voltage_gain_fraction": 0.07122544481319926,
+    "predicted_state_gain_over_causal_fraction": 0.03476223417622892,
+    "predicted_state_gain_over_shuffled_fraction": 0.10893021824724836,
+    "oracle_gap_recovery_fraction": 0.35127281137145394,
+    "eight_ms_predicted_gain_over_causal_fraction": -0.05799825485430654
+  },
+  "per_seed": {
+    "61017": {
+      "voltage_gain_fraction": 0.07122544481319926,
+      "active_voltage_gain_fraction": 0.1399674879196937,
+      "predicted_state_gain_over_causal_fraction": 0.027531668971704115,
+      "predicted_state_gain_over_shuffled_fraction": 0.08790971923796198,
+      "oracle_gap_recovery_fraction": 0.33263528311134694,
+      "eight_ms_predicted_gain_over_causal_fraction": -0.0957379584575958
+    },
+    "61029": {
+      "voltage_gain_fraction": 0.06510705628533286,
+      "active_voltage_gain_fraction": 0.12768846968818437,
+      "predicted_state_gain_over_causal_fraction": 0.03476223417622892,
+      "predicted_state_gain_over_shuffled_fraction": 0.14376125445673815,
+      "oracle_gap_recovery_fraction": 0.35127281137145394,
+      "eight_ms_predicted_gain_over_causal_fraction": -0.05799825485430654
+    },
+    "61043": {
+      "voltage_gain_fraction": 0.10996817137752546,
+      "active_voltage_gain_fraction": 0.15180726180797388,
+      "predicted_state_gain_over_causal_fraction": 0.04905274252464664,
+      "predicted_state_gain_over_shuffled_fraction": 0.10893021824724836,
+      "oracle_gap_recovery_fraction": 0.49303707056965257,
+      "eight_ms_predicted_gain_over_causal_fraction": 0.034951708839671136
+    }
+  },
+  "registered_thresholds": {
+    "minimum_median_voltage_gain_fraction": 0.10,
+    "minimum_median_state_gain_over_causal_fraction": 0.02,
+    "minimum_median_state_gain_over_shuffled_fraction": 0.02,
+    "minimum_median_oracle_gap_recovery_fraction": 0.20,
+    "minimum_median_eight_ms_gain_over_causal_fraction": 0.02
+  },
+  "interpretation": {
+    "causal_alignment_signal_identified": true,
+    "one_step_state_coupling_signal_robust_across_seeds": true,
+    "global_voltage_prediction_gate_passed": false,
+    "active_voltage_prediction_gain_range_fraction": [
+      0.12768846968818437,
+      0.15180726180797388
+    ],
+    "recursive_state_coupling_robust_across_seeds": false,
+    "reason_not_to_authorize_06c": "The local bridge recovers causally specific one-step STATE information, but median global voltage gain is below threshold and two of three 8 ms recursive STATE rollouts are worse than the frozen causal updater."
+  },
+  "methodology": {
+    "state_and_outcome_splits_read": ["train"],
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "shuffled_control_uses_same_bridge": true,
+    "rollout_windows_nested": true,
+    "recursive_quantity": "mechanism_STATE_only",
+    "voltage_boundary_condition": "teacher_V_t_at_each_ms",
+    "autonomous_voltage_rollout_claimed": false
+  },
+  "full_training_authorized": false,
+  "fresh_test_generation_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "next_step": "06b_c_voltage_bridge_representation_forensic"
+}
