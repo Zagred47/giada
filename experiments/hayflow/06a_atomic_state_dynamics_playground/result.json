@@ -1,0 +1,61 @@
+{
+  "schema_version": "06a-registered-result-v1",
+  "archive_sha256": "b2aaa071925c0eea4c34f7e116d491faeea52f9fc166a8b6370e085c6532983d",
+  "artifact_index_sha256": "ad28ed4666e8bd99fb0be5f5d2230e7b731868e20740e94fdd7537aa56e96cb5",
+  "final_report_sha256": "fa72141a9ca50ceb2582d6eec1852dcd5af7d83e6e34b7e408750a48bf518fa2",
+  "indexed_member_count": 10,
+  "integrity_valid": true,
+  "valid": true,
+  "decision_grade": false,
+  "diagnosis": "ATOMIC_STATE_UPDATE_NOT_YET_LEARNABLE",
+  "technical_gate_passed": false,
+  "minimum_pilot_improvement_fraction": 0.02,
+  "one_step": {
+    "causal_start_voltage": {
+      "normalized_delta_rmse": 4.450060592970834,
+      "persistence_normalized_delta_rmse": 4.490176457095718,
+      "improvement_vs_persistence_fraction": 0.008934139784526618,
+      "active_improvement_vs_persistence_fraction": 0.011282739894539984
+    },
+    "teacher_interval_voltage": {
+      "normalized_delta_rmse": 4.426645907379823,
+      "persistence_normalized_delta_rmse": 4.490176457095718,
+      "improvement_vs_persistence_fraction": 0.014148786873509067,
+      "active_improvement_vs_persistence_fraction": 0.016581303832792882
+    }
+  },
+  "recursive_state_improvement_vs_persistence_fraction": {
+    "causal_start_voltage": {
+      "1_ms": -0.0055188844828530925,
+      "2_ms": 0.20446959351159621,
+      "4_ms": 0.02678166461474718,
+      "8_ms": 0.06325130700143833
+    },
+    "teacher_interval_voltage": {
+      "1_ms": 0.003612897989996089,
+      "2_ms": 0.21602628361191056,
+      "4_ms": 0.03150943174345011,
+      "8_ms": 0.07093576121192258
+    }
+  },
+  "nonfinite_count": 0,
+  "domain_violation_count": 0,
+  "state_and_outcome_splits_read": [
+    "train"
+  ],
+  "validation_state_accessed": false,
+  "test_state_accessed": false,
+  "candidate_selection_performed": false,
+  "methodological_findings": {
+    "teacher_endpoint_adds_little_over_start_voltage": true,
+    "calibration_curve_plateau_reached": false,
+    "rollout_horizon_windows_nested": false,
+    "rollout_horizon_gains_directly_comparable": false,
+    "intra_ms_voltage_path_observed": false
+  },
+  "next_step": "06a_b_atomic_voltage_path_identifiability",
+  "full_training_authorized": false,
+  "fresh_test_generation_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "code_revision": "944f6a6ec1f69607a2ac801c4e474da00fe959cf"
+}

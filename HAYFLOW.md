@@ -1235,3 +1235,23 @@ contract, normalization or missing local context. Success only in that arm
 directs 06b toward explicit voltage/state coupling. Success in the causal arm
 authorizes a multi-seed explicit-state updater canary. Validation, tests,
 fresh-test generation, full training and mass data remain prohibited.
+
+The completed 06a run is registered in
+`experiments/hayflow/06a_atomic_state_dynamics_playground/result.json`. All ten
+indexed members passed integrity verification, and only train-derived state
+and outcomes were read. The causal and teacher interval-voltage arms improved
+one-step normalized-delta RMSE over persistence by `0.89%` and `1.41%`, below
+the preregistered `2%` technical gate. The registered diagnosis is therefore
+`ATOMIC_STATE_UPDATE_NOT_YET_LEARNABLE`; it is not a pass and cannot authorize
+the multi-seed 06b canary.
+
+The result narrows the next question. Supplying the teacher endpoint voltage
+adds only about `0.52` percentage points, while neither arm observes the
+intra-ms voltage path that determines voltage-gated kinetics. Calibration was
+still improving at step 300. Recursive state gains were positive at several
+horizons, but each horizon used independently selected windows and therefore
+does not form a comparable scaling curve. One bounded train-only
+`06a_b_atomic_voltage_path_identifiability` forensic is authorized to separate
+optimization budget from fixed voltage-path information on nested windows.
+Model-capacity growth, validation access and full-neuron composition remain
+prohibited.

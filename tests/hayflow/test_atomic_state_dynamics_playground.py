@@ -25,6 +25,7 @@ PREREGISTRATION = (
     / "06a_atomic_state_dynamics_playground"
     / "preregistration.json"
 )
+RESULT = PREREGISTRATION.with_name("result.json")
 
 
 def test_registered_05t_authority_is_exact():
@@ -53,6 +54,35 @@ def test_preregistration_forbids_heldout_access_and_candidate_selection():
     assert registered["roles"]["test_state_access_forbidden"]
     assert not registered["alignment"]["candidate_selection_performed"]
     assert registered["technical_gate"]["decision_grade"] is False
+
+
+def test_registered_result_preserves_failed_gate_and_bounded_followup():
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["archive_sha256"] == (
+        "b2aaa071925c0eea4c34f7e116d491faeea52f9fc166a8b6370e085c6532983d"
+    )
+    assert result["artifact_index_sha256"] == (
+        "ad28ed4666e8bd99fb0be5f5d2230e7b731868e20740e94fdd7537aa56e96cb5"
+    )
+    assert result["integrity_valid"] and result["valid"]
+    assert result["diagnosis"] == "ATOMIC_STATE_UPDATE_NOT_YET_LEARNABLE"
+    assert not result["technical_gate_passed"]
+    assert (
+        result["one_step"]["causal_start_voltage"]
+        ["improvement_vs_persistence_fraction"]
+        < result["minimum_pilot_improvement_fraction"]
+    )
+    assert (
+        result["one_step"]["teacher_interval_voltage"]
+        ["improvement_vs_persistence_fraction"]
+        < result["minimum_pilot_improvement_fraction"]
+    )
+    assert not result["methodological_findings"]["rollout_horizon_windows_nested"]
+    assert not result["methodological_findings"][
+        "rollout_horizon_gains_directly_comparable"
+    ]
+    assert result["next_step"] == "06a_b_atomic_voltage_path_identifiability"
+    assert not result["full_training_authorized"]
 
 
 def test_mechanism_logit_roundtrip_and_semantic_scale_repair():
