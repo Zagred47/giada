@@ -328,6 +328,16 @@ from .optimized_explicit_state_updater_canary import (
     OptimizedExplicitStateUpdaterCanary,
     verified_06ab_artifact_root,
 )
+from .causal_voltage_state_coupling_forensic import (
+    COUPLING_MODES,
+    EXPECTED_06B_ARCHIVE_SHA256,
+    EXPECTED_06B_FINAL_SHA256,
+    EXPECTED_06B_INDEX_SHA256,
+    CausalVoltageBridge,
+    CausalVoltageStateCouplingConfig,
+    CausalVoltageStateCouplingForensic,
+    verified_06b_artifact_root,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -568,4 +578,12 @@ __all__ = [
     "OptimizedExplicitStateCanaryConfig",
     "OptimizedExplicitStateUpdaterCanary",
     "verified_06ab_artifact_root",
+    "COUPLING_MODES",
+    "EXPECTED_06B_ARCHIVE_SHA256",
+    "EXPECTED_06B_FINAL_SHA256",
+    "EXPECTED_06B_INDEX_SHA256",
+    "CausalVoltageBridge",
+    "CausalVoltageStateCouplingConfig",
+    "CausalVoltageStateCouplingForensic",
+    "verified_06b_artifact_root",
 ]

@@ -1,0 +1,68 @@
+{
+  "schema_version": "06b-b-preregistration-v1",
+  "experiment": "causal_voltage_state_coupling_forensic",
+  "status": "preregistered_before_execution",
+  "question": "Can a small causal voltage bridge recover a material part of the frozen 06b endpoint-conditioned STATE advantage?",
+  "authorized_by": {
+    "experiment": "06b_optimized_explicit_state_updater_canary",
+    "diagnosis": "ATOMIC_STATE_REQUIRES_EXPLICIT_VOLTAGE_COUPLING",
+    "archive_sha256": "0d44d0f6aeb90c7df67a65cd2f92ffbdad9c9163acc11af92ab90f1c52d785ec",
+    "artifact_index_sha256": "0fe4985566f7276c333bd288280b3756751e82f02353d2e43c791374f126a612",
+    "final_report_sha256": "89512fc5cd37a06c21d59d9d5d74d6418f40afa0d09a3bbaf7a8bf2ff1e4ccc7"
+  },
+  "trainable_component": "shared causal one-ms voltage-delta bridge only",
+  "frozen_components": [
+    "three 06b causal_start_voltage STATE updater checkpoints",
+    "three 06b linear_endpoint_path STATE updater checkpoints"
+  ],
+  "bridge_inputs": [
+    "V_t",
+    "parent and mean-child voltage differences at t",
+    "normalized mechanism STATE at t with semantic presence mask",
+    "local ion state at t",
+    "U_realized over [t,t+1ms]",
+    "static segment and region metadata"
+  ],
+  "bridge_target": "teacher V_t_plus_1 minus V_t on train-derived fit/calibration roles",
+  "paired_modes": [
+    "frozen_causal",
+    "predicted_endpoint",
+    "shuffled_predicted_endpoint",
+    "teacher_endpoint_oracle"
+  ],
+  "causal_specificity_control": "The identical predicted delta-V tensor is deterministically shuffled across transitions before entering the same frozen endpoint STATE updater.",
+  "seeds": [61017, 61029, 61043],
+  "selection_role": "train-derived calibration only",
+  "evaluation_role": "disjoint train-derived development only",
+  "rollout_contract": {
+    "horizons_ms": [1, 2, 4, 8],
+    "nested_common_windows": true,
+    "recursive_quantity": "mechanism STATE",
+    "voltage_boundary_condition": "teacher V_t at each millisecond",
+    "autonomous_voltage_rollout_claimed": false
+  },
+  "registered_gates": {
+    "all_seed_voltage_gains_positive": true,
+    "minimum_median_voltage_gain_fraction": 0.10,
+    "all_seed_predicted_state_gains_over_frozen_causal_positive": true,
+    "minimum_median_state_gain_over_causal_fraction": 0.02,
+    "minimum_median_state_gain_over_shuffled_fraction": 0.02,
+    "minimum_median_oracle_gap_recovery_fraction": 0.20,
+    "minimum_median_eight_ms_gain_over_causal_fraction": 0.02
+  },
+  "decision_tree": {
+    "all_gates_pass": "CAUSAL_VOLTAGE_BRIDGE_IDENTIFIED; authorize 06c coupled voltage-state micro-canary",
+    "bridge_not_predictive": "inspect voltage bridge representation",
+    "predicted_not_better_than_shuffled": "causal specificity failure",
+    "otherwise": "frozen STATE updater incompatible with predicted voltage; inspect joint voltage-state training"
+  },
+  "prohibited": [
+    "retraining or modifying the six frozen 06b STATE updaters",
+    "reading validation or test state/outcomes",
+    "using teacher endpoint voltage in the primary predicted mode",
+    "claiming an autonomous voltage rollout",
+    "training the full neuron",
+    "fresh-test generation",
+    "mass dataset generation"
+  ]
+}

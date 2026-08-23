@@ -1337,3 +1337,35 @@ The authorized next experiment is one bounded train-only
 checkpoints as controls, separate coupling information from additional capacity
 or optimization, and preserve paired seeds and common nested rollout windows.
 It cannot yet train the full neuron or access held-out state.
+
+### 06b-b causal voltage/STATE coupling forensic
+
+`notebooks/06b_b_causal_voltage_state_coupling_forensic.ipynb` implements the
+bounded causal test authorized by 06b. The six exact 06b STATE-updater
+checkpoints are verified and frozen. Only a compact shared voltage bridge is
+trained, using current voltage and axial differences, current mechanism STATE,
+local ions, realized input and static morphology to estimate the next 1 ms
+voltage change.
+
+Four paired modes separate information from capacity: the frozen causal STATE
+updater; the frozen endpoint updater driven by predicted delta voltage; the
+same predicted tensor shuffled across transitions; and the frozen endpoint
+updater driven by the teacher endpoint oracle. The shuffled arm has identical
+parameters and predictions but destroys their causal alignment, so it guards
+against attributing a generic extra-input or optimization effect to voltage
+coupling.
+
+Bridge checkpoints are selected only on train-derived calibration episodes and
+evaluated on disjoint train-derived development episodes across seeds 61017,
+61029 and 61043. Mechanism STATE is rolled forward recursively on common nested
+1/2/4/8 ms windows. Because no autonomous voltage updater exists yet, every
+millisecond remains anchored to teacher `V_t`; 06b-b therefore makes no claim
+of an autonomous neuron rollout.
+
+The preregistered pass requires a positive bridge gain in every seed and at
+least 10% median voltage gain, positive predicted-STATE gains over the frozen
+causal path in every seed, at least two percentage points median gain over both
+the causal and shuffled controls, recovery of at least 20% of the endpoint
+oracle gap, and at least two points of gain over the causal path at 8 ms. A pass
+authorizes only `06c_coupled_voltage_state_micro_canary`. Held-out access,
+full-neuron training, fresh-test generation and mass data remain prohibited.
