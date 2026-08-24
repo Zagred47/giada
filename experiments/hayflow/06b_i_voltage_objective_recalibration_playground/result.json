@@ -1,0 +1,49 @@
+{
+  "schema_version": "06b-i-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": "hayflow_voltage_objective_recalibration_playground.zip",
+  "archive_size_bytes": 2508212,
+  "archive_sha256": "539005ba612468a83ea8265b7b95dcb27eda3f85df5d81c2c0ad59badebed629",
+  "artifact_index_sha256": "bcd49b6d08ab64baca45040731aa698e05164e6c4ac8241d1ed62ab5a05a9f63",
+  "final_report_sha256": "336eddbcd6c8a8436cf65983582fb09544b512a5af9b1ecdea9d312808be4343",
+  "code_revision": "708ff4627e1a1bda342e011389a76a3bbf7ef8e4",
+  "artifact_integrity": {"zip_crc_valid": true, "archive_member_count": 78, "indexed_member_count": 76, "indexed_member_failures": [], "all_indexed_sizes_and_sha256_verified": true},
+  "formal_diagnosis": "VOLTAGE_OBJECTIVE_RECALIBRATION_NOT_LEARNABLE",
+  "engineering_diagnosis": "TRAINED_OBJECTIVES_MOVE_AWAY_FROM_FROZEN_OPTIMUM_AND_CAUSAL_GAIN_COLLAPSES_NEAR_GLOBAL",
+  "primary": {
+    "arm": "causal_gain_balanced",
+    "passed": false,
+    "median_voltage_gain_vs_persistence": 0.21798044212781653,
+    "median_STATE_gain_vs_persistence": 0.307007358372299,
+    "median_voltage_gain_over_frozen_alpha": 0.003527658119730992,
+    "median_training_effect": -0.011229838478342913,
+    "median_active_gain": 0.2703493193940363,
+    "median_moderate_gain": -0.6521650786061921,
+    "median_quiescent_gain": -16.967777335770272,
+    "median_soma_gain": -0.6266516097014558,
+    "development_gain_range_by_seed": {"61017": [0.7889676094055176, 0.8104352951049805], "61029": [0.7939215302467346, 0.8129293918609619], "61043": [0.7934086322784424, 0.8128968477249146]}
+  },
+  "fallback": {"arm": "activity_region_balanced_bridge", "passed": false, "median_voltage_gain_vs_persistence": 0.020641868606002145, "median_voltage_gain_over_frozen_alpha": -0.2527898071424035, "median_training_effect": -0.5154183020499707, "median_soma_gain": -0.9202665004714525},
+  "controls": {
+    "frozen_alpha_075_voltage_gain_vs_persistence": 0.21788114433785732,
+    "global_gain_voltage_gain_over_frozen_alpha": 0.0013005188155641445,
+    "global_gain_training_effect": -0.0024666512679727415,
+    "raw_bridge_training_effect": -0.13906462599358194,
+    "activity_balanced_bridge_training_effect": -0.5475411640788193,
+    "diagnostic_passing_arms": []
+  },
+  "fixed_checkpoint_scaling": {
+    "causal_gain_calibration_rmse_mv": {"step0": 8.9886, "step100": 9.0117, "step200": 9.0376, "step400": 9.1233},
+    "global_gain_calibration_rmse_mv": {"step0": 8.9886, "step100": 8.998, "step200": 9.0061, "step400": 9.0245},
+    "activity_region_bridge_calibration_rmse_mv": {"step0": 9.964, "step100": 15.8725, "step200": 13.9291, "step400": 15.2007},
+    "interpretation": "Every optimized intervention moves away from its own checkpoint-zero calibration endpoint. The failure is not an undertraining plateau."
+  },
+  "identified_lessons": [
+    "The frozen 0.75 calibration remains the strongest registered candidate on reused development roles.",
+    "The causal gain head learns almost no conditional variation and mostly increases the global gain toward 0.80.",
+    "Activity and activity-by-region reweighting destabilize the bridge and do not repair quiescent, moderate or somatic transitions.",
+    "No short-horizon improvement compensates for the eight-ms failure; the gain arm only marginally improves four-ms calibration while degrading one, two and eight ms.",
+    "Before changing the full bridge, a frozen analytic lookup must test whether the current causal variables identify useful heterogeneous gains at all."
+  ],
+  "decision": {"fresh_train_support_confirmation_authorized": false, "coupled_06c_canary_authorized": false, "full_training_authorized": false, "fresh_test_generation_authorized": false, "mass_dataset_generation_authorized": false, "next_step": "frozen_analytic_causal_gain_feature_identifiability"}
+}

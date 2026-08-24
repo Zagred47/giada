@@ -1715,3 +1715,48 @@ calibration and development roles in 06b-i are therefore explicitly reused as
 a learnability playground. No result from this notebook is a new independent
 confirmation; success can authorize only confirmation on fresh train support,
 never 06c, validation/test access or full training.
+
+The completed 06b-i archive is registered in
+`experiments/hayflow/06b_i_voltage_objective_recalibration_playground/result.json`.
+ZIP CRC and all 76 indexed members pass independent size and SHA-256
+verification. Neither the primary causal-gain arm nor the preregistered
+activity-by-region fallback passes; no diagnostic arm passes either.
+
+The causal gain retains useful absolute dynamics (21.80% voltage and 30.70%
+STATE gains versus persistence), but improves only 0.35% over frozen alpha
+instead of the required 2%. Its calibration endpoint worsens monotonically
+from 8.99 mV at step zero to 9.12 mV at step 400, and its learned gain varies
+only from roughly 0.79 to 0.81. It therefore collapses close to a global
+multiplier rather than exploiting the conditional inputs.
+
+Bridge-updating objectives are actively harmful: the activity and
+activity-by-region arms worsen their own checkpoint-zero calibration endpoint
+by 54.75% and 51.54%. None repairs moderate, quiescent or somatic transitions.
+The registered formal diagnosis is
+`VOLTAGE_OBJECTIVE_RECALIBRATION_NOT_LEARNABLE`; the engineering diagnosis is
+`TRAINED_OBJECTIVES_MOVE_AWAY_FROM_FROZEN_OPTIMUM_AND_CAUSAL_GAIN_COLLAPSES_NEAR_GLOBAL`.
+
+The next step is a frozen analytic feature-identifiability experiment. It will
+fit closed-form gain lookup tables from causal partitions of raw predicted
+delta, current voltage and region, with a teacher-activity oracle reported
+separately and prohibited from selection. This isolates feature sufficiency
+from neural optimization before any bridge representation is enlarged.
+
+### 06b-j frozen analytic causal-gain identifiability
+
+The preregistered 06b-j experiment is an optimizer-free component playground.
+For every frozen 06b-h source seed it estimates bounded least-squares gains for
+a synchronized hierarchy of partitions: global, region, raw predicted
+activity, current-voltage band, region-by-activity and
+region-by-activity-by-voltage. Shrinkage is selected only on the historically
+reused train calibration role; development remains a reused train component,
+so no independent confirmation is claimed.
+
+The primary causal partition must improve direct teacher-boundary error by at
+least 5% over alpha=0.75 and recursive 8 ms error by at least 2% over the
+global analytic lookup, while keeping voltage and STATE gains positive in all
+seeds and preserving active, moderate, quiescent and somatic strata. A
+teacher-activity lookup uses the true future delta only as a prohibited oracle:
+it can diagnose missing causal observability, but can never become a model
+candidate. The notebook performs no neural training and cannot authorize 06c,
+validation/test access, full training or a fresh test generation.
