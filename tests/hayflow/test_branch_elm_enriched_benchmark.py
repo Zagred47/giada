@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 NOTEBOOK = ROOT / "notebooks" / "06b_c_supplement_branch_elm_enriched_benchmark.ipynb"
 PREREGISTRATION = ROOT / "experiments" / "hayflow" / "06b_c_branch_elm_enriched_benchmark" / "preregistration.json"
 EXECUTION_AMENDMENT = PREREGISTRATION.with_name("execution_amendment.json")
+REGISTERED_RESULT = PREREGISTRATION.with_name("result.json")
 
 
 def test_branch_elm_contract_is_exactly_the_published_small_model():
@@ -92,3 +93,31 @@ def test_elm_sidecar_notebook_uses_compact_outputs_and_stable_download():
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
     assert "display(results)" not in code
+
+
+def test_registered_branch_elm_result_preserves_integrity_and_scope():
+    result = json.loads(REGISTERED_RESULT.read_text(encoding="utf-8"))
+    assert result["status"] == "completed_and_independently_verified"
+    assert result["integrity"]["valid"]
+    assert result["integrity"]["archive_sha256"] == "721ba0bb5bffecaa11e46f9aa0fbec081a935142d97e13a13daff77acf0ab816"
+    assert result["integrity"]["artifact_index_sha256"] == "5c76a099b61a547d467b6894980a0a6ab0a1aa38752e97be75aa71877caf9dc0"
+    assert result["integrity"]["final_report_sha256"] == "8a3913d4630203fd35b6ce0d14be811d6b44bfea3f3f9661e6c25d7fc9a8a1b7"
+    assert result["integrity"]["indexed_member_failures"] == []
+    assert result["integrity"]["checkpoint_file_count"] == 6
+    assert result["execution"]["recovered_completed_checkpoint_count"] == 6
+    assert result["execution"]["retraining_avoided_for_recovered_checkpoints"]
+    assert result["contract"]["trainable_parameter_count"] == 8002
+    assert result["contract"]["roles"] == {
+        "fit": 28,
+        "calibration": 10,
+        "development": 10,
+    }
+    assert result["contract"]["fresh_test_compatible_episode_count"] == 64
+    assert result["retrained_exact_architecture"]["fresh_test_clipped_soma_rmse_mv"]["U_realized"]["median"] == 2.7096906444434774
+    assert result["retrained_exact_architecture"]["fresh_test_clipped_soma_rmse_mv"]["U_scheduled"]["median"] == 3.301054152891874
+    assert result["spike_metrics"]["positive_count_in_every_reported_subset"] == 0
+    assert not result["spike_metrics"]["valid_for_interpretation"]
+    assert result["spike_metrics"]["auc"] is None
+    assert not result["comparability"]["same_target_scope"]
+    assert not result["comparability"]["direct_scalar_ranking_authorized"]
+    assert not result["primary_experiment_replaced"]

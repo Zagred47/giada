@@ -1,0 +1,118 @@
+{
+  "schema_version": "06b-c-branch-elm-registered-result-v1",
+  "experiment": "branch_elm_enriched_dataset_sidecar",
+  "status": "completed_and_independently_verified",
+  "integrity": {
+    "archive_sha256": "721ba0bb5bffecaa11e46f9aa0fbec081a935142d97e13a13daff77acf0ab816",
+    "artifact_index_sha256": "5c76a099b61a547d467b6894980a0a6ab0a1aa38752e97be75aa71877caf9dc0",
+    "final_report_sha256": "8a3913d4630203fd35b6ce0d14be811d6b44bfea3f3f9661e6c25d7fc9a8a1b7",
+    "benchmark_contract_sha256": "cc435c7b3b4f1db54041bf757324331eb879bc592d883b10d67ec45fdb615b9e",
+    "benchmark_results_sha256": "424f7576098f7e95f95a2d9256628132fba1c505f5b8b9d23e857020edfe70db",
+    "indexed_member_count": 9,
+    "indexed_member_failures": [],
+    "checkpoint_file_count": 6,
+    "zip_crc_valid": true,
+    "valid": true
+  },
+  "execution": {
+    "contract_code_revision": "8a90b429871c44e8ad21856843a817345b9d8ab5",
+    "final_report_code_revision": "d182ebb563941d172d030428eb013ced98e49e46",
+    "device": "cuda",
+    "recovered_completed_checkpoint_count": 6,
+    "retraining_avoided_for_recovered_checkpoints": true,
+    "fresh_test_used_for_selection": false
+  },
+  "contract": {
+    "architecture": "published Branch-ELM num_memory_20",
+    "trainable_parameter_count": 8002,
+    "dendritic_segment_count": 639,
+    "input_channel_count": 1278,
+    "input_views": ["U_scheduled", "U_realized"],
+    "compatible_train_episode_count": 48,
+    "excluded_train_episode_count": 168,
+    "excluded_train_reason": "somatic_current_not_representable",
+    "roles": {
+      "fit": 28,
+      "calibration": 10,
+      "development": 10
+    },
+    "fresh_test_episode_count": 64,
+    "fresh_test_compatible_episode_count": 64,
+    "fresh_test_evaluated_timestep_count": 512,
+    "sidecar_only": true
+  },
+  "published_original_neuronio_reference": {
+    "clipped_soma_rmse_mv": 0.6375671602714604,
+    "spike_auc": 0.9921568089858758
+  },
+  "zero_shot_original_checkpoint_fresh_test": {
+    "U_scheduled_clipped_soma_rmse_mv": 8.238825913764224,
+    "U_realized_clipped_soma_rmse_mv": 4.66034899317477
+  },
+  "retrained_exact_architecture": {
+    "fresh_test_clipped_soma_rmse_mv": {
+      "U_scheduled": {
+        "17": 3.301054152891874,
+        "29": 2.380112455651644,
+        "43": 3.683890593032833,
+        "median": 3.301054152891874
+      },
+      "U_realized": {
+        "17": 2.659912058443558,
+        "29": 2.7096906444434774,
+        "43": 5.319469991494508,
+        "median": 2.7096906444434774
+      }
+    },
+    "development_clipped_soma_rmse_mv": {
+      "U_scheduled": {
+        "17": 0.11297450366605298,
+        "29": 0.19691454422249546,
+        "43": 0.11302727508804736,
+        "median": 0.11302727508804736
+      },
+      "U_realized": {
+        "17": 0.12699886429576188,
+        "29": 0.8364393080713891,
+        "43": 0.4171294347443442,
+        "median": 0.4171294347443442
+      }
+    },
+    "fresh_improvement_over_zero_shot_fraction": {
+      "U_scheduled": 0.5993295419221134,
+      "U_realized": 0.4185648653326379
+    },
+    "fresh_to_development_median_rmse_ratio": {
+      "U_scheduled": 29.205819129235653,
+      "U_realized": 6.496042759735304
+    }
+  },
+  "spike_metrics": {
+    "valid_for_interpretation": false,
+    "positive_count_in_every_reported_subset": 0,
+    "auc": null,
+    "auc_defined": false,
+    "f1_at_0_5": 0.0,
+    "interpretation": "F1=0 is not evidence of failed spike discrimination because no evaluated subset contains a positive spike. A spike-positive evaluation set is required."
+  },
+  "interpretation": {
+    "zero_shot_transfer": "The original checkpoint transfers poorly to the enriched fresh distribution; causal realized releases reduce error relative to scheduled inputs but remain far from the original NeuronIO reference.",
+    "small_scale_retraining": "Retraining the unchanged 8,002-parameter architecture materially improves fresh RMSE over zero-shot for both input views.",
+    "generalization": "The large development-to-fresh gap and seed variability show a substantial support/generalization shift. The bounded 48-episode compatible training pool is not an original-budget replication.",
+    "input_view": "U_realized has the better fresh median, but U_scheduled contains the best individual seed and is less unstable; this canary does not establish a robust winner between views.",
+    "scientific_conclusion": "On this bounded enriched-data canary, the published small Branch-ELM does not retain its original-dataset accuracy even after retraining. This is evidence about transfer and support, not proof that the architecture is intrinsically incapable."
+  },
+  "comparability": {
+    "same_fresh_transitions_as_hayflow_approximately_0_40_mv": true,
+    "same_target_scope": false,
+    "direct_scalar_ranking_authorized": false,
+    "reason": "Branch-ELM uses clipped soma-only RMSE; the reported HayFlow value is an aggregate over all 642 segment voltages.",
+    "matched_followup": "Evaluate the frozen HayFlow candidate with clipped soma-only RMSE on the same 64 fresh episodes. Use a separate spike-positive set for AUC/F1."
+  },
+  "primary_experiment_replaced": false,
+  "full_training_authorized": false,
+  "next_steps": {
+    "primary": "nested_coupling_aware_local_bridge_optimization_scaling_forensic",
+    "professor_sidecar": "matched_frozen_hayflow_soma_metric_audit"
+  }
+}

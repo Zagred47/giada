@@ -41,3 +41,28 @@ aggregate over all 642 segment voltages.  The report must not rank those two
 numbers directly, even when both models see the same fresh transitions.
 
 Notebook: `notebooks/06b_c_supplement_branch_elm_enriched_benchmark.ipynb`.
+
+## Registered result
+
+The recovered archive is valid and contains all six completed checkpoints; no
+model was retrained during recovery.  On the 64 compatible fresh episodes, the
+published checkpoint transfers at 8.239 mV with `U_scheduled` and 4.660 mV
+with `U_realized`.  Small-scale retraining of the unchanged 8,002-parameter
+architecture improves the median fresh RMSE to 3.301 mV and 2.710 mV,
+respectively.
+
+This is a real improvement over zero-shot transfer, but not a successful
+replication of the published 0.638 mV result.  The median development errors
+are 0.113 mV (`U_scheduled`) and 0.417 mV (`U_realized`), producing fresh to
+development gaps of 29.2x and 6.50x.  Together with the seed variability,
+this identifies a strong support/generalization shift rather than a simple
+failure to optimize the compatible training episodes.
+
+Every reported subset contains zero positive somatic spikes.  AUC is therefore
+undefined and F1=0 is not interpretable as a discrimination failure.  A
+spike-positive evaluation set is required for that comparison.
+
+The professor-requested comparison is consequently only partially closed.  A
+direct scalar HayFlow-versus-ELM ranking remains prohibited until the frozen
+HayFlow candidate is evaluated with the same clipped soma-only target on these
+same 64 episodes.  The registered machine-readable result is `result.json`.
