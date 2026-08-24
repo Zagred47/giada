@@ -186,6 +186,12 @@ class InformationMatchedVoltageTransitionBenchmark(
             )
         )
 
+    @staticmethod
+    def _architectural_parameter_count(model: Any) -> int:
+        """Count stored model weights even when a loaded control is frozen."""
+
+        return int(sum(value.numel() for value in model.parameters()))
+
     def _define_common_tensor(self) -> None:
         widths = {
             "axial_voltage": 3,
@@ -264,11 +270,15 @@ class InformationMatchedVoltageTransitionBenchmark(
         self._define_common_tensor()
         device = next(iter(self.frozen_state_models.values())).proposal.weight.device
         models = self._new_matched_models(device)
-        state_count = self._parameter_count(
-            self.frozen_state_models[("causal_start_voltage", self.comparison.seeds[0])]
-        )
+        state_model = self.frozen_state_models[
+            ("causal_start_voltage", self.comparison.seeds[0])
+        ]
+        state_count = self._architectural_parameter_count(state_model)
+        state_trainable_count = self._parameter_count(state_model)
         if state_count != self.comparison.expected_state_updater_parameter_count:
             raise RuntimeError("current 06b STATE-updater parameter count changed")
+        if state_trainable_count != 0:
+            raise RuntimeError("frozen 06b STATE updater unexpectedly remains trainable")
         probe_rows = np.asarray([0], dtype=np.int64)
         probe_segments = np.asarray([[0, 1]], dtype=np.int64)
         probe, _ = self._common_numpy_batch("fit", probe_rows, probe_segments)
@@ -306,6 +316,7 @@ class InformationMatchedVoltageTransitionBenchmark(
                 "hayflow_voltage_bridge": {
                     "voltage_path_parameter_count": self._parameter_count(models["hayflow_voltage_bridge"]),
                     "state_updater_parameter_count": state_count,
+                    "state_updater_trainable_parameter_count_during_comparison": state_trainable_count,
                     "complete_compact_transition_system_parameter_count": state_count
                     + self._parameter_count(models["hayflow_voltage_bridge"]),
                     "state_updater_affects_voltage_metric": False,

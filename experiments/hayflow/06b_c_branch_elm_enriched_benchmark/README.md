@@ -99,7 +99,8 @@ The matched active voltage paths are the 8,002-parameter Branch-ELM core
 (7,981 parameters influence its voltage output) and the current
 8,985-parameter HayFlow voltage bridge.  The 7,212-parameter STATE updater is
 reported as part of the 16,197-parameter complete compact transition system,
-but it is downstream and cannot affect the voltage score.  Both arms use the
+but it is frozen (zero trainable parameters in this comparison), downstream
+and cannot affect the voltage score.  Both arms use the
 same paired samples, optimizer hyperparameters, loss, checkpoint-selection
 role and development role over seeds 61017, 61029 and 61043.
 

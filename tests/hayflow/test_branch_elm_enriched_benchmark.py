@@ -177,6 +177,7 @@ def test_corrective_transition_contract_is_same_input_and_authentic_target():
     assert amendment["arms"]["branch_elm_core"]["total_parameter_count"] == 8002
     assert amendment["arms"]["hayflow_voltage_bridge"]["voltage_path_parameter_count"] == 8985
     assert amendment["arms"]["hayflow_voltage_bridge"]["complete_compact_transition_system_parameter_count"] == 16197
+    assert amendment["arms"]["hayflow_voltage_bridge"]["downstream_state_updater_trainable_parameter_count_during_comparison"] == 0
 
 
 def test_information_matched_session_passes_one_tensor_to_both_arms():
@@ -194,6 +195,9 @@ def test_information_matched_session_passes_one_tensor_to_both_arms():
     counter = inspect.getsource(
         InformationMatchedVoltageTransitionBenchmark._parameter_count
     )
+    architectural_counter = inspect.getsource(
+        InformationMatchedVoltageTransitionBenchmark._architectural_parameter_count
+    )
     assert "prediction = model(features)" in train
     assert "for name in MATCHED_MODEL_NAMES" in train
     assert 'values["voltage_t1"]' in batch and 'values["voltage_t"]' in batch
@@ -202,6 +206,7 @@ def test_information_matched_session_passes_one_tensor_to_both_arms():
     assert '"teacher_endpoint_used_as_input": False' in final
     assert '"autoregressive_rollout_performed": False' in final
     assert "if value.requires_grad" in counter
+    assert "value.numel() for value in model.parameters()" in architectural_counter
 
 
 def test_matched_hayflow_path_cannot_train_or_change_metric_support():
