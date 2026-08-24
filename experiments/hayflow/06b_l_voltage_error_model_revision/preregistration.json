@@ -1,0 +1,65 @@
+{
+  "schema_version": "06b-l-preregistration-v1",
+  "experiment": "voltage_error_model_revision",
+  "status": "preregistered_before_execution",
+  "question": "Can an explicit causal mixture between persistence and the frozen dynamic update repair low-activity rollout errors?",
+  "authorized_by": {
+    "experiment": "temporal_voltage_correction_state",
+    "diagnosis": "TEMPORAL_CORRECTION_STATE_NOT_IDENTIFIED",
+    "archive_sha256": "fe22d8f135257d58ae844c0e8db5c1ba52f7eab9b3f0005722ff6c1a5f1ea33c",
+    "artifact_index_sha256": "3536b6e9ada1ebecd725e5956fec6d8c928074ba839c4dcd88d513e94805f45f",
+    "final_report_sha256": "3df8d38762a8cdd56b84e964adc66ca111053cba81b396981d478813aa53afb4"
+  },
+  "experts": {
+    "persistence": "zero voltage delta",
+    "dynamic": "frozen region_raw_voltage lookup from 06b-j"
+  },
+  "causal_matrix": {
+    "hard_hurdle_instantaneous": "binary gate from raw delta, current voltage and baseline delta",
+    "hard_hurdle_temporal": "binary gate adding fast/slow EMA and predicted displacement",
+    "soft_blend_instantaneous": "continuous convex blend from instantaneous causal features",
+    "soft_blend_temporal": "continuous convex blend adding causal temporal features"
+  },
+  "primary_scheme": "hard_hurdle_instantaneous",
+  "fallback_scheme": "soft_blend_instantaneous",
+  "oracles": {
+    "teacher_regime_oracle": "future teacher activity selects persistence below 1 mV and dynamic update otherwise",
+    "teacher_optimal_blend_oracle": "future teacher endpoint selects the per-step optimal convex blend",
+    "eligible_for_selection": false
+  },
+  "fit": {
+    "distribution": "recursive frozen-static exposures",
+    "method": "region-specific closed-form ridge",
+    "ridge_strengths": [0.01, 0.1, 1.0, 10.0],
+    "hard_gate_thresholds": [0.25, 0.5, 0.75],
+    "selection_role": "historically reused train calibration",
+    "neural_training_performed": false,
+    "optimizer_used": false
+  },
+  "registered_gate": {
+    "minimum_recursive_gain_over_static": 0.02,
+    "all_seed_voltage_gain_vs_persistence": "positive",
+    "all_seed_STATE_gain_vs_persistence": "positive",
+    "minimum_active_ge_5mV_gain_vs_persistence": 0.10,
+    "minimum_moderate_1_to_5mV_gain_vs_persistence": 0.0,
+    "minimum_quiescent_lt_1mV_gain_vs_persistence": 0.0,
+    "minimum_soma_gain_vs_persistence": 0.0,
+    "physical_voltage_violations": 0
+  },
+  "terminal_decision_rule": {
+    "any_causal_gate_passes": "revise architecture with a persistence-dynamic gate",
+    "teacher_regime_oracle_only_passes": "revise architecture with an explicit regime-state encoder",
+    "optimal_blend_oracle_only_passes": "revise architecture with a continuous mixture state",
+    "no_oracle_passes": "replace or extend the voltage expert family"
+  },
+  "scope_limitations": {
+    "terminal_diagnostic_before_architecture_revision": true,
+    "new_independent_confirmation_claimed": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "fresh_test_generation_authorized": false,
+    "mass_dataset_generation_authorized": false
+  }
+}

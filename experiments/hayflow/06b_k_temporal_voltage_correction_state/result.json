@@ -1,0 +1,70 @@
+{
+  "schema_version": "06b-k-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": "hayflow_temporal_voltage_correction_state.zip",
+  "archive_size_bytes": 164156,
+  "archive_sha256": "fe22d8f135257d58ae844c0e8db5c1ba52f7eab9b3f0005722ff6c1a5f1ea33c",
+  "artifact_index_sha256": "3536b6e9ada1ebecd725e5956fec6d8c928074ba839c4dcd88d513e94805f45f",
+  "final_report_sha256": "3df8d38762a8cdd56b84e964adc66ca111053cba81b396981d478813aa53afb4",
+  "code_revision": "7bd0a31cc61278453ec88b0257e24fba042fd724",
+  "artifact_integrity": {
+    "zip_crc_valid": true,
+    "archive_member_count": 35,
+    "indexed_member_count": 33,
+    "indexed_member_failures": [],
+    "all_indexed_sizes_and_sha256_verified": true
+  },
+  "formal_diagnosis": "TEMPORAL_CORRECTION_STATE_NOT_IDENTIFIED",
+  "primary": {
+    "scheme": "causal_temporal_combined",
+    "passed": false,
+    "median_recursive_gain_over_static": -0.1978575699495677,
+    "median_recursive_gain_over_exposure_control": -0.1061729692726554,
+    "median_voltage_gain_vs_persistence": 0.0917177203663132,
+    "median_STATE_gain_vs_persistence": 0.24427086831964062,
+    "median_moderate_gain": -2.785898985824283,
+    "median_quiescent_gain": -25.712227557385987,
+    "median_soma_gain": -0.5553629126308091
+  },
+  "controls": {
+    "exposure_instantaneous_gain_over_static": -0.03829361601887227,
+    "ema_fast_gain_over_static": -0.05898670691935615,
+    "ema_slow_gain_over_static": -0.05674010415580644,
+    "predicted_displacement_gain_over_exposure_control": 0.027274166225045637,
+    "predicted_displacement_gain_over_static": -0.009975023345169864,
+    "physical_voltage_violations": 0
+  },
+  "teacher_error_oracle": {
+    "eligible_for_selection": false,
+    "passed": false,
+    "median_recursive_gain_over_static": 0.14299515288338915,
+    "median_voltage_gain_vs_persistence": 0.3501712259254939,
+    "median_STATE_gain_vs_persistence": 0.32378750410448054,
+    "median_moderate_gain": -1.3446540692571163,
+    "median_quiescent_gain": -20.29053533830982,
+    "median_soma_gain": -0.06370484680519928
+  },
+  "absolute_low_activity_errors": {
+    "persistence_quiescent_rmse_mv": 0.46995171904563904,
+    "static_quiescent_rmse_mv_by_seed": {"61017": 6.1419, "61029": 11.745, "61043": 4.5379},
+    "oracle_quiescent_rmse_mv_by_seed": {"61017": 3.6859, "61029": 10.7884, "61043": 10.0055},
+    "persistence_moderate_rmse_mv": 2.872399091720581,
+    "static_moderate_rmse_mv_by_seed": {"61017": 3.7571, "61029": 4.9153, "61043": 4.2144}
+  },
+  "identified_lessons": [
+    "Recursive exposure refitting alone degrades the frozen static lookup.",
+    "Fast and slow EMA histories do not identify a useful correction state.",
+    "Predicted displacement carries a small temporal signal over the exposure control but does not beat the static lookup.",
+    "Teacher current error greatly improves active and global rollout error but still damages quiescent and moderate regimes.",
+    "Low-activity failures are several millivolts in absolute terms and are not merely inflated relative percentages.",
+    "The final disambiguation should test an explicit mixture between persistence and dynamic update."
+  ],
+  "decision": {
+    "fresh_train_support_confirmation_authorized": false,
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "fresh_test_generation_authorized": false,
+    "mass_dataset_generation_authorized": false,
+    "next_step": "atomic_voltage_error_model_revision"
+  }
+}

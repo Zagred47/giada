@@ -1799,3 +1799,40 @@ gates. The aligned controls distinguish temporal information from exposure
 refitting, and the oracle distinguishes missing causal observability from an
 insufficient error model. No neural optimizer, validation/test state, fresh
 test, 06c authorization or independent confirmation is involved.
+
+The completed 06b-k archive is registered in
+`experiments/hayflow/06b_k_temporal_voltage_correction_state/result.json`.
+ZIP CRC and all 33 indexed members pass independent size and SHA-256
+verification. Exposure refitting, fast/slow EMA state and their causal
+combination all degrade the frozen static lookup. Predicted displacement is
+the only positive temporal ablation relative to the exposure control (+2.73%)
+but remains 1.00% worse than the static lookup. The teacher-current-error
+oracle improves global recursive RMSE by 14.30%, yet still fails moderate,
+quiescent and soma gates.
+
+The quiet-regime failure is not a relative-metric artifact: persistence RMSE
+is 0.47 mV while the static lookup ranges from 4.54 to 11.75 mV across seeds;
+the oracle remains between 3.69 and 10.79 mV. The formal diagnosis is
+`TEMPORAL_CORRECTION_STATE_NOT_IDENTIFIED`. The final atomic disambiguation
+before architectural revision is an explicit persistence-versus-dynamic
+mixture: causal soft/hard gates must be compared with teacher-regime and
+per-step optimal-blend oracles. This determines whether the architecture needs
+a learnable hurdle gate, more observable regime state, or a different expert
+family.
+
+### 06b-l terminal voltage error-model disambiguation
+
+The preregistered 06b-l experiment is the last atomic diagnostic before an
+architecture revision. It freezes two voltage experts: persistence (zero
+delta) and the best 06b-j region-by-activity-by-voltage update. Four aligned
+causal gates compare hard versus soft mixing and instantaneous versus temporal
+features. A future teacher-regime switch and a per-step optimal convex blend
+are prohibited oracles.
+
+All causal gates are region-specific closed-form ridge models fit on recursive
+static exposures and selected only on the reused train calibration role. A
+passing causal gate maps directly to a hurdle-gated architecture; an
+oracle-only result maps to a regime encoder or continuous mixture state; if
+even the optimal blend oracle fails, the voltage expert family must change.
+No outcome authorizes another generic diagnostic loop, validation/test access,
+06c or full training.
