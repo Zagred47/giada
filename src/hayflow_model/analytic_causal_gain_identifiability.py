@@ -601,9 +601,15 @@ class AnalyticCausalGainIdentifiability(VoltageObjectiveRecalibrationPlayground)
                 and row["region_gain_vs_persistence"]["soma"] >= self.config.minimum_soma_gain_fraction
                 and row["physical_voltage_violation_count"] == 0
             )
-        primary_pass = passes(PRIMARY_SCHEME)
-        fallback_pass = passes(FALLBACK_SCHEME)
-        oracle_pass = passes(ORACLE_SCHEME)
+        gate_results = {
+            scheme: passes(scheme)
+            for scheme in (*CAUSAL_GAIN_SCHEMES, ORACLE_SCHEME)
+        }
+        for scheme, passed in gate_results.items():
+            summaries[scheme]["registered_gate_passed"] = passed
+        primary_pass = gate_results[PRIMARY_SCHEME]
+        fallback_pass = gate_results[FALLBACK_SCHEME]
+        oracle_pass = gate_results[ORACLE_SCHEME]
         direct_identified = summaries[PRIMARY_SCHEME]["median_direct_improvement_over_alpha075_fraction"] >= self.config.minimum_direct_improvement_fraction
         if primary_pass:
             diagnosis = "ANALYTIC_CAUSAL_GAIN_FEATURES_IDENTIFIED"

@@ -90,6 +90,7 @@ def test_06bj_finalization_keeps_oracle_out_of_selection_and_blocks_06c():
         AnalyticCausalGainIdentifiability.finalize_analytic_identifiability
     )
     assert source.index("if primary_pass") < source.index("elif fallback_pass")
+    assert 'summaries[scheme]["registered_gate_passed"] = passed' in source
     assert '"oracle_eligible_for_selection": False' in source
     assert '"coupled_06c_canary_authorized": False' in source
     assert '"full_training_authorized": False' in source
