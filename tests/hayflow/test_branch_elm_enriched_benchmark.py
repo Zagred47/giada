@@ -191,6 +191,9 @@ def test_information_matched_session_passes_one_tensor_to_both_arms():
     final = inspect.getsource(
         InformationMatchedVoltageTransitionBenchmark.finalize_information_matched_benchmark
     )
+    counter = inspect.getsource(
+        InformationMatchedVoltageTransitionBenchmark._parameter_count
+    )
     assert "prediction = model(features)" in train
     assert "for name in MATCHED_MODEL_NAMES" in train
     assert 'values["voltage_t1"]' in batch and 'values["voltage_t"]' in batch
@@ -198,6 +201,7 @@ def test_information_matched_session_passes_one_tensor_to_both_arms():
     assert '"same_numeric_input_tensor": True' in final
     assert '"teacher_endpoint_used_as_input": False' in final
     assert '"autoregressive_rollout_performed": False' in final
+    assert "if value.requires_grad" in counter
 
 
 def test_matched_hayflow_path_cannot_train_or_change_metric_support():

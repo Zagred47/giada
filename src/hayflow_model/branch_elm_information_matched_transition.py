@@ -175,7 +175,16 @@ class InformationMatchedVoltageTransitionBenchmark(
 
     @staticmethod
     def _parameter_count(model: Any) -> int:
-        return int(sum(value.numel() for value in model.parameters()))
+        # The published 8,002-parameter Branch-ELM count includes only
+        # trainable weights. ELM intentionally registers routing indices,
+        # validity masks and fixed time constants as non-trainable Parameters.
+        return int(
+            sum(
+                value.numel()
+                for value in model.parameters()
+                if value.requires_grad
+            )
+        )
 
     def _define_common_tensor(self) -> None:
         widths = {
