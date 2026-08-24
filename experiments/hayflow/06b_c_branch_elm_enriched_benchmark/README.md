@@ -14,6 +14,12 @@ Both `U_scheduled` and causal `U_realized` inputs are reported.  The original
 current are excluded and counted because that input cannot be represented by
 the published architecture without changing the comparison.
 
+The initial preflight showed that exactly 48 train episodes remain compatible
+after this exclusion, rather than the 80 initially budgeted. Before any
+training or fresh-outcome evaluation, the role allocation was amended to 28
+fit, 10 calibration, and 10 development episodes. All compatible episodes are
+therefore retained in disjoint roles without altering the model contract.
+
 The retrained checkpoints are selected only on a train-derived calibration
 role and are frozen before fresh-test outcomes are read.  The 05j-o fresh set
 has already been opened historically in this project, so this is a

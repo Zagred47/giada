@@ -24,6 +24,11 @@ def test_branch_elm_contract_is_exactly_the_published_small_model():
     assert ORIGINAL_ELM_PARAMETER_COUNT == 8002
     assert ELM_INPUT_VIEWS == ("U_scheduled", "U_realized")
     assert config.expected_dendritic_segment_count == 639
+    assert (
+        config.fit_episode_count,
+        config.calibration_episode_count,
+        config.development_episode_count,
+    ) == (28, 10, 10)
     assert config.training_steps == 300
     assert ORIGINAL_ELM_TEST_SOMA_RMSE_MV == 0.6375671602714604
     assert ORIGINAL_ELM_TEST_AUC == 0.9921568089858758

@@ -43,9 +43,9 @@ DEFAULT_Y_TRAIN_SOMA_SCALE = 0.1
 class BranchELMEnrichedBenchmarkConfig:
     seeds: Tuple[int, ...] = (17, 29, 43)
     input_views: Tuple[str, ...] = ELM_INPUT_VIEWS
-    fit_episode_count: int = 48
-    calibration_episode_count: int = 16
-    development_episode_count: int = 16
+    fit_episode_count: int = 28
+    calibration_episode_count: int = 10
+    development_episode_count: int = 10
     training_steps: int = 300
     evaluation_interval: int = 50
     progress_interval: int = 25
@@ -231,6 +231,7 @@ class BranchELMEnrichedBenchmark:
             "eligible_train_episode_count": len(eligible),
             "excluded_train_episode_count": len(excluded),
             "excluded_by_reason": {reason: sum(item[1] == reason for item in excluded) for reason in sorted({item[1] for item in excluded})},
+            "all_compatible_train_episodes_assigned": len(ordered) == sum(counts.values()),
         }
         return roles
 

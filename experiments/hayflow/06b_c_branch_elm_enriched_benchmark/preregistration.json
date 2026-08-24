@@ -1,7 +1,13 @@
 {
   "schema_version": "06b-c-branch-elm-preregistration-v1",
   "experiment": "branch_elm_enriched_dataset_sidecar",
-  "status": "preregistered_before_execution",
+  "status": "preregistered_before_execution_with_pretraining_feasibility_amendment",
+  "feasibility_amendment": {
+    "reason": "The first preflight found exactly 48 train episodes compatible with the unchanged 1,278-input Branch-ELM contract after excluding somatic-current protocols.",
+    "timing": "Applied after preflight failure, before any model training and before any fresh-test outcome evaluation.",
+    "change": "Role counts reduced from 48/16/16 to 28/10/10 so all 48 compatible episodes remain disjoint.",
+    "scientific_constraint_preserved": "Somatic-current episodes remain excluded; no new input channel, parameter, or architecture adaptation was introduced."
+  },
   "role": "supplementary professor-requested comparison; does not replace or select the primary 06b-c experiment",
   "questions": [
     "How does the published 8,002-parameter num_memory_20 checkpoint transfer zero-shot to the enriched HayFlow fresh test?",
@@ -39,9 +45,9 @@
   "training_budget": {
     "seeds": [17, 29, 43],
     "steps_per_seed_and_view": 300,
-    "fit_episodes": 48,
-    "calibration_episodes": 16,
-    "development_episodes": 16
+    "fit_episodes": 28,
+    "calibration_episodes": 10,
+    "development_episodes": 10
   },
   "metrics": {
     "primary": "soma voltage RMSE after clipping the target above -55 mV, matching the original Branch-ELM convention",
