@@ -1,0 +1,19 @@
+branch_elm_enriched_benchmark:
+  seeds: [17, 29, 43]
+  input_views: [U_scheduled, U_realized]
+  fit_episode_count: 48
+  calibration_episode_count: 16
+  development_episode_count: 16
+  training_steps: 300
+  evaluation_interval: 50
+  progress_interval: 25
+  learning_rate: 0.0005
+  weight_decay: 0.0
+  gradient_clip_norm: 1.0
+  train_burn_in_ms: 8
+  fresh_test_burn_in_ms: 4
+  spike_loss_weight: 0.5
+  soma_loss_weight: 0.5
+  expected_dendritic_segment_count: 639
+  expected_parameter_count: 8002
+  primary_metric: clipped_soma_rmse_mv

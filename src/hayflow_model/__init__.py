@@ -338,6 +338,24 @@ from .causal_voltage_state_coupling_forensic import (
     CausalVoltageStateCouplingForensic,
     verified_06b_artifact_root,
 )
+from .causal_voltage_bridge_representation_forensic import (
+    EXPECTED_06BB_ARCHIVE_SHA256,
+    EXPECTED_06BB_FINAL_SHA256,
+    EXPECTED_06BB_INDEX_SHA256,
+    REPRESENTATION_ARMS,
+    CausalVoltageBridgeRepresentationConfig,
+    CausalVoltageBridgeRepresentationForensic,
+    TreeVoltageResidual,
+    verified_06bb_artifact_root,
+)
+from .branch_elm_enriched_benchmark import (
+    ELM_INPUT_VIEWS,
+    ORIGINAL_ELM_PARAMETER_COUNT,
+    ORIGINAL_ELM_TEST_AUC,
+    ORIGINAL_ELM_TEST_SOMA_RMSE_MV,
+    BranchELMEnrichedBenchmark,
+    BranchELMEnrichedBenchmarkConfig,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -586,4 +604,18 @@ __all__ = [
     "CausalVoltageStateCouplingConfig",
     "CausalVoltageStateCouplingForensic",
     "verified_06b_artifact_root",
+    "EXPECTED_06BB_ARCHIVE_SHA256",
+    "EXPECTED_06BB_FINAL_SHA256",
+    "EXPECTED_06BB_INDEX_SHA256",
+    "REPRESENTATION_ARMS",
+    "CausalVoltageBridgeRepresentationConfig",
+    "CausalVoltageBridgeRepresentationForensic",
+    "TreeVoltageResidual",
+    "verified_06bb_artifact_root",
+    "ELM_INPUT_VIEWS",
+    "ORIGINAL_ELM_PARAMETER_COUNT",
+    "ORIGINAL_ELM_TEST_AUC",
+    "ORIGINAL_ELM_TEST_SOMA_RMSE_MV",
+    "BranchELMEnrichedBenchmark",
+    "BranchELMEnrichedBenchmarkConfig",
 ]

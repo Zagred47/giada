@@ -1,0 +1,59 @@
+{
+  "schema_version": "06b-c-branch-elm-preregistration-v1",
+  "experiment": "branch_elm_enriched_dataset_sidecar",
+  "status": "preregistered_before_execution",
+  "role": "supplementary professor-requested comparison; does not replace or select the primary 06b-c experiment",
+  "questions": [
+    "How does the published 8,002-parameter num_memory_20 checkpoint transfer zero-shot to the enriched HayFlow fresh test?",
+    "How does the exact same 8,002-parameter architecture perform when retrained at small scale on train-only enriched HayFlow trajectories?",
+    "How sensitive is the result to scheduled presynaptic events versus causally realized release events?"
+  ],
+  "architecture_contract": {
+    "trainable_parameter_count": 8002,
+    "num_input": 1278,
+    "input_mapping": "639 dendritic excitatory channels followed by 639 dendritic inhibitory channels",
+    "num_memory": 20,
+    "num_branch": 45,
+    "num_synapse_per_branch": 100,
+    "routing": "neuronio_routing",
+    "checkpoint": "models/num_memory_20/neuronio_best_model_state.pt"
+  },
+  "input_views": {
+    "U_scheduled": "closest to the original end-to-end Branch-ELM presynaptic input contract",
+    "U_realized": "causal membrane-core sensitivity using only successful authentic releases"
+  },
+  "data_contract": {
+    "training": "train split only, deterministically divided into disjoint fit/calibration/development episodes",
+    "fresh_evaluation": "same sealed 05j-o transition dataset used by the reported HayFlow approximately 0.40 mV result",
+    "somatic_current_episodes": "excluded and counted because the original 1,278-input architecture cannot represent injected somatic current",
+    "intra_ms_timestamps": "binned to the original one-millisecond Branch-ELM input resolution",
+    "multi_event_collisions": "binary-clipped and counted"
+  },
+  "recurrent_state_contract": {
+    "reset": "zero at each independent teacher episode",
+    "train_burn_in_ms": 8,
+    "fresh_test_burn_in_ms": 4,
+    "original_training_reference": "500 ms windows with 150 ms burn-in",
+    "limitation": "The diagnostic HayFlow episodes are shorter, so this is a bounded comparison and not a replication of the original training budget."
+  },
+  "training_budget": {
+    "seeds": [17, 29, 43],
+    "steps_per_seed_and_view": 300,
+    "fit_episodes": 48,
+    "calibration_episodes": 16,
+    "development_episodes": 16
+  },
+  "metrics": {
+    "primary": "soma voltage RMSE after clipping the target above -55 mV, matching the original Branch-ELM convention",
+    "secondary": ["raw soma RMSE", "soma MAE", "spike AUC", "spike F1 at 0.5"],
+    "published_reference_soma_rmse_mv": 0.6375671602714604,
+    "published_reference_spike_auc": 0.9921568089858758
+  },
+  "comparability_warning": "The published 0.6376 mV value and this benchmark are soma-only with target clipping. HayFlow approximately 0.40 mV is an all-642-segment aggregate. Even on the same fresh transitions, those target scopes cannot be ranked as one scalar leaderboard.",
+  "prohibited": [
+    "changing the Branch-ELM parameter count or routing",
+    "using fresh-test results for checkpoint or hyperparameter selection",
+    "allowing this sidecar to select or veto the primary 06b-c causal result",
+    "claiming that 0.40 beats 0.60 without a matched target and metric"
+  ]
+}

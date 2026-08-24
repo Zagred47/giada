@@ -1,0 +1,52 @@
+{
+  "schema_version": "06b-c-preregistration-v1",
+  "experiment": "causal_voltage_bridge_representation_forensic",
+  "status": "preregistered_before_execution",
+  "question": "Was the 06b-b bridge limited mainly by additional optimization of the same local representation, or by missing authentic morphology-tree support?",
+  "authorized_by": {
+    "experiment": "06b_b_causal_voltage_state_coupling_forensic",
+    "diagnosis": "CAUSAL_VOLTAGE_BRIDGE_NOT_PREDICTIVE",
+    "archive_sha256": "d652c3fdf088569b212c6fc710185ab4f870857e5e84cc2947459b7f456bb349",
+    "artifact_index_sha256": "824cc0fdfb977c69fed7bbf3dfcea691f6c1346c84fadedd988aa20c12c56986",
+    "final_report_sha256": "41a1fc65c2bc1b812e06758f171983e8201b2627905fdd6a7b0813c442bacc2e"
+  },
+  "frozen_components": [
+    "three 06b-b local voltage bridges",
+    "three 06b causal-start-voltage STATE updaters",
+    "three 06b endpoint-conditioned STATE updaters"
+  ],
+  "paired_arms": [
+    "frozen_local_bridge",
+    "continued_local_bridge",
+    "authentic_tree_residual",
+    "relabelled_tree_residual"
+  ],
+  "causal_isolation": {
+    "continued_local_bridge": "extra optimizer budget without added topology or parameters",
+    "authentic_tree_residual": "zero-initialized residual using the real NEURON segment tree",
+    "relabelled_tree_residual": "parameter-, initialization-, sample-, and optimizer-matched residual using a fixed relabelled tree while segment features remain unmoved"
+  },
+  "seeds": [61017, 61029, 61043],
+  "selection_role": "train-derived calibration only",
+  "evaluation_role": "disjoint train-derived development only",
+  "registered_gates": {
+    "minimum_median_continuation_gain_over_frozen_fraction": 0.02,
+    "minimum_median_authentic_gain_over_relabelled_fraction": 0.02,
+    "authentic_voltage_gain_over_relabelled_positive_for_all_seeds": true,
+    "authentic_state_gain_over_relabelled_positive_at_median": true
+  },
+  "interpretation": {
+    "continuation_only": "local bridge optimization limit identified",
+    "authentic_tree_only": "authentic topology information identified",
+    "both": "optimization and authentic topology both contribute",
+    "neither": "local voltage representation remains insufficient"
+  },
+  "prohibited": [
+    "reading validation or test state/outcomes",
+    "changing the six frozen STATE updaters",
+    "using teacher V_t+1 as a model input",
+    "claiming an autonomous voltage rollout",
+    "training the full neuron",
+    "letting the Branch-ELM sidecar select or veto this experiment"
+  ]
+}
