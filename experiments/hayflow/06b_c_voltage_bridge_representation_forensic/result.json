@@ -1,0 +1,67 @@
+{
+  "schema_version": "06b-c-registered-result-v1",
+  "experiment": "causal_voltage_bridge_representation_forensic",
+  "status": "completed_and_independently_verified",
+  "archive_sha256": "6c0df160b7f175ef2a46ff05ad88ee53d483a8eb14d893c0fa73de2190d7330d",
+  "artifact_index_sha256": "d828d9ad318998c6e07632b262493838dfd853cf4166edbfe034e11b6b6ec23e",
+  "final_report_sha256": "378421fff03d1e87e145334792fa1ac66e6df0627f24333b1cd256b70787af85",
+  "indexed_member_count": 16,
+  "indexed_member_failures": [],
+  "zip_crc_valid": true,
+  "integrity_valid": true,
+  "valid": true,
+  "component_decision_grade": true,
+  "code_revision": "3cbd913b50fd29b8f7f48e9bd32e7620dfbc78e8",
+  "diagnosis": "LOCAL_BRIDGE_OPTIMIZATION_LIMIT_IDENTIFIED",
+  "optimization_limit_identified_by_registered_median_gate": true,
+  "optimization_signal_robust_across_all_seeds": false,
+  "authentic_topology_information_identified": false,
+  "median": {
+    "continuation_voltage_gain_over_frozen_fraction": 0.026928518723509987,
+    "authentic_voltage_gain_over_relabelled_fraction": 0.000040779406754287706,
+    "authentic_state_gain_over_relabelled_fraction": -0.00006185394479563122
+  },
+  "per_seed": {
+    "61017": {
+      "continuation_voltage_gain_over_frozen_fraction": 0.026928518723509987,
+      "authentic_voltage_gain_over_relabelled_fraction": -0.0016604310619696694,
+      "authentic_state_gain_over_relabelled_fraction": -0.00006185394479563122
+    },
+    "61029": {
+      "continuation_voltage_gain_over_frozen_fraction": 0.05869959199908048,
+      "authentic_voltage_gain_over_relabelled_fraction": 0.000040779406754287706,
+      "authentic_state_gain_over_relabelled_fraction": -0.00009025099763082522
+    },
+    "61043": {
+      "continuation_voltage_gain_over_frozen_fraction": -0.032905287463789845,
+      "authentic_voltage_gain_over_relabelled_fraction": 0.00012093458126194445,
+      "authentic_state_gain_over_relabelled_fraction": 0.000037956930987292914
+    }
+  },
+  "registered_thresholds": {
+    "minimum_median_continuation_gain_over_frozen_fraction": 0.02,
+    "minimum_median_authentic_gain_over_relabelled_fraction": 0.02,
+    "authentic_voltage_gain_over_relabelled_positive_for_all_seeds": true,
+    "authentic_state_gain_over_relabelled_positive_at_median": true
+  },
+  "interpretation": {
+    "formal_registered_outcome": "The median continuation gain is 2.69 percentage points and passes the preregistered 2% optimizer-budget gate.",
+    "robustness_caveat": "Continuation improves seeds 61017 and 61029 but worsens seed 61043 by 3.29 percentage points; the optimization signal is therefore conditional, not all-seed robust.",
+    "topology_control": "Authentic and relabelled tree residuals differ by only about 0.004 percentage points at the median voltage gate, while the median downstream STATE difference is slightly negative.",
+    "scientific_conclusion": "Additional optimization of the existing local bridge remains a live hypothesis. This particular 1,409-parameter tree-residual representation provides no evidence that authentic morphology is being exploited.",
+    "what_is_not_concluded": "The result does not show that morphology is biologically irrelevant or that every topology-aware architecture will fail. It rejects only the tested residual representation and training contract."
+  },
+  "methodology": {
+    "state_and_outcome_splits_read": ["train"],
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "state_updater_retraining_performed": false,
+    "authentic_and_relabelled_parameter_matched": true,
+    "authentic_and_relabelled_initialization_matched": true,
+    "authentic_and_relabelled_sample_stream_matched": true
+  },
+  "full_training_authorized": false,
+  "fresh_test_generation_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "next_step": "complete_06b_c_branch_elm_sidecar_then_run_nested_local_bridge_optimization_scaling_forensic"
+}

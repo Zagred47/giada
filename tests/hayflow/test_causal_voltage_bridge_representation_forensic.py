@@ -16,6 +16,7 @@ from src.hayflow_model.causal_voltage_bridge_representation_forensic import (
 ROOT = Path(__file__).resolve().parents[2]
 NOTEBOOK = ROOT / "notebooks" / "06b_c_voltage_bridge_representation_forensic.ipynb"
 PREREGISTRATION = ROOT / "experiments" / "hayflow" / "06b_c_voltage_bridge_representation_forensic" / "preregistration.json"
+RESULT = PREREGISTRATION.with_name("result.json")
 
 
 def test_06bb_authority_is_exact_and_registered():
@@ -66,3 +67,16 @@ def test_06bc_notebook_is_compact_and_uses_stable_blob_download():
     assert "EXPECTED_06BB_INDEX_SHA256" in code
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
+
+
+def test_registered_result_preserves_optimizer_caveat_and_topology_no_signal():
+    result = json.loads(RESULT.read_text(encoding="utf-8"))
+    assert result["archive_sha256"] == "6c0df160b7f175ef2a46ff05ad88ee53d483a8eb14d893c0fa73de2190d7330d"
+    assert result["artifact_index_sha256"] == "d828d9ad318998c6e07632b262493838dfd853cf4166edbfe034e11b6b6ec23e"
+    assert result["integrity_valid"] and result["component_decision_grade"]
+    assert result["diagnosis"] == "LOCAL_BRIDGE_OPTIMIZATION_LIMIT_IDENTIFIED"
+    assert result["optimization_limit_identified_by_registered_median_gate"]
+    assert not result["optimization_signal_robust_across_all_seeds"]
+    assert not result["authentic_topology_information_identified"]
+    assert result["per_seed"]["61043"]["continuation_voltage_gain_over_frozen_fraction"] < 0
+    assert not result["full_training_authorized"]
