@@ -1,0 +1,82 @@
+{
+  "schema_version": "06b-e-preregistration-v1",
+  "experiment": "recursive_voltage_state_contract_forensic",
+  "status": "preregistered_before_execution",
+  "question": "Which part of the recurrent boundary contract prevents the verified one-step coupling gain from composing over time?",
+  "authorized_by": {
+    "experiment": "nested_coupling_optimization_scaling_forensic",
+    "diagnosis": "ONE_STEP_COUPLING_OBJECTIVE_ONLY",
+    "archive_sha256": "a630a4532bef1cce49de733fe12b521de765daa906340a7b48ca99ef7e24291e",
+    "artifact_index_sha256": "5b280e0d5aa093f54ce0411e873e8f044354b2e30cb3aa21744cfd1061455882",
+    "final_report_sha256": "499f2df9c3c9c29d8f75cc523d4d089c245e743720e6eb238c3bd10c29c04b6c"
+  },
+  "frozen_factorial_matrix": {
+    "voltage_feedback": ["teacher_voltage", "predicted_voltage"],
+    "mechanism_state_feedback": ["teacher_STATE", "predicted_STATE"],
+    "ion_context": ["teacher_current_ions", "held_initial_ions"],
+    "frozen_model_arms": [
+      "voltage_constant",
+      "voltage_cosine",
+      "joint_constant",
+      "joint_cosine",
+      "joint_shuffled_cosine"
+    ],
+    "paired_seeds": [61017, 61029, 61043],
+    "nested_horizons_ms": [1, 2, 4, 8],
+    "common_window_count": 16,
+    "frozen_checkpoint_budget": 1500
+  },
+  "alignment_contract": {
+    "same_windows_for_every_cell": true,
+    "same_realized_external_input_at_each_step": true,
+    "same_frozen_8985_parameter_bridge_within_arm_and_seed": true,
+    "same_frozen_7212_parameter_STATE_updater_within_seed": true,
+    "training_performed": false,
+    "candidate_selection_performed": false,
+    "development_used_for_selection": false
+  },
+  "simultaneous_questions": [
+    "How much error is caused by recursively feeding predicted mechanism STATE?",
+    "How much additional error is caused by recursively feeding predicted voltage?",
+    "Does holding the initial ion context expose a missing causal ion updater?",
+    "Are the voltage, STATE and ion penalties additive or interacting?",
+    "Does the exploratory constant-schedule advantage survive a stricter full-feedback contract?",
+    "Does authentic joint coupling still beat its shuffled training control under full feedback?"
+  ],
+  "primary_outcome": "eight_ms_normalized_mechanism_STATE_RMSE",
+  "registered_effects": {
+    "mechanism_state_exposure": "teacherV_predictedS_teacherI relative to teacherV_teacherS_teacherI",
+    "voltage_feedback": "predictedV_predictedS_teacherI relative to teacherV_predictedS_teacherI",
+    "ion_state_persistence": "teacherV_predictedS_heldI relative to teacherV_predictedS_teacherI",
+    "full_boundary": "predictedV_predictedS_heldI relative to teacherV_teacherS_teacherI",
+    "voltage_x_state_interaction": "difference of differences on normalized STATE RMSE",
+    "state_x_ion_interaction": "difference of differences on normalized STATE RMSE",
+    "optimizer_trajectory": "joint_constant minus joint_cosine STATE gain under full boundary",
+    "causal_specificity": "joint_cosine minus joint_shuffled_cosine STATE gain under full boundary"
+  },
+  "registered_gates": {
+    "minimum_material_feedback_effect_fraction": 0.02,
+    "minimum_material_interaction_fraction": 0.01,
+    "minimum_causal_specificity_fraction": 0.01,
+    "minimum_positive_seed_count": 2
+  },
+  "interpretation_policy": {
+    "one_identified_main_effect": "authorize a bounded train-only repair of that recurrent component",
+    "multiple_identified_main_effects": "authorize one synchronized factorial repair matrix, not sequential architecture churn",
+    "interaction_without_main_effect": "return to an atomic coupled-boundary playground",
+    "no_material_effect": "expand the state contract before any further bridge optimization"
+  },
+  "scope_limitations": {
+    "realized_external_input_remains_step_specific": true,
+    "synaptic_internal_state_is_not_closed": true,
+    "autonomous_neuron_rollout_claimed": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false
+  },
+  "prohibited": [
+    "training or selecting a candidate",
+    "reading validation or test state/outcomes",
+    "claiming an autonomous neuron rollout",
+    "authorizing 06c, full training, fresh-test generation or mass-data generation directly from this frozen forensic"
+  ]
+}

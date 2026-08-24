@@ -1462,3 +1462,29 @@ It must separate exposure-bias repair, missing recurrent variables and
 optimizer-trajectory effects under shared seeds, windows and budgets. It may
 not access validation/test state, generate a fresh test, train the full neuron
 or authorize mass data before a new preregistered recursive gate passes.
+
+### 06b-e recursive voltage/STATE contract forensic
+
+`notebooks/06b_e_recursive_voltage_state_contract_forensic.ipynb` implements a
+more conservative first half of that authorization: a frozen diagnostic matrix
+before any repair is trained. It restores all 15 exact final 06b-d bridges and
+crosses teacher versus predicted voltage feedback, teacher versus predicted
+mechanism-STATE feedback, and current teacher ions versus an initial ion
+context held through the window.
+
+All eight boundary cells use the same nested 1/2/4/8 ms development windows,
+paired seeds, realized external inputs, frozen STATE updater and frozen bridge
+within an arm. The five 06b-d arms remain visible, so the same execution also
+tests whether the exploratory constant-schedule effect survives stricter
+feedback and whether the authentic joint objective retains an advantage over
+its shuffled-path training control.
+
+The primary outcome is 8 ms normalized mechanism-STATE RMSE. Main effects are
+registered at a 2% relative error penalty in at least two seeds; interactions
+are registered at 1%. The matrix performs no training and no candidate
+selection. It is not a complete autonomous neuron rollout because realized
+external input remains step-specific and synaptic internal state is not yet
+closed. Its only possible authorization is a subsequent bounded train-only
+repair matrix targeted at the identified recurrent factors. Validation/test
+access, 06c, full-neuron training, fresh-test generation and mass data remain
+prohibited.
