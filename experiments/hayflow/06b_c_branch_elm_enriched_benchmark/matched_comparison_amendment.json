@@ -1,6 +1,11 @@
 {
   "schema_version": "06b-c-branch-elm-matched-comparison-amendment-v1",
-  "status": "metric_alignment_completion_after_initial_sidecar_result",
+  "status": "retracted_wrong_comparator_and_unequal_information_contract",
+  "retraction": {
+    "scientific_comparison_valid": false,
+    "wrong_hayflow_checkpoint_family": "05j-n H2 plus refit was used instead of the current compact 06b state-updater plus voltage-bridge system",
+    "unequal_information": "H2 received complete teacher S_t plus U_realized while Branch-ELM received event history only"
+  },
   "reason": "The initial sidecar revealed that the reported HayFlow approximately 0.40 mV value and the Branch-ELM fresh metric used different target scopes and different transition subsets.",
   "observed_mismatch": {
     "original_hayflow": "all 642 segment voltages over 64 preregistered boundary transitions",
@@ -28,6 +33,6 @@
   "spike_metric_policy": "The shared support contains zero positive somatic spikes, so AUC and F1 cannot form a valid matched spike comparison. This is reported as unavailable, not replaced with another dataset or another experiment.",
   "fresh_outcomes_already_opened": true,
   "model_or_checkpoint_selection_from_fresh_outcomes": false,
-  "sidecar_closes_after_this_completion": true,
-  "next_step_after_completion": "return_to_nested_coupling_aware_local_bridge_optimization_scaling_forensic"
+  "sidecar_closes_after_this_completion": false,
+  "next_step_after_completion": "replace this retracted completion with one current-model, identical-causal-information evaluation, then return to the nested coupling-aware local bridge optimization scaling forensic"
 }

@@ -1,7 +1,14 @@
 {
-  "schema_version": "06b-c-branch-elm-registered-result-v2",
+  "schema_version": "06b-c-branch-elm-registered-result-v3",
   "experiment": "branch_elm_enriched_dataset_sidecar",
-  "status": "completed_and_independently_verified",
+  "status": "retracted_wrong_hayflow_comparator_and_input_contract",
+  "retraction": {
+    "artifact_integrity_valid": true,
+    "scientific_comparison_valid": false,
+    "reason": "The matched addendum evaluated the retired 05j-n H2 plus refit stack rather than the current compact 06b state-updater plus voltage-bridge system, and supplied complete teacher boundary state S_t only to H2 while Branch-ELM received event history.",
+    "prohibited_claim": "The reported 50.2% error reduction must not be used as the professor-requested HayFlow-versus-Branch-ELM conclusion.",
+    "required_correction": "Evaluate the current compact system and Branch-ELM under an explicitly identical causal-information contract before making any ranking claim."
+  },
   "integrity": {
     "archive_sha256": "2a8e10ade7ed5cd82556a017ecfb2fee28e342c6ca49f60bb787f500e6b17045",
     "artifact_index_sha256": "2abadf5e4172113d1d80f0946ae37eb62fdb519f4959ec7537f4b0a83d4637ca",
@@ -105,6 +112,9 @@
   },
   "matched_frozen_hayflow": {
     "valid": true,
+    "scientific_comparison_valid": false,
+    "historical_diagnostic_only": true,
+    "wrong_comparator_for_requested_question": true,
     "retraining_performed": false,
     "checkpoint_selection_performed": false,
     "h2_parameter_count": 277820,
@@ -137,7 +147,7 @@
     "same_target_scope": false,
     "direct_scalar_ranking_against_original_hayflow_0_40_authorized": false,
     "original_0_40_reason": "The original HayFlow report pools all 642 segments over 64 selected boundary transitions; the matched comparison pools clipped soma voltage over 512 post-burn-in transitions.",
-    "matched_voltage_ranking_authorized": true,
+    "matched_voltage_ranking_authorized": false,
     "matched_voltage_same_dataset": true,
     "matched_voltage_same_transitions": true,
     "matched_voltage_same_target": true,
@@ -152,6 +162,6 @@
   "full_training_authorized": false,
   "next_steps": {
     "primary": "nested_coupling_aware_local_bridge_optimization_scaling_forensic",
-    "professor_sidecar": "closed_no_further_experiment"
+    "professor_sidecar": "requires_corrected_current_compact_model_and_information_matched_evaluation"
   }
 }

@@ -62,25 +62,25 @@ Every reported subset contains zero positive somatic spikes.  AUC is therefore
 undefined and F1=0 is not interpretable as a discrimination failure.  A
 spike-positive evaluation set is required for that comparison.
 
-The amended archive completes the voltage comparison inside this same sidecar.
-The frozen HayFlow candidate obtains a median clipped soma RMSE of 1.349 mV
-(seeds: 1.555, 1.156, and 1.349 mV), compared with 2.710 mV for retrained
-Branch-ELM with `U_realized` (2.660, 2.710, and 5.319 mV).  HayFlow therefore
-reduces the paired median error by 50.2%; its ensemble prediction is 1.350 mV.
-No retraining, checkpoint selection, architecture search, or fresh-outcome
-selection was performed for HayFlow.
+## Retraction of the first matched addendum
 
-This is a valid matched system-level voltage comparison: both models use the
-same 64 episodes, 512 transitions, 4 ms burn-in, clipped somatic target, and
-pooled RMSE.  It is not a capacity- or information-matched architecture
-ablation: Branch-ELM has 8,002 parameters and consumes event history, whereas
-the frozen HayFlow stack has 320,829 parameters and consumes the complete
-17,220-variable boundary state plus `U_realized`.  The earlier HayFlow value
-near 0.40 mV remains a different all-segment/boundary metric and is not used in
-the ranking.  Spike comparison is unavailable because the shared support has
-zero positive somatic spikes.
+The first matched addendum is retracted as an answer to the
+professor-requested comparison.  Although the archive and every indexed hash
+are valid, it evaluated the retired 05j-n H2 plus refit stack (320,829
+parameters), not the current compact 06b system composed of the 7,212-parameter
+mechanism-STATE updater and the 8,985-parameter voltage bridge.  It also gave
+the old H2 stack the complete teacher boundary state `S_t` plus
+`U_realized`, while Branch-ELM received event history only.
 
-The professor-requested sidecar is now closed.  No additional comparison
-experiment is planned; work returns to the primary 06b-c causal trajectory.
-The registered result is `result.json`, and the frozen metric-alignment
-contract is `matched_comparison_amendment.json`.
+Consequently, the observed 1.349 mV versus 2.710 mV result and the nominal
+50.2% reduction are retained only as historical diagnostics and must not be
+reported as the requested HayFlow-versus-Branch-ELM conclusion.  Equal target,
+transitions, burn-in, and metric are insufficient when the compared model and
+causal information differ.
+
+The corrective comparison must use the current compact system and an
+explicitly identical information contract: the same causal external inputs,
+initialization, history, transitions, target, burn-in, and metric.  No teacher
+boundary state may be injected into only one arm.  The sidecar remains open
+only for this correction; it must not branch into additional ELM experiments.
+The retraction and raw historical numbers are recorded in `result.json`.
