@@ -1,0 +1,105 @@
+{
+  "schema_version": "06b-e-registered-result-v1",
+  "experiment": "recursive_voltage_state_contract_forensic",
+  "status": "completed_and_independently_verified_with_system_safety_amendment",
+  "archive_sha256": "9239a7ae329571903a165226c6cb7098fbfb8daf5ca3578262b0bf945baa9cdc",
+  "artifact_index_sha256": "acc8b29f4eacd9c209e6ca4e622da5fa5527d500b30ccaefdfc2580f721fa2ad",
+  "final_report_sha256": "37a38f215caa1f996fdd81eac2901f6860b9744e01a43e2042ef438bb594f928",
+  "indexed_member_count": 10,
+  "indexed_member_failures": [],
+  "zip_crc_valid": true,
+  "integrity_valid": true,
+  "valid": true,
+  "component_decision_grade": true,
+  "code_revision": "cc94d49e4926d797ca031055cdb2eb0fa9db58d9",
+  "formal_preregistered_primary_diagnosis": "MECHANISM_STATE_EXPOSURE_PRIMARY_LIMIT",
+  "systems_level_safety_amended_diagnosis": "JOINT_MECHANISM_STATE_EXPOSURE_AND_VOLTAGE_FEEDBACK_LIMITS",
+  "formal_identified_limits": [
+    "mechanism_state_exposure"
+  ],
+  "formal_identified_interactions": [
+    "voltage_x_state",
+    "state_x_ion"
+  ],
+  "formal_median_effects": {
+    "state_feedback_penalty": 4.8121002509639,
+    "voltage_feedback_penalty_on_STATE": -0.10012624295458661,
+    "ion_feedback_penalty": 0.009801073825613793,
+    "full_boundary_penalty_on_STATE": 4.280272680359968,
+    "voltage_state_interaction": -0.5966757044154054,
+    "state_ion_interaction": 0.051251787514758874,
+    "constant_over_cosine_full_state_gain": 0.006401724601863723,
+    "causal_specificity_full_state_gain": 0.07111553062910214
+  },
+  "full_feedback_eight_ms": {
+    "median_state_improvement_vs_persistence_fraction": 0.25563489106269843,
+    "per_seed_state_improvement_vs_persistence_fraction": {
+      "61017": 0.21654519328713495,
+      "61029": 0.27905053761866105,
+      "61043": 0.25563489106269843
+    },
+    "median_voltage_improvement_vs_persistence_fraction": -0.4646294028226823,
+    "per_seed_voltage_improvement_vs_persistence_fraction": {
+      "61017": -0.4484874126443905,
+      "61029": -0.4707581350062442,
+      "61043": -0.4646294028226823
+    },
+    "median_voltage_rmse_mv": 25.988662719726562,
+    "per_seed_voltage_rmse_mv": {
+      "61017": 25.701793670654297,
+      "61029": 26.096668243408203,
+      "61043": 25.988662719726562
+    },
+    "median_endpoint_mean_voltage_drift_mv": 5.213313102722168,
+    "per_seed_physical_voltage_violation_count": {
+      "61017": 99,
+      "61029": 127,
+      "61043": 88
+    },
+    "total_physical_voltage_violation_count": 314,
+    "evaluated_endpoint_voltage_count": 30816,
+    "physical_voltage_violation_fraction": 0.01018951194184839
+  },
+  "teacher_voltage_predicted_state_eight_ms": {
+    "median_state_improvement_vs_persistence_fraction": 0.1791204638897649,
+    "median_normalized_state_rmse": 0.7249753475189209
+  },
+  "all_teacher_boundary_eight_ms": {
+    "median_state_improvement_vs_persistence_fraction": 0.8603789291504044,
+    "median_normalized_state_rmse": 0.12330937385559082
+  },
+  "registered_thresholds": {
+    "minimum_material_feedback_effect_fraction": 0.02,
+    "minimum_material_interaction_fraction": 0.01,
+    "minimum_causal_specificity_fraction": 0.01,
+    "minimum_positive_seed_count": 2
+  },
+  "interpretation": {
+    "formal_primary_outcome": "Replacing teacher mechanism STATE with recursively predicted STATE increases eight-ms normalized STATE RMSE by 481% at the median, with the same direction in all three seeds. This cleanly identifies exposure to predicted mechanism state as a major temporal-composition limit.",
+    "voltage_safety_amendment": "The preregistered primary-outcome logic measured voltage feedback only through downstream STATE RMSE. Under that metric predicted voltage appears beneficial because it reduces STATE error by about 10%. Direct voltage metrics show the opposite: eight-ms voltage RMSE is about 26 mV, 46% worse than persistence in every seed, with 314 physical-range violations. A multivariate physical system cannot accept this compensatory error, so voltage feedback is retained as a co-primary repair target.",
+    "causal_specificity": "The authentic joint model retains a 7.11 percentage-point median STATE advantage over the shuffled-training control under full feedback. The causal coupling signal survives the harder contract and should be preserved during repair.",
+    "ion_context": "Holding the initial ion context adds only 0.98% median STATE error, below the 2% main-effect gate. A dedicated ion updater is not the first repair priority at the tested eight-ms horizon.",
+    "optimization_schedule": "The constant-over-cosine full-feedback difference is only 0.64 percentage points at the median and reverses strongly in seed 61017. The exploratory constant-schedule signal from 06b-d is not confirmed.",
+    "interaction": "Predicted voltage partially compensates mechanism-STATE error while simultaneously destroying voltage accuracy. The large negative voltage-by-STATE interaction is therefore evidence of objective misalignment, not a healthy recurrent solution.",
+    "scientific_conclusion": "The next repair must jointly address exposure to predicted mechanism STATE and stable voltage recurrence under direct voltage constraints. Optimizing STATE alone would reward an unphysical compensatory path.",
+    "amendment_status": "The mechanism-STATE diagnosis is the preregistered primary result. Treating direct voltage failure as a co-primary blocker is a transparent post-execution systems-safety amendment based on metrics and physical bounds already recorded by the experiment; it is not relabelled as a preregistered success."
+  },
+  "methodology": {
+    "training_performed": false,
+    "candidate_selection_performed": false,
+    "development_used_for_selection": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "same_windows_for_every_cell": true,
+    "realized_external_input_is_step_specific": true,
+    "synaptic_internal_state_is_not_closed": true,
+    "autonomous_neuron_rollout_claimed": false
+  },
+  "bounded_train_only_joint_repair_matrix_authorized": true,
+  "state_only_repair_authorized": false,
+  "coupled_06c_canary_authorized": false,
+  "full_training_authorized": false,
+  "fresh_test_generation_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "next_step": "preregister one synchronized train-only matrix crossing mechanism-STATE exposure repair with direct stable-voltage recurrence constraints and a shuffled causal control"
+}

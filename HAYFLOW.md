@@ -1488,3 +1488,26 @@ closed. Its only possible authorization is a subsequent bounded train-only
 repair matrix targeted at the identified recurrent factors. Validation/test
 access, 06c, full-neuron training, fresh-test generation and mass data remain
 prohibited.
+
+The completed 06b-e artifact is registered in
+`experiments/hayflow/06b_e_recursive_voltage_state_contract_forensic/result.json`.
+All ten indexed members passed independent integrity verification. The
+preregistered primary result identifies mechanism-STATE exposure: recursively
+feeding predicted STATE increases 8 ms normalized STATE RMSE by 481% at the
+median, consistently across all three seeds.
+
+Direct voltage metrics expose an additional systems-level blocker that the
+primary STATE-only decision rule did not capture. Under full feedback the
+STATE estimate remains 25.56% better than persistence, but voltage is 46.46%
+worse than persistence in every seed, has about 26 mV RMSE and produces 314
+out-of-range endpoints. Predicted voltage is compensating STATE error while
+its own trajectory becomes unphysical. The formal preregistered diagnosis is
+therefore preserved, while the engineering decision is amended to
+`JOINT_MECHANISM_STATE_EXPOSURE_AND_VOLTAGE_FEEDBACK_LIMITS`.
+
+Ion holding is below the 2% main-effect gate, constant versus cosine is not
+confirmed, and authentic coupling retains a 7.11-point advantage over the
+shuffled control. The next authorized activity is one synchronized train-only
+matrix crossing STATE-exposure repair with direct stable-voltage recurrence
+constraints. A STATE-only repair, 06c and all larger-scale activities remain
+blocked.

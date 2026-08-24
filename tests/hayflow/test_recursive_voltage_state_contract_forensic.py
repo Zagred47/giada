@@ -100,3 +100,33 @@ def test_06be_notebook_is_compact_and_uses_stable_blob_download():
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
     assert "display(matrix)" not in code
+
+
+def test_06be_registered_result_keeps_formal_and_safety_diagnoses_separate():
+    result = json.loads((EXPERIMENT / "result.json").read_text(encoding="utf-8"))
+    assert result["status"] == (
+        "completed_and_independently_verified_with_system_safety_amendment"
+    )
+    assert result["archive_sha256"] == (
+        "9239a7ae329571903a165226c6cb7098fbfb8daf5ca3578262b0bf945baa9cdc"
+    )
+    assert result["artifact_index_sha256"] == (
+        "acc8b29f4eacd9c209e6ca4e622da5fa5527d500b30ccaefdfc2580f721fa2ad"
+    )
+    assert result["final_report_sha256"] == (
+        "37a38f215caa1f996fdd81eac2901f6860b9744e01a43e2042ef438bb594f928"
+    )
+    assert result["indexed_member_count"] == 10
+    assert result["formal_preregistered_primary_diagnosis"] == (
+        "MECHANISM_STATE_EXPOSURE_PRIMARY_LIMIT"
+    )
+    assert result["systems_level_safety_amended_diagnosis"] == (
+        "JOINT_MECHANISM_STATE_EXPOSURE_AND_VOLTAGE_FEEDBACK_LIMITS"
+    )
+    full = result["full_feedback_eight_ms"]
+    assert full["median_state_improvement_vs_persistence_fraction"] > 0
+    assert full["median_voltage_improvement_vs_persistence_fraction"] < 0
+    assert full["total_physical_voltage_violation_count"] == 314
+    assert result["bounded_train_only_joint_repair_matrix_authorized"]
+    assert not result["state_only_repair_authorized"]
+    assert not result["coupled_06c_canary_authorized"]
