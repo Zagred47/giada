@@ -130,3 +130,12 @@ def test_06be_registered_result_keeps_formal_and_safety_diagnoses_separate():
     assert result["bounded_train_only_joint_repair_matrix_authorized"]
     assert not result["state_only_repair_authorized"]
     assert not result["coupled_06c_canary_authorized"]
+    replication = result["confirmatory_reexecution"]
+    assert replication["archive_sha256"] == (
+        "820aba669e730030a3408fa0ad3dc3b4e738e1c013d120290d8a04e1492d1954"
+    )
+    assert replication["artifact_index_sha256"] == (
+        "dc43155bb0065768f473b41cfd0f7fc3bbe40d00052953a2786e27bf5da0a3ac"
+    )
+    assert replication["numerical_summary_matches_canonical_run"]
+    assert not replication["canonical_artifact_replaced"]

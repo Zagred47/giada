@@ -1511,3 +1511,10 @@ shuffled control. The next authorized activity is one synchronized train-only
 matrix crossing STATE-exposure repair with direct stable-voltage recurrence
 constraints. A STATE-only repair, 06c and all larger-scale activities remain
 blocked.
+
+A second 06b-e execution at revision `5c3b5c2` independently reproduced every
+numerical median, diagnosis, identified limit and interaction. The changed ZIP
+and JSON hashes reflect the embedded revision provenance after result
+documentation was added; the executable experiment code was unchanged. The
+first artifact remains canonical and the later archive is registered as a
+confirmatory exact-summary replication.

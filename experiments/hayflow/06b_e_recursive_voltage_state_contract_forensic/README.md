@@ -52,3 +52,11 @@ mechanism-STATE exposure repair with direct stable-voltage recurrence
 constraints and retain a shuffled causal control. A STATE-only repair, 06c,
 full training, fresh-test generation and mass-data generation remain
 prohibited.
+
+A confirmatory re-execution at repository revision `5c3b5c2` also passed all
+ten member and CRC checks and reproduced every reported median, diagnosis,
+identified limit and interaction exactly. Its archive and JSON hashes differ
+because the embedded `code_revision` provenance changed after the canonical
+result was documented; the executable model/notebook code did not change. The
+original artifact remains canonical and the second run is registered as an
+exact numerical replication.
