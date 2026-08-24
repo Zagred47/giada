@@ -85,6 +85,16 @@ def test_06bf_final_gate_requires_joint_safety_specificity_and_scaling():
     assert '"full_training_authorized": False' in finalization
 
 
+def test_06bf_contract_drops_stale_frozen_updater_metadata():
+    preparation = inspect.getsource(
+        RecursiveJointRepairMatrix.prepare_recursive_joint_repair
+    )
+    assert '"state_updater_frozen"' in preparation
+    assert "report.pop(stale_field, None)" in preparation
+    assert '"mechanism_STATE_updater_trainable": True' in preparation
+    assert '"feedback_boundary_during_training": "arm_specific"' in preparation
+
+
 def test_06bf_notebook_is_compact_and_uses_stable_blob_download():
     notebook = json.loads(NOTEBOOK.read_text(encoding="utf-8"))
     assert len(notebook["cells"]) <= 12
@@ -103,3 +113,18 @@ def test_06bf_notebook_is_compact_and_uses_stable_blob_download():
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
     assert "display(training_report)" not in code
+
+
+def test_06bf_registered_result_preserves_primary_and_secondary_status():
+    result = json.loads((EXPERIMENT / "result.json").read_text(encoding="utf-8"))
+    assert result["artifact_integrity"]["indexed_member_failures"] == []
+    assert result["formal_primary_result"]["diagnosis"] == (
+        "VOLTAGE_REPAIRED_STATE_EXPOSURE_REMAINS"
+    )
+    assert not result["formal_primary_result"]["coupled_06c_canary_authorized"]
+    assert result["exploratory_secondary_result"]["arm"] == "full_feedback_scalar"
+    assert result["exploratory_secondary_result"]["passed_every_gate_except"] == [
+        "fixed_budget_scaling_continues"
+    ]
+    assert not result["exploratory_secondary_result"]["retrospectively_promoted"]
+    assert result["documentation_amendment"]["numerical_results_affected"] is False

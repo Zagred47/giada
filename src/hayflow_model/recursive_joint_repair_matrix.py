@@ -348,6 +348,32 @@ class RecursiveJointRepairMatrix(RecursiveVoltageStateContractForensic):
             "test_state_accessed": False,
             "full_training_authorized": False,
         }
+        for stale_field in (
+            "training_performed",
+            "state_updater_frozen",
+            "state_updater_retraining_performed",
+            "trainable_component",
+            "voltage_boundary_condition",
+            "recursive_quantity",
+        ):
+            report.pop(stale_field, None)
+        report.update(
+            {
+                "training_stage_at_contract_write": "not_started",
+                "training_planned": True,
+                "bridge_trainable": True,
+                "mechanism_STATE_updater_trainable": True,
+                "trainable_components": [
+                    "causal_voltage_bridge",
+                    "mechanism_STATE_updater",
+                ],
+                "feedback_boundary_during_training": "arm_specific",
+                "recursively_predicted_quantities": [
+                    "voltage",
+                    "mechanism_STATE",
+                ],
+            }
+        )
         atomic._write_json(self.output_dir / "joint_repair_contract.json", report)
         return report
 
@@ -949,6 +975,9 @@ class RecursiveJointRepairMatrix(RecursiveVoltageStateContractForensic):
             },
             "primary_arm": primary,
             "primary_arm_selected_before_execution": True,
+            "training_performed": True,
+            "bridge_retrained": True,
+            "mechanism_STATE_updater_retrained": True,
             "multiple_questions_answered_in_one_matrix": [
                 "STATE_exposure_repair",
                 "voltage_feedback_repair",

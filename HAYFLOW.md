@@ -1548,3 +1548,30 @@ quality within 2%, continues improving from 200 to 600 steps, beats the
 shuffled causal control, improves both modalities over persistence in every
 seed and produces no physical voltage violations. Validation/test access,
 fresh-test generation, full training and mass-data generation remain blocked.
+
+The completed 06b-f artifact is registered in
+`experiments/hayflow/06b_f_recursive_joint_repair_matrix/result.json`. Its ZIP
+CRC and all 85 indexed member sizes and SHA-256 hashes passed independent
+verification. The preregistered primary voltage-protected arm is a formal
+NO-GO: voltage recurrence is genuinely repaired, with 23.62% median 8 ms error
+reduction and zero physical violations, but mechanism-STATE error is 4.24%
+worse than the teacher-forced reference. One-step STATE degradation is 5.24%
+and joint calibration error worsens by 7.55% from 200 to 600 steps.
+
+The matrix nevertheless produced a useful secondary result. The unprotected
+`full_feedback_scalar` arm improves 8 ms STATE error by 2.16% and voltage error
+by 22.36%, retains one-step quality, has positive STATE and voltage gains in
+every seed, retains a 7.67-point authentic-over-shuffled advantage and produces
+no physical voltage violations. It misses only the registered scaling gate:
+1.60% improvement from 200 to 600 steps versus the required 2%. Because this
+was not the primary arm it is not promoted retrospectively; it becomes a
+specific hypothesis for a new bounded train-only confirmation combined with
+STATE scheduled sampling.
+
+The returned `joint_repair_contract.json` also exposed a documentation-only
+inheritance bug: several fields still described the upstream frozen STATE
+updater and voltage-only bridge training. Checkpoints and numerical results
+show that 06b-f trained both components as intended. The contract writer is
+corrected for future executions, the amendment is recorded transparently, and
+no rerun is required. 06c, held-out access and larger-scale training remain
+unauthorized.

@@ -1,0 +1,97 @@
+{
+  "schema_version": "06b-f-registered-result-v1",
+  "status": "completed_and_independently_verified_with_documentation_amendment",
+  "archive": "hayflow_recursive_joint_repair_matrix.zip",
+  "archive_size_bytes": 4780654,
+  "archive_sha256": "ad47fb5f16f4f495cc0dd4641448a6cca565833c1473a87f29b5e1ff81859d43",
+  "artifact_index_sha256": "0c0103784aa1da435e43252d29d5b10d65c7e6baf8e94075f4cc0babe03fb799",
+  "final_report_sha256": "a9b7c1459c08b95064c41f1215717f5ed205180e742a6edc021f51a740ff0a80",
+  "code_revision": "deb28d079fc5c0671e87c25b4b8e363b49c3c335",
+  "artifact_integrity": {
+    "zip_crc_valid": true,
+    "archive_member_count": 87,
+    "indexed_member_count": 85,
+    "indexed_member_failures": [],
+    "all_indexed_sizes_and_sha256_verified": true
+  },
+  "formal_primary_result": {
+    "primary_arm": "full_feedback_voltage_protected",
+    "primary_arm_selected_before_execution": true,
+    "diagnosis": "VOLTAGE_REPAIRED_STATE_EXPOSURE_REMAINS",
+    "gate_checks": {
+      "state_exposure_repaired": false,
+      "voltage_recurrence_repaired": true,
+      "all_seed_physical_safety": true,
+      "one_step_performance_retained": false,
+      "causal_specificity_retained": true,
+      "fixed_budget_scaling_continues": false
+    },
+    "median_contrasts": {
+      "eight_ms_STATE_error_reduction_fraction": -0.04238570880821246,
+      "eight_ms_voltage_error_reduction_fraction": 0.23622814682118176,
+      "eight_ms_STATE_gain_vs_persistence_fraction": 0.24684620822487147,
+      "eight_ms_voltage_gain_vs_persistence_fraction": 0.1586183644612409,
+      "one_step_STATE_degradation_fraction": 0.052377428591811936,
+      "one_step_voltage_degradation_fraction": -0.45959759823547863,
+      "causal_specificity_fraction": 0.07672092995117175,
+      "two_hundred_to_six_hundred_step_joint_error_reduction_fraction": -0.07547043798019692,
+      "physical_voltage_violation_count": 0
+    },
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "fresh_test_generation_authorized": false,
+    "mass_dataset_generation_authorized": false,
+    "registered_next_step": "state_scheduled_sampling_refinement"
+  },
+  "mechanistic_interpretation": {
+    "voltage_repair_is_real": "The primary arm reduces median 8 ms voltage error by 23.62%, improves voltage over persistence in every seed and removes all physical voltage violations.",
+    "STATE_exposure_remains": "Median 8 ms STATE error is 4.24% worse than the teacher-forced training reference and worsens with seed; one-step STATE degradation also exceeds the 2% gate.",
+    "voltage_protection_not_supported": "Removing STATE-loss gradients from the bridge hurts both STATE and voltage relative to the scalar full-feedback arm at the median.",
+    "optimization_not_monotone": "The primary joint normalized calibration error worsens by 7.55% from 200 to 600 steps at the median, driven by seeds 61029 and 61043."
+  },
+  "exploratory_secondary_result": {
+    "arm": "full_feedback_scalar",
+    "selection_role": "secondary_preregistered_arm_not_primary",
+    "retrospectively_promoted": false,
+    "median_contrasts": {
+      "eight_ms_STATE_error_reduction_fraction": 0.021558006592687917,
+      "eight_ms_voltage_error_reduction_fraction": 0.22356306892906785,
+      "eight_ms_STATE_gain_vs_persistence_fraction": 0.32484128298726356,
+      "eight_ms_voltage_gain_vs_persistence_fraction": 0.19778244906488085,
+      "maximum_one_step_degradation_fraction": 0.009849157178248191,
+      "causal_specificity_fraction": 0.07672092995117175,
+      "two_hundred_to_six_hundred_step_joint_error_reduction_fraction": 0.0160026134537814,
+      "physical_voltage_violation_count": 0
+    },
+    "all_seed_eight_ms_STATE_error_reductions_are_positive": true,
+    "all_seed_STATE_and_voltage_gains_vs_persistence_are_positive": true,
+    "all_seed_physical_voltage_violation_count_is_zero": true,
+    "passed_every_gate_except": [
+      "fixed_budget_scaling_continues"
+    ],
+    "scaling_threshold_fraction": 0.02,
+    "observed_scaling_fraction": 0.0160026134537814,
+    "confirmatory_status": "promising_but_requires_new_preregistered_train_only_confirmation"
+  },
+  "documentation_amendment": {
+    "issue": "joint_repair_contract.json inherited stale pre-06b-f fields claiming a frozen STATE updater, voltage-bridge-only training and teacher voltage boundaries.",
+    "ground_truth": "Every 06b-f arm trained both the 8985-parameter bridge and the 7212-parameter mechanism-STATE updater; feedback boundaries were arm-specific.",
+    "numerical_results_affected": false,
+    "checkpoint_identity_affected": false,
+    "decision_affected": false,
+    "future_contract_writer_corrected": true,
+    "rerun_required": false
+  },
+  "decision": {
+    "06c_authorized": false,
+    "primary_NO_GO_preserved": true,
+    "authorized_next_activity": "bounded_train_only_state_scheduled_sampling_refinement_with_scalar_full_feedback_confirmation",
+    "prohibited": [
+      "retrospectively selecting full_feedback_scalar as a passed primary candidate",
+      "accessing validation or test outcomes",
+      "fresh-test generation",
+      "full training",
+      "mass dataset generation"
+    ]
+  }
+}
