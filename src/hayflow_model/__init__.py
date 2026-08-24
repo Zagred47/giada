@@ -348,6 +348,15 @@ from .causal_voltage_bridge_representation_forensic import (
     TreeVoltageResidual,
     verified_06bb_artifact_root,
 )
+from .nested_coupling_optimization_scaling_forensic import (
+    EXPECTED_06BC_ARCHIVE_SHA256,
+    EXPECTED_06BC_FINAL_SHA256,
+    EXPECTED_06BC_INDEX_SHA256,
+    SCALING_ARMS,
+    NestedCouplingOptimizationScalingConfig,
+    NestedCouplingOptimizationScalingForensic,
+    verified_06bc_artifact_root,
+)
 from .branch_elm_enriched_benchmark import (
     ELM_INPUT_VIEWS,
     ORIGINAL_ELM_PARAMETER_COUNT,
@@ -626,6 +635,13 @@ __all__ = [
     "CausalVoltageBridgeRepresentationForensic",
     "TreeVoltageResidual",
     "verified_06bb_artifact_root",
+    "EXPECTED_06BC_ARCHIVE_SHA256",
+    "EXPECTED_06BC_FINAL_SHA256",
+    "EXPECTED_06BC_INDEX_SHA256",
+    "SCALING_ARMS",
+    "NestedCouplingOptimizationScalingConfig",
+    "NestedCouplingOptimizationScalingForensic",
+    "verified_06bc_artifact_root",
     "ELM_INPUT_VIEWS",
     "ORIGINAL_ELM_PARAMETER_COUNT",
     "ORIGINAL_ELM_TEST_AUC",

@@ -1,0 +1,87 @@
+nested_coupling_optimization_scaling_forensic:
+  role_seed: 61001
+  pilot_seed: 61017
+  pilot_seeds: [61017, 61029, 61043]
+  fit_components_per_regime: 3
+  calibration_components_per_regime: 1
+  development_components_per_regime: 1
+  fit_transition_limit: 1024
+  calibration_transition_limit: 256
+  development_transition_limit: 256
+  normalization_transition_limit: 1024
+  hidden_width: 48
+  embedding_width: 12
+  training_steps: 1200
+  short_training_steps: 300
+  batch_transition_count: 8
+  coordinates_per_transition: 512
+  evaluation_interval: 100
+  progress_interval: 200
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  normalized_delta_limit: 8.0
+  active_delta_threshold: 0.25
+  active_delta_weight: 4.0
+  minimum_delta_scale: 0.00001
+  rollout_horizons_ms: [1, 2, 4, 8]
+  rollout_windows_per_horizon: 16
+  evaluation_coordinate_chunk: 2048
+  minimum_pilot_improvement_fraction: 0.02
+  voltage_path_sample_indices: [5, 10, 15, 20, 25, 30, 35, 40]
+  expected_microtrace_sample_count: 41
+  maximum_parameter_count: 7238
+  minimum_factor_effect_fraction: 0.01
+  plateau_relative_improvement_fraction: 0.002
+  minimum_per_seed_causal_gain_fraction: 0.02
+  minimum_median_causal_gain_fraction: 0.10
+  minimum_median_semantic_macro_gain_fraction: 0.03
+  minimum_median_active_gain_fraction: 0.10
+  minimum_positive_semantic_group_fraction: 0.70
+  minimum_causal_retention_vs_endpoint_fraction: 0.70
+  minimum_median_eight_ms_rollout_gain_fraction: 0.10
+
+  bridge_training_steps: 800
+  bridge_hidden_width: 64
+  bridge_region_embedding_width: 8
+  bridge_batch_transition_count: 8
+  bridge_segments_per_transition: 256
+  bridge_evaluation_interval: 100
+  bridge_progress_interval: 50
+  bridge_learning_rate: 0.001
+  bridge_weight_decay: 0.00001
+  bridge_gradient_clip_norm: 1.0
+  bridge_voltage_scale_mv: 20.0
+  bridge_delta_limit_mv: 100.0
+  bridge_active_delta_threshold_mv: 5.0
+  bridge_active_weight: 4.0
+  maximum_bridge_parameter_count: 12000
+  minimum_median_voltage_gain_fraction: 0.10
+  minimum_median_state_gain_over_causal_fraction: 0.02
+  minimum_median_state_gain_over_shuffled_fraction: 0.02
+  minimum_median_oracle_gap_recovery_fraction: 0.20
+  minimum_median_eight_ms_gain_over_causal_fraction: 0.02
+
+  continuation_training_steps: 500
+  residual_training_steps: 500
+  representation_hidden_width: 32
+  topology_relabel_seed_offset: 606300
+  representation_evaluation_interval: 50
+  maximum_residual_parameter_count: 4000
+  minimum_authentic_gain_over_relabelled_fraction: 0.02
+  minimum_continuation_gain_over_frozen_fraction: 0.02
+
+  # 06b-d: five synchronized arms and fixed-budget mini scaling laws.
+  scaling_training_steps: 1500
+  scaling_checkpoints: [0, 250, 500, 1000, 1500]
+  coupling_coordinates_per_batch: 1024
+  cosine_minimum_learning_rate_ratio: 0.1
+  state_gradient_scale_minimum: 0.01
+  state_gradient_scale_maximum: 100.0
+
+  # Component-level, train-derived development gates only.
+  minimum_scaling_gain_fraction: 0.01
+  minimum_joint_state_gain_fraction: 0.01
+  maximum_joint_voltage_degradation_fraction: 0.01
+  minimum_causal_specificity_gain_fraction: 0.01
+  minimum_recursive_gain_fraction: 0.02

@@ -1392,3 +1392,48 @@ updaters frozen and cross optimization budget with topology/axial support under
 paired seeds and the same shuffled control. It cannot authorize 06c, held-out
 access or full-neuron training unless the registered causal and recursive gates
 are subsequently met.
+
+### 06b-c voltage-bridge representation forensic
+
+`notebooks/06b_c_voltage_bridge_representation_forensic.ipynb` compared the
+frozen local bridge, a continued optimization of the same bridge, and
+parameter-, initialization- and stream-matched authentic versus relabelled
+tree residuals. The six mechanism-STATE updaters remained frozen and all roles
+were train-derived.
+
+The registered median continuation gain over the frozen bridge was `2.69`
+percentage points and downstream STATE gain improved in all three seeds by
+`0.68--1.51` points. Global voltage improvement was not all-seed robust: two
+seeds improved while seed 61043 worsened by `3.29` points. Authentic and
+relabelled topology residuals were practically identical, rejecting the tested
+1,409-parameter topology residual rather than morphology in general. The
+registered diagnosis is `LOCAL_BRIDGE_OPTIMIZATION_LIMIT_IDENTIFIED`.
+
+The separate professor-requested Branch-ELM sidecar has also been closed. In
+its corrected equal-information, authentic one-step comparison, the current
+8,985-parameter HayFlow voltage path beat the 8,002-parameter Branch-ELM core
+in every paired seed. That supplementary ranking does not select the primary
+HayFlow experiment.
+
+### 06b-d nested coupling and optimization scaling forensic
+
+`notebooks/06b_d_nested_coupling_optimization_scaling_forensic.ipynb`
+implements the next preregistered train-only matrix. It answers six questions
+within one run rather than creating a chain of redundant binary notebooks.
+Five synchronized arms cross voltage-only versus downstream-STATE-aware
+objectives with constant versus cosine learning-rate schedules and add a
+shuffled-path causal control. Every arm uses the same 8,985-parameter bridge,
+within-seed initialization and minibatch stream.
+
+Fixed checkpoints at 0, 250, 500, 1000 and 1500 steps provide optimizer-budget
+mini scaling laws without duplicate training. The frozen 7,212-parameter
+STATE updater supplies a differentiable downstream objective but is never
+updated. Fit-only initial gradient norms fix the loss scale; gradient cosines
+probe whether the voltage and STATE objectives cooperate or conflict.
+
+All fixed budgets are evaluated without development-based model selection.
+Final arms are also compared on common nested 1/2/4/8 ms mechanism-STATE
+windows. Teacher voltage remains the millisecond boundary condition, so 06b-d
+does not claim an autonomous voltage rollout. Validation/test access,
+full-neuron training, fresh-test generation and mass data generation remain
+prohibited until the preregistered causal and recursive gates are evaluated.

@@ -1,0 +1,85 @@
+{
+  "schema_version": "06b-d-preregistration-v1",
+  "experiment": "nested_coupling_optimization_scaling_forensic",
+  "status": "preregistered_before_execution",
+  "question": "Can the existing local voltage bridge become more learnable through optimizer scaling and an explicitly downstream-STATE-aware objective, and is any gain causally specific and recursively retained?",
+  "authorized_by": {
+    "experiment": "causal_voltage_bridge_representation_forensic",
+    "diagnosis": "LOCAL_BRIDGE_OPTIMIZATION_LIMIT_IDENTIFIED",
+    "archive_sha256": "6c0df160b7f175ef2a46ff05ad88ee53d483a8eb14d893c0fa73de2190d7330d",
+    "artifact_index_sha256": "d828d9ad318998c6e07632b262493838dfd853cf4166edbfe034e11b6b6ec23e",
+    "final_report_sha256": "378421fff03d1e87e145334792fa1ac66e6df0627f24333b1cd256b70787af85"
+  },
+  "factorial_matrix": {
+    "objectives": ["voltage_only", "voltage_plus_frozen_downstream_STATE"],
+    "optimizer_schedules": ["constant", "cosine_decay_to_0.1x"],
+    "causal_control": "joint objective with predicted voltage paths rotated across coordinate examples",
+    "arms": [
+      "voltage_constant",
+      "voltage_cosine",
+      "joint_constant",
+      "joint_cosine",
+      "joint_shuffled_cosine"
+    ],
+    "fixed_budget_checkpoints": [0, 250, 500, 1000, 1500],
+    "paired_seeds": [61017, 61029, 61043]
+  },
+  "alignment_contract": {
+    "same_8985_parameter_architecture": true,
+    "same_initialization_within_seed": true,
+    "same_minibatch_stream_within_seed": true,
+    "same_voltage_loss": true,
+    "state_updater_frozen": true,
+    "state_updater_retraining_performed": false,
+    "state_loss_backpropagates_to_voltage_bridge": true,
+    "state_loss_scale": "ratio of initial voltage and STATE gradient norms on one fixed fit-only probe batch; clipped to [0.01, 100] and frozen",
+    "development_used_for_selection": false
+  },
+  "simultaneous_questions": [
+    "Does performance continue to scale beyond 500 optimizer steps?",
+    "Does cosine decay improve over constant learning rate?",
+    "Does a downstream-STATE-aware objective improve one-step STATE without materially degrading voltage?",
+    "Does the true alignment outperform a shuffled-path negative control?",
+    "Does a one-step gain transfer to nested 8 ms mechanism-STATE recurrence?",
+    "Are voltage and downstream-STATE gradients aligned, orthogonal, or conflicting during training?"
+  ],
+  "registered_contrasts": {
+    "optimizer_budget_scaling": "joint_cosine at 1500 minus joint_cosine at 500",
+    "joint_objective": "joint_cosine minus voltage_cosine at 1500",
+    "schedule_under_voltage": "voltage_cosine minus voltage_constant at 1500",
+    "schedule_under_joint": "joint_cosine minus joint_constant at 1500",
+    "causal_specificity": "joint_cosine minus joint_shuffled_cosine at 1500",
+    "recursive_transfer": "joint_cosine minus voltage_cosine at 8 ms"
+  },
+  "registered_gates": {
+    "minimum_scaling_gain_fraction": 0.01,
+    "minimum_joint_state_gain_fraction": 0.01,
+    "maximum_joint_voltage_degradation_fraction": 0.01,
+    "minimum_causal_specificity_gain_fraction": 0.01,
+    "minimum_recursive_gain_fraction": 0.02
+  },
+  "data_contract": {
+    "state_and_outcome_splits": ["train"],
+    "fit_transition_limit": 1024,
+    "calibration_transition_limit": 256,
+    "development_transition_limit": 256,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "rollout_windows_nested": true,
+    "teacher_voltage_boundary_used_each_ms": true,
+    "autonomous_voltage_rollout_claimed": false
+  },
+  "parallelism_policy": {
+    "scientific": "all arms are executed in one synchronized matrix",
+    "compute": "shared batches and cached tensors on one GPU; arm updates remain deterministic and sequential because concurrent CUDA streams would not improve this small-model workload reliably",
+    "duplicate_training_avoided": "budget scaling uses checkpoints from each single 1500-step trajectory"
+  },
+  "prohibited": [
+    "reading validation or test state/outcomes",
+    "changing or retraining the frozen mechanism-STATE updater",
+    "using teacher V_t_plus_1 as a bridge input",
+    "selecting a candidate from development outcomes",
+    "claiming an autonomous voltage rollout",
+    "authorizing full-neuron training, fresh-test generation, or mass data generation from this component experiment"
+  ]
+}
