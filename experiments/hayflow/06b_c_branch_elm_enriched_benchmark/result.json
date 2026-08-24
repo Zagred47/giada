@@ -1,167 +1,134 @@
 {
-  "schema_version": "06b-c-branch-elm-registered-result-v3",
+  "schema_version": "06b-c-branch-elm-registered-result-v4",
   "experiment": "branch_elm_enriched_dataset_sidecar",
-  "status": "retracted_wrong_hayflow_comparator_and_input_contract",
-  "retraction": {
-    "artifact_integrity_valid": true,
-    "scientific_comparison_valid": false,
-    "reason": "The matched addendum evaluated the retired 05j-n H2 plus refit stack rather than the current compact 06b state-updater plus voltage-bridge system, and supplied complete teacher boundary state S_t only to H2 while Branch-ELM received event history.",
-    "prohibited_claim": "The reported 50.2% error reduction must not be used as the professor-requested HayFlow-versus-Branch-ELM conclusion.",
-    "required_correction": "Evaluate the current compact system and Branch-ELM under an explicitly identical causal-information contract before making any ranking claim."
-  },
+  "status": "completed_information_matched_one_step_voltage_comparison",
+  "valid": true,
+  "comparison_complete": true,
+  "scientific_voltage_ranking_authorized": true,
+  "professor_sidecar_closed": true,
+  "primary_experiment_replaced": false,
   "integrity": {
-    "archive_sha256": "2a8e10ade7ed5cd82556a017ecfb2fee28e342c6ca49f60bb787f500e6b17045",
-    "artifact_index_sha256": "2abadf5e4172113d1d80f0946ae37eb62fdb519f4959ec7537f4b0a83d4637ca",
-    "final_report_sha256": "d0b98688208d9dd5cc0fa45f4be85f5db38e3c4c89e967592a9e4e7631120d0c",
-    "benchmark_contract_sha256": "0b0e306e3b8c5911d300444faf98b765ab92e99d3265eceb982267e8075449f9",
-    "benchmark_results_sha256": "4a3e66dc3e3a18c4b2ce19334f30937833bdbecedef37ef04110b8a5bb7fddf8",
-    "matched_hayflow_comparison_sha256": "d4a00f64cb6f2b9c69c9237d2ef9eef2081172a5127dfdc3e8a88fc78d689a7b",
-    "indexed_member_count": 10,
+    "archive_sha256": "21c0a7d34da6a5303e3dc7254d722f34ee53a23344c4e682a1420213f323d8d5",
+    "artifact_index_sha256": "547484605a479348a67f4628341bf3890fc978ed1e892c599ee1051a461e36ff",
+    "final_report_sha256": "0e6b16315d46c0ee5cb0dcdbcd579671bba5a54af2db82c33eb8ebd32087b0d7",
+    "information_matched_contract_sha256": "ff2d00db089b2f1ee34d0b374db898c6b0d8c471a2b68dab3e715112e55142c6",
+    "information_matched_results_sha256": "4049765747fd989f348869172223671d62d0c572b878d50cc966fa9241d20a7c",
+    "indexed_member_count": 15,
     "indexed_member_failures": [],
     "checkpoint_file_count": 6,
     "zip_crc_valid": true,
     "valid": true
   },
   "execution": {
-    "contract_code_revision": "8a90b429871c44e8ad21856843a817345b9d8ab5",
-    "final_report_code_revision": "edda0db2687b46e704b5b77a78becf3e4b4d9af6",
-    "device": "cuda",
-    "recovered_completed_checkpoint_count": 6,
-    "retraining_avoided_for_recovered_checkpoints": true,
-    "fresh_test_used_for_selection": false
+    "code_revision": "a26ee9eed8d932b3ef1a9828aea17e4eed76118c",
+    "device": "cuda:0",
+    "seeds": [61017, 61029, 61043],
+    "training_steps_per_seed": 800,
+    "fit_transition_count": 1024,
+    "calibration_transition_count": 256,
+    "development_transition_count": 256,
+    "test_or_validation_state_accessed": false
   },
-  "contract": {
-    "architecture": "published Branch-ELM num_memory_20",
-    "trainable_parameter_count": 8002,
-    "dendritic_segment_count": 639,
-    "input_channel_count": 1278,
-    "input_views": ["U_scheduled", "U_realized"],
-    "compatible_train_episode_count": 48,
-    "excluded_train_episode_count": 168,
-    "excluded_train_reason": "somatic_current_not_representable",
-    "roles": {
-      "fit": 28,
-      "calibration": 10,
-      "development": 10
-    },
-    "fresh_test_episode_count": 64,
-    "fresh_test_compatible_episode_count": 64,
-    "fresh_test_evaluated_timestep_count": 512,
-    "sidecar_only": true
+  "comparison_contract": {
+    "scope": "train-derived disjoint development; authentic one-step voltage only",
+    "same_numeric_input_tensor": true,
+    "same_training_pairs": true,
+    "same_sample_order": true,
+    "same_loss_and_optimizer": true,
+    "same_authentic_teacher_target": true,
+    "target": "raw_NEURON_V_t_plus_1_minus_V_t",
+    "target_clipping": null,
+    "teacher_endpoint_used_as_input": false,
+    "autoregressive_rollout_performed": false,
+    "spike_metric_in_scope": false,
+    "input_width": 76,
+    "input_fields": [
+      "voltage_t_and_axial_voltage_differences",
+      "mechanism_STATE_t",
+      "mechanism_presence",
+      "local_ions_t",
+      "U_realized",
+      "segment_static",
+      "region_id"
+    ]
   },
-  "published_original_neuronio_reference": {
-    "clipped_soma_rmse_mv": 0.6375671602714604,
-    "spike_auc": 0.9921568089858758
-  },
-  "zero_shot_original_checkpoint_fresh_test": {
-    "U_scheduled_clipped_soma_rmse_mv": 8.238825913764224,
-    "U_realized_clipped_soma_rmse_mv": 4.66034899317477
-  },
-  "retrained_exact_architecture": {
-    "fresh_test_clipped_soma_rmse_mv": {
-      "U_scheduled": {
-        "17": 3.3010539723936594,
-        "29": 2.3801122934374526,
-        "43": 3.6838905293085418,
-        "median": 3.3010539723936594
-      },
-      "U_realized": {
-        "17": 2.6599121103997967,
-        "29": 2.709690563381758,
-        "43": 5.319470411007508,
-        "median": 2.709690563381758
-      }
+  "parameters": {
+    "branch_elm_core": {
+      "total_trainable_parameter_count": 8002,
+      "voltage_path_parameter_count": 7981,
+      "published_core_hyperparameters_retained": true,
+      "published_event_routing_retained": false
     },
-    "development_clipped_soma_rmse_mv": {
-      "U_scheduled": {
-        "17": 0.11297450366605298,
-        "29": 0.19691454422249546,
-        "43": 0.11302727508804736,
-        "median": 0.11302727508804736
-      },
-      "U_realized": {
-        "17": 0.12699886429576188,
-        "29": 0.8364393080713891,
-        "43": 0.4171294347443442,
-        "median": 0.4171294347443442
-      }
-    },
-    "fresh_improvement_over_zero_shot_fraction": {
-      "U_scheduled": 0.5993295419221134,
-      "U_realized": 0.4185648653326379
-    },
-    "fresh_to_development_median_rmse_ratio": {
-      "U_scheduled": 29.205819129235653,
-      "U_realized": 6.496042759735304
+    "hayflow_voltage_bridge": {
+      "voltage_path_trainable_parameter_count": 8985,
+      "downstream_state_updater_parameter_count": 7212,
+      "downstream_state_updater_trainable_parameter_count_during_comparison": 0,
+      "complete_compact_transition_system_parameter_count": 16197,
+      "downstream_state_updater_affects_voltage_metric": false
     }
   },
-  "spike_metrics": {
-    "valid_for_interpretation": false,
-    "positive_count_in_every_reported_subset": 0,
-    "auc": null,
-    "auc_defined": false,
-    "f1_at_0_5": 0.0,
-    "interpretation": "F1=0 is not evidence of failed spike discrimination because no evaluated subset contains a positive spike. A spike-positive evaluation set is required."
+  "development_rmse_mv": {
+    "branch_elm_core": {
+      "global_median": 6.380009239033494,
+      "soma_median": 14.823964911891716,
+      "active_median": 21.011531835549395,
+      "global_per_seed": {"61017": 6.189949619510396, "61029": 6.4496934390744745, "61043": 6.380009239033494},
+      "soma_per_seed": {"61017": 14.079610484858154, "61029": 14.91770369996742, "61043": 14.823964911891716},
+      "active_per_seed": {"61017": 20.330121158323525, "61029": 21.011531835549395, "61043": 21.288246031326434}
+    },
+    "hayflow_voltage_bridge": {
+      "global_median": 5.99485376513486,
+      "soma_median": 9.577290636371764,
+      "active_median": 18.86696728713806,
+      "global_per_seed": {"61017": 5.99485376513486, "61029": 6.034345499697692, "61043": 5.744785543851399},
+      "soma_per_seed": {"61017": 9.159734104621444, "61029": 9.577290636371764, "61043": 10.915084707159055},
+      "active_per_seed": {"61017": 18.86696728713806, "61029": 19.13633949932341, "61043": 18.607233705902093}
+    }
+  },
+  "paired_hayflow_error_reduction_vs_branch_elm_fraction": {
+    "global": {"61017": 0.031518165149616695, "61029": 0.06439809012634012, "61043": 0.09956469832296433, "median": 0.06439809012634012},
+    "soma": {"61017": 0.34943270522489, "61029": 0.35799163001255485, "61043": 0.26368655268449637, "median": 0.34943270522489},
+    "active": {"61017": 0.07196975658880533, "61029": 0.08924586512313915, "61043": 0.12593861990692579, "median": 0.08924586512313915}
+  },
+  "persistence_reference": {
+    "global_rmse_mv": 6.454584479049846,
+    "soma_rmse_mv": 14.295555052647536,
+    "median_global_improvement_fraction": {"branch_elm_core": 0.011553840569971108, "hayflow_voltage_bridge": 0.0712254546217761},
+    "median_soma_improvement_fraction": {"branch_elm_core": -0.0369632278913381, "hayflow_voltage_bridge": 0.3300511521867736}
   },
   "interpretation": {
-    "zero_shot_transfer": "The original checkpoint transfers poorly to the enriched fresh distribution; causal realized releases reduce error relative to scheduled inputs but remain far from the original NeuronIO reference.",
-    "small_scale_retraining": "Retraining the unchanged 8,002-parameter architecture materially improves fresh RMSE over zero-shot for both input views.",
-    "generalization": "The large development-to-fresh gap and seed variability show a substantial support/generalization shift. The bounded 48-episode compatible training pool is not an original-budget replication.",
-    "input_view": "U_realized has the better fresh median, but U_scheduled contains the best individual seed and is less unstable; this canary does not establish a robust winner between views.",
-    "scientific_conclusion": "On this bounded enriched-data canary, the published small Branch-ELM does not retain its original-dataset accuracy even after retraining. This is evidence about transfer and support, not proof that the architecture is intrinsically incapable."
+    "primary_result": "Under the identical causal-information contract, the compact HayFlow voltage bridge has lower authentic one-step voltage RMSE than the 8,002-parameter Branch-ELM core for every paired seed.",
+    "global_effect": "The all-segment advantage is consistent but moderate: 3.15%, 6.44%, and 9.96%, with a 6.44% median reduction.",
+    "soma_effect": "The soma advantage is larger: 26.37% to 35.80%, with a 34.94% median reduction.",
+    "active_effect": "On active examples HayFlow reduces RMSE by 7.20% to 12.59%, with an 8.92% median reduction.",
+    "persistence_context": "HayFlow beats persistence globally and at the soma for every seed; Branch-ELM provides only a small global gain and is worse than persistence at the soma for two of three seeds.",
+    "scope_limit": "This ranks only the authentic one-step voltage transition on train-derived disjoint development support. It is not a rollout, spike, fresh-test, or published-checkpoint comparison.",
+    "parameter_caveat": "The active voltage paths are close but not exactly parameter matched: 8,985 trainable HayFlow voltage parameters versus 8,002 Branch-ELM parameters. The frozen 7,212-parameter state updater cannot affect the scored voltage output.",
+    "scientific_conclusion": "The result supports the current causal and morphology-aware voltage representation over the small Branch-ELM core under equal information, but the absolute errors remain too large to establish a successful neuron surrogate."
   },
-  "matched_frozen_hayflow": {
-    "valid": true,
-    "scientific_comparison_valid": false,
-    "historical_diagnostic_only": true,
-    "wrong_comparator_for_requested_question": true,
-    "retraining_performed": false,
-    "checkpoint_selection_performed": false,
-    "h2_parameter_count": 277820,
-    "refit_head_parameter_count": 43009,
-    "combined_parameter_count": 320829,
-    "parameter_ratio_vs_branch_elm": 40.0936015996001,
-    "fresh_test_clipped_soma_rmse_mv": {
-      "17": 1.5545033830090176,
-      "29": 1.156193913394785,
-      "43": 1.349443744937548,
-      "median": 1.349443744937548,
-      "ensemble_mean": 1.350013493957726
+  "historical_results": {
+    "published_original_neuronio_reference": {"clipped_soma_rmse_mv": 0.6375671602714604, "directly_comparable_to_current_result": false},
+    "initial_enriched_branch_elm_benchmark": {
+      "published_checkpoint_zero_shot_clipped_soma_rmse_mv": {"U_scheduled": 8.238825913764224, "U_realized": 4.66034899317477},
+      "retrained_8002_parameter_architecture_fresh_median_clipped_soma_rmse_mv": {"U_scheduled": 3.3010539723936594, "U_realized": 2.709690563381758},
+      "comparison_to_current_hayflow_authorized": false,
+      "reason": "different target scope, transition support, and causal-information contract"
     },
-    "fresh_test_soma_mae_mv": {
-      "17": 1.3213857231999109,
-      "29": 0.9812067247106031,
-      "43": 1.0928143163822814,
-      "ensemble_mean": 1.1295946572385422
-    },
-    "paired_error_reduction_vs_branch_elm_U_realized_fraction": {
-      "17": 0.4155809220420562,
-      "29": 0.573311458873065,
-      "43": 0.7463199076838246,
-      "median": 0.5019934146084155
+    "retracted_first_matched_addendum": {
+      "artifact_integrity_valid": true,
+      "scientific_comparison_valid": false,
+      "archive_sha256": "2a8e10ade7ed5cd82556a017ecfb2fee28e342c6ca49f60bb787f500e6b17045",
+      "artifact_index_sha256": "2abadf5e4172113d1d80f0946ae37eb62fdb519f4959ec7537f4b0a83d4637ca",
+      "wrong_combined_parameter_count": 320829,
+      "prohibited_nominal_error_reduction_fraction": 0.5019934146084155,
+      "reason": "It used the retired H2 plus refit stack and unequal model inputs."
     }
   },
-  "comparability": {
-    "same_fresh_dataset_as_hayflow_approximately_0_40_mv": true,
-    "same_fresh_transitions_as_hayflow_approximately_0_40_mv": false,
-    "same_target_scope": false,
-    "direct_scalar_ranking_against_original_hayflow_0_40_authorized": false,
-    "original_0_40_reason": "The original HayFlow report pools all 642 segments over 64 selected boundary transitions; the matched comparison pools clipped soma voltage over 512 post-burn-in transitions.",
-    "matched_voltage_ranking_authorized": false,
-    "matched_voltage_same_dataset": true,
-    "matched_voltage_same_transitions": true,
-    "matched_voltage_same_target": true,
-    "matched_voltage_same_metric": true,
-    "matched_voltage_same_burn_in": true,
-    "matched_voltage_same_input_contract": false,
-    "input_contract_warning": "Branch-ELM consumes event history only; frozen HayFlow consumes the complete teacher boundary state S_t plus U_realized.",
-    "matched_spike_comparison_completed": false,
-    "matched_spike_comparison_reason": "The shared 512-transition support contains zero positive somatic spikes."
-  },
-  "primary_experiment_replaced": false,
   "full_training_authorized": false,
+  "fresh_test_generation_authorized": false,
+  "mass_dataset_generation_authorized": false,
   "next_steps": {
-    "primary": "nested_coupling_aware_local_bridge_optimization_scaling_forensic",
-    "professor_sidecar": "requires_corrected_current_compact_model_and_information_matched_evaluation"
+    "professor_sidecar": "closed_no_further_elm_experiments",
+    "primary": "nested_coupling_aware_local_bridge_optimization_scaling_forensic"
   }
 }

@@ -43,7 +43,7 @@ slightly negative for downstream STATE.  This rejects the tested
 morphology is irrelevant to the neuron or to every possible architecture.
 
 No full training, fresh-test generation, or mass dataset generation is
-authorized.  The logically independent professor-requested Branch-ELM
-sidecar still requires one corrective, information-matched evaluation of the
-current compact 06b system.  After that correction, the next primary activity
-is the nested coupling-aware local bridge optimization scaling forensic.
+authorized. The logically independent professor-requested Branch-ELM sidecar
+has now been closed by the corrective information-matched comparison. The
+next primary activity is the nested coupling-aware local bridge optimization
+scaling forensic.

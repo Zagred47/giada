@@ -115,42 +115,25 @@ def test_elm_sidecar_notebook_uses_compact_outputs_and_stable_download():
 
 def test_registered_branch_elm_result_preserves_integrity_and_scope():
     result = json.loads(REGISTERED_RESULT.read_text(encoding="utf-8"))
-    assert result["status"] == "retracted_wrong_hayflow_comparator_and_input_contract"
-    assert result["retraction"]["artifact_integrity_valid"]
-    assert not result["retraction"]["scientific_comparison_valid"]
+    assert result["status"] == "completed_information_matched_one_step_voltage_comparison"
+    assert result["comparison_complete"]
+    assert result["scientific_voltage_ranking_authorized"]
+    assert result["professor_sidecar_closed"]
     assert result["integrity"]["valid"]
-    assert result["integrity"]["archive_sha256"] == "2a8e10ade7ed5cd82556a017ecfb2fee28e342c6ca49f60bb787f500e6b17045"
-    assert result["integrity"]["artifact_index_sha256"] == "2abadf5e4172113d1d80f0946ae37eb62fdb519f4959ec7537f4b0a83d4637ca"
-    assert result["integrity"]["final_report_sha256"] == "d0b98688208d9dd5cc0fa45f4be85f5db38e3c4c89e967592a9e4e7631120d0c"
-    assert result["integrity"]["matched_hayflow_comparison_sha256"] == "d4a00f64cb6f2b9c69c9237d2ef9eef2081172a5127dfdc3e8a88fc78d689a7b"
+    assert result["integrity"]["archive_sha256"] == "21c0a7d34da6a5303e3dc7254d722f34ee53a23344c4e682a1420213f323d8d5"
+    assert result["integrity"]["artifact_index_sha256"] == "547484605a479348a67f4628341bf3890fc978ed1e892c599ee1051a461e36ff"
+    assert result["integrity"]["final_report_sha256"] == "0e6b16315d46c0ee5cb0dcdbcd579671bba5a54af2db82c33eb8ebd32087b0d7"
+    assert result["integrity"]["information_matched_results_sha256"] == "4049765747fd989f348869172223671d62d0c572b878d50cc966fa9241d20a7c"
     assert result["integrity"]["indexed_member_failures"] == []
     assert result["integrity"]["checkpoint_file_count"] == 6
-    assert result["execution"]["recovered_completed_checkpoint_count"] == 6
-    assert result["execution"]["retraining_avoided_for_recovered_checkpoints"]
-    assert result["contract"]["trainable_parameter_count"] == 8002
-    assert result["contract"]["roles"] == {
-        "fit": 28,
-        "calibration": 10,
-        "development": 10,
-    }
-    assert result["contract"]["fresh_test_compatible_episode_count"] == 64
-    assert result["retrained_exact_architecture"]["fresh_test_clipped_soma_rmse_mv"]["U_realized"]["median"] == 2.709690563381758
-    assert result["retrained_exact_architecture"]["fresh_test_clipped_soma_rmse_mv"]["U_scheduled"]["median"] == 3.3010539723936594
-    assert result["spike_metrics"]["positive_count_in_every_reported_subset"] == 0
-    assert not result["spike_metrics"]["valid_for_interpretation"]
-    assert result["spike_metrics"]["auc"] is None
-    assert not result["comparability"]["same_target_scope"]
-    assert not result["comparability"][
-        "same_fresh_transitions_as_hayflow_approximately_0_40_mv"
-    ]
-    assert not result["comparability"]["direct_scalar_ranking_against_original_hayflow_0_40_authorized"]
-    assert not result["comparability"]["matched_voltage_ranking_authorized"]
-    assert not result["comparability"]["matched_voltage_same_input_contract"]
-    assert result["matched_frozen_hayflow"]["fresh_test_clipped_soma_rmse_mv"]["median"] == 1.349443744937548
-    assert result["matched_frozen_hayflow"]["paired_error_reduction_vs_branch_elm_U_realized_fraction"]["median"] == 0.5019934146084155
-    assert not result["matched_frozen_hayflow"]["scientific_comparison_valid"]
-    assert result["matched_frozen_hayflow"]["wrong_comparator_for_requested_question"]
-    assert result["next_steps"]["professor_sidecar"] == "requires_corrected_current_compact_model_and_information_matched_evaluation"
+    assert result["comparison_contract"]["same_numeric_input_tensor"]
+    assert not result["comparison_contract"]["teacher_endpoint_used_as_input"]
+    assert result["development_rmse_mv"]["branch_elm_core"]["global_median"] == 6.380009239033494
+    assert result["development_rmse_mv"]["hayflow_voltage_bridge"]["global_median"] == 5.99485376513486
+    assert result["paired_hayflow_error_reduction_vs_branch_elm_fraction"]["global"]["median"] == 0.06439809012634012
+    assert result["paired_hayflow_error_reduction_vs_branch_elm_fraction"]["soma"]["median"] == 0.34943270522489
+    assert not result["historical_results"]["retracted_first_matched_addendum"]["scientific_comparison_valid"]
+    assert result["next_steps"]["professor_sidecar"] == "closed_no_further_elm_experiments"
     assert not result["primary_experiment_replaced"]
 
 

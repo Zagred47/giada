@@ -109,4 +109,33 @@ contract; the ELM core is retrained while retaining its published branch and
 memory hyperparameters.  The original event-only ELM result remains secondary
 context, not the matched ranking.  The executable contract is recorded in
 `information_matched_transition_amendment.json`.  This is the sole corrective
-run and closes the sidecar once its artifact is registered.
+run and is now registered below.
+
+## Corrective information-matched result
+
+The corrective archive from code revision `a26ee9e` passed independent ZIP,
+member-size, member-SHA-256 and CRC verification. Both models received the
+same 76-value per-segment causal tensor, paired examples and ordering, loss,
+optimizer, and unclipped teacher target `V_(t+1) - V_t`. Neither model
+received the teacher endpoint, and no rollout or spike metric was part of this
+comparison.
+
+HayFlow obtained a lower development RMSE in every paired seed. Across all
+segments, Branch-ELM scored 6.190, 6.450 and 6.380 mV while HayFlow scored
+5.995, 6.034 and 5.745 mV. The corresponding HayFlow error reductions are
+3.15%, 6.44% and 9.96%, with a median of 6.44%.
+
+The soma result is stronger: median RMSE falls from 14.824 mV for Branch-ELM
+to 9.577 mV for HayFlow, a paired median reduction of 34.94%. On active
+examples, the median reduction is 8.92%. HayFlow also beats the persistence
+baseline globally and at the soma for all three seeds; Branch-ELM is worse
+than soma persistence in two seeds.
+
+This is a valid ranking for the bounded authentic one-step voltage question,
+not evidence that the complete HayFlow surrogate is solved. The absolute
+errors remain large, no autoregressive behavior was tested, and the active
+voltage paths are close but not exactly parameter matched (8,985 versus 8,002
+trainable parameters). The frozen 7,212-parameter STATE updater is downstream
+and cannot influence the scored voltage. The professor sidecar is closed
+without further ELM experiments, and work returns to the primary HayFlow
+causal program.
