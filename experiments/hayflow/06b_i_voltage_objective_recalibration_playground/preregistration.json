@@ -1,0 +1,73 @@
+{
+  "schema_version": "06b-i-preregistration-v1",
+  "experiment": "voltage_objective_recalibration_playground",
+  "status": "preregistered_before_execution",
+  "question": "Can a causal gain or activity/region-balanced voltage objective preserve the 06b-h regenerative rescue while repairing quiescent, moderate and somatic voltage transitions?",
+  "authorized_by": {
+    "experiment": "frozen_voltage_generalization_forensic",
+    "formal_diagnosis": "FROZEN_VOLTAGE_CALIBRATION_RESCUES_GENERALIZATION",
+    "engineering_diagnosis": "GLOBAL_AMPLITUDE_RESCUE_WITH_ACTIVITY_AND_SOMA_HETEROGENEITY",
+    "archive_sha256": "8c2c255a234c7fb25673bafcec0e7521ca084fd98d7d9c0c9cc86211bab1b948",
+    "artifact_index_sha256": "4ab21e154a1972cdbd9e059c7bcc7094814810eb4b0b0cac8a8a2c49f69a1c2d",
+    "final_report_sha256": "bfc1a664d3549a2aecd28a6c2df200e188e0a05498c90c2afde353f75ea2f813"
+  },
+  "frozen_reference": {
+    "arm": "source_scalar",
+    "output_gain": 0.75,
+    "bias_mv_per_ms": 0.0,
+    "source_step": 600
+  },
+  "synchronized_matrix": {
+    "arms": {
+      "raw_bridge_control": "train the bridge with the original active-weighted voltage loss",
+      "activity_balanced_bridge": "train the bridge with inverse-frequency activity-bin weights",
+      "activity_region_balanced_bridge": "train the bridge with inverse-frequency activity-by-region weights",
+      "global_gain_balanced": "freeze the bridge and train one bounded global gain with the activity-balanced loss",
+      "causal_gain_balanced": "freeze the bridge and train a sub-1000-parameter bounded gain from raw predicted delta, current voltage and region"
+    },
+    "primary_arm": "causal_gain_balanced",
+    "fallback_arm": "activity_region_balanced_bridge",
+    "paired_seeds": [61017, 61029, 61043],
+    "training_steps": 400,
+    "fixed_checkpoints": [0, 100, 200, 400],
+    "unroll_horizon_ms": 8,
+    "same_source_checkpoint_within_seed": true,
+    "same_minibatch_stream_within_seed": true,
+    "mechanism_STATE_updater_frozen": true,
+    "future_targets_used_only_to_construct_training_losses": true,
+    "inference_uses_only_causal_inputs": true
+  },
+  "roles": {
+    "fit": "historically used train connected components 1-3",
+    "calibration_monitoring": "historically used train connected component 4",
+    "development_decision": "historically used train connected component 5",
+    "new_independent_confirmation_claimed": false,
+    "reason_for_reuse": "all eight independent train components have already been consumed; the experiment measures component learnability only"
+  },
+  "registered_gate": {
+    "minimum_median_voltage_gain_over_frozen_alpha": 0.02,
+    "minimum_step0_to_step400_training_effect": 0.02,
+    "all_seed_voltage_gain_vs_persistence": "positive",
+    "all_seed_STATE_gain_vs_persistence": "positive",
+    "minimum_active_ge_5mV_gain_vs_persistence": 0.10,
+    "minimum_moderate_1_to_5mV_gain_vs_persistence": 0.0,
+    "minimum_quiescent_lt_1mV_gain_vs_persistence": 0.0,
+    "minimum_soma_gain_vs_persistence": 0.0,
+    "physical_voltage_violations": 0
+  },
+  "decision_rule": {
+    "primary_passes": "authorize only a fresh-train-support causal-gain confirmation",
+    "primary_fails_fallback_passes": "authorize only a fresh-train-support activity-region confirmation",
+    "diagnostic_arm_only_passes": "register a new hypothesis; do not select it retrospectively",
+    "no_arm_passes": "return to an atomic voltage-bridge representation revision"
+  },
+  "scope_limitations": {
+    "component_playground_grade_only": true,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "coupled_06c_canary_authorized": false,
+    "fresh_test_generation_authorized": false,
+    "full_training_authorized": false,
+    "mass_dataset_generation_authorized": false
+  }
+}

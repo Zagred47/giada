@@ -1,0 +1,83 @@
+{
+  "schema_version": "06b-h-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": "hayflow_frozen_voltage_generalization_forensic.zip",
+  "archive_size_bytes": 102207,
+  "archive_sha256": "8c2c255a234c7fb25673bafcec0e7521ca084fd98d7d9c0c9cc86211bab1b948",
+  "artifact_index_sha256": "4ab21e154a1972cdbd9e059c7bcc7094814810eb4b0b0cac8a8a2c49f69a1c2d",
+  "final_report_sha256": "bfc1a664d3549a2aecd28a6c2df200e188e0a05498c90c2afde353f75ea2f813",
+  "code_revision": "095d561dd57ad04b829d9bd38fb8071be306114b",
+  "artifact_integrity": {
+    "zip_crc_valid": true,
+    "archive_member_count": 14,
+    "indexed_member_count": 12,
+    "indexed_member_failures": [],
+    "all_indexed_sizes_and_sha256_verified": true
+  },
+  "role_integrity": {
+    "split": "train",
+    "available_components_by_regime": {"nmda_plateau": 8},
+    "calibration_component_position": 7,
+    "audit_component_position": 8,
+    "calibration_trajectory_count": 27,
+    "audit_trajectory_count": 27,
+    "prior_calibration_overlap": [],
+    "prior_audit_overlap": [],
+    "calibration_audit_overlap": [],
+    "audit_used_for_selection": false
+  },
+  "selected_frozen_candidate": {
+    "model_arm": "source_scalar",
+    "alpha": 0.75,
+    "bias_mode": "none",
+    "bias_mv_per_ms": 0.0,
+    "calibration_median_voltage_gain_vs_persistence": 0.28796302945870533,
+    "calibration_median_STATE_gain_vs_persistence": 0.3092227135634551
+  },
+  "sealed_audit": {
+    "median_voltage_gain_vs_persistence": 0.22360983853228977,
+    "per_seed_voltage_gain_vs_persistence": {"61017": 0.23378524936373202, "61029": 0.22360983853228977, "61043": 0.20929423329423025},
+    "median_STATE_gain_vs_persistence": 0.2020981191161768,
+    "per_seed_STATE_gain_vs_persistence": {"61017": 0.23405172033777266, "61029": 0.2020981191161768, "61043": 0.18791425906366654},
+    "per_seed_eight_ms_voltage_rmse_mv": {"61017": 11.385978698730469, "61029": 11.537185668945312, "61043": 11.749916076660156},
+    "persistence_eight_ms_voltage_rmse_mv": 14.86003589630127,
+    "physical_voltage_violations": 0
+  },
+  "activity_breakdown": {
+    "median_active_5_to_20mV_gain": 0.19911213023909702,
+    "median_regenerative_ge_20mV_gain": 0.3333839496377341,
+    "median_active_ge_5mV_gain": 0.31828923055409963,
+    "median_moderate_1_to_5mV_gain": -1.1961442437479435,
+    "median_quiescent_lt_1mV_gain": -24.42644875650759,
+    "interpretation": "The global RMSE rescue is carried by active and regenerative coordinates. Moderate and quiescent transitions remain substantially worse than persistence."
+  },
+  "region_breakdown": {
+    "median_soma_gain": -0.21013455739981346,
+    "median_ais_gain": 0.43734650963337884,
+    "median_axon_gain": 0.42953693853133157,
+    "median_apical_trunk_gain": 0.17243686274213932,
+    "median_nexus_gain": 0.19832793790387115,
+    "median_basal_gain": 0.15016108335569933,
+    "median_tuft_gain": 0.18595517160115238,
+    "interpretation": "Every large dendritic/axonal region beats persistence at the median, but the soma does not."
+  },
+  "formal_diagnosis": "FROZEN_VOLTAGE_CALIBRATION_RESCUES_GENERALIZATION",
+  "engineering_diagnosis": "GLOBAL_AMPLITUDE_RESCUE_WITH_ACTIVITY_AND_SOMA_HETEROGENEITY",
+  "identified_lessons": [
+    "The source scalar bridge contains a useful voltage direction whose amplitude is systematically too large on unused train components.",
+    "A fixed 0.75 shrinkage generalizes from component seven to sealed component eight and restores absolute voltage and STATE utility in all seeds.",
+    "A global RMSE can hide severe failures near rest because persistence error is tiny there and active coordinates dominate squared error.",
+    "The next objective must preserve regenerative gains while explicitly protecting quiescent, moderate and somatic transitions.",
+    "A causal conditional gain is a smaller and more diagnostic intervention than immediately replacing the voltage bridge."
+  ],
+  "decision": {
+    "train_only_voltage_objective_recalibration_authorized": true,
+    "coupled_06c_canary_authorized": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "full_training_authorized": false,
+    "fresh_test_generation_authorized": false,
+    "mass_dataset_generation_authorized": false,
+    "next_step": "train_only_causal_gain_and_activity_region_balanced_voltage_objective_matrix"
+  }
+}

@@ -1,0 +1,23 @@
+voltage_objective_recalibration_playground:
+  objective_training_steps: 400
+  objective_checkpoints: [0, 100, 200, 400]
+  objective_unroll_horizon_ms: 8
+  objective_batch_window_count: 4
+  objective_learning_rate: 0.00015
+  objective_weight_decay: 0.00001
+  objective_gradient_clip_norm: 1.0
+  objective_fit_window_count: 64
+  gain_hidden_width: 16
+  gain_region_embedding_width: 4
+  gain_minimum: 0.0
+  gain_maximum: 1.5
+  gain_initial: 0.75
+  inverse_frequency_weight_cap: 20.0
+  minimum_training_effect_fraction: 0.02
+  minimum_gain_over_frozen_alpha_fraction: 0.02
+  minimum_active_gain_fraction: 0.10
+  minimum_quiescent_gain_fraction: 0.0
+  minimum_moderate_gain_fraction: 0.0
+  minimum_soma_gain_fraction: 0.0
+  minimum_STATE_gain_fraction: 0.0
+  maximum_gain_parameter_count: 1000

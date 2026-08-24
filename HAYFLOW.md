@@ -1662,3 +1662,56 @@ which permits only a stratified train-only objective experiment; or a voltage
 representation-generalization failure, which returns to an atomic voltage
 playground. No outcome directly authorizes 06c, held-out access, full training,
 fresh-test generation or mass-data generation.
+
+The completed 06b-h archive is registered in
+`experiments/hayflow/06b_h_frozen_voltage_generalization_forensic/result.json`.
+ZIP CRC and all 12 indexed member sizes and hashes pass independent
+verification. Calibration uses component seven and the sealed audit uses
+component eight of the sole `nmda_plateau` train regime, with zero overlap.
+
+The frozen `source_scalar` bridge with a 0.75 output multiplier and no bias is
+selected on calibration. On sealed audit it beats voltage persistence by
+22.36% at the median (20.93–23.38% in every seed), preserves a 20.21% median
+STATE gain and produces no physical-range violations. The registered formal
+diagnosis is therefore `FROZEN_VOLTAGE_CALIBRATION_RESCUES_GENERALIZATION`.
+
+The rescue is not uniform. Active and regenerative coordinates improve by
+31.83% and 33.34%, whereas moderate and quiescent coordinates remain 119.61%
+and 2442.64% worse than persistence. Every large dendritic/axonal region beats
+persistence at the median, but soma remains 21.01% worse. The engineering
+diagnosis is consequently
+`GLOBAL_AMPLITUDE_RESCUE_WITH_ACTIVITY_AND_SOMA_HETEROGENEITY`.
+
+The next authorized experiment is train-only and atomic: compare the frozen
+0.75 calibration with a causal conditional-gain head and activity/region
+balanced voltage objectives while freezing the mechanism-STATE updater. It
+must use the same batches and checkpoints across arms, treat previously used
+train roles as a playground rather than new independent confirmation, and can
+authorize only fresh train-support confirmation—not 06c or held-out access.
+
+### 06b-i train-only voltage-objective recalibration playground
+
+`notebooks/06b_i_voltage_objective_recalibration_playground.ipynb` implements
+the atomic follow-up authorized by 06b-h. It freezes the mechanism-STATE
+updater and starts every trainable arm from the same 06b-f source-scalar
+checkpoint. The frozen 0.75 output multiplier is retained as the reference.
+
+Five synchronized arms share seeds, eight-ms windows, minibatches, optimizer
+settings and fixed 0/100/200/400 checkpoints. They compare the original
+active-weighted bridge update, activity-balanced bridge training,
+activity-by-region-balanced bridge training, a one-parameter global gain and a
+small causal conditional gain. The conditional head receives only raw
+predicted voltage delta, current voltage and region ID; teacher outcomes are
+used only to construct the training loss.
+
+The causal-gain arm is primary and the activity-by-region bridge arm is the
+only preregistered fallback. A pass requires improvement over frozen alpha,
+continued optimization, positive voltage and STATE gains in every seed, zero
+physical violations, and non-negative performance in moderate, quiescent and
+somatic strata while retaining active-event utility.
+
+All eight independent train components have already been consumed. The fit,
+calibration and development roles in 06b-i are therefore explicitly reused as
+a learnability playground. No result from this notebook is a new independent
+confirmation; success can authorize only confirmation on fresh train support,
+never 06c, validation/test access or full training.

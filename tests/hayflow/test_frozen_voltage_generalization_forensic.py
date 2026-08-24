@@ -116,3 +116,17 @@ def test_06bh_notebook_is_compact_and_uses_stable_blob_download():
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
     assert "display(audit_report)" not in code
+
+
+def test_06bh_registered_result_preserves_formal_and_engineering_diagnoses():
+    result = json.loads((EXPERIMENT / "result.json").read_text(encoding="utf-8"))
+    assert result["artifact_integrity"]["indexed_member_failures"] == []
+    assert result["formal_diagnosis"] == (
+        "FROZEN_VOLTAGE_CALIBRATION_RESCUES_GENERALIZATION"
+    )
+    assert result["engineering_diagnosis"] == (
+        "GLOBAL_AMPLITUDE_RESCUE_WITH_ACTIVITY_AND_SOMA_HETEROGENEITY"
+    )
+    assert result["sealed_audit"]["median_voltage_gain_vs_persistence"] > 0
+    assert result["activity_breakdown"]["median_quiescent_lt_1mV_gain"] < 0
+    assert not result["decision"]["coupled_06c_canary_authorized"]
