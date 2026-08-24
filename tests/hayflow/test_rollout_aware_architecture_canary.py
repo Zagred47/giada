@@ -15,6 +15,7 @@ from src.hayflow_model.rollout_aware_architecture_canary import (
     RolloutAwareArchitectureCanaryConfig,
     artifact_index_matches,
     discover_indexed_artifact_source,
+    materialize_nested_indexed_artifact_source,
     disjoint_episode_roles,
     encode_causal_realized_drive,
     model_parameter_count,
@@ -40,6 +41,29 @@ def test_artifact_discovery_accepts_kaggle_archive_name_and_extracted_root(tmp_p
     extracted.mkdir()
     (extracted / "artifact_index.json").write_bytes(index)
     assert discover_indexed_artifact_source(tmp_path, digest) == extracted.resolve()
+
+
+def test_artifact_discovery_materializes_one_kaggle_nested_zip_level(tmp_path):
+    import hashlib
+    import io
+    import zipfile
+
+    index = b'{"schema_version":"nested-test"}'
+    digest = hashlib.sha256(index).hexdigest()
+    inner_bytes = io.BytesIO()
+    with zipfile.ZipFile(inner_bytes, "w") as inner:
+        inner.writestr("artifact/artifact_index.json", index)
+        inner.writestr("artifact/final_report.json", "{}")
+    outer = tmp_path / "dataset" / "archive.zip"
+    outer.parent.mkdir()
+    with zipfile.ZipFile(outer, "w") as handle:
+        handle.writestr("original_artifact.zip", inner_bytes.getvalue())
+    materialized = materialize_nested_indexed_artifact_source(
+        tmp_path, digest, tmp_path / "cache"
+    )
+    assert materialized is not None
+    assert materialized.is_file()
+    assert artifact_index_matches(materialized, digest)
 
 
 ROOT = Path(__file__).resolve().parents[2]

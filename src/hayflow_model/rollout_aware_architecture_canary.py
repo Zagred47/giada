@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 import hashlib
+import io
 import json
 import math
 from pathlib import Path
@@ -208,6 +209,63 @@ def discover_indexed_artifact_source(
             resolved, expected_index_sha256
         ):
             return resolved
+    return None
+
+
+def materialize_nested_indexed_artifact_source(
+    input_root: Path,
+    expected_index_sha256: str,
+    cache_dir: Path,
+    *,
+    maximum_nested_archive_bytes: int = 128 * 1024 * 1024,
+) -> Optional[Path]:
+    """Materialize an exact artifact when Kaggle wraps its ZIP in another ZIP.
+
+    Some Kaggle upload paths expose ``archive.zip`` whose only relevant member
+    is the original user ZIP.  Ordinary discovery intentionally returns real
+    filesystem artifacts; this bounded fallback unwraps one archive level and
+    still accepts a candidate only by the immutable artifact-index digest.
+    """
+
+    input_root = Path(input_root)
+    cache_dir = Path(cache_dir)
+    target = cache_dir / f"{expected_index_sha256}.zip"
+    if target.is_file() and artifact_index_matches(target, expected_index_sha256):
+        return target.resolve()
+    if not input_root.is_dir():
+        return None
+    for outer_path in sorted(input_root.rglob("*.zip")):
+        try:
+            with zipfile.ZipFile(outer_path) as outer:
+                nested = [
+                    info
+                    for info in outer.infolist()
+                    if not info.is_dir()
+                    and info.filename.lower().endswith(".zip")
+                    and info.file_size <= int(maximum_nested_archive_bytes)
+                ]
+                for info in nested:
+                    payload = outer.read(info)
+                    with zipfile.ZipFile(io.BytesIO(payload)) as inner:
+                        indices = [
+                            name
+                            for name in inner.namelist()
+                            if Path(name.replace("\\", "/")).name
+                            == "artifact_index.json"
+                        ]
+                        if not any(
+                            hashlib.sha256(inner.read(name)).hexdigest()
+                            == expected_index_sha256
+                            for name in indices
+                        ):
+                            continue
+                    cache_dir.mkdir(parents=True, exist_ok=True)
+                    temporary = target.with_suffix(".tmp")
+                    temporary.write_bytes(payload)
+                    temporary.replace(target)
+                    return target.resolve()
+        except (OSError, zipfile.BadZipFile, RuntimeError):
+            continue
     return None
 
 
@@ -1030,6 +1088,7 @@ __all__ = [
     "artifact_index_matches",
     "disjoint_episode_components_by_regime",
     "discover_indexed_artifact_source",
+    "materialize_nested_indexed_artifact_source",
     "disjoint_episode_roles",
     "encode_causal_realized_drive",
     "model_parameter_count",

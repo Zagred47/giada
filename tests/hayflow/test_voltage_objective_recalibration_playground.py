@@ -109,6 +109,7 @@ def test_06bi_notebook_is_compact_and_uses_stable_blob_download():
             ast.parse("".join(cell.get("source", [])))
             assert not cell.get("outputs")
     assert "EXPECTED_06BH_INDEX_SHA256" in code
+    assert "materialize_nested_indexed_artifact_source" in code
     assert "train_synchronized_objective_matrix" in code
     assert "evaluate_objective_matrix" in code
     assert "base64.b64encode" in code and "new Blob" in code
