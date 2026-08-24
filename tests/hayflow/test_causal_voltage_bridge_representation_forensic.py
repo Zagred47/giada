@@ -77,6 +77,8 @@ def test_registered_result_preserves_optimizer_caveat_and_topology_no_signal():
     assert result["diagnosis"] == "LOCAL_BRIDGE_OPTIMIZATION_LIMIT_IDENTIFIED"
     assert result["optimization_limit_identified_by_registered_median_gate"]
     assert not result["optimization_signal_robust_across_all_seeds"]
+    assert result["downstream_state_continuation_signal_positive_all_seeds"]
     assert not result["authentic_topology_information_identified"]
     assert result["per_seed"]["61043"]["continuation_voltage_gain_over_frozen_fraction"] < 0
+    assert all(row["continuation_state_gain_over_frozen_fraction"] > 0 for row in result["per_seed"].values())
     assert not result["full_training_authorized"]

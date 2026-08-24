@@ -29,6 +29,13 @@ This signal is not uniform: seeds 61017 and 61029 improved by 2.69 and 5.87
 points, while seed 61043 worsened by 3.29 points.  The correct conclusion is
 therefore a conditional optimization signal, not an all-seed robust repair.
 
+The downstream STATE result is more consistent than the global voltage RMSE:
+continued local optimization improves STATE gain in all three seeds by 0.68,
+0.89, and 1.51 percentage points.  Thus the bridge continuation contains a
+robust causally useful signal even though global delta-V RMSE is not monotonic.
+This exposes a likely objective-alignment issue that the next optimization
+forensic must isolate.
+
 Authentic and relabelled topology residuals were practically identical.  The
 median authentic advantage was only 0.004 percentage points for voltage and
 slightly negative for downstream STATE.  This rejects the tested

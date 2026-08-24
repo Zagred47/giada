@@ -15,25 +15,30 @@
   "diagnosis": "LOCAL_BRIDGE_OPTIMIZATION_LIMIT_IDENTIFIED",
   "optimization_limit_identified_by_registered_median_gate": true,
   "optimization_signal_robust_across_all_seeds": false,
+  "downstream_state_continuation_signal_positive_all_seeds": true,
   "authentic_topology_information_identified": false,
   "median": {
     "continuation_voltage_gain_over_frozen_fraction": 0.026928518723509987,
+    "continuation_state_gain_over_frozen_fraction": 0.00889193909768849,
     "authentic_voltage_gain_over_relabelled_fraction": 0.000040779406754287706,
     "authentic_state_gain_over_relabelled_fraction": -0.00006185394479563122
   },
   "per_seed": {
     "61017": {
       "continuation_voltage_gain_over_frozen_fraction": 0.026928518723509987,
+      "continuation_state_gain_over_frozen_fraction": 0.00889193909768849,
       "authentic_voltage_gain_over_relabelled_fraction": -0.0016604310619696694,
       "authentic_state_gain_over_relabelled_fraction": -0.00006185394479563122
     },
     "61029": {
       "continuation_voltage_gain_over_frozen_fraction": 0.05869959199908048,
+      "continuation_state_gain_over_frozen_fraction": 0.01505925000900554,
       "authentic_voltage_gain_over_relabelled_fraction": 0.000040779406754287706,
       "authentic_state_gain_over_relabelled_fraction": -0.00009025099763082522
     },
     "61043": {
       "continuation_voltage_gain_over_frozen_fraction": -0.032905287463789845,
+      "continuation_state_gain_over_frozen_fraction": 0.006811729527355537,
       "authentic_voltage_gain_over_relabelled_fraction": 0.00012093458126194445,
       "authentic_state_gain_over_relabelled_fraction": 0.000037956930987292914
     }
@@ -46,9 +51,10 @@
   },
   "interpretation": {
     "formal_registered_outcome": "The median continuation gain is 2.69 percentage points and passes the preregistered 2% optimizer-budget gate.",
-    "robustness_caveat": "Continuation improves seeds 61017 and 61029 but worsens seed 61043 by 3.29 percentage points; the optimization signal is therefore conditional, not all-seed robust.",
+    "robustness_caveat": "Global voltage gain improves for seeds 61017 and 61029 but worsens for seed 61043 by 3.29 percentage points; the voltage-RMSE signal is therefore conditional, not all-seed robust.",
+    "downstream_state_result": "Despite the global voltage-RMSE reversal at seed 61043, continued local optimization improves downstream STATE gain for all three seeds by 0.68 to 1.51 percentage points, with a median gain of 0.89 points.",
     "topology_control": "Authentic and relabelled tree residuals differ by only about 0.004 percentage points at the median voltage gate, while the median downstream STATE difference is slightly negative.",
-    "scientific_conclusion": "Additional optimization of the existing local bridge remains a live hypothesis. This particular 1,409-parameter tree-residual representation provides no evidence that authentic morphology is being exploited.",
+    "scientific_conclusion": "Additional optimization of the existing local bridge is supported by an all-seed downstream STATE improvement, while its global voltage-RMSE effect remains seed-dependent. This points to objective alignment and optimization dynamics rather than the tested 1,409-parameter topology residual.",
     "what_is_not_concluded": "The result does not show that morphology is biologically irrelevant or that every topology-aware architecture will fail. It rejects only the tested residual representation and training contract."
   },
   "methodology": {
@@ -63,5 +69,5 @@
   "full_training_authorized": false,
   "fresh_test_generation_authorized": false,
   "mass_dataset_generation_authorized": false,
-  "next_step": "complete_06b_c_branch_elm_sidecar_then_run_nested_local_bridge_optimization_scaling_forensic"
+  "next_step": "complete_06b_c_branch_elm_sidecar_then_run_nested_coupling_aware_local_bridge_optimization_forensic"
 }
