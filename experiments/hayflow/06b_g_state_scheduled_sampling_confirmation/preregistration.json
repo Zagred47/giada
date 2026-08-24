@@ -1,0 +1,97 @@
+{
+  "schema_version": "06b-g-preregistration-v1",
+  "experiment": "state_scheduled_sampling_confirmation",
+  "status": "preregistered_before_execution",
+  "question": "Does the promising 06b-f scalar full-feedback checkpoint generalize to unused train components, and can STATE scheduled sampling improve its recursive composition without sacrificing voltage?",
+  "authorized_by": {
+    "experiment": "recursive_joint_repair_matrix",
+    "formal_primary_diagnosis": "VOLTAGE_REPAIRED_STATE_EXPOSURE_REMAINS",
+    "archive_sha256": "ad47fb5f16f4f495cc0dd4641448a6cca565833c1473a87f29b5e1ff81859d43",
+    "artifact_index_sha256": "0c0103784aa1da435e43252d29d5b10d65c7e6baf8e94075f4cc0babe03fb799",
+    "final_report_sha256": "a9b7c1459c08b95064c41f1215717f5ed205180e742a6edc021f51a740ff0a80",
+    "secondary_hypothesis": "full_feedback_scalar passed every registered gate except fixed-budget scaling"
+  },
+  "independent_confirmation": {
+    "source_candidate": "06b-f full_feedback_scalar step600",
+    "source_reference": "06b-f teacherV_teacherS step600",
+    "role_source": "the first unused connected component after the complete 06b-f fit/calibration/development prefix in every regime",
+    "train_split_only": true,
+    "trajectory_disjoint_from_all_06b_f_roles": true,
+    "window_count": 16,
+    "checkpoint_selection_on_confirmation": false
+  },
+  "continuation_matrix": {
+    "arms": {
+      "scalar_continue": "eight-ms full-feedback scalar continuation",
+      "state_linear_curriculum": "STATE teacher probability decays linearly from 0.50 to zero over 300 steps; voltage remains predicted",
+      "joint_linear_curriculum": "STATE and voltage teacher probabilities decay together from 0.50 to zero over 300 steps",
+      "state_fixed_25": "STATE teacher probability remains 0.25 as a mixing-vs-curriculum control",
+      "shuffled_continue": "full feedback with voltage-to-STATE path shuffled across unique batch windows"
+    },
+    "primary_arm": "state_linear_curriculum",
+    "fallback_arm": "scalar_continue",
+    "hierarchical_fallback_registered_before_execution": true,
+    "paired_seeds": [61017, 61029, 61043],
+    "unroll_horizon_ms": 8,
+    "fixed_checkpoints": [0, 100, 200, 400],
+    "source_checkpoint_is_identical_within_seed": true,
+    "minibatch_stream_is_identical_within_seed": true,
+    "teacher_forcing_uniform_draws_are_shared_within_seed": true,
+    "same_optimizer_and_loss": true,
+    "source_optimizer_state_available": false,
+    "optimizer_restart_is_identical_across_arms": true,
+    "continuation_semantics": "weight continuation with a registered optimizer restart",
+    "both_bridge_and_STATE_updater_trainable": true
+  },
+  "registered_gates": {
+    "source_confirmation": {
+      "minimum_median_STATE_error_reduction": 0.02,
+      "minimum_median_voltage_error_reduction": 0.10,
+      "maximum_median_one_step_degradation": 0.02,
+      "all_seed_requirements": "positive STATE and voltage gains versus persistence and zero physical voltage violations"
+    },
+    "primary_curriculum": {
+      "minimum_median_STATE_gain_over_scalar_continue": 0.02,
+      "maximum_median_voltage_degradation_vs_scalar_continue": 0.02,
+      "minimum_absolute_STATE_error_reduction_vs_teacher_reference": 0.02,
+      "minimum_absolute_voltage_error_reduction_vs_teacher_reference": 0.10,
+      "maximum_one_step_degradation_vs_scalar_continue": 0.02,
+      "minimum_step0_to_step400_joint_error_reduction": 0.02,
+      "all_seed_requirements": "positive STATE and voltage gains versus persistence and zero physical voltage violations"
+    },
+    "shared_causal_specificity": {
+      "minimum_scalar_over_shuffled_STATE_gain": 0.01
+    },
+    "fallback_scalar": {
+      "allowed_only_if_source_is_independently_confirmed": true,
+      "minimum_absolute_STATE_error_reduction_vs_teacher_reference": 0.02,
+      "minimum_absolute_voltage_error_reduction_vs_teacher_reference": 0.10,
+      "minimum_step0_to_step400_joint_error_reduction": 0.02,
+      "maximum_one_step_degradation_vs_step0_scalar": 0.02,
+      "same_all_seed_safety_and_causal_requirements": true
+    }
+  },
+  "decision_rule": {
+    "source_confirmed_and_primary_passes": "authorize the STATE-curriculum candidate for 06c only",
+    "source_confirmed_primary_fails_fallback_passes": "authorize scalar_continue for 06c only",
+    "source_not_confirmed": "reject the 06b-f secondary signal",
+    "neither_continuation_passes": "return to an atomic STATE-exposure playground"
+  },
+  "scope_limitations": {
+    "confirmation_used_for_model_selection": false,
+    "development_used_for_selection": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "realized_external_input_remains_step_specific": true,
+    "synaptic_internal_state_is_not_closed": true,
+    "autonomous_neuron_rollout_claimed": false
+  },
+  "prohibited": [
+    "choosing state_fixed_25 or joint_linear_curriculum after observing confirmation",
+    "changing the 400-step endpoint after observing intermediate checkpoints",
+    "reading validation or test outcomes",
+    "fresh-test generation",
+    "full training",
+    "mass dataset generation"
+  ]
+}

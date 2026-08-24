@@ -1,0 +1,20 @@
+state_scheduled_sampling_confirmation:
+  scheduled_training_steps: 400
+  scheduled_checkpoints: [0, 100, 200, 400]
+  scheduled_unroll_horizon_ms: 8
+  scheduled_batch_window_count: 4
+  scheduled_learning_rate: 0.00015
+  scheduled_weight_decay: 0.00001
+  scheduled_gradient_clip_norm: 1.0
+  confirmation_components_per_regime: 1
+  confirmation_window_count: 16
+  curriculum_initial_teacher_probability: 0.50
+  curriculum_decay_steps: 300
+  fixed_STATE_teacher_probability: 0.25
+  minimum_confirmation_STATE_error_reduction_fraction: 0.02
+  minimum_confirmation_voltage_error_reduction_fraction: 0.10
+  minimum_curriculum_STATE_gain_fraction: 0.02
+  maximum_curriculum_voltage_degradation_fraction: 0.02
+  minimum_continuation_scaling_fraction: 0.02
+  maximum_confirmation_one_step_degradation_fraction: 0.02
+  minimum_confirmation_causal_specificity_fraction: 0.01

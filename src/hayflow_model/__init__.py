@@ -374,6 +374,15 @@ from .recursive_joint_repair_matrix import (
     RecursiveJointRepairMatrix,
     verified_06be_artifact_root,
 )
+from .state_scheduled_sampling_confirmation import (
+    EXPECTED_06BF_ARCHIVE_SHA256,
+    EXPECTED_06BF_FINAL_SHA256,
+    EXPECTED_06BF_INDEX_SHA256,
+    SCHEDULED_ARMS,
+    StateScheduledSamplingConfig,
+    StateScheduledSamplingConfirmation,
+    verified_06bf_artifact_root,
+)
 from .branch_elm_enriched_benchmark import (
     ELM_INPUT_VIEWS,
     ORIGINAL_ELM_PARAMETER_COUNT,
@@ -672,6 +681,13 @@ __all__ = [
     "RecursiveJointRepairConfig",
     "RecursiveJointRepairMatrix",
     "verified_06be_artifact_root",
+    "EXPECTED_06BF_ARCHIVE_SHA256",
+    "EXPECTED_06BF_FINAL_SHA256",
+    "EXPECTED_06BF_INDEX_SHA256",
+    "SCHEDULED_ARMS",
+    "StateScheduledSamplingConfig",
+    "StateScheduledSamplingConfirmation",
+    "verified_06bf_artifact_root",
     "ELM_INPUT_VIEWS",
     "ORIGINAL_ELM_PARAMETER_COUNT",
     "ORIGINAL_ELM_TEST_AUC",

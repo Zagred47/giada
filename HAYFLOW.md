@@ -1575,3 +1575,35 @@ show that 06b-f trained both components as intended. The contract writer is
 corrected for future executions, the amendment is recorded transparently, and
 no rerun is required. 06c, held-out access and larger-scale training remain
 unauthorized.
+
+### 06b-g independent scalar confirmation and STATE scheduled sampling
+
+`notebooks/06b_g_state_scheduled_sampling_confirmation.ipynb` implements the
+bounded train-only follow-up authorized by 06b-f. The promising scalar arm is
+not retroactively promoted. Its exact 600-step checkpoint is first evaluated
+frozen against the exact teacher-forced reference on the next unused connected
+component in every train regime. These confirmation trajectories are disjoint
+from all earlier fit, calibration and development roles and are never used for
+checkpoint selection.
+
+Five continuations then start from the same scalar checkpoint within each
+seed. They compare plain full feedback, a linearly decaying STATE curriculum,
+a joint STATE/voltage curriculum, fixed 25% STATE mixing and a shuffled
+voltage-to-STATE control. All arms train directly through eight milliseconds
+and share minibatches, teacher-forcing random draws, optimizer, loss and fixed
+0/100/200/400-step checkpoints. The computational cost therefore answers
+replication, horizon, curriculum, mixing and causal-specificity questions in
+one synchronized matrix.
+
+Because 06b-f did not persist optimizer state, every arm uses the same
+registered AdamW restart. The experiment therefore claims continuation of
+weights, not continuation of the previous optimizer trajectory.
+
+The STATE-linear curriculum is primary. Plain scalar continuation is an
+explicitly preregistered hierarchical fallback, eligible only if the frozen
+scalar signal first confirms independently and the continuation passes its own
+absolute accuracy, scaling, one-step, causal and all-seed safety gates. Neither
+the joint curriculum nor fixed-mixing arm can be selected after viewing the
+confirmation outcomes. A successful hierarchy authorizes only 06c; validation
+and test access, fresh-test generation, full training and mass-data generation
+remain prohibited.
