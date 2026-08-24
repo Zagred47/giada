@@ -383,6 +383,15 @@ from .state_scheduled_sampling_confirmation import (
     StateScheduledSamplingConfirmation,
     verified_06bf_artifact_root,
 )
+from .frozen_voltage_generalization_forensic import (
+    EXPECTED_06BG_ARCHIVE_SHA256,
+    EXPECTED_06BG_FINAL_SHA256,
+    EXPECTED_06BG_INDEX_SHA256,
+    FROZEN_MODEL_ARMS,
+    FrozenVoltageForensicConfig,
+    FrozenVoltageGeneralizationForensic,
+    verified_06bg_artifact_root,
+)
 from .branch_elm_enriched_benchmark import (
     ELM_INPUT_VIEWS,
     ORIGINAL_ELM_PARAMETER_COUNT,
@@ -688,6 +697,13 @@ __all__ = [
     "StateScheduledSamplingConfig",
     "StateScheduledSamplingConfirmation",
     "verified_06bf_artifact_root",
+    "EXPECTED_06BG_ARCHIVE_SHA256",
+    "EXPECTED_06BG_FINAL_SHA256",
+    "EXPECTED_06BG_INDEX_SHA256",
+    "FROZEN_MODEL_ARMS",
+    "FrozenVoltageForensicConfig",
+    "FrozenVoltageGeneralizationForensic",
+    "verified_06bg_artifact_root",
     "ELM_INPUT_VIEWS",
     "ORIGINAL_ELM_PARAMETER_COUNT",
     "ORIGINAL_ELM_TEST_AUC",

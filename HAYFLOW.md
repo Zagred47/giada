@@ -1607,3 +1607,58 @@ the joint curriculum nor fixed-mixing arm can be selected after viewing the
 confirmation outcomes. A successful hierarchy authorizes only 06c; validation
 and test access, fresh-test generation, full training and mass-data generation
 remain prohibited.
+
+The completed 06b-g archive is registered in
+`experiments/hayflow/06b_g_state_scheduled_sampling_confirmation/result.json`.
+ZIP CRC and all 71 indexed member sizes and hashes passed independent
+verification. The confirmation role contains 27 train trajectories from the
+sixth connected component of the only available `nmda_plateau` regime and has
+zero overlap with all prior roles.
+
+The source scalar checkpoint is not independently confirmed. It reduces STATE
+error by 6.18% and voltage error by 37.54% relative to the learned
+teacher-forced reference, but its voltage is 21.25% worse than persistence at
+the median and worse in every seed. The learned reference is itself much worse
+than persistence. Thus the earlier relative ranking did not establish useful
+absolute voltage dynamics.
+
+The STATE-linear curriculum nevertheless identifies a real intervention. It
+improves STATE by 3.28% over matched scalar continuation, improves voltage by
+2.22%, and reduces joint error by 9.10% from step 0 to 400 while retaining the
+authentic-over-shuffled causal signal. Yet voltage remains 12.38% worse than
+persistence, and the optimizer-restarted continuation degrades one-step error
+by 18.57% relative to the source checkpoint. No arm is eligible for 06c.
+
+The formal diagnosis remains
+`SCALAR_SECONDARY_SIGNAL_NOT_INDEPENDENTLY_CONFIRMED`. The more specific
+engineering diagnosis is
+`INDEPENDENT_VOLTAGE_GENERALIZATION_FAILURE_WITH_LEARNABLE_STATE_CURRICULUM`.
+Before further training, the next experiment must be frozen and decompose
+voltage failure by activity regime, amplitude and drift against persistence.
+The returned contract also inherited two stale upstream labels (four-ms
+training and frozen STATE backpropagation); future provenance is corrected and
+no numerical rerun is required.
+
+### 06b-h frozen voltage-generalization forensic
+
+`notebooks/06b_h_frozen_voltage_generalization_forensic.ipynb` implements the
+frozen follow-up required by 06b-g. It performs no neural training. Four exact
+checkpoint families are crossed with five voltage-amplitude shrinkage factors
+and two bias modes, producing 40 aligned candidates from the same numerical
+inputs and targets.
+
+The seventh unused connected component of every train regime is used only to
+fit a pooled voltage residual and select one frozen candidate. The eighth is a
+sealed train-only audit role. Both are structurally selected, disjoint from all
+06b-g roles and from each other. Audit errors are decomposed by teacher voltage
+activity into quiescent, moderate, active and regenerative strata so that a
+global calibration failure can be distinguished from an activity-imbalanced
+objective. The same sealed audit also reports every canonical anatomical
+region, plus endpoint drift, without using either breakdown for selection.
+
+The registered outcomes are: a calibration rescue, which permits only a later
+train-only voltage-objective recalibration; an activity-imbalance diagnosis,
+which permits only a stratified train-only objective experiment; or a voltage
+representation-generalization failure, which returns to an atomic voltage
+playground. No outcome directly authorizes 06c, held-out access, full training,
+fresh-test generation or mass-data generation.

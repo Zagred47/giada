@@ -99,6 +99,16 @@ def test_06bg_finalization_preserves_preregistered_primary_then_fallback():
     assert '"full_training_authorized": False' in source
 
 
+def test_06bg_contract_removes_stale_four_ms_and_frozen_STATE_fields():
+    source = inspect.getsource(
+        StateScheduledSamplingConfirmation.prepare_scheduled_sampling_confirmation
+    )
+    assert '"joint_objective_backpropagates_through_frozen_state_updater"' in source
+    assert '"training_horizon_ms"' in source
+    assert '"training_horizon_ms": self.config.scheduled_unroll_horizon_ms' in source
+    assert '"joint_objective_backpropagates_through_trainable_STATE_updater": True' in source
+
+
 def test_06bg_notebook_is_compact_and_uses_stable_blob_download():
     notebook = json.loads(NOTEBOOK.read_text(encoding="utf-8"))
     assert len(notebook["cells"]) <= 12
@@ -117,3 +127,18 @@ def test_06bg_notebook_is_compact_and_uses_stable_blob_download():
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
     assert "display(confirmation_report)" not in code
+
+
+def test_06bg_registered_result_separates_formal_and_engineering_diagnosis():
+    result = json.loads((EXPERIMENT / "result.json").read_text(encoding="utf-8"))
+    assert result["artifact_integrity"]["indexed_member_failures"] == []
+    assert result["formal_diagnosis"] == (
+        "SCALAR_SECONDARY_SIGNAL_NOT_INDEPENDENTLY_CONFIRMED"
+    )
+    assert result["engineering_diagnosis"] == (
+        "INDEPENDENT_VOLTAGE_GENERALIZATION_FAILURE_WITH_LEARNABLE_STATE_CURRICULUM"
+    )
+    assert result["source_confirmation"]["median_voltage_gain_vs_persistence"] < 0
+    assert result["primary_curriculum"]["median_STATE_gain_over_scalar"] > 0
+    assert not result["decision"]["coupled_06c_canary_authorized"]
+    assert result["documentation_amendment"]["numerical_results_affected"] is False

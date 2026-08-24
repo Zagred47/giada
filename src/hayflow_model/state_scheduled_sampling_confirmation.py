@@ -343,6 +343,8 @@ class StateScheduledSamplingConfirmation(RecursiveJointRepairMatrix):
             "training_stage_at_contract_write",
             "training_planned",
             "feedback_boundary_during_training",
+            "joint_objective_backpropagates_through_frozen_state_updater",
+            "training_horizon_ms",
         ):
             report.pop(stale_field, None)
         report.update(
@@ -350,6 +352,8 @@ class StateScheduledSamplingConfirmation(RecursiveJointRepairMatrix):
                 "training_stage_at_contract_write": "not_started",
                 "continuation_training_planned": True,
                 "feedback_boundary_during_training": "schedule_specific",
+                "training_horizon_ms": self.config.scheduled_unroll_horizon_ms,
+                "joint_objective_backpropagates_through_trainable_STATE_updater": True,
             }
         )
         atomic._write_json(self.output_dir / "scheduled_sampling_contract.json", report)
@@ -916,6 +920,9 @@ class StateScheduledSamplingConfirmation(RecursiveJointRepairMatrix):
             "selected_candidate": selected,
             "source_optimizer_state_available": False,
             "optimizer_restart_is_identical_across_arms": True,
+            "training_performed": True,
+            "bridge_retrained": True,
+            "mechanism_STATE_updater_retrained": True,
             "median_by_arm": median_by_arm,
             "per_seed_by_arm": arm_rows,
             "causal_specificity_retained": causal_specificity,

@@ -1,0 +1,89 @@
+{
+  "schema_version": "06b-h-preregistration-v1",
+  "experiment": "frozen_voltage_generalization_forensic",
+  "status": "preregistered_before_execution",
+  "question": "Is the independent voltage failure a frozen amplitude/bias calibration error, an activity-imbalanced objective, or a representation-generalization failure?",
+  "authorized_by": {
+    "experiment": "state_scheduled_sampling_confirmation",
+    "formal_diagnosis": "SCALAR_SECONDARY_SIGNAL_NOT_INDEPENDENTLY_CONFIRMED",
+    "engineering_diagnosis": "INDEPENDENT_VOLTAGE_GENERALIZATION_FAILURE_WITH_LEARNABLE_STATE_CURRICULUM",
+    "archive_sha256": "5a09397433d941f6d80adf12d6ac7936be9404189bdd2952d88ebd43ef45c4eb",
+    "artifact_index_sha256": "94896c60d767fe1d38cd9f848d3d4cdf6df3dcabd38a3afe7c3e1ce675dc2567",
+    "final_report_sha256": "e78531d7ec6e810e268ffb76ac18548fefeb3836d5481eefb093cac126d490b2"
+  },
+  "frozen_matrix": {
+    "model_arms": [
+      "source_scalar",
+      "scalar_continue",
+      "state_linear_curriculum",
+      "joint_linear_curriculum"
+    ],
+    "voltage_shrinkage_factors": [0.0, 0.25, 0.5, 0.75, 1.0],
+    "global_bias_modes": ["none", "pooled_calibration_residual"],
+    "candidate_count": 40,
+    "neural_training_performed": false,
+    "checkpoint_weights_modified": false
+  },
+  "roles": {
+    "calibration": {
+      "source": "seventh connected component of every train regime",
+      "window_count": 16,
+      "used_for_candidate_selection": true
+    },
+    "audit": {
+      "source": "eighth connected component of every train regime",
+      "window_count": 16,
+      "used_for_candidate_selection": false
+    },
+    "trajectory_disjoint_from_all_06b_g_roles": true,
+    "calibration_audit_disjoint": true,
+    "train_split_only": true
+  },
+  "selection_rule": {
+    "primary_metric": "median eight-ms voltage RMSE divided by persistence RMSE on calibration",
+    "constraint": "positive eight-ms STATE gain versus persistence in every seed",
+    "tie_breaks": [
+      "smaller absolute global bias",
+      "larger voltage shrinkage factor",
+      "lexicographic model-arm name"
+    ]
+  },
+  "audit_strata": {
+    "activity_measure": "absolute teacher endpoint voltage change at eight milliseconds",
+    "region_breakdown": "every canonical teacher region, reported without influencing selection",
+    "bins_mv": [
+      "quiescent < 1",
+      "moderate 1-5",
+      "active 5-20",
+      "regenerative >= 20",
+      "aggregate active >= 5"
+    ]
+  },
+  "decision_rule": {
+    "FROZEN_VOLTAGE_CALIBRATION_RESCUES_GENERALIZATION": "the sealed audit beats persistence in every seed with at least 2% median voltage gain, positive STATE gain in every seed, zero physical voltage violations, and uses a material amplitude or bias correction",
+    "ACTIVITY_IMBALANCED_VOLTAGE_OBJECTIVE": "the aggregate active stratum beats persistence by at least 2% while the quiescent stratum remains worse than persistence",
+    "VOLTAGE_REPRESENTATION_GENERALIZATION_FAILURE": "all other valid outcomes"
+  },
+  "next_steps": {
+    "FROZEN_VOLTAGE_CALIBRATION_RESCUES_GENERALIZATION": "train_only_voltage_objective_recalibration",
+    "ACTIVITY_IMBALANCED_VOLTAGE_OBJECTIVE": "train_only_activity_stratified_voltage_objective",
+    "VOLTAGE_REPRESENTATION_GENERALIZATION_FAILURE": "atomic_voltage_representation_playground"
+  },
+  "scope_limitations": {
+    "realized_external_input_remains_step_specific": true,
+    "synaptic_internal_state_is_not_closed": true,
+    "autonomous_neuron_rollout_claimed": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "coupled_06c_canary_authorized": false
+  },
+  "prohibited": [
+    "changing candidate selection after reading the audit role",
+    "using the audit role for fitting the bias",
+    "neural retraining",
+    "validation or test access",
+    "fresh-test generation",
+    "full training",
+    "mass dataset generation"
+  ]
+}
