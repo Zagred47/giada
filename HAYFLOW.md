@@ -1760,3 +1760,42 @@ teacher-activity lookup uses the true future delta only as a prohibited oracle:
 it can diagnose missing causal observability, but can never become a model
 candidate. The notebook performs no neural training and cannot authorize 06c,
 validation/test access, full training or a fresh test generation.
+
+The completed 06b-j archive is registered in
+`experiments/hayflow/06b_j_analytic_causal_gain_identifiability/result.json`.
+ZIP CRC and all 35 indexed members pass independent size and SHA-256
+verification. The primary region-by-raw-activity-by-voltage lookup improves
+direct teacher-boundary RMSE by 9.40% over alpha=0.75 and recursive 8 ms RMSE
+by 4.32% over the analytic global lookup. Its selected shrinkage is 0.01 in
+all three seeds and its 8 ms RMSE remains ordered and stable from 13.23 to
+13.88 mV, so the heterogeneous static signal is reproducible rather than an
+optimizer artifact.
+
+The registered gate still fails: moderate transitions remain at -46.72% and
+quiescent transitions at -1206.93% versus persistence. The prohibited
+teacher-activity oracle improves the global lookup by 7.92% but also remains
+negative on moderate (-33.32%), quiescent (-380.49%) and soma (-34.28%).
+Consequently neither finer static partitions nor direct access to the teacher
+activity class repairs low-activity recursive composition. The formal
+diagnosis is `STATIC_GAIN_IDENTIFIED_BUT_TEMPORAL_COMPOSITION_FAILS`; the next
+atomic experiment must test a causal temporal correction state against an
+exposure-matched instantaneous control and a teacher-error oracle.
+
+### 06b-k atomic temporal voltage-correction state
+
+The preregistered 06b-k experiment freezes the selected 06b-j static lookup
+and generates fit exposures by recursively running that lookup. It then fits a
+synchronized closed-form matrix: an instantaneous exposure-matched control,
+fast and slow signed/absolute EMA states, predicted displacement, their causal
+combination and a prohibited teacher-current-error oracle. Every arm is a
+region-specific ridge correction bounded to +/-5 mV per millisecond; ridge is
+selected only by recursive RMSE on the historically reused train calibration
+role.
+
+The primary causal combination must improve the frozen static lookup by at
+least 2% and the exposure-matched instantaneous control by at least 1%, while
+passing voltage, STATE, active, moderate, quiescent, soma and physical-safety
+gates. The aligned controls distinguish temporal information from exposure
+refitting, and the oracle distinguishes missing causal observability from an
+insufficient error model. No neural optimizer, validation/test state, fresh
+test, 06c authorization or independent confirmation is involved.

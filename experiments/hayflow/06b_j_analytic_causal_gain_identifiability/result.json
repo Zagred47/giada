@@ -1,0 +1,67 @@
+{
+  "schema_version": "06b-j-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": "hayflow_analytic_causal_gain_identifiability.zip",
+  "archive_size_bytes": 149497,
+  "archive_sha256": "44b5d5653c7e99efc78315801f28758a5c71f06d6f492aa7c2cd34b57ba58517",
+  "artifact_index_sha256": "ebf1b4e6b89020851b5baf2eca6a8ebfb09b056ca5506b77061231424fbf822c",
+  "final_report_sha256": "68fd1d9951f56e62c9dc0504823bd4087c95e51a4e895b4ea0e5a617d0050521",
+  "code_revision": "7207b7db57a6d6edcd1f9a3092733f67af50b51a",
+  "artifact_integrity": {
+    "zip_crc_valid": true,
+    "archive_member_count": 37,
+    "indexed_member_count": 35,
+    "indexed_member_failures": [],
+    "all_indexed_sizes_and_sha256_verified": true
+  },
+  "formal_diagnosis": "STATIC_GAIN_IDENTIFIED_BUT_TEMPORAL_COMPOSITION_FAILS",
+  "primary": {
+    "scheme": "region_raw_voltage",
+    "passed": false,
+    "median_direct_improvement_over_alpha075": 0.09398943608873667,
+    "median_recursive_voltage_gain_vs_persistence": 0.24174434221597196,
+    "median_recursive_STATE_gain_vs_persistence": 0.32092295564880136,
+    "median_recursive_gain_over_global_lookup": 0.043234807992965085,
+    "median_active_gain": 0.2918534623783545,
+    "median_moderate_gain": -0.46721465439712007,
+    "median_quiescent_gain": -12.069287054576765,
+    "median_soma_gain": 0.014002863709778657,
+    "physical_voltage_violation_count": 0
+  },
+  "controls": {
+    "global_lookup_recursive_voltage_gain_vs_persistence": 0.1880290985790427,
+    "region_raw_activity_recursive_gain_over_global": 0.04078780450388275,
+    "voltage_band_recursive_gain_over_global": 0.03051275142284038,
+    "all_causal_schemes_passed": false
+  },
+  "teacher_activity_oracle": {
+    "eligible_for_selection": false,
+    "passed": false,
+    "median_direct_improvement_over_alpha075": 0.10078704098884184,
+    "median_recursive_gain_over_global_lookup": 0.07923929320707379,
+    "median_moderate_gain": -0.33315977345081627,
+    "median_quiescent_gain": -3.804871442719474,
+    "median_soma_gain": -0.34276574727053166
+  },
+  "stability": {
+    "primary_selected_shrinkage_by_seed": {"61017": 0.01, "61029": 0.01, "61043": 0.01},
+    "primary_8ms_rmse_mv_by_seed": {"61017": 13.2266, "61029": 13.538, "61043": 13.8843},
+    "global_8ms_rmse_mv_by_seed": {"61017": 13.8243, "61029": 14.678, "61043": 14.4971},
+    "primary_supported_cells_by_seed": {"61017": "95/176", "61029": "96/176", "61043": "95/176"}
+  },
+  "identified_lessons": [
+    "Removing the optimizer reveals reproducible heterogeneous static gain signal across all three seeds.",
+    "The primary causal partition improves both direct teacher-boundary error and recursive error over the global lookup.",
+    "The improvement survives to 8 ms but does not repair moderate or quiescent transitions.",
+    "Even a prohibited teacher-activity oracle fails those low-activity gates, so finer static activity binning is not a sufficient repair.",
+    "The next atomic question is whether a causal temporal correction state can represent rollout error accumulation."
+  ],
+  "decision": {
+    "fresh_train_support_confirmation_authorized": false,
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "fresh_test_generation_authorized": false,
+    "mass_dataset_generation_authorized": false,
+    "next_step": "atomic_temporal_voltage_correction_state"
+  }
+}
