@@ -1836,3 +1836,34 @@ oracle-only result maps to a regime encoder or continuous mixture state; if
 even the optimal blend oracle fails, the voltage expert family must change.
 No outcome authorizes another generic diagnostic loop, validation/test access,
 06c or full training.
+
+The completed 06b-l archive is registered in
+`experiments/hayflow/06b_l_voltage_error_model_revision/result.json`. All 28
+indexed member sizes and SHA-256 digests pass independent verification. The
+run uses only historically reused train roles, performs no neural training and
+does not access validation or test state.
+
+None of the four deployable causal gates passes. They improve global voltage
+and mechanism-STATE error relative to persistence, but remain 5.19--9.34%
+worse than the frozen static expert at eight milliseconds and damage the
+quiescent regime severely. The teacher-regime oracle also fails: knowing only
+whether the true next transition is quiet or active is not sufficient to
+choose between persistence and the dynamic expert.
+
+The prohibited coordinate-wise, per-step optimal convex blend is the sole
+passing arm. It improves recursive voltage RMSE by 6.75% over the frozen
+static expert, improves voltage by 29.60% and STATE by 30.74% over persistence,
+and is non-negative on active, moderate, quiescent and somatic strata with no
+physical voltage violations. Its coefficient is genuinely heterogeneous:
+roughly 45--47% of coordinates choose persistence, 33--43% choose the full
+dynamic update, and the remainder use a fractional blend.
+
+This does not produce a selectable model because the oracle reads the teacher
+endpoint at every step. It establishes architectural headroom and rejects a
+simple quiet/active hurdle. The registered diagnosis is
+`OPTIMAL_BLEND_ORACLE_WORKS_BUT_REGIME_GATE_FAILS`. The next intervention is
+therefore the preregistered architecture revision: a causal continuous mixture
+state, updated from local physiological and synaptic state plus morphological
+context. The revision must retain persistence as an explicit safe expert,
+preserve regional diagnostics (especially AIS/axon), and be tested first as a
+component playground rather than as a full-neuron or held-out experiment.

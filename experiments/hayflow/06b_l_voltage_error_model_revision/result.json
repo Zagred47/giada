@@ -1,0 +1,112 @@
+{
+  "schema_version": "06b-l-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": "hayflow_voltage_error_model_revision.zip",
+  "archive_size_bytes": 164422,
+  "archive_sha256": "8af4278ec0eb9cd0594cd5ad5cc7ff3b0f5050e20be5b17df9013348ca14b41e",
+  "artifact_index_sha256": "959aea3c0f60613210452ddfa3d0fdb1f1be06ca8b113ac50a582e37b38ae529",
+  "final_report_sha256": "884e2d7b7a5f1f6796048618d727ba6267c8d2bfe92287ec89826995ccbdda90",
+  "code_revision": "bf89200a7b2d9671265afa3208b43091f6423d75",
+  "artifact_integrity": {
+    "archive_member_count": 30,
+    "indexed_member_count": 28,
+    "indexed_member_failures": [],
+    "all_indexed_sizes_and_sha256_verified": true
+  },
+  "formal_diagnosis": "OPTIMAL_BLEND_ORACLE_WORKS_BUT_REGIME_GATE_FAILS",
+  "causal_schemes": {
+    "hard_hurdle_instantaneous": {
+      "passed": false,
+      "median_recursive_gain_over_static": -0.05194596149695374,
+      "median_voltage_gain_vs_persistence": 0.19864050161889046,
+      "median_STATE_gain_vs_persistence": 0.2783400388828692,
+      "median_moderate_gain": -0.4154677463734824,
+      "median_quiescent_gain": -4.932367271075466,
+      "median_soma_gain": -0.2396337824000505
+    },
+    "hard_hurdle_temporal": {
+      "passed": false,
+      "median_recursive_gain_over_static": -0.05333545348017754,
+      "median_voltage_gain_vs_persistence": 0.21856709496650473,
+      "median_STATE_gain_vs_persistence": 0.27162120758859876,
+      "median_moderate_gain": -0.14979105996448294,
+      "median_quiescent_gain": -1.6167800634702485,
+      "median_soma_gain": 0.0
+    },
+    "soft_blend_instantaneous": {
+      "passed": false,
+      "median_recursive_gain_over_static": -0.08858397086561065,
+      "median_voltage_gain_vs_persistence": 0.15346305182116105,
+      "median_STATE_gain_vs_persistence": 0.23984296650229275,
+      "median_moderate_gain": 0.08109653988328902,
+      "median_quiescent_gain": -3.3215615383205606,
+      "median_soma_gain": 0.17036753763441037
+    },
+    "soft_blend_temporal": {
+      "passed": false,
+      "median_recursive_gain_over_static": -0.09342674970427578,
+      "median_voltage_gain_vs_persistence": 0.17002911738099113,
+      "median_STATE_gain_vs_persistence": 0.24672062259320282,
+      "median_moderate_gain": 0.08748613326261456,
+      "median_quiescent_gain": -2.731255124385795,
+      "median_soma_gain": 0.15789451410931288
+    }
+  },
+  "teacher_regime_oracle": {
+    "eligible_for_selection": false,
+    "passed": false,
+    "median_recursive_gain_over_static": 0.021824759560236662,
+    "median_voltage_gain_vs_persistence": 0.24198625705767451,
+    "median_STATE_gain_vs_persistence": 0.30608159895125564,
+    "median_moderate_gain": -0.1977892073310168,
+    "median_quiescent_gain": -1.2634130094667606,
+    "median_soma_gain": 0.20249792513695564
+  },
+  "teacher_optimal_blend_oracle": {
+    "eligible_for_selection": false,
+    "passed": true,
+    "median_recursive_gain_over_static": 0.06753420969122326,
+    "median_voltage_gain_vs_persistence": 0.296047360398738,
+    "median_STATE_gain_vs_persistence": 0.3074197187243448,
+    "median_moderate_gain": 0.3391590023502382,
+    "median_quiescent_gain": 0.003979779773723879,
+    "median_soma_gain": 0.4107724252451138,
+    "median_active_gain": 0.29635716658931066,
+    "physical_voltage_violations": 0,
+    "gate_mean_by_seed": {
+      "61017": 0.4868,
+      "61029": 0.4635,
+      "61043": 0.4089
+    },
+    "gate_zero_fraction_by_seed": {
+      "61017": 0.4467,
+      "61029": 0.4673,
+      "61043": 0.4563
+    },
+    "gate_one_fraction_by_seed": {
+      "61017": 0.4306,
+      "61029": 0.4273,
+      "61043": 0.3334
+    }
+  },
+  "identified_lessons": [
+    "A static activity threshold is not the missing decision variable: even the prohibited teacher-regime oracle fails the registered gate.",
+    "The per-step coordinate-wise optimal convex blend beats the frozen static expert and passes all registered global, activity, soma, STATE and safety gates.",
+    "The deployable causal ridge gates improve over persistence globally but select the wrong coordinates and times, remaining worse than the static expert and strongly damaging quiescent dynamics.",
+    "The useful control variable is continuous and spatially and temporally varying; it is not identified by raw voltage delta, current voltage, displacement and short EMA histories alone.",
+    "The oracle is greedy and privileged, and its axonal rollout remains below persistence, so it is evidence of headroom rather than a deployable candidate.",
+    "The next intervention must be an architecture revision with a causal continuous mixture state informed by local physiological, synaptic and topological context."
+  ],
+  "decision": {
+    "selected_causal_scheme": null,
+    "architecture_revision_authorized": true,
+    "architecture_revision": "continuous_mixture_state",
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "fresh_test_generation_authorized": false,
+    "mass_dataset_generation_authorized": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "next_step": "architecture_revision_continuous_mixture_state"
+  }
+}
