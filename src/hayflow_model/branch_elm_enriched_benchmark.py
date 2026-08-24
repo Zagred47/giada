@@ -127,17 +127,19 @@ class BranchELMEnrichedBenchmark:
         repository_root: Path,
         *,
         code_revision: str,
+        resume_existing_output: bool = False,
     ) -> None:
         config.validate()
         self.bundle = bundle
         self.output_dir = Path(output_dir)
-        self.output_dir.mkdir(parents=True, exist_ok=False)
+        self.output_dir.mkdir(parents=True, exist_ok=bool(resume_existing_output))
         self.config = config
         self.fresh_test_source = Path(fresh_test_source)
         self.repository_root = Path(repository_root)
         self.code_revision = str(code_revision)
         self.store = CompositeTransitionStore(bundle)
         self.fresh_store: Optional[_FreshTestTransitionStore] = None
+        self.fresh_root = Path()
         self.roles: Dict[str, List[str]] = {}
         self.cache: Dict[Tuple[int, str, str], Dict[str, np.ndarray]] = {}
         self.models: Dict[Tuple[str, int], Any] = {}
@@ -248,6 +250,7 @@ class BranchELMEnrichedBenchmark:
             self.fresh_test_source,
             self.output_dir.parent / ".06bc_elm_artifact_cache" / "05jo",
         )
+        self.fresh_root = Path(fresh_root)
         self.fresh_store = self._make_fresh_store(fresh_root)
         self.segment_to_channel = self._validate_morphology()
         self.roles = self._select_roles()
@@ -492,7 +495,26 @@ class BranchELMEnrichedBenchmark:
         atomic._write_json(self.output_dir / "benchmark_results.json", report)
         return report
 
-    def finalize(self, contract: Mapping[str, Any], results: Mapping[str, Any]) -> Dict[str, Any]:
+    def run_matched_hayflow_comparison(
+        self,
+        h2_source: Path,
+        refit_source: Path,
+        results: Mapping[str, Any],
+    ) -> Dict[str, Any]:
+        from .branch_elm_matched_comparison import MatchedFrozenHayFlowComparison
+
+        return MatchedFrozenHayFlowComparison(
+            self,
+            h2_source,
+            refit_source,
+        ).evaluate(results)
+
+    def finalize(
+        self,
+        contract: Mapping[str, Any],
+        results: Mapping[str, Any],
+        matched_hayflow: Optional[Mapping[str, Any]] = None,
+    ) -> Dict[str, Any]:
         medians = {}
         for view in self.config.input_views:
             values = [float(row["fresh_test"]["clipped_soma_rmse_mv"]) for row in results["retrained_exact_architecture"][view].values()]
@@ -500,7 +522,11 @@ class BranchELMEnrichedBenchmark:
         full_fresh_coverage = int(contract["fresh_test_compatible_episode_count"]) == int(contract["fresh_test_episode_count"])
         report = {
             "schema_version": "06b-c-branch-elm-final-v1",
-            "valid": bool(contract.get("valid") and results.get("valid")),
+            "valid": bool(
+                contract.get("valid")
+                and results.get("valid")
+                and (matched_hayflow is None or matched_hayflow.get("valid"))
+            ),
             "sidecar_only": True,
             "primary_experiment_replaced": False,
             "architecture": "published Branch-ELM num_memory_20",
@@ -509,12 +535,24 @@ class BranchELMEnrichedBenchmark:
             "zero_shot_original_checkpoint": results["zero_shot_original_checkpoint"],
             "published_original_dataset_reference": {"clipped_soma_rmse_mv": ORIGINAL_ELM_TEST_SOMA_RMSE_MV, "spike_auc": ORIGINAL_ELM_TEST_AUC},
             "comparability": {
-                "same_fresh_transitions_as_hayflow_0_40": full_fresh_coverage,
-                "same_fresh_dataset_but_compatible_subset_only": not full_fresh_coverage,
-                "same_target_scope_as_hayflow_0_40": False,
-                "reason": "Branch-ELM reports clipped soma-only RMSE; HayFlow 0.40 mV is an aggregate over all 642 segment voltages.",
-                "claim_elm_beats_or_loses_to_hayflow_authorized": False,
+                "same_fresh_dataset_as_hayflow_0_40": full_fresh_coverage,
+                "same_transitions_as_original_hayflow_0_40": False,
+                "same_target_scope_as_original_hayflow_0_40": False,
+                "original_0_40_reason": "The original HayFlow report pools all 642 segments over 64 selected boundary transitions; Branch-ELM pools clipped soma voltage over 512 post-burn-in transitions.",
+                "matched_voltage_comparison_completed": bool(
+                    matched_hayflow
+                    and matched_hayflow.get("comparison_complete_for_voltage")
+                ),
+                "matched_spike_comparison_completed": bool(
+                    matched_hayflow
+                    and matched_hayflow.get("comparison_complete_for_spikes")
+                ),
+                "claim_elm_beats_or_loses_to_hayflow_authorized_for_matched_voltage_only": bool(
+                    matched_hayflow
+                    and matched_hayflow.get("comparison_complete_for_voltage")
+                ),
             },
+            "matched_hayflow_comparison": dict(matched_hayflow or {}),
             "fresh_test_status": "retrospective_for_project_but_not_used_for_elm_selection",
             "scope": "bounded_enriched_data_canary_not_original_budget_replication",
             "fresh_test_used_for_selection": False,

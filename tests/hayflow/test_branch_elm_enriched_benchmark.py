@@ -11,6 +11,10 @@ from src.hayflow_model.branch_elm_enriched_benchmark import (
     BranchELMEnrichedBenchmark,
     BranchELMEnrichedBenchmarkConfig,
 )
+from src.hayflow_model.branch_elm_matched_comparison import (
+    MatchedFrozenHayFlowComparison,
+    restore_registered_branch_elm_checkpoints,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -18,6 +22,7 @@ NOTEBOOK = ROOT / "notebooks" / "06b_c_supplement_branch_elm_enriched_benchmark.
 PREREGISTRATION = ROOT / "experiments" / "hayflow" / "06b_c_branch_elm_enriched_benchmark" / "preregistration.json"
 EXECUTION_AMENDMENT = PREREGISTRATION.with_name("execution_amendment.json")
 REGISTERED_RESULT = PREREGISTRATION.with_name("result.json")
+MATCHED_AMENDMENT = PREREGISTRATION.with_name("matched_comparison_amendment.json")
 
 
 def test_branch_elm_contract_is_exactly_the_published_small_model():
@@ -93,6 +98,10 @@ def test_elm_sidecar_notebook_uses_compact_outputs_and_stable_download():
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
     assert "display(results)" not in code
+    assert "restore_registered_branch_elm_checkpoints" in code
+    assert "run_matched_hayflow_comparison" in code
+    assert "EXPECTED_05JN_INDEX_SHA256" in code
+    assert "matched['comparison_complete_for_voltage']" in code
 
 
 def test_registered_branch_elm_result_preserves_integrity_and_scope():
@@ -119,5 +128,35 @@ def test_registered_branch_elm_result_preserves_integrity_and_scope():
     assert not result["spike_metrics"]["valid_for_interpretation"]
     assert result["spike_metrics"]["auc"] is None
     assert not result["comparability"]["same_target_scope"]
+    assert not result["comparability"][
+        "same_fresh_transitions_as_hayflow_approximately_0_40_mv"
+    ]
     assert not result["comparability"]["direct_scalar_ranking_authorized"]
     assert not result["primary_experiment_replaced"]
+
+
+def test_matched_completion_is_same_sidecar_and_frozen_metric_only():
+    amendment = json.loads(MATCHED_AMENDMENT.read_text(encoding="utf-8"))
+    assert not amendment["completion"]["new_experiment_created"]
+    assert not amendment["completion"]["hayflow_retraining"]
+    assert not amendment["completion"]["checkpoint_selection"]
+    assert amendment["completion"]["shared_burn_in_ms"] == 4
+    assert "512" in amendment["completion"]["shared_support"]
+    assert amendment["sidecar_closes_after_this_completion"]
+
+
+def test_matched_hayflow_path_cannot_train_or_change_metric_support():
+    source = inspect.getsource(MatchedFrozenHayFlowComparison.evaluate)
+    assert "torch.optim" not in source
+    assert ".backward(" not in source
+    assert "expected_count != 512" in source
+    assert "np.minimum(target, -55.0)" in inspect.getsource(
+        MatchedFrozenHayFlowComparison._soma_metrics
+    )
+    assert '"same_target": True' in source
+    assert '"same_transitions": True' in source
+    assert '"same_input_contract": False' in source
+    assert '"retraining_performed": False' in source
+    recovery = inspect.getsource(restore_registered_branch_elm_checkpoints)
+    assert "len(checkpoints) != 6" in recovery
+    assert '"reports_imported": False' in recovery

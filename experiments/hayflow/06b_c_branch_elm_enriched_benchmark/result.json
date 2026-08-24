@@ -103,16 +103,17 @@
     "scientific_conclusion": "On this bounded enriched-data canary, the published small Branch-ELM does not retain its original-dataset accuracy even after retraining. This is evidence about transfer and support, not proof that the architecture is intrinsically incapable."
   },
   "comparability": {
-    "same_fresh_transitions_as_hayflow_approximately_0_40_mv": true,
+    "same_fresh_dataset_as_hayflow_approximately_0_40_mv": true,
+    "same_fresh_transitions_as_hayflow_approximately_0_40_mv": false,
     "same_target_scope": false,
     "direct_scalar_ranking_authorized": false,
-    "reason": "Branch-ELM uses clipped soma-only RMSE; the reported HayFlow value is an aggregate over all 642 segment voltages.",
-    "matched_followup": "Evaluate the frozen HayFlow candidate with clipped soma-only RMSE on the same 64 fresh episodes. Use a separate spike-positive set for AUC/F1."
+    "reason": "Branch-ELM uses clipped soma-only RMSE over 512 post-burn-in transitions; the reported HayFlow value aggregates all 642 segment voltages over 64 selected boundary transitions.",
+    "matched_followup": "Complete this same 06b-c sidecar by evaluating frozen HayFlow with clipped soma-only RMSE on the exact same 512 post-burn-in transitions. Do not open a separate spike experiment; report spike comparison as unavailable because support has no positives."
   },
   "primary_experiment_replaced": false,
   "full_training_authorized": false,
   "next_steps": {
     "primary": "nested_coupling_aware_local_bridge_optimization_scaling_forensic",
-    "professor_sidecar": "matched_frozen_hayflow_soma_metric_audit"
+    "professor_sidecar": "complete_matched_frozen_hayflow_soma_metric_inside_existing_06b_c_sidecar_then_close"
   }
 }

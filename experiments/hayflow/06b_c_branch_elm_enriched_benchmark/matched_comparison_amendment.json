@@ -1,0 +1,33 @@
+{
+  "schema_version": "06b-c-branch-elm-matched-comparison-amendment-v1",
+  "status": "metric_alignment_completion_after_initial_sidecar_result",
+  "reason": "The initial sidecar revealed that the reported HayFlow approximately 0.40 mV value and the Branch-ELM fresh metric used different target scopes and different transition subsets.",
+  "observed_mismatch": {
+    "original_hayflow": "all 642 segment voltages over 64 preregistered boundary transitions",
+    "branch_elm": "clipped soma-only voltage over 512 post-burn-in transitions from the same 64 episodes"
+  },
+  "completion": {
+    "experiment_identity": "remains the 06b-c Branch-ELM professor-requested sidecar",
+    "new_experiment_created": false,
+    "hayflow_checkpoint": "existing frozen 05j-n direct-tree refit checkpoints for seeds 17, 29, and 43",
+    "shared_support": "the exact 512 post-burn-in transitions already used for Branch-ELM fresh evaluation",
+    "shared_target": "segment-0 soma voltage at t+1 clipped above -55 mV",
+    "shared_metric": "pooled RMSE in mV",
+    "shared_burn_in_ms": 4,
+    "hayflow_retraining": false,
+    "checkpoint_selection": false,
+    "architecture_search": false
+  },
+  "primary_comparison": "frozen HayFlow versus retrained Branch-ELM using causal U_realized and paired seeds",
+  "secondary_comparisons": [
+    "published Branch-ELM checkpoint zero-shot",
+    "retrained Branch-ELM with U_scheduled",
+    "frozen HayFlow three-checkpoint ensemble mean"
+  ],
+  "remaining_structural_difference": "Branch-ELM consumes event history only, whereas HayFlow consumes the complete teacher boundary state S_t plus U_realized. The aligned result is a system-level model comparison, not a pure architecture-only causal attribution.",
+  "spike_metric_policy": "The shared support contains zero positive somatic spikes, so AUC and F1 cannot form a valid matched spike comparison. This is reported as unavailable, not replaced with another dataset or another experiment.",
+  "fresh_outcomes_already_opened": true,
+  "model_or_checkpoint_selection_from_fresh_outcomes": false,
+  "sidecar_closes_after_this_completion": true,
+  "next_step_after_completion": "return_to_nested_coupling_aware_local_bridge_optimization_scaling_forensic"
+}

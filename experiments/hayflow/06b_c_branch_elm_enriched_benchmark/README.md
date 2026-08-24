@@ -62,7 +62,11 @@ Every reported subset contains zero positive somatic spikes.  AUC is therefore
 undefined and F1=0 is not interpretable as a discrimination failure.  A
 spike-positive evaluation set is required for that comparison.
 
-The professor-requested comparison is consequently only partially closed.  A
-direct scalar HayFlow-versus-ELM ranking remains prohibited until the frozen
-HayFlow candidate is evaluated with the same clipped soma-only target on these
-same 64 episodes.  The registered machine-readable result is `result.json`.
+The first archive therefore closes only the ELM half of the professor-requested
+comparison.  The same notebook is now amended to evaluate the already-frozen
+HayFlow candidate over the exact 512 Branch-ELM post-burn-in transitions with
+the same clipped soma-only target.  No new experiment, retraining, checkpoint
+selection, or architecture search is introduced.  Once that amended archive
+is registered, this sidecar is closed and work returns to the primary 06b-c
+causal trajectory.  The current registered ELM result is `result.json`; the
+metric-alignment contract is `matched_comparison_amendment.json`.

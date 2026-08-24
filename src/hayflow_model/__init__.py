@@ -356,6 +356,13 @@ from .branch_elm_enriched_benchmark import (
     BranchELMEnrichedBenchmark,
     BranchELMEnrichedBenchmarkConfig,
 )
+from .branch_elm_matched_comparison import (
+    EXPECTED_BRANCH_ELM_RESUME_ARCHIVE_SHA256,
+    EXPECTED_BRANCH_ELM_RESUME_FINAL_SHA256,
+    EXPECTED_BRANCH_ELM_RESUME_INDEX_SHA256,
+    MatchedFrozenHayFlowComparison,
+    restore_registered_branch_elm_checkpoints,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -618,4 +625,9 @@ __all__ = [
     "ORIGINAL_ELM_TEST_SOMA_RMSE_MV",
     "BranchELMEnrichedBenchmark",
     "BranchELMEnrichedBenchmarkConfig",
+    "EXPECTED_BRANCH_ELM_RESUME_ARCHIVE_SHA256",
+    "EXPECTED_BRANCH_ELM_RESUME_FINAL_SHA256",
+    "EXPECTED_BRANCH_ELM_RESUME_INDEX_SHA256",
+    "MatchedFrozenHayFlowComparison",
+    "restore_registered_branch_elm_checkpoints",
 ]
