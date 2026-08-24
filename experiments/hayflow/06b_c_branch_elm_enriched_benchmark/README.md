@@ -84,3 +84,28 @@ initialization, history, transitions, target, burn-in, and metric.  No teacher
 boundary state may be injected into only one arm.  The sidecar remains open
 only for this correction; it must not branch into additional ELM experiments.
 The retraction and raw historical numbers are recorded in `result.json`.
+
+## Corrective execution prepared
+
+The replacement notebook now implements a bounded teacher-boundary one-step
+comparison.  Both arms receive the exact same numeric per-segment tensor made
+from current voltage and axial differences, normalized mechanism STATE,
+mechanism presence, local ions, causal `U_realized`, static morphology and
+region identity.  The target is the unclipped authentic NEURON transition
+`V_(t+1) - V_t`; neither arm receives the teacher endpoint and no rollout is
+performed.
+
+The matched active voltage paths are the 8,002-parameter Branch-ELM core
+(7,981 parameters influence its voltage output) and the current
+8,985-parameter HayFlow voltage bridge.  The 7,212-parameter STATE updater is
+reported as part of the 16,197-parameter complete compact transition system,
+but it is downstream and cannot affect the voltage score.  Both arms use the
+same paired samples, optimizer hyperparameters, loss, checkpoint-selection
+role and development role over seeds 61017, 61029 and 61043.
+
+The published checkpoint cannot be reused under this strict common-input
+contract; the ELM core is retrained while retaining its published branch and
+memory hyperparameters.  The original event-only ELM result remains secondary
+context, not the matched ranking.  The executable contract is recorded in
+`information_matched_transition_amendment.json`.  This is the sole corrective
+run and closes the sidecar once its artifact is registered.

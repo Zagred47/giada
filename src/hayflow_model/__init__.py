@@ -363,6 +363,13 @@ from .branch_elm_matched_comparison import (
     MatchedFrozenHayFlowComparison,
     restore_registered_branch_elm_checkpoints,
 )
+from .branch_elm_information_matched_transition import (
+    MATCHED_MODEL_NAMES,
+    InformationMatchedBranchELM,
+    InformationMatchedBridgeAdapter,
+    InformationMatchedTransitionConfig,
+    InformationMatchedVoltageTransitionBenchmark,
+)
 
 __all__ = [
     "DualRidgeBaseline",
@@ -630,4 +637,9 @@ __all__ = [
     "EXPECTED_BRANCH_ELM_RESUME_INDEX_SHA256",
     "MatchedFrozenHayFlowComparison",
     "restore_registered_branch_elm_checkpoints",
+    "MATCHED_MODEL_NAMES",
+    "InformationMatchedBranchELM",
+    "InformationMatchedBridgeAdapter",
+    "InformationMatchedTransitionConfig",
+    "InformationMatchedVoltageTransitionBenchmark",
 ]

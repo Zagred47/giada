@@ -1,0 +1,60 @@
+{
+  "schema_version": "06b-c-information-matched-transition-amendment-v1",
+  "status": "preregistered_before_corrective_execution",
+  "experiment_identity": "same professor-requested 06b-c Branch-ELM sidecar",
+  "new_experiment_created": false,
+  "question": "On authentic one-millisecond teacher voltage transitions, which compact voltage architecture learns better when both arms receive the same causal information tensor?",
+  "correction_of": {
+    "artifact_sha256": "2a8e10ade7ed5cd82556a017ecfb2fee28e342c6ca49f60bb787f500e6b17045",
+    "reason": "the previous addendum used retired H2+refit and unequal input information",
+    "previous_ranking_reinstated": false
+  },
+  "common_contract": {
+    "input": "the exact same numeric per-segment tensor assembled from voltage_t, parent/child axial voltage differences_t, normalized mechanism_STATE_t, mechanism presence, local ions_t, U_realized, segment static features, and region identity",
+    "target": "raw NEURON V_t_plus_1 minus V_t",
+    "target_clipping": null,
+    "same_training_pairs": true,
+    "same_sample_order": true,
+    "same_loss": "active-weighted smooth L1 on normalized delta voltage",
+    "same_optimizer": "AdamW with identical hyperparameters",
+    "same_checkpoint_selection": "minimum global raw voltage-transition RMSE on the same train-derived calibration role",
+    "evaluation": "same disjoint train-derived development role",
+    "teacher_endpoint_used_as_input": false,
+    "autoregressive_rollout": false
+  },
+  "arms": {
+    "branch_elm_core": {
+      "total_parameter_count": 8002,
+      "voltage_path_parameter_count": 7981,
+      "published_core_hyperparameters_retained": true,
+      "published_checkpoint_used": false,
+      "original_event_only_routing_retained": false,
+      "reason": "the input adapter must change so the two arms receive identical information"
+    },
+    "hayflow_voltage_bridge": {
+      "voltage_path_parameter_count": 8985,
+      "downstream_state_updater_parameter_count": 7212,
+      "complete_compact_transition_system_parameter_count": 16197,
+      "downstream_state_updater_affects_voltage_metric": false
+    }
+  },
+  "seeds": [61017, 61029, 61043],
+  "training_steps_per_arm_and_seed": 800,
+  "primary_metrics": [
+    "global raw endpoint-voltage RMSE in mV",
+    "somatic raw endpoint-voltage RMSE in mV"
+  ],
+  "secondary_metrics": [
+    "active-transition RMSE",
+    "improvement over voltage persistence"
+  ],
+  "prohibited": [
+    "using H2 or 05j-n as the HayFlow comparator",
+    "giving either arm a teacher endpoint or a field absent from the other arm",
+    "clipping the primary voltage target",
+    "claiming an autoregressive result",
+    "comparing the matched result directly with the published 0.6376 mV without the input-contract caveat",
+    "opening another ELM experiment after this correction"
+  ],
+  "completion": "register the returned archive, close the professor sidecar, and return to the nested coupling-aware local bridge optimization scaling forensic"
+}

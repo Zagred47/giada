@@ -15,6 +15,10 @@ from src.hayflow_model.branch_elm_matched_comparison import (
     MatchedFrozenHayFlowComparison,
     restore_registered_branch_elm_checkpoints,
 )
+from src.hayflow_model.branch_elm_information_matched_transition import (
+    InformationMatchedTransitionConfig,
+    InformationMatchedVoltageTransitionBenchmark,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -23,6 +27,9 @@ PREREGISTRATION = ROOT / "experiments" / "hayflow" / "06b_c_branch_elm_enriched_
 EXECUTION_AMENDMENT = PREREGISTRATION.with_name("execution_amendment.json")
 REGISTERED_RESULT = PREREGISTRATION.with_name("result.json")
 MATCHED_AMENDMENT = PREREGISTRATION.with_name("matched_comparison_amendment.json")
+INFORMATION_MATCHED_AMENDMENT = PREREGISTRATION.with_name(
+    "information_matched_transition_amendment.json"
+)
 
 
 def test_branch_elm_contract_is_exactly_the_published_small_model():
@@ -93,16 +100,17 @@ def test_elm_sidecar_notebook_uses_compact_outputs_and_stable_download():
         if cell.get("cell_type") == "code":
             ast.parse("".join(cell.get("source", [])))
             assert not cell.get("outputs")
-    assert "BranchELMEnrichedBenchmark" in code
-    assert "EXPECTED_05JO_INDEX_SHA256" in code
+    assert "InformationMatchedVoltageTransitionBenchmark" in code
+    assert "EXPECTED_05T_INDEX_SHA256" in code
+    assert "EXPECTED_06B_INDEX_SHA256" in code
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
     assert "display(results)" not in code
-    assert "restore_registered_branch_elm_checkpoints" in code
-    assert "run_matched_hayflow_comparison" in code
-    assert "EXPECTED_05JN_INDEX_SHA256" in code
-    assert "matched['comparison_complete_for_voltage']" in code
-    assert "Notebook 06b-c Branch-ELM ritirato" in code
+    assert "run_information_matched_benchmark" in code
+    assert "finalize_information_matched_benchmark" in code
+    assert "EXPECTED_05JO_INDEX_SHA256" not in code
+    assert "EXPECTED_05JN_INDEX_SHA256" not in code
+    assert "H2_SOURCE" not in code
 
 
 def test_registered_branch_elm_result_preserves_integrity_and_scope():
@@ -155,6 +163,41 @@ def test_matched_completion_is_same_sidecar_and_frozen_metric_only():
     assert "512" in amendment["completion"]["shared_support"]
     assert not amendment["sidecar_closes_after_this_completion"]
     assert not amendment["retraction"]["scientific_comparison_valid"]
+
+
+def test_corrective_transition_contract_is_same_input_and_authentic_target():
+    amendment = json.loads(
+        INFORMATION_MATCHED_AMENDMENT.read_text(encoding="utf-8")
+    )
+    assert not amendment["new_experiment_created"]
+    assert amendment["common_contract"]["target"] == "raw NEURON V_t_plus_1 minus V_t"
+    assert amendment["common_contract"]["target_clipping"] is None
+    assert not amendment["common_contract"]["teacher_endpoint_used_as_input"]
+    assert not amendment["common_contract"]["autoregressive_rollout"]
+    assert amendment["arms"]["branch_elm_core"]["total_parameter_count"] == 8002
+    assert amendment["arms"]["hayflow_voltage_bridge"]["voltage_path_parameter_count"] == 8985
+    assert amendment["arms"]["hayflow_voltage_bridge"]["complete_compact_transition_system_parameter_count"] == 16197
+
+
+def test_information_matched_session_passes_one_tensor_to_both_arms():
+    config = InformationMatchedTransitionConfig()
+    config.validate()
+    assert config.seeds == (61017, 61029, 61043)
+    assert config.training_steps == 800
+    train = inspect.getsource(InformationMatchedVoltageTransitionBenchmark._train_seed)
+    batch = inspect.getsource(
+        InformationMatchedVoltageTransitionBenchmark._common_numpy_batch
+    )
+    final = inspect.getsource(
+        InformationMatchedVoltageTransitionBenchmark.finalize_information_matched_benchmark
+    )
+    assert "prediction = model(features)" in train
+    assert "for name in MATCHED_MODEL_NAMES" in train
+    assert 'values["voltage_t1"]' in batch and 'values["voltage_t"]' in batch
+    assert "np.minimum" not in batch
+    assert '"same_numeric_input_tensor": True' in final
+    assert '"teacher_endpoint_used_as_input": False' in final
+    assert '"autoregressive_rollout_performed": False' in final
 
 
 def test_matched_hayflow_path_cannot_train_or_change_metric_support():

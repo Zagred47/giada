@@ -1,0 +1,18 @@
+information_matched_voltage_transition:
+  seeds: [61017, 61029, 61043]
+  training_steps: 800
+  evaluation_interval: 100
+  progress_interval: 50
+  batch_transition_count: 8
+  segments_per_transition: 256
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  voltage_scale_mv: 20.0
+  delta_limit_mv: 100.0
+  active_delta_threshold_mv: 5.0
+  active_weight: 4.0
+  evaluation_transition_chunk: 16
+  expected_branch_elm_parameter_count: 8002
+  expected_hayflow_bridge_parameter_count: 8985
+  expected_state_updater_parameter_count: 7212
