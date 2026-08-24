@@ -43,5 +43,6 @@ slightly negative for downstream STATE.  This rejects the tested
 morphology is irrelevant to the neuron or to every possible architecture.
 
 No full training, fresh-test generation, or mass dataset generation is
-authorized.  The professor-requested Branch-ELM sidecar remains logically
-independent and should be completed before the next primary experiment.
+authorized.  The logically independent professor-requested Branch-ELM
+sidecar has now been completed and closed.  The next primary activity is the
+nested coupling-aware local bridge optimization scaling forensic.

@@ -108,9 +108,10 @@ def test_registered_branch_elm_result_preserves_integrity_and_scope():
     result = json.loads(REGISTERED_RESULT.read_text(encoding="utf-8"))
     assert result["status"] == "completed_and_independently_verified"
     assert result["integrity"]["valid"]
-    assert result["integrity"]["archive_sha256"] == "721ba0bb5bffecaa11e46f9aa0fbec081a935142d97e13a13daff77acf0ab816"
-    assert result["integrity"]["artifact_index_sha256"] == "5c76a099b61a547d467b6894980a0a6ab0a1aa38752e97be75aa71877caf9dc0"
-    assert result["integrity"]["final_report_sha256"] == "8a3913d4630203fd35b6ce0d14be811d6b44bfea3f3f9661e6c25d7fc9a8a1b7"
+    assert result["integrity"]["archive_sha256"] == "2a8e10ade7ed5cd82556a017ecfb2fee28e342c6ca49f60bb787f500e6b17045"
+    assert result["integrity"]["artifact_index_sha256"] == "2abadf5e4172113d1d80f0946ae37eb62fdb519f4959ec7537f4b0a83d4637ca"
+    assert result["integrity"]["final_report_sha256"] == "d0b98688208d9dd5cc0fa45f4be85f5db38e3c4c89e967592a9e4e7631120d0c"
+    assert result["integrity"]["matched_hayflow_comparison_sha256"] == "d4a00f64cb6f2b9c69c9237d2ef9eef2081172a5127dfdc3e8a88fc78d689a7b"
     assert result["integrity"]["indexed_member_failures"] == []
     assert result["integrity"]["checkpoint_file_count"] == 6
     assert result["execution"]["recovered_completed_checkpoint_count"] == 6
@@ -122,8 +123,8 @@ def test_registered_branch_elm_result_preserves_integrity_and_scope():
         "development": 10,
     }
     assert result["contract"]["fresh_test_compatible_episode_count"] == 64
-    assert result["retrained_exact_architecture"]["fresh_test_clipped_soma_rmse_mv"]["U_realized"]["median"] == 2.7096906444434774
-    assert result["retrained_exact_architecture"]["fresh_test_clipped_soma_rmse_mv"]["U_scheduled"]["median"] == 3.301054152891874
+    assert result["retrained_exact_architecture"]["fresh_test_clipped_soma_rmse_mv"]["U_realized"]["median"] == 2.709690563381758
+    assert result["retrained_exact_architecture"]["fresh_test_clipped_soma_rmse_mv"]["U_scheduled"]["median"] == 3.3010539723936594
     assert result["spike_metrics"]["positive_count_in_every_reported_subset"] == 0
     assert not result["spike_metrics"]["valid_for_interpretation"]
     assert result["spike_metrics"]["auc"] is None
@@ -131,7 +132,12 @@ def test_registered_branch_elm_result_preserves_integrity_and_scope():
     assert not result["comparability"][
         "same_fresh_transitions_as_hayflow_approximately_0_40_mv"
     ]
-    assert not result["comparability"]["direct_scalar_ranking_authorized"]
+    assert not result["comparability"]["direct_scalar_ranking_against_original_hayflow_0_40_authorized"]
+    assert result["comparability"]["matched_voltage_ranking_authorized"]
+    assert not result["comparability"]["matched_voltage_same_input_contract"]
+    assert result["matched_frozen_hayflow"]["fresh_test_clipped_soma_rmse_mv"]["median"] == 1.349443744937548
+    assert result["matched_frozen_hayflow"]["paired_error_reduction_vs_branch_elm_U_realized_fraction"]["median"] == 0.5019934146084155
+    assert result["next_steps"]["professor_sidecar"] == "closed_no_further_experiment"
     assert not result["primary_experiment_replaced"]
 
 

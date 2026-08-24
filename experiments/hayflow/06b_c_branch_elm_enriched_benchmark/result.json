@@ -1,14 +1,15 @@
 {
-  "schema_version": "06b-c-branch-elm-registered-result-v1",
+  "schema_version": "06b-c-branch-elm-registered-result-v2",
   "experiment": "branch_elm_enriched_dataset_sidecar",
   "status": "completed_and_independently_verified",
   "integrity": {
-    "archive_sha256": "721ba0bb5bffecaa11e46f9aa0fbec081a935142d97e13a13daff77acf0ab816",
-    "artifact_index_sha256": "5c76a099b61a547d467b6894980a0a6ab0a1aa38752e97be75aa71877caf9dc0",
-    "final_report_sha256": "8a3913d4630203fd35b6ce0d14be811d6b44bfea3f3f9661e6c25d7fc9a8a1b7",
-    "benchmark_contract_sha256": "cc435c7b3b4f1db54041bf757324331eb879bc592d883b10d67ec45fdb615b9e",
-    "benchmark_results_sha256": "424f7576098f7e95f95a2d9256628132fba1c505f5b8b9d23e857020edfe70db",
-    "indexed_member_count": 9,
+    "archive_sha256": "2a8e10ade7ed5cd82556a017ecfb2fee28e342c6ca49f60bb787f500e6b17045",
+    "artifact_index_sha256": "2abadf5e4172113d1d80f0946ae37eb62fdb519f4959ec7537f4b0a83d4637ca",
+    "final_report_sha256": "d0b98688208d9dd5cc0fa45f4be85f5db38e3c4c89e967592a9e4e7631120d0c",
+    "benchmark_contract_sha256": "0b0e306e3b8c5911d300444faf98b765ab92e99d3265eceb982267e8075449f9",
+    "benchmark_results_sha256": "4a3e66dc3e3a18c4b2ce19334f30937833bdbecedef37ef04110b8a5bb7fddf8",
+    "matched_hayflow_comparison_sha256": "d4a00f64cb6f2b9c69c9237d2ef9eef2081172a5127dfdc3e8a88fc78d689a7b",
+    "indexed_member_count": 10,
     "indexed_member_failures": [],
     "checkpoint_file_count": 6,
     "zip_crc_valid": true,
@@ -16,7 +17,7 @@
   },
   "execution": {
     "contract_code_revision": "8a90b429871c44e8ad21856843a817345b9d8ab5",
-    "final_report_code_revision": "d182ebb563941d172d030428eb013ced98e49e46",
+    "final_report_code_revision": "edda0db2687b46e704b5b77a78becf3e4b4d9af6",
     "device": "cuda",
     "recovered_completed_checkpoint_count": 6,
     "retraining_avoided_for_recovered_checkpoints": true,
@@ -52,16 +53,16 @@
   "retrained_exact_architecture": {
     "fresh_test_clipped_soma_rmse_mv": {
       "U_scheduled": {
-        "17": 3.301054152891874,
-        "29": 2.380112455651644,
-        "43": 3.683890593032833,
-        "median": 3.301054152891874
+        "17": 3.3010539723936594,
+        "29": 2.3801122934374526,
+        "43": 3.6838905293085418,
+        "median": 3.3010539723936594
       },
       "U_realized": {
-        "17": 2.659912058443558,
-        "29": 2.7096906444434774,
-        "43": 5.319469991494508,
-        "median": 2.7096906444434774
+        "17": 2.6599121103997967,
+        "29": 2.709690563381758,
+        "43": 5.319470411007508,
+        "median": 2.709690563381758
       }
     },
     "development_clipped_soma_rmse_mv": {
@@ -102,18 +103,55 @@
     "input_view": "U_realized has the better fresh median, but U_scheduled contains the best individual seed and is less unstable; this canary does not establish a robust winner between views.",
     "scientific_conclusion": "On this bounded enriched-data canary, the published small Branch-ELM does not retain its original-dataset accuracy even after retraining. This is evidence about transfer and support, not proof that the architecture is intrinsically incapable."
   },
+  "matched_frozen_hayflow": {
+    "valid": true,
+    "retraining_performed": false,
+    "checkpoint_selection_performed": false,
+    "h2_parameter_count": 277820,
+    "refit_head_parameter_count": 43009,
+    "combined_parameter_count": 320829,
+    "parameter_ratio_vs_branch_elm": 40.0936015996001,
+    "fresh_test_clipped_soma_rmse_mv": {
+      "17": 1.5545033830090176,
+      "29": 1.156193913394785,
+      "43": 1.349443744937548,
+      "median": 1.349443744937548,
+      "ensemble_mean": 1.350013493957726
+    },
+    "fresh_test_soma_mae_mv": {
+      "17": 1.3213857231999109,
+      "29": 0.9812067247106031,
+      "43": 1.0928143163822814,
+      "ensemble_mean": 1.1295946572385422
+    },
+    "paired_error_reduction_vs_branch_elm_U_realized_fraction": {
+      "17": 0.4155809220420562,
+      "29": 0.573311458873065,
+      "43": 0.7463199076838246,
+      "median": 0.5019934146084155
+    }
+  },
   "comparability": {
     "same_fresh_dataset_as_hayflow_approximately_0_40_mv": true,
     "same_fresh_transitions_as_hayflow_approximately_0_40_mv": false,
     "same_target_scope": false,
-    "direct_scalar_ranking_authorized": false,
-    "reason": "Branch-ELM uses clipped soma-only RMSE over 512 post-burn-in transitions; the reported HayFlow value aggregates all 642 segment voltages over 64 selected boundary transitions.",
-    "matched_followup": "Complete this same 06b-c sidecar by evaluating frozen HayFlow with clipped soma-only RMSE on the exact same 512 post-burn-in transitions. Do not open a separate spike experiment; report spike comparison as unavailable because support has no positives."
+    "direct_scalar_ranking_against_original_hayflow_0_40_authorized": false,
+    "original_0_40_reason": "The original HayFlow report pools all 642 segments over 64 selected boundary transitions; the matched comparison pools clipped soma voltage over 512 post-burn-in transitions.",
+    "matched_voltage_ranking_authorized": true,
+    "matched_voltage_same_dataset": true,
+    "matched_voltage_same_transitions": true,
+    "matched_voltage_same_target": true,
+    "matched_voltage_same_metric": true,
+    "matched_voltage_same_burn_in": true,
+    "matched_voltage_same_input_contract": false,
+    "input_contract_warning": "Branch-ELM consumes event history only; frozen HayFlow consumes the complete teacher boundary state S_t plus U_realized.",
+    "matched_spike_comparison_completed": false,
+    "matched_spike_comparison_reason": "The shared 512-transition support contains zero positive somatic spikes."
   },
   "primary_experiment_replaced": false,
   "full_training_authorized": false,
   "next_steps": {
     "primary": "nested_coupling_aware_local_bridge_optimization_scaling_forensic",
-    "professor_sidecar": "complete_matched_frozen_hayflow_soma_metric_inside_existing_06b_c_sidecar_then_close"
+    "professor_sidecar": "closed_no_further_experiment"
   }
 }

@@ -62,11 +62,25 @@ Every reported subset contains zero positive somatic spikes.  AUC is therefore
 undefined and F1=0 is not interpretable as a discrimination failure.  A
 spike-positive evaluation set is required for that comparison.
 
-The first archive therefore closes only the ELM half of the professor-requested
-comparison.  The same notebook is now amended to evaluate the already-frozen
-HayFlow candidate over the exact 512 Branch-ELM post-burn-in transitions with
-the same clipped soma-only target.  No new experiment, retraining, checkpoint
-selection, or architecture search is introduced.  Once that amended archive
-is registered, this sidecar is closed and work returns to the primary 06b-c
-causal trajectory.  The current registered ELM result is `result.json`; the
-metric-alignment contract is `matched_comparison_amendment.json`.
+The amended archive completes the voltage comparison inside this same sidecar.
+The frozen HayFlow candidate obtains a median clipped soma RMSE of 1.349 mV
+(seeds: 1.555, 1.156, and 1.349 mV), compared with 2.710 mV for retrained
+Branch-ELM with `U_realized` (2.660, 2.710, and 5.319 mV).  HayFlow therefore
+reduces the paired median error by 50.2%; its ensemble prediction is 1.350 mV.
+No retraining, checkpoint selection, architecture search, or fresh-outcome
+selection was performed for HayFlow.
+
+This is a valid matched system-level voltage comparison: both models use the
+same 64 episodes, 512 transitions, 4 ms burn-in, clipped somatic target, and
+pooled RMSE.  It is not a capacity- or information-matched architecture
+ablation: Branch-ELM has 8,002 parameters and consumes event history, whereas
+the frozen HayFlow stack has 320,829 parameters and consumes the complete
+17,220-variable boundary state plus `U_realized`.  The earlier HayFlow value
+near 0.40 mV remains a different all-segment/boundary metric and is not used in
+the ranking.  Spike comparison is unavailable because the shared support has
+zero positive somatic spikes.
+
+The professor-requested sidecar is now closed.  No additional comparison
+experiment is planned; work returns to the primary 06b-c causal trajectory.
+The registered result is `result.json`, and the frozen metric-alignment
+contract is `matched_comparison_amendment.json`.
