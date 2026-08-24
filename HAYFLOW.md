@@ -1437,3 +1437,28 @@ windows. Teacher voltage remains the millisecond boundary condition, so 06b-d
 does not claim an autonomous voltage rollout. Validation/test access,
 full-neuron training, fresh-test generation and mass data generation remain
 prohibited until the preregistered causal and recursive gates are evaluated.
+
+The completed 06b-d artifact is registered in
+`experiments/hayflow/06b_d_nested_coupling_optimization_scaling_forensic/result.json`.
+All 88 indexed members passed independent integrity verification. Increasing
+the joint-cosine budget from 500 to 1500 steps adds 2.51 percentage points of
+median voltage gain. The joint downstream-STATE objective adds 1.20 STATE
+points over voltage-only training without a voltage tradeoff, and authentic
+alignment beats the shuffled-path control by 1.59 STATE points. Thus bridge
+optimization, downstream objective alignment and causal specificity are all
+identified at one step.
+
+The registered 8 ms contrast is only 1.66 percentage points, below the 2%
+recursive gate, with one seed slightly negative. Cosine decay is not itself
+identified and gradient alignment changes sign during training. The formal
+diagnosis is `ONE_STEP_COUPLING_OBJECTIVE_ONLY`: the local bridge is learnable,
+but the present voltage/STATE contract does not yet turn the one-step gain into
+robust temporal composition. A promising constant-schedule 8 ms contrast is
+retained only as an exploratory hypothesis because it was not the registered
+primary contrast and reverses sign in one seed.
+
+The authorized next activity is a small train-only recursive-contract matrix.
+It must separate exposure-bias repair, missing recurrent variables and
+optimizer-trajectory effects under shared seeds, windows and budgets. It may
+not access validation/test state, generate a fresh test, train the full neuron
+or authorize mass data before a new preregistered recursive gate passes.

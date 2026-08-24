@@ -1,0 +1,116 @@
+{
+  "schema_version": "06b-d-registered-result-v1",
+  "experiment": "nested_coupling_optimization_scaling_forensic",
+  "status": "completed_and_independently_verified",
+  "archive_sha256": "a630a4532bef1cce49de733fe12b521de765daa906340a7b48ca99ef7e24291e",
+  "artifact_index_sha256": "5b280e0d5aa093f54ce0411e873e8f044354b2e30cb3aa21744cfd1061455882",
+  "final_report_sha256": "499f2df9c3c9c29d8f75cc523d4d089c245e743720e6eb238c3bd10c29c04b6c",
+  "indexed_member_count": 88,
+  "indexed_member_failures": [],
+  "zip_crc_valid": true,
+  "integrity_valid": true,
+  "valid": true,
+  "component_decision_grade": true,
+  "code_revision": "723953af4aa5cb0836866b48d3ff3f2bc832d73a",
+  "diagnosis": "ONE_STEP_COUPLING_OBJECTIVE_ONLY",
+  "gate_checks": {
+    "optimizer_budget_scaling_identified": true,
+    "joint_objective_identified": true,
+    "causal_specificity_identified": true,
+    "recursive_benefit_identified": false,
+    "cosine_schedule_identified": false
+  },
+  "median_contrasts": {
+    "scaling_voltage_gain": 0.02513385544764113,
+    "scaling_state_gain": 0.005719325844835921,
+    "joint_voltage_effect": 0.008057700496533649,
+    "joint_state_effect": 0.011969291606960142,
+    "causal_specificity_voltage_effect": 0.0032173622165794225,
+    "causal_specificity_state_effect": 0.01592719634455919,
+    "joint_recursive_effect": 0.016601695567844188,
+    "cosine_voltage_objective_effect": -0.0023391274566267883,
+    "cosine_joint_objective_effect": 0.0012469639396273102
+  },
+  "per_seed_registered_contrasts": {
+    "61017": {
+      "scaling_voltage_gain": 0.02513385544764113,
+      "joint_state_effect": 0.011295633297608965,
+      "causal_specificity_state_effect": 0.006384669064726012,
+      "joint_recursive_effect": -0.0010709247375718656
+    },
+    "61029": {
+      "scaling_voltage_gain": 0.013307753613188478,
+      "joint_state_effect": 0.011969291606960142,
+      "causal_specificity_state_effect": 0.01592719634455919,
+      "joint_recursive_effect": 0.025438309423685523
+    },
+    "61043": {
+      "scaling_voltage_gain": 0.0334634925316063,
+      "joint_state_effect": 0.014361959258200607,
+      "causal_specificity_state_effect": 0.01798914789318573,
+      "joint_recursive_effect": 0.016601695567844188
+    }
+  },
+  "registered_thresholds": {
+    "minimum_scaling_gain_fraction": 0.01,
+    "minimum_joint_state_gain_fraction": 0.01,
+    "maximum_joint_voltage_degradation_fraction": 0.01,
+    "minimum_causal_specificity_gain_fraction": 0.01,
+    "minimum_recursive_gain_fraction": 0.02
+  },
+  "joint_cosine_final_development_medians": {
+    "voltage_delta_rmse_mv": 5.5874505043029785,
+    "voltage_improvement_vs_persistence_fraction": 0.13434383972157738,
+    "state_normalized_delta_rmse": 3.820535784172636,
+    "state_improvement_vs_persistence_fraction": 0.14913452964040352,
+    "eight_ms_recursive_state_improvement_vs_persistence_fraction": 0.1791204638897649
+  },
+  "gradient_probe": {
+    "initial_state_loss_scales_by_seed": {
+      "61017": 0.01,
+      "61029": 0.0196511076436073,
+      "61043": 0.037948830141910035
+    },
+    "seed_61017_scale_hit_registered_lower_clip": true,
+    "initial_gradient_cosines_by_seed": {
+      "61017": -0.38064048985663607,
+      "61029": 0.7065771505121224,
+      "61043": 0.6289123857327328
+    },
+    "gradient_alignment_stable_across_seeds_and_budgets": false
+  },
+  "exploratory_observation_not_a_registered_success": {
+    "contrast": "joint_constant minus voltage_constant at 8 ms",
+    "per_seed_effects": {
+      "61017": -0.01312942390012728,
+      "61029": 0.03928082828078183,
+      "61043": 0.07606656659760913
+    },
+    "median_effect": 0.03928082828078183,
+    "interpretation": "The constant-schedule arm suggests that recursive behavior may depend on the optimization trajectory, but the contrast was not the preregistered recursive gate and reverses sign in one seed. It is hypothesis-generating only."
+  },
+  "interpretation": {
+    "optimizer_scaling": "Extending the preregistered joint-cosine trajectory from 500 to 1500 steps adds 2.51 percentage points of median voltage gain, clearly passing the 1% scaling gate; the corresponding STATE gain adds only 0.57 points.",
+    "joint_objective": "At 1500 steps, the true joint objective improves median downstream STATE gain by 1.20 points over voltage-only cosine while also improving voltage by 0.81 points, so the STATE-aware objective is useful without a voltage tradeoff.",
+    "causal_specificity": "The aligned joint path beats its shuffled counterpart by 1.59 points on downstream STATE at the median. The voltage-only specificity effect is much smaller at 0.32 points, so the strongest causal evidence concerns the downstream STATE objective.",
+    "schedule": "Cosine decay is not identified as beneficial. Its registered effects remain below 1%, and the gradient cosine changes sign across seeds, arms and budgets.",
+    "recursion": "The preregistered joint-cosine advantage over voltage-cosine at 8 ms is 1.66 points, below the 2% gate, with one seed slightly negative. The one-step improvement therefore cannot yet justify a coupled autoregressive canary.",
+    "scientific_conclusion": "More optimization and a causally aligned downstream objective make the compact bridge more learnable at one step. The remaining obstacle is temporal composition of the voltage/STATE contract, not absence of one-step signal.",
+    "what_is_not_concluded": "This experiment does not show that joint training is useless, that recurrence is impossible, or that the constant schedule is a validated winner. Teacher voltage and ion context were still supplied at each millisecond, so no autonomous voltage rollout was tested."
+  },
+  "methodology": {
+    "state_and_outcome_splits_read": ["train"],
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "development_used_for_selection": false,
+    "same_initialization_within_seed": true,
+    "same_minibatch_stream_within_seed": true,
+    "state_updater_retraining_performed": false,
+    "teacher_voltage_boundary_used_each_ms": true,
+    "autonomous_voltage_rollout_claimed": false
+  },
+  "full_training_authorized": false,
+  "fresh_test_generation_authorized": false,
+  "mass_dataset_generation_authorized": false,
+  "next_step": "preregister a bounded train-only recursive voltage-state contract matrix that separates exposure-bias repair, missing recurrent state, and optimizer-trajectory effects before any 06c canary"
+}

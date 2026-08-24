@@ -33,3 +33,37 @@ diagnostic role and cannot select a deployable candidate.
 
 Notebook:
 `notebooks/06b_d_nested_coupling_optimization_scaling_forensic.ipynb`.
+
+## Registered result
+
+The returned archive from revision `723953a` passed independent ZIP CRC and
+all 88 indexed member-size and SHA-256 checks. The synchronized matrix answers
+several questions cleanly. Extending the joint-cosine trajectory from 500 to
+1500 steps adds 2.51 percentage points of median voltage gain, so the previous
+500-step bridge was still optimization-limited. At 1500 steps, adding the
+frozen downstream-STATE objective improves STATE gain by 1.20 points over the
+voltage-only arm without degrading voltage; the true causal alignment also
+beats the shuffled-path control by 1.59 STATE points. These three registered
+gates pass.
+
+Cosine decay itself is not identified: both registered schedule effects remain
+below one percentage point. Gradient alignment is also not stationary. Its
+cosine changes sign across seeds, budgets and arms, and the initial STATE-loss
+scale for seed 61017 hits the preregistered lower clip. A fixed scalarized loss
+is therefore an incomplete description of the optimization geometry.
+
+The decisive recursive gate fails. At 8 ms, the preregistered joint-cosine arm
+beats voltage-cosine by 1.66 percentage points rather than the required 2%, and
+seed 61017 is slightly negative. A constant-schedule contrast has a promising
+3.93-point median but reverses sign in seed 61017; because it was not the
+registered recursive contrast, it is recorded only as a new hypothesis and
+not promoted to a success.
+
+The registered diagnosis is `ONE_STEP_COUPLING_OBJECTIVE_ONLY`. More bridge
+optimization and causally aligned downstream supervision improve one-step
+learnability, but that gain is not yet robustly compositional. Teacher voltage
+and ion context were still supplied at every millisecond, so this result does
+not test an autonomous neuron rollout. No full training, fresh-test generation
+or mass-data generation is authorized. The next experiment must be a bounded
+train-only recursive voltage/STATE contract matrix separating exposure bias,
+missing recurrent variables and optimizer-trajectory effects.

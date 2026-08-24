@@ -103,3 +103,32 @@ def test_06bd_notebook_is_compact_safe_and_uses_stable_zip_download():
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
     assert "display(training)" not in code
+
+
+def test_06bd_registered_result_preserves_the_failed_recursive_gate():
+    result = json.loads((EXPERIMENT / "result.json").read_text(encoding="utf-8"))
+    assert result["status"] == "completed_and_independently_verified"
+    assert result["archive_sha256"] == (
+        "a630a4532bef1cce49de733fe12b521de765daa906340a7b48ca99ef7e24291e"
+    )
+    assert result["artifact_index_sha256"] == (
+        "5b280e0d5aa093f54ce0411e873e8f044354b2e30cb3aa21744cfd1061455882"
+    )
+    assert result["final_report_sha256"] == (
+        "499f2df9c3c9c29d8f75cc523d4d089c245e743720e6eb238c3bd10c29c04b6c"
+    )
+    assert result["indexed_member_count"] == 88
+    assert result["indexed_member_failures"] == []
+    assert result["diagnosis"] == "ONE_STEP_COUPLING_OBJECTIVE_ONLY"
+    gates = result["gate_checks"]
+    assert gates["optimizer_budget_scaling_identified"]
+    assert gates["joint_objective_identified"]
+    assert gates["causal_specificity_identified"]
+    assert not gates["recursive_benefit_identified"]
+    assert not gates["cosine_schedule_identified"]
+    assert result["median_contrasts"]["joint_recursive_effect"] < result[
+        "registered_thresholds"
+    ]["minimum_recursive_gain_fraction"]
+    assert not result["full_training_authorized"]
+    assert not result["fresh_test_generation_authorized"]
+    assert not result["mass_dataset_generation_authorized"]
