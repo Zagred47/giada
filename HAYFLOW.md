@@ -1518,3 +1518,33 @@ and JSON hashes reflect the embedded revision provenance after result
 documentation was added; the executable experiment code was unchanged. The
 first artifact remains canonical and the later archive is registered as a
 confirmatory exact-summary replication.
+
+### 06b-f synchronized recursive joint repair matrix
+
+`notebooks/06b_f_recursive_joint_repair_matrix.ipynb` implements the single
+bounded repair authorized by 06b-e. It does not introduce a larger architecture
+or a new dataset. Within each of three seeds, all six arms restore the same
+06b-d `joint_cosine` bridge and 06b `linear_endpoint_path` mechanism-STATE
+updater, then train both components on identical train-derived windows and the
+same minibatch stream.
+
+The matrix crosses teacher/predicted voltage and mechanism-STATE exposure,
+full-feedback scalar training, a shuffled causal control, and a preregistered
+voltage-protected gradient route. In that primary arm the STATE objective still
+trains the STATE updater through a four-ms differentiable unroll, but its
+gradient into the voltage bridge is cleared. The bridge therefore optimizes
+voltage accuracy, physical range and drift directly rather than learning to
+compensate STATE error with an invalid voltage trajectory.
+
+Fixed checkpoints at 0, 200, 400 and 600 steps answer the optimization-scaling
+question without launching separate runs. Common 1/2/4/8 ms development
+windows simultaneously measure STATE exposure, voltage stability, gradient
+routing, causal specificity and temporal composition. The primary arm was
+selected before execution; development cannot switch the winner.
+
+A 06c micro-canary is authorized only if the primary arm reduces median 8 ms
+STATE error by at least 2% and voltage error by at least 10%, retains one-step
+quality within 2%, continues improving from 200 to 600 steps, beats the
+shuffled causal control, improves both modalities over persistence in every
+seed and produces no physical voltage violations. Validation/test access,
+fresh-test generation, full training and mass-data generation remain blocked.

@@ -1,0 +1,91 @@
+{
+  "schema_version": "06b-f-preregistration-v1",
+  "experiment": "recursive_joint_repair_matrix",
+  "status": "preregistered_before_execution",
+  "question": "Can a synchronized train-only repair make predicted mechanism STATE and voltage jointly composable without sacrificing one-step accuracy, physical safety or causal specificity?",
+  "authorized_by": {
+    "canonical_06b_e_artifact_index_sha256": "acc8b29f4eacd9c209e6ca4e622da5fa5527d500b30ccaefdfc2580f721fa2ad",
+    "confirmatory_06b_e_artifact_index_sha256": "dc43155bb0065768f473b41cfd0f7fc3bbe40d00052953a2786e27bf5da0a3ac",
+    "formal_diagnosis": "MECHANISM_STATE_EXPOSURE_PRIMARY_LIMIT",
+    "systems_safety_diagnosis": "JOINT_MECHANISM_STATE_EXPOSURE_AND_VOLTAGE_FEEDBACK_LIMITS"
+  },
+  "fixed_matrix": {
+    "arms": [
+      "teacherV_teacherS",
+      "teacherV_predictedS",
+      "predictedV_teacherS",
+      "full_feedback_scalar",
+      "full_feedback_voltage_protected",
+      "full_feedback_shuffled"
+    ],
+    "primary_arm": "full_feedback_voltage_protected",
+    "paired_seeds": [61017, 61029, 61043],
+    "training_horizon_ms": 4,
+    "evaluation_horizons_ms": [1, 2, 4, 8],
+    "fixed_checkpoints": [0, 200, 400, 600],
+    "fit_windows": 64,
+    "calibration_windows": 16,
+    "development_windows": 16
+  },
+  "alignment_contract": {
+    "same_06b_d_joint_cosine_step1500_bridge_initialization_within_seed": true,
+    "same_06b_linear_endpoint_STATE_initialization_within_seed": true,
+    "both_models_trainable_in_every_arm": true,
+    "same_minibatch_stream_within_seed": true,
+    "same_optimizer_hyperparameters": true,
+    "same_targets_and_loss_weights": true,
+    "same_realized_external_input_at_each_step": true,
+    "held_initial_ions_for_every_arm": true,
+    "single_training_trajectory_supplies_all_fixed_budgets": true
+  },
+  "arm_semantics": {
+    "teacherV_teacherS": "teacher-forced exposure reference",
+    "teacherV_predictedS": "isolates STATE exposure repair",
+    "predictedV_teacherS": "isolates voltage feedback repair",
+    "full_feedback_scalar": "joint recurrent training with a scalarized objective",
+    "full_feedback_voltage_protected": "STATE loss trains the STATE updater through time but its bridge gradients are removed; voltage loss alone updates the bridge",
+    "full_feedback_shuffled": "same joint recurrence but the voltage delta supplied to the STATE updater is shuffled across batch"
+  },
+  "primary_outcomes": [
+    "eight_ms_normalized_mechanism_STATE_RMSE",
+    "eight_ms_voltage_RMSE_mV"
+  ],
+  "registered_gates": {
+    "minimum_median_STATE_error_reduction_vs_teacher_forced_reference": 0.02,
+    "minimum_median_voltage_error_reduction_vs_teacher_forced_reference": 0.10,
+    "minimum_median_200_to_600_step_joint_error_reduction": 0.02,
+    "maximum_median_one_step_STATE_or_voltage_degradation": 0.02,
+    "minimum_median_authentic_vs_shuffled_STATE_gain": 0.01,
+    "all_seed_requirements": "positive STATE and voltage gain versus persistence and zero physical voltage violations"
+  },
+  "decision_rule": {
+    "all_gates_pass": "authorize only 06c_coupled_voltage_state_micro_canary",
+    "STATE_only_pass": "voltage_stability_refinement",
+    "voltage_only_pass": "state_scheduled_sampling_refinement",
+    "neither_pass": "return_to_atomic_coupled_boundary_playground"
+  },
+  "simultaneous_questions": [
+    "Does predicted-STATE exposure become trainable?",
+    "Does predicted-voltage recurrence become stable?",
+    "Does their joint repair require gradient isolation?",
+    "Does authentic voltage-to-STATE alignment still beat shuffling?",
+    "Does additional fixed optimization budget still reduce joint error?"
+  ],
+  "scope_limitations": {
+    "train_derived_roles_only": true,
+    "development_used_for_selection": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "realized_external_input_remains_step_specific": true,
+    "synaptic_internal_state_is_not_closed": true,
+    "autonomous_neuron_rollout_claimed": false
+  },
+  "prohibited": [
+    "selecting a different primary arm after observing development",
+    "STATE-only repair outside the synchronized matrix",
+    "reading validation or test outcomes",
+    "fresh-test generation",
+    "full training",
+    "mass dataset generation"
+  ]
+}

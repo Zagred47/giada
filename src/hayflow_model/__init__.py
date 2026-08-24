@@ -366,6 +366,14 @@ from .recursive_voltage_state_contract_forensic import (
     RecursiveVoltageStateContractForensic,
     verified_06bd_artifact_root,
 )
+from .recursive_joint_repair_matrix import (
+    ACCEPTED_06BE_ARTIFACTS,
+    EXPECTED_06BE_INDEX_SHA256,
+    REPAIR_ARMS,
+    RecursiveJointRepairConfig,
+    RecursiveJointRepairMatrix,
+    verified_06be_artifact_root,
+)
 from .branch_elm_enriched_benchmark import (
     ELM_INPUT_VIEWS,
     ORIGINAL_ELM_PARAMETER_COUNT,
@@ -658,6 +666,12 @@ __all__ = [
     "RecursiveVoltageStateContractConfig",
     "RecursiveVoltageStateContractForensic",
     "verified_06bd_artifact_root",
+    "ACCEPTED_06BE_ARTIFACTS",
+    "EXPECTED_06BE_INDEX_SHA256",
+    "REPAIR_ARMS",
+    "RecursiveJointRepairConfig",
+    "RecursiveJointRepairMatrix",
+    "verified_06be_artifact_root",
     "ELM_INPUT_VIEWS",
     "ORIGINAL_ELM_PARAMETER_COUNT",
     "ORIGINAL_ELM_TEST_AUC",
