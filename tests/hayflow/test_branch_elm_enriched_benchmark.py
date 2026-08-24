@@ -16,6 +16,7 @@ from src.hayflow_model.branch_elm_enriched_benchmark import (
 ROOT = Path(__file__).resolve().parents[2]
 NOTEBOOK = ROOT / "notebooks" / "06b_c_supplement_branch_elm_enriched_benchmark.ipynb"
 PREREGISTRATION = ROOT / "experiments" / "hayflow" / "06b_c_branch_elm_enriched_benchmark" / "preregistration.json"
+EXECUTION_AMENDMENT = PREREGISTRATION.with_name("execution_amendment.json")
 
 
 def test_branch_elm_contract_is_exactly_the_published_small_model():
@@ -52,6 +53,21 @@ def test_fresh_test_is_not_used_during_checkpoint_selection():
     train_source = inspect.getsource(BranchELMEnrichedBenchmark._train)
     assert 'self.roles["calibration"]' in train_source
     assert "fresh_store" not in train_source
+
+
+def test_undefined_auc_is_json_safe_and_completed_checkpoints_are_reused():
+    evaluation = inspect.getsource(BranchELMEnrichedBenchmark._evaluate)
+    recovery = inspect.getsource(BranchELMEnrichedBenchmark._recover_completed_run)
+    benchmark = inspect.getsource(BranchELMEnrichedBenchmark.run_benchmark)
+    assert "auc if math.isfinite(auc) else None" in evaluation
+    assert '"spike_auc_defined"' in evaluation
+    assert "recovered_after_report_serialization_interruption" in recovery
+    assert "_recover_completed_run(view, seed, device)" in benchmark
+    amendment = json.loads(EXECUTION_AMENDMENT.read_text(encoding="utf-8"))
+    assert amendment["model_effect"] == "none"
+    assert amendment["selection_effect"] == "none"
+    assert amendment["recovery_contract"]["expected_checkpoint_count"] == 6
+    assert not amendment["recovery_contract"]["retrain_recovered_checkpoints"]
 
 
 def test_original_input_mapping_excludes_unrepresentable_somatic_current():

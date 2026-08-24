@@ -20,6 +20,13 @@ training or fresh-outcome evaluation, the role allocation was amended to 28
 fit, 10 calibration, and 10 development episodes. All compatible episodes are
 therefore retained in disjoint roles without altering the model contract.
 
+The first completed training run encountered a report-only interruption:
+spike AUC is undefined when an evaluated subset contains only one class, and
+the strict JSON writer correctly rejected the resulting `NaN`. The metric is
+now serialized as JSON `null` with an explicit `spike_auc_defined` flag. A
+checkpoint-resume path reloads the six already completed models and recomputes
+calibration, development, and fresh metrics without retraining.
+
 The retrained checkpoints are selected only on a train-derived calibration
 role and are frozen before fresh-test outcomes are read.  The 05j-o fresh set
 has already been opened historically in this project, so this is a

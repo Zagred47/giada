@@ -1,0 +1,19 @@
+{
+  "schema_version": "06b-c-branch-elm-execution-amendment-v1",
+  "status": "report_only_repair_after_training_before_result_registration",
+  "observed_failure": "Strict JSON serialization rejected a non-finite spike AUC after all six 300-step training runs and fresh evaluations had completed.",
+  "cause": "At least one evaluated subset contained only one spike class, for which ROC AUC is mathematically undefined.",
+  "model_effect": "none",
+  "data_effect": "none",
+  "selection_effect": "none",
+  "metric_repair": "Undefined AUC is serialized as JSON null and accompanied by spike_auc_defined=false.",
+  "recovery_contract": {
+    "reuse_completed_checkpoints": true,
+    "expected_checkpoint_count": 6,
+    "retrain_recovered_checkpoints": false,
+    "recompute_calibration_development_and_fresh_metrics": true,
+    "fresh_test_used_for_selection": false,
+    "learning_curve_recovery": "not possible from the saved checkpoint; the console log remains external diagnostic evidence"
+  },
+  "scientific_interpretation_changed": false
+}

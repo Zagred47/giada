@@ -376,11 +376,13 @@ class BranchELMEnrichedBenchmark:
         labels = np.asarray(spike_target, dtype=np.int8); scores = np.asarray(spike_score)
         binary = scores >= 0.5; tp = int(np.sum(binary & (labels == 1))); fp = int(np.sum(binary & (labels == 0))); fn = int(np.sum((~binary) & (labels == 1)))
         precision = tp / max(tp + fp, 1); recall = tp / max(tp + fn, 1)
+        auc = _binary_auc(labels, scores)
         return {
             "clipped_soma_rmse_mv": float(np.sqrt(np.mean((prediction - target) ** 2))),
             "raw_soma_rmse_mv_secondary": float(np.sqrt(np.mean((prediction - raw_target) ** 2))),
             "soma_mae_mv": float(np.mean(np.abs(prediction - target))),
-            "spike_auc": _binary_auc(labels, scores),
+            "spike_auc": auc if math.isfinite(auc) else None,
+            "spike_auc_defined": math.isfinite(auc),
             "spike_f1_at_0_5": 2 * precision * recall / max(precision + recall, 1e-12),
             "spike_positive_count": int(labels.sum()),
             "evaluated_timestep_count": len(labels),
@@ -419,16 +421,64 @@ class BranchELMEnrichedBenchmark:
         atomic.torch.save({"state_dict": best_state, "view": view, "seed": seed, "configuration": asdict(self.config)}, checkpoint)
         return {"seed": seed, "view": view, "best_calibration_clipped_soma_rmse_mv": best_score, "development": self._evaluate(selected, self.store, self.roles["development"], view, self.config.train_burn_in_ms, device), "learning_curve": curve, "checkpoint": checkpoint.name, "checkpoint_sha256": atomic._sha256_file(checkpoint)}
 
+    def _recover_completed_run(self, view: str, seed: int, device: Any) -> Optional[Dict[str, Any]]:
+        """Reload a completed checkpoint after a report-only interruption."""
+
+        checkpoint = self.output_dir / f"branch_elm_8002_{view}_seed{seed}.pt"
+        if not checkpoint.is_file():
+            return None
+        payload = atomic.torch.load(checkpoint, map_location=device, weights_only=False)
+        if str(payload.get("view")) != view or int(payload.get("seed", -1)) != seed:
+            raise RuntimeError(f"Branch-ELM checkpoint identity mismatch: {checkpoint}")
+        model = self._new_model(device)
+        model.load_state_dict(payload["state_dict"])
+        model.eval()
+        self.models[(view, seed)] = model
+        calibration = self._evaluate(
+            model,
+            self.store,
+            self.roles["calibration"],
+            view,
+            self.config.train_burn_in_ms,
+            device,
+        )
+        return {
+            "seed": seed,
+            "view": view,
+            "best_calibration_clipped_soma_rmse_mv": calibration[
+                "clipped_soma_rmse_mv"
+            ],
+            "calibration_recomputed_from_selected_checkpoint": calibration,
+            "development": self._evaluate(
+                model,
+                self.store,
+                self.roles["development"],
+                view,
+                self.config.train_burn_in_ms,
+                device,
+            ),
+            "learning_curve": [],
+            "learning_curve_available_after_recovery": False,
+            "recovered_after_report_serialization_interruption": True,
+            "checkpoint": checkpoint.name,
+            "checkpoint_sha256": atomic._sha256_file(checkpoint),
+        }
+
     def run_benchmark(self) -> Dict[str, Any]:
         if self.fresh_store is None:
             raise RuntimeError("prepare_benchmark() must run first")
         device = atomic.torch.device("cuda" if atomic.torch.cuda.is_available() else "cpu")
         compatible_fresh = [trajectory for trajectory in self.fresh_store.trajectory_indices if not self._trajectory_has_somatic_current(self.fresh_store, trajectory)]
         trained: Dict[str, Any] = {}
+        recovered_count = 0
         for view in self.config.input_views:
             trained[view] = {}
             for seed in self.config.seeds:
-                run = self._train(view, seed, device)
+                run = self._recover_completed_run(view, seed, device)
+                if run is None:
+                    run = self._train(view, seed, device)
+                else:
+                    recovered_count += 1
                 trained[view][str(seed)] = run
         # Only after every retrained checkpoint has been selected from the
         # train-derived calibration role may fresh-test outcomes be read.
@@ -438,7 +488,7 @@ class BranchELMEnrichedBenchmark:
         for view in self.config.input_views:
             for seed in self.config.seeds:
                 trained[view][str(seed)]["fresh_test"] = self._evaluate(self.models[(view, seed)], self.fresh_store, compatible_fresh, view, self.config.fresh_test_burn_in_ms, device)
-        report = {"schema_version": "06b-c-branch-elm-results-v1", "valid": True, "device": str(device), "zero_shot_original_checkpoint": zero_shot, "retrained_exact_architecture": trained, "fresh_test_used_for_selection": False, "trainable_parameter_count": ORIGINAL_ELM_PARAMETER_COUNT}
+        report = {"schema_version": "06b-c-branch-elm-results-v1", "valid": True, "device": str(device), "zero_shot_original_checkpoint": zero_shot, "retrained_exact_architecture": trained, "fresh_test_used_for_selection": False, "trainable_parameter_count": ORIGINAL_ELM_PARAMETER_COUNT, "recovered_completed_checkpoint_count": recovered_count, "retraining_avoided_for_recovered_checkpoints": True}
         atomic._write_json(self.output_dir / "benchmark_results.json", report)
         return report
 
