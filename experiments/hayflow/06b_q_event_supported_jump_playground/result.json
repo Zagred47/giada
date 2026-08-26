@@ -1,0 +1,142 @@
+{
+  "schema_version": "06b-q-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": {
+    "filename": "hayflow_event_supported_jump_playground.zip",
+    "sha256": "5f2a8ddd0402fcd556138f9838e330e97fc0f1b2e8dc8c8a2d330a53b8bd117e",
+    "artifact_index_sha256": "c39fa24b2b96cfba29ab348fb139c7f3156decef48d09b53d040ce2e384b9a08",
+    "final_report_sha256": "f3d4614c46c95918ec1ac6f5afce9e4242e35a92ef183406c20bc56789e64c17",
+    "indexed_member_count": 30,
+    "all_indexed_members_verified": true
+  },
+  "implementation": {
+    "code_revision": "7a6cb88d3a5838232e9130cf6545ac9ce9524075",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "source_scaling_reused_from_06b_p": "region_p99",
+    "objective_reused_from_06b_p": "hybrid",
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "fresh_test_accessed": false
+  },
+  "support_repair": {
+    "mixed_seed_snapshot_disjoint_component_count": 8,
+    "event_only_component_count": 0,
+    "no_event_only_component_count": 0,
+    "fit": {
+      "transition_count": 512,
+      "event_transition_count": 66,
+      "event_transition_fraction": 0.12890625,
+      "maximum_events_per_segment": 1
+    },
+    "calibration": {
+      "transition_count": 128,
+      "event_transition_count": 22,
+      "event_transition_fraction": 0.171875,
+      "maximum_events_per_segment": 1
+    },
+    "development": {
+      "transition_count": 128,
+      "event_transition_count": 22,
+      "event_transition_fraction": 0.171875,
+      "maximum_events_per_segment": 1
+    },
+    "conclusion": "the zero-support confound from 06b-p was removed"
+  },
+  "synthetic_preflight": {
+    "valid": true,
+    "known_target": true,
+    "best_final_arm": "moment_pool|legacy_all_entry_p99",
+    "best_final_rmse": 0.7254804372787476,
+    "chronological_jump_nonzero_robust_log_rmse": 1.7359732389450073,
+    "interpretation": "all arms remained finite and optimized, but the synthetic task did not predict the biological arm ordering"
+  },
+  "paired_3x2_result": {
+    "selected_on_calibration_half_B": "chronological_jump|nonzero_robust_log",
+    "median_calibration_half_B_rmse_mv": 6.5485183531865525,
+    "median_development_one_step_rmse_mv": 6.83621157034836,
+    "median_passive_one_step_rmse_mv": 7.170141356928604,
+    "median_one_step_gain_over_passive_fraction": 0.0465722738168285,
+    "selected_steps": {
+      "61017": 300,
+      "61029": 300,
+      "61043": 300
+    },
+    "per_seed_development_one_step_rmse_mv": {
+      "61017": 6.640329582367365,
+      "61029": 7.426889376026883,
+      "61043": 6.836211570348359
+    },
+    "event_transition_rmse_is_worse_than_no_event": true,
+    "median_event_transition_rmse_mv": 8.837171261039268,
+    "median_no_event_transition_rmse_mv": 6.429724099717815
+  },
+  "causal_controls": {
+    "event_deletion_rmse_increase_mv": 0.008119095478907212,
+    "timestamp_reversal_rmse_increase_mv": 0.001472643984025801,
+    "receptor_permutation_rmse_increase_mv": 0.0002626720827780815,
+    "event_deletion_relative_increase_fraction": 0.00118766006513363,
+    "registered_materiality_threshold_fraction": 0.02,
+    "automatic_positive_sign_gate_passed": true,
+    "decision_grade_event_content_materiality": false,
+    "interpretation": "the signs are positive but all effects are far below the registered 2 percent materiality scale; the one-step gain cannot yet be attributed to use of event content"
+  },
+  "recursive_boundary": {
+    "trained_stage_B_per_seed_8ms_rmse_mv": {
+      "61017": 46.93772219109498,
+      "61029": 73.52599824073182,
+      "61043": 41.874657506558975
+    },
+    "trained_stage_B_median_8ms_rmse_mv": 46.93772219109498,
+    "safety_stage_checkpoint_zero_passive_rmse_mv": 18.16236316429294,
+    "safety_stage_gain_over_passive_fraction": 0.0,
+    "conclusion": "the learned one-step correction is recursively unstable; checkpoint zero is substantially safer"
+  },
+  "passive_default_gate": {
+    "automatically_selected_arm": "passive_default_gate",
+    "passive_default_selected_steps": {
+      "61017": 0,
+      "61029": 0,
+      "61043": 0
+    },
+    "ungated_selected_steps": {
+      "61017": 0,
+      "61029": 0,
+      "61043": 0
+    },
+    "metrics_numerically_identical": true,
+    "learned_gate_effect_demonstrated": false,
+    "interpretation": "the apparent safety preservation is the zero-output passive prior, not evidence that the learned gate helped"
+  },
+  "postwarmup_gradient_probe": {
+    "valid": true,
+    "event_and_no_event_gradients_nonzero": true,
+    "cosines_vary_strongly_across_seed_and_budget": true,
+    "observed_cosine_range": [-0.99, 0.99],
+    "interpretation": "optimization receives signal, but event and no-event objectives are not directionally stable across seeds"
+  },
+  "teacher_contract_audits": {
+    "boundary_current_coordinate_count": 1022,
+    "time_integrated_current_coordinate_count": 0,
+    "mechanism_factorized_model_trained": false,
+    "required_extension": "store causal per-mechanism current integrals over each 1 ms transition",
+    "bounded_gate_like_state_coordinate_count": 4072,
+    "stable_relaxation_compatible_fraction": 0.23881360265916646,
+    "universal_simple_relaxation_supported": false
+  },
+  "automated_outcome": {
+    "valid": true,
+    "diagnosis": "EVENT_OPERATOR_LEARNS_TEACHER_BOUNDARY_BUT_FAILS_RECURSIVE_BOUNDARY",
+    "selected_candidate": null,
+    "next_step": "collect_intermediate_state_or_train_recursive_boundary_exposure"
+  },
+  "registered_interpretation": {
+    "real_one_step_progress": true,
+    "event_support_confound_removed": true,
+    "event_content_causally_used_at_material_scale": false,
+    "ordered_event_operator_recursively_safe": false,
+    "passive_default_gate_learned": false,
+    "mechanism_factorization_testable_with_current_dataset": false,
+    "formal_diagnosis": "ONE_STEP_SOURCE_LEARNABILITY_IMPROVED_BUT_EVENT_UTILIZATION_IS_SUBMATERIAL_AND_RECURSIVE_BOUNDARY_INSTABILITY_PERSISTS",
+    "authorized_next_experiment": "paired train-only event-utilization auxiliary x recursive-boundary-exposure playground with the passive Hines prior fixed as the safety baseline"
+  }
+}

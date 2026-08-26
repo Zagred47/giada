@@ -2087,3 +2087,32 @@ logger extension required.  A nonselective sidecar reports how many bounded
 mechanism STATE coordinates are compatible with a stable relaxation form.
 Validation, test, fresh test, full training and mass generation remain
 forbidden.
+
+The completed 06b-q result is registered in
+`experiments/hayflow/06b_q_event_supported_jump_playground/result.json`; all
+30 indexed members pass size and SHA-256 verification.  The support repair
+succeeded, with 66/22/22 event transitions in fit/calibration/development.
+Chronological jump plus nonzero-robust normalization trained to the final
+checkpoint in all seeds and improved median one-step RMSE from 7.17 mV for the
+passive prior to 6.84 mV, a 4.66% gain.
+
+The event-content claim is nevertheless not decision-grade.  Event deletion
+adds only 0.0081 mV (0.12%) and the timestamp/receptor counterfactuals are
+smaller, all far below the registered 2% materiality scale.  Event-transition
+RMSE remains 8.84 mV versus 6.43 mV without events.  Post-warm-up gradients are
+nonzero but their event/no-event cosine ranges from approximately -0.99 to
++0.99 across seed and budget, showing unstable optimization geometry.
+
+The trained selected arm is recursively unsafe: its median 8 ms RMSE is
+46.94 mV.  Both later safety arms select checkpoint zero for every seed and
+therefore return the identical 18.16 mV passive trajectory.  This is not
+evidence that the gate learned.  No causal per-mechanism current integral is
+stored, so factorized-current training remains unauthorized; only 23.9% of
+identifiable bounded STATE coordinates are compatible with a simple stable
+relaxation fit.
+
+The qualified diagnosis is
+`ONE_STEP_SOURCE_LEARNABILITY_IMPROVED_BUT_EVENT_UTILIZATION_IS_SUBMATERIAL_AND_RECURSIVE_BOUNDARY_INSTABILITY_PERSISTS`.
+The next authorized train-only experiment should cross a teacher-grounded
+synaptic-effect auxiliary with explicit multi-step recursive-boundary exposure,
+while retaining the passive Hines solve as a fixed safety baseline.

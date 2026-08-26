@@ -116,6 +116,24 @@ def test_06bq_preregisters_one_multifactor_run_without_fake_current_target():
     assert prereg["prohibitions"]["fake_mechanism_integral_target"] is False
 
 
+def test_06bq_registered_result_qualifies_automatic_causal_and_gate_claims():
+    result = json.loads((EXPERIMENT / "result.json").read_text())
+    assert result["archive"]["all_indexed_members_verified"]
+    assert result["support_repair"]["conclusion"] == (
+        "the zero-support confound from 06b-p was removed"
+    )
+    assert result["paired_3x2_result"]["median_one_step_gain_over_passive_fraction"] > 0.04
+    assert result["causal_controls"]["automatic_positive_sign_gate_passed"]
+    assert not result["causal_controls"]["decision_grade_event_content_materiality"]
+    assert result["passive_default_gate"]["passive_default_selected_steps"] == {
+        "61017": 0,
+        "61029": 0,
+        "61043": 0,
+    }
+    assert not result["passive_default_gate"]["learned_gate_effect_demonstrated"]
+    assert result["automated_outcome"]["selected_candidate"] is None
+
+
 def test_06bq_configuration_is_a_fixed_3x2_plus_2_arm_safety_design():
     config = EventSupportedJumpConfig()
     config.validate()
