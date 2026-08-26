@@ -3,6 +3,8 @@ import inspect
 import json
 from pathlib import Path
 
+import numpy as np
+
 import pytest
 
 from src.hayflow_model import atomic_state_dynamics_playground as atomic
@@ -84,6 +86,25 @@ def test_06bo_exact_identity_audit_separates_float64_from_operational_float32():
     assert '"identity_audit_dtype": "float64"' in source
     assert '"operational_training_dtype": "float32"' in source
     assert '"maximum_float32_authentic_reconstruction_error_mv"' in source
+
+
+def test_06bo_empty_metric_support_is_json_null_not_nan():
+    session = object.__new__(EffectiveMembraneSourcePlayground)
+    metrics = session._masked_voltage_metrics(
+        np.zeros((1, 2), dtype=np.float32),
+        np.zeros((1, 2), dtype=np.float32),
+        np.zeros((1, 2), dtype=np.float32),
+        {"empty": np.zeros((1, 2), dtype=bool)},
+    )["empty"]
+    assert metrics == {
+        "coordinate_count": 0,
+        "voltage_rmse_mv": None,
+        "persistence_rmse_mv": None,
+        "voltage_gain_vs_persistence_fraction": None,
+    }
+    json.dumps(metrics, allow_nan=False)
+    assert session._available_median([None, float("nan"), 1.0, 3.0]) == 2.0
+    assert session._available_median([None, float("nan")]) is None
 
 
 def test_06bo_training_keeps_streams_paired_and_selects_on_calibration():

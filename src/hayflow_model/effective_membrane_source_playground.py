@@ -924,9 +924,9 @@ class EffectiveMembraneSourcePlayground(AtomicStateDynamicsPlayground):
             if not count:
                 rows[name] = {
                     "coordinate_count": 0,
-                    "voltage_rmse_mv": float("nan"),
-                    "persistence_rmse_mv": float("nan"),
-                    "voltage_gain_vs_persistence_fraction": float("nan"),
+                    "voltage_rmse_mv": None,
+                    "persistence_rmse_mv": None,
+                    "voltage_gain_vs_persistence_fraction": None,
                 }
                 continue
             model_rmse = self._rmse(prediction[expanded], target[expanded])
@@ -1387,6 +1387,15 @@ class EffectiveMembraneSourcePlayground(AtomicStateDynamicsPlayground):
     def _median(values: Sequence[float]) -> float:
         return float(np.median(np.asarray(values, dtype=np.float64)))
 
+    @staticmethod
+    def _available_median(values: Sequence[Optional[float]]) -> Optional[float]:
+        finite = [
+            float(value)
+            for value in values
+            if value is not None and np.isfinite(float(value))
+        ]
+        return float(np.median(np.asarray(finite, dtype=np.float64))) if finite else None
+
     def _summary(self, key: str, evaluation: Mapping[str, Any]) -> Dict[str, Any]:
         rows = [seed[key] for seed in evaluation["per_seed"].values()]
         authentic = [row["authentic"]["horizons"]["8_ms"] for row in rows]
@@ -1444,7 +1453,7 @@ class EffectiveMembraneSourcePlayground(AtomicStateDynamicsPlayground):
                 ]
             ),
             "activity_gain_vs_persistence": {
-                name: self._median(
+                name: self._available_median(
                     [
                         row["activity"][name]["voltage_gain_vs_persistence_fraction"]
                         for row in authentic
@@ -1453,7 +1462,7 @@ class EffectiveMembraneSourcePlayground(AtomicStateDynamicsPlayground):
                 for name in activity_names
             },
             "region_gain_vs_persistence": {
-                name: self._median(
+                name: self._available_median(
                     [
                         row["region"][name]["voltage_gain_vs_persistence_fraction"]
                         for row in authentic
@@ -1628,15 +1637,23 @@ class EffectiveMembraneSourcePlayground(AtomicStateDynamicsPlayground):
         critical = [
             value
             for name, value in best["region_gain_vs_persistence"].items()
-            if any(token in name.lower() for token in ("soma", "ais", "axon"))
+            if value is not None
+            and any(token in name.lower() for token in ("soma", "ais", "axon"))
         ]
+        activity_thresholds = {
+            "quiescent_lt_1mV": 0.0,
+            "moderate_1_to_5mV": 0.0,
+            "active_ge_5mV": self.config.minimum_active_gain_vs_persistence_fraction,
+        }
+        activity_safe = all(
+            best["activity_gain_vs_persistence"].get(name) is not None
+            and best["activity_gain_vs_persistence"][name] >= threshold
+            for name, threshold in activity_thresholds.items()
+        )
         safety = bool(
             best["median_gain_vs_persistence_fraction"]
             >= self.config.minimum_global_gain_vs_persistence_fraction
-            and best["activity_gain_vs_persistence"]["quiescent_lt_1mV"] >= 0
-            and best["activity_gain_vs_persistence"]["moderate_1_to_5mV"] >= 0
-            and best["activity_gain_vs_persistence"]["active_ge_5mV"]
-            >= self.config.minimum_active_gain_vs_persistence_fraction
+            and activity_safe
             and critical
             and all(value >= 0 for value in critical)
             and best["physical_voltage_violation_count"] == 0
