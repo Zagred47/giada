@@ -34,6 +34,10 @@ voltage increment.  The corresponding float32 reconstruction error is still
 recorded separately as an operational numerical diagnostic; it is not hidden
 and does not become a model-selection signal.
 
+Metric strata with zero supporting coordinates are encoded explicitly with
+`coordinate_count: 0` and JSON `null` values.  They are never represented as
+NaN, imputed as performance measurements or allowed to pass a safety gate.
+
 Only historical train-derived roles are read.  Validation, test and sealed
 fresh-test states remain inaccessible.  The experiment cannot authorize full
 training, mass generation or 06c.  A positive result authorizes only an
@@ -43,7 +47,7 @@ Kaggle entry point:
 `notebooks/06b_o_effective_membrane_source_playground.ipynb`.
 
 The bootstrap defaults to code revision
-`8cc53f9393279c988c419e7fddfd1804d0b5f52a`, verifies that the 06b-o module is
+`abe09f40a737f5df183bd2c3801c3beefe02c323`, verifies that the 06b-o module is
 physically present in the checkout and evicts stale `src.*` modules before the
 first project import. `HAYFLOW_ELM_REF` remains an explicit expert override.
 
