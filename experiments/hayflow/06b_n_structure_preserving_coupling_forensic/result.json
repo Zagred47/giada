@@ -1,0 +1,121 @@
+{
+  "schema_version": "06b-n-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": "hayflow_structure_preserving_coupling_forensic.zip",
+  "archive_size_bytes": 1054858,
+  "archive_sha256": "5bbdc11d747b5219b6a7713544b4c594b967d08e733fa40d2299ce160cacb54c",
+  "artifact_index_sha256": "332a68f9028999eb135e64be2df82e37f7d8ae207e304e57aa205c94a71ea097",
+  "final_report_sha256": "fdd4109bd9ff9da5ce0f3c512d06924da7b1f6981408f7e536d5d5fa66d12465",
+  "factorial_training_report_sha256": "b579ff3bd3c34968e605c23844f6f7fe74e863008958b105b5be4d8b83680bc8",
+  "factorial_development_sha256": "854333fadffc29da1948daf3bf86e4cc36cef90b18877f3e16e5c08639473e0b",
+  "frozen_counterfactual_sha256": "206996a2abe64ade7cba214a67c2b1ede8526a593f87ed06d1b14bfca95cbd48",
+  "relaxation_training_report_sha256": "6986c3ca62a98d3c4c23445634af6b61b02a223282d86fea0913a2219f2dd741",
+  "code_revision": "d1c148b27118b54d3a4136842bb2e779dbba5359",
+  "artifact_integrity": {
+    "archive_member_count": 73,
+    "indexed_member_count": 72,
+    "indexed_member_failures": [],
+    "all_indexed_sizes_and_sha256_verified": true
+  },
+  "execution_contract": {
+    "pilot_seeds": [61017, 61029, 61043],
+    "factor_arm_count": 16,
+    "factorial_design": "2x2x2x2",
+    "training_steps": 200,
+    "checkpoints": [0, 50, 100, 200],
+    "same_minibatch_stream_within_seed": true,
+    "same_initialization_except_registered_gate_bias": true,
+    "teacher_endpoint_used_as_input": false,
+    "teacher_microtrace_used_only_as_nonselectable_upper_bound": true,
+    "validation_state_accessed": false,
+    "test_state_accessed": false
+  },
+  "formal_diagnosis": "OBJECTIVE_COUPLING_AND_RELAXATION_DO_NOT_CLOSE_ROLLOUT_GAP",
+  "registered_factor_main_effects": {
+    "carry_first_over_neutral": -0.2359890886616859,
+    "persistence_regret_over_standard": -0.0003606712598221984,
+    "endpoint_mix_over_pre_mix": -0.00019865232011817557,
+    "relaxation_over_generic_state": -0.03083493057466946
+  },
+  "best_observed_arm": {
+    "name": "p0.50|standard_rollout|pre_mixed_state|generic_state",
+    "selected_candidate": false,
+    "median_recursive_gain_over_static_fraction": -0.02634458751238089,
+    "median_voltage_gain_vs_persistence_fraction": 0.21989273915757868,
+    "median_STATE_gain_vs_persistence_fraction": 0.2907706521259923,
+    "minimum_seed_STATE_gain_vs_persistence_fraction": 0.21511935572206664,
+    "median_alpha_mean": 0.7196944952011108,
+    "median_alpha_standard_deviation": 0.003095125313848257,
+    "activity_gain_vs_persistence": {
+      "quiescent_lt_1mV": -7.524954748134041,
+      "moderate_1_to_5mV": -0.13214738230444523,
+      "active_ge_5mV": 0.23216709656311108,
+      "active_5_to_20mV": 0.2810191549987928,
+      "regenerative_ge_20mV": 0.22816761531575658
+    },
+    "region_gain_vs_persistence": {
+      "soma": 0.07268344125008408,
+      "ais": -0.4185178605679558,
+      "axon": -1.1100170797215916,
+      "apical_trunk": 0.08237236892393751,
+      "nexus": 0.20324240947579408,
+      "basal": 0.11329244013917406,
+      "tuft": 0.2600634819439075,
+      "other": 0.1376699974723764
+    },
+    "physical_voltage_violation_count": 0
+  },
+  "frozen_counterfactual_findings": {
+    "local_recurrent_p0_50_pre_mixed_median_voltage_rmse_mv": 13.5722,
+    "local_recurrent_p0_50_voltage_gain_vs_persistence": 0.2398,
+    "local_recurrent_p0_01_pre_mixed_median_voltage_rmse_mv": 17.5125,
+    "local_recurrent_p0_01_voltage_gain_vs_persistence": 0.0191,
+    "constant_carry_first_reduces_quiescent_damage_but_removes_active_correction": true,
+    "endpoint_mixing_materially_changes_rollout": false
+  },
+  "voltage_path_diagnostic": {
+    "median_normalized_STATE_rmse": {
+      "causal_endpoint_2_support": 0.08388,
+      "causal_coarse_4_support": 0.07932,
+      "causal_linear_8_support": 0.07913,
+      "teacher_microtrace_upper_bound": 0.07942
+    },
+    "teacher_microtrace_materially_outperforms_causal_linear_path": false,
+    "intra_ms_path_resolution_identified_as_primary_limit": false
+  },
+  "relaxation_updater_findings": {
+    "median_initial_calibration_smooth_l1": 7.708673477172852,
+    "median_final_calibration_smooth_l1": 0.4370897114276886,
+    "median_development_smooth_l1": 0.7401076555252075,
+    "median_shuffled_semantics_development_smooth_l1": 0.8736799359321594,
+    "semantic_identity_is_used": true,
+    "median_recursive_STATE_gain_vs_persistence_neutral_gate": 0.00277,
+    "recursive_state_utility_identified": false,
+    "exact_cnexp_replay_executed": false,
+    "exact_cnexp_replay_eligible": false,
+    "cnexp_mod_file_count": 15,
+    "dataset_matched_cnexp_mechanism_count": 13
+  },
+  "identified_lessons": [
+    "A constant carry-first prior is not a viable repair. It makes quiescent behavior much less harmful by suppressing intervention, but sacrifices the active and regenerative correction needed for the global task.",
+    "The persistence-regret objective moves quiescent and moderate metrics in the intended direction at neutral gating, but the global effect is slightly negative and far too small to close the static-expert gap.",
+    "Mixing complete STATE endpoints rather than updating STATE after voltage mixing has a near-zero paired effect. Noncommutativity of these two tested compositions is not the primary failure.",
+    "The bounded relaxation updater is learnable one step and becomes worse when mechanism identities are shuffled, proving that the optimizer uses biological semantic labels. Nevertheless it provides almost no recursive STATE gain and worsens voltage rollout, so the tested structure is insufficient.",
+    "The authentic teacher microtrace does not beat the causal linear eight-support path. Missing intra-millisecond voltage-path resolution is therefore not supported as the leading explanation.",
+    "The best arm remains 2.63% worse than the frozen static expert and severely damages quiescent, AIS and axonal coordinates despite positive active, dendritic, soma and mechanism-STATE gains.",
+    "The evidence now points away from more gate bias, loss reweighting, endpoint-order changes or generic relaxation capacity and toward revision of the voltage expert family or the causal state contract."
+  ],
+  "decision": {
+    "selected_candidate": null,
+    "material_positive_main_effects": [],
+    "fresh_train_support_confirmation_authorized": false,
+    "architecture_revision_continuation_authorized": true,
+    "architecture_revision": "voltage_expert_family_or_causal_state_contract",
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "mass_dataset_generation_authorized": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "next_step": "revise_voltage_expert_family_or_state_contract"
+  }
+}

@@ -53,6 +53,25 @@ def test_06bn_preregisters_bounded_four_axis_matrix():
     ]
 
 
+def test_06bn_registers_verified_terminal_result():
+    result = json.loads((EXPERIMENT_N / "result.json").read_text())
+    assert result["archive_sha256"] == (
+        "5bbdc11d747b5219b6a7713544b4c594b967d08e733fa40d2299ce160cacb54c"
+    )
+    assert result["artifact_index_sha256"] == (
+        "332a68f9028999eb135e64be2df82e37f7d8ae207e304e57aa205c94a71ea097"
+    )
+    assert result["final_report_sha256"] == (
+        "fdd4109bd9ff9da5ce0f3c512d06924da7b1f6981408f7e536d5d5fa66d12465"
+    )
+    assert result["formal_diagnosis"] == (
+        "OBJECTIVE_COUPLING_AND_RELAXATION_DO_NOT_CLOSE_ROLLOUT_GAP"
+    )
+    assert result["decision"]["selected_candidate"] is None
+    assert not result["decision"]["fresh_train_support_confirmation_authorized"]
+    assert not result["decision"]["coupled_06c_canary_authorized"]
+
+
 def test_06bn_config_and_specs_cover_exact_2x2x2x2_matrix():
     config = StructurePreservingCouplingConfig()
     config.validate()
