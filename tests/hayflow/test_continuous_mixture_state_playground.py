@@ -53,6 +53,26 @@ def test_06bm_preregisters_small_orthogonal_factorial_matrix():
     ]
 
 
+def test_06bm_registers_verified_terminal_result():
+    result = json.loads((EXPERIMENT_M / "result.json").read_text())
+    assert result["archive_sha256"] == (
+        "9b97c3b4a465f376f98b97a9408f7accd0268a0681b8be8c432f40327f97bfee"
+    )
+    assert result["artifact_index_sha256"] == (
+        "319bacdeece4749407643816977550b3b326694f787503bb50dcc3d3e1ef73f6"
+    )
+    assert result["final_report_sha256"] == (
+        "5f35dc5e4a4d3b308d8c1ccaeed2cba4da780ced201a42f9ee36640bb5c1628b"
+    )
+    assert result["formal_diagnosis"] == (
+        "MIXTURE_TARGET_LEARNABLE_BUT_RECURSIVE_COMPOSITION_FAILS"
+    )
+    assert result["decision"]["architecture_revision"] == (
+        "continuous_mixture_objective_and_coupling_revision"
+    )
+    assert not result["decision"]["fresh_train_support_confirmation_authorized"]
+
+
 def test_06bm_configuration_and_run_specs_are_bounded():
     config = ContinuousMixtureStateConfig()
     config.validate()

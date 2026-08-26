@@ -1901,3 +1901,40 @@ playground support. A passing arm can authorize only a fresh train-support
 confirmation of the corresponding component. The notebook cannot authorize
 06c, validation/test access, full training, mass dataset generation or an
 independent performance claim.
+
+The completed 06b-m archive is registered in
+`experiments/hayflow/06b_m_continuous_mixture_state_playground/result.json`.
+ZIP CRC and all 164 indexed member sizes and SHA-256 digests pass independent
+verification. The run used the exact preregistered 12 trajectories per seed
+and the code revision recorded by the notebook.
+
+The experiment identifies two real positive signals. Full physiological input
+improves the aligned voltage-only instantaneous controller by 2.16%, and the
+width-32 authentic-tree controller improves its width-8 counterpart by 1.91%.
+The controller also learns a nonconstant mixture target: representative alpha
+correlations reach 0.20--0.28 instead of zero, while global voltage and
+mechanism-STATE gains over persistence remain positive with no physical
+voltage violations.
+
+Those gains do not yet form a valid architecture. The best arm remains 0.55%
+worse than the frozen static expert. Local recurrence is 0.42% worse than the
+physiological instantaneous control, authentic tree messages are 0.19% worse
+than local recurrence and 0.38% worse than the relabelled-tree control. Thus
+the current optimizer is not exploiting memory or authentic morphology. All
+arms remain severely harmful in quiescent dynamics, and AIS/axon errors remain
+negative versus persistence.
+
+The objective ablation is decisive. Removing optimal-blend supervision makes
+alpha nearly constant (standard deviation 0.0009 and oracle correlation 0.049)
+but slightly improves global recursive voltage error. Auxiliary supervision
+creates heterogeneous alpha and improves target correlation, yet slightly
+worsens the deployed rollout. The target is therefore partly learnable, but
+the greedy mixture target and the recursive voltage/STATE composition are
+misaligned. The formal diagnosis is
+`MIXTURE_TARGET_LEARNABLE_BUT_RECURSIVE_COMPOSITION_FAILS`.
+
+The next intervention is a bounded objective-and-coupling revision, not a
+larger generic recurrent network. It must retain the identified physiological
+input signal, add explicit quiet-regime safety, and isolate loss alignment from
+voltage/STATE coupling with paired controls before any new independent data or
+06c evaluation is allowed.

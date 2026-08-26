@@ -24,3 +24,13 @@ The corresponding Kaggle entry point is
 `notebooks/06b_m_continuous_mixture_state_playground.ipynb`. Its final cell
 uses the project's browser-Blob ZIP download path and keeps notebook output
 compact.
+
+## Registered result
+
+The verified run completed the full matrix but selected no candidate. Rich
+physiological input and width both carry measurable signal; recurrence and
+authentic tree messages do not outperform their aligned controls. The
+optimal-blend auxiliary target makes alpha heterogeneous and partly
+predictable, but conflicts with the recursive rollout objective. The formal
+diagnosis is `MIXTURE_TARGET_LEARNABLE_BUT_RECURSIVE_COMPOSITION_FAILS` and
+the authorized continuation is a bounded mixture objective/coupling revision.

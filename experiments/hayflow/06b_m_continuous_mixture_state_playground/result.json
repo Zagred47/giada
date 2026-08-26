@@ -1,0 +1,123 @@
+{
+  "schema_version": "06b-m-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": "hayflow_continuous_mixture_state_playground.zip",
+  "archive_size_bytes": 3514657,
+  "archive_sha256": "9b97c3b4a465f376f98b97a9408f7accd0268a0681b8be8c432f40327f97bfee",
+  "artifact_index_sha256": "319bacdeece4749407643816977550b3b326694f787503bb50dcc3d3e1ef73f6",
+  "final_report_sha256": "5f35dc5e4a4d3b308d8c1ccaeed2cba4da780ced201a42f9ee36640bb5c1628b",
+  "training_report_sha256": "c8ee5182a80833f3b8ad9a749b8e9fc7569af63696a5ac37aafac888474aac6a",
+  "development_report_sha256": "09d9195c616a4a75db801c997a509329867d17a20f98f9aa8dc7d75c9988c770",
+  "code_revision": "990e255457ab508da16c832afc7702590e14a020",
+  "artifact_integrity": {
+    "archive_member_count": 166,
+    "indexed_member_count": 164,
+    "crc_failure": null,
+    "indexed_member_failures": [],
+    "all_indexed_sizes_and_sha256_verified": true
+  },
+  "formal_diagnosis": "MIXTURE_TARGET_LEARNABLE_BUT_RECURSIVE_COMPOSITION_FAILS",
+  "execution_contract": {
+    "seed_count": 3,
+    "trajectories_per_seed": 12,
+    "checkpoint_steps": [0, 100, 200, 400],
+    "parameter_counts_by_width": {
+      "8": 1117,
+      "16": 3085,
+      "32": 9709
+    },
+    "same_initialization_within_seed_and_width": true,
+    "same_minibatch_stream_within_seed": true,
+    "teacher_endpoint_used_as_input": false,
+    "teacher_optimal_blend_used_only_as_training_target": true
+  },
+  "registered_factorial_contrasts": {
+    "physiology_over_voltage_instantaneous": 0.021621888820469892,
+    "local_recurrence_over_physiology_instantaneous": -0.004170528494277237,
+    "authentic_tree_over_local": -0.0019418452967456812,
+    "authentic_tree_over_shuffled_tree": -0.0037995997587672026,
+    "oracle_auxiliary_over_rollout_only": -0.004782358881629145,
+    "tree_width_max_over_min": 0.019141516948402493
+  },
+  "representative_arms": {
+    "voltage_instantaneous_w16": {
+      "median_recursive_gain_over_static": -0.033815014211394656,
+      "median_voltage_gain_vs_persistence": 0.2135600613285371,
+      "median_STATE_gain_vs_persistence": 0.2817387087321511,
+      "median_oracle_alpha_correlation": 0.08643198292060882,
+      "median_alpha_standard_deviation": 0.016087358817458153
+    },
+    "physiology_instantaneous_w16": {
+      "median_recursive_gain_over_static": -0.011461980913183512,
+      "median_voltage_gain_vs_persistence": 0.23794544059161182,
+      "median_STATE_gain_vs_persistence": 0.30331440369842033,
+      "median_oracle_alpha_correlation": 0.2240876555479715,
+      "median_alpha_standard_deviation": 0.1013307198882103
+    },
+    "local_recurrent_w32": {
+      "median_recursive_gain_over_static": -0.005520670057985733,
+      "median_voltage_gain_vs_persistence": 0.23983119055219182,
+      "median_STATE_gain_vs_persistence": 0.3100732888818609,
+      "median_oracle_alpha_correlation": 0.23446215328331496,
+      "median_alpha_standard_deviation": 0.19451963901519775,
+      "median_moderate_gain": -0.009937735080884691,
+      "median_quiescent_gain": -7.253033760051311,
+      "median_soma_gain": 0.051453104026039975
+    },
+    "authentic_tree_w32": {
+      "median_recursive_gain_over_static": -0.008645253641455186,
+      "median_voltage_gain_vs_persistence": 0.23914283626536903,
+      "median_STATE_gain_vs_persistence": 0.3098109915381987,
+      "median_oracle_alpha_correlation": 0.20495793379585428,
+      "median_alpha_standard_deviation": 0.19699989259243011,
+      "median_moderate_gain": 0.0013259775816409913,
+      "median_quiescent_gain": -7.337786067479517,
+      "median_soma_gain": 0.07075840455849736
+    },
+    "shuffled_tree_w32": {
+      "median_recursive_gain_over_static": -0.006506538340543155,
+      "median_voltage_gain_vs_persistence": 0.24202284607656754,
+      "median_STATE_gain_vs_persistence": 0.3100707159757857,
+      "median_oracle_alpha_correlation": 0.26733607888325467,
+      "median_alpha_standard_deviation": 0.22146768867969513
+    },
+    "authentic_tree_no_oracle_aux_w16": {
+      "median_recursive_gain_over_static": -0.00860149985506986,
+      "median_voltage_gain_vs_persistence": 0.24911630842545218,
+      "median_STATE_gain_vs_persistence": 0.3069438701764443,
+      "median_oracle_alpha_correlation": 0.049079518260590205,
+      "median_alpha_standard_deviation": 0.0009187642717733979,
+      "median_quiescent_gain": -9.748494241504657
+    }
+  },
+  "mini_scaling_observations": {
+    "tree_width_32_over_8_development_gain": 0.019141516948402493,
+    "width_32_calibration_plateaus_near_step": 200,
+    "width_8_continues_improving_through_step": 400,
+    "capacity_signal_present": true,
+    "capacity_alone_closes_static_gap": false
+  },
+  "identified_lessons": [
+    "Adding local physiological, mechanism, ion, realized-input and static-segment features improves the aligned instantaneous voltage-only control by 2.16%, so the richer causal state contains useful information.",
+    "Increasing recurrent width from 8 to 32 improves the authentic-tree arm by 1.91%, but every trained arm remains worse than the frozen static expert; capacity alone is not the missing intervention.",
+    "Local recurrence does not improve the physiological instantaneous arm, authentic morphology does not improve the local arm, and the relabelled tree slightly outperforms the authentic tree. The current optimizer therefore does not exploit temporal or morphological structure causally.",
+    "Optimal-blend auxiliary supervision raises alpha dispersion and oracle correlation, whereas the rollout-only arm collapses to an almost constant alpha. However, the auxiliary objective slightly worsens recursive voltage error, demonstrating objective conflict rather than simple target non-learnability.",
+    "All arms retain positive global voltage and mechanism-STATE gains over persistence with zero physical-voltage violations, but none beats the static expert and all remain severely harmful in the quiescent regime; AIS and axon are also negative.",
+    "The next experiment must revise the mixture objective and the way voltage and mechanism-state updates are coupled, using the already identified physiological input signal and explicit quiet-regime safety controls rather than adding generic recurrence or topology capacity."
+  ],
+  "decision": {
+    "selected_candidate": null,
+    "primary_passed": false,
+    "local_fallback_passed": false,
+    "instantaneous_fallback_passed": false,
+    "fresh_train_support_confirmation_authorized": false,
+    "architecture_revision_continuation_authorized": true,
+    "architecture_revision": "continuous_mixture_objective_and_coupling_revision",
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "mass_dataset_generation_authorized": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "next_step": "continuous_mixture_objective_and_coupling_revision"
+  }
+}
