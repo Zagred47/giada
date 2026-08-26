@@ -1867,3 +1867,37 @@ state, updated from local physiological and synaptic state plus morphological
 context. The revision must retain persistence as an explicit safe expert,
 preserve regional diagnostics (especially AIS/axon), and be tested first as a
 component playground rather than as a full-neuron or held-out experiment.
+
+### 06b-m causal continuous mixture-state playground
+
+`notebooks/06b_m_continuous_mixture_state_playground.ipynb` implements the
+first architecture revision authorized by 06b-l. Persistence and the frozen
+06b-j dynamic voltage update remain immutable. The only trainable object is a
+small causal controller that emits a bounded coefficient for each segment and
+millisecond, so the applied voltage update is the convex mixture between zero
+delta and the frozen dynamic proposal.
+
+The preregistered matrix is deliberately multifactorial but bounded. At width
+16, six parameter-matched arms isolate voltage-only versus physiological
+observability, instantaneous versus recurrent state, local versus authentic
+tree messages, authentic versus deterministically relabelled morphology, and
+rollout-only versus optimal-blend auxiliary supervision. Local, authentic-tree
+and relabelled-tree arms are additionally evaluated at widths 8 and 32. This
+produces 12 trajectories per seed rather than a combinatorial sweep. The same
+initialization is reused within a seed and width, every arm sees the same
+minibatches in the same order, and checkpoints at 0/100/200/400 steps provide
+mini scaling laws without duplicate runs.
+
+The teacher endpoint and the 06b-l optimal blend are never model inputs. The
+endpoint contributes only to the ordinary training loss; the optimal blend is
+an explicitly ablated auxiliary target. Internal probes measure alpha
+correlation and RMSE against that target, alpha dispersion, hidden-state norm
+and temporal change. The relabelled-tree arm is the causal negative control
+for whether the optimizer uses authentic morphology rather than merely extra
+parameters.
+
+All calibration and development roles remain historically reused train-only
+playground support. A passing arm can authorize only a fresh train-support
+confirmation of the corresponding component. The notebook cannot authorize
+06c, validation/test access, full training, mass dataset generation or an
+independent performance claim.

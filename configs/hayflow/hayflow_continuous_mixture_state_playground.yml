@@ -1,0 +1,20 @@
+continuous_mixture_state_playground:
+  mixture_hidden_widths: [8, 16, 32]
+  full_matrix_hidden_width: 16
+  mixture_training_steps: 400
+  mixture_checkpoints: [0, 100, 200, 400]
+  mixture_batch_window_count: 4
+  mixture_learning_rate: 0.0003
+  mixture_weight_decay: 0.00001
+  mixture_gradient_clip_norm: 1.0
+  mixture_region_embedding_width: 4
+  mixture_oracle_auxiliary_weight: 0.25
+  mixture_STATE_loss_weight: 0.25
+  mixture_physical_penalty_weight: 1.0
+  mixture_drift_penalty_weight: 0.1
+  maximum_mixture_parameter_count: 20000
+  topology_relabel_seed_offset: 606400
+  minimum_topology_gain_fraction: 0.01
+  minimum_memory_gain_fraction: 0.01
+  minimum_observability_gain_fraction: 0.01
+  minimum_oracle_alpha_correlation: 0.10

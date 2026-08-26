@@ -1,0 +1,94 @@
+{
+  "schema_version": "06b-m-preregistration-v1",
+  "experiment": "continuous_mixture_state_playground",
+  "status": "preregistered_before_execution",
+  "question": "Can a small causal continuous state learn when and how strongly to apply the frozen dynamic voltage expert during recursive rollout?",
+  "authorized_by": {
+    "experiment": "voltage_error_model_revision",
+    "diagnosis": "OPTIMAL_BLEND_ORACLE_WORKS_BUT_REGIME_GATE_FAILS",
+    "archive_sha256": "8af4278ec0eb9cd0594cd5ad5cc7ff3b0f5050e20be5b17df9013348ca14b41e",
+    "artifact_index_sha256": "959aea3c0f60613210452ddfa3d0fdb1f1be06ca8b113ac50a582e37b38ae529",
+    "final_report_sha256": "884e2d7b7a5f1f6796048618d727ba6267c8d2bfe92287ec89826995ccbdda90"
+  },
+  "fixed_experts": {
+    "persistence": "zero voltage delta",
+    "dynamic": "frozen 06b-j region_raw_voltage update"
+  },
+  "common_controller": {
+    "output": "per-segment alpha in [0,1]",
+    "composition": "delta_V = alpha * frozen_dynamic_delta",
+    "cell": "shared encoder plus GRUCell plus bounded readout",
+    "parameter_matched_within_width": true,
+    "same_initialization_within_seed_and_width": true,
+    "same_minibatch_stream_within_seed": true
+  },
+  "factorial_matrix": {
+    "voltage_instantaneous": "voltage-only causal input, hidden reset every millisecond",
+    "physiology_instantaneous": "adds mechanism STATE, presence, ions, realized input and segment static features; hidden reset",
+    "local_recurrent": "full physiological input with persistent local hidden state",
+    "tree_recurrent": "local recurrent state plus authentic parent/child messages",
+    "shuffled_tree_recurrent": "same model with deterministic relabelled topology",
+    "tree_recurrent_no_oracle_aux": "authentic tree trained without optimal-blend target distillation"
+  },
+  "orthogonal_contrasts": {
+    "observability": "physiology_instantaneous versus voltage_instantaneous",
+    "memory": "local_recurrent versus physiology_instantaneous",
+    "topology": "tree_recurrent versus local_recurrent",
+    "causal_topology": "tree_recurrent versus shuffled_tree_recurrent",
+    "objective": "tree_recurrent versus tree_recurrent_no_oracle_aux"
+  },
+  "mini_scaling_law": {
+    "hidden_widths": [8, 16, 32],
+    "full_matrix_width": 16,
+    "scaling_arms": [
+      "local_recurrent",
+      "tree_recurrent",
+      "shuffled_tree_recurrent"
+    ],
+    "checkpoints": [0, 100, 200, 400]
+  },
+  "training_contract": {
+    "rollout_horizon_ms": 8,
+    "feedback": "fully recursive predicted voltage and mechanism STATE",
+    "teacher_endpoint_used_as_input": false,
+    "teacher_optimal_blend_used_only_as_training_target": true,
+    "frozen_voltage_expert": true,
+    "frozen_mechanism_STATE_updater": true,
+    "selection_role": "historically reused train calibration",
+    "development_role": "historically reused train development"
+  },
+  "internal_probes": [
+    "oracle-alpha correlation and RMSE",
+    "alpha variance and extreme fractions",
+    "hidden-state norm and temporal change",
+    "alpha temporal change"
+  ],
+  "registered_gate": {
+    "minimum_recursive_gain_over_static": 0.02,
+    "all_seed_voltage_gain_vs_persistence": "positive",
+    "all_seed_STATE_gain_vs_persistence": "positive",
+    "minimum_active_gain_vs_persistence": 0.10,
+    "minimum_moderate_gain_vs_persistence": 0.0,
+    "minimum_quiescent_gain_vs_persistence": 0.0,
+    "minimum_soma_gain_vs_persistence": 0.0,
+    "minimum_topology_or_memory_contrast": 0.01,
+    "minimum_oracle_alpha_correlation": 0.10,
+    "physical_voltage_violations": 0
+  },
+  "hierarchical_decision": {
+    "tree_passes_with_authentic_contrasts": "fresh train-support topology-aware mixture confirmation",
+    "local_passes_but_tree_does_not": "fresh train-support local mixture confirmation",
+    "instantaneous_physiology_passes": "fresh train-support instantaneous mixture confirmation",
+    "alpha_target_learnable_but_rollout_fails": "revise mixture objective and coupling",
+    "alpha_target_not_learnable": "revise synaptic and hidden-state observability contract"
+  },
+  "scope_limitations": {
+    "component_playground_only": true,
+    "new_independent_confirmation_claimed": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "mass_dataset_generation_authorized": false
+  }
+}

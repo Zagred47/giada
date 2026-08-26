@@ -447,6 +447,17 @@ from .voltage_error_model_revision import (
     VoltageErrorModelRevisionConfig,
     verified_06bk_artifact_root,
 )
+from .continuous_mixture_state_playground import (
+    EXPECTED_06BL_ARCHIVE_SHA256,
+    EXPECTED_06BL_FINAL_SHA256,
+    EXPECTED_06BL_INDEX_SHA256,
+    FULL_MATRIX_ARMS as CONTINUOUS_MIXTURE_FULL_MATRIX_ARMS,
+    SCALING_ARMS as CONTINUOUS_MIXTURE_SCALING_ARMS,
+    ContinuousMixtureCell,
+    ContinuousMixtureStateConfig,
+    ContinuousMixtureStatePlayground,
+    verified_06bl_artifact_root,
+)
 from .branch_elm_enriched_benchmark import (
     ELM_INPUT_VIEWS,
     ORIGINAL_ELM_PARAMETER_COUNT,
@@ -806,6 +817,15 @@ __all__ = [
     "VoltageErrorModelRevision",
     "VoltageErrorModelRevisionConfig",
     "verified_06bk_artifact_root",
+    "EXPECTED_06BL_ARCHIVE_SHA256",
+    "EXPECTED_06BL_FINAL_SHA256",
+    "EXPECTED_06BL_INDEX_SHA256",
+    "CONTINUOUS_MIXTURE_FULL_MATRIX_ARMS",
+    "CONTINUOUS_MIXTURE_SCALING_ARMS",
+    "ContinuousMixtureCell",
+    "ContinuousMixtureStateConfig",
+    "ContinuousMixtureStatePlayground",
+    "verified_06bl_artifact_root",
     "ELM_INPUT_VIEWS",
     "ORIGINAL_ELM_PARAMETER_COUNT",
     "ORIGINAL_ELM_TEST_AUC",
