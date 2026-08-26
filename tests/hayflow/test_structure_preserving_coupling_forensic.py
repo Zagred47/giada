@@ -99,6 +99,15 @@ def test_06bn_path_resolution_and_semantic_negative_controls_are_present():
     assert "permutation" in relaxation and "shuffled" in relaxation
 
 
+def test_06bn_path_boundary_forces_checkpoint_dtype():
+    source = inspect.getsource(StructurePreservingCouplingForensic._state_forward_path)
+    assert "dtype=normalized_state.dtype" in source
+    frozen = inspect.getsource(
+        StructurePreservingCouplingForensic.run_frozen_counterfactual_matrix
+    )
+    assert "dtype=current_voltage.dtype" in frozen
+
+
 def test_06bn_cnexp_audit_is_honest_about_exact_execution():
     report = audit_cnexp_teacher_contract(TEACHER_MODS, ())
     assert report["cnexp_file_count"] >= 10

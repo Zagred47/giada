@@ -518,6 +518,12 @@ class StructurePreservingCouplingForensic(ContinuousMixtureStatePlayground):
     ) -> Any:
         batch, coordinate_count = normalized_state.shape
         device = normalized_state.device
+        # NumPy path constructions such as ceil/floor promote float32 arrays to
+        # float64.  Keep the model boundary explicit so every causal and
+        # privileged path matches the registered float32 checkpoint.
+        voltage_path = atomic.torch.as_tensor(
+            voltage_path, dtype=normalized_state.dtype, device=device
+        )
         segments = atomic.torch.as_tensor(
             self.coordinate["segment"], dtype=atomic.torch.long, device=device
         )
@@ -743,9 +749,9 @@ class StructurePreservingCouplingForensic(ContinuousMixtureStatePlayground):
             endpoint = raw * self._static_gain(seed, raw, current_voltage)
             fractions = np.asarray(self.config.voltage_path_sample_indices, dtype=np.float32) / float(self.config.expected_microtrace_sample_count - 1)
             path_variants = {
-                "causal_linear_8_support": endpoint[:, :, None] * atomic.torch.as_tensor(fractions, device=device)[None, None, :],
-                "causal_coarse_4_support": endpoint[:, :, None] * atomic.torch.as_tensor(np.ceil(fractions * 4.0) / 4.0, device=device)[None, None, :],
-                "causal_endpoint_2_support": endpoint[:, :, None] * atomic.torch.as_tensor(np.where(fractions < 1.0, 0.0, 1.0), device=device)[None, None, :],
+                "causal_linear_8_support": endpoint[:, :, None] * atomic.torch.as_tensor(fractions, dtype=current_voltage.dtype, device=device)[None, None, :],
+                "causal_coarse_4_support": endpoint[:, :, None] * atomic.torch.as_tensor(np.ceil(fractions * 4.0) / 4.0, dtype=current_voltage.dtype, device=device)[None, None, :],
+                "causal_endpoint_2_support": endpoint[:, :, None] * atomic.torch.as_tensor(np.where(fractions < 1.0, 0.0, 1.0), dtype=current_voltage.dtype, device=device)[None, None, :],
                 "teacher_microtrace_upper_bound": self._teacher_paths(self.window_data["development"]["indices"][:, 0], device),
             }
             target_state = batch["state_t1"][:, 0]
