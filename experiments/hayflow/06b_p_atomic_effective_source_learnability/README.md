@@ -69,3 +69,7 @@ cell and evicts stale `src.*` modules before the first project import.  Code,
 configuration and notebook must always be used from that same revision.
 
 Expected artifact: `hayflow_atomic_effective_source_learnability.zip`.
+
+The post-result literature synthesis, newly identified sparse-normalization
+confound and proposed follow-up matrix are recorded in
+`followup_research_synthesis.md`.
