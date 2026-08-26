@@ -1,0 +1,94 @@
+{
+  "schema_version": "06b-n-preregistration-v1",
+  "experiment": "structure_preserving_coupling_forensic",
+  "status": "preregistered_before_execution",
+  "question": "Which of gate prior, persistence-regret objective, state-flow composition and mechanism-shaped relaxation causally repairs the recursive mixture failure?",
+  "authorized_by": {
+    "experiment": "continuous_mixture_state_playground",
+    "diagnosis": "MIXTURE_TARGET_LEARNABLE_BUT_RECURSIVE_COMPOSITION_FAILS",
+    "archive_sha256": "9b97c3b4a465f376f98b97a9408f7accd0268a0681b8be8c432f40327f97bfee",
+    "artifact_index_sha256": "319bacdeece4749407643816977550b3b326694f787503bb50dcc3d3e1ef73f6",
+    "final_report_sha256": "5f35dc5e4a4d3b308d8c1ccaeed2cba4da780ced201a42f9ee36640bb5c1628b"
+  },
+  "stage_1_frozen_counterfactuals": {
+    "source_controllers": [
+      "local_recurrent width 32 step 400",
+      "physiology_instantaneous width 16 step 400"
+    ],
+    "gate_priors": [0.01, 0.05, 0.1, 0.5],
+    "state_compositions": ["pre_mixed_state", "endpoint_mixed_state"],
+    "purpose": "screen carry bias and non-commuting state composition without retraining",
+    "selection_eligible": false
+  },
+  "stage_2_structure_probe": {
+    "candidate": "bounded learned relaxation x_next=x_inf+(x_t-x_inf)*exp(-rate)",
+    "input": "causal predicted linear voltage path, U_realized, static and semantic identifiers",
+    "teacher_microtrace_used_for_training": false,
+    "teacher_microtrace_upper_bound_selection_eligible": false,
+    "exact_cnexp_claim_requires_complete_parameter_and_rate-function_contract": true,
+    "path_diagnostics": [
+      "causal endpoint path with 2 supports",
+      "causal coarse path with 4 supports",
+      "causal linear path with 8 supports",
+      "teacher microtrace upper bound"
+    ],
+    "negative_control": "deterministically shuffled mechanism, variable and kind identities"
+  },
+  "stage_3_factorial_matrix": {
+    "axes": {
+      "gate_prior": [0.02, 0.5],
+      "objective": ["standard_rollout", "persistence_regret"],
+      "state_composition": ["pre_mixed_state", "endpoint_mixed_state"],
+      "state_updater": ["generic_state", "relaxation_state"]
+    },
+    "arm_count": 16,
+    "hidden_width": 16,
+    "steps": 200,
+    "checkpoints": [0, 50, 100, 200],
+    "same_minibatches_within_seed": true,
+    "same_initialization_except_registered_gate_bias": true,
+    "same_frozen_voltage_expert": true,
+    "pilot_seeds": [61017, 61029, 61043]
+  },
+  "registered_controls": {
+    "persistence": "zero voltage delta",
+    "frozen_static_expert": "registered 06b-m reference",
+    "teacher_microtrace": "privileged non-selectable upper bound",
+    "exact_cnexp": "audit only unless full executable contract passes"
+  },
+  "registered_metrics": [
+    "8 ms recursive voltage gain over frozen static and persistence",
+    "mechanism STATE gain over persistence",
+    "quiescent, moderate and active voltage gains",
+    "soma and per-region gains",
+    "alpha mean and dispersion",
+    "physical voltage violations",
+    "paired main effects for all four axes"
+  ],
+  "selection_gate": {
+    "minimum_recursive_gain_over_static": 0.02,
+    "minimum_seed_STATE_gain_over_persistence": 0.0,
+    "quiescent_gain_over_persistence": 0.0,
+    "moderate_gain_over_persistence": 0.0,
+    "active_gain_over_persistence": 0.1,
+    "soma_gain_over_persistence": 0.0,
+    "soma_AIS_and_axon_gains_over_persistence": "all non-negative",
+    "physical_voltage_violations": 0
+  },
+  "decision_tree": {
+    "absolute_gate_passes": "fresh train-support confirmation of the exact selected arm",
+    "one_or_more_main_effects_at_least_one_percent_but_absolute_gate_fails": "focused revision using only registered positive factors",
+    "no_material_main_effect": "revise voltage expert family or causal STATE contract",
+    "only_teacher_microtrace_upper_bound_helps": "voltage path resolution is the leading diagnosis",
+    "exact_cnexp_contract_unavailable": "do not claim exact Rush-Larsen replication"
+  },
+  "scope_limitations": {
+    "historically_reused_train_only": true,
+    "new_independent_confirmation_claimed": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "mass_dataset_generation_authorized": false
+  }
+}

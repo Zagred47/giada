@@ -1,0 +1,27 @@
+structure_preserving_coupling_forensic:
+  frozen_gate_priors: [0.01, 0.05, 0.10, 0.50]
+  factor_gate_priors: [0.02, 0.50]
+  factor_objectives: [standard_rollout, persistence_regret]
+  factor_couplings: [pre_mixed_state, endpoint_mixed_state]
+  factor_state_updaters: [generic_state, relaxation_state]
+  factor_hidden_width: 16
+  factor_training_steps: 200
+  factor_checkpoints: [0, 50, 100, 200]
+  factor_batch_window_count: 4
+  factor_learning_rate: 0.0003
+  factor_weight_decay: 0.00001
+  factor_gradient_clip_norm: 1.0
+  persistence_regret_weight: 0.5
+  persistence_regret_temperature: 0.05
+  persistence_regret_margin: 0.0
+  quiescent_regret_multiplier: 4.0
+  quiescent_threshold_mv: 1.0
+  relaxation_hidden_width: 20
+  relaxation_training_steps: 400
+  relaxation_checkpoints: [0, 100, 200, 400]
+  relaxation_learning_rate: 0.0003
+  relaxation_weight_decay: 0.00001
+  relaxation_gradient_clip_norm: 1.0
+  relaxation_embedding_width: 4
+  maximum_relaxation_parameter_count: 12000
+  minimum_material_factor_gain: 0.01
