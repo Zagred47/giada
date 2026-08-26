@@ -185,7 +185,8 @@ def test_06bq_notebook_is_compact_parseable_and_uses_blob_download():
         if cell.get("cell_type") == "code":
             ast.parse("".join(cell.get("source", [])))
             assert not cell.get("outputs")
-    assert "IMPLEMENTATION_COMMIT_PLACEHOLDER" in code
+    assert "IMPLEMENTATION_COMMIT_PLACEHOLDER" not in code
+    assert "ea32d9193acdd4fa9b729ca466bed9e5aba34966" in code
     assert "EXPECTED_06BP_INDEX_SHA256" in code
     assert "run_sparse_event_synthetic_preflight" in code
     assert "train_event_representation_matrix" in code
