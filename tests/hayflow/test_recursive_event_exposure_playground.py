@@ -115,9 +115,9 @@ def test_06br_notebook_is_compact_parseable_and_uses_blob_download():
             ast.parse("".join(cell.get("source", [])))
             assert not cell.get("outputs")
     assert "IMPLEMENTATION_COMMIT_PLACEHOLDER" not in code
+    assert "cbd7be51e87650b7790bf6514309eb065617effa" in code
     assert "prepare_recursive_event_exposure_playground" in code
     assert "run_causal_auxiliary_probe" in code
     assert "train_recursive_factorial_matrix" in code
     assert "base64.b64encode" in code and "new Blob" in code
     assert "FileLink" not in code
-
