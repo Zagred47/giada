@@ -136,7 +136,7 @@ def test_06bo_notebook_is_compact_parseable_and_uses_blob_download():
             ast.parse("".join(cell.get("source", [])))
             assert not cell.get("outputs")
     assert "EXPECTED_06BN_INDEX_SHA256" in code
-    assert "9a613838480362e9655409fad332400b44c60bd9" in code
+    assert "8cc53f9393279c988c419e7fddfd1804d0b5f52a" in code
     assert "MODULE_PATH.is_file()" in code
     assert "name.startswith('src.')" in code
     assert (

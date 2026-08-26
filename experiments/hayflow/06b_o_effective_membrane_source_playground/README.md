@@ -28,6 +28,12 @@ also evaluated with teacher STATE refresh, relabelled topology, axial coupling
 removed and a deterministic spatial-output shuffle.  These are diagnostic
 counterfactuals and are not selection-eligible.
 
+The blocking algebraic identity is evaluated in float64 to avoid cancellation
+between the large cable-equation mass/axial terms and the small one-millisecond
+voltage increment.  The corresponding float32 reconstruction error is still
+recorded separately as an operational numerical diagnostic; it is not hidden
+and does not become a model-selection signal.
+
 Only historical train-derived roles are read.  Validation, test and sealed
 fresh-test states remain inaccessible.  The experiment cannot authorize full
 training, mass generation or 06c.  A positive result authorizes only an
@@ -37,7 +43,7 @@ Kaggle entry point:
 `notebooks/06b_o_effective_membrane_source_playground.ipynb`.
 
 The bootstrap defaults to code revision
-`9a613838480362e9655409fad332400b44c60bd9`, verifies that the 06b-o module is
+`8cc53f9393279c988c419e7fddfd1804d0b5f52a`, verifies that the 06b-o module is
 physically present in the checkout and evicts stale `src.*` modules before the
 first project import. `HAYFLOW_ELM_REF` remains an explicit expert override.
 
