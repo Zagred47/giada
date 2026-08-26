@@ -1,20 +1,21 @@
 {
-  "schema_version": "06b-p-preregistration-v1",
+  "schema_version": "06b-p-preregistration-v2",
   "status": "preregistered_before_execution",
   "authorization": {
     "source": "06b-o registered result",
     "diagnosis": "PASSIVE_HINES_PRIOR_HELPS_LONG_ROLLOUT_BUT_EFFECTIVE_SOURCE_IS_NOT_LEARNED",
-    "allowed_intervention": "atomic_effective_source_scaling_objective_and_boundary_reassessment"
+    "allowed_intervention": "adaptive_atomic_effective_source_causal_forensics"
   },
-  "scientific_question": "Can a causal local model learn the exact effective cable-equation source after target rescaling, and does that gain survive replacement of teacher voltage boundaries by its own recursively predicted voltage?",
-  "stage_1_source_support_audit": {
-    "scales_fit_on": "historically reused train/fit only",
-    "scaling_modes": ["raw_source", "global_p99", "region_p99"],
-    "quantile": 0.99,
-    "source_output_limit": 8.0,
-    "selection_eligible": false
+  "scientific_question": "Which atomic cause prevents effective-source learning: target conditioning, objective alignment, lossy event aggregation, missing synaptic boundary memory, net-source cancellation, or the 1 ms macro-step?",
+  "stage_0_nonselective_audits": {
+    "input_materiality": ["compact causal moments", "ordered receptor-resolved events without historical tails", "ordered receptor-resolved events plus authentic boundary synapse state"],
+    "physical_targets": ["net_effective_source", "intrinsic_residual_after_known_synaptic_operator"],
+    "known_synaptic_hines_control": true,
+    "substep_dt_ms": [1.0, 0.5, 0.25],
+    "substep_selection_eligible": false,
+    "substep_limitation": "microtraces contain voltage but not complete intermediate mechanism/synapse state"
   },
-  "stage_2_atomic_matrix": {
+  "stage_1_atomic_matrix": {
     "factorial_design": "3x3",
     "factor_count": 9,
     "scaling_axis": ["raw_source", "global_p99", "region_p99"],
@@ -22,7 +23,7 @@
     "pilot_seeds": [61017, 61029, 61043],
     "steps": 300,
     "checkpoints": [0, 50, 100, 200, 300],
-    "selection_metric": "one-step calibration endpoint RMSE",
+    "selection_metric": "one-step calibration-half-A endpoint RMSE",
     "same_numeric_input_tensor": true,
     "same_initialization_within_seed": true,
     "same_minibatch_stream_within_seed": true,
@@ -30,11 +31,30 @@
     "teacher_endpoint_used_as_model_input": false,
     "gradient_norms_recorded_at_initialization": true
   },
+  "stage_2_adaptive_fragment_matrix": {
+    "adaptive_dependency": "reuse only the scaling and objective selected by stage 1",
+    "factorial_design": "3x2",
+    "factor_count": 6,
+    "input_contract_axis": ["compact_moments", "exact_events", "boundary_complete"],
+    "physical_target_axis": ["net_effective_source", "intrinsic_residual"],
+    "fixed_width_numeric_input": true,
+    "equal_parameter_count_within_stage": true,
+    "pilot_seeds": [61017, 61029, 61043],
+    "steps": 300,
+    "checkpoints": [0, 50, 100, 200, 300],
+    "selection_metric": "one-step disjoint calibration-half-B endpoint RMSE",
+    "same_initialization_within_seed": true,
+    "same_minibatch_stream_within_seed": true,
+    "regime_gradient_cosines_at_initialization": true,
+    "teacher_endpoint_used_as_model_input": false
+  },
   "stage_3_frozen_boundary_test": {
     "models_retrained": false,
     "teacher_boundary_metric": "one-step endpoint and source error",
     "recursive_boundary_metric": "1/2/4/8 ms voltage rollout",
     "recursive_state_contract": "teacher mechanism STATE retained to isolate voltage-boundary shift",
+    "structured_synaptic_inputs_recomputed_at_predicted_voltage": true,
+    "directional_voltage_sensitivity_mv": [0.25, 1.0],
     "teacher_source_oracle_selectable": false,
     "predicted_state_trained": false,
     "temporal_memory_trained": false
@@ -43,24 +63,24 @@
     "minimum_atomic_gain_over_passive_fraction": 0.02,
     "minimum_recursive_gain_over_passive_fraction": 0.02,
     "minimum_trained_selection_fraction": 0.6666666666666666,
-    "required_recursive_activity_gains": {
-      "quiescent_lt_1mV": 0.0,
-      "moderate_1_to_5mV": 0.0,
-      "active_ge_5mV": 0.0
-    },
+    "causal_materiality_fraction": 0.02,
+    "required_recursive_activity_gains": {"quiescent_lt_1mV": 0.0, "moderate_1_to_5mV": 0.0, "active_ge_5mV": 0.0},
     "physical_voltage_violation_count": 0
   },
   "interpretation_map": {
-    "atomic_and_recursive_pass": "scaled source contract may receive independent train-support confirmation",
+    "adaptive_atomic_and_recursive_pass": "fragment may receive independent train-support confirmation",
     "atomic_pass_recursive_fail": "recursive voltage-boundary distribution shift is identified",
-    "atomic_pass_safety_fail": "source is learnable but requires a causal regime decomposition",
-    "atomic_fail": "current causal representation or supervised physical quantity must change"
+    "exact_events_help": "compact U encoding is causally lossy",
+    "boundary_complete_helps": "synapse state at S_t is causally missing",
+    "intrinsic_target_helps": "net-source cancellation harms learnability",
+    "all_fragment_repairs_fail": "move to mechanism-factored currents or collect complete intermediate state"
   },
   "prohibitions": {
     "validation_state_access": false,
     "test_state_access": false,
     "fresh_test_access": false,
     "teacher_endpoint_as_input": false,
+    "substep_candidate_selection": false,
     "candidate_confirmation_claim": false,
     "coupled_06c_authorization": false,
     "full_training_authorization": false,
