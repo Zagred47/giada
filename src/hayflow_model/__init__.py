@@ -489,6 +489,20 @@ from .effective_membrane_source_playground import (
     EffectiveMembraneSourcePlayground,
     verified_06bn_artifact_root,
 )
+from .atomic_effective_source_learnability import (
+    ENDPOINT_ONLY as ATOMIC_SOURCE_ENDPOINT_ONLY,
+    GLOBAL_P99 as ATOMIC_SOURCE_GLOBAL_P99,
+    HYBRID as ATOMIC_SOURCE_HYBRID,
+    NATIVE_ONLY as ATOMIC_SOURCE_NATIVE_ONLY,
+    RAW_SOURCE as ATOMIC_SOURCE_RAW,
+    REGION_P99 as ATOMIC_SOURCE_REGION_P99,
+    EXPECTED_06BO_ARCHIVE_SHA256,
+    EXPECTED_06BO_FINAL_SHA256,
+    EXPECTED_06BO_INDEX_SHA256,
+    AtomicEffectiveSourceConfig,
+    AtomicEffectiveSourceLearnability,
+    verified_06bo_artifact_root,
+)
 from .branch_elm_enriched_benchmark import (
     ELM_INPUT_VIEWS,
     ORIGINAL_ELM_PARAMETER_COUNT,

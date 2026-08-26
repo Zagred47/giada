@@ -1,0 +1,79 @@
+atomic_effective_source_learnability:
+  role_seed: 61001
+  pilot_seed: 61017
+  pilot_seeds: [61017, 61029, 61043]
+  fit_components_per_regime: 3
+  calibration_components_per_regime: 1
+  development_components_per_regime: 1
+  fit_transition_limit: 1024
+  calibration_transition_limit: 256
+  development_transition_limit: 256
+  normalization_transition_limit: 1024
+  hidden_width: 48
+  embedding_width: 12
+  training_steps: 300
+  batch_transition_count: 8
+  coordinates_per_transition: 512
+  evaluation_interval: 25
+  progress_interval: 25
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  normalized_delta_limit: 8.0
+  active_delta_threshold: 0.25
+  active_delta_weight: 4.0
+  minimum_delta_scale: 0.00001
+  rollout_horizons_ms: [1, 2, 4, 8]
+  rollout_windows_per_horizon: 16
+  evaluation_coordinate_chunk: 2048
+  minimum_pilot_improvement_fraction: 0.02
+
+  output_parameterizations: [direct_voltage, hines_effective_source]
+  state_feedback_contracts: [frozen_boundary_state, predicted_dynamic_state]
+  temporal_contracts: [instantaneous, local_recurrent]
+  matrix_hidden_width: 32
+  matrix_region_embedding_width: 4
+  matrix_training_steps: 400
+  matrix_checkpoints: [0, 100, 200, 400]
+  matrix_training_horizon_ms: 4
+  matrix_batch_window_count: 4
+  matrix_fit_window_count: 64
+  matrix_calibration_window_count: 16
+  matrix_development_window_count: 16
+  matrix_learning_rate: 0.0003
+  matrix_weight_decay: 0.00001
+  matrix_gradient_clip_norm: 1.0
+  macro_step_ms: 1.0
+  voltage_scale_mv: 20.0
+  normalized_output_limit: 8.0
+  native_target_loss_weight: 0.25
+  state_loss_weight: 0.25
+  physical_penalty_weight: 1.0
+  drift_penalty_weight: 0.1
+  moderate_activity_weight: 2.0
+  active_activity_weight: 4.0
+  physical_voltage_minimum_mv: -120.0
+  physical_voltage_maximum_mv: 80.0
+  maximum_source_model_parameter_count: 20000
+  maximum_state_model_parameter_count: 12000
+  topology_relabel_seed_offset: 606500
+  source_materiality_fraction: 0.02
+  state_materiality_fraction: 0.02
+  memory_materiality_fraction: 0.02
+  topology_materiality_fraction: 0.02
+  minimum_global_gain_vs_persistence_fraction: 0.10
+  minimum_active_gain_vs_persistence_fraction: 0.10
+  exact_reconstruction_tolerance_mv: 0.0001
+
+  # 06b-p: one paired 3x3 matrix; no STATE updater or temporal recurrence.
+  scaling_modes: [raw_source, global_p99, region_p99]
+  objectives: [native_only, endpoint_only, hybrid]
+  atomic_training_steps: 300
+  atomic_checkpoints: [0, 50, 100, 200, 300]
+  atomic_batch_transition_count: 32
+  source_scale_quantile: 0.99
+  source_scale_floor: 0.0001
+  hybrid_native_weight: 0.25
+  minimum_atomic_gain_over_passive_fraction: 0.02
+  minimum_recursive_gain_over_passive_fraction: 0.02
+  minimum_trained_selection_fraction: 0.6666666666666666

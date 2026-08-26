@@ -1979,3 +1979,33 @@ not selection-eligible. Only train-derived fit, calibration and development
 roles are read. A positive result may authorize only an independent
 train-support confirmation; validation, test, 06c, full training and mass data
 generation remain forbidden.
+
+The completed 06b-o archive is registered in
+`experiments/hayflow/06b_o_effective_membrane_source_playground/result.json`.
+All 31 indexed members pass independent size and SHA-256 verification. The
+strict-JSON recovery changed only serialization of unsupported metric strata;
+the three-seed, eight-arm training and selected checkpoints had already
+completed.
+
+The physical decomposition is algebraically valid: its float64 teacher-source
+oracle reconstructs the endpoint within `2.05e-12 mV`. The zero-output passive
+Hines prior also provides real long-rollout structure, reaching `7.43 mV` RMSE
+at 8 ms with positive active, regenerative, soma, AIS and axon gains and no
+physical-voltage violations. Relabelling morphology degrades that prior by
+31.9%, confirming that authentic topology matters.
+
+The neural source itself was not learned. Eleven of twelve Hines seed-arm
+selections retain checkpoint zero, and every Hines median scaling trajectory
+worsens from step 0 to step 400. The nominal 9.88% source main effect therefore
+conflates a useful fixed passive prior with failed source optimization. The
+same prior remains severely unsafe for quiescent and moderate dynamics and is
+worse than the direct learned control at one millisecond. Predicted STATE and
+local recurrence show no positive effect under this failed source contract,
+so they are not yet rejected independently.
+
+The registered diagnosis is
+`PASSIVE_HINES_PRIOR_HELPS_LONG_ROLLOUT_BUT_EFFECTIVE_SOURCE_IS_NOT_LEARNED`.
+The authorized next step is a one-step atomic source-learnability matrix that
+crosses target scaling and objective alignment, followed by frozen recursive
+boundary tests. No independent confirmation, validation/test access, 06c,
+full training or mass generation is authorized.
