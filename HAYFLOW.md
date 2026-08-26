@@ -2009,3 +2009,28 @@ The authorized next step is a one-step atomic source-learnability matrix that
 crosses target scaling and objective alignment, followed by frozen recursive
 boundary tests. No independent confirmation, validation/test access, 06c,
 full training or mass generation is authorized.
+
+### 06b-p atomic effective-source learnability
+
+`notebooks/06b_p_atomic_effective_source_learnability.ipynb` implements the
+authorized atomic follow-up without adding another STATE updater, recurrent
+block or full-neuron training run. One paired 3x3 matrix crosses raw source
+units, global train-fit p99 scaling and fixed region-specific p99 scaling with
+native-source-only, endpoint-voltage-only and hybrid objectives. All arms share
+seeds, initialization, minibatches and exactly the same causal feature tensor.
+
+Checkpoint selection occurs on one-step train calibration boundaries. Frozen
+models are then evaluated on reused train development both as independent
+teacher-boundary transitions and as eight-millisecond recursive-voltage
+rollouts. Teacher mechanism STATE remains available during the latter solely
+to isolate voltage-boundary distribution shift. Initial gradient norms,
+source correlation, output saturation, activity-stratified safety and mini
+scaling laws are recorded in the same run.
+
+The interpretation is preregistered: an atomic-only success identifies
+recursive boundary shift; atomic learning with unsafe regimes identifies a
+source-regime decomposition problem; failure even after scaling redirects the
+project toward source observability or a different supervised physical
+quantity. Only a safe atomic and recursive success may authorize independent
+train-support confirmation. Validation/test access, 06c, full training and
+mass generation remain forbidden.

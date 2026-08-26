@@ -110,6 +110,7 @@ def test_06bp_notebook_is_compact_parseable_and_uses_blob_download():
             ast.parse("".join(cell.get("source", [])))
             assert not cell.get("outputs")
     assert "EXPECTED_06BO_INDEX_SHA256" in code
+    assert "8bc229b37583d39b9671df3aa96b8c563906540b" in code
     assert "prepare_atomic_source_learnability" in code
     assert "train_atomic_source_matrix" in code
     assert "evaluate_atomic_and_recursive_boundaries" in code

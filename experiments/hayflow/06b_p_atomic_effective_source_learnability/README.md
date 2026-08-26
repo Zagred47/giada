@@ -32,4 +32,8 @@ confirmation of the exact scaling/objective contract.  It cannot authorize
 Kaggle entry point:
 `notebooks/06b_p_atomic_effective_source_learnability.ipynb`.
 
+The notebook bootstrap pins implementation revision
+`8bc229b37583d39b9671df3aa96b8c563906540b` and evicts stale `src.*` modules
+before the first project import.
+
 Expected artifact: `hayflow_atomic_effective_source_learnability.zip`.
