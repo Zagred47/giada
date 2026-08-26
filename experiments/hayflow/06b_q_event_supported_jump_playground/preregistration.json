@@ -1,0 +1,67 @@
+{
+  "schema_version": "06b-q-preregistration-v1",
+  "status": "preregistered_before_execution",
+  "authorization": {
+    "source": "registered 06b-p result",
+    "diagnosis": "EVENT_CONTRACT_SIGNAL_NOT_DECISION_GRADE_DUE_TO_SUPPORT_FAILURE_AND_RECURSIVE_INSTABILITY",
+    "allowed_intervention": "train-only event support, representation and conditioning playground"
+  },
+  "scientific_question": "Does a genuine ordered U_realized event operator become learnable when every role contains causal event support and sparse coordinates are normalized from their nonzero distribution, and can a passive-default gate preserve recursive safety?",
+  "stage_A_known_answer_preflight": {
+    "factors": ["event representation", "normalization"],
+    "representations": ["moment_pool", "deepset_events", "chronological_jump"],
+    "normalizations": ["legacy_all_entry_p99", "nonzero_robust_log"],
+    "known_target": true,
+    "controlled_axes": ["event sparsity", "event multiplicity", "receptor identity", "timestamp"],
+    "mini_scaling_checkpoints": [0, 20, 60, 120],
+    "biological_selection_eligible": false
+  },
+  "stage_B_paired_matrix": {
+    "factorial_design": "3x2",
+    "factor_count": 6,
+    "common_numeric_input": "ordered padded per-segment U_realized sequence",
+    "same_parameter_count": true,
+    "same_initialization_within_seed": true,
+    "same_minibatch_stream_within_seed": true,
+    "balanced_event_no_event_minibatches": true,
+    "role_stratification": "U_realized only; no outcome labels",
+    "checkpoint_selection": "calibration half A",
+    "arm_selection": "disjoint calibration half B",
+    "development_used_for_selection": false,
+    "postwarmup_gradient_probe_steps": [25, 150],
+    "causal_controls": ["event deletion", "timestamp reversal", "receptor permutation"]
+  },
+  "stage_C_adaptive_safety_gate": {
+    "dependency": "only the representation-normalization arm selected in stage B",
+    "arms": ["ungated_residual", "passive_default_gate"],
+    "same_architecture_and_parameter_count": true,
+    "primary_metric": "8 ms recursive endpoint RMSE",
+    "safety_metrics": ["no-event RMSE", "quiet/moderate behavior", "physical voltage violations"]
+  },
+  "mechanism_factorization_gate": {
+    "policy": "do not train a mechanism-factored current target from boundary current samples",
+    "required_evidence": "causal per-mechanism current integral over the full 1 ms macro-step",
+    "fallback": "emit a logger-contract requirement instead of a scientifically invalid arm"
+  },
+  "rate_form_state_sidecar": {
+    "selection_eligible": false,
+    "purpose": "measure how many bounded mechanism STATE coordinates are compatible with a stable relaxation form"
+  },
+  "registered_gates": {
+    "minimum_one_step_gain_over_passive_fraction": 0.02,
+    "minimum_recursive_8ms_gain_over_passive_fraction": 0.02,
+    "event_deletion_must_increase_error": true,
+    "receptor_permutation_must_increase_error": true,
+    "physical_voltage_violation_count": 0
+  },
+  "prohibitions": {
+    "validation_state_access": false,
+    "test_state_access": false,
+    "fresh_test_access": false,
+    "teacher_endpoint_as_input": false,
+    "outcome_label_role_stratification": false,
+    "fake_mechanism_integral_target": false,
+    "full_training_authorization": false,
+    "mass_dataset_generation_authorization": false
+  }
+}

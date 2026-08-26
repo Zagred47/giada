@@ -2048,3 +2048,40 @@ intrinsic target identify the corresponding causal bottleneck even if they do
 not yet pass the candidate gate. Only a safe atomic and recursive success may authorize independent
 train-support confirmation. Validation/test access, 06c, full training and
 mass generation remain forbidden.
+
+### 06b-q event-supported jump and mechanism playground
+
+`notebooks/06b_q_event_supported_jump_and_mechanism_playground.ipynb` is the
+registered follow-up to 06b-p.  The prior `exact_events` view was a set of 42
+pooled receptor statistics; it did not preserve the individual ordered event
+sequence.  Its all-entry p99 normalization also assigned a scale near
+`1e-6` to many sparse coordinates, while the development role contained no
+nonzero exact-event rows.  Consequently, the apparent event main effect was
+not decision-grade.
+
+06b-q rebuilds fit, calibration and development roles from train episodes
+only.  Connected components under seed and snapshot identity are split before
+causal support is measured, and every role receives event-positive and
+no-event components classified exclusively from `U_realized`.  A genuine
+ordered, receptor-resolved per-segment event tensor is shared by a paired 3x2
+matrix: moment pooling, Deep Sets and chronological jump-GRU encoders crossed
+with legacy all-entry p99 and nonzero-robust signed-log normalization.  All
+encoders remain instantiated in every arm, preserving parameter equality.
+
+The same run includes a known-answer sparse-event playground with mini
+scaling checkpoints, balanced event/no-event minibatches, post-warm-up
+gradient contrasts, and frozen deletion/timestamp/receptor counterfactuals.
+Checkpoint selection uses calibration half A; arm selection uses disjoint
+calibration half B.  Development is opened only afterward.  A final adaptive
+two-arm comparison tests an ungated residual against an identically
+parameterized passive-default gate on one-step and eight-millisecond recursive
+metrics.
+
+Mechanism-current factorization is guarded by a data-contract audit.  Endpoint
+or boundary current samples are not treated as the causal current integral
+over a one-millisecond transition.  If per-mechanism integrals are absent, no
+factorized model is trained and the artifact records the precise teacher
+logger extension required.  A nonselective sidecar reports how many bounded
+mechanism STATE coordinates are compatible with a stable relaxation form.
+Validation, test, fresh test, full training and mass generation remain
+forbidden.
