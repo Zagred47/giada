@@ -36,4 +36,9 @@ independent train-support confirmation of the exact source-operator contract.
 Kaggle entry point:
 `notebooks/06b_o_effective_membrane_source_playground.ipynb`.
 
+The bootstrap defaults to code revision
+`9a613838480362e9655409fad332400b44c60bd9`, verifies that the 06b-o module is
+physically present in the checkout and evicts stale `src.*` modules before the
+first project import. `HAYFLOW_ELM_REF` remains an explicit expert override.
+
 Expected artifact: `hayflow_effective_membrane_source_playground.zip`.
