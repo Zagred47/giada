@@ -1,0 +1,77 @@
+{
+  "schema_version": "06b-p-registered-result-v2",
+  "status": "completed_with_support_qualification",
+  "archive": {
+    "name": "hayflow_atomic_effective_source_learnability.zip",
+    "sha256": "0a2d53f9ffe8ed64ac8823cac1b95cd632576b501791879df2ff665cf5cc190e",
+    "artifact_index_sha256": "30b492ad00018b9e5b2d907c698ee9156a99b76dbf636fc67d2430507d02ca42",
+    "final_report_sha256": "731856becd6ff13aa2cc9a8875991497d37bffa9c3af6e66bbe2c80017d00dde",
+    "indexed_member_count": 55,
+    "all_indexed_members_verified": true
+  },
+  "implementation": {
+    "code_revision": "0a62d2c1693ab7bee9510e2164a7535214ae90ea",
+    "final_report_schema": "06b-p-final-report-v2",
+    "adaptive_v2_executed": true
+  },
+  "automated_outcome": {
+    "valid": true,
+    "diagnosis": "LOSSY_EVENT_AGGREGATION_IS_CAUSALLY_MATERIAL_BUT_INSUFFICIENT",
+    "selected_calibration_fragment_arm": "compact_moments|intrinsic_residual",
+    "best_observed_development_arm": "boundary_complete|intrinsic_residual",
+    "selected_candidate": null,
+    "atomic_source_signal": false,
+    "recursive_boundary_signal": false,
+    "regime_safety_passed": false,
+    "adaptive_fragment_main_effects": {
+      "exact_events_over_compact": 0.029657560720618148,
+      "boundary_complete_over_exact_events": -0.014001536916893875,
+      "intrinsic_residual_over_net_effective_source": -0.01407012931294327
+    }
+  },
+  "support_audit": {
+    "fit_exact_event_nonzero_fraction": 0.00005794763388221332,
+    "calibration_exact_event_nonzero_fraction": 5.794763388221332e-7,
+    "development_exact_event_nonzero_fraction": 0.0,
+    "fit_boundary_tail_nonzero_fraction": 0.0010830412772585669,
+    "calibration_boundary_tail_nonzero_fraction": 0.0007510013351134847,
+    "development_boundary_tail_nonzero_fraction": 0.0009271621421154131,
+    "exact_event_causal_claim_decision_grade": false,
+    "reason": "The exact-event intervention has no positive feature support in development and nearly none in calibration."
+  },
+  "registered_metrics": {
+    "passive_development_one_step_rmse_mv": 2.30775785446167,
+    "passive_development_recursive_8ms_rmse_mv": 7.42733907699585,
+    "calibration_selected_arm_development_one_step_rmse_mv": 2.42537,
+    "calibration_selected_arm_development_recursive_8ms_rmse_mv": 11.51859,
+    "best_observed_development_one_step_rmse_mv": 2.22525,
+    "best_observed_development_one_step_gain_over_passive_fraction": 0.03575,
+    "best_observed_development_recursive_8ms_rmse_mv": 8.06435,
+    "best_source_correlation": 0.2208966993019934,
+    "best_source_nrmse": 0.9759,
+    "physical_voltage_violation_count": 0,
+    "known_synaptic_hines_gain_over_passive_fraction": 0.010419974496631013,
+    "net_intrinsic_target_correlation": 0.9988073452309333
+  },
+  "registered_interpretation": {
+    "formal_diagnosis": "EVENT_CONTRACT_SIGNAL_NOT_DECISION_GRADE_DUE_TO_SUPPORT_FAILURE_AND_RECURSIVE_INSTABILITY",
+    "scaling_and_objective_closed": true,
+    "net_source_cancellation_supported": false,
+    "boundary_synapse_memory_main_effect_supported": false,
+    "exact_event_encoding_is_a_candidate_cause": true,
+    "exact_event_encoding_is_confirmed_cause": false,
+    "one_millisecond_step_is_primary_cause": false,
+    "recursive_quiet_moderate_instability_persists": true,
+    "calibration_to_development_arm_selection_is_stable": false,
+    "initial_gradient_cosine_probe_informative": false,
+    "initial_gradient_cosine_limitation": "Zero-initialized readout yields almost collinear regime gradients (approximately 0.99-1.00).",
+    "next_step": "event-support-balanced ordered-event playground with paired target interaction and post-warmup regime probes"
+  },
+  "methodology": {
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "fresh_test_accessed": false,
+    "new_independent_confirmation_claimed": false,
+    "full_training_authorized": false
+  }
+}

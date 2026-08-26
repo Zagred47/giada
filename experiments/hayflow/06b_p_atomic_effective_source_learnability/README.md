@@ -1,12 +1,21 @@
 # 06b-p — adaptive atomic effective-source forensics
 
-Status: preregistered; not yet executed.
+Status: adaptive v2 executed; no candidate selected.
 
 Historical note: the original stage-1-only revision (`8bc229b`) has now been
 executed and immutably registered in `result_v1.json`. It found calibration
 movement but no development source identification or recursive benefit, so
 scaling/objective repair alone is closed as an explanation. The adaptive v2
-protocol described below has not yet been executed.
+protocol described below was subsequently executed.
+
+The adaptive result is registered in `result.json`. The generated report found
+a 2.97% exact-event main effect, but development contained no nonzero exact
+event features and calibration contained almost none. Consequently the effect
+is a hypothesis-generating signal, not a decision-grade causal attribution.
+The calibration-selected arm failed to generalize and every 8 ms rollout was
+worse than passive overall, especially in quiet and moderate coordinates. The
+authorized follow-up must first balance positive event support and test the
+input-by-target interaction; it may not proceed to full training.
 
 The 06b-o physical decomposition is exact and its zero-source passive Hines
 prior improves long rollout, but eleven of twelve Hines seed-arm selections

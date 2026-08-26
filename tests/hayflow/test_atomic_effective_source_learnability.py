@@ -53,6 +53,19 @@ def test_06bp_historical_v1_result_is_registered_without_overwriting_v2():
     assert result["interpretation"]["scale_or_objective_alone_is_sufficient"] is False
 
 
+def test_06bp_v2_result_qualifies_event_claim_by_observed_support():
+    result = json.loads((EXPERIMENT_P / "result.json").read_text())
+    assert result["archive"]["all_indexed_members_verified"]
+    assert result["implementation"]["adaptive_v2_executed"]
+    assert result["automated_outcome"]["selected_candidate"] is None
+    assert result["support_audit"]["development_exact_event_nonzero_fraction"] == 0.0
+    assert result["support_audit"]["exact_event_causal_claim_decision_grade"] is False
+    interpretation = result["registered_interpretation"]
+    assert interpretation["exact_event_encoding_is_a_candidate_cause"]
+    assert not interpretation["exact_event_encoding_is_confirmed_cause"]
+    assert interpretation["recursive_quiet_moderate_instability_persists"]
+
+
 def test_06bp_preregisters_exact_paired_3x3_matrix_and_boundary_test():
     prereg = json.loads((EXPERIMENT_P / "preregistration.json").read_text())
     assert prereg["status"] == "preregistered_before_execution"
