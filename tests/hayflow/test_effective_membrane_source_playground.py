@@ -129,6 +129,10 @@ def test_06bo_notebook_is_compact_parseable_and_uses_blob_download():
     assert "9a613838480362e9655409fad332400b44c60bd9" in code
     assert "MODULE_PATH.is_file()" in code
     assert "name.startswith('src.')" in code
+    assert (
+        "from src.hayflow_model.effective_membrane_source_playground import "
+        "EffectiveMembraneSourceConfig,EffectiveMembraneSourcePlayground"
+    ) in code
     assert "run_exact_source_reconstruction_audit" in code
     assert "train_synchronized_source_matrix" in code
     assert "evaluate_source_matrix" in code
