@@ -76,6 +76,16 @@ def test_06bo_source_target_is_defined_by_cable_equation_residual():
     assert "solver(diagonal, coupling, base_rhs + source)" in apply_source
 
 
+def test_06bo_exact_identity_audit_separates_float64_from_operational_float32():
+    source = inspect.getsource(
+        EffectiveMembraneSourcePlayground.run_exact_source_reconstruction_audit
+    )
+    assert ".to(dtype=atomic.torch.float64)" in source
+    assert '"identity_audit_dtype": "float64"' in source
+    assert '"operational_training_dtype": "float32"' in source
+    assert '"maximum_float32_authentic_reconstruction_error_mv"' in source
+
+
 def test_06bo_training_keeps_streams_paired_and_selects_on_calibration():
     source = inspect.getsource(
         EffectiveMembraneSourcePlayground.train_synchronized_source_matrix

@@ -1057,10 +1057,33 @@ class EffectiveMembraneSourcePlayground(AtomicStateDynamicsPlayground):
         native_magnitudes = []
         source_targets = []
         direct_targets = []
+        float32_authentic_errors = []
         with atomic.torch.no_grad():
             for step in range(max(self.config.rollout_horizons_ms)):
-                current = batch["voltage_t"][:, step]
-                target = batch["voltage_t1"][:, step]
+                current_float32 = batch["voltage_t"][:, step]
+                target_float32 = batch["voltage_t1"][:, step]
+                normalized_float32 = self._normalized_source_target(
+                    current_float32, target_float32, "authentic"
+                )
+                reconstructed_float32 = self._apply_output(
+                    HINES_SOURCE,
+                    normalized_float32,
+                    current_float32,
+                    "authentic",
+                )
+                float32_authentic_errors.append(
+                    float((reconstructed_float32 - target_float32).abs().max().cpu())
+                )
+
+                # This stage verifies an algebraic identity, not the numerical
+                # precision used by the trainable model.  In float32 the cable
+                # RHS subtracts large mass/axial terms to recover a small
+                # one-millisecond voltage increment, so cancellation can exceed
+                # the preregistered identity tolerance even when A^-1(Ax) is
+                # implemented correctly.  Keep that operational error above,
+                # but perform the blocking identity check in float64.
+                current = current_float32.to(dtype=atomic.torch.float64)
+                target = target_float32.to(dtype=atomic.torch.float64)
                 normalized = self._normalized_source_target(
                     current, target, "authentic"
                 )
@@ -1103,7 +1126,12 @@ class EffectiveMembraneSourcePlayground(AtomicStateDynamicsPlayground):
             "schema_version": "06b-o-source-reconstruction-v1",
             "valid": max(errors["authentic"]) <= self.config.exact_reconstruction_tolerance_mv,
             "teacher_source_is_selection_eligible": False,
+            "identity_audit_dtype": "float64",
+            "operational_training_dtype": "float32",
             "maximum_authentic_reconstruction_error_mv": max(errors["authentic"]),
+            "maximum_float32_authentic_reconstruction_error_mv": max(
+                float32_authentic_errors
+            ),
             "median_relabelled_rmse_mv": float(
                 np.median(errors["relabelled_with_authentic_source"])
             ),
