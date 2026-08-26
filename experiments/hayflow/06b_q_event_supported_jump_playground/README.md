@@ -6,6 +6,11 @@ Instead it constructs the ordered, receptor-resolved `U_realized` sequence at
 every segment and compares three matched encoders under two normalization
 contracts.
 
+The train-only split is built from seed/snapshot-disjoint components that each
+contain both event and no-event transitions according to `U_realized`.  The
+50/50 balance is then enforced at window and minibatch level; it is not imposed
+by incorrectly requiring entire biological episodes with no events.
+
 The notebook contains three stages in one run:
 
 1. a known-answer sparse-event playground with mini scaling checkpoints;

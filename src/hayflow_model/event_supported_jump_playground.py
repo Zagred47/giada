@@ -213,63 +213,86 @@ def build_event_supported_roles(
     role_seed: int,
     component_targets: Mapping[str, Tuple[int, int]],
 ) -> Tuple[Dict[str, List[Dict[str, Any]]], Dict[str, Any]]:
-    """Create seed/snapshot-disjoint roles stratified only by causal input.
+    """Create seed/snapshot-disjoint roles with both causal support states.
 
-    Each target is ``(event-positive components, no-event components)``.  The
-    component graph is formed before support labels are evaluated, preventing
-    leakage through shared seeds or snapshots.
+    A trajectory component is *not* labelled globally as event/no-event: a
+    biologically useful episode normally contains both kinds of transitions.
+    Components are therefore profiled using only ``U_realized`` and retained
+    when both event and no-event transitions exist.  The requested pair gives
+    the desired support quotas; its maximum is the number of mixed components
+    assigned to that role.  Window construction and minibatches perform the
+    actual 50/50 balancing afterward.
     """
 
     components = _train_components(store.episode_rows)
-    supported: Dict[bool, List[List[Dict[str, Any]]]] = {True: [], False: []}
+    mixed: List[List[Dict[str, Any]]] = []
+    event_only: List[List[Dict[str, Any]]] = []
+    no_event_only: List[List[Dict[str, Any]]] = []
     summaries = []
     for component in components:
         indices = np.concatenate(
             [store.trajectory_indices[str(row["trajectory_id"])] for row in component]
         )
-        positive = any(has_realized_event(store, int(index)) for index in indices)
+        support = np.asarray(
+            [has_realized_event(store, int(index)) for index in indices], dtype=bool
+        )
+        event_count = int(support.sum())
+        no_event_count = int(len(support) - event_count)
         digest = hashlib.sha256(
             f"{role_seed}|06bq|{'|'.join(sorted(str(r['trajectory_id']) for r in component))}".encode()
         ).hexdigest()
         component.sort(key=lambda row: str(row["trajectory_id"]))
-        supported[positive].append(component)
+        if event_count and no_event_count:
+            mixed.append(component)
+            support_class = "mixed"
+        elif event_count:
+            event_only.append(component)
+            support_class = "event_only"
+        else:
+            no_event_only.append(component)
+            support_class = "no_event_only"
         summaries.append(
             {
                 "digest": digest,
-                "positive": positive,
+                "support_class": support_class,
                 "episode_count": len(component),
                 "transition_count": int(len(indices)),
+                "event_transition_count": event_count,
+                "no_event_transition_count": no_event_count,
             }
         )
-    for positive in (False, True):
-        supported[positive].sort(
-            key=lambda component: hashlib.sha256(
-                f"{role_seed}|06bq-order|{'|'.join(str(r['trajectory_id']) for r in component)}".encode()
-            ).hexdigest()
-        )
+    order_key = lambda component: hashlib.sha256(
+        f"{role_seed}|06bq-order|{'|'.join(str(r['trajectory_id']) for r in component)}".encode()
+    ).hexdigest()
+    mixed.sort(key=order_key)
+    event_only.sort(key=order_key)
+    no_event_only.sort(key=order_key)
     roles = {role: [] for role in component_targets}
-    cursors = {False: 0, True: 0}
+    cursor = 0
     for role, (positive_count, negative_count) in component_targets.items():
-        for positive, count in ((True, positive_count), (False, negative_count)):
-            chosen = supported[positive][cursors[positive] : cursors[positive] + count]
-            if len(chosen) != count:
-                raise RuntimeError(
-                    f"06b-q lacks {'event' if positive else 'no-event'} components for {role}"
-                )
-            cursors[positive] += count
-            for component in chosen:
-                for source in component:
-                    row = dict(source)
-                    row["06bq_role"] = role
-                    row["06bq_causal_support"] = "event" if positive else "no_event"
-                    roles[role].append(row)
+        count = max(int(positive_count), int(negative_count))
+        chosen = mixed[cursor : cursor + count]
+        if len(chosen) != count:
+            raise RuntimeError(
+                f"06b-q lacks mixed event/no-event components for {role}: "
+                f"requested={count}, available_after_prior_roles={len(mixed) - cursor}"
+            )
+        cursor += count
+        for component in chosen:
+            for source in component:
+                row = dict(source)
+                row["06bq_role"] = role
+                row["06bq_causal_support"] = "mixed_component"
+                roles[role].append(row)
     return roles, {
         "valid": all(roles.values()),
         "source_split": "train_only",
         "stratification_source": "U_realized_only",
         "outcome_labels_used": False,
         "available_component_counts": {
-            "event": len(supported[True]), "no_event": len(supported[False])
+            "mixed": len(mixed),
+            "event_only": len(event_only),
+            "no_event_only": len(no_event_only),
         },
         "selected_episode_counts": {role: len(rows) for role, rows in roles.items()},
         "components": summaries,
@@ -601,7 +624,10 @@ class EventSupportedJumpPlayground(AtomicEffectiveSourceLearnability):
                 steps = self.store.metadata["step_index"][candidate]
                 if not np.array_equal(steps, np.arange(steps[0], steps[0] + horizon)):
                     continue
-                supported = any(has_realized_event(self.store, int(index)) for index in candidate)
+                # Balance the causal condition at the window's anchor
+                # transition.  Subsequent steps remain authentic and may
+                # contain either condition, as required for recursive tests.
+                supported = has_realized_event(self.store, int(candidate[0]))
                 (positive if supported else negative).append(candidate)
         key = lambda row: hashlib.sha256(
             f"{self.config.role_seed}|06bq-window|{role}|{','.join(map(str, row))}".encode()

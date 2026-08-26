@@ -23,6 +23,7 @@ from src.hayflow_model.event_supported_jump_playground import (
     EventConditionedSourceCell,
     EventSupportedJumpConfig,
     EventSupportedJumpPlayground,
+    build_event_supported_roles,
     fit_event_normalizers,
     normalize_event_tensor,
     ordered_event_tensor,
@@ -76,12 +77,38 @@ class _Store:
         ]
 
 
+class _RoleStore:
+    def __init__(self):
+        self.episode_rows = [
+            {
+                "trajectory_id": f"trajectory-{index}",
+                "split": "train",
+                "seed": 100 + index,
+                "snapshot_id": f"snapshot-{index}",
+                "snapshot_source": f"source-{index}",
+            }
+            for index in range(3)
+        ]
+        self.trajectory_indices = {
+            f"trajectory-{index}": np.asarray([2 * index, 2 * index + 1])
+            for index in range(3)
+        }
+
+    def actions(self, index, view):
+        assert view == "U_realized"
+        return (
+            [{"kind": "synaptic_event", "released_quantity": 0.0}]
+            if index % 2
+            else []
+        )
+
+
 def test_06bq_preregisters_one_multifactor_run_without_fake_current_target():
     prereg = json.loads((EXPERIMENT / "preregistration.json").read_text())
     assert prereg["status"] == "preregistered_before_execution"
     assert prereg["stage_B_paired_matrix"]["factorial_design"] == "3x2"
     assert prereg["stage_B_paired_matrix"]["role_stratification"] == (
-        "U_realized only; no outcome labels"
+        "seed/snapshot-disjoint mixed-support components profiled from U_realized only; no outcome labels"
     )
     assert prereg["mechanism_factorization_gate"]["required_evidence"] == (
         "causal per-mechanism current integral over the full 1 ms macro-step"
@@ -120,6 +147,22 @@ def test_06bq_ordered_tensor_preserves_timestamp_order_and_receptor_coupling():
     assert values[1, 2, 0, ampa] == pytest.approx(0.4)
     assert values[1, 2, 0, nmda] == pytest.approx(0.3)
     assert mask[1, 2, :2].all()
+
+
+def test_06bq_roles_use_mixed_components_not_impossible_all_no_event_episodes():
+    roles, report = build_event_supported_roles(
+        _RoleStore(),
+        role_seed=17,
+        component_targets={
+            "fit": (1, 1),
+            "calibration": (1, 1),
+            "development": (1, 1),
+        },
+    )
+    assert report["valid"]
+    assert report["available_component_counts"]["mixed"] == 3
+    assert report["available_component_counts"]["no_event_only"] == 0
+    assert all(len(rows) == 1 for rows in roles.values())
 
 
 def test_06bq_nonzero_normalizer_does_not_collapse_sparse_event_features():

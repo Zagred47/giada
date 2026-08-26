@@ -2061,8 +2061,10 @@ not decision-grade.
 
 06b-q rebuilds fit, calibration and development roles from train episodes
 only.  Connected components under seed and snapshot identity are split before
-causal support is measured, and every role receives event-positive and
-no-event components classified exclusively from `U_realized`.  A genuine
+causal support is measured, and every role receives mixed-support components
+containing both event and no-event transitions according exclusively to
+`U_realized`. The 50/50 balance is enforced afterward at window and minibatch
+level, rather than requiring biologically unrealistic all-no-event episodes. A genuine
 ordered, receptor-resolved per-segment event tensor is shared by a paired 3x2
 matrix: moment pooling, Deep Sets and chronological jump-GRU encoders crossed
 with legacy all-entry p99 and nonzero-robust signed-log normalization.  All
