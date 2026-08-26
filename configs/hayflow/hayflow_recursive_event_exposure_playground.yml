@@ -1,0 +1,131 @@
+recursive_event_exposure_playground:
+  role_seed: 61001
+  pilot_seed: 61017
+  pilot_seeds: [61017, 61029, 61043]
+  fit_components_per_regime: 3
+  calibration_components_per_regime: 1
+  development_components_per_regime: 1
+  fit_transition_limit: 1024
+  calibration_transition_limit: 256
+  development_transition_limit: 256
+  normalization_transition_limit: 1024
+  hidden_width: 48
+  embedding_width: 12
+  training_steps: 300
+  batch_transition_count: 8
+  coordinates_per_transition: 512
+  evaluation_interval: 25
+  progress_interval: 25
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  normalized_delta_limit: 8.0
+  active_delta_threshold: 0.25
+  active_delta_weight: 4.0
+  minimum_delta_scale: 0.00001
+  rollout_horizons_ms: [1, 2, 4, 8]
+  rollout_windows_per_horizon: 16
+  evaluation_coordinate_chunk: 2048
+  minimum_pilot_improvement_fraction: 0.02
+  output_parameterizations: [direct_voltage, hines_effective_source]
+  state_feedback_contracts: [frozen_boundary_state, predicted_dynamic_state]
+  temporal_contracts: [instantaneous, local_recurrent]
+  matrix_hidden_width: 32
+  matrix_region_embedding_width: 4
+  matrix_training_steps: 400
+  matrix_checkpoints: [0, 100, 200, 400]
+  matrix_training_horizon_ms: 8
+  matrix_batch_window_count: 4
+  matrix_fit_window_count: 64
+  matrix_calibration_window_count: 16
+  matrix_development_window_count: 16
+  matrix_learning_rate: 0.0003
+  matrix_weight_decay: 0.00001
+  matrix_gradient_clip_norm: 1.0
+  macro_step_ms: 1.0
+  voltage_scale_mv: 20.0
+  normalized_output_limit: 8.0
+  native_target_loss_weight: 0.25
+  state_loss_weight: 0.25
+  physical_penalty_weight: 1.0
+  drift_penalty_weight: 0.1
+  moderate_activity_weight: 2.0
+  active_activity_weight: 4.0
+  physical_voltage_minimum_mv: -120.0
+  physical_voltage_maximum_mv: 80.0
+  maximum_source_model_parameter_count: 20000
+  maximum_state_model_parameter_count: 12000
+  topology_relabel_seed_offset: 606500
+  source_materiality_fraction: 0.02
+  state_materiality_fraction: 0.02
+  memory_materiality_fraction: 0.02
+  topology_materiality_fraction: 0.02
+  minimum_global_gain_vs_persistence_fraction: 0.10
+  minimum_active_gain_vs_persistence_fraction: 0.10
+  exact_reconstruction_tolerance_mv: 0.0001
+  scaling_modes: [raw_source, global_p99, region_p99]
+  objectives: [native_only, endpoint_only, hybrid]
+  atomic_training_steps: 300
+  atomic_checkpoints: [0, 50, 100, 200, 300]
+  atomic_batch_transition_count: 32
+  source_scale_quantile: 0.99
+  source_scale_floor: 0.0001
+  hybrid_native_weight: 0.25
+  minimum_atomic_gain_over_passive_fraction: 0.02
+  minimum_recursive_gain_over_passive_fraction: 0.02
+  minimum_trained_selection_fraction: 0.6666666666666666
+  input_contracts: [compact_moments, exact_events, boundary_complete]
+  physical_targets: [net_effective_source, intrinsic_residual]
+  fragment_training_steps: 300
+  fragment_checkpoints: [0, 50, 100, 200, 300]
+  fragment_batch_transition_count: 32
+  structured_scale_quantile: 0.99
+  structured_scale_floor: 0.000001
+  substep_audit_transition_count: 12
+  substep_audit_dt_ms: [1.0, 0.5, 0.25]
+  voltage_sensitivity_perturbations_mv: [0.25, 1.0]
+  event_representations: [moment_pool, deepset_events, chronological_jump]
+  event_normalizations: [legacy_all_entry_p99, nonzero_robust_log]
+  safety_gates: [ungated_residual, passive_default_gate]
+  support_fit_components: [3, 3]
+  support_calibration_components: [1, 1]
+  support_development_components: [1, 1]
+  event_max_per_segment: 16
+  event_embedding_width: 12
+  event_scale_quantile: 0.99
+  event_scale_floor: 0.000001
+  event_normalized_clip: 12.0
+  jump_training_steps: 300
+  jump_checkpoints: [0, 25, 75, 150, 300]
+  jump_batch_transition_count: 32
+  gradient_probe_steps: [25, 150]
+  safety_training_steps: 200
+  safety_checkpoints: [0, 50, 100, 200]
+  synthetic_training_steps: 120
+  synthetic_checkpoints: [0, 20, 60, 120]
+  minimum_event_support_fraction: 0.01
+  minimum_recursive_gain_fraction: 0.02
+  passive_gate_initial_bias: -4.0
+
+  auxiliary_modes: [auxiliary_off, causal_synaptic_auxiliary]
+  exposure_modes: [teacher_boundary, pushforward_4ms]
+  stability_modes: [stability_off, passive_relative_directional]
+  auxiliary_target_names: [synaptic_conductance_us, synaptic_source_na, somatic_current_na]
+  auxiliary_scale_quantile: 0.99
+  auxiliary_scale_floor: 0.000001
+  auxiliary_probe_steps: 120
+  auxiliary_probe_checkpoints: [0, 20, 60, 120]
+  auxiliary_probe_batch_window_count: 8
+  recursive_training_steps: 240
+  recursive_checkpoints: [0, 40, 120, 240]
+  recursive_training_horizon_ms: 4
+  recursive_batch_window_count: 4
+  auxiliary_loss_weight: 0.25
+  directional_stability_weight: 0.05
+  directional_perturbation_mv: 0.25
+  passive_relative_margin: 1.05
+  minimum_auxiliary_gain_over_permuted_fraction: 0.10
+  minimum_candidate_gain_over_passive_fraction: 0.02
+  maximum_per_seed_regression_fraction: 0.0
+  minimum_event_materiality_fraction: 0.02
+

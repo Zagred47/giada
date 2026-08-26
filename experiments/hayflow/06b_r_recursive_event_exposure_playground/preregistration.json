@@ -1,0 +1,68 @@
+{
+  "schema_version": "06b-r-preregistration-v1",
+  "status": "preregistered_before_execution",
+  "authorization": {
+    "source": "registered 06b-q result",
+    "formal_diagnosis": "ONE_STEP_SOURCE_LEARNABILITY_IMPROVED_BUT_EVENT_UTILIZATION_IS_SUBMATERIAL_AND_RECURSIVE_BOUNDARY_INSTABILITY_PERSISTS",
+    "allowed_followup": "paired train-only event-utilization auxiliary x recursive-boundary-exposure playground with the passive Hines prior fixed as safety baseline"
+  },
+  "scientific_question": "Can causal event supervision, recursive boundary exposure, and passive-relative local stability jointly turn the 06b-q one-step gain into a non-regressive 8 ms rollout?",
+  "stage_A_atomic_auxiliary_probe": {
+    "arms": ["causal_target", "permuted_target"],
+    "target": ["synaptic_conductance_us", "synaptic_source_na", "somatic_current_na"],
+    "target_is_function_of": ["S_t", "U_realized"],
+    "target_uses_teacher_endpoint": false,
+    "same_initialization": true,
+    "same_minibatch_stream": true,
+    "mini_scaling_checkpoints": [0, 20, 60, 120],
+    "selection_eligible": false
+  },
+  "stage_B_factorial_matrix": {
+    "design": "2x2x2",
+    "factor_count": 8,
+    "factors": {
+      "causal_event_auxiliary": ["off", "on"],
+      "boundary_exposure": ["teacher_boundary", "pushforward_4ms"],
+      "local_stability": ["off", "passive_relative_directional"]
+    },
+    "fixed_representation": "chronological_jump|nonzero_robust_log",
+    "same_parameter_count": true,
+    "same_initialization_within_seed": true,
+    "same_window_and_minibatch_stream_within_seed": true,
+    "training_horizon_ms": 4,
+    "checkpoint_selection": "calibration half A, primary 8 ms recursive RMSE",
+    "arm_selection": "disjoint calibration half B with hard passive non-regression gate",
+    "development_used_for_selection": false,
+    "mini_scaling_checkpoints": [0, 40, 120, 240]
+  },
+  "causal_controls": [
+    "ordered_event_path_deletion",
+    "all_current_U_deletion",
+    "timestamp_reversal",
+    "receptor_permutation"
+  ],
+  "registered_gates": {
+    "minimum_auxiliary_gain_over_permuted_fraction": 0.10,
+    "minimum_median_8ms_gain_over_passive_fraction": 0.02,
+    "maximum_per_seed_8ms_regression_fraction": 0.0,
+    "minimum_ordered_event_deletion_materiality_fraction": 0.02,
+    "physical_voltage_violation_count": 0
+  },
+  "interpretation_table": {
+    "auxiliary_true_not_better_than_permuted": "causal event target or encoder is not learnable at this budget",
+    "pushforward_helps_only": "exposure bias is causal but local amplification remains",
+    "stability_helps_only": "local sensitivity is causal but training distribution remains mismatched",
+    "interaction_passes_all_gates": "candidate may proceed to a new sealed-test confirmation",
+    "no_arm_beats_passive": "retain passive baseline and redesign the learned residual contract"
+  },
+  "prohibitions": {
+    "validation_state_access": false,
+    "test_state_access": false,
+    "fresh_test_access": false,
+    "teacher_endpoint_as_input": false,
+    "teacher_mechanism_state_is_deployment_ready": false,
+    "full_training_authorization": false,
+    "mass_dataset_generation_authorization": false
+  }
+}
+
