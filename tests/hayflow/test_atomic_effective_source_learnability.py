@@ -42,6 +42,17 @@ def test_06bp_is_authorized_by_independently_registered_06bo_result():
     )
 
 
+def test_06bp_historical_v1_result_is_registered_without_overwriting_v2():
+    result = json.loads((EXPERIMENT_P / "result_v1.json").read_text())
+    assert result["archive"]["all_indexed_members_verified"]
+    assert result["implementation"]["code_revision"] == (
+        "8bc229b37583d39b9671df3aa96b8c563906540b"
+    )
+    assert result["implementation"]["adaptive_v2_executed"] is False
+    assert result["registered_outcome"]["selected_candidate"] is None
+    assert result["interpretation"]["scale_or_objective_alone_is_sufficient"] is False
+
+
 def test_06bp_preregisters_exact_paired_3x3_matrix_and_boundary_test():
     prereg = json.loads((EXPERIMENT_P / "preregistration.json").read_text())
     assert prereg["status"] == "preregistered_before_execution"

@@ -2,6 +2,12 @@
 
 Status: preregistered; not yet executed.
 
+Historical note: the original stage-1-only revision (`8bc229b`) has now been
+executed and immutably registered in `result_v1.json`. It found calibration
+movement but no development source identification or recursive benefit, so
+scaling/objective repair alone is closed as an explanation. The adaptive v2
+protocol described below has not yet been executed.
+
 The 06b-o physical decomposition is exact and its zero-source passive Hines
 prior improves long rollout, but eleven of twelve Hines seed-arm selections
 retained checkpoint zero.  This experiment therefore does not add STATE,

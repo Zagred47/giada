@@ -1,0 +1,50 @@
+{
+  "schema_version": "06b-p-registered-result-v1",
+  "status": "completed_historical_stage_1_only",
+  "archive": {
+    "name": "hayflow_atomic_effective_source_learnability.zip",
+    "sha256": "145eff3b1533009b7cc7f75efa0b7d1fb3664ea421887cd10cb83e437198c175",
+    "artifact_index_sha256": "491bba51bd81c4864bf5102c90c43ca02798e466f1cd4b45b90a658889752555",
+    "final_report_sha256": "9261a610eebbcb21d3f249ec68cf869472d7df58ae0a11e9b1eb66b67237b0ca",
+    "indexed_member_count": 34,
+    "all_indexed_members_verified": true
+  },
+  "implementation": {
+    "code_revision": "8bc229b37583d39b9671df3aa96b8c563906540b",
+    "final_report_schema": "06b-p-final-report-v1",
+    "adaptive_v2_executed": false
+  },
+  "registered_outcome": {
+    "valid": true,
+    "diagnosis": "CURRENT_CAUSAL_REPRESENTATION_DOES_NOT_LEARN_EFFECTIVE_SOURCE",
+    "selected_candidate": null,
+    "atomic_source_signal": false,
+    "recursive_boundary_signal": false,
+    "passive_one_step_rmse_mv": 2.30775785446167,
+    "passive_recursive_8ms_rmse_mv": 7.42733907699585,
+    "best_nonzero_source_correlation": 0.18879484002708122,
+    "best_nonzero_source_nrmse": 0.982375411439053,
+    "worst_recursive_8ms_rmse_mv": 14.912047386169434,
+    "main_effects": {
+      "global_p99_over_raw_atomic": 0.0,
+      "region_p99_over_raw_atomic": -0.016153107236184683,
+      "native_over_endpoint_atomic": 0.004266574549119051,
+      "hybrid_over_endpoint_atomic": 0.0005003701458684562
+    }
+  },
+  "interpretation": {
+    "scale_or_objective_alone_is_sufficient": false,
+    "calibration_training_signal_observed": true,
+    "development_source_identification_observed": false,
+    "recursive_safety_observed": false,
+    "stage_1_conclusion": "Scaling and loss alignment alone do not solve effective-source learnability.",
+    "authorized_follow_up": "Run preregistered 06b-p v2 adaptive input-contract x physical-target matrix."
+  },
+  "methodology": {
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "fresh_test_accessed": false,
+    "new_independent_confirmation_claimed": false,
+    "full_training_authorized": false
+  }
+}
