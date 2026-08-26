@@ -1,0 +1,95 @@
+{
+  "schema_version": "06b-o-preregistration-v1",
+  "experiment": "effective_membrane_source_playground",
+  "status": "preregistered_before_execution",
+  "question": "Does learning an effective local cable-equation RHS source and delegating spatial propagation to Hines improve recursive learnability relative to direct voltage prediction?",
+  "authorized_by": {
+    "experiment": "structure_preserving_coupling_forensic",
+    "diagnosis": "OBJECTIVE_COUPLING_AND_RELAXATION_DO_NOT_CLOSE_ROLLOUT_GAP",
+    "archive_sha256": "5bbdc11d747b5219b6a7713544b4c594b967d08e733fa40d2299ce160cacb54c",
+    "artifact_index_sha256": "332a68f9028999eb135e64be2df82e37f7d8ae207e304e57aa205c94a71ea097",
+    "final_report_sha256": "fdd4109bd9ff9da5ce0f3c512d06924da7b1f6981408f7e536d5d5fa66d12465"
+  },
+  "stage_1_exact_reconstruction": {
+    "teacher_effective_source": "A V_t+1 - mass V_t - leak E_leak",
+    "macro_step_ms": 1.0,
+    "normalization": "per-segment diagonal times 20 mV",
+    "maximum_reconstruction_error_mv": 0.0001,
+    "controls": [
+      "relabelled topology with authentic source",
+      "no axial coupling with authentic source",
+      "passive Hines transition"
+    ],
+    "selection_eligible": false
+  },
+  "stage_2_factorial_matrix": {
+    "axes": {
+      "output_parameterization": [
+        "direct_voltage",
+        "hines_effective_source"
+      ],
+      "state_feedback": [
+        "frozen_boundary_state",
+        "predicted_dynamic_state"
+      ],
+      "temporal_contract": [
+        "instantaneous",
+        "local_recurrent"
+      ]
+    },
+    "arm_count": 8,
+    "seeds": [61017, 61029, 61043],
+    "training_horizon_ms": 4,
+    "evaluation_horizons_ms": [1, 2, 4, 8],
+    "training_steps": 400,
+    "checkpoints": [0, 100, 200, 400],
+    "same_numeric_input_tensor": true,
+    "same_minibatches_within_seed": true,
+    "same_initialization_within_seed": true,
+    "same_endpoint_and_native_loss_weights": true,
+    "checkpoint_selection_role": "train-derived calibration",
+    "final_evaluation_role": "train-derived development"
+  },
+  "stage_3_frozen_counterfactuals": {
+    "teacher_state_refresh": "privileged upper bound",
+    "relabelled_topology": "tests authentic spatial assignment",
+    "no_axial": "tests dependence on cable propagation",
+    "spatial_output_shuffle": "negative control for segment identity",
+    "retraining_performed": false,
+    "selection_eligible": false
+  },
+  "registered_metrics": [
+    "voltage RMSE and gain over persistence at 1, 2, 4 and 8 ms",
+    "normalized mechanism-STATE RMSE",
+    "quiescent, moderate, active and regenerative gains",
+    "per-region gains including soma, AIS and axon",
+    "endpoint drift and physical violations",
+    "paired main effects for source parameterization, STATE feedback and memory",
+    "topology and spatial-identity counterfactual degradation",
+    "progressive checkpoint trajectories"
+  ],
+  "selection_gate": {
+    "minimum_source_main_effect_fraction": 0.02,
+    "minimum_global_gain_vs_persistence_fraction": 0.10,
+    "minimum_active_gain_vs_persistence_fraction": 0.10,
+    "quiescent_gain_vs_persistence": "non-negative",
+    "moderate_gain_vs_persistence": "non-negative",
+    "soma_AIS_and_axon_gains_vs_persistence": "all non-negative",
+    "physical_voltage_violations": 0
+  },
+  "decision_tree": {
+    "source_effect_and_absolute_gate_pass": "independent train-support source-operator confirmation",
+    "source_effect_without_absolute_gate": "atomic source regime and boundary reassessment",
+    "teacher_state_upper_bound_only": "revise causal STATE observability",
+    "no_source_or_state_signal": "reassess physical target and time discretization"
+  },
+  "scope_limitations": {
+    "historically_reused_train_only": true,
+    "new_independent_confirmation_claimed": false,
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "coupled_06c_canary_authorized": false,
+    "full_training_authorized": false,
+    "mass_dataset_generation_authorized": false
+  }
+}

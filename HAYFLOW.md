@@ -1938,3 +1938,44 @@ larger generic recurrent network. It must retain the identified physiological
 input signal, add explicit quiet-regime safety, and isolate loss alignment from
 voltage/STATE coupling with paired controls before any new independent data or
 06c evaluation is allowed.
+
+### 06b-n structure-preserving coupling forensic
+
+The completed 06b-n run crossed gate prior, rollout objective, STATE-flow
+composition and STATE updater in one synchronized 2x2x2x2 train-only matrix.
+It also tested frozen gate counterfactuals, multiple causal voltage paths, a
+teacher-microtrace upper bound and a bounded mechanism-aware relaxation
+updater. All sixteen arms shared seeds, minibatches and the frozen voltage
+expert.
+
+No arm passed. The best remained 2.63% worse than the frozen static expert,
+with positive active and dendritic gains but severe quiescent, AIS and axonal
+damage. Carry-first gating removed useful active correction, persistence regret
+had negligible global effect, endpoint STATE mixing was immaterial and the
+learned relaxation updater did not transfer its one-step semantic signal to
+recursive STATE utility. The teacher microtrace did not beat the causal linear
+path, rejecting missing intra-millisecond voltage resolution as the leading
+explanation. The registered diagnosis is
+`OBJECTIVE_COUPLING_AND_RELAXATION_DO_NOT_CLOSE_ROLLOUT_GAP`.
+
+### 06b-o effective membrane-source playground
+
+`notebooks/06b_o_effective_membrane_source_playground.ipynb` is the
+preregistered architecture revision authorized by 06b-n. Instead of adding
+another voltage gate, it compares direct voltage-delta prediction with a local
+effective cable-equation RHS source whose spatial propagation is performed by
+the fixed differentiable Hines solve.
+
+One aligned 2x2x2 matrix crosses output parameterization, frozen versus
+predicted mechanism-STATE feedback and instantaneous versus locally recurrent
+memory. All eight arms receive the same numeric inputs and share seeds,
+initialization, minibatches, parameter allocation and objective weights.
+Checkpoints at 0/100/200/400 steps provide mini scaling trajectories.
+
+An exact source-reconstruction audit must pass before training. Frozen
+teacher-STATE, relabelled-topology, no-axial and spatial-output-shuffle
+counterfactuals are evaluated for every trained arm without retraining and are
+not selection-eligible. Only train-derived fit, calibration and development
+roles are read. A positive result may authorize only an independent
+train-support confirmation; validation, test, 06c, full training and mass data
+generation remain forbidden.

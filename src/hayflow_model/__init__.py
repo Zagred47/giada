@@ -474,6 +474,21 @@ from .structure_preserving_coupling_forensic import (
     audit_cnexp_teacher_contract,
     verified_06bm_artifact_root,
 )
+from .effective_membrane_source_playground import (
+    DIRECT_VOLTAGE,
+    FROZEN_BOUNDARY_STATE,
+    HINES_SOURCE,
+    INSTANTANEOUS,
+    LOCAL_RECURRENT as SOURCE_LOCAL_RECURRENT,
+    PREDICTED_DYNAMIC_STATE,
+    EXPECTED_06BN_ARCHIVE_SHA256,
+    EXPECTED_06BN_FINAL_SHA256,
+    EXPECTED_06BN_INDEX_SHA256,
+    CausalMembraneSourceCell,
+    EffectiveMembraneSourceConfig,
+    EffectiveMembraneSourcePlayground,
+    verified_06bn_artifact_root,
+)
 from .branch_elm_enriched_benchmark import (
     ELM_INPUT_VIEWS,
     ORIGINAL_ELM_PARAMETER_COUNT,
