@@ -10,490 +10,738 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{array}
 
-\geometry{margin=1in}
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue!55!black,
-  citecolor=blue!55!black,
-  urlcolor=blue!55!black
-}
+\geometry{margin=0.9in}
+\hypersetup{colorlinks=true,linkcolor=blue!55!black,
+citecolor=blue!55!black,urlcolor=blue!55!black}
 \setlist{nosep}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\modela}{\textsc{HayFlow-OneStep}}
+\newcommand{\modelb}{\textsc{HayFlow-Recursive}}
 
-% Provisional title and author order: verify before submission.
-\title{HayFlow: Towards a Causal, Morphology-Aware Neural Surrogate\\
+% Provisional title, author order, and affiliations: verify before submission.
+\title{HayFlow: Causal State Contracts and Structure-Preserving Learning\\
 for a Biophysical Cortical Neuron}
 \author{Alessio Ragno \and Alessandro Belli}
 \date{August 2026}
 
 \begin{document}
-
 \maketitle
 
 \begin{abstract}
-Detailed multicompartment neuron models reproduce nonlinear dendritic and
-somatic dynamics, but their computational cost limits their use in large
-network simulations and iterative experiments. Existing neural surrogates can
-predict membrane voltage accurately, yet voltage-only input--output mappings do
-not expose the internal variables needed to define a causal, restartable, and
-autoregressive simulator. We introduce HayFlow, a developing surrogate of the
-Hay layer-5 pyramidal-cell model that learns a one-millisecond flow map over the
-complete 642-segment morphology, a rich boundary state, and realized synaptic
-input. Our methodology decomposes the problem into controlled learnability,
-representation, optimization, and recursive-exposure experiments before
-scaling the model. A frozen morphology-aware core followed by a direct-tree
-residual decoder achieves an ensemble RMSE of \textbf{0.3308 mV} on a
-preregistered fresh one-step test, compared with 2.5763 mV for persistence.
-In a separate information-matched comparison, the compact HayFlow voltage path
-outperforms an 8,002-parameter Branch-ELM core in every paired seed, reducing
-median global RMSE by 6.44\% and somatic RMSE by 34.94\%. However, the strongest
-one-step model fails under closed-loop rollout. A later recursive prototype
-shows that four-millisecond pushforward exposure reduces the median eight-step
-RMSE from 18.162 mV for a support-matched passive reference to 14.720 mV, with
-no physical-voltage violations. This prototype does not pass its cross-seed
-promotion gate and still receives teacher mechanism state during rollout.
-Thus, the current evidence establishes an accurate one-step flow map and a
-causally supported route toward recursive stability, but not yet an autonomous
+Detailed multicompartment neuron models reproduce nonlinear dendritic,
+synaptic, and somatic dynamics, but their computational cost limits repeated
+experimentation and large-network simulation. Existing accelerators either
+retain the original equations through hardware-aware solvers, reduce the
+morphology, or learn an input--output approximation. These approaches are
+effective for their intended targets, but they do not by themselves provide a
+learned, restartable flow map over the complete internal state of the original
+neuron. We introduce HayFlow, a developing surrogate of the Hay layer-5
+pyramidal-cell model. HayFlow defines a causal one-millisecond transition over
+all 642 instantiated segments, a rich boundary state, and realized synaptic
+input. The project uses component-level, preregistered experiments to separate
+information, representation, optimization, and recursive-exposure failures.
+A frozen morphology-aware core followed by a direct-tree residual decoder
+achieves an ensemble RMSE of \textbf{0.3308 mV} on a preregistered fresh
+one-step test, versus 2.5763 mV for persistence. Under an independent
+information-matched protocol, a compact HayFlow voltage bridge outperforms an
+8,002-parameter Branch-ELM core for every paired seed, reducing median global,
+somatic, and active-regime RMSE by 6.44\%, 34.94\%, and 8.92\%, respectively.
+However, the one-step champion fails in closed loop. A separate recursive
+prototype combining a passive Hines prior with four-millisecond pushforward
+exposure reduces median eight-step RMSE from 18.162 to 14.720 mV and produces
+no physical-voltage violations. It nevertheless fails a preregistered
+cross-seed calibration veto and still receives teacher mechanism state during
+rollout. The evidence therefore establishes an accurate one-step flow map, a
+fair advantage over a compact phenomenological baseline, and a causally
+supported route toward recursive stability, but not yet an autonomous
 replacement for NEURON.
 \end{abstract}
 
 \section{Introduction}
 
-Biophysically detailed neuron models represent membrane voltage, ion-channel
-gates, calcium dynamics, synaptic conductances, axial coupling, and nonlinear
-dendritic events over a branched morphology. The Hay layer-5 pyramidal-cell
-(L5PC) model is a prominent example: it captures a broad range of dendritic and
-perisomatic active properties and is routinely simulated with NEURON
-\cite{hay2011,hines1997}. This level of mechanistic detail is valuable, but it
-is expensive when the neuron must be evaluated repeatedly or embedded in a
-large network.
+\subsection{Problem and Importance}
 
-Neural surrogates offer a promising alternative. Beniaguev, Segev, and London
-showed that the input--output transformation of a detailed cortical neuron can
-be approximated by a deep artificial neural network \cite{beniaguev2021}.
-Nevertheless, predicting voltage from a finite history and constructing a
-restartable dynamical system are different objectives. In closed loop, a
-surrogate consumes its own predicted state. Small errors in voltage, slow
-channel variables, calcium, or synaptic tails may then change voltage-dependent
-conductances and threshold events, causing the model to enter states absent
-from teacher-forced training.
+Biophysically detailed neurons represent membrane voltage, ion-channel gates,
+calcium dynamics, receptor-specific synaptic conductances, and axial current
+over a branched morphology. The Hay layer-5 pyramidal-cell (L5PC) model is a
+prominent example: it reproduces a broad range of dendritic and perisomatic
+active properties and is commonly simulated with NEURON
+\cite{hay2011,hines1997}. Such models are scientific instruments rather than
+mere signal generators. Their internal state permits causal interventions,
+snapshot restoration, branch-specific stimulation, and mechanistic analysis
+of NMDA, calcium, backpropagating, and somatic events.
 
-HayFlow addresses this distinction explicitly. We formulate the teacher as a
-causal one-millisecond flow map over a rich state contract, preserve the
-instantiated morphology, and separate three questions:
+The same detail makes simulation expensive. Each numerical step couples many
+compartments and mechanism variables, and biologically relevant trajectories
+require thousands of small integration steps. This cost becomes prohibitive
+when the model is embedded in a circuit, swept over input conditions, or used
+inside an optimization loop. Accelerating one cell while preserving its
+nonlinear computations is therefore important both for computational
+neuroscience and for studying what a cortical neuron computes.
 
+\subsection{Standard Solutions and the Remaining Gap}
+
+Existing solutions fall into three families.
 \begin{enumerate}
-  \item Is the one-step transition identifiable from the available causal
-  state and input?
-  \item Can a compact, morphology-aware model learn that transition?
-  \item Does the learned transition remain stable when recursively composed?
+  \item \textbf{Exact numerical acceleration} retains the original equations
+  and improves scheduling, vectorization, or hardware utilization.
+  DeepDendrite parallelizes the Hines solve on GPUs and reports
+  orders-of-magnitude acceleration without replacing the mechanistic model
+  \cite{zhang2023}. This is preferable when exact state and arbitrary
+  biophysical interventions are non-negotiable.
+  \item \textbf{Analytical or phenomenological reduction} decreases the number
+  of compartments or variables. Neuron\_Reduce preserves selected transfer
+  impedances while mapping a detailed tree to a smaller one
+  \cite{amsalem2020}. Reduced models are interpretable and fast, but their
+  fidelity is tied to the preserved quantities and reduction assumptions.
+  \item \textbf{Learned surrogates} fit the teacher's observable behavior.
+  Temporal convolutional networks, CNN--LSTMs, and Expressive Leaky Memory
+  neurons predict voltage and spikes much faster than detailed simulation
+  \cite{beniaguev2021,olah2022,spieler2024}. Most target
+  event-history-to-output behavior rather than the full causal state transition.
 \end{enumerate}
 
-The present work is a technical progress report rather than a claim of a
-finished simulator. Its contributions are:
+The unresolved gap is a learned surrogate that is simultaneously
+\emph{morphology preserving}, \emph{state complete enough for restart and
+branching}, and \emph{stable under recursive use}. Low one-step voltage error
+does not guarantee this: during deployment, a model consumes its own predicted
+voltage and slow state, so small errors can alter voltage-dependent currents
+and threshold events.
 
-\begin{itemize}
-  \item a replay-validated teacher and dataset contract covering all 642
-  instantiated segments, including soma, axon initial segment, axon, and
-  dendrites;
-  \item a decision-grade one-step checkpoint family evaluated on a sealed,
-  preregistered fresh test;
-  \item an information-matched comparison showing a modest but consistent
-  advantage over a compact Branch-ELM baseline under equal numerical input;
-  \item a controlled diagnosis showing that excellent one-step accuracy does
-  not imply autoregressive stability;
-  \item factorial evidence that pushforward boundary exposure, rather than the
-  tested ordered-event auxiliary or directional penalty, materially improves
-  learned recursive dynamics.
-\end{itemize}
+\subsection{Proposal and Design Rationale}
+
+We propose HayFlow, a one-millisecond causal flow map over the complete
+instantiated Hay morphology. Four arguments guide the design.
+\begin{enumerate}
+  \item \textbf{Expose causal state rather than infer it repeatedly from a
+  finite voltage history.} Voltage alone is not Markovian for a
+  conductance-based neuron. Mechanism, ionic, calcium, and synaptic states are
+  recorded at each boundary.
+  \item \textbf{Represent the dendritic tree explicitly.} Axial interaction is
+  local on the morphology, while regenerative events depend on region and
+  path. Tree features and a Hines-style solve are better aligned than an
+  arbitrary compartment ordering.
+  \item \textbf{Separate physical transport from learned nonlinear sources.}
+  The cable solve is known and stable; the difficult local effective membrane
+  source is learned. This focuses capacity where the teacher is nonlinear.
+  \item \textbf{Test learnability before scale.} Small paired experiments,
+  probes, path deletions, and mini scaling curves distinguish absent
+  information, representation, optimization, and closed-loop exposure.
+\end{enumerate}
+
+\subsection{Hypotheses}
+
+\begin{description}[leftmargin=1.2cm,style=nextline]
+  \item[H1: Causal-state identifiability.]
+  Rich boundary state and realized input identify the authentic one-millisecond
+  transition substantially better than persistence or frozen H2.
+  \item[H2: Morphology-aware representation.]
+  Under identical numerical information and similar parameter budget, a
+  morphology-aware HayFlow path should outperform Branch-ELM, especially at
+  the soma and in active regimes.
+  \item[H3: Non-compositionality of one-step accuracy.]
+  Teacher-forced one-step selection will not necessarily remain accurate when
+  the model is recursively applied to its own state.
+  \item[H4: Structure-preserving prior.]
+  A passive Hines prior should be safer recursively than an unconstrained
+  learned transition, particularly in physical-voltage violations.
+  \item[H5: Exposure alignment.]
+  Pushforward exposure to model-generated boundaries should improve multi-step
+  RMSE relative to teacher-boundary training.
+  \item[H6: Event and stability objectives.]
+  Ordered-event supervision and a passive-relative directional penalty may
+  improve rollout; they are retained only if causal ablations show material gain.
+\end{description}
+
+\subsection{Contributions}
+
+This report contributes: (i) a replay-validated causal teacher contract over
+all 642 segments; (ii) a one-step checkpoint family evaluated on a sealed
+fresh test; (iii) an information-matched Branch-ELM comparison; (iv) a causal
+diagnosis of one-step composition failure; and (v) a paired factorial
+experiment isolating pushforward exposure as the first materially successful
+learned recursive intervention.
 
 \section{Related Work}
 
-\paragraph{Biophysical neuron models.}
-The Hay L5PC model combines detailed morphology with active conductances tuned
-to reproduce dendritic and perisomatic behavior \cite{hay2011}. NEURON provides
-the numerical environment used to instantiate and integrate such
-multicompartment models \cite{hines1997}. HayFlow does not modify this teacher:
-the original NEURON model remains the canonical source of trajectories,
-internal states, and event labels.
+\subsection{Detailed Multicompartment Models}
 
-\paragraph{Neural surrogates of cortical neurons.}
-The NeuronIO work demonstrated that a detailed cortical neuron can be
-approximated by a deep temporal convolutional network and also introduced a
-small branch-structured baseline \cite{beniaguev2021}. That work primarily
-models the input--output transformation from presynaptic events to somatic
-voltage and spikes. HayFlow instead targets a causal boundary-to-boundary
-transition over the complete instantiated state and morphology. Consequently,
-published error values cannot be compared directly unless support, target,
-information, and metric are aligned.
+Rall's cable-theoretic treatment established the basis for representing
+dendrites as branched electrical structures. NEURON made empirically grounded
+multicompartment neurons practical to construct and simulate
+\cite{hines1997}. The Hay L5PC model combined reconstructed morphology with
+active somatic, axonal, and dendritic mechanisms constrained by
+electrophysiology \cite{hay2011}. These works are our mechanistic foundation:
+HayFlow does not alter or retune the teacher.
 
-\paragraph{Learned physical simulation.}
-Graph-based learned simulators exploit relational structure to model physical
-systems and meshes \cite{sanchez2020,pfaff2021}. HayFlow shares the view that
-topology should be represented explicitly, but the neuronal problem adds stiff
-local mechanism states, receptor dynamics, voltage-dependent nonlinearities,
-and threshold events. We therefore retain a passive Hines-style physical prior
-in the recursive line of experiments rather than asking a generic graph model
-to rediscover all cable coupling from data.
+Recent exact accelerators attack runtime rather than complexity. DeepDendrite
+introduces dendritic hierarchical scheduling and GPU execution while retaining
+the biophysical equations \cite{zhang2023}. Exact acceleration is preferable
+when arbitrary channel parameters, unseen mechanisms, or exact trajectories
+must change at inference. HayFlow targets repeated evaluation within a fixed
+teacher family and state contract.
 
-\paragraph{Autoregressive distribution shift.}
-Teacher forcing creates a mismatch between training on ground-truth states and
-deployment on model-generated states. Scheduled sampling and learned-simulator
-noise curricula address related exposure problems \cite{bengio2015,
-sanchez2020}. Our pushforward intervention follows the same general principle,
-but is evaluated causally within a paired factorial design and against a
-support-matched passive reference.
+\subsection{Morphological and Dynamical Reduction}
 
-\section{Problem Formulation and Teacher Contract}
+Neuron\_Reduce maps synapses and active channels to a smaller tree while
+preserving selected transfer impedances and reports substantial speedups on
+nonlinear neurons \cite{amsalem2020}. It is strong when retained somatic and
+dendritic behaviors are specified in advance. We keep all 642 segments so that
+learned-dynamics error is not confounded with morphology-reduction error.
+Reduction remains a later, separately measurable compression stage.
 
-Let $S_t$ denote the complete causal teacher state at a millisecond boundary
-and let $U_{[t,t+1)}$ denote the realized inputs during the following interval.
-The target flow map is
+\subsection{Learned Neuron Surrogates}
+
+Beniaguev, Segev, and London showed that a temporal convolutional network can
+approximate the spike-level input--output transformation of a cortical neuron
+\cite{beniaguev2021}. Ol\'ah, Pedersen, and Rowan used CNN--LSTMs for several
+multicompartment cells and demonstrated large circuit-level runtime gains
+\cite{olah2022}. Their principal contract is presynaptic history to
+voltage/spikes rather than complete state evolution.
+
+Spieler et al. introduced ELM, combining filtered synaptic traces, multiple
+leaky memories, nonlinear integration, and a compact readout
+\cite{spieler2024}. Branch-ELM encodes dendritic grouping and fits NeuronIO with
+fewer than ten thousand parameters. It is our closest compact learned baseline.
+HayFlow differs by receiving a rich causal boundary state, preserving all 642
+segment outputs, and targeting the next internal state. Published ELM and
+HayFlow errors are not directly comparable; we therefore run a separate
+information-matched experiment.
+
+\subsection{Learned Physical Simulators and Rollout Stability}
+
+Graph Networks and MeshGraphNets model physical systems as interacting entities
+\cite{sanchez2020,pfaff2021}; Fourier neural operators learn maps between
+function spaces \cite{li2021}. These motivate topology-aware learning, but a
+neuron adds heterogeneous mechanisms, receptor state, stiffness, and threshold
+events. Scheduled sampling addresses teacher-forcing exposure mismatch
+\cite{bengio2015}. Brandstetter et al. cast autoregressive PDE stability as
+domain adaptation and introduced pushforward training \cite{brandstetter2022}.
+HayFlow tests this intervention causally on a neuronal state contract.
+
+\subsection{Comparative Positioning}
+
+\begin{table*}[t]
+\centering
+\caption{Representative alternatives and their appropriate use.}
+\label{tab:related-positioning}
+\small
+\begin{tabularx}{\textwidth}{p{2.3cm}YYYY}
+\toprule
+Approach & State and structure & Objective & Main assumption & Prefer when \\
+\midrule
+NEURON / Hay & Full mechanistic state and tree & Solve specified equations &
+Mechanisms are known & Exact behavior and arbitrary interventions are required \\
+DeepDendrite & Same model with GPU scheduling & Exact accelerated solve &
+Supported hardware/mechanisms & Fidelity must be retained \\
+Neuron\_Reduce & Reduced tree and mapped mechanisms & Preserve selected
+electrotonic responses & Reduction criteria capture desired computation & A
+smaller interpretable mechanism is sufficient \\
+TCN / CNN--LSTM & Event history to voltage/spikes & Observable output error &
+Internal state need not be exposed & Fast output emulation is sufficient \\
+Branch-ELM & Synaptic traces and leaky memories & Voltage/spike or sequence loss
+& Compact memories summarize history & A very small recurrent neuron is desired \\
+HayFlow & Rich boundary state and complete tree & Full transition and stable
+rollout & Teacher state is recordable & Restart, branching, local voltage, and
+future differentiable deployment are required \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\section{Background and Problem Formulation}
+
+For segment $i$, compartmental dynamics can be written schematically as
 \begin{equation}
-  \mathcal{F}_{1\,\mathrm{ms}}:
-  \left(S_t,U_{[t,t+1)}\right)
-  \longmapsto
-  \left(S_{t+1},V_{[t,t+1]},E_{[t,t+1)}\right),
-  \label{eq:flowmap}
+ C_i\frac{dV_i}{dt}=I_{\mathrm{axial},i}(V)
+ +I_{\mathrm{ion},i}(V_i,z_i,c_i)
+ +I_{\mathrm{syn},i}(V_i,r_i,U)+I_{\mathrm{ext},i},
+ \label{eq:cable}
 \end{equation}
-where $V_{[t,t+1]}$ is a high-resolution voltage microtrace on selected probes
-and $E_{[t,t+1)}$ contains event labels such as somatic spikes,
-backpropagating action potentials, calcium spikes, and NMDA events.
+with channel states $z_i$, concentrations $c_i$, and synaptic state $r_i$.
+Their additional kinetics imply that voltage alone is not closed: equal
+voltage with different $(z,c,r)$ can have different futures.
 
-The state contract contains, where available in the authentic teacher:
+Let $S_t$ be the complete recorded teacher state at a millisecond boundary and
+$U_{[t,t+1)}$ the realized input during the interval. The target is
+\begin{equation}
+ \mathcal F_{1\,\mathrm{ms}}:(S_t,U_{[t,t+1)})\mapsto
+ (S_{t+1},V_{[t,t+1]},E_{[t,t+1)}),
+ \label{eq:flowmap}
+\end{equation}
+where $V$ is a probe microtrace and $E$ includes somatic, axonal,
+backpropagating, calcium, and NMDA events. $S_t$ contains voltage at 642
+segments, accessible NMODL \texttt{STATE} variables, calcium/ions, synaptic
+state, morphology/mechanism masks, and replay metadata. $U$ contains ordered
+events, timestamps, synapse identity, receptor-aware realized release, and
+external current. Realized release is causal because the authentic synaptic
+front end determines it before membrane integration.
 
-\begin{itemize}
-  \item voltage for every one of the 642 instantiated segments;
-  \item ion-channel and other NMODL \texttt{STATE} variables;
-  \item calcium and accessible ionic concentrations;
-  \item synaptic rise/decay state and causal release information;
-  \item morphology, mechanism-presence masks, and stable segment indices;
-  \item random-stream metadata needed for reproducibility.
-\end{itemize}
-
-The realized input $U_{[t,t+1)}$ records the ordered synaptic events, their
-intra-millisecond timestamps, synapse identities, receptor-aware effects, and
-somatic current when present. Realized release is causal in this formulation:
-the authentic synaptic front-end determines release before the membrane update,
-so it is an admissible input to the dynamical core rather than information from
-the future endpoint.
-
-Teacher snapshots are restored and replayed under identical inputs. The
-diagnostic dataset passed exhaustive replay with a maximum discrepancy below
-$10^{-5}$ in its registered validation. This contract makes it possible to
-distinguish model error from teacher nondeterminism or indexing drift.
+One-step evaluation uses $\widehat S_{t+1}=\widehat{\mathcal F}(S_t,U_t)$.
+Autonomous rollout instead uses
+\begin{equation}
+ \widehat S_{t+k+1}=\widehat{\mathcal F}(\widehat S_{t+k},U_{t+k}).
+ \label{eq:rollout}
+\end{equation}
+New input does not reset errors stored in voltage, calcium, gates, or synaptic
+tails. One-step and rollout candidates therefore require separate gates.
 
 \section{Method}
 
-\subsection{Component-Level Experimental Methodology}
+\subsection{Evidence-Gated Workflow}
 
-Instead of immediately scaling a large end-to-end architecture, we use a
-component-level experimental workflow. Each experiment isolates one proposed
-capability---for example state update, voltage coupling, axial transport,
-event use, or recursive exposure---and includes an aligned negative control.
-When several hypotheses share data, seeds, and minibatches, they are evaluated
-in a small preregistered factorial matrix. Checkpoints at increasing budgets
-provide miniature scaling curves without duplicating training.
+\begin{figure}[t]
+\centering
+\fbox{\parbox{0.94\linewidth}{\centering
+\textbf{Teacher audit} $\rightarrow$ \textbf{Replayable contract}
+$\rightarrow$ \textbf{Atomic probes} $\rightarrow$
+\textbf{Paired factorials} $\rightarrow$ \textbf{Calibration}
+$\rightarrow$ \textbf{Frozen development} $\rightarrow$
+\textbf{Sealed fresh test}\\[4pt]
+At every arrow: test information, representation, optimization, causal path
+use, and split leakage before increasing scale.}}
+\caption{HayFlow's workflow. A later stage opens only after the registered gate
+of the previous stage passes.}
+\label{fig:workflow}
+\end{figure}
 
-The workflow distinguishes four failure modes:
+Components are tested before composition; seeds, initialization, minibatches,
+and evaluation windows are paired across causal arms; target permutation, path
+deletion, passive references, and frozen checkpoints act as negative controls;
+checkpoint ladders reveal mini scaling laws; and fresh outcomes never select a
+model. The workflow distinguishes missing information, inadequate
+representation, failed optimization, and recursive exposure shift.
 
-\begin{enumerate}
-  \item \textbf{information}: the causal input does not identify the target;
-  \item \textbf{representation}: the useful information is present but poorly
-  encoded;
-  \item \textbf{optimization}: the representation is expressive but not used
-  by the optimizer;
-  \item \textbf{recursive exposure}: a one-step learner is evaluated on states
-  generated by its own imperfect transition.
-\end{enumerate}
+\subsection{Model A: \modela}
 
-Probe tasks, target permutations, path deletions, paired seeds, and frozen
-historical checkpoints are used to discriminate these explanations. Test and
-fresh-test outcomes are not used for architecture or checkpoint selection.
-
-\subsection{Model A: One-Step HayFlow-Hines Decoder}
-
-The strongest one-step family consists of a frozen HayFlow-Hines H2 core and a
-trainable direct-tree residual decoder. The decoder receives 226 fixed
-multiscale tree features per segment, concatenated with a learned
-16-dimensional segment embedding. A shared SiLU multilayer perceptron of width
-$242\rightarrow96\rightarrow96\rightarrow1$ predicts a bounded voltage
-residual:
+Model A is a frozen HayFlow-Hines H2 core plus a direct-tree residual decoder.
+H2 preserves the 642-segment morphology, uses one physical Hines solve per
+macro-step, and produces a voltage proposal. The decoder receives 226 fixed
+multiscale tree features and a learned 16-dimensional segment embedding. A
+shared SiLU MLP $242\rightarrow96\rightarrow96\rightarrow1$ predicts
 \begin{equation}
-  \widehat{V}_{t+1,i}=V^{\mathrm{H2}}_{t+1,i}
-  +120\tanh\!\left(g_\theta(\phi_{t,i},e_i)/120\right),
+ \widehat V_{t+1,i}=V^{\mathrm{H2}}_{t+1,i}
+ +120\tanh(g_\theta(\phi_{t,i},e_i)/120).
+ \label{eq:modela}
 \end{equation}
-where $i$ indexes a segment, $\phi_{t,i}$ denotes its tree features, and $e_i$
-is its learned embedding. The decoder has 43,009 trainable parameters; the
-frozen H2 parameters are additional and are not included in this count.
+It has 43,009 trainable parameters; frozen H2 is additional. Tree features
+expose multiscale context, embeddings allow local specialization, sharing
+avoids 642 independent models, and the residual preserves a known baseline.
 
-Three fixed seeds were fitted on 120 train-only boundary pairs. Thirty
-disjoint internal pairs were used for checkpoint selection, and previously
-opened development support was evaluated only after freezing. A separate
-32-pair, 64-episode fresh-test plan was then generated and opened without
-retraining or seed selection.
+\subsection{Model B: \modelb}
 
-\subsection{Model B: Recursive Physical-Prior Prototype}
+Model B preserves the passive cable solve and learns an effective membrane
+source:
+\begin{equation}
+ A_{\mathrm{passive}}(S_t)\widehat V_{t+1}
+ =b_{\mathrm{passive}}(S_t,U_t)+\widehat q_\theta(S_t,U_t).
+ \label{eq:modelb}
+\end{equation}
+The Hines-structured matrix propagates axial/passive effects; a
+12,972-parameter cell predicts the nonlinear source. Four-millisecond
+pushforward exposure generates intermediate predicted states before later
+losses are evaluated. This changes the training distribution without using
+future teacher state as input.
 
-The current learned recursive frontier uses a passive Hines cable solve as a
-physical prior and a 12,972-parameter neural cell that predicts an effective
-membrane source from causal state and compact input. Its strongest arm uses
-four-millisecond pushforward exposure: during training, the model is exposed
-to boundary states generated by its own preceding predictions before the loss
-is evaluated. This directly targets the deployment distribution.
+The registered $2\times2\times2$ experiment crosses: ordered-event auxiliary
+on/off; teacher-boundary versus 4 ms pushforward exposure; and
+passive-relative directional penalty on/off. All arms share initialization,
+windows, minibatches, and budget.
 
-The registered $2\times2\times2$ design crossed:
+\subsection{Hypothesis-to-Experiment Traceability}
 
-\begin{itemize}
-  \item a causal ordered-event auxiliary objective on/off;
-  \item teacher-boundary versus four-millisecond pushforward exposure;
-  \item a passive-relative directional stability penalty on/off.
-\end{itemize}
-
-All arms shared initialization, windows, minibatches, and budget. Calibration
-selection and arm selection used disjoint calibration halves. The development
-role was opened only after selection.
+\begin{table*}[t]
+\centering
+\caption{Every hypothesis is tied to a causal contrast and decision rule.}
+\label{tab:hypothesis-map}
+\small
+\begin{tabularx}{\textwidth}{p{0.8cm}YYp{3.2cm}}
+\toprule
+Hyp. & Contrast & Primary observable & Decision meaning \\
+\midrule
+H1 & Model A vs persistence and H2 on sealed support & Global RMSE, passing seeds
+& Rich state suffices for one-step prediction if both baselines are beaten \\
+H2 & HayFlow bridge vs Branch-ELM with identical tensor/protocol & Global,
+soma, active RMSE & Representation comparison only; no rollout claim \\
+H3 & Frozen one-step checkpoints composed for 1--8 ms & Horizon RMSE and drift &
+Large growth rejects one-step selection as deployment proxy \\
+H4 & Learned recursive arm vs passive Hines & 8 ms RMSE and violations & Learned
+correction must improve rather than damage the prior \\
+H5 & Teacher-boundary vs pushforward training & Marginal 8 ms RMSE gain &
+Positive paired effect supports exposure alignment \\
+H6 & Auxiliary/penalty on/off and path deletion & Marginal and deletion effects &
+Retain only factors above materiality threshold \\
+\bottomrule
+\end{tabularx}
+\end{table*}
 
 \section{Experimental Setup}
 
-The base diagnostic resource contains 29,240 transitions and is augmented by a
-640-transition validation top-up, giving 29,880 transitions without physically
-merging the stores. The data are split by seed and protocol rather than by
-random windows from the same trajectory. A separate 05j-o fresh teacher shard
-contains 768 transitions from 64 episodes arranged as 32 paired examples.
+\subsection{Teacher, Data, and Splits}
 
-The principal voltage metric is
-\begin{equation}
-  \mathrm{RMSE}_V =
-  \sqrt{\frac{1}{N T}\sum_{n=1}^{N}\sum_{i=1}^{T}
-  \left(\widehat{V}_{n,i}-V_{n,i}\right)^2},
-\end{equation}
-reported in millivolts. We additionally monitor region-specific and
-activity-conditioned RMSE, maximum segment error, mean drift, branching
-retention, and physical-voltage violations. One-step and recursive metrics are
-reported separately and must not be merged into a single leaderboard.
+The teacher is the original Hay L5PC implementation from
+\texttt{neuron\_as\_deep\_net}, pinned and audited before generation. The base
+diagnostic store contains 29,240 one-millisecond transitions and a
+validation-only top-up contains 640, yielding 29,880 logical transitions
+without physically merging the HDF5 stores. Splits are separated by seed and
+protocol, not by random windows from one trajectory.
 
-\subsection{Information-Matched Branch-ELM Comparison}
+The one-step fresh test is distinct: 32 causal boundary pairs, 64 episodes,
+and 768 transitions. It was generated from a sealed plan only after Model A
+was frozen. Exhaustive replay reached $3.815\times10^{-6}$ maximum discrepancy,
+below the $10^{-5}$ tolerance.
 
-To answer whether the apparent advantage over the small Branch-ELM baseline
-was caused by the enriched data contract rather than the architecture, we ran
-a corrective information-matched comparison. Both models receive the exact
-same 76-value per-segment numerical tensor, containing boundary voltage and
-axial differences, mechanism state and presence, local ions, realized causal
-input, static segment features, and region identity. They use the same
-transitions, sample order, loss, optimizer, and unclipped target
-$V_{t+1}-V_t$. Neither model receives $V_{t+1}$ as input, and no rollout or
-spike metric is part of this comparison.
+The matched Branch-ELM comparison uses train-derived roles: 1,024 fit, 256
+calibration, and 256 disjoint development transitions. The 06b-r factorial
+uses bounded event-balanced windows, disjoint calibration halves for
+checkpoint and arm decisions, and development only afterward. It never opens
+validation, test, or fresh-test state.
 
-The Branch-ELM core has 8,002 trainable parameters (7,981 on its voltage
-influence path). The HayFlow voltage bridge has 8,985 trainable parameters.
-Its downstream 7,212-parameter state updater is frozen and cannot affect the
-scored voltage. The active paths are therefore close, although not exactly
-parameter matched. Training uses three paired seeds, 1,024 fit transitions,
-256 calibration transitions, and 256 disjoint development transitions per
-registered execution.
+\subsection{Optimization and Hyperparameters}
+
+\begin{table*}[t]
+\centering
+\caption{Registered settings for the three central results.}
+\label{tab:hyperparameters}
+\small
+\begin{tabularx}{\textwidth}{p{2.8cm}YYY}
+\toprule
+Setting & Model A refit & Matched comparison & Model B factorial \\
+\midrule
+Seeds & 17, 29, 43 & 61017, 61029, 61043 & 61017, 61029, 61043 \\
+Trainable voltage parameters & 43,009 decoder; H2 frozen & 8,002 Branch-ELM;
+8,985 HayFlow & 12,972 source cell \\
+Optimizer & AdamW & AdamW for both arms & AdamW for all arms \\
+Learning rate & $10^{-3}$ & $10^{-3}$ & $3\times10^{-4}$ \\
+Weight decay & $10^{-5}$ & $10^{-5}$ & $10^{-5}$ \\
+Gradient clipping & 5.0 & 1.0 & 1.0 \\
+Budget & Up to 1,200 epochs & 800 steps & 240 steps \\
+Checkpoints & Every 20; patience 240 & Every 100 steps & 0, 40, 120, 240 \\
+Batch & Internal fit pairs & 8 transitions, 256 segments & 4 balanced windows \\
+Loss & Voltage residual objective & Active-weighted smooth L1 on normalized
+$\Delta V$ & Endpoint/native/state/physical/drift terms plus factorial terms \\
+Selection & 30-pair internal calibration & Same calibration for both arms &
+Half A checkpoint; half B veto \\
+Evaluation & Frozen development, then sealed fresh test & Disjoint development
+& Development after selection \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+In the matched comparison, both models receive the same 76-value per-segment
+tensor: $V_t$, parent/child axial differences, normalized mechanism state,
+mechanism presence, local ions, $U_{\mathrm{realized}}$, static features, and
+region identity. They share sample order, optimizer, active-weighted smooth-L1
+loss, and raw unclipped target $V_{t+1}-V_t$. The teacher endpoint is not an
+input. The HayFlow bridge's downstream 7,212-parameter state updater is frozen
+and cannot influence voltage.
+
+\subsection{Parameter Tuning and Selection}
+
+Fresh data are never used for tuning. Model A's architecture was fixed before
+refit; only representation statistics, weights, and stopping epoch were fitted
+internally. A seed passed only if it improved internal calibration over H2 by
+at least 10\%, improved frozen development over the better of H2 and
+persistence by at least 5\%, retained branch contrast in $[0.5,2.0]$, and did
+not exceed H2 maximum segment error. Two of three seeds were required.
+
+For Model B, factors and thresholds were preregistered. The 0/40/120/240
+checkpoint ladder is a mini scaling curve. Calibration half A selects an epoch;
+half B applies a no-seed-regression veto. Development cannot reverse that
+decision. This is deliberately stricter than choosing the visually best run.
+
+\subsection{Baselines and Metrics}
+
+One-step baselines are persistence and frozen H2; the compact architecture
+competitor is Branch-ELM. Recursive references are support-matched passive
+Hines and frozen 06b-q. Metrics include global, soma, and active-regime RMSE;
+maximum segment error; branching retention; horizon RMSE; mean drift; physical
+violations outside $[-120,80]$ mV; marginal factor effects; and path-deletion
+effects.
+
+Runtime acceleration is a final objective, but a controlled common-hardware
+teacher-versus-surrogate benchmark has not been registered. We therefore do
+not claim speedup. Interpretability is assessed structurally through explicit
+morphology, physical priors, path deletion, and factor ablation rather than an
+unvalidated scalar score.
+
+\subsection{Implementation and Reproducibility}
+
+Experiments use PyTorch on CUDA-enabled Kaggle runtimes. Every archive contains
+the code revision, configuration, checkpoints, dataset hashes, and an indexed
+SHA-256 manifest. The GPU model was not consistently recorded and is not
+claimed. Code and records are at \url{https://github.com/Zagred47/giada}.
+Central revisions are \texttt{c1b48fe} (05j-o), \texttt{a26ee9e} (matched
+comparison), and \texttt{cbd7be5} (06b-r).
 
 \section{Results}
 
-\subsection{Fresh One-Step Evaluation}
-
-Table~\ref{tab:fresh} reports the preregistered 05j-o fresh test. All three
-frozen seeds pass the registered gate and improve substantially over both
-persistence and frozen H2. The canonical report result is the three-seed
-ensemble, not a seed chosen after opening the fresh test.
+\subsection{H1: Fresh One-Step Evaluation}
 
 \begin{table}[t]
-  \centering
-  \caption{Preregistered one-step fresh-test voltage RMSE. The ensemble is the
-  canonical Model A result.}
-  \label{tab:fresh}
-  \begin{tabular}{lrr}
-    \toprule
-    Model & RMSE (mV) & Status \\
-    \midrule
-    Persistence & 2.5763 & Baseline \\
-    Frozen HayFlow-Hines H2 & 2.7445 & Baseline \\
-    Model A, seed 17 & 0.4037 & Passed \\
-    Model A, seed 29 & 0.3774 & Passed \\
-    Model A, seed 43 & 0.3775 & Passed \\
-    Model A, three-seed ensemble & \textbf{0.3308} & Authorized one-step \\
-    \bottomrule
-  \end{tabular}
+\centering
+\caption{Preregistered one-step fresh-test voltage results. Ensemble maximum
+error and retention were not registered.}
+\label{tab:fresh}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Model & RMSE (mV) & Max error (mV) & Retention \\
+\midrule
+Persistence & 2.5763 & -- & -- \\
+Frozen H2 & 2.7445 & -- & -- \\
+Model A, seed 17 & 0.4037 & 7.978 & 1.113 \\
+Model A, seed 29 & 0.3774 & 9.048 & 1.098 \\
+Model A, seed 43 & 0.3775 & 7.707 & 1.139 \\
+Model A ensemble & \textbf{0.3308} & -- & -- \\
+\bottomrule
+\end{tabular}
 \end{table}
 
-The ensemble reduces RMSE by 87.16\% relative to persistence. Its authorization
-is strictly one-step: it does not establish stable recursive simulation.
+All three frozen seeds pass. The canonical result is the ensemble, not a seed
+chosen after opening fresh outcomes. It improves on persistence by 87.16\%,
+supporting H1 on the sealed one-step distribution. Authorization remains
+strictly one-step.
 
-\subsection{Information-Matched Comparison with Branch-ELM}
+\subsection{H2: Information-Matched Branch-ELM Comparison}
 
-Table~\ref{tab:elm} confirms the qualitative observation discussed during the
-project review: under equal numerical information, HayFlow is slightly better
-globally and more clearly better in somatic and active regimes. HayFlow wins
-the global paired comparison for every seed; the per-seed global reductions
-are 3.15\%, 6.44\%, and 9.96\%.
+The informal comparison between approximately 0.4 mV and published ELM error
+is invalid because support, target, and input differ. Table~\ref{tab:elm} is
+the corrective comparison with identical information and protocol.
 
 \begin{table}[t]
-  \centering
-  \caption{Information-matched one-step development comparison. Values are
-  paired-seed median RMSE. This is not a rollout or fresh-test comparison.}
-  \label{tab:elm}
-  \begin{tabular}{lrrr}
-    \toprule
-    Scope & Branch-ELM & HayFlow & Reduction \\
-          & RMSE (mV) & RMSE (mV) & (\%) \\
-    \midrule
-    All 642 segments & 6.380 & \textbf{5.995} & 6.44 \\
-    Soma & 14.824 & \textbf{9.577} & 34.94 \\
-    Active examples & 21.012 & \textbf{18.867} & 8.92 \\
-    \bottomrule
-  \end{tabular}
+\centering
+\caption{Information-matched one-step development RMSE.}
+\label{tab:elm}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Scope & Branch-ELM & HayFlow & Reduction \\
+ & RMSE (mV) & RMSE (mV) & (\%) \\
+\midrule
+All 642 segments & 6.380 & \textbf{5.995} & 6.44 \\
+Soma & 14.824 & \textbf{9.577} & 34.94 \\
+Active examples & 21.012 & \textbf{18.867} & 8.92 \\
+\bottomrule
+\end{tabular}
 \end{table}
 
-This comparison supports the compact causal and morphology-aware HayFlow
-voltage representation. It does not justify directly comparing the 0.3308 mV
-fresh-test ensemble with the published Branch-ELM value: those figures use
-different target scopes, supports, and metrics. The matched comparison is the
-scientifically valid answer to the architecture question.
+HayFlow wins globally for all paired seeds, by 3.15\%, 6.44\%, and 9.96\%.
+It beats persistence globally and somatically for every seed; Branch-ELM has
+only a small median global gain and is worse than somatic persistence for two
+seeds. H2 is supported for this train-derived compact contract. The active
+paths are close but not identical in size, so this is a representation-level
+comparison, not a parameter-for-parameter theorem.
 
-\subsection{One-Step Accuracy Does Not Compose Automatically}
+\subsection{H3: One-Step Accuracy Does Not Compose}
 
-When the frozen Model A checkpoints are repeatedly applied to their own
-predicted state, their eight-millisecond RMSEs rise to 76.70, 95.47, and
-62.72 mV. New synaptic inputs at each millisecond do not reset this error:
-voltage-dependent currents, slow mechanism state, calcium, and synaptic tails
-carry previous state errors forward. The result rules out treating one-step
-RMSE as a sufficient proxy for deployment stability.
+The frozen Model A checkpoints reach 76.70, 95.47, and 62.72 mV RMSE at 8 ms.
+This is a qualitative failure relative to their sub-0.41 mV one-step errors.
+New input does not restore channel, calcium, synaptic, or voltage state. H3 is
+strongly supported: one-step RMSE alone is not a deployment criterion.
 
-\subsection{Recursive Progress from Pushforward Exposure}
+\subsection{H4--H6: Recursive Factorial Result}
 
-The 06b-r factorial experiment identifies pushforward exposure as the only
-materially supported intervention among the three tested factors. The best
-learned arm reaches a median 8 ms development RMSE of 14.720 mV, compared with
-18.162 mV for the support-matched passive reference and 46.938 mV for the
-previous frozen learned arm on the same support. This corresponds to an
-18.95\% reduction relative to the passive reference and a 68.64\% reduction
-relative to the previous learned arm. It produces zero physical-voltage
-violations.
+The best arm is
+\texttt{auxiliary\_off|pushforward\_4ms|stability\_off}. It reaches 14.720 mV
+median RMSE at 8 ms, versus 18.162 mV for passive Hines and 46.938 mV for the
+previous learned arm. It improves passive by 18.95\% and 06b-q by 68.64\%, with
+zero physical violations.
 
 \begin{table}[t]
-  \centering
-  \caption{Registered causal readout of the 06b-r factorial experiment.}
-  \label{tab:factorial}
-  \begin{tabular}{lrl}
-    \toprule
-    Intervention or control & Marginal effect & Interpretation \\
-    \midrule
-    Pushforward exposure, 4 ms & 18.96\% gain & Supported \\
-    Ordered-event auxiliary & 0.0058\% gain & Inert at tested scale \\
-    Directional stability penalty & 0.00004\% gain & Inert at tested scale \\
-    Delete ordered-event path & 0.0145\% error change & Not material \\
-    Delete all compact causal $U$ & 2.17\% error increase & Material input path \\
-    \bottomrule
-  \end{tabular}
+\centering
+\caption{Recursive 8 ms comparison on identical 06b-r support.}
+\label{tab:recursive}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Model & RMSE (mV) & Gain vs passive & Violations \\
+\midrule
+Previous learned 06b-q & 46.938 & $-158.44\%$ & 7,225 \\
+Passive Hines & 18.162 & 0 & 0 \\
+Model B pushforward & \textbf{14.720} & \textbf{18.95\%} & 0 \\
+\bottomrule
+\end{tabular}
 \end{table}
 
-The arm is not promoted. Seed 61043 regresses by 10.08\% on calibration half B,
-violating the preregistered no-seed-regression gate. In addition, the model is
-supplied with teacher mechanism state during rollout and is therefore not yet
-an autonomous surrogate. Development results cannot be used retrospectively
-to overturn the calibration veto.
+Per-seed RMSE is 13.752, 14.720, and 17.860 mV; mean drift is 3.024, 1.824,
+and 11.533 mV. Development improves for every seed, but seed 61043 had already
+regressed by 10.08\% on calibration half B. The preregistered veto blocks
+promotion, and development cannot overturn it.
+
+\subsection{Ablation and Hyperparameter Impact}
+
+\begin{table}[t]
+\centering
+\caption{Paired marginal and path-deletion effects.}
+\label{tab:factorial}
+\small
+\begin{tabular}{lrl}
+\toprule
+Factor or deletion & Effect & Decision \\
+\midrule
+Pushforward 4 ms & 18.96\% gain & Supported \\
+Ordered-event auxiliary & 0.0058\% gain & Inert at tested scale \\
+Directional penalty & 0.00004\% gain & Inert at tested scale \\
+Delete ordered-event path & 0.0145\% error change & Not material \\
+Delete all compact causal $U$ & 2.17\% error increase & Material \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+H4 is partially supported: passive Hines is safer than the old learned arm,
+and the selected correction improves it without violations. H5 is supported by
+the paired 18.96\% pushforward effect. H6 is rejected at the tested scale. The
+auxiliary negative result is qualified because its target included boundary
+synaptic tails derived from $S_t$, while its head saw only event embedding; it
+does not prove every event encoder unlearnable.
+
+Checkpoint selection at steps 240, 120, and 40 for seeds 61017, 61029, and
+61043 shows that more optimization is not monotonically safer across seeds.
+This motivates nested cross-seed calibration rather than one stopping budget.
+
+\subsection{Consolidated Hypothesis Assessment}
+
+\begin{table*}[t]
+\centering
+\caption{Outcome of each hypothesis. Support is restricted to its registered
+metric and distribution.}
+\label{tab:hypothesis-results}
+\small
+\begin{tabularx}{\textwidth}{p{0.8cm}p{2.1cm}YY}
+\toprule
+Hyp. & Outcome & Evidence & Qualification \\
+\midrule
+H1 & Supported & 0.3308 mV fresh ensemble vs 2.5763 persistence and 2.7445 H2
+& One-step only \\
+H2 & Supported & All paired global seeds won; 6.44\% global, 34.94\% soma gain
+& Development; modest parameter mismatch \\
+H3 & Supported & 62.72--95.47 mV after 8 ms & Composition failure does not
+reject every HayFlow architecture \\
+H4 & Partial & Passive zero violations; learned arm improves it by 18.95\% &
+Teacher mechanism state remains in rollout \\
+H5 & Supported & 18.96\% paired marginal pushforward gain & One seed fails the
+separate calibration veto \\
+H6 & Not supported & Auxiliary/penalty effects near zero; path deletion inert &
+Auxiliary contract narrows the negative claim \\
+\bottomrule
+\end{tabularx}
+\end{table*}
 
 \section{Discussion}
 
-The experiments provide two complementary results. First, the causal boundary
-state makes the one-millisecond transition highly predictable: Model A reaches
-sub-millivolt fresh-test error and clearly beats simple one-step baselines.
-Second, recursive composition is a distinct problem. The one-step champion can
-leave the teacher-state manifold after only a few predictions, at which point
-small errors are amplified by nonlinear membrane mechanisms.
+\subsection{Scientific Progress and Method Advantages}
 
-The information-matched Branch-ELM experiment narrows the architectural claim.
-When both compact models receive identical causal information, HayFlow has a
-consistent but moderate global advantage and a larger somatic advantage. This
-suggests that morphology-aware voltage features are useful, but it does not
-show that model identity alone explains the one-step champion: Model A is
-larger, includes a frozen H2 core, and is evaluated under a separate fresh-test
-contract.
+Three independent gains are established. The teacher contract converts an
+ambiguous history-to-output problem into a replayable causal transition. The
+direct-tree decoder shows this one-step map is accurately learnable on sealed
+support. Pushforward exposure then reduces recursive error below a physical
+baseline without violations, proving that the prior 46.94 mV failure was not
+an unavoidable learned-model limit.
 
-The recursive factorial result is encouraging because it separates a real
-repair from several plausible but ineffective additions. The tested event
-auxiliary and directional penalty did not improve the selected metric, while
-pushforward exposure did. Thus, the immediate bottleneck is not simply a lack
-of nominal network capacity or a missing event feature. Training-distribution
-alignment is causal and material. At the same time, cross-seed fragility and
-teacher-state dependence show that exposure repair alone is insufficient.
+The Branch-ELM result is narrower: with information equalized,
+morphology-aware features confer a consistent advantage, especially at the
+soma. It does not imply full Model A dominates ELM universally. ELM is smaller
+and naturally recurrent; HayFlow exposes more teacher state and targets a
+different deployment contract.
+
+\subsection{When HayFlow Should and Should Not Be Preferred}
+
+HayFlow should eventually be preferred when complete local voltage, causal
+restart, counterfactual branching, and a differentiable learned core are
+required. Explicit state, topology, and factorized physics make its failures
+more diagnosable than a black-box event-to-soma model.
+
+It should not currently replace NEURON for exact mechanisms or unseen parameter
+interventions. DeepDendrite is preferable when exact acceleration and hardware
+are available; Neuron\_Reduce when an interpretable reduced morphology is
+acceptable; Branch-ELM or CNN--LSTM when only fast voltage/spikes are needed.
+These conditions define scope rather than hidden caveats.
 
 \subsection{Limitations}
 
 \begin{itemize}
-  \item The current datasets are intentionally diagnostic and enriched; they
-  do not yet cover the complete biological input distribution at the scale of
-  the original NeuronIO study.
-  \item The canonical 0.3308 mV result is one-step only.
-  \item The recursive 14.720 mV result is development evidence from a model
-  that failed its calibration promotion gate.
-  \item Model B receives teacher mechanism state during rollout, preventing an
-  autonomous deployment claim.
-  \item The Branch-ELM comparison is train-derived development evidence, not a
-  new sealed test, and the active voltage paths differ modestly in parameter
-  count.
-  \item Spike timing, rapid firing, long plateaus, longer horizons, and network
-  integration remain to be validated.
+  \item Data are diagnostic and event enriched, not yet at NeuronIO scale or
+  naturalistic coverage.
+  \item The 0.3308 mV result is one-step only.
+  \item The 14.720 mV result is development evidence and fails calibration
+  promotion.
+  \item Model B receives teacher mechanism state during rollout and is not
+  state closed.
+  \item The ELM comparison is development-only and has a modest parameter
+  mismatch.
+  \item Common-hardware speed, memory, and energy have not been measured.
+  \item Rapid firing, event timing, long plateaus, longer horizons, unseen
+  protocols, networks, and other morphologies remain unvalidated.
 \end{itemize}
 
 \section{Conclusion and Future Work}
 
-HayFlow currently combines a fresh-tested 0.3308 mV one-step checkpoint family
-with a separate pushforward-trained recursive prototype that improves 8 ms
-error by 18.95\% over its support-matched physical baseline. The matched
-Branch-ELM comparison further shows that, with identical causal inputs, the
-compact HayFlow voltage representation is consistently better, although only
-modestly so in the global metric. These results constitute meaningful progress
-toward a morphology-aware neural simulator, but they do not yet establish an
-autonomous replacement for NEURON.
+HayFlow combines a fresh-tested 0.3308 mV one-step family with a separate
+pushforward recursive prototype improving 8 ms error by 18.95\% over passive
+Hines. Under identical causal input, its compact voltage bridge improves on
+Branch-ELM by 6.44\% globally and 34.94\% at the soma. The main result is not a
+finished replacement for NEURON: rich causal state makes the one-step Hay
+transition accurately learnable, while stable composition requires explicit
+exposure to model-generated boundaries.
 
-The next experiments should retain the passive physical prior, compact causal
-input, and pushforward exposure while removing causally inert branches. They
-should then test nested cross-seed calibration, autonomous mechanism-state
-prediction, multiple pushforward horizons and budgets, event-positive regimes,
-and longer closed-loop rollouts. A new sealed test should be opened only after
-the resulting candidate passes all train-derived and calibration gates.
+Next work will retain passive physics, compact causal input, and pushforward
+exposure while removing inert branches. A candidate must jointly predict
+mechanism state, use nested cross-seed/horizon calibration, and pass
+event-positive and longer rollouts before a new sealed test. Only after state
+closure should the project scale data, benchmark speed/memory, test other
+morphologies, and evaluate multi-neuron deployment.
 
-\begin{thebibliography}{9}
-
-\bibitem{hay2011}
-E. Hay, S. Hill, F. Sch\"urmann, H. Markram, and I. Segev.
+\begin{thebibliography}{99}
+\bibitem{hay2011} E. Hay, S. Hill, F. Sch\"urmann, H. Markram, and I. Segev.
 Models of neocortical layer 5b pyramidal cells capturing a wide range of
-dendritic and perisomatic active properties.
-\emph{PLoS Computational Biology}, 7(7):e1002107, 2011.
+dendritic and perisomatic active properties. \emph{PLoS Computational
+Biology}, 7(7):e1002107, 2011.
 
-\bibitem{hines1997}
-M. L. Hines and N. T. Carnevale.
-The NEURON simulation environment.
-\emph{Neural Computation}, 9(6):1179--1209, 1997.
+\bibitem{hines1997} M. L. Hines and N. T. Carnevale. The NEURON simulation
+environment. \emph{Neural Computation}, 9(6):1179--1209, 1997.
 
-\bibitem{beniaguev2021}
-D. Beniaguev, I. Segev, and M. London.
-Single cortical neurons as deep artificial neural networks.
-\emph{Neuron}, 109(17):2727--2739.e3, 2021.
+\bibitem{amsalem2020} O. Amsalem, G. Eyal, N. Rogozinski, M. Gevaert,
+P. Kumbhar, F. Sch\"urmann, and I. Segev. An efficient analytical reduction of
+detailed nonlinear neuron models. \emph{Nature Communications}, 11:288, 2020.
 
-\bibitem{sanchez2020}
-A. Sanchez-Gonzalez, J. Godwin, T. Pfaff, R. Ying, J. Leskovec, and
-P. Battaglia.
-Learning to simulate complex physics with graph networks.
-In \emph{Proceedings of the 37th International Conference on Machine
-Learning}, 2020.
+\bibitem{beniaguev2021} D. Beniaguev, I. Segev, and M. London. Single cortical
+neurons as deep artificial neural networks. \emph{Neuron},
+109(17):2727--2739.e3, 2021.
 
-\bibitem{pfaff2021}
-T. Pfaff, M. Fortunato, A. Sanchez-Gonzalez, and P. Battaglia.
-Learning mesh-based simulation with graph networks.
-In \emph{International Conference on Learning Representations}, 2021.
+\bibitem{olah2022} V. J. Ol\'ah, N. P. Pedersen, and M. J. M. Rowan. Ultrafast
+simulation of large-scale neocortical microcircuitry with biophysically
+realistic neurons. \emph{eLife}, 11:e79535, 2022.
 
-\bibitem{bengio2015}
-S. Bengio, O. Vinyals, N. Jaitly, and N. Shazeer.
-Scheduled sampling for sequence prediction with recurrent neural networks.
-In \emph{Advances in Neural Information Processing Systems}, 2015.
+\bibitem{spieler2024} A. Spieler, N. Rahaman, G. Martius, B. Sch\"olkopf, and
+A. Levina. The Expressive Leaky Memory Neuron: an efficient and expressive
+phenomenological neuron model can solve long-horizon tasks. In
+\emph{International Conference on Learning Representations}, 2024.
 
+\bibitem{zhang2023} Y. Zhang, G. He, L. Ma, et al. A GPU-based computational
+framework that bridges neuron simulation and artificial intelligence.
+\emph{Nature Communications}, 14:5798, 2023.
+
+\bibitem{sanchez2020} A. Sanchez-Gonzalez, J. Godwin, T. Pfaff, R. Ying,
+J. Leskovec, and P. Battaglia. Learning to simulate complex physics with graph
+networks. In \emph{ICML}, 2020.
+
+\bibitem{pfaff2021} T. Pfaff, M. Fortunato, A. Sanchez-Gonzalez, and
+P. Battaglia. Learning mesh-based simulation with graph networks. In
+\emph{ICLR}, 2021.
+
+\bibitem{li2021} Z. Li, N. Kovachki, K. Azizzadenesheli, B. Liu,
+K. Bhattacharya, A. Stuart, and A. Anandkumar. Fourier neural operator for
+parametric partial differential equations. In \emph{ICLR}, 2021.
+
+\bibitem{brandstetter2022} J. Brandstetter, D. E. Worrall, and M. Welling.
+Message passing neural PDE solvers. In \emph{ICLR}, 2022.
+
+\bibitem{bengio2015} S. Bengio, O. Vinyals, N. Jaitly, and N. Shazeer.
+Scheduled sampling for sequence prediction with recurrent neural networks. In
+\emph{NeurIPS}, 2015.
 \end{thebibliography}
 
 \end{document}
