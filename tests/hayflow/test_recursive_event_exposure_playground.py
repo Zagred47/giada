@@ -35,6 +35,21 @@ def test_06br_preregisters_atomic_control_and_paired_2x2x2_matrix():
     assert prereg["registered_gates"]["maximum_per_seed_8ms_regression_fraction"] == 0.0
 
 
+def test_06br_registered_result_preserves_real_gain_without_promoting_candidate():
+    result = json.loads((EXPERIMENT / "result.json").read_text())
+    assert result["archive"]["all_indexed_members_verified"]
+    assert result["historical_comparison_on_same_support"][
+        "error_reduction_vs_frozen_06bq_fraction"
+    ] > 0.68
+    assert result["development_diagnostic"]["all_seeds_non_regressive"]
+    assert result["development_diagnostic"]["physical_voltage_violation_count"] == 0
+    assert result["factorial_causal_readout"]["supported_factor"] == "pushforward_4ms"
+    assert result["input_path_controls"]["aggregate_current_U_path_materiality_passed"]
+    assert not result["input_path_controls"]["ordered_event_path_materiality_passed"]
+    assert result["calibration_selection"]["selected_candidate"] is None
+    assert not result["registered_interpretation"]["candidate_promoted"]
+
+
 def test_06br_configuration_is_fixed_and_spans_registered_budgets():
     config = RecursiveEventExposureConfig()
     config.validate()

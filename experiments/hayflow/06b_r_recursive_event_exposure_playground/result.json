@@ -1,0 +1,132 @@
+{
+  "schema_version": "06b-r-registered-result-v1",
+  "status": "completed_and_independently_verified",
+  "archive": {
+    "filename": "hayflow_recursive_event_exposure_playground.zip",
+    "sha256": "602ce9d59637ed165849de36c1b5f98a1410899b98db24d2c71ce57c0dd6d758",
+    "size_bytes": 1364363,
+    "artifact_index_sha256": "54e3243955d0e1e52467aa062ac5f87b5a793b232d8d356a9a1e69368bfb3450",
+    "final_report_sha256": "13e57fe90247df417dc5f9ccb5f19bda269c4465bfe2dc630863cfb6ae86abdb",
+    "indexed_member_count": 36,
+    "all_indexed_members_verified": true
+  },
+  "implementation": {
+    "code_revision": "cbd7be51e87650b7790bf6514309eb065617effa",
+    "dataset_fingerprint": "2b9d8ecf9a088f75485390f88b8aa33c53d2adf52cb5ed1fa5795241eca4f182",
+    "validation_state_accessed": false,
+    "test_state_accessed": false,
+    "fresh_test_accessed": false,
+    "teacher_mechanism_state_during_rollout": true,
+    "teacher_mechanism_state_is_deployment_ready": false
+  },
+  "atomic_auxiliary_probe": {
+    "causal_target_median_normalized_rmse": 0.02634022757411003,
+    "permuted_target_median_normalized_rmse": 0.027213500812649727,
+    "gain_over_permuted_fraction": 0.032089705934995716,
+    "registered_minimum_gain_fraction": 0.10,
+    "registered_gate_passed": false,
+    "per_seed_causal_r2": {
+      "61017": -0.18203139305114746,
+      "61029": 0.07103025913238525,
+      "61043": -0.36055827140808105
+    },
+    "posthoc_contract_limitation": "the target included boundary synaptic tails computed from S_t, while the auxiliary head received only the ordered-event embedding; failure therefore cannot be attributed uniquely to event-encoder learnability",
+    "decision_grade_negative_claim": false
+  },
+  "calibration_selection": {
+    "diagnostic_best_arm": "auxiliary_off|pushforward_4ms|stability_off",
+    "median_8ms_rmse_mv": 12.09491240387443,
+    "median_passive_8ms_rmse_mv": 17.00399226148672,
+    "median_gain_over_passive_fraction": 0.28870160501843645,
+    "per_seed": {
+      "61017": {
+        "selected_step": 240,
+        "rmse_mv": 11.080740306008417,
+        "passive_rmse_mv": 17.00399226148672,
+        "gain_fraction": 0.3483447807074226
+      },
+      "61029": {
+        "selected_step": 120,
+        "rmse_mv": 12.09491240387443,
+        "passive_rmse_mv": 17.00399226148672,
+        "gain_fraction": 0.28870160501843645
+      },
+      "61043": {
+        "selected_step": 40,
+        "rmse_mv": 18.71776692576497,
+        "passive_rmse_mv": 17.00399226148672,
+        "gain_fraction": -0.10078660575257214
+      }
+    },
+    "no_seed_regressed_gate_passed": false,
+    "selected_candidate": null,
+    "interpretation": "the preregistered veto correctly rejected promotion because seed 61043 regressed on calibration half B"
+  },
+  "development_diagnostic": {
+    "arm": "auxiliary_off|pushforward_4ms|stability_off",
+    "median_8ms_rmse_mv": 14.720348756370337,
+    "median_passive_8ms_rmse_mv": 18.16236316429294,
+    "median_gain_over_passive_fraction": 0.1895135768835179,
+    "per_seed": {
+      "61017": {
+        "rmse_mv": 13.752484013272843,
+        "gain_fraction": 0.2428031589903391,
+        "mean_drift_mv": 3.0241565704345703
+      },
+      "61029": {
+        "rmse_mv": 14.720348756370337,
+        "gain_fraction": 0.1895135768835179,
+        "mean_drift_mv": 1.8235665559768677
+      },
+      "61043": {
+        "rmse_mv": 17.860309981284214,
+        "gain_fraction": 0.016630720368072005,
+        "mean_drift_mv": 11.53266716003418
+      }
+    },
+    "all_seeds_non_regressive": true,
+    "physical_voltage_violation_count": 0,
+    "selection_eligible": false,
+    "reason_not_selection_eligible": "development was opened only after calibration selection and cannot override the registered calibration veto"
+  },
+  "historical_comparison_on_same_support": {
+    "frozen_06bq_median_8ms_rmse_mv": 46.93772260913468,
+    "passive_median_8ms_rmse_mv": 18.16236316429294,
+    "06br_pushforward_median_8ms_rmse_mv": 14.720348756370337,
+    "error_reduction_vs_frozen_06bq_fraction": 0.6863830902825583,
+    "error_reduction_vs_passive_fraction": 0.1895135768835179,
+    "frozen_06bq_physical_violations_across_seeds": 7225,
+    "06br_pushforward_physical_violations_across_seeds": 0,
+    "interpretation": "recursive boundary exposure produced a large real stability improvement; the old 46.94 mV failure was not an unavoidable architectural limit"
+  },
+  "factorial_causal_readout": {
+    "pushforward_4ms_marginal_gain_fraction": 0.18956652293619547,
+    "causal_synaptic_auxiliary_marginal_gain_fraction": 0.0000580816306176013,
+    "passive_relative_directional_marginal_gain_fraction": 0.00000040657675193234155,
+    "supported_factor": "pushforward_4ms",
+    "unsupported_factors": [
+      "causal_synaptic_auxiliary_as_implemented",
+      "passive_relative_directional_penalty_as_implemented"
+    ]
+  },
+  "input_path_controls": {
+    "ordered_event_path_deletion_relative_increase_fraction": 0.00014493273180608913,
+    "all_current_U_deletion_relative_increase_fraction": 0.02165616732135642,
+    "timestamp_reversal_relative_increase_fraction": -0.00004843363243276239,
+    "receptor_permutation_relative_increase_fraction": -0.00002331510840059262,
+    "registered_materiality_threshold_fraction": 0.02,
+    "ordered_event_path_materiality_passed": false,
+    "aggregate_current_U_path_materiality_passed": true,
+    "interpretation": "the model materially uses the aggregate causal U path, but not the additional ordered event pathway"
+  },
+  "registered_interpretation": {
+    "real_recursive_progress": true,
+    "pushforward_exposure_causally_supported": true,
+    "ordered_event_encoder_causally_supported": false,
+    "directional_regularizer_causally_supported": false,
+    "candidate_promoted": false,
+    "formal_diagnosis": "PUSHFORWARD_CAUSALLY_REPAIRS_ROLLOUT_BUT_ORDERED_EVENT_AND_DIRECTIONAL_PATHS_ARE_INERT_AND_CROSS_SEED_CALIBRATION_REMAINS_FRAGILE",
+    "authorized_next_experiment": "retain the compact causal U path and pushforward training, remove the inert auxiliary and directional factors, and run a train-only cross-seed/horizon/budget forensic with nested calibration before any sealed test"
+  }
+}
+
