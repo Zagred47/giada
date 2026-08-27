@@ -13,7 +13,7 @@ the revised `main.tex`. It is an editorial aid, not part of the paper.
 | Standard/SOTA solutions | `Standard Solutions and the Remaining Gap` | Exact acceleration, morphology reduction, and learned surrogates |
 | Proposal | `Proposal and Design Rationale` | Full-state 1 ms morphology-aware flow map |
 | Hypotheses and reasoning | `Proposal...` plus `Hypotheses` | Four design arguments and H1--H6 |
-| Why preferable | Introduction plus `Discussion / When HayFlow...` | Conditional comparison rather than universal superiority |
+| Why preferable | Introduction plus `Discussion / When GIADA...` | Conditional comparison rather than universal superiority |
 
 ## Related Work
 
@@ -24,7 +24,7 @@ the revised `main.tex`. It is an editorial aid, not part of the paper.
 | What they do | Each subsection | State, objective, and contribution described |
 | What they solve | Each subsection and positioning table | Appropriate target/use case stated |
 | Improvement over previous work | Each subsection | Hardware, reduction, compact memory, graph and pushforward advances |
-| Difference from HayFlow | `Comparative Positioning` | Assumptions, state, objective, and use conditions compared explicitly |
+| Difference from GIADA | `Comparative Positioning` | Assumptions, state, objective, and use conditions compared explicitly |
 | When to prefer each method | Positioning table and Discussion | Exact, reduced, output-only, and full-state cases distinguished |
 
 ## Method

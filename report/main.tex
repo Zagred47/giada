@@ -18,11 +18,11 @@
 citecolor=blue!55!black,urlcolor=blue!55!black}
 \setlist{nosep}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\newcommand{\modela}{\textsc{HayFlow-OneStep}}
-\newcommand{\modelb}{\textsc{HayFlow-Recursive}}
+\newcommand{\modela}{\textsc{GIADA-OneStep}}
+\newcommand{\modelb}{\textsc{GIADA-Recursive}}
 
 % Provisional title, author order, and affiliations: verify before submission.
-\title{HayFlow: Causal State Contracts and Structure-Preserving Learning\\
+\title{GIADA: Causal State Contracts and Structure-Preserving Learning\\
 for a Biophysical Cortical Neuron}
 \author{Alessio Ragno \and Alessandro Belli}
 \date{August 2026}
@@ -38,15 +38,15 @@ retain the original equations through hardware-aware solvers, reduce the
 morphology, or learn an input--output approximation. These approaches are
 effective for their intended targets, but they do not by themselves provide a
 learned, restartable flow map over the complete internal state of the original
-neuron. We introduce HayFlow, a developing surrogate of the Hay layer-5
-pyramidal-cell model. HayFlow defines a causal one-millisecond transition over
+neuron. We introduce GIADA, a developing surrogate of the Hay layer-5
+pyramidal-cell model. GIADA defines a causal one-millisecond transition over
 all 642 instantiated segments, a rich boundary state, and realized synaptic
 input. The project uses component-level, preregistered experiments to separate
 information, representation, optimization, and recursive-exposure failures.
 A frozen morphology-aware core followed by a direct-tree residual decoder
 achieves an ensemble RMSE of \textbf{0.3308 mV} on a preregistered fresh
 one-step test, versus 2.5763 mV for persistence. Under an independent
-information-matched protocol, a compact HayFlow voltage bridge outperforms an
+information-matched protocol, a compact GIADA voltage bridge outperforms an
 8,002-parameter Branch-ELM core for every paired seed, reducing median global,
 somatic, and active-regime RMSE by 6.44\%, 34.94\%, and 8.92\%, respectively.
 However, the one-step champion fails in closed loop. A separate recursive
@@ -113,7 +113,7 @@ and threshold events.
 
 \subsection{Proposal and Design Rationale}
 
-We propose HayFlow, a one-millisecond causal flow map over the complete
+We propose GIADA, a one-millisecond causal flow map over the complete
 instantiated Hay morphology. Four arguments guide the design.
 \begin{enumerate}
   \item \textbf{Expose causal state rather than infer it repeatedly from a
@@ -140,7 +140,7 @@ instantiated Hay morphology. Four arguments guide the design.
   transition substantially better than persistence or frozen H2.
   \item[H2: Morphology-aware representation.]
   Under identical numerical information and similar parameter budget, a
-  morphology-aware HayFlow path should outperform Branch-ELM, especially at
+  morphology-aware GIADA path should outperform Branch-ELM, especially at
   the soma and in active regimes.
   \item[H3: Non-compositionality of one-step accuracy.]
   Teacher-forced one-step selection will not necessarily remain accurate when
@@ -175,13 +175,13 @@ multicompartment neurons practical to construct and simulate
 \cite{hines1997}. The Hay L5PC model combined reconstructed morphology with
 active somatic, axonal, and dendritic mechanisms constrained by
 electrophysiology \cite{hay2011}. These works are our mechanistic foundation:
-HayFlow does not alter or retune the teacher.
+GIADA does not alter or retune the teacher.
 
 Recent exact accelerators attack runtime rather than complexity. DeepDendrite
 introduces dendritic hierarchical scheduling and GPU execution while retaining
 the biophysical equations \cite{zhang2023}. Exact acceleration is preferable
 when arbitrary channel parameters, unseen mechanisms, or exact trajectories
-must change at inference. HayFlow targets repeated evaluation within a fixed
+must change at inference. GIADA targets repeated evaluation within a fixed
 teacher family and state contract.
 
 \subsection{Morphological and Dynamical Reduction}
@@ -206,9 +206,9 @@ Spieler et al. introduced ELM, combining filtered synaptic traces, multiple
 leaky memories, nonlinear integration, and a compact readout
 \cite{spieler2024}. Branch-ELM encodes dendritic grouping and fits NeuronIO with
 fewer than ten thousand parameters. It is our closest compact learned baseline.
-HayFlow differs by receiving a rich causal boundary state, preserving all 642
+GIADA differs by receiving a rich causal boundary state, preserving all 642
 segment outputs, and targeting the next internal state. Published ELM and
-HayFlow errors are not directly comparable; we therefore run a separate
+GIADA errors are not directly comparable; we therefore run a separate
 information-matched experiment.
 
 \subsection{Learned Physical Simulators and Rollout Stability}
@@ -220,7 +220,7 @@ neuron adds heterogeneous mechanisms, receptor state, stiffness, and threshold
 events. Scheduled sampling addresses teacher-forcing exposure mismatch
 \cite{bengio2015}. Brandstetter et al. cast autoregressive PDE stability as
 domain adaptation and introduced pushforward training \cite{brandstetter2022}.
-HayFlow tests this intervention causally on a neuronal state contract.
+GIADA tests this intervention causally on a neuronal state contract.
 
 \subsection{Comparative Positioning}
 
@@ -244,7 +244,7 @@ TCN / CNN--LSTM & Event history to voltage/spikes & Observable output error &
 Internal state need not be exposed & Fast output emulation is sufficient \\
 Branch-ELM & Synaptic traces and leaky memories & Voltage/spike or sequence loss
 & Compact memories summarize history & A very small recurrent neuron is desired \\
-HayFlow & Rich boundary state and complete tree & Full transition and stable
+GIADA & Rich boundary state and complete tree & Full transition and stable
 rollout & Teacher state is recordable & Restart, branching, local voltage, and
 future differentiable deployment are required \\
 \bottomrule
@@ -302,7 +302,7 @@ $\rightarrow$ \textbf{Frozen development} $\rightarrow$
 \textbf{Sealed fresh test}\\[4pt]
 At every arrow: test information, representation, optimization, causal path
 use, and split leakage before increasing scale.}}
-\caption{HayFlow's workflow. A later stage opens only after the registered gate
+\caption{GIADA's workflow. A later stage opens only after the registered gate
 of the previous stage passes.}
 \label{fig:workflow}
 \end{figure}
@@ -316,7 +316,7 @@ representation, failed optimization, and recursive exposure shift.
 
 \subsection{Model A: \modela}
 
-Model A is a frozen HayFlow-Hines H2 core plus a direct-tree residual decoder.
+Model A is a frozen GIADA-Hines H2 core plus a direct-tree residual decoder.
 H2 preserves the 642-segment morphology, uses one physical Hines solve per
 macro-step, and produces a voltage proposal. The decoder receives 226 fixed
 multiscale tree features and a learned 16-dimensional segment embedding. A
@@ -363,7 +363,7 @@ Hyp. & Contrast & Primary observable & Decision meaning \\
 \midrule
 H1 & Model A vs persistence and H2 on sealed support & Global RMSE, passing seeds
 & Rich state suffices for one-step prediction if both baselines are beaten \\
-H2 & HayFlow bridge vs Branch-ELM with identical tensor/protocol & Global,
+H2 & GIADA bridge vs Branch-ELM with identical tensor/protocol & Global,
 soma, active RMSE & Representation comparison only; no rollout claim \\
 H3 & Frozen one-step checkpoints composed for 1--8 ms & Horizon RMSE and drift &
 Large growth rejects one-step selection as deployment proxy \\
@@ -412,7 +412,7 @@ Setting & Model A refit & Matched comparison & Model B factorial \\
 \midrule
 Seeds & 17, 29, 43 & 61017, 61029, 61043 & 61017, 61029, 61043 \\
 Trainable voltage parameters & 43,009 decoder; H2 frozen & 8,002 Branch-ELM;
-8,985 HayFlow & 12,972 source cell \\
+8,985 GIADA & 12,972 source cell \\
 Optimizer & AdamW & AdamW for both arms & AdamW for all arms \\
 Learning rate & $10^{-3}$ & $10^{-3}$ & $3\times10^{-4}$ \\
 Weight decay & $10^{-5}$ & $10^{-5}$ & $10^{-5}$ \\
@@ -435,7 +435,7 @@ tensor: $V_t$, parent/child axial differences, normalized mechanism state,
 mechanism presence, local ions, $U_{\mathrm{realized}}$, static features, and
 region identity. They share sample order, optimizer, active-weighted smooth-L1
 loss, and raw unclipped target $V_{t+1}-V_t$. The teacher endpoint is not an
-input. The HayFlow bridge's downstream 7,212-parameter state updater is frozen
+input. The GIADA bridge's downstream 7,212-parameter state updater is frozen
 and cannot influence voltage.
 
 \subsection{Parameter Tuning and Selection}
@@ -518,7 +518,7 @@ the corrective comparison with identical information and protocol.
 \small
 \begin{tabular}{lrrr}
 \toprule
-Scope & Branch-ELM & HayFlow & Reduction \\
+Scope & Branch-ELM & GIADA & Reduction \\
  & RMSE (mV) & RMSE (mV) & (\%) \\
 \midrule
 All 642 segments & 6.380 & \textbf{5.995} & 6.44 \\
@@ -528,7 +528,7 @@ Active examples & 21.012 & \textbf{18.867} & 8.92 \\
 \end{tabular}
 \end{table}
 
-HayFlow wins globally for all paired seeds, by 3.15\%, 6.44\%, and 9.96\%.
+GIADA wins globally for all paired seeds, by 3.15\%, 6.44\%, and 9.96\%.
 It beats persistence globally and somatically for every seed; Branch-ELM has
 only a small median global gain and is worse than somatic persistence for two
 seeds. H2 is supported for this train-derived compact contract. The active
@@ -619,7 +619,7 @@ H1 & Supported & 0.3308 mV fresh ensemble vs 2.5763 persistence and 2.7445 H2
 H2 & Supported & All paired global seeds won; 6.44\% global, 34.94\% soma gain
 & Development; modest parameter mismatch \\
 H3 & Supported & 62.72--95.47 mV after 8 ms & Composition failure does not
-reject every HayFlow architecture \\
+reject every GIADA architecture \\
 H4 & Partial & Passive zero violations; learned arm improves it by 18.95\% &
 Teacher mechanism state remains in rollout \\
 H5 & Supported & 18.96\% paired marginal pushforward gain & One seed fails the
@@ -644,12 +644,12 @@ an unavoidable learned-model limit.
 The Branch-ELM result is narrower: with information equalized,
 morphology-aware features confer a consistent advantage, especially at the
 soma. It does not imply full Model A dominates ELM universally. ELM is smaller
-and naturally recurrent; HayFlow exposes more teacher state and targets a
+and naturally recurrent; GIADA exposes more teacher state and targets a
 different deployment contract.
 
-\subsection{When HayFlow Should and Should Not Be Preferred}
+\subsection{When GIADA Should and Should Not Be Preferred}
 
-HayFlow should eventually be preferred when complete local voltage, causal
+GIADA should eventually be preferred when complete local voltage, causal
 restart, counterfactual branching, and a differentiable learned core are
 required. Explicit state, topology, and factorized physics make its failures
 more diagnosable than a black-box event-to-soma model.
@@ -679,7 +679,7 @@ These conditions define scope rather than hidden caveats.
 
 \section{Conclusion and Future Work}
 
-HayFlow combines a fresh-tested 0.3308 mV one-step family with a separate
+GIADA combines a fresh-tested 0.3308 mV one-step family with a separate
 pushforward recursive prototype improving 8 ms error by 18.95\% over passive
 Hines. Under identical causal input, its compact voltage bridge improves on
 Branch-ELM by 6.44\% globally and 34.94\% at the soma. The main result is not a

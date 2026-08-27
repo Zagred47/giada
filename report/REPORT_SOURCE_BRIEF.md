@@ -1,4 +1,4 @@
-# HayFlow preliminary report source brief
+# GIADA preliminary report source brief
 
 Status: source-controlled writing brief prepared before the Overleaf template
 is connected. This file is not the final paper and must not be cited as an
@@ -90,7 +90,7 @@ This thesis naturally accommodates both required models:
 
 Use the exact identity and metrics from `checkpoint_registry.json`.
 
-- Architecture: frozen HayFlow-Hines H2 plus registered direct-tree residual
+- Architecture: frozen GIADA-Hines H2 plus registered direct-tree residual
   decoder.
 - Morphology: 642 segments.
 - Decoder: 226 tree features, 16-dimensional segment embedding and shared
@@ -143,18 +143,18 @@ Corrective contract:
 - same unclipped target `V_(t+1)-V_t`;
 - no teacher endpoint input;
 - no rollout or spike claim;
-- 8,002-parameter Branch-ELM core versus 8,985-parameter HayFlow voltage path;
+- 8,002-parameter Branch-ELM core versus 8,985-parameter GIADA voltage path;
 - the frozen 7,212-parameter state updater cannot influence the voltage score.
 
 Development results:
 
-| Scope | Branch-ELM median RMSE | HayFlow median RMSE | HayFlow median reduction |
+| Scope | Branch-ELM median RMSE | GIADA median RMSE | GIADA median reduction |
 | --- | ---: | ---: | ---: |
 | All 642 segments | 6.380 mV | 5.995 mV | 6.44% |
 | Soma | 14.824 mV | 9.577 mV | 34.94% |
 | Active examples | 21.012 mV | 18.867 mV | 8.92% |
 
-HayFlow wins every paired seed globally. This is evidence for the compact
+GIADA wins every paired seed globally. This is evidence for the compact
 causal voltage representation under equal information, not evidence that the
 complete surrogate is solved. It is train-derived development support, not a
 new fresh test.
@@ -249,7 +249,7 @@ before final prose is frozen.
 
 One-sentence summary:
 
-> HayFlow currently combines a fresh-tested 0.3308 mV one-step checkpoint
+> GIADA currently combines a fresh-tested 0.3308 mV one-step checkpoint
 > family with a separate pushforward-trained recursive prototype that improves
 > 8 ms error by 18.95% over its physical baseline, while autonomous state
 > closure and cross-seed robustness remain unresolved.
