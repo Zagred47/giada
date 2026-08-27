@@ -1,0 +1,162 @@
+{
+  "schema_version": "hayflow-checkpoint-registry-v1",
+  "as_of": "2026-08-27",
+  "decision": {
+    "canonical_report_model_id": "05j_n_direct_tree_refit_three_seed_family",
+    "canonical_single_file_representative_id": "05j_n_direct_tree_refit_seed29",
+    "canonical_free_running_model_id": null,
+    "best_learned_rollout_diagnostic_id": "06b_r_pushforward_4ms",
+    "summary": "The 05j-n three-seed family is the strongest decision-grade one-step model and the only candidate confirmed on a preregistered fresh test. No autonomous free-running checkpoint is currently promoted. The 06b-r pushforward arm is the strongest learned recursive diagnostic, but it failed the preregistered cross-seed calibration veto and uses teacher mechanism state during rollout."
+  },
+  "canonical_one_step_model": {
+    "id": "05j_n_direct_tree_refit_three_seed_family",
+    "training_experiment": "05j_n_regenerative_decoder_refit",
+    "evaluation_experiment": "05j_o_regenerative_fresh_test",
+    "status": "candidate_authorized_for_one_step_only",
+    "registered_unit": "three_frozen_seed_family_with_ensemble_mean",
+    "architecture": {
+      "name": "frozen HayFlow-Hines-H2 plus registered direct-tree residual decoder",
+      "segment_count": 642,
+      "primary_input": "U_realized through the frozen H2/tree feature path",
+      "base_h2_frozen": true,
+      "feature_width": 226,
+      "segment_embedding_dim": 16,
+      "hidden_width": 96,
+      "nonlinearity": "SiLU",
+      "residual_parameterization": "120 mV tanh-bounded residual",
+      "trainable_decoder_parameter_count_derived": 43009,
+      "trainable_decoder_parameter_formula": "642*16 + (226+16)*96+96 + 96*96+96 + 96*1+1",
+      "full_system_parameter_count_registered": false
+    },
+    "artifact_chain": {
+      "frozen_h2_archive": {
+        "filename": "hayflow_hines_canary_v2.zip",
+        "archive_sha256": "f653bf8f0048134994727593237067ab1faf91d7f42f17d70150ff8dc339bca5",
+        "checkpoint_member": "checkpoints/canary_models.pt",
+        "checkpoint_sha256": "5fe46579aa05143e30a252ca78995e15d4fafe0c510967ac0c59b3e0344bd06f"
+      },
+      "decoder_archive": {
+        "filename": "hayflow_hines_regenerative_decoder_refit.zip",
+        "archive_sha256": "1d7e5aab979be1c7bf5dcbc5016861a5186769b4ad98a18edd556366419d89f4",
+        "artifact_index_sha256": "c3c4199b0a6da73b8f0ec3b986e22a7f2a9999cc74947039ac72811583c8e610"
+      },
+      "fresh_test_archive": {
+        "filename": "hayflow_hines_regenerative_fresh_test.zip",
+        "archive_sha256": "88310745dde29a17ba3073c01be127b5630c56e591e36b56cdd50e9280d1cc6d",
+        "artifact_index_sha256": "56143bea1bb66cd238d04cd30d3c32af0c0101b94616ee4cfcfea3e29860880d"
+      }
+    },
+    "checkpoints": [
+      {
+        "seed": 17,
+        "member": "checkpoints/direct_tree_refit_seed17.pt",
+        "sha256": "4e9677cc2651348a2d8ef47f3549a9ef0ecdbe95fa0bb5da320b62a63776d5e4",
+        "best_epoch": 960,
+        "internal_calibration_rmse_mv": 0.921276,
+        "development_rmse_mv": 0.368057,
+        "fresh_test_rmse_mv": 0.40365529085402385,
+        "fresh_test_maximum_segment_error_mv": 7.978437423706055
+      },
+      {
+        "seed": 29,
+        "member": "checkpoints/direct_tree_refit_seed29.pt",
+        "sha256": "6049877905ed31309b8475acde6e34b0446c25663a5d10580ad5df6f44e2eaab",
+        "best_epoch": 1120,
+        "internal_calibration_rmse_mv": 0.812529,
+        "development_rmse_mv": 0.334722,
+        "fresh_test_rmse_mv": 0.3773627471653612,
+        "fresh_test_maximum_segment_error_mv": 9.048107147216797,
+        "single_file_representative_reason": "lowest internal-calibration RMSE before the fresh test was opened; its fresh-test value is descriptive, not a post-hoc selection rule"
+      },
+      {
+        "seed": 43,
+        "member": "checkpoints/direct_tree_refit_seed43.pt",
+        "sha256": "3edba6b0ef7c3c4e7a3bc3216979387fa0469efc2e6ecee75948899c5da9f1ad",
+        "best_epoch": 1140,
+        "internal_calibration_rmse_mv": 0.815115,
+        "development_rmse_mv": 0.354341,
+        "fresh_test_rmse_mv": 0.3775308167729107,
+        "fresh_test_maximum_segment_error_mv": 7.707235813140869
+      }
+    ],
+    "fresh_test": {
+      "pair_count": 32,
+      "episode_count": 64,
+      "transition_count": 768,
+      "all_three_seeds_passed": true,
+      "ensemble_mean_rmse_mv": 0.33083894195481345,
+      "persistence_rmse_mv": 2.5762716329918827,
+      "frozen_h2_rmse_mv": 2.7445487777125455,
+      "checkpoint_selection_performed": false,
+      "retraining_performed": false
+    },
+    "scope_limitations": [
+      "authorized for one-step prediction only",
+      "the same frozen family failed the 2/4/8 ms autoregressive micro-rollout",
+      "the ensemble is an inference aggregation of three checkpoints, not one checkpoint file",
+      "the decoder archive depends on the exact frozen H2 checkpoint and registered feature construction"
+    ],
+    "failed_autoregressive_followup": {
+      "experiment": "05k_frozen_candidate_micro_rollout",
+      "per_seed_8ms_rmse_mv": {
+        "17": 76.7009732216467,
+        "29": 95.46554635973264,
+        "43": 62.722191855809704
+      },
+      "diagnosis": "FROZEN_CANDIDATE_FAILS_AUTOREGRESSIVE_MICRO_ROLLOUT"
+    }
+  },
+  "recursive_frontier": {
+    "best_learned_diagnostic": {
+      "id": "06b_r_pushforward_4ms",
+      "experiment": "06b_r_recursive_event_exposure_playground",
+      "status": "diagnostic_only_not_promoted",
+      "architecture": "HayFlow-ESI passive Hines prior plus recursive effective-source cell",
+      "arm": "auxiliary_off|pushforward_4ms|stability_off",
+      "trainable_parameter_count": 12972,
+      "development_median_8ms_rmse_mv": 14.720348756370337,
+      "development_passive_8ms_rmse_mv": 18.16236316429294,
+      "gain_over_passive_fraction": 0.1895135768835179,
+      "physical_voltage_violation_count": 0,
+      "all_development_seeds_non_regressive": true,
+      "calibration_seed_61043_gain_fraction": -0.10078660575257214,
+      "preregistered_no_seed_regression_gate_passed": false,
+      "teacher_mechanism_state_during_rollout": true,
+      "teacher_mechanism_state_is_deployment_ready": false,
+      "checkpoint_members": [
+        "recursive_auxiliary_off|pushforward_4ms|stability_off_seed61017.pt",
+        "recursive_auxiliary_off|pushforward_4ms|stability_off_seed61029.pt",
+        "recursive_auxiliary_off|pushforward_4ms|stability_off_seed61043.pt"
+      ]
+    },
+    "best_numeric_nonlearned_baseline": {
+      "experiment": "06b_o_effective_membrane_source_playground",
+      "arm": "hines_effective_source|frozen_boundary_state|instantaneous",
+      "median_8ms_rmse_mv": 7.42733907699585,
+      "status": "passive_checkpoint_zero_baseline_not_a_learned_candidate",
+      "physical_voltage_violation_count": 0
+    },
+    "best_frozen_scalar_train_only_audit": {
+      "experiment": "06b_h_frozen_voltage_generalization_forensic",
+      "arm": "source_scalar_alpha_0.75",
+      "median_8ms_rmse_mv": 11.537185668945312,
+      "status": "sealed_train_component_audit_not_validation_or_test",
+      "physical_voltage_violation_count": 0,
+      "limitations": "large quiescent/moderate regressions and negative soma gain"
+    },
+    "best_analytic_noncheckpoint": {
+      "experiment": "06b_j_analytic_causal_gain_identifiability",
+      "scheme": "region_raw_voltage",
+      "median_8ms_rmse_mv": 13.538,
+      "status": "analytic_lookup_not_a_trainable_checkpoint"
+    }
+  },
+  "reporting_rules": [
+    "Use 0.3308 mV only for the 05j-o one-step three-seed ensemble on the preregistered fresh test.",
+    "Do not compare the 0.3308 mV one-step result directly with 8 ms autoregressive RMSE values.",
+    "Do not describe seed 29 as selected by the fresh test; it was already the strongest individual on internal calibration.",
+    "Do not call 06b-o a learned HayFlow checkpoint: its winning neural source remained at checkpoint zero.",
+    "Do not call 06b-r the current validated model: it is the learned rollout frontier but failed the preregistered calibration veto and is not deployment-ready.",
+    "State explicitly that no autonomous free-running checkpoint has yet been promoted."
+  ]
+}
