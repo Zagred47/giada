@@ -136,6 +136,20 @@ CPU utilization (`htop`). Start with one worker, then test two, four, and at
 most the available physical vCPUs. Keep the highest count whose throughput is
 near-linear and whose memory has a safety margin.
 
+After the single-worker benchmark, use the registered concurrency harness
+instead of manually launching overlapping probes. For example, four workers
+with 3,000 transitions each:
+
+```bash
+GIADA_BENCHMARK_WORKERS=4 \
+GIADA_BENCHMARK_DURATION_MS=3000 \
+GIADA_BENCHMARK_OUTPUT=/workspace/giada-data/cpu-concurrency-4 \
+bash "$GIADA_ROOT/runpod_scale/scripts/benchmark_cpu_concurrency.sh"
+```
+
+The harness writes independent logs and reports aggregate throughput,
+parallel efficiency, projected S1 wall time, and per-process peak RSS.
+
 Generation writes one compact progress line about every 30 seconds with the
 completed transition count, percentage, throughput, and ETA. Follow a
 background log with `tail -F`; after reconnecting, `tmux attach -t giada`

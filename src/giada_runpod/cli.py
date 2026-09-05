@@ -134,12 +134,29 @@ def command_benchmark(args: argparse.Namespace) -> None:
     prepare = generator.prepare()
     report = generator.generate_shard(config, shard, Path(args.output) / "benchmark")
     rate = report["transitions_per_second"]
+    resource_usage = {}
+    try:
+        import resource
+
+        usage = resource.getrusage(resource.RUSAGE_SELF)
+        resource_usage = {
+            "peak_process_rss_mib": float(usage.ru_maxrss) / 1024.0,
+            "process_user_cpu_seconds": float(usage.ru_utime),
+            "process_system_cpu_seconds": float(usage.ru_stime),
+        }
+    except (ImportError, AttributeError):
+        resource_usage = {
+            "peak_process_rss_mib": None,
+            "process_user_cpu_seconds": None,
+            "process_system_cpu_seconds": None,
+        }
     estimate = {
         "schema_version": "giada-runpod-teacher-benchmark-v1",
         "host": socket.gethostname(),
         "code_revision": _revision(Path(args.elm_repo)),
         "teacher_prepare": prepare,
         "benchmark": report,
+        "resource_usage": resource_usage,
         "projected_stage_wall_hours_one_worker": config.target_transitions / rate / 3600.0,
         "projected_stage_storage_gib": report["size_bytes"] / duration * config.target_transitions / (1024**3),
         "note": "measure at least 6000 ms before provisioning the full CPU fleet",
