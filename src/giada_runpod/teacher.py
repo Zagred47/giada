@@ -27,6 +27,7 @@ from .neuronio_inputs import (
     neuronio_input_config_for_protocol,
     sample_neuronio_actions,
 )
+from .hybrid_inputs import sample_hybrid_actions
 from .planning import ShardPlan
 from .store import LeanShardWriter, validate_lean_shard
 
@@ -363,10 +364,25 @@ class ScaleTeacherGenerator:
             "storage_profile": config.storage_profile,
             "plan_sha256": shard.plan_sha256,
             "teacher_commit": git_commit(self.teacher_repo),
-            "input_methodology": "NeuronIO_NMDA_ranges_temporal_smoothing_spatial_length_weighting",
+            "input_methodology": (
+                "GIADA_hybrid_stochastic_plus_causal_paired_v1"
+                if config.purpose == "giada_hybrid_pilot"
+                else "NeuronIO_NMDA_ranges_temporal_smoothing_spatial_length_weighting"
+            ),
             "generation_purpose": config.purpose,
             "trajectory_protocols": {
                 str(row.trajectory_index): row.protocol for row in shard.trajectories
+            },
+            "trajectory_design": {
+                str(row.trajectory_index): {
+                    "protocol": row.protocol,
+                    "protocol_family": row.protocol_family,
+                    "protocol_arm": row.protocol_arm,
+                    "pair_id": row.pair_id,
+                    "seed": row.seed,
+                    "split": row.split,
+                }
+                for row in shard.trajectories
             },
         }
         started = time.perf_counter()
@@ -383,15 +399,23 @@ class ScaleTeacherGenerator:
             local_row = 0
             last_progress = started
             for trajectory in shard.trajectories:
-                actions_by_step, input_metadata = sample_neuronio_actions(
-                    trajectory.duration_ms,
-                    self.mapping,
-                    seed=trajectory.seed,
-                    config=neuronio_input_config_for_protocol(
-                        trajectory.protocol
-                    ),
-                    protocol=trajectory.protocol,
-                )
+                if config.purpose == "giada_hybrid_pilot":
+                    actions_by_step, input_metadata = sample_hybrid_actions(
+                        trajectory.duration_ms,
+                        self.mapping,
+                        seed=trajectory.seed,
+                        protocol=trajectory.protocol,
+                    )
+                else:
+                    actions_by_step, input_metadata = sample_neuronio_actions(
+                        trajectory.duration_ms,
+                        self.mapping,
+                        seed=trajectory.seed,
+                        config=neuronio_input_config_for_protocol(
+                            trajectory.protocol
+                        ),
+                        protocol=trajectory.protocol,
+                    )
                 self.session._restore_native_snapshot(
                     self.session.equilibrium_snapshot_path,
                     self.equilibrium_rng["sequences"],
@@ -403,10 +427,29 @@ class ScaleTeacherGenerator:
                     self.session._active_transition_id = local_row
                     self.session._last_release_outcomes = []
                     self.session._last_release_verification = {}
-                    _, scheduled, _ = self.session._drive_one_ms(
-                        float(self.session.h.t), actions, lambda: 0.0, sample_interval_ms=1.0
-                    )
+                    if config.purpose == "giada_hybrid_pilot":
+                        observer = lambda: ordered_segment_voltages(
+                            self.session.audit.live_segments
+                        )[segments].copy()
+                        _, scheduled, samples = self.session._drive_one_ms(
+                            float(self.session.h.t),
+                            actions,
+                            observer,
+                            sample_interval_ms=0.025,
+                        )
+                        micro_voltage = np.asarray(samples, dtype=np.float32)
+                    else:
+                        _, scheduled, _ = self.session._drive_one_ms(
+                            float(self.session.h.t),
+                            actions,
+                            lambda: 0.0,
+                            sample_interval_ms=1.0,
+                        )
                     state_t1 = projector.capture()
+                    if config.purpose != "giada_hybrid_pilot":
+                        micro_voltage = np.stack(
+                            (state_t["voltage_t_mv"], state_t1["voltage_t_mv"])
+                        )
                     views = build_input_views(scheduled, self.session._last_release_outcomes)
                     realized = []
                     for action in views["U_realized"]:
@@ -435,6 +478,9 @@ class ScaleTeacherGenerator:
                     row = {
                         **state_t,
                         "voltage_t_plus_1_mv": state_t1["voltage_t_mv"],
+                        "voltage_min_mv": np.min(micro_voltage, axis=0),
+                        "voltage_max_mv": np.max(micro_voltage, axis=0),
+                        "high_resolution_sample_count": len(micro_voltage),
                         "causal_drive": encode_realized_drive(realized, selected_segments=segments),
                         "trajectory_index": trajectory.trajectory_index,
                         "step_index": step,

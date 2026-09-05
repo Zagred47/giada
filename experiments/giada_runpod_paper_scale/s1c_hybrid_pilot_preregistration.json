@@ -1,0 +1,53 @@
+{
+  "schema_version": "giada-runpod-s1c-hybrid-preregistration-v1",
+  "project": "GIADA",
+  "status": "preregistered_not_run",
+  "decision_date": "2026-09-05",
+  "purpose": "Restore and test the evolved GIADA data methodology before any further paper-scale generation.",
+  "supersedes": "S1b only as the candidate primary data methodology; S1 and S1b remain immutable stochastic controls.",
+  "teacher": {
+    "repository_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "segment_count": 642,
+    "canonical_synaptic_weights_unchanged": true,
+    "authentic_probabilistic_release": true
+  },
+  "design": {
+    "transition_count": 15360,
+    "trajectory_count": 192,
+    "trajectory_duration_ms": 80,
+    "replicates_per_protocol_per_split": 8,
+    "splits": ["train", "validation"],
+    "protocol_arm_count": 12,
+    "stored_anatomical_probe_count": 7,
+    "microtrace_interval_ms": 0.025,
+    "causal_pairing": "All targeted arms in a family share equilibrium state, Random123 seed, duration and pre-intervention history. Stochastic backgrounds are separate controls.",
+    "outcomes_used_for_plan_selection": false,
+    "paper_test_claimed": false
+  },
+  "families": {
+    "background_controls": ["canonical NeuronIO", "active-support NeuronIO; separate seeded controls, not a same-history counterfactual pair"],
+    "nmda_boundary": ["n8 hard-negative candidate", "confirmed n12 plateau schedule"],
+    "calcium_boundary": ["unpaired n12", "paired n8", "confirmed paired n12"],
+    "somatic_boundary": ["0.05 nA subthreshold", "3.0 nA calibrated spike"],
+    "bap_counterfactual": ["soma only", "assist only", "combined candidate"]
+  },
+  "historical_sources": {
+    "selected_dendritic_protocols_schema": "0.3.0",
+    "selected_dendritic_protocols_sha256": "ee9750e728939c09a10cf594543b807a307695d2c60af24b542ece5d9d2cc0d4",
+    "nmda_protocol_id": "tuft_nmda_plateau-tuft-n12-b2-r1-unpaired-branch-w400",
+    "calcium_protocol_id": "paired_bap_calcium_spike-hot_zone-n12-b3-r1-paired-nearest-w800",
+    "targeted_dataset_contract": "1.1.2"
+  },
+  "hard_gates": [
+    "all 192 trajectories and 15360 transitions validate",
+    "no seed crosses train and validation",
+    "every causal family is complete within each pair_id",
+    "every arm in a pair has the same seed and split",
+    "all seven anatomical probes use stable segment ids",
+    "every transition has 41 voltage samples including 1 ms boundaries",
+    "no NaN or Inf",
+    "protocol outcome summaries are reported separately by split"
+  ],
+  "decision_rule": "Use the audit to choose a prospective hybrid corpus composition; do not train on S1c and do not call it a held-out test.",
+  "architecture_experiments_modified": false
+}

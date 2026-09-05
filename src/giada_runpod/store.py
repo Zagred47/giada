@@ -85,6 +85,8 @@ class LeanShardWriter:
         for name in (
             "voltage_t_mv",
             "voltage_t_plus_1_mv",
+            "voltage_min_mv",
+            "voltage_max_mv",
             "parent_delta_t_mv",
             "mean_child_delta_t_mv",
         ):
@@ -98,6 +100,7 @@ class LeanShardWriter:
         dataset("split_code", (), "u1")
         dataset("scheduled_event_count", (), "i4")
         dataset("realized_event_count", (), "i4")
+        dataset("high_resolution_sample_count", (), "u1")
         self.event_datasets: Dict[str, Any] = {}
         event_chunk = max(256, chunk * 8)
 
@@ -148,9 +151,15 @@ class LeanShardWriter:
         missing = required - set(row)
         if missing:
             raise ValueError(f"compact transition missing fields: {sorted(missing)}")
+        normalized = dict(row)
+        start = np.asarray(normalized["voltage_t_mv"])
+        end = np.asarray(normalized["voltage_t_plus_1_mv"])
+        normalized.setdefault("voltage_min_mv", np.minimum(start, end))
+        normalized.setdefault("voltage_max_mv", np.maximum(start, end))
+        normalized.setdefault("high_resolution_sample_count", 2)
         for name, dataset in self.datasets.items():
             dataset.resize(index + 1, axis=0)
-            dataset[index] = row[name]
+            dataset[index] = normalized[name]
         events = [item for item in realized_events if item.get("kind") == "synaptic_event"]
         if events:
             start, stop = self.event_count, self.event_count + len(events)

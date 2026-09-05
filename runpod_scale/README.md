@@ -17,9 +17,11 @@ as the amount of authentic teacher time increases?
   `V(t+1 ms) - V(t)`.
 - Both use the same samples, order, loss, optimizer family, and three seeds.
 - This comparison is one-step only; it does not make an autoregressive claim.
-- The input generator reproduces the published NeuronIO NMDA rate ranges,
-  piecewise temporal rates, Gaussian smoothing, length weighting, spatial
-  randomization, and exponential-then-Bernoulli sampling.
+- S1/S1b reproduce the published NeuronIO NMDA sampler as a stochastic control.
+  They are not the primary GIADA data methodology.
+- The primary scaling candidate is a hybrid: stochastic background plus
+  canonical-weight targeted events, hard negatives, and counterfactual arms
+  restored from the same teacher state and Random123 seed.
 - Probabilistic release remains the authentic teacher mechanism. `U_realized`
   is obtained causally before membrane integration and verified at the next
   boundary by the already validated instrumentation.
@@ -76,6 +78,27 @@ trajectory shard layout, which would have assigned four shards to one worker
 and three to the others and introduced a 33% static load imbalance. The change
 affects only scheduling and restart granularity; seeds, trajectories, splits,
 teacher dynamics, stored fields, and the scientific comparison are unchanged.
+
+### S1c: prospective GIADA hybrid pilot
+
+S1b established that random high-excitation/low-inhibition streams can recover
+somatic activity, but it does not reproduce the evolved GIADA sampling
+methodology. It is frozen as a control. `s1c_giada_hybrid_pilot.yml` is the
+prospective correction and must run under a new output root.
+
+The 15,360-transition pilot contains eight train and eight validation
+replicates for each of 12 arms. Targeted arms within a causal family share the
+exact equilibrium snapshot, Random123 seed, duration, and pre-intervention
+history. The stochastic backgrounds are separate controls rather than a
+same-history counterfactual pair. Registered contrasts are canonical versus
+active stochastic background; 8 versus 12 local tuft synapses; unpaired,
+paired-n8 and paired-n12 hot-zone stimulation; weak versus calibrated somatic
+current; and soma-only, assist-only and combined bAP candidates. Synaptic
+weights remain canonical. Seven anatomical probes are sampled at 0.025 ms.
+
+This is still a development pilot: its outcomes decide the composition of a
+larger hybrid corpus, not a paper test. It does not reuse the old sealed fresh
+test outcomes, and it does not alter any Kaggle architecture experiment.
 
 ## Storage and interruption contract
 
@@ -244,6 +267,27 @@ export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1b-event-support-pilot-v2
 "$GIADA_PYTHON" -m src.giada_runpod.cli plan \
   --config runpod_scale/configs/s1b_event_support_pilot.yml \
   --output "$GIADA_OUTPUT_ROOT"
+```
+
+The primary GIADA hybrid pilot is launched separately:
+
+```bash
+export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1c-hybrid-pilot-v1
+"$GIADA_PYTHON" -m src.giada_runpod.cli plan \
+  --config runpod_scale/configs/s1c_giada_hybrid_pilot.yml \
+  --output "$GIADA_OUTPUT_ROOT"
+
+nohup bash "$GIADA_ROOT/runpod_scale/scripts/launch_cpu_workers.sh" \
+  >"$GIADA_OUTPUT_ROOT/logs/supervisor.log" 2>&1 &
+
+"$GIADA_PYTHON" -m src.giada_runpod.cli validate \
+  --plan "$GIADA_OUTPUT_ROOT/plan.json" \
+  --output "$GIADA_OUTPUT_ROOT"
+
+"$GIADA_PYTHON" -m src.giada_runpod.cli audit-hybrid \
+  --corpus "$GIADA_OUTPUT_ROOT" \
+  --plan "$GIADA_OUTPUT_ROOT/plan.json" \
+  --output "$GIADA_OUTPUT_ROOT/hybrid_audit.json"
 ```
 
 ## GPU phase

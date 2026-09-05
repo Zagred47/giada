@@ -30,6 +30,13 @@ original NeuronIO distribution before an independent event-support corpus is
 preregistered. From this point onward, schema/integrity validation and
 per-split dynamical-support validation are both mandatory before GPU training.
 
+The S1b result is now explicitly classified as a NeuronIO-distribution control,
+not the primary GIADA generator. The next development stage is S1c, a separate
+hybrid pilot that restores the evolved methodology: stochastic background,
+targeted canonical-weight dendritic events, hard negatives, and matched
+counterfactual futures from the same state. Its immutable preregistration is
+`s1c_hybrid_pilot_preregistration.json`.
+
 The first S1b attempt was aborted before analysis because its proposed
 low-inhibition range was marginally canonical but jointly infeasible with
 near-zero excitation.  The corrected v2 pilot used a fresh output root and an

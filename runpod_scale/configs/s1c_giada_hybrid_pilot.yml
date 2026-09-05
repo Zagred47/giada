@@ -1,0 +1,27 @@
+giada_runpod_scale:
+  stage: s1c_hybrid_pilot
+  target_transitions: 15360
+  trajectory_duration_ms: 80
+  trajectories_per_shard: 1
+  storage_profile: spatial_probe
+  sampled_segments_per_transition: 7
+  root_seed: 9200001
+  validation_trajectory_fraction: 0.5
+  compression: lzf
+  chunk_transitions: 256
+  progress_interval_s: 30
+  purpose: giada_hybrid_pilot
+  # Exact order is part of the immutable preregistration contract.
+  input_protocols:
+    - giada_hybrid_background_canonical_v1
+    - giada_hybrid_background_active_v1
+    - giada_hybrid_nmda_n8_v1
+    - giada_hybrid_nmda_n12_v1
+    - giada_hybrid_calcium_unpaired_n12_v1
+    - giada_hybrid_calcium_paired_n8_v1
+    - giada_hybrid_calcium_paired_n12_v1
+    - giada_hybrid_somatic_subthreshold_v1
+    - giada_hybrid_somatic_spike_v1
+    - giada_hybrid_bap_soma_only_v1
+    - giada_hybrid_bap_assist_only_v1
+    - giada_hybrid_bap_combined_v1

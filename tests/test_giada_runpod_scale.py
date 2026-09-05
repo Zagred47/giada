@@ -11,6 +11,11 @@ from src.giada_runpod.neuronio_inputs import (
     neuronio_input_config_for_protocol,
     sample_neuronio_actions,
 )
+from src.giada_runpod.hybrid_inputs import (
+    HYBRID_PROTOCOLS,
+    hybrid_protocol_spec,
+    sample_hybrid_actions,
+)
 from src.giada_runpod.planning import build_shard_plan, load_shard_plan, write_shard_plan
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
 from src.giada_runpod.training import LeanSomaCorpus
@@ -97,6 +102,77 @@ def test_s1b_factorial_protocols_sample_without_inverted_rate_bounds() -> None:
                 protocol=protocol,
             )
             assert metadata["protocol"] == protocol
+
+
+def test_s1c_hybrid_plan_keeps_causal_arms_in_same_snapshot_group() -> None:
+    config = ScaleConfig(
+        stage="s1c_hybrid_pilot",
+        target_transitions=15_360,
+        trajectory_duration_ms=80,
+        trajectories_per_shard=1,
+        storage_profile="spatial_probe",
+        sampled_segments_per_transition=7,
+        validation_trajectory_fraction=0.5,
+        purpose="giada_hybrid_pilot",
+        input_protocols=HYBRID_PROTOCOLS,
+    )
+    rows = [row for shard in build_shard_plan(config) for row in shard.trajectories]
+    assert len(rows) == 192
+    assert {row.split for row in rows} == {"train", "validation"}
+    assert not (
+        {row.seed for row in rows if row.split == "train"}
+        & {row.seed for row in rows if row.split == "validation"}
+    )
+    groups = {}
+    for row in rows:
+        groups.setdefault(row.pair_id, []).append(row)
+    assert len(groups) == 96
+    for group in groups.values():
+        assert len({row.seed for row in group}) == 1
+        assert len({row.split for row in group}) == 1
+        family = group[0].protocol_family
+        assert {row.protocol_arm for row in group} == {
+            hybrid_protocol_spec(protocol).arm
+            for protocol in HYBRID_PROTOCOLS
+            if hybrid_protocol_spec(protocol).family == family
+        }
+
+
+def test_s1c_hybrid_actions_are_deterministic_and_causally_matched() -> None:
+    count = 639
+    mapping = DendriticSynapseMap(
+        segment_ids=np.arange(1, count + 1),
+        segment_lengths_um=np.linspace(2.0, 20.0, count),
+        is_basal=np.arange(count) < 250,
+        excitatory_synapse_ids=np.arange(count),
+        inhibitory_synapse_ids=np.arange(count, 2 * count),
+    )
+    materialized = {}
+    for protocol in HYBRID_PROTOCOLS:
+        first, metadata = sample_hybrid_actions(
+            80, mapping, seed=9200001, protocol=protocol
+        )
+        second, _ = sample_hybrid_actions(
+            80, mapping, seed=9200001, protocol=protocol
+        )
+        encoded = {
+            step: [row.to_dict() for row in actions]
+            for step, actions in first.items()
+        }
+        assert encoded == {
+            step: [row.to_dict() for row in actions]
+            for step, actions in second.items()
+        }
+        assert metadata["canonical_synaptic_weights_unchanged"]
+        materialized[protocol] = encoded
+    assert len(materialized["giada_hybrid_nmda_n8_v1"][20]) == 8
+    assert len(materialized["giada_hybrid_nmda_n12_v1"][20]) == 12
+    assert all(
+        step >= 19
+        for protocol, schedule in materialized.items()
+        if not hybrid_protocol_spec(protocol).family.startswith("background_")
+        for step in schedule
+    )
 
 
 def test_runpod_teacher_session_uses_base_contract_without_calibration_artifacts(

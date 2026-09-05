@@ -117,14 +117,27 @@ def command_worker(args: argparse.Namespace) -> None:
 def command_benchmark(args: argparse.Namespace) -> None:
     config = load_scale_config(args.config)
     duration = int(args.duration_ms)
+    protocol = config.input_protocols[0]
+    protocol_family = "neuronio_background"
+    protocol_arm = "canonical"
+    if config.purpose == "giada_hybrid_pilot":
+        from .hybrid_inputs import hybrid_protocol_spec
+
+        spec = hybrid_protocol_spec(protocol)
+        protocol_family = spec.family
+        protocol_arm = spec.arm
     trajectory = TrajectoryPlan(
-        trajectory_id="benchmark-neuronio-000000",
+        trajectory_id=f"benchmark-{protocol}",
         trajectory_index=0,
         seed=config.root_seed,
         split="train",
         duration_ms=duration,
+        protocol=protocol,
+        protocol_family=protocol_family,
+        protocol_arm=protocol_arm,
+        pair_id=f"benchmark-{protocol_family}",
     )
-    identity = f"benchmark|{config.stage}|{duration}|{config.root_seed}"
+    identity = f"benchmark|{config.stage}|{protocol}|{duration}|{config.root_seed}"
     import hashlib
 
     shard = ShardPlan(
@@ -225,6 +238,33 @@ def command_audit_corpus(args: argparse.Namespace) -> None:
         raise SystemExit(2)
 
 
+def command_audit_hybrid(args: argparse.Namespace) -> None:
+    from .hybrid_audit import audit_hybrid_corpus
+
+    def progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 20 == 0:
+            print(f"[GIADA RunPod][hybrid audit] {index}/{total} shards", flush=True)
+
+    report = audit_hybrid_corpus(
+        Path(args.corpus), plan_path=Path(args.plan), progress=progress
+    )
+    _write_json(Path(args.output), report)
+    print(
+        json.dumps(
+            {
+                "valid": report["valid"],
+                "blockers": report["blockers"],
+                "trajectory_count": report["trajectory_count"],
+                "protocol_summaries": report["protocol_summaries"],
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def command_train(args: argparse.Namespace) -> None:
     import yaml
     from .training import MatchedTrainingConfig, PaperScaleMatchedTrainer
@@ -277,6 +317,13 @@ def parser() -> argparse.ArgumentParser:
     audit.add_argument("--plan", type=Path)
     audit.add_argument("--output", required=True, type=Path)
     audit.set_defaults(func=command_audit_corpus)
+    hybrid = sub.add_parser(
+        "audit-hybrid", help="verify the paired GIADA hybrid pilot and summarize outcomes"
+    )
+    hybrid.add_argument("--corpus", required=True, type=Path)
+    hybrid.add_argument("--plan", required=True, type=Path)
+    hybrid.add_argument("--output", required=True, type=Path)
+    hybrid.set_defaults(func=command_audit_hybrid)
     train = sub.add_parser("train", help="run the paired GPU comparison on validated shards")
     train.add_argument("--config", required=True, type=Path)
     train.add_argument("--corpus", required=True, type=Path)

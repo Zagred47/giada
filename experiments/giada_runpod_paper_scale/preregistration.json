@@ -1,7 +1,7 @@
 {
   "schema_version": "giada-runpod-paper-scale-preregistration-v1",
   "project": "GIADA",
-  "status": "s1b_v2_support_pilot_valid_fresh_event_support_corpus_pending",
+  "status": "s1b_v2_control_valid_s1c_giada_hybrid_pilot_preregistered",
   "scientific_question": "Does GIADA's paired one-step soma RMSE advantage over the 8,002-parameter Branch-ELM core survive increasing authentic teacher time?",
   "historical_small_support_result": {
     "branch_elm_median_soma_rmse_mv": 14.823964911891716,
@@ -33,7 +33,8 @@
   },
   "data_method": {
     "teacher": "canonical Hay L5PC NEURON model at commit 074c4666300a8ad246601dab179a97a6942f0f29",
-    "input_distribution": "published NeuronIO NMDA ranges, temporal smoothing, morphology-length weighting and exponential-then-Bernoulli event sampling",
+    "control_input_distribution": "S1/S1b use the published NeuronIO NMDA ranges, temporal smoothing, morphology-length weighting and exponential-then-Bernoulli event sampling.",
+    "primary_candidate_distribution": "S1c prospectively restores the evolved GIADA hybrid: stochastic background plus targeted canonical-weight events, hard negatives and same-state counterfactual arms.",
     "release_input": "causal U_realized from authentic probabilistic synapses",
     "rich_event_dataset_role": "separate held-out/event-enriched sidecar, not duplicated at paper scale"
   },
@@ -82,7 +83,8 @@
     "v2_correction": "Use the canonical-support slice [-600,0], add an analytic interval-feasibility invariant, and execute all eight samplers across multiple seeds in CI.",
     "v2_result_record": "s1b_v2_support_pilot_result.json",
     "v2_result": "The paired pilot recovered active support in both splits. High excitation plus low inhibition was robust under broad and fast temporal regimes; the fast arm was strongest. Pilot transitions remain development-only.",
-    "prospective_next_step": "Preregister a fresh-seed event-support corpus that preserves canonical subthreshold coverage and includes the two independently supported high-excitation/low-inhibition regimes.",
+    "prospective_next_step": "Run the preregistered S1c hybrid pilot; only its audit may determine the composition of a fresh larger hybrid corpus.",
+    "methodology_classification": "S1b is a NeuronIO stochastic control and must not be described as the primary GIADA data generator.",
     "pilot_role": "development-only input-support diagnosis, never a final held-out test",
     "factorial_axes": [
       "full versus upper-range excitation",

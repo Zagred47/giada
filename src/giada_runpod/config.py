@@ -14,6 +14,9 @@ STAGE_TRANSITIONS = {
     # development confirmation split and must never be reported as a final
     # paper test.
     "s1b_pilot": 96_000,
+    # Small causal pilot for the primary GIADA hybrid methodology.  It is
+    # intentionally separate from the random-support S1/S1b controls.
+    "s1c_hybrid_pilot": 15_360,
     "s2": 3_600_000,
     "s3": 28_800_000,
     "s4": 230_400_000,
@@ -69,7 +72,7 @@ class ScaleConfig:
             )
         if not 0.0 < self.validation_trajectory_fraction < 0.5:
             if not (
-                self.purpose == "input_support_pilot"
+                self.purpose in {"input_support_pilot", "giada_hybrid_pilot"}
                 and self.validation_trajectory_fraction == 0.5
             ):
                 raise ValueError(
@@ -79,6 +82,7 @@ class ScaleConfig:
         if self.purpose not in {
             "paper_scale_confirmation",
             "input_support_pilot",
+            "giada_hybrid_pilot",
         }:
             raise ValueError("unknown generation purpose")
         if not self.input_protocols or len(set(self.input_protocols)) != len(
@@ -93,6 +97,21 @@ class ScaleConfig:
                     "input-support pilot requires paired discovery/confirmation "
                     "replicates for every protocol"
                 )
+        if self.purpose == "giada_hybrid_pilot":
+            from .hybrid_inputs import HYBRID_PROTOCOLS
+
+            if self.stage != "s1c_hybrid_pilot":
+                raise ValueError("GIADA hybrid pilot requires stage s1c_hybrid_pilot")
+            if tuple(self.input_protocols) != HYBRID_PROTOCOLS:
+                raise ValueError(
+                    "GIADA hybrid pilot requires the preregistered protocol registry"
+                )
+            if self.validation_trajectory_fraction != 0.5:
+                raise ValueError(
+                    "GIADA hybrid pilot requires balanced train/validation groups"
+                )
+            if self.trajectory_count % (2 * len(HYBRID_PROTOCOLS)):
+                raise ValueError("hybrid trajectory count must contain complete paired replicates")
         if self.compression not in {"lzf", "gzip", "none"}:
             raise ValueError("compression must be lzf, gzip, or none")
         if self.chunk_transitions <= 0 or self.progress_interval_s <= 0:

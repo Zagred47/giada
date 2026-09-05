@@ -23,6 +23,9 @@ class TrajectoryPlan:
     split: str
     duration_ms: int
     protocol: str = "neuronio_nmda_ergodic_v1"
+    protocol_family: str = "neuronio_background"
+    protocol_arm: str = "canonical"
+    pair_id: str = ""
 
 
 @dataclass(frozen=True)
@@ -55,8 +58,45 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
     config.validate()
     count = config.trajectory_count
     protocols = tuple(config.input_protocols)
-    protocol_for = {index: protocols[index % len(protocols)] for index in range(count)}
-    if len(protocols) == 1:
+    if config.purpose == "giada_hybrid_pilot":
+        from .hybrid_inputs import HYBRID_PROTOCOL_SPECS
+
+        repeats = count // (2 * len(HYBRID_PROTOCOL_SPECS))
+        trajectories = []
+        index = 0
+        for split_index, split in enumerate(("train", "validation")):
+            for replicate in range(repeats):
+                family_seeds: Dict[str, int] = {}
+                for spec in HYBRID_PROTOCOL_SPECS:
+                    family_seed = family_seeds.setdefault(
+                        spec.family,
+                        config.root_seed
+                        + split_index * 100_000
+                        + replicate * 100
+                        + len(family_seeds),
+                    )
+                    pair_id = f"{split}-{spec.family}-rep{replicate:03d}"
+                    trajectories.append(
+                        TrajectoryPlan(
+                            trajectory_id=f"{config.stage}-{pair_id}-{spec.arm}",
+                            trajectory_index=index,
+                            seed=family_seed,
+                            split=split,
+                            duration_ms=config.trajectory_duration_ms,
+                            protocol=spec.protocol,
+                            protocol_family=spec.family,
+                            protocol_arm=spec.arm,
+                            pair_id=pair_id,
+                        )
+                    )
+                    index += 1
+        protocol_for = {}
+        validation = set()
+    else:
+        protocol_for = {index: protocols[index % len(protocols)] for index in range(count)}
+    if config.purpose == "giada_hybrid_pilot":
+        pass
+    elif len(protocols) == 1:
         # Preserve the original S0--S4 split identity exactly.
         validation_count = max(
             1, int(round(count * config.validation_trajectory_fraction))
@@ -92,17 +132,18 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
                 ).digest(),
             )
             validation.update(ranked[:validation_count])
-    trajectories = [
-        TrajectoryPlan(
-            trajectory_id=f"{config.stage}-neuronio-{index:06d}",
-            trajectory_index=index,
-            seed=config.root_seed + index,
-            split="validation" if index in validation else "train",
-            duration_ms=config.trajectory_duration_ms,
-            protocol=protocol_for[index],
-        )
-        for index in range(count)
-    ]
+    if config.purpose != "giada_hybrid_pilot":
+        trajectories = [
+            TrajectoryPlan(
+                trajectory_id=f"{config.stage}-neuronio-{index:06d}",
+                trajectory_index=index,
+                seed=config.root_seed + index,
+                split="validation" if index in validation else "train",
+                duration_ms=config.trajectory_duration_ms,
+                protocol=protocol_for[index],
+            )
+            for index in range(count)
+        ]
     shards: List[ShardPlan] = []
     width = max(5, len(str(config.shard_count - 1)))
     for shard_index, start in enumerate(
