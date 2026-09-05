@@ -61,5 +61,14 @@ Neither pilot is training data. The next step is a prospective specification
 of the final hybrid corpus; S2 remains blocked until that specification and
 its per-split support gates are frozen.
 
+That specification is now frozen as S1e. It contains exactly 600,000
+transitions at the same scale as S1: 360,000 from long 6-second stochastic
+background trajectories and 240,000 from 80-ms targeted episodes using only
+the S1c/S1d-confirmed arms. Both physical components use an 80/20
+trajectory-level split and are exposed to training through a validated logical
+manifest, without duplicating the HDF5 files. S1e remains development data;
+it is not a fresh paper test. Its preregistration is
+`s1e_hybrid_production_preregistration.json`.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

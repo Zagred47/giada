@@ -123,6 +123,7 @@ def command_benchmark(args: argparse.Namespace) -> None:
     if config.purpose in {
         "giada_hybrid_pilot",
         "giada_protocol_repair_pilot",
+        "giada_hybrid_production_targeted",
     }:
         from .hybrid_inputs import hybrid_protocol_spec
 
@@ -291,6 +292,29 @@ def command_train(args: argparse.Namespace) -> None:
     }, indent=2), flush=True)
 
 
+def command_compose_s1e(args: argparse.Namespace) -> None:
+    from .production_corpus import build_and_audit_s1e_composite
+
+    def progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 20 == 0:
+            print(f"[GIADA RunPod][S1e composite audit] {index}/{total} shards", flush=True)
+
+    report = build_and_audit_s1e_composite(
+        Path(args.background),
+        Path(args.targeted),
+        Path(args.output),
+        progress=progress,
+    )
+    print(json.dumps({
+        "valid": report["valid"],
+        "blockers": report["blockers"],
+        "composition": report["composition"],
+        "support_checks": report["support_checks"],
+    }, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="GIADA paper-scale RunPod workflow")
     sub = result.add_subparsers(dest="command", required=True)
@@ -336,6 +360,13 @@ def parser() -> argparse.ArgumentParser:
     train.add_argument("--output", required=True, type=Path)
     train.add_argument("--elm-repo", default=Path.cwd(), type=Path)
     train.set_defaults(func=command_train)
+    compose = sub.add_parser(
+        "compose-s1e", help="seal and audit the two-part S1e hybrid corpus"
+    )
+    compose.add_argument("--background", required=True, type=Path)
+    compose.add_argument("--targeted", required=True, type=Path)
+    compose.add_argument("--output", required=True, type=Path)
+    compose.set_defaults(func=command_compose_s1e)
     return result
 
 

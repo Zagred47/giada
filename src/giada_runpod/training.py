@@ -82,8 +82,19 @@ class LeanSomaCorpus:
         except ImportError as error:  # pragma: no cover
             raise RuntimeError("paper-scale training requires h5py") from error
         self.h5py = h5py
+        from .corpus_audit import corpus_components
+
         self.root = Path(root)
-        self.paths = sorted((self.root / "shards").glob("shard-*.h5"))
+        manifest_path = self.root / "composite_manifest.json"
+        if manifest_path.is_file():
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            if not manifest.get("valid"):
+                raise RuntimeError("composite corpus is not validated")
+        self.paths = [
+            path
+            for _, component_root, _ in corpus_components(self.root)
+            for path in sorted((component_root / "shards").glob("shard-*.h5"))
+        ]
         if not self.paths:
             raise FileNotFoundError(f"no paper-scale shards under {self.root}")
         self.rows: Dict[int, List[tuple[Path, np.ndarray]]] = {0: [], 1: []}

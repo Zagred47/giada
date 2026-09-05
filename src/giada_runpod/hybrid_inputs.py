@@ -80,6 +80,28 @@ PROTOCOL_REPAIR_SPECS = (
     HybridProtocolSpec("giada_repair_bap_p3_factor3_combined_v1", "bap_repair_matrix", "p3_factor3_combined", "GIADA_v1_1_2", "factorial_assist_contrast", 361),
 )
 PROTOCOL_REPAIR_PROTOCOLS = tuple(row.protocol for row in PROTOCOL_REPAIR_SPECS)
+PRODUCTION_BACKGROUND_PROTOCOLS = (
+    CANONICAL_NEURONIO_PROTOCOL,
+    ACTIVE_BACKGROUND_PROTOCOL,
+)
+
+# Only arms whose semantics were confirmed prospectively in S1c/S1d enter
+# production.  The matrix retains negative/positive boundaries and paired
+# interventions; it does not include the failed S1c somatic/BAP transcriptions.
+PRODUCTION_TARGET_PROTOCOLS = (
+    "giada_repair_somatic_3na_negative_v1",
+    "giada_repair_somatic_6na_positive_v1",
+    "giada_hybrid_nmda_n8_v1",
+    "giada_hybrid_nmda_n12_v1",
+    "giada_hybrid_calcium_unpaired_n12_v1",
+    "giada_hybrid_calcium_paired_n8_v1",
+    "giada_hybrid_calcium_paired_n12_v1",
+    "giada_repair_bap_assist_only_n12_b3_w400_v1",
+    "giada_repair_bap_p2_factor3_soma_only_v1",
+    "giada_repair_bap_p2_factor3_combined_v1",
+    "giada_repair_bap_p3_factor3_soma_only_v1",
+    "giada_repair_bap_p3_factor3_combined_v1",
+)
 _BY_PROTOCOL = {
     row.protocol: row for row in (*HYBRID_PROTOCOL_SPECS, *PROTOCOL_REPAIR_SPECS)
 }
@@ -90,6 +112,8 @@ def protocol_specs_for_purpose(purpose: str) -> tuple[HybridProtocolSpec, ...]:
         return HYBRID_PROTOCOL_SPECS
     if purpose == "giada_protocol_repair_pilot":
         return PROTOCOL_REPAIR_SPECS
+    if purpose == "giada_hybrid_production_targeted":
+        return tuple(_BY_PROTOCOL[name] for name in PRODUCTION_TARGET_PROTOCOLS)
     raise ValueError(f"no paired GIADA protocol registry for purpose {purpose!r}")
 
 

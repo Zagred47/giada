@@ -12,6 +12,28 @@ import numpy as np
 ProgressCallback = Callable[[int, int], None]
 
 
+def corpus_components(
+    root: Path, plan_path: Path | None = None
+) -> list[tuple[str, Path, Path | None]]:
+    """Resolve one physical corpus or a verified logical composite."""
+
+    corpus_root = Path(root).resolve()
+    manifest_path = corpus_root / "composite_manifest.json"
+    if not manifest_path.is_file():
+        return [("corpus", corpus_root, Path(plan_path) if plan_path else None)]
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("schema_version") != "giada-runpod-composite-corpus-v1":
+        raise RuntimeError("unknown composite corpus schema")
+    components = []
+    for row in manifest.get("components", []):
+        component_root = (corpus_root / str(row["root"])).resolve()
+        component_plan = (component_root / str(row.get("plan", "plan.json"))).resolve()
+        components.append((str(row["component_id"]), component_root, component_plan))
+    if not components:
+        raise RuntimeError("composite corpus has no components")
+    return components
+
+
 def _empty_state() -> Dict[str, Any]:
     return {
         "delta": [],
@@ -95,14 +117,38 @@ def audit_soma_corpus(
         raise RuntimeError("soma corpus audit requires h5py") from error
 
     root = Path(corpus_root)
-    paths = sorted((root / "shards").glob("shard-*.h5"))
-    if not paths:
+    sources = corpus_components(root, plan_path)
+    path_rows = [
+        (component_id, component_root, component_plan, path)
+        for component_id, component_root, component_plan in sources
+        for path in sorted((component_root / "shards").glob("shard-*.h5"))
+    ]
+    if not path_rows:
         raise FileNotFoundError(f"no soma shards under {root}")
     states: Dict[int, Dict[str, Any]] = {code: _empty_state() for code in (0, 1)}
-    plan = _plan_lookup(plan_path)
     protocol_states: Dict[str, Dict[int, Dict[str, Any]]] = {}
     blockers = []
-    for index, path in enumerate(paths, 1):
+    component_validations = {}
+    for component_id, component_root, component_plan in sources:
+        validation_path = component_root / "validation_report.json"
+        validation = (
+            json.loads(validation_path.read_text(encoding="utf-8"))
+            if validation_path.is_file()
+            else None
+        )
+        component_validations[component_id] = {
+            "present": validation is not None,
+            "valid": bool(validation and validation.get("valid")),
+            "validated_shard_count": None if validation is None else validation.get("validated_shard_count"),
+            "validated_transition_count": None if validation is None else validation.get("validated_transition_count"),
+        }
+        # A standalone in-memory/test corpus may legitimately omit this file.
+        # Production composition enforces its presence separately; if a report
+        # is present here, however, it must never be ignored when invalid.
+        if validation is not None and not validation.get("valid"):
+            blockers.append(f"{component_id}: invalid validation report")
+    for index, (component_id, _, component_plan, path) in enumerate(path_rows, 1):
+        plan = _plan_lookup(component_plan)
         with h5py.File(path, "r") as handle:
             split = np.asarray(handle["split_code"][:], dtype=np.uint8)
             voltage_t = np.asarray(handle["voltage_t_mv"][:, 0], dtype=np.float64)
@@ -122,14 +168,14 @@ def audit_soma_corpus(
                     planned = plan.get(int(trajectory_index))
                     if planned is None:
                         blockers.append(
-                            f"trajectory {int(trajectory_index)} is absent from plan"
+                            f"{component_id}: trajectory {int(trajectory_index)} is absent from plan"
                         )
                         continue
                     expected_code = 1 if planned["split"] == "validation" else 0
                     row_mask = trajectory == trajectory_index
                     if np.any(split[row_mask] != expected_code):
                         blockers.append(
-                            f"trajectory {int(trajectory_index)} split disagrees with plan"
+                            f"{component_id}: trajectory {int(trajectory_index)} split disagrees with plan"
                         )
                     by_split = protocol_states.setdefault(
                         planned["protocol"],
@@ -144,14 +190,15 @@ def audit_soma_corpus(
                         row_mask,
                     )
         if progress is not None:
-            progress(index, len(paths))
+            progress(index, len(path_rows))
 
     missing = [code for code, state in states.items() if not state["delta"]]
     report = {
         "schema_version": "giada-runpod-soma-corpus-audit-v1",
         "valid": not missing and not blockers,
         "corpus_root": str(root.resolve()),
-        "shard_count": len(paths),
+        "shard_count": len(path_rows),
+        "components": component_validations,
         "missing_split_codes": missing,
         "blockers": sorted(set(blockers)),
         "splits": {
@@ -169,15 +216,11 @@ def audit_soma_corpus(
             }
             for protocol, by_split in sorted(protocol_states.items())
         }
-    validation_path = root / "validation_report.json"
-    if validation_path.is_file():
-        validation = json.loads(validation_path.read_text(encoding="utf-8"))
+    if len(sources) == 1:
+        report["source_validation"] = next(iter(component_validations.values()))
+    else:
         report["source_validation"] = {
-            "valid": bool(validation.get("valid")),
-            "validated_shard_count": validation.get("validated_shard_count"),
-            "validated_transition_count": validation.get(
-                "validated_transition_count"
-            ),
+            "valid": all(row["valid"] for row in component_validations.values()),
+            "components": component_validations,
         }
-        report["valid"] = bool(report["valid"] and validation.get("valid"))
     return report

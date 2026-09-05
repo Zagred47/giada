@@ -1,0 +1,73 @@
+{
+  "schema_version": "giada-runpod-s1e-hybrid-production-preregistration-v1",
+  "project": "GIADA",
+  "status": "preregistered_not_run",
+  "decision_date": "2026-09-05",
+  "purpose": "Test the confirmed GIADA hybrid data recipe at the same 600,000-transition scale as frozen S1 before authorizing S2.",
+  "predecessors": [
+    "s1c_hybrid_pilot_result.json",
+    "s1d_protocol_repair_result.json"
+  ],
+  "composition": {
+    "total_transition_count": 600000,
+    "train_transition_count": 480000,
+    "validation_transition_count": 120000,
+    "long_stochastic_background": {
+      "transition_count": 360000,
+      "fraction": 0.6,
+      "trajectory_duration_ms": 6000,
+      "trajectory_count": 60,
+      "protocols": {
+        "neuronio_nmda_ergodic_v1": {
+          "train_trajectories": 24,
+          "validation_trajectories": 6
+        },
+        "neuronio_nmda_pilot_ex_high_inh_low_time_fast_v2": {
+          "train_trajectories": 24,
+          "validation_trajectories": 6
+        }
+      }
+    },
+    "confirmed_targeted": {
+      "transition_count": 240000,
+      "fraction": 0.4,
+      "trajectory_duration_ms": 80,
+      "trajectory_count": 3000,
+      "protocol_count": 12,
+      "train_episodes_per_protocol": 200,
+      "validation_episodes_per_protocol": 50,
+      "families": [
+        "somatic negative/positive boundary",
+        "NMDA negative/positive boundary",
+        "calcium unpaired/paired causal boundary",
+        "BAP assist-only and soma-only/combined causal contrasts"
+      ]
+    }
+  },
+  "rationale": {
+    "two_physical_subcorpora": "Long stochastic trajectories preserve slow rate modulation; short targeted episodes avoid thousands of empty post-stimulus transitions.",
+    "logical_composite": "Models sample one verified corpus without copying or physically merging HDF5 shards.",
+    "mixture": "Sixty percent background preserves broad naturalistic coverage, while forty percent targeted support prevents rare nonlinear regimes from disappearing from validation.",
+    "aligned_comparison": "GIADA and Branch-ELM receive the same numerical tensors, samples, targets, loss, optimizer family and seeds."
+  },
+  "preregistered_support_gates": {
+    "exact_train_transitions": 480000,
+    "exact_validation_transitions": 120000,
+    "minimum_train_absolute_delta_ge_5mv": 1024,
+    "minimum_validation_absolute_delta_ge_5mv": 256,
+    "minimum_train_somatic_upcrossings_minus55mv": 512,
+    "minimum_validation_somatic_upcrossings_minus55mv": 128,
+    "every_protocol_present_in_both_splits": true,
+    "every_component_structurally_valid": true
+  },
+  "anti_leakage": {
+    "split_unit": "complete trajectory or complete paired episode group",
+    "seed_overlap_across_splits": false,
+    "normalization_fit": "train only",
+    "validation_role": "development model comparison, not fresh paper test",
+    "post_hoc_resplitting_allowed": false
+  },
+  "decision_rule": "S2 may be considered only if both components validate, every preregistered support gate passes, and the aligned S1e GPU comparison is complete. A failed gate triggers a minimal prospective repair, never post-hoc resplitting.",
+  "architecture_experiments_modified": false,
+  "paper_test_claimed": false
+}

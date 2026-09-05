@@ -11,6 +11,8 @@ from .neuronio_inputs import NeuronIOInputConfig, sample_neuronio_actions
 from .hybrid_inputs import (
     HYBRID_PROTOCOLS,
     PROTOCOL_REPAIR_PROTOCOLS,
+    PRODUCTION_BACKGROUND_PROTOCOLS,
+    PRODUCTION_TARGET_PROTOCOLS,
     sample_hybrid_actions,
 )
 from .store import LeanShardWriter, validate_lean_shard
@@ -26,6 +28,8 @@ __all__ = [
     "sample_neuronio_actions",
     "HYBRID_PROTOCOLS",
     "PROTOCOL_REPAIR_PROTOCOLS",
+    "PRODUCTION_BACKGROUND_PROTOCOLS",
+    "PRODUCTION_TARGET_PROTOCOLS",
     "sample_hybrid_actions",
     "validate_lean_shard",
 ]

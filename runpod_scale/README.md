@@ -344,6 +344,38 @@ The final audit prints a bounded summary plus
 `scientific_outcome_assessment`. Large-scale hybrid generation remains blocked
 unless both the technical audit and every preregistered S1d control pass.
 
+S1d passed every registered control. The next prospective stage is S1e, a
+600,000-transition hybrid corpus with two physical components: long
+stochastic background trajectories and short confirmed targeted episodes.
+They are generated and validated by one resumable supervisor and then sealed
+as a logical composite. Start it in `tmux` or with `nohup`:
+
+```bash
+cd /workspace/giada
+git fetch origin runpod/paper-scale-data
+git checkout --detach origin/runpod/paper-scale-data
+"$GIADA_PYTHON" -m pytest tests/test_giada_runpod_scale.py -q
+
+export GIADA_ROOT=/workspace/giada
+export GIADA_TEACHER_ROOT=/workspace/neuron_as_deep_net
+export GIADA_PYTHON=/workspace/.giada-venv/bin/python
+export GIADA_WORKER_COUNT=8
+export GIADA_S1E_ROOT=/workspace/giada-data/s1e-hybrid-production-v1
+
+mkdir -p "$GIADA_S1E_ROOT/logs"
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s1e_hybrid_corpus.sh" \
+  >"$GIADA_S1E_ROOT/logs/pipeline.log" 2>&1 &
+echo $! | tee "$GIADA_S1E_ROOT/logs/pipeline.pid"
+tail -F "$GIADA_S1E_ROOT/logs/pipeline.log"
+```
+
+The supervisor is connection-independent. A rerun with the same root resumes
+completed shards after checking their plan hash. Completion requires
+`composite/composite_manifest.json` and `composite/production_audit.json` with
+`valid: true`. Do not point GPU training at either component alone; its corpus
+argument is the verified composite directory.
+
 ## GPU phase
 
 Stop the CPU Pod, create a GPU Pod in the network-volume region, and attach the

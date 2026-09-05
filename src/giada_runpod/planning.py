@@ -61,15 +61,26 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
     paired_purpose = config.purpose in {
         "giada_hybrid_pilot",
         "giada_protocol_repair_pilot",
+        "giada_hybrid_production_targeted",
     }
     if paired_purpose:
         from .hybrid_inputs import protocol_specs_for_purpose
 
         specs = protocol_specs_for_purpose(config.purpose)
-        repeats = count // (2 * len(specs))
+        per_protocol, remainder = divmod(count, len(specs))
+        if remainder:
+            raise RuntimeError("paired plan cannot balance protocol counts")
+        validation_repeats = int(
+            round(per_protocol * config.validation_trajectory_fraction)
+        )
+        train_repeats = per_protocol - validation_repeats
+        if min(train_repeats, validation_repeats) <= 0:
+            raise RuntimeError("paired plan requires both train and validation replicas")
         trajectories = []
         index = 0
-        for split_index, split in enumerate(("train", "validation")):
+        for split_index, (split, repeats) in enumerate(
+            (("train", train_repeats), ("validation", validation_repeats))
+        ):
             for replicate in range(repeats):
                 family_seeds: Dict[str, int] = {}
                 for spec in specs:

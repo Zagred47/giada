@@ -14,6 +14,8 @@ from src.giada_runpod.neuronio_inputs import (
 from src.giada_runpod.hybrid_inputs import (
     HYBRID_PROTOCOLS,
     PROTOCOL_REPAIR_PROTOCOLS,
+    PRODUCTION_BACKGROUND_PROTOCOLS,
+    PRODUCTION_TARGET_PROTOCOLS,
     hybrid_protocol_spec,
     sample_hybrid_actions,
 )
@@ -270,6 +272,67 @@ def test_s1d_repair_actions_match_immutable_calibrations() -> None:
     ) == 36
 
 
+def test_s1e_hybrid_production_plan_has_exact_registered_composition() -> None:
+    background = ScaleConfig(
+        stage="s1e_hybrid_background",
+        target_transitions=360_000,
+        trajectory_duration_ms=6000,
+        trajectories_per_shard=1,
+        validation_trajectory_fraction=0.2,
+        purpose="giada_hybrid_production_background",
+        input_protocols=PRODUCTION_BACKGROUND_PROTOCOLS,
+    )
+    targeted = ScaleConfig(
+        stage="s1e_hybrid_targeted",
+        target_transitions=240_000,
+        trajectory_duration_ms=80,
+        trajectories_per_shard=25,
+        validation_trajectory_fraction=0.2,
+        purpose="giada_hybrid_production_targeted",
+        input_protocols=PRODUCTION_TARGET_PROTOCOLS,
+    )
+    background_rows = [
+        row for shard in build_shard_plan(background) for row in shard.trajectories
+    ]
+    targeted_rows = [
+        row for shard in build_shard_plan(targeted) for row in shard.trajectories
+    ]
+    assert len(background_rows) == 60
+    assert len(targeted_rows) == 3000
+    for protocol in PRODUCTION_BACKGROUND_PROTOCOLS:
+        rows = [row for row in background_rows if row.protocol == protocol]
+        assert sum(row.split == "train" for row in rows) == 24
+        assert sum(row.split == "validation" for row in rows) == 6
+    for protocol in PRODUCTION_TARGET_PROTOCOLS:
+        rows = [row for row in targeted_rows if row.protocol == protocol]
+        assert sum(row.split == "train" for row in rows) == 200
+        assert sum(row.split == "validation" for row in rows) == 50
+    assert not (
+        {row.seed for row in targeted_rows if row.split == "train"}
+        & {row.seed for row in targeted_rows if row.split == "validation"}
+    )
+    groups = {}
+    for row in targeted_rows:
+        groups.setdefault(row.pair_id, []).append(row)
+    for group in groups.values():
+        assert len({row.seed for row in group}) == 1
+        assert len({row.split for row in group}) == 1
+        family = group[0].protocol_family
+        expected_arms = {
+            hybrid_protocol_spec(protocol).arm
+            for protocol in PRODUCTION_TARGET_PROTOCOLS
+            if hybrid_protocol_spec(protocol).family == family
+        }
+        assert {row.protocol_arm for row in group} == expected_arms
+
+
+def test_s1e_target_registry_excludes_failed_s1c_transcriptions() -> None:
+    assert "giada_hybrid_somatic_spike_v1" not in PRODUCTION_TARGET_PROTOCOLS
+    assert "giada_hybrid_bap_combined_v1" not in PRODUCTION_TARGET_PROTOCOLS
+    assert "giada_repair_somatic_6na_positive_v1" in PRODUCTION_TARGET_PROTOCOLS
+    assert "giada_repair_bap_p2_factor3_combined_v1" in PRODUCTION_TARGET_PROTOCOLS
+
+
 def test_runpod_teacher_session_uses_base_contract_without_calibration_artifacts(
     tmp_path: Path, monkeypatch,
 ) -> None:
@@ -517,3 +580,91 @@ def test_soma_corpus_audit_reports_split_activity_without_mutation(
     assert report["protocol_splits"]["p1"]["validation"][
         "absolute_delta_ge_5mv_count"
     ] == 1
+
+
+def test_logical_composite_reads_both_components_without_index_collision(
+    tmp_path: Path,
+) -> None:
+    metadata = {
+        "storage_profile": "soma_paper",
+        "mechanism_group_names": ["g0"],
+        "ion_names": ["i0"],
+        "causal_drive_features": [f"u{i}" for i in range(12)],
+        "segment_ids": [0],
+        "mechanism_presence": [[1]],
+        "segment_static": [[0.0]],
+        "region_names": ["soma"],
+        "segment_region_ids": [0],
+    }
+    component_roots = []
+    for component_index, component_id in enumerate(("background", "targeted")):
+        root = tmp_path / component_id
+        component_roots.append(root)
+        writer = LeanShardWriter(
+            root / "shards" / "shard-00000.h5",
+            segment_count_per_transition=1,
+            mechanism_group_count=1,
+            ion_count=1,
+            schema_metadata=metadata,
+            chunk_transitions=2,
+        )
+        for local_index, split in enumerate((0, 1)):
+            writer.append(
+                {
+                    "segment_id": [0],
+                    "voltage_t_mv": [-70.0],
+                    "voltage_t_plus_1_mv": [-69.0 + component_index],
+                    "parent_delta_t_mv": [0.0],
+                    "mean_child_delta_t_mv": [0.0],
+                    "mechanism_state_t": [[0.2]],
+                    "ion_state_t": [[0.01]],
+                    "causal_drive": [[0.0] * 12],
+                    "trajectory_index": local_index,
+                    "step_index": 0,
+                    "seed": component_index * 100 + local_index,
+                    "split_code": split,
+                    "scheduled_event_count": 0,
+                    "realized_event_count": 0,
+                },
+                [],
+            )
+        writer.close(expected_transition_count=2)
+        (root / "validation_report.json").write_text(
+            json.dumps({"valid": True, "validated_shard_count": 1, "validated_transition_count": 2}),
+            encoding="utf-8",
+        )
+        (root / "plan.json").write_text(
+            json.dumps({
+                "shards": [{
+                    "trajectories": [
+                        {"trajectory_index": 0, "split": "train", "protocol": f"{component_id}_train"},
+                        {"trajectory_index": 1, "split": "validation", "protocol": f"{component_id}_validation"},
+                    ]
+                }]
+            }),
+            encoding="utf-8",
+        )
+    composite = tmp_path / "composite"
+    composite.mkdir()
+    (composite / "composite_manifest.json").write_text(
+        json.dumps({
+            "schema_version": "giada-runpod-composite-corpus-v1",
+            "valid": True,
+            "components": [
+                {"component_id": name, "root": f"../{name}", "plan": "plan.json"}
+                for name in ("background", "targeted")
+            ],
+        }),
+        encoding="utf-8",
+    )
+    report = audit_soma_corpus(composite)
+    assert report["valid"]
+    assert report["shard_count"] == 2
+    assert report["splits"]["train"]["transition_count"] == 2
+    assert report["splits"]["validation"]["transition_count"] == 2
+    corpus = LeanSomaCorpus(composite)
+    try:
+        assert corpus.train_count == 2
+        assert corpus.validation_count == 2
+    finally:
+        corpus.close()
