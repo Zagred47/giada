@@ -1,0 +1,64 @@
+{
+  "schema_version": "giada-runpod-s1d-protocol-repair-result-v1",
+  "project": "GIADA",
+  "status": "completed_all_preregistered_gates_passed",
+  "result_date": "2026-09-05",
+  "code_revision": "2bedb91feed9b4b95cbbe3ef4aadb7f432fe23c7",
+  "integrity": {
+    "valid": true,
+    "shard_count": 144,
+    "trajectory_count": 144,
+    "transition_count": 11520,
+    "failed_marker_count": 0,
+    "blockers": []
+  },
+  "scientific_outcome": {
+    "passed": true,
+    "all_gates_passed_in_train": true,
+    "all_gates_passed_in_validation": true,
+    "exploratory_arms_used_for_gate": false,
+    "registered_controls": {
+      "single_3na_somatic_negative": {
+        "train_positive_count": "0/8",
+        "validation_positive_count": "0/8",
+        "median_soma_peak_mv": -61.202030181884766
+      },
+      "single_6na_somatic_positive": {
+        "train_positive_count": "8/8",
+        "validation_positive_count": "8/8",
+        "median_soma_peak_mv": 43.3900032043457
+      },
+      "selected_n12_b3_w400_assist_subthreshold": {
+        "train_soma_positive_count": "0/8",
+        "validation_soma_positive_count": "0/8",
+        "train_trunk_peak_ge_minus20_count": "0/8",
+        "validation_trunk_peak_ge_minus20_count": "0/8"
+      },
+      "p2_factor3_soma_only_bap_negative": {
+        "train_trunk_peak_ge_minus20_count": "0/8",
+        "validation_trunk_peak_ge_minus20_count": "0/8",
+        "median_trunk_peak_mv": -40.0455207824707
+      },
+      "p3_factor3_soma_only_bap_positive": {
+        "train_trunk_peak_ge_minus20_count": "8/8",
+        "validation_trunk_peak_ge_minus20_count": "8/8",
+        "median_trunk_peak_mv": -2.5738019943237305
+      }
+    },
+    "paired_causal_contrasts": {
+      "p2_factor3": "The soma-only arm remained below the registered trunk BAP threshold, whereas the combined arm crossed it in 8/8 train and 8/8 validation trajectories.",
+      "p3_factor2": "Both soma-only and combined arms produced somatic spikes; only the combined arm crossed the registered trunk BAP threshold in 8/8 train and 8/8 validation trajectories.",
+      "p3_factor3": "Both arms crossed the BAP threshold, while the combined arm increased the median trunk peak from about -2.57 mV to 5.13 mV in train and 5.43 mV in validation."
+    }
+  },
+  "decision": {
+    "s1d_is_immutable": true,
+    "s1c_nmda_and_calcium_protocols_confirmed": true,
+    "s1d_somatic_and_bap_protocols_confirmed": true,
+    "failed_s1c_protocol_transcriptions_repaired": true,
+    "s2_authorized": false,
+    "next_step": "prospectively preregister the final hybrid corpus composition using the confirmed S1c and S1d arms plus long-window stochastic controls",
+    "architecture_experiments_modified": false,
+    "paper_test_claimed": false
+  }
+}

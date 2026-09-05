@@ -49,5 +49,17 @@ while its broad-temporal counterpart was the most balanced secondary cell
 (52/45 and 18/15).  This identifies prospective input regimes; it does not
 convert the pilot into training or final validation data.
 
+S1c and its prospective S1d repair are now complete. S1c established robust
+NMDA and calcium contrasts but exposed two transcription errors in its somatic
+and BAP arms. S1d repaired only those arms and passed every preregistered gate
+independently in train and validation: one 3 nA pulse stayed negative, one
+6 nA pulse spiked, the selected n12/b3/w400 dendritic assist stayed
+subthreshold, p2-factor3 soma-only stayed below the registered trunk BAP
+threshold, and p3-factor3 soma-only crossed it. Paired combined arms further
+confirmed that the dendritic assist changes the trunk response causally.
+Neither pilot is training data. The next step is a prospective specification
+of the final hybrid corpus; S2 remains blocked until that specification and
+its per-split support gates are frozen.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.
