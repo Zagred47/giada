@@ -94,6 +94,20 @@ git clone --branch runpod/paper-scale-data https://github.com/Zagred47/giada.git
 bash "$GIADA_ROOT/runpod_scale/scripts/bootstrap_cpu.sh"
 ```
 
+For browser-console resilience, keep a named `tmux` session for interactive
+work while running scientific jobs with `nohup` and persistent log files:
+
+```bash
+tmux new -s giada
+# Detach without stopping the session: Ctrl-b, then d
+tmux attach -t giada
+```
+
+Use `tail -F <log>` inside `tmux` to resume live log streaming after a browser
+disconnect. `tmux` preserves the terminal view; `nohup` is the independent
+process-lifetime guarantee. Both end if the Pod itself is stopped, so restart
+contracts still depend on completed shard markers stored under `/workspace`.
+
 Create S1's immutable plan:
 
 ```bash

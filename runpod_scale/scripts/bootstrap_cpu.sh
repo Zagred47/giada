@@ -15,7 +15,8 @@ if command -v apt-get >/dev/null 2>&1; then
     git \
     python3 \
     python3-dev \
-    python3-pip
+    python3-pip \
+    tmux
 fi
 
 if [[ ! -d "$GIADA_ROOT/.git" ]]; then
