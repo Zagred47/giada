@@ -1,7 +1,7 @@
 {
   "schema_version": "giada-runpod-paper-scale-preregistration-v1",
   "project": "GIADA",
-  "status": "remote_cpu_benchmark_complete_s1_generation_pending",
+  "status": "s1_data_validated_gpu_training_pending",
   "scientific_question": "Does GIADA's paired one-step soma RMSE advantage over the 8,002-parameter Branch-ELM core survive increasing authentic teacher time?",
   "historical_small_support_result": {
     "branch_elm_median_soma_rmse_mv": 14.823964911891716,
@@ -53,5 +53,13 @@
     "scientific_protocol_changed": false,
     "architecture_experiments_changed": false,
     "benchmark_record": "cpu_benchmark_results.json"
+  },
+  "s1_data_result": {
+    "record": "s1_data_validation_result.json",
+    "valid": true,
+    "validated_transition_count": 600000,
+    "validated_shard_count": 100,
+    "blocker_count": 0,
+    "gpu_training_started": false
   }
 }

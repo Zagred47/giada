@@ -1,0 +1,34 @@
+{
+  "schema_version": "giada-runpod-s1-data-result-v1",
+  "project": "GIADA",
+  "stage": "s1",
+  "recorded_at": "2026-09-05",
+  "corpus_path_on_network_volume": "/workspace/giada-data/s1-v2",
+  "generation": {
+    "teacher_trajectory_count": 100,
+    "trajectory_duration_ms": 6000,
+    "transition_count": 600000,
+    "shard_count": 100,
+    "train_trajectory_count": 97,
+    "validation_trajectory_count": 3,
+    "failed_marker_count": 0,
+    "worker_count": 8
+  },
+  "validation": {
+    "schema_version": "giada-runpod-validation-v1",
+    "valid": true,
+    "blockers": [],
+    "expected_shard_count": 100,
+    "validated_shard_count": 100,
+    "expected_transition_count": 600000,
+    "validated_transition_count": 600000,
+    "total_size_bytes": 131556733,
+    "total_size_mib": 125.46227741241455
+  },
+  "interpretation": {
+    "stage_complete": true,
+    "scientific_protocol_changed": false,
+    "architecture_experiments_changed": false,
+    "next_action": "paired GPU training of the preregistered GIADA and Branch-ELM models"
+  }
+}
