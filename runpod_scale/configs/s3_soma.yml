@@ -1,0 +1,12 @@
+giada_runpod_scale:
+  stage: s3
+  target_transitions: 28800000
+  trajectory_duration_ms: 6000
+  trajectories_per_shard: 16
+  storage_profile: soma_paper
+  sampled_segments_per_transition: 1
+  root_seed: 9300001
+  validation_trajectory_fraction: 0.03333333333333333
+  compression: lzf
+  chunk_transitions: 1024
+  progress_interval_s: 30

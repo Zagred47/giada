@@ -1,0 +1,46 @@
+{
+  "schema_version": "giada-runpod-paper-scale-preregistration-v1",
+  "project": "GIADA",
+  "status": "implementation_complete_remote_benchmark_pending",
+  "scientific_question": "Does GIADA's paired one-step soma RMSE advantage over the 8,002-parameter Branch-ELM core survive increasing authentic teacher time?",
+  "historical_small_support_result": {
+    "branch_elm_median_soma_rmse_mv": 14.823964911891716,
+    "giada_median_soma_rmse_mv": 9.577290636371764,
+    "paired_median_giada_reduction_fraction": 0.34943270522489,
+    "scope": "train-derived disjoint development support; one-step only"
+  },
+  "stages": {
+    "s0": 29880,
+    "s1": 600000,
+    "s2": 3600000,
+    "s3": 28800000,
+    "s4": 230400000
+  },
+  "advance_policy": "Advance one stage only after integrity validation and paired evaluation of the preceding stage.",
+  "fixed_comparison": {
+    "input": "same 76-value causal soma tensor",
+    "target": "raw authentic NEURON V(t+1 ms)-V(t)",
+    "target_clipping": null,
+    "models": {
+      "branch_elm_core_trainable_parameters": 8002,
+      "giada_voltage_bridge_trainable_parameters": 8985
+    },
+    "seeds": [61017, 61029, 61043],
+    "same_sample_order": true,
+    "same_optimizer_family": true,
+    "same_loss": true,
+    "rollout_claimed": false
+  },
+  "data_method": {
+    "teacher": "canonical Hay L5PC NEURON model at commit 074c4666300a8ad246601dab179a97a6942f0f29",
+    "input_distribution": "published NeuronIO NMDA ranges, temporal smoothing, morphology-length weighting and exponential-then-Bernoulli event sampling",
+    "release_input": "causal U_realized from authentic probabilistic synapses",
+    "rich_event_dataset_role": "separate held-out/event-enriched sidecar, not duplicated at paper scale"
+  },
+  "anti_leakage": {
+    "split_unit": "complete trajectory/seed",
+    "normalization_fit": "train only",
+    "architecture_selection_from_scale_track": false,
+    "validation_used_as_fresh_test": false
+  }
+}

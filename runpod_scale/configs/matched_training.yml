@@ -1,0 +1,18 @@
+giada_matched_training:
+  seeds: [61017, 61029, 61043]
+  training_steps: 3000
+  checkpoints: [100, 300, 1000, 3000]
+  batch_size: 4096
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  voltage_scale_mv: 20.0
+  delta_limit_mv: 100.0
+  active_delta_threshold_mv: 5.0
+  active_weight: 4.0
+  normalization_sample_limit: 1000000
+  evaluation_sample_limit: 1000000
+  progress_interval: 50
+  expected_input_width: 76
+  expected_branch_elm_parameters: 8002
+  expected_giada_parameters: 8985

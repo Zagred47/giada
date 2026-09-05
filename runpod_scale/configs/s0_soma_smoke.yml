@@ -1,0 +1,14 @@
+giada_runpod_scale:
+  stage: s0
+  target_transitions: 29880
+  # S0 preserves the historical 29,880-transition diagnostic budget. It is a
+  # systems smoke test; S1+ return to the canonical 6-second trajectories.
+  trajectory_duration_ms: 996
+  trajectories_per_shard: 3
+  storage_profile: soma_paper
+  sampled_segments_per_transition: 1
+  root_seed: 9100001
+  validation_trajectory_fraction: 0.03333333333333333
+  compression: lzf
+  chunk_transitions: 256
+  progress_interval_s: 30
