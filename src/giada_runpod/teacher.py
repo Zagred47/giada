@@ -86,6 +86,19 @@ def _release_seed(seed: int) -> int:
     return int.from_bytes(hashlib.sha256(f"giada-release|{seed}".encode()).digest()[:4], "big")
 
 
+def ordered_segment_voltages(live_segments: Mapping[int, Any]) -> np.ndarray:
+    """Read the canonical contiguous segment-id order from the audit mapping."""
+
+    expected_ids = set(range(len(live_segments)))
+    observed_ids = {int(segment_id) for segment_id in live_segments}
+    if observed_ids != expected_ids:
+        raise RuntimeError("live segment mapping is not contiguous in canonical id order")
+    return np.asarray(
+        [float(live_segments[segment_id].v) for segment_id in range(len(live_segments))],
+        dtype=np.float32,
+    )
+
+
 class BoundaryProjector:
     """Read only the segment-local fields required by the matched models."""
 
@@ -187,10 +200,7 @@ class BoundaryProjector:
         )
 
     def capture(self) -> Dict[str, np.ndarray]:
-        voltage_all = np.asarray(
-            [float(segment.v) for segment in self.session.audit.live_segments],
-            dtype=np.float32,
-        )
+        voltage_all = ordered_segment_voltages(self.session.audit.live_segments)
         selected = self.segment_ids
         parent = self.parent_ids[selected]
         parent_delta = voltage_all[parent] - voltage_all[selected]

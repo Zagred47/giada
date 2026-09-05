@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 
@@ -64,6 +65,16 @@ def test_runpod_teacher_session_tracks_snapshot_random123_seed(monkeypatch) -> N
     session._configure_rngs(456, [1.0, 2.0])
     assert observed == {"seed": 456, "sequences": [1.0, 2.0]}
     assert session.active_random123_seed == 456
+
+
+def test_ordered_segment_voltages_reads_values_not_mapping_keys() -> None:
+    live_segments = {
+        2: SimpleNamespace(v=-72.0),
+        0: SimpleNamespace(v=-76.0),
+        1: SimpleNamespace(v=-74.0),
+    }
+    observed = teacher_module.ordered_segment_voltages(live_segments)
+    np.testing.assert_array_equal(observed, [-76.0, -74.0, -72.0])
 
 
 def test_neuronio_sampler_is_seeded_and_preserves_canonical_event_fields() -> None:
