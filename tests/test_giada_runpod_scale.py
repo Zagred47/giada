@@ -5,7 +5,12 @@ from types import SimpleNamespace
 import numpy as np
 
 from src.giada_runpod.config import ScaleConfig
-from src.giada_runpod.neuronio_inputs import DendriticSynapseMap, sample_neuronio_actions
+from src.giada_runpod.neuronio_inputs import (
+    PILOT_PROTOCOLS,
+    DendriticSynapseMap,
+    neuronio_input_config_for_protocol,
+    sample_neuronio_actions,
+)
 from src.giada_runpod.planning import build_shard_plan, load_shard_plan, write_shard_plan
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
 from src.giada_runpod.training import LeanSomaCorpus
@@ -32,6 +37,45 @@ def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
     loaded_config, loaded_shards = load_shard_plan(path)
     assert loaded_config == config
     assert loaded_shards == shards
+
+
+def test_s1b_support_pilot_is_paired_within_every_factorial_cell() -> None:
+    config = ScaleConfig(
+        stage="s1b_pilot",
+        target_transitions=96_000,
+        trajectories_per_shard=1,
+        validation_trajectory_fraction=0.5,
+        purpose="input_support_pilot",
+        input_protocols=PILOT_PROTOCOLS,
+    )
+    trajectories = [
+        row for shard in build_shard_plan(config) for row in shard.trajectories
+    ]
+    assert len(trajectories) == 16
+    for protocol in PILOT_PROTOCOLS:
+        rows = [row for row in trajectories if row.protocol == protocol]
+        assert len(rows) == 2
+        assert {row.split for row in rows} == {"train", "validation"}
+
+
+def test_s1b_factorial_protocols_condition_only_canonical_support() -> None:
+    for protocol in PILOT_PROTOCOLS:
+        config = neuronio_input_config_for_protocol(protocol)
+        config.validate()
+        assert 0.0 <= config.basal_excitatory_per_100ms[0]
+        assert config.basal_excitatory_per_100ms[1] <= 800.0
+        assert -600.0 <= config.basal_inhibitory_difference_per_100ms[0]
+        assert config.basal_inhibitory_difference_per_100ms[1] <= 200.0
+        assert set(config.rate_intervals_ms) <= set(
+            neuronio_input_config_for_protocol(
+                "neuronio_nmda_ergodic_v1"
+            ).rate_intervals_ms
+        )
+        assert set(config.smoothing_sigmas_ms) <= set(
+            neuronio_input_config_for_protocol(
+                "neuronio_nmda_ergodic_v1"
+            ).smoothing_sigmas_ms
+        )
 
 
 def test_runpod_teacher_session_uses_base_contract_without_calibration_artifacts(
@@ -243,8 +287,41 @@ def test_soma_corpus_audit_reports_split_activity_without_mutation(
             [],
         )
     writer.close(expected_transition_count=3)
-    report = audit_soma_corpus(root)
+    plan_path = root / "plan.json"
+    plan_path.write_text(
+        json.dumps(
+            {
+                "shards": [
+                    {
+                        "trajectories": [
+                            {
+                                "trajectory_index": 0,
+                                "split": "train",
+                                "protocol": "p0",
+                            },
+                            {
+                                "trajectory_index": 1,
+                                "split": "train",
+                                "protocol": "p1",
+                            },
+                            {
+                                "trajectory_index": 2,
+                                "split": "validation",
+                                "protocol": "p1",
+                            },
+                        ]
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    report = audit_soma_corpus(root, plan_path=plan_path)
     assert report["valid"]
     assert report["splits"]["train"]["transition_count"] == 2
     assert report["splits"]["train"]["somatic_upcrossings_minus55mv"] == 1
     assert report["splits"]["validation"]["absolute_delta_ge_5mv_count"] == 1
+    assert report["protocol_splits"]["p0"]["train"]["transition_count"] == 1
+    assert report["protocol_splits"]["p1"]["validation"][
+        "absolute_delta_ge_5mv_count"
+    ] == 1

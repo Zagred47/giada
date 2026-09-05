@@ -23,8 +23,8 @@ from src.hayflow_teacher.audit import git_commit
 
 from .config import ScaleConfig
 from .neuronio_inputs import (
-    NeuronIOInputConfig,
     build_dendritic_synapse_map,
+    neuronio_input_config_for_protocol,
     sample_neuronio_actions,
 )
 from .planning import ShardPlan
@@ -364,6 +364,10 @@ class ScaleTeacherGenerator:
             "plan_sha256": shard.plan_sha256,
             "teacher_commit": git_commit(self.teacher_repo),
             "input_methodology": "NeuronIO_NMDA_ranges_temporal_smoothing_spatial_length_weighting",
+            "generation_purpose": config.purpose,
+            "trajectory_protocols": {
+                str(row.trajectory_index): row.protocol for row in shard.trajectories
+            },
         }
         started = time.perf_counter()
         writer = LeanShardWriter(
@@ -383,7 +387,10 @@ class ScaleTeacherGenerator:
                     trajectory.duration_ms,
                     self.mapping,
                     seed=trajectory.seed,
-                    config=NeuronIOInputConfig(),
+                    config=neuronio_input_config_for_protocol(
+                        trajectory.protocol
+                    ),
+                    protocol=trajectory.protocol,
                 )
                 self.session._restore_native_snapshot(
                     self.session.equilibrium_snapshot_path,

@@ -3,11 +3,24 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, Mapping, Sequence, Tuple
+from typing import Any, Dict, Sequence, Tuple
 
 import numpy as np
 
 from src.hayflow_data import InputAction
+
+
+CANONICAL_NEURONIO_PROTOCOL = "neuronio_nmda_ergodic_v1"
+PILOT_PROTOCOLS = (
+    "neuronio_nmda_pilot_ex_full_inh_full_time_broad_v1",
+    "neuronio_nmda_pilot_ex_high_inh_full_time_broad_v1",
+    "neuronio_nmda_pilot_ex_full_inh_low_time_broad_v1",
+    "neuronio_nmda_pilot_ex_high_inh_low_time_broad_v1",
+    "neuronio_nmda_pilot_ex_full_inh_full_time_fast_v1",
+    "neuronio_nmda_pilot_ex_high_inh_full_time_fast_v1",
+    "neuronio_nmda_pilot_ex_full_inh_low_time_fast_v1",
+    "neuronio_nmda_pilot_ex_high_inh_low_time_fast_v1",
+)
 
 
 @dataclass(frozen=True)
@@ -36,6 +49,41 @@ class NeuronIOInputConfig:
             raise ValueError("smoothing jitter can produce a non-positive sigma")
         if self.minimum_segment_length_um < 0:
             raise ValueError("minimum segment length must be non-negative")
+
+
+def neuronio_input_config_for_protocol(protocol: str) -> NeuronIOInputConfig:
+    """Return a preregistered conditional slice of the NeuronIO support.
+
+    The pilot never changes synaptic locations, weights, mechanisms, release,
+    or the teacher.  Each factorial arm only conditions values already inside
+    the published NeuronIO ranges.  It is therefore a support diagnostic, not
+    a replacement data distribution.
+    """
+
+    name = str(protocol)
+    if name == CANONICAL_NEURONIO_PROTOCOL:
+        return NeuronIOInputConfig()
+    if name not in PILOT_PROTOCOLS:
+        raise ValueError(f"unknown NeuronIO input protocol {name!r}")
+    high_excitation = "_ex_high_" in name
+    low_inhibition = "_inh_low_" in name
+    fast_temporal = "_time_fast_" in name
+    excitatory = (600.0, 800.0) if high_excitation else (0.0, 800.0)
+    inhibitory_difference = (
+        (-600.0, -300.0) if low_inhibition else (-600.0, 200.0)
+    )
+    return NeuronIOInputConfig(
+        basal_excitatory_per_100ms=excitatory,
+        basal_inhibitory_difference_per_100ms=inhibitory_difference,
+        apical_excitatory_per_100ms=excitatory,
+        apical_inhibitory_difference_per_100ms=inhibitory_difference,
+        rate_intervals_ms=(25, 30, 35, 40, 45)
+        if fast_temporal
+        else NeuronIOInputConfig.rate_intervals_ms,
+        smoothing_sigmas_ms=(25, 30, 35, 40, 50, 60)
+        if fast_temporal
+        else NeuronIOInputConfig.smoothing_sigmas_ms,
+    )
 
 
 @dataclass(frozen=True)
@@ -111,7 +159,8 @@ def sample_neuronio_actions(
     *,
     seed: int,
     config: NeuronIOInputConfig | None = None,
-) -> tuple[Dict[int, Tuple[InputAction, ...]], Dict[str, float]]:
+    protocol: str = CANONICAL_NEURONIO_PROTOCOL,
+) -> tuple[Dict[int, Tuple[InputAction, ...]], Dict[str, Any]]:
     """Sample ordered millisecond events using the published NMDA methodology.
 
     The distributional recipe is reproduced exactly; ``Generator`` is used
@@ -182,5 +231,6 @@ def sample_neuronio_actions(
         "excitatory_event_count": int(ex_spikes.sum()),
         "inhibitory_event_count": int(inh_spikes.sum()),
         "sampler": "NeuronIO_NMDA_distributional_reproduction_v1",
+        "protocol": str(protocol),
     }
     return actions, metadata

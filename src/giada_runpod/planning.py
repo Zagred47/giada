@@ -54,14 +54,44 @@ def _split_for(index: int, count: int, validation_fraction: float) -> str:
 def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
     config.validate()
     count = config.trajectory_count
-    validation_count = max(1, int(round(count * config.validation_trajectory_fraction)))
-    ranked = sorted(
-        range(count),
-        key=lambda index: hashlib.sha256(
-            f"giada-paper-split|{config.root_seed}|{index}".encode()
-        ).digest(),
-    )
-    validation = set(ranked[:validation_count])
+    protocols = tuple(config.input_protocols)
+    protocol_for = {index: protocols[index % len(protocols)] for index in range(count)}
+    if len(protocols) == 1:
+        # Preserve the original S0--S4 split identity exactly.
+        validation_count = max(
+            1, int(round(count * config.validation_trajectory_fraction))
+        )
+        ranked = sorted(
+            range(count),
+            key=lambda index: hashlib.sha256(
+                f"giada-paper-split|{config.root_seed}|{index}".encode()
+            ).digest(),
+        )
+        validation = set(ranked[:validation_count])
+    else:
+        # A support pilot is paired within every factorial cell.  This avoids
+        # repeating S1's mistake, where an aggregate random split happened to
+        # contain no active trajectory at all.
+        validation = set()
+        for protocol in protocols:
+            candidates = [
+                index for index in range(count) if protocol_for[index] == protocol
+            ]
+            validation_count = max(
+                1,
+                int(
+                    round(
+                        len(candidates) * config.validation_trajectory_fraction
+                    )
+                ),
+            )
+            ranked = sorted(
+                candidates,
+                key=lambda index: hashlib.sha256(
+                    f"giada-protocol-split|{config.root_seed}|{protocol}|{index}".encode()
+                ).digest(),
+            )
+            validation.update(ranked[:validation_count])
     trajectories = [
         TrajectoryPlan(
             trajectory_id=f"{config.stage}-neuronio-{index:06d}",
@@ -69,6 +99,7 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
             seed=config.root_seed + index,
             split="validation" if index in validation else "train",
             duration_ms=config.trajectory_duration_ms,
+            protocol=protocol_for[index],
         )
         for index in range(count)
     ]

@@ -38,6 +38,9 @@ class MatchedTrainingConfig:
     expected_input_width: int = 76
     expected_branch_elm_parameters: int = 8002
     expected_giada_parameters: int = 8985
+    minimum_train_active_transitions: int = 256
+    minimum_validation_active_transitions: int = 64
+    minimum_validation_somatic_upcrossings: int = 16
 
     def validate(self) -> None:
         if not self.seeds or self.training_steps <= 0 or self.batch_size <= 0:
@@ -50,6 +53,14 @@ class MatchedTrainingConfig:
             raise ValueError("invalid optimizer configuration")
         if self.voltage_scale_mv <= 0 or self.delta_limit_mv <= 0:
             raise ValueError("invalid voltage scaling")
+        if self.active_delta_threshold_mv != 5.0:
+            raise ValueError("paper-scale active support threshold is fixed at 5 mV")
+        if min(
+            self.minimum_train_active_transitions,
+            self.minimum_validation_active_transitions,
+            self.minimum_validation_somatic_upcrossings,
+        ) < 0:
+            raise ValueError("support minima cannot be negative")
 
     @classmethod
     def from_mapping(cls, values: Mapping[str, Any]) -> "MatchedTrainingConfig":
@@ -257,6 +268,42 @@ class PaperScaleMatchedTrainer:
             raise RuntimeError("paper-scale training requires PyTorch") from error
         config.validate()
         self.torch = torch
+        from .corpus_audit import audit_soma_corpus
+
+        self.support_preflight = audit_soma_corpus(corpus_root)
+        train_support = self.support_preflight["splits"].get("train", {})
+        validation_support = self.support_preflight["splits"].get(
+            "validation", {}
+        )
+        blockers = []
+        checks = (
+            (
+                "train |delta V| >= 5 mV",
+                train_support.get("absolute_delta_ge_5mv_count", 0),
+                config.minimum_train_active_transitions,
+            ),
+            (
+                "validation |delta V| >= 5 mV",
+                validation_support.get("absolute_delta_ge_5mv_count", 0),
+                config.minimum_validation_active_transitions,
+            ),
+            (
+                "validation somatic -55 mV upcrossings",
+                validation_support.get("somatic_upcrossings_minus55mv", 0),
+                config.minimum_validation_somatic_upcrossings,
+            ),
+        )
+        for label, observed, required in checks:
+            if int(observed) < int(required):
+                blockers.append(
+                    f"{label}: observed {int(observed)}, require {int(required)}"
+                )
+        self.support_preflight["training_support_blockers"] = blockers
+        if blockers:
+            raise RuntimeError(
+                "matched training blocked before GPU use because corpus support "
+                "is insufficient: " + "; ".join(blockers)
+            )
         self.corpus = LeanSomaCorpus(corpus_root)
         self.output_dir = Path(output_dir)
         if self.output_dir.exists():
@@ -307,7 +354,7 @@ class PaperScaleMatchedTrainer:
             raise RuntimeError(f"matched parameter contract changed: {counts} != {expected}")
         return {name: model.to(self.device) for name, model in models.items()}
 
-    def _evaluate(self, model: Any) -> Dict[str, float]:
+    def _evaluate(self, model: Any) -> Dict[str, Any]:
         squared = 0.0
         persistence_squared = 0.0
         active_squared = 0.0
@@ -332,7 +379,10 @@ class PaperScaleMatchedTrainer:
             "soma_rmse_mv": rmse,
             "persistence_soma_rmse_mv": persistence,
             "improvement_vs_persistence_fraction": 1.0 - rmse / max(persistence, 1e-12),
-            "active_soma_rmse_mv": math.sqrt(active_squared / active_count) if active_count else 0.0,
+            # An empty stratum is unsupported, never a perfect zero-error score.
+            "active_soma_rmse_mv": (
+                math.sqrt(active_squared / active_count) if active_count else None
+            ),
             "active_count": active_count,
             "example_count": count,
         }
@@ -397,6 +447,7 @@ class PaperScaleMatchedTrainer:
             "train_transition_count": self.corpus.train_count,
             "validation_transition_count": self.corpus.validation_count,
             "configuration": asdict(self.config),
+            "corpus_support_preflight": self.support_preflight,
             "mini_scaling_law_runs": runs,
             "final_median_soma_rmse_mv": medians,
             "giada_relative_rmse_reduction_vs_branch_elm": 1.0 - medians["giada_voltage_bridge"] / medians["branch_elm_core"],

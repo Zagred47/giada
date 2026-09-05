@@ -16,3 +16,8 @@ giada_matched_training:
   expected_input_width: 76
   expected_branch_elm_parameters: 8002
   expected_giada_parameters: 8985
+  # Hard preflight gates.  The GPU run must not start if an active evaluation
+  # stratum is absent, as happened in the frozen S1 corpus.
+  minimum_train_active_transitions: 256
+  minimum_validation_active_transitions: 64
+  minimum_validation_somatic_upcrossings: 16

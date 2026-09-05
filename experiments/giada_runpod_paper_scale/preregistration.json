@@ -1,7 +1,7 @@
 {
   "schema_version": "giada-runpod-paper-scale-preregistration-v1",
   "project": "GIADA",
-  "status": "s1_data_validated_gpu_training_pending",
+  "status": "s1_subthreshold_result_recorded_s1b_support_pilot_pending",
   "scientific_question": "Does GIADA's paired one-step soma RMSE advantage over the 8,002-parameter Branch-ELM core survive increasing authentic teacher time?",
   "historical_small_support_result": {
     "branch_elm_median_soma_rmse_mv": 14.823964911891716,
@@ -60,6 +60,29 @@
     "validated_transition_count": 600000,
     "validated_shard_count": 100,
     "blocker_count": 0,
-    "gpu_training_started": false
+    "gpu_training_started": true,
+    "distribution_audit_record": "s1_distribution_audit_result.json",
+    "matched_training_record": "s1_matched_training_result.json",
+    "scientific_scope": "subthreshold one-step validation only",
+    "active_validation_transition_count": 0,
+    "s2_authorized": false
+  },
+  "support_amendment": {
+    "reason": "The original integrity validation omitted a per-split dynamical-support gate. S1 validation contained no |delta V| >= 1 mV transition and no somatic spike.",
+    "s1_immutability": "S1 data, seeds, split and completed result remain frozen; no post-hoc replacement is allowed.",
+    "next_experiment": "s1b_event_support_pilot",
+    "pilot_role": "development-only input-support diagnosis, never a final held-out test",
+    "factorial_axes": [
+      "full versus upper-range excitation",
+      "full versus excitation-favouring inhibitory balance",
+      "broad versus fast temporal bandwidth"
+    ],
+    "methodological_invariants": [
+      "all conditioned rates remain inside the original NeuronIO support",
+      "canonical teacher, morphology, synaptic locations and weights remain unchanged",
+      "authentic probabilistic release remains unchanged",
+      "one discovery and one independent confirmation trajectory per factorial cell",
+      "a fresh event-support corpus will be preregistered only after the pilot"
+    ]
   }
 }

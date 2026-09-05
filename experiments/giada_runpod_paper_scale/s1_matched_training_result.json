@@ -1,0 +1,50 @@
+{
+  "schema_version": "giada-runpod-s1-matched-training-result-v1",
+  "project": "GIADA",
+  "stage": "s1",
+  "recorded_at": "2026-09-05",
+  "source_corpus": "/workspace/giada-data/s1-v2",
+  "comparison": {
+    "same_numeric_input": true,
+    "same_target": "authentic_NEURON_one_ms_soma_voltage_transition",
+    "same_sample_order": true,
+    "same_optimizer_and_loss": true,
+    "branch_elm_trainable_parameters": 8002,
+    "giada_trainable_parameters": 8985,
+    "rollout_claimed": false
+  },
+  "final_step": 3000,
+  "per_seed_soma_rmse_mv": {
+    "61017": {
+      "branch_elm_core": 1.119536,
+      "giada_voltage_bridge": 0.195364,
+      "giada_reduction_fraction": 0.8255
+    },
+    "61029": {
+      "branch_elm_core": 0.4254455810462094,
+      "giada_voltage_bridge": 0.24621240957757304,
+      "giada_reduction_fraction": 0.421283424845748
+    },
+    "61043": {
+      "branch_elm_core": 0.235154,
+      "giada_voltage_bridge": 0.277971,
+      "giada_reduction_fraction": -0.1821
+    }
+  },
+  "median_soma_rmse_mv": {
+    "branch_elm_core": 0.4254455810462094,
+    "giada_voltage_bridge": 0.24621240957757304
+  },
+  "median_giada_reduction_fraction": 0.421283424845748,
+  "seed_win_count": {
+    "giada": 2,
+    "branch_elm": 1
+  },
+  "decision": {
+    "numerically_valid": true,
+    "robust_three_seed_win": false,
+    "scope_after_distribution_audit": "subthreshold_validation_only",
+    "active_or_spiking_claim_supported": false,
+    "s2_authorized": false
+  }
+}

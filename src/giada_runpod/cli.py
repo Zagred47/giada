@@ -37,9 +37,12 @@ def command_plan(args: argparse.Namespace) -> None:
     destination = Path(args.output) / "plan.json"
     write_shard_plan(destination, config, shards)
     split_counts: Dict[str, int] = {}
+    protocol_split_counts: Dict[str, Dict[str, int]] = {}
     for shard in shards:
         for row in shard.trajectories:
             split_counts[row.split] = split_counts.get(row.split, 0) + 1
+            by_split = protocol_split_counts.setdefault(row.protocol, {})
+            by_split[row.split] = by_split.get(row.split, 0) + 1
     report = {
         "schema_version": "giada-runpod-run-manifest-v1",
         "project": "GIADA",
@@ -50,6 +53,7 @@ def command_plan(args: argparse.Namespace) -> None:
         "trajectory_count": config.trajectory_count,
         "transition_count": config.target_transitions,
         "trajectory_split_counts": split_counts,
+        "protocol_split_counts": protocol_split_counts,
         "architecture_experiments_modified": False,
     }
     _write_json(Path(args.output) / "run_manifest.json", report)
@@ -211,7 +215,9 @@ def command_audit_corpus(args: argparse.Namespace) -> None:
                 flush=True,
             )
 
-    report = audit_soma_corpus(Path(args.corpus), progress=progress)
+    report = audit_soma_corpus(
+        Path(args.corpus), plan_path=args.plan, progress=progress
+    )
     destination = Path(args.output)
     _write_json(destination, report)
     print(json.dumps(report, indent=2), flush=True)
@@ -268,6 +274,7 @@ def parser() -> argparse.ArgumentParser:
         "audit-corpus", help="summarize voltage-target support in every soma shard"
     )
     audit.add_argument("--corpus", required=True, type=Path)
+    audit.add_argument("--plan", type=Path)
     audit.add_argument("--output", required=True, type=Path)
     audit.set_defaults(func=command_audit_corpus)
     train = sub.add_parser("train", help="run the paired GPU comparison on validated shards")

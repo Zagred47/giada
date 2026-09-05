@@ -1,0 +1,25 @@
+giada_runpod_scale:
+  stage: s1b_pilot
+  target_transitions: 96000
+  trajectory_duration_ms: 6000
+  trajectories_per_shard: 1
+  storage_profile: soma_paper
+  sampled_segments_per_transition: 1
+  root_seed: 9150001
+  validation_trajectory_fraction: 0.5
+  compression: lzf
+  chunk_transitions: 256
+  progress_interval_s: 30
+  purpose: input_support_pilot
+  # 2x2x2 factorial over conditional slices of the original NeuronIO support:
+  # excitation range x inhibitory balance x temporal bandwidth.  There is one
+  # discovery and one independent confirmation trajectory in every cell.
+  input_protocols:
+    - neuronio_nmda_pilot_ex_full_inh_full_time_broad_v1
+    - neuronio_nmda_pilot_ex_high_inh_full_time_broad_v1
+    - neuronio_nmda_pilot_ex_full_inh_low_time_broad_v1
+    - neuronio_nmda_pilot_ex_high_inh_low_time_broad_v1
+    - neuronio_nmda_pilot_ex_full_inh_full_time_fast_v1
+    - neuronio_nmda_pilot_ex_high_inh_full_time_fast_v1
+    - neuronio_nmda_pilot_ex_full_inh_low_time_fast_v1
+    - neuronio_nmda_pilot_ex_high_inh_low_time_fast_v1

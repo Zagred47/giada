@@ -12,6 +12,47 @@ import numpy as np
 ProgressCallback = Callable[[int, int], None]
 
 
+def _empty_state() -> Dict[str, Any]:
+    return {
+        "delta": [],
+        "voltage_t": [],
+        "voltage_t1": [],
+        "scheduled": 0,
+        "realized": 0,
+    }
+
+
+def _append_state(
+    state: Dict[str, Any],
+    voltage_t: np.ndarray,
+    voltage_t1: np.ndarray,
+    scheduled: np.ndarray,
+    realized: np.ndarray,
+    mask: np.ndarray,
+) -> None:
+    if not np.any(mask):
+        return
+    state["delta"].append(voltage_t1[mask] - voltage_t[mask])
+    state["voltage_t"].append(voltage_t[mask])
+    state["voltage_t1"].append(voltage_t1[mask])
+    state["scheduled"] += int(scheduled[mask].sum())
+    state["realized"] += int(realized[mask].sum())
+
+
+def _plan_lookup(plan_path: Path | None) -> Dict[int, Dict[str, Any]]:
+    if plan_path is None:
+        return {}
+    payload = json.loads(Path(plan_path).read_text(encoding="utf-8"))
+    result: Dict[int, Dict[str, Any]] = {}
+    for shard in payload["shards"]:
+        for row in shard["trajectories"]:
+            result[int(row["trajectory_index"])] = {
+                "protocol": str(row.get("protocol", "neuronio_nmda_ergodic_v1")),
+                "split": str(row["split"]),
+            }
+    return result
+
+
 def _split_summary(state: Dict[str, Any]) -> Dict[str, Any]:
     delta = np.concatenate(state["delta"])
     voltage_t = np.concatenate(state["voltage_t"])
@@ -43,6 +84,7 @@ def _split_summary(state: Dict[str, Any]) -> Dict[str, Any]:
 def audit_soma_corpus(
     corpus_root: Path,
     *,
+    plan_path: Path | None = None,
     progress: ProgressCallback | None = None,
 ) -> Dict[str, Any]:
     """Read every shard and summarize target/activity support without mutation."""
@@ -56,16 +98,10 @@ def audit_soma_corpus(
     paths = sorted((root / "shards").glob("shard-*.h5"))
     if not paths:
         raise FileNotFoundError(f"no soma shards under {root}")
-    states: Dict[int, Dict[str, Any]] = {
-        code: {
-            "delta": [],
-            "voltage_t": [],
-            "voltage_t1": [],
-            "scheduled": 0,
-            "realized": 0,
-        }
-        for code in (0, 1)
-    }
+    states: Dict[int, Dict[str, Any]] = {code: _empty_state() for code in (0, 1)}
+    plan = _plan_lookup(plan_path)
+    protocol_states: Dict[str, Dict[int, Dict[str, Any]]] = {}
+    blockers = []
     for index, path in enumerate(paths, 1):
         with h5py.File(path, "r") as handle:
             split = np.asarray(handle["split_code"][:], dtype=np.uint8)
@@ -75,32 +111,64 @@ def audit_soma_corpus(
             )
             scheduled = np.asarray(handle["scheduled_event_count"][:])
             realized = np.asarray(handle["realized_event_count"][:])
+            trajectory = np.asarray(handle["trajectory_index"][:], dtype=np.int64)
             for code in (0, 1):
                 mask = split == code
-                if not np.any(mask):
-                    continue
-                state = states[code]
-                state["delta"].append(voltage_t1[mask] - voltage_t[mask])
-                state["voltage_t"].append(voltage_t[mask])
-                state["voltage_t1"].append(voltage_t1[mask])
-                state["scheduled"] += int(scheduled[mask].sum())
-                state["realized"] += int(realized[mask].sum())
+                _append_state(
+                    states[code], voltage_t, voltage_t1, scheduled, realized, mask
+                )
+            if plan:
+                for trajectory_index in np.unique(trajectory):
+                    planned = plan.get(int(trajectory_index))
+                    if planned is None:
+                        blockers.append(
+                            f"trajectory {int(trajectory_index)} is absent from plan"
+                        )
+                        continue
+                    expected_code = 1 if planned["split"] == "validation" else 0
+                    row_mask = trajectory == trajectory_index
+                    if np.any(split[row_mask] != expected_code):
+                        blockers.append(
+                            f"trajectory {int(trajectory_index)} split disagrees with plan"
+                        )
+                    by_split = protocol_states.setdefault(
+                        planned["protocol"],
+                        {code: _empty_state() for code in (0, 1)},
+                    )
+                    _append_state(
+                        by_split[expected_code],
+                        voltage_t,
+                        voltage_t1,
+                        scheduled,
+                        realized,
+                        row_mask,
+                    )
         if progress is not None:
             progress(index, len(paths))
 
     missing = [code for code, state in states.items() if not state["delta"]]
     report = {
         "schema_version": "giada-runpod-soma-corpus-audit-v1",
-        "valid": not missing,
+        "valid": not missing and not blockers,
         "corpus_root": str(root.resolve()),
         "shard_count": len(paths),
         "missing_split_codes": missing,
+        "blockers": sorted(set(blockers)),
         "splits": {
             name: _split_summary(states[code])
             for code, name in ((0, "train"), (1, "validation"))
             if states[code]["delta"]
         },
     }
+    if protocol_states:
+        report["protocol_splits"] = {
+            protocol: {
+                name: _split_summary(by_split[code])
+                for code, name in ((0, "train"), (1, "validation"))
+                if by_split[code]["delta"]
+            }
+            for protocol, by_split in sorted(protocol_states.items())
+        }
     validation_path = root / "validation_report.json"
     if validation_path.is_file():
         validation = json.loads(validation_path.read_text(encoding="utf-8"))

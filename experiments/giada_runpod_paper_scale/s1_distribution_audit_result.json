@@ -1,0 +1,47 @@
+{
+  "schema_version": "giada-runpod-s1-distribution-audit-result-v1",
+  "project": "GIADA",
+  "stage": "s1",
+  "recorded_at": "2026-09-05",
+  "source_corpus": "/workspace/giada-data/s1-v2",
+  "source_audit_schema": "giada-runpod-soma-corpus-audit-v1",
+  "valid": true,
+  "train": {
+    "transition_count": 582000,
+    "absolute_delta_ge_1mv_count": 799,
+    "absolute_delta_ge_2mv_count": 503,
+    "absolute_delta_ge_5mv_count": 405,
+    "absolute_delta_ge_5mv_fraction": 0.0006958762886597938,
+    "somatic_upcrossings_minus55mv": 142,
+    "maximum_absolute_delta_mv": 89.30723190307617,
+    "voltage_minimum_mv": -81.11680603027344,
+    "voltage_maximum_mv": 32.45378875732422,
+    "scheduled_event_count": 8054314,
+    "realized_event_count": 5093235
+  },
+  "validation": {
+    "transition_count": 18000,
+    "absolute_delta_ge_1mv_count": 0,
+    "absolute_delta_ge_2mv_count": 0,
+    "absolute_delta_ge_5mv_count": 0,
+    "somatic_upcrossings_minus55mv": 0,
+    "maximum_absolute_delta_mv": 0.9860153198242188,
+    "voltage_minimum_mv": -81.11651611328125,
+    "voltage_maximum_mv": -62.55513381958008,
+    "scheduled_event_count": 252633,
+    "realized_event_count": 159672
+  },
+  "decision": {
+    "integrity_status": "valid",
+    "distribution_status": "validation_has_no_active_or_spiking_support",
+    "matched_result_scope": "authentic_one_step_subthreshold_only",
+    "s2_authorized": false,
+    "s1_rewritten": false,
+    "next_step": "paired_factorial_s1b_input_support_pilot_with_fresh_seeds"
+  },
+  "reporting_correction": {
+    "empty_active_rmse_previous_value": 0.0,
+    "correct_semantics": null,
+    "meaning": "unsupported because active_count is zero, not perfect error"
+  }
+}

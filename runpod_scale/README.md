@@ -45,6 +45,23 @@ Advancement is sequential: benchmark first, then S1; proceed to S2/S3/S4 only
 if the paired advantage and data integrity survive the previous stage. This is
 a scaling law, not a single all-or-nothing 64-hour generation.
 
+### S1 distribution audit and corrective pilot
+
+S1 passed byte-level and schema validation, but the mandatory post-generation
+distribution audit found that its three validation trajectories were entirely
+subthreshold: zero transitions had `|delta V| >= 1 mV` and there were zero
+somatic `-55 mV` upcrossings.  The paired S1 result therefore remains an
+authentic subthreshold one-step comparison, but it cannot support an active or
+spiking claim and does not authorize S2.
+
+S1 is frozen rather than repaired post hoc.  Before any further scaling,
+`s1b_event_support_pilot.yml` runs a development-only 2x2x2 factorial pilot
+over excitation range, inhibitory balance and temporal bandwidth.  Every arm
+is a conditional slice inside the published NeuronIO ranges; morphology,
+weights, mechanisms and authentic probabilistic release are unchanged.  Each
+cell has one discovery and one independent confirmation trajectory.  The
+pilot identifies a support-generating protocol; it is not a final paper test.
+
 The measured S1 execution configuration is eight independent CPU workers. S1
 uses one 6,000-ms trajectory per shard (100 shards total), so modulo assignment
 gives each worker 12 or 13 trajectories. This replaces the earlier four-
@@ -198,6 +215,30 @@ the GPU phase starts after CPU writers have stopped. Critical results should
 also be copied to external object storage because RunPod does not position Pod
 storage as long-term archival storage.
 
+Integrity validation must now always be followed by a target-distribution
+audit.  The audit prints bounded progress and records split- and protocol-level
+support:
+
+```bash
+"$GIADA_PYTHON" -m src.giada_runpod.cli audit-corpus \
+  --corpus "$GIADA_OUTPUT_ROOT" \
+  --plan "$GIADA_OUTPUT_ROOT/plan.json" \
+  --output "$GIADA_OUTPUT_ROOT/distribution_audit.json"
+```
+
+Do not start GPU training unless the registered active-transition and somatic
+upcrossing minima pass.  Empty strata are reported as unsupported (`null`),
+never as a zero-error metric.
+
+The corrective pilot uses a fresh output root and fresh seeds:
+
+```bash
+export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1b-event-support-pilot-v1
+"$GIADA_PYTHON" -m src.giada_runpod.cli plan \
+  --config runpod_scale/configs/s1b_event_support_pilot.yml \
+  --output "$GIADA_OUTPUT_ROOT"
+```
+
 ## GPU phase
 
 Stop the CPU Pod, create a GPU Pod in the network-volume region, and attach the
@@ -215,7 +256,7 @@ python -c "import numpy, torch; assert numpy.__version__.split('.')[0] == '1'; a
 
 python -m src.giada_runpod.cli train \
   --config runpod_scale/configs/matched_training.yml \
-  --corpus /workspace/giada-data/s1 \
+  --corpus /workspace/giada-data/s1-v2 \
   --output /workspace/giada-results/s1-matched \
   --elm-repo /workspace/giada
 ```

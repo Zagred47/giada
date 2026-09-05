@@ -10,6 +10,10 @@ from typing import Any, Dict, Mapping
 STAGE_TRANSITIONS = {
     "s0": 29_880,
     "s1": 600_000,
+    # Exploratory input-support pilot only.  Its validation split is a
+    # development confirmation split and must never be reported as a final
+    # paper test.
+    "s1b_pilot": 96_000,
     "s2": 3_600_000,
     "s3": 28_800_000,
     "s4": 230_400_000,
@@ -36,6 +40,8 @@ class ScaleConfig:
     compression: str = "lzf"
     chunk_transitions: int = 256
     progress_interval_s: float = 30.0
+    purpose: str = "paper_scale_confirmation"
+    input_protocols: tuple[str, ...] = ("neuronio_nmda_ergodic_v1",)
 
     def validate(self) -> None:
         if self.stage not in STAGE_TRANSITIONS:
@@ -62,7 +68,31 @@ class ScaleConfig:
                 "spatial_probe is deliberately capped at s2; use soma_paper for s3/s4"
             )
         if not 0.0 < self.validation_trajectory_fraction < 0.5:
-            raise ValueError("validation fraction must lie in (0, 0.5)")
+            if not (
+                self.purpose == "input_support_pilot"
+                and self.validation_trajectory_fraction == 0.5
+            ):
+                raise ValueError(
+                    "validation fraction must lie in (0, 0.5), except for a "
+                    "paired input-support pilot"
+                )
+        if self.purpose not in {
+            "paper_scale_confirmation",
+            "input_support_pilot",
+        }:
+            raise ValueError("unknown generation purpose")
+        if not self.input_protocols or len(set(self.input_protocols)) != len(
+            self.input_protocols
+        ):
+            raise ValueError("input protocols must be non-empty and unique")
+        if self.purpose == "input_support_pilot":
+            if self.stage != "s1b_pilot":
+                raise ValueError("input-support pilot requires stage s1b_pilot")
+            if self.trajectory_count % (2 * len(self.input_protocols)):
+                raise ValueError(
+                    "input-support pilot requires paired discovery/confirmation "
+                    "replicates for every protocol"
+                )
         if self.compression not in {"lzf", "gzip", "none"}:
             raise ValueError("compression must be lzf, gzip, or none")
         if self.chunk_transitions <= 0 or self.progress_interval_s <= 0:
@@ -87,6 +117,8 @@ class ScaleConfig:
         if "stage" not in payload:
             raise ValueError("scale config requires stage")
         payload.setdefault("target_transitions", STAGE_TRANSITIONS[str(payload["stage"])])
+        if "input_protocols" in payload:
+            payload["input_protocols"] = tuple(map(str, payload["input_protocols"]))
         result = cls(**payload)
         result.validate()
         return result
