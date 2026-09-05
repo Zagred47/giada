@@ -1,0 +1,102 @@
+{
+  "schema_version": "giada-runpod-s1b-support-pilot-result-v1",
+  "project": "GIADA",
+  "date": "2026-09-05",
+  "code_revision": "2e8dd01",
+  "experiment": "s1b_event_support_pilot_v2",
+  "role": "development_only_input_support_diagnosis",
+  "selection_eligible_for_final_claims": false,
+  "validation": {
+    "valid": true,
+    "blockers": [],
+    "shard_count": 16,
+    "transition_count": 96000,
+    "train_transition_count": 48000,
+    "validation_transition_count": 48000
+  },
+  "aggregate_support": {
+    "train": {
+      "absolute_delta_ge_1mv_count": 416,
+      "absolute_delta_ge_2mv_count": 262,
+      "absolute_delta_ge_5mv_count": 212,
+      "somatic_upcrossings_minus55mv": 77,
+      "voltage_maximum_mv": 32.12456512451172,
+      "maximum_absolute_delta_mv": 88.74676132202148
+    },
+    "validation": {
+      "absolute_delta_ge_1mv_count": 394,
+      "absolute_delta_ge_2mv_count": 266,
+      "absolute_delta_ge_5mv_count": 225,
+      "somatic_upcrossings_minus55mv": 78,
+      "voltage_maximum_mv": 31.537105560302734,
+      "maximum_absolute_delta_mv": 88.32287979125977
+    }
+  },
+  "protocol_support": {
+    "full_excitation_full_inhibition_broad": {
+      "train_ge_5mv": 0,
+      "validation_ge_5mv": 0,
+      "train_upcrossings": 0,
+      "validation_upcrossings": 0
+    },
+    "full_excitation_full_inhibition_fast": {
+      "train_ge_5mv": 15,
+      "validation_ge_5mv": 0,
+      "train_upcrossings": 5,
+      "validation_upcrossings": 0
+    },
+    "full_excitation_low_inhibition_broad": {
+      "train_ge_5mv": 6,
+      "validation_ge_5mv": 27,
+      "train_upcrossings": 3,
+      "validation_upcrossings": 11
+    },
+    "full_excitation_low_inhibition_fast": {
+      "train_ge_5mv": 0,
+      "validation_ge_5mv": 0,
+      "train_upcrossings": 0,
+      "validation_upcrossings": 0
+    },
+    "high_excitation_full_inhibition_broad": {
+      "train_ge_5mv": 2,
+      "validation_ge_5mv": 73,
+      "train_upcrossings": 1,
+      "validation_upcrossings": 26
+    },
+    "high_excitation_full_inhibition_fast": {
+      "train_ge_5mv": 28,
+      "validation_ge_5mv": 18,
+      "train_upcrossings": 9,
+      "validation_upcrossings": 6
+    },
+    "high_excitation_low_inhibition_broad": {
+      "train_ge_5mv": 52,
+      "validation_ge_5mv": 45,
+      "train_upcrossings": 18,
+      "validation_upcrossings": 15
+    },
+    "high_excitation_low_inhibition_fast": {
+      "train_ge_5mv": 109,
+      "validation_ge_5mv": 62,
+      "train_upcrossings": 41,
+      "validation_upcrossings": 20
+    }
+  },
+  "interpretation": {
+    "primary_supported_regime": "high_excitation_low_inhibition_fast",
+    "secondary_supported_regime": "high_excitation_low_inhibition_broad",
+    "primary_finding": "High excitation and low inhibition jointly recover strong active soma support under both temporal regimes; fast temporal structure further increases event density in the strongest cell.",
+    "interaction_warning": "Several single-factor cells were asymmetric across the two trajectories, so one trajectory per split is insufficient for a stable quantitative factorial effect estimate.",
+    "negative_control": "The canonical full-excitation/full-inhibition/broad cell remained subthreshold in both independent trajectories.",
+    "next_step": "Use new seeds to generate a preregistered event-support corpus containing canonical subthreshold coverage plus both robust high-excitation/low-inhibition regimes; do not train on S1b."
+  },
+  "invariants": {
+    "teacher_unchanged": true,
+    "synaptic_weights_unchanged": true,
+    "synaptic_locations_unchanged": true,
+    "probabilistic_release_unchanged": true,
+    "architecture_experiments_modified": false,
+    "pilot_used_for_training": false,
+    "pilot_used_as_final_validation": false
+  }
+}
