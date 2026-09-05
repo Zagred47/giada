@@ -1,2 +1,7 @@
 -r requirements-cpu.txt
-torch>=2.4,<3
+# The official RunPod image supplies torch 2.4.0+cu124.  Keep that ABI instead
+# of silently upgrading the CUDA runtime.  PyTorch 2.4 wheels are not reliably
+# compatible with NumPy 2.x, while the paper-scale loader needs tensor/NumPy
+# round-trips during every validation checkpoint.
+numpy>=1.26,<2
+torch>=2.4,<2.5

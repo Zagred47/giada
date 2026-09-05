@@ -210,6 +210,9 @@ git fetch origin runpod/paper-scale-data
 git checkout --detach origin/runpod/paper-scale-data
 python -m pip install -r runpod_scale/requirements-gpu.txt
 
+# Confirm that the template's CUDA build was preserved and NumPy is ABI-safe.
+python -c "import numpy, torch; assert numpy.__version__.split('.')[0] == '1'; assert torch.cuda.is_available(); print({'torch': torch.__version__, 'numpy': numpy.__version__, 'gpu': torch.cuda.get_device_name(0)})"
+
 python -m src.giada_runpod.cli train \
   --config runpod_scale/configs/matched_training.yml \
   --corpus /workspace/giada-data/s1 \
