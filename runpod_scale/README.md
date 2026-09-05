@@ -45,6 +45,14 @@ Advancement is sequential: benchmark first, then S1; proceed to S2/S3/S4 only
 if the paired advantage and data integrity survive the previous stage. This is
 a scaling law, not a single all-or-nothing 64-hour generation.
 
+The measured S1 execution configuration is eight independent CPU workers. S1
+uses one 6,000-ms trajectory per shard (100 shards total), so modulo assignment
+gives each worker 12 or 13 trajectories. This replaces the earlier four-
+trajectory shard layout, which would have assigned four shards to one worker
+and three to the others and introduced a 33% static load imbalance. The change
+affects only scheduling and restart granularity; seeds, trajectories, splits,
+teacher dynamics, stored fields, and the scientific comparison are unchanged.
+
 ## Storage and interruption contract
 
 Each CPU process owns an independent NEURON interpreter. Threads must not
@@ -111,7 +119,7 @@ contracts still depend on completed shard markers stored under `/workspace`.
 Create S1's immutable plan:
 
 ```bash
-export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1
+export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1-v2
 mkdir -p "$GIADA_OUTPUT_ROOT"
 cd "$GIADA_ROOT"
 "$GIADA_PYTHON" -m src.giada_runpod.cli plan \
@@ -161,7 +169,7 @@ restores the live view, while `tail -n 50 <log>` resynchronizes recent history.
 Launch the selected workers in a disconnect-safe shell:
 
 ```bash
-export GIADA_WORKER_COUNT=4  # replace with the benchmarked safe value
+export GIADA_WORKER_COUNT=8  # selected by the recorded 1/4/8-worker benchmark
 mkdir -p "$GIADA_OUTPUT_ROOT/logs"
 nohup bash "$GIADA_ROOT/runpod_scale/scripts/launch_cpu_workers.sh" \
   >"$GIADA_OUTPUT_ROOT/logs/supervisor.log" 2>&1 &

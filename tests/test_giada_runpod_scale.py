@@ -13,8 +13,14 @@ from src.giada_runpod import teacher as teacher_module
 
 
 def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
-    config = ScaleConfig(stage="s1", target_transitions=600_000)
+    config = ScaleConfig(
+        stage="s1",
+        target_transitions=600_000,
+        trajectories_per_shard=1,
+    )
     shards = build_shard_plan(config)
+    assert len(shards) == 100
+    assert all(len(shard.trajectories) == 1 for shard in shards)
     assert sum(row.expected_transition_count for row in shards) == 600_000
     trajectories = [trajectory for shard in shards for trajectory in shard.trajectories]
     assert len(trajectories) == 100

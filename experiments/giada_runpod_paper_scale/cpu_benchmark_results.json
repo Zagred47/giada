@@ -1,0 +1,76 @@
+{
+  "schema_version": "giada-runpod-cpu-benchmark-decision-v1",
+  "project": "GIADA",
+  "recorded_at": "2026-09-05",
+  "hardware": {
+    "provider": "RunPod",
+    "cpu_profile": "5 GHz compute-optimized",
+    "vcpu_count": 8,
+    "ram_gib": 16,
+    "network_volume_gib": 100
+  },
+  "software": {
+    "neuron": "8.2.7",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "h5py": "3.16.0",
+    "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29"
+  },
+  "single_worker": {
+    "duration_ms": 6000,
+    "transition_count": 6000,
+    "elapsed_seconds": 87.09577818214893,
+    "transitions_per_second": 68.8896756259176,
+    "causal_release_outcome_count": 89234,
+    "hdf5_size_bytes": 1377361,
+    "hdf5_sha256": "6434f8029f0427441acb4db323a2ed9128143ac7db0918e3dd7b748fb8240a07",
+    "projected_s1_wall_hours": 2.4193272090827427,
+    "projected_s1_storage_gib": 0.128276739269495
+  },
+  "four_workers": {
+    "duration_ms_per_worker": 3000,
+    "completed_worker_count": 4,
+    "failure_count": 0,
+    "aggregate_steady_state_transitions_per_second": 218.293,
+    "steady_state_speedup_over_single_worker": 3.16873316671379,
+    "parallel_efficiency_fraction": 0.792183291678449,
+    "projected_s1_wall_minutes": 45.8099893262725,
+    "maximum_worker_peak_rss_mib": 338.8,
+    "sum_worker_peak_rss_mib": 1351.921875
+  },
+  "eight_workers": {
+    "duration_ms_per_worker": 3000,
+    "completed_worker_count": 8,
+    "failure_count": 0,
+    "cold_start_probe_wall_seconds": 135.61687755584717,
+    "cold_start_probe_transitions_per_second": 176.96912384755927,
+    "worker_generation_rates": [
+      38.40740577186378,
+      39.02468501337672,
+      38.953180286386335,
+      39.27688412468807,
+      37.394196399846955,
+      39.20515550991555,
+      38.14034001983402,
+      39.02653793529163
+    ],
+    "aggregate_steady_state_transitions_per_second": 309.428385061203,
+    "steady_state_speedup_over_single_worker": 4.4916510674466,
+    "parallel_efficiency_fraction": 0.5614563834308254,
+    "ideal_balanced_projected_s1_wall_minutes": 32.31765566052404,
+    "maximum_worker_peak_rss_mib": 336.859375,
+    "sum_worker_peak_rss_mib": 2676.54296875
+  },
+  "decision": {
+    "selected_worker_count": 8,
+    "reason": "Eight workers maximize measured aggregate steady-state throughput on the already rented fixed-price pod; memory usage remains far below 16 GiB.",
+    "s1_trajectories_per_shard": 1,
+    "s1_shard_count": 100,
+    "assignment": "shard_index modulo 8",
+    "maximum_trajectories_per_worker": 13,
+    "minimum_trajectories_per_worker": 12,
+    "estimated_s1_wall_minutes": "approximately 34--36 plus validation",
+    "data_generation_started_before_decision": false,
+    "scientific_contract_changed": false
+  }
+}
