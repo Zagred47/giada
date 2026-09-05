@@ -14,7 +14,11 @@ import numpy as np
 
 from src.hayflow_data import BurnInCriteria, build_input_views
 from src.hayflow_model.rollout_aware_architecture_canary import CAUSAL_DRIVE_FEATURES
-from src.hayflow_teacher import TargetedDiagnosticDatasetSession
+from src.hayflow_teacher import (
+    DiagnosticDatasetSession,
+    TargetedDiagnosticDatasetSession,
+    expected_audit_hashes,
+)
 from src.hayflow_teacher.audit import git_commit
 
 from .config import ScaleConfig
@@ -32,6 +36,44 @@ CANONICAL_ION_COUNT = 6
 CANONICAL_MATCHED_REGION_COUNT = 11
 
 
+class RunPodCausalTeacherSession(DiagnosticDatasetSession):
+    """Minimal teacher session with the validated causal release driver.
+
+    The paper-scale NeuronIO generator does not consume the calibrated
+    dendritic protocol catalog.  Inheriting the v1/v1.1 dataset session would
+    therefore introduce two irrelevant artifact dependencies.  This session
+    retains the audited base teacher and delegates only the already-validated
+    causal one-millisecond driver from v1.1.
+    """
+
+    def __init__(
+        self,
+        elm_repo: Path,
+        teacher_repo: Path,
+        *,
+        output_dir: Path,
+        seed: int,
+    ) -> None:
+        super().__init__(
+            elm_repo,
+            teacher_repo,
+            output_dir=output_dir,
+            seed=seed,
+            expected_teacher_hashes=expected_audit_hashes(),
+        )
+        self.active_random123_seed = int(seed)
+        self._active_transition_id = -1
+        self._last_release_outcomes: List[Any] = []
+        self._last_release_verification: Dict[str, Any] = {}
+
+    def _configure_rngs(self, seed: int, sequences: Sequence[float]) -> None:
+        super()._configure_rngs(seed, sequences)
+        self.active_random123_seed = int(seed)
+
+    def _drive_one_ms(self, *args: Any, **kwargs: Any) -> Any:
+        return TargetedDiagnosticDatasetSession._drive_one_ms(self, *args, **kwargs)
+
+
 def _atomic_json(path: Path, payload: Mapping[str, Any]) -> None:
     destination = Path(path)
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -47,7 +89,7 @@ def _release_seed(seed: int) -> int:
 class BoundaryProjector:
     """Read only the segment-local fields required by the matched models."""
 
-    def __init__(self, session: TargetedDiagnosticDatasetSession, segment_ids: Sequence[int]) -> None:
+    def __init__(self, session: RunPodCausalTeacherSession, segment_ids: Sequence[int]) -> None:
         self.session = session
         self.segment_ids = np.asarray(segment_ids, dtype=np.int64)
         self.segment_count = len(session.audit.live_segments)
@@ -250,7 +292,7 @@ class ScaleTeacherGenerator:
         self.teacher_repo = Path(teacher_repo).resolve()
         self.work_dir = Path(work_dir).resolve()
         self.work_dir.mkdir(parents=True, exist_ok=True)
-        self.session = TargetedDiagnosticDatasetSession(
+        self.session = RunPodCausalTeacherSession(
             self.elm_repo,
             self.teacher_repo,
             output_dir=self.work_dir / "teacher_runtime",

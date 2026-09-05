@@ -8,6 +8,7 @@ from src.giada_runpod.neuronio_inputs import DendriticSynapseMap, sample_neuroni
 from src.giada_runpod.planning import build_shard_plan, load_shard_plan, write_shard_plan
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
 from src.giada_runpod.training import LeanSomaCorpus
+from src.giada_runpod import teacher as teacher_module
 
 
 def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
@@ -23,6 +24,46 @@ def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
     loaded_config, loaded_shards = load_shard_plan(path)
     assert loaded_config == config
     assert loaded_shards == shards
+
+
+def test_runpod_teacher_session_uses_base_contract_without_calibration_artifacts(
+    tmp_path: Path, monkeypatch,
+) -> None:
+    captured = {}
+
+    def fake_base_init(self, elm_repo, teacher_repo, **kwargs):
+        captured.update(kwargs)
+        self.seed = int(kwargs["seed"])
+
+    monkeypatch.setattr(
+        teacher_module.DiagnosticDatasetSession, "__init__", fake_base_init
+    )
+    session = teacher_module.RunPodCausalTeacherSession(
+        tmp_path / "giada",
+        tmp_path / "teacher",
+        output_dir=tmp_path / "runtime",
+        seed=123,
+    )
+    assert captured["output_dir"] == tmp_path / "runtime"
+    assert captured["expected_teacher_hashes"]
+    assert session.active_random123_seed == 123
+    assert not hasattr(session, "calibration_source")
+
+
+def test_runpod_teacher_session_tracks_snapshot_random123_seed(monkeypatch) -> None:
+    observed = {}
+
+    def fake_configure(self, seed, sequences):
+        observed["seed"] = seed
+        observed["sequences"] = list(sequences)
+
+    monkeypatch.setattr(
+        teacher_module.DiagnosticDatasetSession, "_configure_rngs", fake_configure
+    )
+    session = object.__new__(teacher_module.RunPodCausalTeacherSession)
+    session._configure_rngs(456, [1.0, 2.0])
+    assert observed == {"seed": 456, "sequences": [1.0, 2.0]}
+    assert session.active_random123_seed == 456
 
 
 def test_neuronio_sampler_is_seeded_and_preserves_canonical_event_fields() -> None:
