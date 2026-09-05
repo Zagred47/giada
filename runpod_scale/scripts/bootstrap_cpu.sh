@@ -10,7 +10,10 @@ if command -v apt-get >/dev/null 2>&1; then
   apt-get update
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
     build-essential \
-    git
+    git \
+    python3 \
+    python3-dev \
+    python3-pip
 fi
 
 if [[ ! -d "$GIADA_ROOT/.git" ]]; then
@@ -25,13 +28,14 @@ fi
 git -C "$TEACHER_ROOT" fetch origin "$TEACHER_COMMIT"
 git -C "$TEACHER_ROOT" checkout --detach "$TEACHER_COMMIT"
 
-python -m pip install --upgrade pip
-python -m pip install -r "$GIADA_ROOT/runpod_scale/requirements-cpu.txt"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+"$PYTHON_BIN" -m pip install --upgrade pip
+"$PYTHON_BIN" -m pip install -r "$GIADA_ROOT/runpod_scale/requirements-cpu.txt"
 
 SIMULATION_ROOT="$TEACHER_ROOT/L5PC_NEURON_simulation"
 if ! find "$SIMULATION_ROOT" -name libnrnmech.so -print -quit | grep -q .; then
   (cd "$SIMULATION_ROOT" && nrnivmodl mods)
 fi
 
-python -c "import neuron, numpy, scipy, h5py; print({'neuron': neuron.__version__, 'numpy': numpy.__version__, 'scipy': scipy.__version__, 'h5py': h5py.__version__})"
+"$PYTHON_BIN" -c "import neuron, numpy, scipy, h5py; print({'neuron': neuron.__version__, 'numpy': numpy.__version__, 'scipy': scipy.__version__, 'h5py': h5py.__version__})"
 echo "GIADA CPU environment ready at $GIADA_ROOT"
