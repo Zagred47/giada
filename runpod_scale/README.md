@@ -147,8 +147,11 @@ GIADA_BENCHMARK_OUTPUT=/workspace/giada-data/cpu-concurrency-4 \
 bash "$GIADA_ROOT/runpod_scale/scripts/benchmark_cpu_concurrency.sh"
 ```
 
-The harness writes independent logs and reports aggregate throughput,
-parallel efficiency, projected S1 wall time, and per-process peak RSS.
+The harness writes independent logs and reports cold-start throughput
+separately from the sum of the workers' steady-state generation rates. Its
+parallel efficiency and projected S1 wall time use the latter, so repeated
+teacher construction and burn-in do not bias the long-lived-worker estimate.
+It also reports per-process peak RSS.
 
 Generation writes one compact progress line about every 30 seconds with the
 completed transition count, percentage, throughput, and ETA. Follow a

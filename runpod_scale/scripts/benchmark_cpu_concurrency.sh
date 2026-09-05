@@ -73,24 +73,32 @@ for worker in range(workers):
     path = root / f"worker-{worker}" / "benchmark_report.json"
     if path.is_file():
         reports.append(json.loads(path.read_text()))
-aggregate_rate = len(reports) * duration / wall
+cold_start_rate = len(reports) * duration / wall
+worker_generation_rates = [
+    float(row["benchmark"]["transitions_per_second"])
+    for row in reports
+]
+steady_state_rate = sum(worker_generation_rates)
 peak_rss = [
     row.get("resource_usage", {}).get("peak_process_rss_mib")
     for row in reports
 ]
 peak_rss = [float(value) for value in peak_rss if value is not None]
 report = {
-    "schema_version": "giada-runpod-cpu-concurrency-v1",
+    "schema_version": "giada-runpod-cpu-concurrency-v2",
     "valid": failures == 0 and len(reports) == workers,
     "worker_count": workers,
     "duration_ms_per_worker": duration,
     "completed_worker_count": len(reports),
     "failure_count": failures,
-    "wall_seconds": wall,
-    "aggregate_transitions_per_second": aggregate_rate,
+    "cold_start_probe_wall_seconds": wall,
+    "cold_start_probe_transitions_per_second": cold_start_rate,
+    "cold_start_probe_parallel_efficiency_fraction": cold_start_rate / max(workers * baseline, 1e-9),
+    "worker_generation_rates": worker_generation_rates,
+    "aggregate_transitions_per_second": steady_state_rate,
     "single_worker_reference_transitions_per_second": baseline,
-    "parallel_efficiency_fraction": aggregate_rate / max(workers * baseline, 1e-9),
-    "projected_s1_wall_minutes": 600000.0 / max(aggregate_rate, 1e-9) / 60.0,
+    "parallel_efficiency_fraction": steady_state_rate / max(workers * baseline, 1e-9),
+    "projected_s1_wall_minutes": 600000.0 / max(steady_state_rate, 1e-9) / 60.0,
     "maximum_worker_peak_rss_mib": max(peak_rss, default=None),
     "sum_worker_peak_rss_mib": sum(peak_rss) if peak_rss else None,
 }
