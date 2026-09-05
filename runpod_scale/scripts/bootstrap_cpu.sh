@@ -46,6 +46,6 @@ if ! find "$SIMULATION_ROOT" -name libnrnmech.so -print -quit | grep -q .; then
   (cd "$SIMULATION_ROOT" && "$VENV_ROOT/bin/nrnivmodl" mods)
 fi
 
-"$PYTHON_BIN" -c "import neuron, numpy, scipy, h5py; print({'neuron': neuron.__version__, 'numpy': numpy.__version__, 'scipy': scipy.__version__, 'h5py': h5py.__version__})"
+MPLBACKEND=Agg "$PYTHON_BIN" -c "import h5py, matplotlib, neuron, numpy, pandas, pyarrow, pytest, scipy, yaml; print({'neuron': neuron.__version__, 'numpy': numpy.__version__, 'scipy': scipy.__version__, 'pandas': pandas.__version__, 'h5py': h5py.__version__, 'matplotlib': matplotlib.__version__, 'pyarrow': pyarrow.__version__})"
 echo "GIADA Python environment ready at $VENV_ROOT"
 echo "GIADA CPU environment ready at $GIADA_ROOT"
