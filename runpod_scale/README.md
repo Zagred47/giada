@@ -88,6 +88,7 @@ After connecting:
 export GIADA_ROOT=/workspace/giada
 export GIADA_TEACHER_ROOT=/workspace/neuron_as_deep_net
 export GIADA_REF=runpod/paper-scale-data
+export GIADA_PYTHON=/workspace/.giada-venv/bin/python
 
 git clone --branch runpod/paper-scale-data https://github.com/Zagred47/giada.git "$GIADA_ROOT"
 bash "$GIADA_ROOT/runpod_scale/scripts/bootstrap_cpu.sh"
@@ -99,7 +100,7 @@ Create S1's immutable plan:
 export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1
 mkdir -p "$GIADA_OUTPUT_ROOT"
 cd "$GIADA_ROOT"
-python -m src.giada_runpod.cli plan \
+"$GIADA_PYTHON" -m src.giada_runpod.cli plan \
   --config runpod_scale/configs/s1_soma.yml \
   --output "$GIADA_OUTPUT_ROOT"
 ```
@@ -107,7 +108,7 @@ python -m src.giada_runpod.cli plan \
 Before S1, run one full canonical trajectory benchmark:
 
 ```bash
-python -m src.giada_runpod.cli benchmark \
+"$GIADA_PYTHON" -m src.giada_runpod.cli benchmark \
   --config runpod_scale/configs/s1_soma.yml \
   --output /workspace/giada-data/benchmark-s1 \
   --elm-repo "$GIADA_ROOT" \
@@ -141,7 +142,7 @@ Validate all shards before stopping CPU compute:
 
 ```bash
 cd "$GIADA_ROOT"
-python -m src.giada_runpod.cli validate \
+"$GIADA_PYTHON" -m src.giada_runpod.cli validate \
   --plan "$GIADA_OUTPUT_ROOT/plan.json" \
   --output "$GIADA_OUTPUT_ROOT"
 ```

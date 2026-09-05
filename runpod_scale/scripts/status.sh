@@ -3,7 +3,8 @@ set -euo pipefail
 
 OUTPUT_ROOT="${GIADA_OUTPUT_ROOT:-/workspace/giada-data/s1}"
 PLAN="${GIADA_PLAN:-$OUTPUT_ROOT/plan.json}"
-python - "$PLAN" "$OUTPUT_ROOT" <<'PY'
+PYTHON_BIN="${GIADA_PYTHON:-/workspace/.giada-venv/bin/python}"
+"$PYTHON_BIN" - "$PLAN" "$OUTPUT_ROOT" <<'PY'
 import json, pathlib, sys, time
 plan = json.loads(pathlib.Path(sys.argv[1]).read_text())
 root = pathlib.Path(sys.argv[2])
