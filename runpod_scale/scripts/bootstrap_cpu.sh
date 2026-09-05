@@ -6,6 +6,13 @@ TEACHER_ROOT="${GIADA_TEACHER_ROOT:-/workspace/neuron_as_deep_net}"
 GIADA_REF="${GIADA_REF:-runpod/paper-scale-data}"
 TEACHER_COMMIT="074c4666300a8ad246601dab179a97a6942f0f29"
 
+if command -v apt-get >/dev/null 2>&1; then
+  apt-get update
+  DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    build-essential \
+    git
+fi
+
 if [[ ! -d "$GIADA_ROOT/.git" ]]; then
   git clone https://github.com/Zagred47/giada.git "$GIADA_ROOT"
 fi
