@@ -1,0 +1,39 @@
+{
+  "schema_version": "giada-runpod-s1c-hybrid-result-v1",
+  "project": "GIADA",
+  "status": "completed_conditional_no_go_to_scaling",
+  "result_date": "2026-09-05",
+  "code_revision": "fa33f5743411d92dc1dfcd68d85671ecdaaee58c",
+  "integrity": {
+    "valid": true,
+    "shard_count": 192,
+    "trajectory_count": 192,
+    "transition_count": 15360,
+    "failed_marker_count": 0,
+    "seed_split_leakage": false
+  },
+  "scientific_findings": {
+    "confirmed_contrasts": {
+      "nmda": "n12 produced a robust tuft event in 8/8 train and 8/8 validation trajectories; n8 remained near the registered boundary",
+      "calcium": "paired n12 produced a robust hot-zone event in 8/8 train and 8/8 validation trajectories, while unpaired n12 stayed negative and paired n8 stayed mostly negative"
+    },
+    "protocol_transcription_failures": {
+      "somatic": "S1c used one 3 nA pulse as the positive, but the immutable one-pulse calibration selected 6 nA; the observed -61.2 mV peak is exactly consistent with the historical 3 nA negative trial",
+      "bap": "S1c used an n8/b2/w800 assist and two 3 nA pulses; the validated contract instead selected n12/b3/w400 as the assist and bracketed BAP with currents derived from the calibrated two-pulse 3 nA base"
+    },
+    "background_interpretation": "Eighty-millisecond stochastic windows contained no active peak. This is insufficient to reject rare-event background protocols that were evaluated over 6000 ms in S1b; they remain controls rather than targeted event arms."
+  },
+  "decision": {
+    "s1c_is_immutable": true,
+    "successful_nmda_and_calcium_arms_are_not_rerun": true,
+    "s2_authorized": false,
+    "next_experiment": "s1d_protocol_repair_pilot",
+    "repair_scope": [
+      "exact 3 nA versus 6 nA one-pulse somatic boundary",
+      "exact selected n12/b3/w400 assist",
+      "paired BAP matrix over p2-factor3, p3-factor2 and p3-factor3 with soma-only/combined counterfactuals"
+    ],
+    "architecture_experiments_modified": false,
+    "paper_test_claimed": false
+  }
+}

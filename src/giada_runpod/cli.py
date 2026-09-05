@@ -120,7 +120,10 @@ def command_benchmark(args: argparse.Namespace) -> None:
     protocol = config.input_protocols[0]
     protocol_family = "neuronio_background"
     protocol_arm = "canonical"
-    if config.purpose == "giada_hybrid_pilot":
+    if config.purpose in {
+        "giada_hybrid_pilot",
+        "giada_protocol_repair_pilot",
+    }:
         from .hybrid_inputs import hybrid_protocol_spec
 
         spec = hybrid_protocol_spec(protocol)
@@ -256,6 +259,9 @@ def command_audit_hybrid(args: argparse.Namespace) -> None:
                 "blockers": report["blockers"],
                 "trajectory_count": report["trajectory_count"],
                 "protocol_summaries": report["protocol_summaries"],
+                "scientific_outcome_assessment": report[
+                    "scientific_outcome_assessment"
+                ],
             },
             indent=2,
         ),

@@ -58,16 +58,21 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
     config.validate()
     count = config.trajectory_count
     protocols = tuple(config.input_protocols)
-    if config.purpose == "giada_hybrid_pilot":
-        from .hybrid_inputs import HYBRID_PROTOCOL_SPECS
+    paired_purpose = config.purpose in {
+        "giada_hybrid_pilot",
+        "giada_protocol_repair_pilot",
+    }
+    if paired_purpose:
+        from .hybrid_inputs import protocol_specs_for_purpose
 
-        repeats = count // (2 * len(HYBRID_PROTOCOL_SPECS))
+        specs = protocol_specs_for_purpose(config.purpose)
+        repeats = count // (2 * len(specs))
         trajectories = []
         index = 0
         for split_index, split in enumerate(("train", "validation")):
             for replicate in range(repeats):
                 family_seeds: Dict[str, int] = {}
-                for spec in HYBRID_PROTOCOL_SPECS:
+                for spec in specs:
                     family_seed = family_seeds.setdefault(
                         spec.family,
                         config.root_seed
@@ -94,7 +99,7 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
         validation = set()
     else:
         protocol_for = {index: protocols[index % len(protocols)] for index in range(count)}
-    if config.purpose == "giada_hybrid_pilot":
+    if paired_purpose:
         pass
     elif len(protocols) == 1:
         # Preserve the original S0--S4 split identity exactly.
@@ -132,7 +137,7 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
                 ).digest(),
             )
             validation.update(ranked[:validation_count])
-    if config.purpose != "giada_hybrid_pilot":
+    if not paired_purpose:
         trajectories = [
             TrajectoryPlan(
                 trajectory_id=f"{config.stage}-neuronio-{index:06d}",

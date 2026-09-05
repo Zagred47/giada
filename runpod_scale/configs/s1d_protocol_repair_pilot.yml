@@ -1,0 +1,24 @@
+giada_runpod_scale:
+  stage: s1d_protocol_repair_pilot
+  target_transitions: 11520
+  trajectory_duration_ms: 80
+  trajectories_per_shard: 1
+  storage_profile: spatial_probe
+  sampled_segments_per_transition: 7
+  root_seed: 9250001
+  validation_trajectory_fraction: 0.5
+  compression: lzf
+  chunk_transitions: 256
+  progress_interval_s: 30
+  purpose: giada_protocol_repair_pilot
+  # Exact order is part of the immutable preregistration contract.
+  input_protocols:
+    - giada_repair_somatic_3na_negative_v1
+    - giada_repair_somatic_6na_positive_v1
+    - giada_repair_bap_assist_only_n12_b3_w400_v1
+    - giada_repair_bap_p2_factor3_soma_only_v1
+    - giada_repair_bap_p2_factor3_combined_v1
+    - giada_repair_bap_p3_factor2_soma_only_v1
+    - giada_repair_bap_p3_factor2_combined_v1
+    - giada_repair_bap_p3_factor3_soma_only_v1
+    - giada_repair_bap_p3_factor3_combined_v1

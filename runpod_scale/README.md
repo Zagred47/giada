@@ -100,6 +100,28 @@ This is still a development pilot: its outcomes decide the composition of a
 larger hybrid corpus, not a paper test. It does not reuse the old sealed fresh
 test outcomes, and it does not alter any Kaggle architecture experiment.
 
+S1c completed all 192 shards and passed its technical audit. The NMDA and
+calcium families produced the intended cross-split contrasts. The audit also
+exposed two protocol-transcription errors: the single-pulse somatic positive
+was written as 3 nA although the immutable calibration selected 6 nA, and the
+BAP candidate did not use the selected n12/b3/w400 assist or the registered
+pulse/current bracket. S1c is frozen; these errors do not invalidate its NMDA
+or calcium observations, but they block large-scale generation.
+
+### S1d: prospective somatic/BAP protocol repair
+
+`s1d_protocol_repair_pilot.yml` reruns only the missing causal axes. It copies
+the parameters from the v1.1.2 teacher artifacts: a 3-versus-6 nA one-pulse
+somatic boundary, the n12/b3/w400 canonical-weight subthreshold assist,
+`p2-factor3` versus `p3-factor3` soma-only BAP controls, and the historical
+`p3-factor2` assisted candidate. A compact 3-by-2 BAP matrix measures pulse
+count/current strength and assist presence in one run. The exploratory
+combined arms cannot override failure of the preregistered controls.
+
+S1d contains 144 independent 80-ms trajectories (11,520 transitions), split
+equally between train and validation with eight replicates per arm per split.
+It is a development top-up, not a paper test and not a replacement for S1c.
+
 ## Storage and interruption contract
 
 Each CPU process owns an independent NEURON interpreter. Threads must not
@@ -289,6 +311,38 @@ nohup bash "$GIADA_ROOT/runpod_scale/scripts/launch_cpu_workers.sh" \
   --plan "$GIADA_OUTPUT_ROOT/plan.json" \
   --output "$GIADA_OUTPUT_ROOT/hybrid_audit.json"
 ```
+
+After preserving the S1c audit, launch the prospective repair under a new
+root. Do not reuse a partially generated directory:
+
+```bash
+cd "$GIADA_ROOT"
+git fetch origin runpod/paper-scale-data
+git checkout --detach origin/runpod/paper-scale-data
+"$GIADA_PYTHON" -m pytest tests/test_giada_runpod_scale.py -q
+
+export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1d-protocol-repair-pilot-v1
+"$GIADA_PYTHON" -m src.giada_runpod.cli plan \
+  --config runpod_scale/configs/s1d_protocol_repair_pilot.yml \
+  --output "$GIADA_OUTPUT_ROOT"
+
+mkdir -p "$GIADA_OUTPUT_ROOT/logs"
+nohup bash "$GIADA_ROOT/runpod_scale/scripts/launch_cpu_workers.sh" \
+  >"$GIADA_OUTPUT_ROOT/logs/supervisor.log" 2>&1 &
+
+"$GIADA_PYTHON" -m src.giada_runpod.cli validate \
+  --plan "$GIADA_OUTPUT_ROOT/plan.json" \
+  --output "$GIADA_OUTPUT_ROOT"
+
+"$GIADA_PYTHON" -m src.giada_runpod.cli audit-hybrid \
+  --corpus "$GIADA_OUTPUT_ROOT" \
+  --plan "$GIADA_OUTPUT_ROOT/plan.json" \
+  --output "$GIADA_OUTPUT_ROOT/hybrid_audit.json"
+```
+
+The final audit prints a bounded summary plus
+`scientific_outcome_assessment`. Large-scale hybrid generation remains blocked
+unless both the technical audit and every preregistered S1d control pass.
 
 ## GPU phase
 

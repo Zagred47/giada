@@ -8,7 +8,11 @@ change their datasets, configurations, or experimental registries.
 from .config import ScaleConfig, load_scale_config
 from .planning import ShardPlan, build_shard_plan, load_shard_plan
 from .neuronio_inputs import NeuronIOInputConfig, sample_neuronio_actions
-from .hybrid_inputs import HYBRID_PROTOCOLS, sample_hybrid_actions
+from .hybrid_inputs import (
+    HYBRID_PROTOCOLS,
+    PROTOCOL_REPAIR_PROTOCOLS,
+    sample_hybrid_actions,
+)
 from .store import LeanShardWriter, validate_lean_shard
 
 __all__ = [
@@ -21,6 +25,7 @@ __all__ = [
     "load_shard_plan",
     "sample_neuronio_actions",
     "HYBRID_PROTOCOLS",
+    "PROTOCOL_REPAIR_PROTOCOLS",
     "sample_hybrid_actions",
     "validate_lean_shard",
 ]

@@ -9,7 +9,73 @@ from typing import Any, Callable, Dict
 
 import numpy as np
 
-from .hybrid_inputs import HYBRID_PROTOCOL_SPECS
+from .hybrid_inputs import protocol_specs_for_purpose
+
+
+def _repair_outcome_assessment(
+    summaries: Dict[str, Dict[str, Dict[str, Any]]]
+) -> Dict[str, Any]:
+    """Apply only the outcome gates fixed before the S1d run.
+
+    Exploratory combined arms are intentionally summarized but never used to
+    retroactively pass or fail the pilot.
+    """
+
+    checks = []
+    for split in ("train", "validation"):
+        negative = summaries["giada_repair_somatic_3na_negative_v1"][split]
+        positive = summaries["giada_repair_somatic_6na_positive_v1"][split]
+        assist = summaries[
+            "giada_repair_bap_assist_only_n12_b3_w400_v1"
+        ][split]
+        bap_negative = summaries[
+            "giada_repair_bap_p2_factor3_soma_only_v1"
+        ][split]
+        bap_positive = summaries[
+            "giada_repair_bap_p3_factor3_soma_only_v1"
+        ][split]
+        checks.extend(
+            (
+                {
+                    "split": split,
+                    "gate": "single_3na_is_somatic_negative",
+                    "passed": negative["soma_peak_ge_0_count"] == 0,
+                },
+                {
+                    "split": split,
+                    "gate": "single_6na_is_somatic_positive",
+                    "passed": positive["soma_peak_ge_0_count"]
+                    == positive["trajectory_count"],
+                },
+                {
+                    "split": split,
+                    "gate": "selected_assist_remains_subthreshold",
+                    "passed": assist["soma_peak_ge_0_count"] == 0
+                    and assist["target_peak_ge_minus20_count"] == 0,
+                },
+                {
+                    "split": split,
+                    "gate": "p2_factor3_soma_only_is_bap_negative",
+                    "passed": bap_negative["target_peak_ge_minus20_count"] == 0,
+                },
+                {
+                    "split": split,
+                    "gate": "p3_factor3_soma_only_is_bap_positive",
+                    "passed": bap_positive["target_peak_ge_minus20_count"]
+                    == bap_positive["trajectory_count"],
+                },
+            )
+        )
+    return {
+        "schema_version": "giada-runpod-s1d-outcome-gates-v1",
+        "passed": all(row["passed"] for row in checks),
+        "checks": checks,
+        "exploratory_arms_used_for_gate": False,
+        "selection_note": (
+            "p2-factor3 combined, p3-factor2 paired arms, and p3-factor3 "
+            "combined are reported as causal contrasts only"
+        ),
+    }
 
 
 def audit_hybrid_corpus(
@@ -26,28 +92,36 @@ def audit_hybrid_corpus(
         raise RuntimeError("hybrid corpus audit requires h5py") from error
     root = Path(corpus_root)
     plan = json.loads(Path(plan_path).read_text(encoding="utf-8"))
+    purpose = str(plan["config"]["purpose"])
+    protocol_specs = protocol_specs_for_purpose(purpose)
     trajectories = {
         int(row["trajectory_index"]): row
         for shard in plan["shards"]
         for row in shard["trajectories"]
     }
-    expected_protocols = {row.protocol for row in HYBRID_PROTOCOL_SPECS}
+    expected_protocols = {row.protocol for row in protocol_specs}
     expected_arms = defaultdict(set)
     target_segments = {}
-    for row in HYBRID_PROTOCOL_SPECS:
+    for row in protocol_specs:
         expected_arms[row.family].add(row.arm)
         target_segments[row.protocol] = row.target_segment_id
     blockers = []
     pair_rows: Dict[str, list[Dict[str, Any]]] = defaultdict(list)
     summaries: Dict[str, Dict[str, Dict[str, Any]]] = defaultdict(dict)
     split_seeds: Dict[str, set[int]] = defaultdict(set)
+    observed_trajectory_indices: set[int] = set()
     paths = sorted((root / "shards").glob("shard-*.h5"))
     if not paths:
         raise FileNotFoundError(f"no hybrid shards under {root}")
     for index, path in enumerate(paths, 1):
         with h5py.File(path, "r") as handle:
             metadata = json.loads(handle.attrs["schema_metadata_json"])
-            if metadata.get("input_methodology") != "GIADA_hybrid_stochastic_plus_causal_paired_v1":
+            expected_methodology = (
+                "GIADA_hybrid_stochastic_plus_causal_paired_v1"
+                if purpose == "giada_hybrid_pilot"
+                else "GIADA_protocol_repair_paired_v1"
+            )
+            if metadata.get("input_methodology") != expected_methodology:
                 blockers.append(f"{path.name}: wrong input methodology")
             if np.any(np.asarray(handle["high_resolution_sample_count"][:]) != 41):
                 blockers.append(f"{path.name}: missing 0.025 ms micro-sampling")
@@ -56,6 +130,11 @@ def audit_hybrid_corpus(
             maxima = np.asarray(handle["voltage_max_mv"][:], dtype=np.float64)
             minima = np.asarray(handle["voltage_min_mv"][:], dtype=np.float64)
             for trajectory_index in np.unique(trajectory_ids):
+                if int(trajectory_index) in observed_trajectory_indices:
+                    blockers.append(
+                        f"trajectory {int(trajectory_index)} occurs in multiple shards"
+                    )
+                observed_trajectory_indices.add(int(trajectory_index))
                 planned = trajectories.get(int(trajectory_index))
                 if planned is None:
                     blockers.append(f"unplanned trajectory {int(trajectory_index)}")
@@ -98,6 +177,13 @@ def audit_hybrid_corpus(
         if progress is not None:
             progress(index, len(paths))
     observed_protocols = set(summaries)
+    missing_trajectories = sorted(set(trajectories) - observed_trajectory_indices)
+    extra_trajectories = sorted(observed_trajectory_indices - set(trajectories))
+    if missing_trajectories or extra_trajectories:
+        blockers.append(
+            "trajectory coverage mismatch: "
+            f"missing={missing_trajectories[:8]} extra={extra_trajectories[:8]}"
+        )
     if observed_protocols != expected_protocols:
         blockers.append(
             f"protocol coverage mismatch: missing={sorted(expected_protocols-observed_protocols)} "
@@ -144,6 +230,12 @@ def audit_hybrid_corpus(
                 "soma_peak_ge_minus20_count": int(
                     np.count_nonzero(np.asarray(state["soma_peaks"]) >= -20.0)
                 ),
+                "soma_peak_ge_0_count": int(
+                    np.count_nonzero(np.asarray(state["soma_peaks"]) >= 0.0)
+                ),
+                "target_peak_ge_minus20_count": int(
+                    np.count_nonzero(np.asarray(state["target_peaks"]) >= -20.0)
+                ),
                 "target_peak_ge_minus45_count": int(
                     np.count_nonzero(np.asarray(state["target_peaks"]) >= -45.0)
                 ),
@@ -152,11 +244,21 @@ def audit_hybrid_corpus(
         }
         for protocol, by_split in sorted(summaries.items())
     }
+    outcome_assessment = (
+        _repair_outcome_assessment(compact)
+        if purpose == "giada_protocol_repair_pilot" and not blockers
+        else None
+    )
     return {
         "schema_version": "giada-runpod-hybrid-corpus-audit-v1",
         "valid": not blockers,
         "blockers": blockers,
-        "methodology": "GIADA hybrid: stochastic background plus causal targeted pairs",
+        "methodology": (
+            "GIADA hybrid: stochastic background plus causal targeted pairs"
+            if purpose == "giada_hybrid_pilot"
+            else "GIADA prospective somatic/BAP protocol-repair matrix"
+        ),
+        "generation_purpose": purpose,
         "corpus_root": str(root.resolve()),
         "shard_count": len(paths),
         "trajectory_count": len(pair_rows) and sum(len(rows) for rows in pair_rows.values()),
@@ -165,5 +267,5 @@ def audit_hybrid_corpus(
         "pair_contrasts": pair_contrasts,
         "outcomes_used_for_plan_selection": False,
         "paper_test_claimed": False,
+        "scientific_outcome_assessment": outcome_assessment,
     }
-

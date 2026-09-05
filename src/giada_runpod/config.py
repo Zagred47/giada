@@ -17,6 +17,10 @@ STAGE_TRANSITIONS = {
     # Small causal pilot for the primary GIADA hybrid methodology.  It is
     # intentionally separate from the random-support S1/S1b controls.
     "s1c_hybrid_pilot": 15_360,
+    # Prospective repair of the two S1c protocol-transcription failures.  It
+    # leaves all successful S1c arms immutable and reruns only the somatic/BAP
+    # boundary matrix from the historical validated parameters.
+    "s1d_protocol_repair_pilot": 11_520,
     "s2": 3_600_000,
     "s3": 28_800_000,
     "s4": 230_400_000,
@@ -72,7 +76,11 @@ class ScaleConfig:
             )
         if not 0.0 < self.validation_trajectory_fraction < 0.5:
             if not (
-                self.purpose in {"input_support_pilot", "giada_hybrid_pilot"}
+                self.purpose in {
+                    "input_support_pilot",
+                    "giada_hybrid_pilot",
+                    "giada_protocol_repair_pilot",
+                }
                 and self.validation_trajectory_fraction == 0.5
             ):
                 raise ValueError(
@@ -83,6 +91,7 @@ class ScaleConfig:
             "paper_scale_confirmation",
             "input_support_pilot",
             "giada_hybrid_pilot",
+            "giada_protocol_repair_pilot",
         }:
             raise ValueError("unknown generation purpose")
         if not self.input_protocols or len(set(self.input_protocols)) != len(
@@ -112,6 +121,28 @@ class ScaleConfig:
                 )
             if self.trajectory_count % (2 * len(HYBRID_PROTOCOLS)):
                 raise ValueError("hybrid trajectory count must contain complete paired replicates")
+        if self.purpose == "giada_protocol_repair_pilot":
+            from .hybrid_inputs import PROTOCOL_REPAIR_PROTOCOLS
+
+            if self.stage != "s1d_protocol_repair_pilot":
+                raise ValueError(
+                    "GIADA protocol-repair pilot requires stage "
+                    "s1d_protocol_repair_pilot"
+                )
+            if tuple(self.input_protocols) != PROTOCOL_REPAIR_PROTOCOLS:
+                raise ValueError(
+                    "GIADA protocol-repair pilot requires the preregistered "
+                    "repair registry"
+                )
+            if self.validation_trajectory_fraction != 0.5:
+                raise ValueError(
+                    "GIADA protocol-repair pilot requires balanced "
+                    "train/validation groups"
+                )
+            if self.trajectory_count % (2 * len(PROTOCOL_REPAIR_PROTOCOLS)):
+                raise ValueError(
+                    "repair trajectory count must contain complete paired replicates"
+                )
         if self.compression not in {"lzf", "gzip", "none"}:
             raise ValueError("compression must be lzf, gzip, or none")
         if self.chunk_transitions <= 0 or self.progress_interval_s <= 0:

@@ -367,6 +367,8 @@ class ScaleTeacherGenerator:
             "input_methodology": (
                 "GIADA_hybrid_stochastic_plus_causal_paired_v1"
                 if config.purpose == "giada_hybrid_pilot"
+                else "GIADA_protocol_repair_paired_v1"
+                if config.purpose == "giada_protocol_repair_pilot"
                 else "NeuronIO_NMDA_ranges_temporal_smoothing_spatial_length_weighting"
             ),
             "generation_purpose": config.purpose,
@@ -399,7 +401,10 @@ class ScaleTeacherGenerator:
             local_row = 0
             last_progress = started
             for trajectory in shard.trajectories:
-                if config.purpose == "giada_hybrid_pilot":
+                if config.purpose in {
+                    "giada_hybrid_pilot",
+                    "giada_protocol_repair_pilot",
+                }:
                     actions_by_step, input_metadata = sample_hybrid_actions(
                         trajectory.duration_ms,
                         self.mapping,
@@ -427,7 +432,10 @@ class ScaleTeacherGenerator:
                     self.session._active_transition_id = local_row
                     self.session._last_release_outcomes = []
                     self.session._last_release_verification = {}
-                    if config.purpose == "giada_hybrid_pilot":
+                    if config.purpose in {
+                        "giada_hybrid_pilot",
+                        "giada_protocol_repair_pilot",
+                    }:
                         observer = lambda: ordered_segment_voltages(
                             self.session.audit.live_segments
                         )[segments].copy()
@@ -446,7 +454,10 @@ class ScaleTeacherGenerator:
                             sample_interval_ms=1.0,
                         )
                     state_t1 = projector.capture()
-                    if config.purpose != "giada_hybrid_pilot":
+                    if config.purpose not in {
+                        "giada_hybrid_pilot",
+                        "giada_protocol_repair_pilot",
+                    }:
                         micro_voltage = np.stack(
                             (state_t["voltage_t_mv"], state_t1["voltage_t_mv"])
                         )

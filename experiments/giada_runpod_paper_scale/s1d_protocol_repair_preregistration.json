@@ -1,0 +1,54 @@
+{
+  "schema_version": "giada-runpod-s1d-protocol-repair-preregistration-v1",
+  "project": "GIADA",
+  "status": "preregistered_not_run",
+  "decision_date": "2026-09-05",
+  "purpose": "Repair only the somatic and BAP protocol-transcription failures exposed by S1c, without rerunning successful NMDA/calcium arms or selecting on S1c outcomes.",
+  "predecessor": "s1c_hybrid_pilot_result.json",
+  "design": {
+    "transition_count": 11520,
+    "trajectory_count": 144,
+    "trajectory_duration_ms": 80,
+    "replicates_per_protocol_per_split": 8,
+    "protocol_arm_count": 9,
+    "splits": ["train", "validation"],
+    "stored_anatomical_probe_count": 7,
+    "microtrace_interval_ms": 0.025,
+    "same_state_pairing": "All arms in each family share equilibrium state, Random123 seed, duration and pre-intervention history.",
+    "paper_test_claimed": false
+  },
+  "immutable_historical_sources": {
+    "teacher_contract": "targeted transition dataset v1.1.2",
+    "single_pulse_somatic_negative_na": 3.0,
+    "single_pulse_somatic_positive_na": 6.0,
+    "two_pulse_bap_base_current_na": 3.0,
+    "selected_assist_protocol_id": "targeted_calcium-hot_zone-n12-b3-r1-unpaired-nearest-w400",
+    "selected_assist_synapse_count": 12,
+    "selected_assist_burst_count": 3,
+    "selected_assist_window_ms": 0.4,
+    "registered_bap_negative": "targeted_bap-soma-only-p2-factor3.0000",
+    "registered_bap_positive": "targeted_bap-soma-only-p3-factor3.0000",
+    "historical_assisted_candidate": "targeted_bap-assisted-p3-factor2.0000",
+    "canonical_synaptic_weights_unchanged": true
+  },
+  "factorial_matrix": {
+    "somatic": ["single 3 nA negative", "single 6 nA positive"],
+    "bap_somatic_drives": ["p2-factor3", "p3-factor2", "p3-factor3"],
+    "bap_assist": ["absent", "present"],
+    "additional_control": "assist only"
+  },
+  "preregistered_outcome_gates": [
+    "single 3 nA has zero soma peaks >= 0 mV in each split",
+    "single 6 nA has soma peak >= 0 mV in every trajectory in each split",
+    "assist-only has zero soma peaks >= 0 mV and zero trunk peaks >= -20 mV in each split",
+    "p2-factor3 soma-only has zero trunk peaks >= -20 mV in each split",
+    "p3-factor3 soma-only has trunk peak >= -20 mV in every trajectory in each split"
+  ],
+  "exploratory_not_selection_gates": [
+    "assist effect at p2-factor3",
+    "historical p3-factor2 soma-only versus combined contrast",
+    "assist effect at p3-factor3"
+  ],
+  "decision_rule": "If integrity and all preregistered controls pass, combine S1c successful arms with S1d repaired arms to specify a fresh larger hybrid corpus. Do not train on S1d and do not call it a held-out test.",
+  "architecture_experiments_modified": false
+}

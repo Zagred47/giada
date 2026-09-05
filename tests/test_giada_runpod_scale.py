@@ -13,6 +13,7 @@ from src.giada_runpod.neuronio_inputs import (
 )
 from src.giada_runpod.hybrid_inputs import (
     HYBRID_PROTOCOLS,
+    PROTOCOL_REPAIR_PROTOCOLS,
     hybrid_protocol_spec,
     sample_hybrid_actions,
 )
@@ -173,6 +174,100 @@ def test_s1c_hybrid_actions_are_deterministic_and_causally_matched() -> None:
         if not hybrid_protocol_spec(protocol).family.startswith("background_")
         for step in schedule
     )
+
+
+def test_s1d_repair_plan_is_complete_paired_and_split_disjoint() -> None:
+    config = ScaleConfig(
+        stage="s1d_protocol_repair_pilot",
+        target_transitions=11_520,
+        trajectory_duration_ms=80,
+        trajectories_per_shard=1,
+        storage_profile="spatial_probe",
+        sampled_segments_per_transition=7,
+        validation_trajectory_fraction=0.5,
+        purpose="giada_protocol_repair_pilot",
+        input_protocols=PROTOCOL_REPAIR_PROTOCOLS,
+    )
+    rows = [row for shard in build_shard_plan(config) for row in shard.trajectories]
+    assert len(rows) == 144
+    assert not (
+        {row.seed for row in rows if row.split == "train"}
+        & {row.seed for row in rows if row.split == "validation"}
+    )
+    groups = {}
+    for row in rows:
+        groups.setdefault(row.pair_id, []).append(row)
+    assert len(groups) == 32
+    for group in groups.values():
+        family = group[0].protocol_family
+        assert len({row.seed for row in group}) == 1
+        assert len({row.split for row in group}) == 1
+        assert {row.protocol_arm for row in group} == {
+            hybrid_protocol_spec(protocol).arm
+            for protocol in PROTOCOL_REPAIR_PROTOCOLS
+            if hybrid_protocol_spec(protocol).family == family
+        }
+
+
+def test_s1d_repair_actions_match_immutable_calibrations() -> None:
+    count = 639
+    mapping = DendriticSynapseMap(
+        segment_ids=np.arange(1, count + 1),
+        segment_lengths_um=np.linspace(2.0, 20.0, count),
+        is_basal=np.arange(count) < 250,
+        excitatory_synapse_ids=np.arange(count),
+        inhibitory_synapse_ids=np.arange(count, 2 * count),
+    )
+    schedules = {}
+    for protocol in PROTOCOL_REPAIR_PROTOCOLS:
+        first, metadata = sample_hybrid_actions(
+            80, mapping, seed=9_250_001, protocol=protocol
+        )
+        second, _ = sample_hybrid_actions(
+            80, mapping, seed=9_250_001, protocol=protocol
+        )
+        encoded = {
+            step: [row.to_dict() for row in actions]
+            for step, actions in first.items()
+        }
+        assert encoded == {
+            step: [row.to_dict() for row in actions]
+            for step, actions in second.items()
+        }
+        assert metadata["canonical_synaptic_weights_unchanged"]
+        schedules[protocol] = first
+
+    negative = schedules["giada_repair_somatic_3na_negative_v1"][20][0]
+    positive = schedules["giada_repair_somatic_6na_positive_v1"][20][0]
+    assert negative.amplitude_na == 3.0
+    assert positive.amplitude_na == 6.0
+
+    assist = schedules["giada_repair_bap_assist_only_n12_b3_w400_v1"]
+    assert set(assist) == {20, 21, 22}
+    assert all(len(assist[step]) == 12 for step in assist)
+    assert {
+        action.synapse_id for actions in assist.values() for action in actions
+    } == set(range(764, 781, 2)) | {872, 874, 936}
+
+    p2 = schedules["giada_repair_bap_p2_factor3_soma_only_v1"]
+    p3 = schedules["giada_repair_bap_p3_factor3_soma_only_v1"]
+    assert set(p2) == {19, 20}
+    assert set(p3) == {19, 20, 21}
+    assert all(actions[0].amplitude_na == 9.0 for actions in p2.values())
+    assert all(actions[0].amplitude_na == 9.0 for actions in p3.values())
+
+    historical = schedules["giada_repair_bap_p3_factor2_combined_v1"]
+    assert set(historical) == {19, 20, 21, 22}
+    assert sum(
+        action.kind == "somatic_current"
+        for actions in historical.values()
+        for action in actions
+    ) == 3
+    assert sum(
+        action.kind == "synaptic_event"
+        for actions in historical.values()
+        for action in actions
+    ) == 36
 
 
 def test_runpod_teacher_session_uses_base_contract_without_calibration_artifacts(
