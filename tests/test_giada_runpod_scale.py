@@ -10,6 +10,7 @@ from src.giada_runpod.planning import build_shard_plan, load_shard_plan, write_s
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
 from src.giada_runpod.training import LeanSomaCorpus
 from src.giada_runpod import teacher as teacher_module
+from src.giada_runpod.corpus_audit import audit_soma_corpus
 
 
 def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
@@ -193,3 +194,57 @@ def test_corpus_sampling_with_replacement_avoids_h5py_duplicate_index_error(
         assert sample["voltage_t_mv"].shape == (100,)
     finally:
         corpus.close()
+
+
+def test_soma_corpus_audit_reports_split_activity_without_mutation(
+    tmp_path: Path,
+) -> None:
+    root = tmp_path / "corpus"
+    path = root / "shards" / "shard-00000.h5"
+    metadata = {
+        "storage_profile": "soma_paper",
+        "mechanism_group_names": ["g0"],
+        "ion_names": ["i0"],
+        "causal_drive_features": ["u0"],
+        "segment_ids": [0],
+        "mechanism_presence": [[1]],
+        "segment_static": [[0.0]],
+        "region_names": ["soma"],
+        "segment_region_ids": [0],
+    }
+    writer = LeanShardWriter(
+        path,
+        segment_count_per_transition=1,
+        mechanism_group_count=1,
+        ion_count=1,
+        schema_metadata=metadata,
+        chunk_transitions=2,
+    )
+    for step, (split, start, end) in enumerate(
+        ((0, -56.0, -54.0), (0, -70.0, -69.5), (1, -70.0, -64.0))
+    ):
+        writer.append(
+            {
+                "segment_id": [0],
+                "voltage_t_mv": [start],
+                "voltage_t_plus_1_mv": [end],
+                "parent_delta_t_mv": [0.0],
+                "mean_child_delta_t_mv": [0.0],
+                "mechanism_state_t": [[0.2]],
+                "ion_state_t": [[0.01]],
+                "causal_drive": [[0.0]],
+                "trajectory_index": step,
+                "step_index": 0,
+                "seed": step,
+                "split_code": split,
+                "scheduled_event_count": 1,
+                "realized_event_count": 1,
+            },
+            [],
+        )
+    writer.close(expected_transition_count=3)
+    report = audit_soma_corpus(root)
+    assert report["valid"]
+    assert report["splits"]["train"]["transition_count"] == 2
+    assert report["splits"]["train"]["somatic_upcrossings_minus55mv"] == 1
+    assert report["splits"]["validation"]["absolute_delta_ge_5mv_count"] == 1

@@ -201,6 +201,24 @@ def command_validate(args: argparse.Namespace) -> None:
         raise SystemExit(2)
 
 
+def command_audit_corpus(args: argparse.Namespace) -> None:
+    from .corpus_audit import audit_soma_corpus
+
+    def progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 10 == 0:
+            print(
+                f"[GIADA RunPod][corpus audit] {index}/{total} shards",
+                flush=True,
+            )
+
+    report = audit_soma_corpus(Path(args.corpus), progress=progress)
+    destination = Path(args.output)
+    _write_json(destination, report)
+    print(json.dumps(report, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def command_train(args: argparse.Namespace) -> None:
     import yaml
     from .training import MatchedTrainingConfig, PaperScaleMatchedTrainer
@@ -246,6 +264,12 @@ def parser() -> argparse.ArgumentParser:
     validate.add_argument("--plan", required=True, type=Path)
     validate.add_argument("--output", required=True, type=Path)
     validate.set_defaults(func=command_validate)
+    audit = sub.add_parser(
+        "audit-corpus", help="summarize voltage-target support in every soma shard"
+    )
+    audit.add_argument("--corpus", required=True, type=Path)
+    audit.add_argument("--output", required=True, type=Path)
+    audit.set_defaults(func=command_audit_corpus)
     train = sub.add_parser("train", help="run the paired GPU comparison on validated shards")
     train.add_argument("--config", required=True, type=Path)
     train.add_argument("--corpus", required=True, type=Path)
