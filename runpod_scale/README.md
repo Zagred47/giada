@@ -136,6 +136,11 @@ CPU utilization (`htop`). Start with one worker, then test two, four, and at
 most the available physical vCPUs. Keep the highest count whose throughput is
 near-linear and whose memory has a safety margin.
 
+Generation writes one compact progress line about every 30 seconds with the
+completed transition count, percentage, throughput, and ETA. Follow a
+background log with `tail -F`; after reconnecting, `tmux attach -t giada`
+restores the live view, while `tail -n 50 <log>` resynchronizes recent history.
+
 Launch the selected workers in a disconnect-safe shell:
 
 ```bash

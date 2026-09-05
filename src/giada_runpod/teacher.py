@@ -325,6 +325,7 @@ class ScaleTeacherGenerator:
         )
         try:
             local_row = 0
+            last_progress = started
             for trajectory in shard.trajectories:
                 actions_by_step, input_metadata = sample_neuronio_actions(
                     trajectory.duration_ms,
@@ -385,6 +386,22 @@ class ScaleTeacherGenerator:
                     }
                     writer.append(row, outcome_events)
                     local_row += 1
+                    now = time.perf_counter()
+                    if (
+                        now - last_progress >= config.progress_interval_s
+                        or local_row == shard.expected_transition_count
+                    ):
+                        elapsed = max(now - started, 1e-9)
+                        rate = local_row / elapsed
+                        remaining = shard.expected_transition_count - local_row
+                        print(
+                            f"[GIADA RunPod][{shard.shard_id}] "
+                            f"{local_row:,}/{shard.expected_transition_count:,} "
+                            f"({100.0 * local_row / shard.expected_transition_count:.1f}%) "
+                            f"{rate:.2f} transition/s; ETA {remaining / max(rate, 1e-9) / 60.0:.1f} min",
+                            flush=True,
+                        )
+                        last_progress = now
             storage = writer.close(expected_transition_count=shard.expected_transition_count)
         except Exception:
             writer.abort()
