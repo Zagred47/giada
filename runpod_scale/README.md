@@ -62,6 +62,13 @@ weights, mechanisms and authentic probabilistic release are unchanged.  Each
 cell has one discovery and one independent confirmation trajectory.  The
 pilot identifies a support-generating protocol; it is not a final paper test.
 
+The first operational attempt (`s1b-event-support-pilot-v1`) was aborted after
+an early hard failure exposed an invalid lower-inhibition interval when the
+full-excitation arm approached zero.  No partial v1 shard is selection
+eligible.  Protocol revision v2 uses the canonical-support slice
+`[-600, 0]` for the inhibitory-rate difference, validates interval feasibility
+before sampling, and must run under a fresh output root.
+
 The measured S1 execution configuration is eight independent CPU workers. S1
 uses one 6,000-ms trajectory per shard (100 shards total), so modulo assignment
 gives each worker 12 or 13 trajectories. This replaces the earlier four-
@@ -233,7 +240,7 @@ never as a zero-error metric.
 The corrective pilot uses a fresh output root and fresh seeds:
 
 ```bash
-export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1b-event-support-pilot-v1
+export GIADA_OUTPUT_ROOT=/workspace/giada-data/s1b-event-support-pilot-v2
 "$GIADA_PYTHON" -m src.giada_runpod.cli plan \
   --config runpod_scale/configs/s1b_event_support_pilot.yml \
   --output "$GIADA_OUTPUT_ROOT"

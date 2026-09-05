@@ -1,7 +1,7 @@
 {
   "schema_version": "giada-runpod-paper-scale-preregistration-v1",
   "project": "GIADA",
-  "status": "s1_subthreshold_result_recorded_s1b_support_pilot_pending",
+  "status": "s1_subthreshold_result_recorded_s1b_v1_aborted_s1b_v2_pending",
   "scientific_question": "Does GIADA's paired one-step soma RMSE advantage over the 8,002-parameter Branch-ELM core survive increasing authentic teacher time?",
   "historical_small_support_result": {
     "branch_elm_median_soma_rmse_mv": 14.823964911891716,
@@ -71,7 +71,15 @@
   "support_amendment": {
     "reason": "The original integrity validation omitted a per-split dynamical-support gate. S1 validation contained no |delta V| >= 1 mV transition and no somatic spike.",
     "s1_immutability": "S1 data, seeds, split and completed result remain frozen; no post-hoc replacement is allowed.",
-    "next_experiment": "s1b_event_support_pilot",
+    "next_experiment": "s1b_event_support_pilot_v2",
+    "aborted_attempt": {
+      "output_root": "s1b-event-support-pilot-v1",
+      "status": "invalid_not_selection_eligible",
+      "reason": "The low-inhibition slice [-600,-300] could invert the sampled inhibitory interval when the full-excitation arm was below 300 events/100 ms.",
+      "first_failed_shard": "shard-00002",
+      "policy": "retain partial files only for forensic provenance; never combine them with v2"
+    },
+    "v2_correction": "Use the canonical-support slice [-600,0], add an analytic interval-feasibility invariant, and execute all eight samplers across multiple seeds in CI.",
     "pilot_role": "development-only input-support diagnosis, never a final held-out test",
     "factorial_axes": [
       "full versus upper-range excitation",

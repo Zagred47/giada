@@ -78,6 +78,27 @@ def test_s1b_factorial_protocols_condition_only_canonical_support() -> None:
         )
 
 
+def test_s1b_factorial_protocols_sample_without_inverted_rate_bounds() -> None:
+    count = 639
+    mapping = DendriticSynapseMap(
+        segment_ids=np.arange(1, count + 1),
+        segment_lengths_um=np.linspace(2.0, 20.0, count),
+        is_basal=np.arange(count) < 250,
+        excitatory_synapse_ids=np.arange(count),
+        inhibitory_synapse_ids=np.arange(count, 2 * count),
+    )
+    for protocol in PILOT_PROTOCOLS:
+        for seed in range(32):
+            _, metadata = sample_neuronio_actions(
+                40,
+                mapping,
+                seed=seed,
+                config=neuronio_input_config_for_protocol(protocol),
+                protocol=protocol,
+            )
+            assert metadata["protocol"] == protocol
+
+
 def test_runpod_teacher_session_uses_base_contract_without_calibration_artifacts(
     tmp_path: Path, monkeypatch,
 ) -> None:

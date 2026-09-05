@@ -1,0 +1,22 @@
+{
+  "schema_version": "giada-runpod-pilot-incident-v1",
+  "project": "GIADA",
+  "date": "2026-09-05",
+  "attempt": "s1b_event_support_pilot_v1",
+  "output_root": "/workspace/giada-data/s1b-event-support-pilot-v1",
+  "status": "aborted_invalid_not_selection_eligible",
+  "first_failed_shard": "shard-00002",
+  "error": "ValueError: high - low < 0",
+  "root_cause": "The preregistered low-inhibition difference slice [-600,-300] was inside the marginal canonical difference range but was not jointly feasible with excitation values below 300. The sampler then formed a negative upper inhibitory-rate bound below its zero-clipped lower bound.",
+  "scope": "Pilot input construction only; canonical S1 data, NEURON teacher dynamics, synaptic release and prior model results are unaffected.",
+  "disposition": "All partial v1 shards are excluded from analysis and must not be merged with the corrected run.",
+  "corrective_action": {
+    "protocol_revision": "v2",
+    "low_inhibition_difference_per_100ms": [-600.0, 0.0],
+    "new_output_root": "/workspace/giada-data/s1b-event-support-pilot-v2",
+    "guards": [
+      "configuration validation rejects any jointly infeasible inhibitory interval",
+      "all eight factorial arms are sampled across 32 deterministic seeds in the test suite"
+    ]
+  }
+}

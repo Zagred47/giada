@@ -12,14 +12,14 @@ from src.hayflow_data import InputAction
 
 CANONICAL_NEURONIO_PROTOCOL = "neuronio_nmda_ergodic_v1"
 PILOT_PROTOCOLS = (
-    "neuronio_nmda_pilot_ex_full_inh_full_time_broad_v1",
-    "neuronio_nmda_pilot_ex_high_inh_full_time_broad_v1",
-    "neuronio_nmda_pilot_ex_full_inh_low_time_broad_v1",
-    "neuronio_nmda_pilot_ex_high_inh_low_time_broad_v1",
-    "neuronio_nmda_pilot_ex_full_inh_full_time_fast_v1",
-    "neuronio_nmda_pilot_ex_high_inh_full_time_fast_v1",
-    "neuronio_nmda_pilot_ex_full_inh_low_time_fast_v1",
-    "neuronio_nmda_pilot_ex_high_inh_low_time_fast_v1",
+    "neuronio_nmda_pilot_ex_full_inh_full_time_broad_v2",
+    "neuronio_nmda_pilot_ex_high_inh_full_time_broad_v2",
+    "neuronio_nmda_pilot_ex_full_inh_low_time_broad_v2",
+    "neuronio_nmda_pilot_ex_high_inh_low_time_broad_v2",
+    "neuronio_nmda_pilot_ex_full_inh_full_time_fast_v2",
+    "neuronio_nmda_pilot_ex_high_inh_full_time_fast_v2",
+    "neuronio_nmda_pilot_ex_full_inh_low_time_fast_v2",
+    "neuronio_nmda_pilot_ex_high_inh_low_time_fast_v2",
 )
 
 
@@ -41,6 +41,30 @@ class NeuronIOInputConfig:
     spatial_multiplier_range: Tuple[float, float] = (0.5, 1.5)
 
     def validate(self) -> None:
+        for label, ex_range, diff_range in (
+            (
+                "basal",
+                self.basal_excitatory_per_100ms,
+                self.basal_inhibitory_difference_per_100ms,
+            ),
+            (
+                "apical",
+                self.apical_excitatory_per_100ms,
+                self.apical_inhibitory_difference_per_100ms,
+            ),
+        ):
+            if ex_range[0] < 0 or ex_range[1] < ex_range[0]:
+                raise ValueError(f"{label} excitatory range is invalid")
+            if diff_range[1] < diff_range[0]:
+                raise ValueError(f"{label} inhibitory-difference range is invalid")
+            # The sampler draws inhibition from
+            # [max(0, excitation + diff_low), excitation + diff_high].
+            # This condition guarantees a non-empty interval even at the
+            # minimum admissible excitation.
+            if ex_range[0] + diff_range[1] < 0:
+                raise ValueError(
+                    f"{label} inhibitory range can invert at low excitation"
+                )
         if not self.rate_intervals_ms or not self.smoothing_sigmas_ms:
             raise ValueError("NeuronIO temporal option lists cannot be empty")
         if min(self.rate_intervals_ms) <= self.interval_jitter_ms:
@@ -69,9 +93,12 @@ def neuronio_input_config_for_protocol(protocol: str) -> NeuronIOInputConfig:
     low_inhibition = "_inh_low_" in name
     fast_temporal = "_time_fast_" in name
     excitatory = (600.0, 800.0) if high_excitation else (0.0, 800.0)
-    inhibitory_difference = (
-        (-600.0, -300.0) if low_inhibition else (-600.0, 200.0)
-    )
+    # A negative upper difference is not valid when the full excitation arm
+    # includes zero: it would make the upper inhibitory-rate bound negative.
+    # Conditioning the canonical [-600, 200] support to [-600, 0] preserves
+    # the intended lower-inhibition contrast while remaining valid and
+    # orthogonal to the excitation factor over its complete range.
+    inhibitory_difference = (-600.0, 0.0) if low_inhibition else (-600.0, 200.0)
     return NeuronIOInputConfig(
         basal_excitatory_per_100ms=excitatory,
         basal_inhibitory_difference_per_100ms=inhibitory_difference,
