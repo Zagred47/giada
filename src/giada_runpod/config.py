@@ -27,6 +27,11 @@ STAGE_TRANSITIONS = {
     # composite manifest.
     "s1e_hybrid_background": 360_000,
     "s1e_hybrid_targeted": 240_000,
+    # Six-fold prospective expansion of the validated S1e hybrid recipe.
+    # The two components remain physically separate because their natural
+    # trajectory lengths differ (6 s background versus 80 ms targeted).
+    "s2_hybrid_background": 2_160_000,
+    "s2_hybrid_targeted": 1_440_000,
     "s2": 3_600_000,
     "s3": 28_800_000,
     "s4": 230_400_000,
@@ -154,30 +159,36 @@ class ScaleConfig:
         if self.purpose == "giada_hybrid_production_background":
             from .hybrid_inputs import PRODUCTION_BACKGROUND_PROTOCOLS
 
-            if self.stage != "s1e_hybrid_background":
-                raise ValueError("hybrid production background requires its S1e stage")
+            if self.stage not in {
+                "s1e_hybrid_background",
+                "s2_hybrid_background",
+            }:
+                raise ValueError("hybrid production background requires an S1e/S2 component stage")
             if tuple(self.input_protocols) != PRODUCTION_BACKGROUND_PROTOCOLS:
                 raise ValueError("hybrid production background protocol registry changed")
             if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 6000:
                 raise ValueError("hybrid production background requires 6000 ms soma trajectories")
             if self.validation_trajectory_fraction != 0.2:
-                raise ValueError("S1e production uses a fixed 80/20 trajectory split")
+                raise ValueError("hybrid production uses a fixed 80/20 trajectory split")
         if self.purpose == "giada_hybrid_production_targeted":
             from .hybrid_inputs import PRODUCTION_TARGET_PROTOCOLS
 
-            if self.stage != "s1e_hybrid_targeted":
-                raise ValueError("hybrid production targeted requires its S1e stage")
+            if self.stage not in {
+                "s1e_hybrid_targeted",
+                "s2_hybrid_targeted",
+            }:
+                raise ValueError("hybrid production targeted requires an S1e/S2 component stage")
             if tuple(self.input_protocols) != PRODUCTION_TARGET_PROTOCOLS:
                 raise ValueError("hybrid production targeted protocol registry changed")
             if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 80:
                 raise ValueError("hybrid production targeted requires 80 ms soma episodes")
             if self.validation_trajectory_fraction != 0.2:
-                raise ValueError("S1e production uses a fixed 80/20 trajectory split")
+                raise ValueError("hybrid production uses a fixed 80/20 trajectory split")
             per_protocol, remainder = divmod(
                 self.trajectory_count, len(PRODUCTION_TARGET_PROTOCOLS)
             )
             if remainder or per_protocol <= 1:
-                raise ValueError("S1e targeted plan must balance every protocol")
+                raise ValueError("hybrid targeted plan must balance every protocol")
         if self.compression not in {"lzf", "gzip", "none"}:
             raise ValueError("compression must be lzf, gzip, or none")
         if self.chunk_transitions <= 0 or self.progress_interval_s <= 0:

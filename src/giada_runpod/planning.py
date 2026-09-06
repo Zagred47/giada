@@ -78,6 +78,10 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
             raise RuntimeError("paired plan requires both train and validation replicas")
         trajectories = []
         index = 0
+        # Keep every split's Random123 seed namespace disjoint even when a
+        # scale contains more than 1,000 paired replicates. Preserve the
+        # historical 100k stride for S1e and smaller plans.
+        split_seed_stride = max(100_000, (per_protocol + 1) * 100)
         for split_index, (split, repeats) in enumerate(
             (("train", train_repeats), ("validation", validation_repeats))
         ):
@@ -87,7 +91,7 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
                     family_seed = family_seeds.setdefault(
                         spec.family,
                         config.root_seed
-                        + split_index * 100_000
+                        + split_index * split_seed_stride
                         + replicate * 100
                         + len(family_seeds),
                     )

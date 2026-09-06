@@ -28,6 +28,7 @@ from src.giada_runpod.training import (
 )
 from src.giada_runpod import teacher as teacher_module
 from src.giada_runpod.corpus_audit import audit_soma_corpus
+from src.giada_runpod.production_corpus import PRODUCTION_PROFILES
 
 
 def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
@@ -350,6 +351,71 @@ def test_s1e_training_config_forbids_validation_checkpoint_selection() -> None:
         raise AssertionError("validation checkpoint selection was accepted")
 
 
+def test_s2_hybrid_plan_is_exact_sixfold_expansion_without_seed_leakage() -> None:
+    background = ScaleConfig(
+        stage="s2_hybrid_background",
+        target_transitions=2_160_000,
+        trajectory_duration_ms=6000,
+        trajectories_per_shard=1,
+        root_seed=9_500_001,
+        validation_trajectory_fraction=0.2,
+        purpose="giada_hybrid_production_background",
+        input_protocols=PRODUCTION_BACKGROUND_PROTOCOLS,
+    )
+    targeted = ScaleConfig(
+        stage="s2_hybrid_targeted",
+        target_transitions=1_440_000,
+        trajectory_duration_ms=80,
+        trajectories_per_shard=25,
+        root_seed=9_600_001,
+        validation_trajectory_fraction=0.2,
+        purpose="giada_hybrid_production_targeted",
+        input_protocols=PRODUCTION_TARGET_PROTOCOLS,
+    )
+    background_rows = [
+        row for shard in build_shard_plan(background) for row in shard.trajectories
+    ]
+    targeted_rows = [
+        row for shard in build_shard_plan(targeted) for row in shard.trajectories
+    ]
+    assert len(background_rows) == 360
+    assert len(targeted_rows) == 18_000
+    assert background.shard_count == 360
+    assert targeted.shard_count == 720
+    for protocol in PRODUCTION_BACKGROUND_PROTOCOLS:
+        rows = [row for row in background_rows if row.protocol == protocol]
+        assert sum(row.split == "train" for row in rows) == 144
+        assert sum(row.split == "validation" for row in rows) == 36
+    for protocol in PRODUCTION_TARGET_PROTOCOLS:
+        rows = [row for row in targeted_rows if row.protocol == protocol]
+        assert sum(row.split == "train" for row in rows) == 1200
+        assert sum(row.split == "validation" for row in rows) == 300
+    train_seeds = {row.seed for row in background_rows + targeted_rows if row.split == "train"}
+    validation_seeds = {
+        row.seed for row in background_rows + targeted_rows if row.split == "validation"
+    }
+    assert not train_seeds & validation_seeds
+    assert PRODUCTION_PROFILES["s2"]["splits"] == {
+        "train": 2_880_000,
+        "validation": 720_000,
+    }
+
+
+def test_s2_training_scales_exposure_and_preregisters_breadth() -> None:
+    config = MatchedTrainingConfig(
+        seeds=(61017, 61029, 61043, 61071, 61103),
+        training_steps=18_000,
+        checkpoints=(100, 300, 600, 1000, 1800, 3000, 6000, 18_000),
+        required_composite_stage="s2_hybrid_production",
+        minimum_seed_wins=4,
+        minimum_family_wins=5,
+        minimum_protocol_wins=12,
+        scaling_reference_seeds=(61017, 61029, 61043),
+    )
+    config.validate()
+    assert config.training_steps * config.batch_size / 2_880_000 == 25.6
+
+
 def test_s1e_training_verifies_sealed_composite_contract(tmp_path: Path) -> None:
     root = tmp_path / "composite"
     root.mkdir()
@@ -379,6 +445,35 @@ def test_s1e_training_verifies_sealed_composite_contract(tmp_path: Path) -> None
     assert report["verified"]
     assert len(report["manifest_sha256"]) == 64
     assert len(report["production_audit_sha256"]) == 64
+
+
+def test_s2_training_rejects_stage_substitution(tmp_path: Path) -> None:
+    root = tmp_path / "composite"
+    root.mkdir()
+    (root / "production_audit.json").write_text(
+        json.dumps({"valid": True, "blockers": []}), encoding="utf-8"
+    )
+    (root / "composite_manifest.json").write_text(
+        json.dumps({
+            "schema_version": "giada-runpod-composite-corpus-v1",
+            "stage": "s1e_hybrid_production",
+            "valid": True,
+            "total_transition_count": 600_000,
+            "production_audit": "production_audit.json",
+        }),
+        encoding="utf-8",
+    )
+    try:
+        PaperScaleMatchedTrainer._validate_corpus_contract(
+            root,
+            MatchedTrainingConfig(
+                required_composite_stage="s2_hybrid_production"
+            ),
+        )
+    except RuntimeError as error:
+        assert "wrong composite stage" in str(error)
+    else:  # pragma: no cover
+        raise AssertionError("S1e corpus was accepted as S2")
 
 
 def test_runpod_teacher_session_uses_base_contract_without_calibration_artifacts(

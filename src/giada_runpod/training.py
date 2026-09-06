@@ -43,6 +43,10 @@ class MatchedTrainingConfig:
     minimum_validation_somatic_upcrossings: int = 16
     required_composite_stage: str | None = None
     checkpoint_selection: str = "final_preregistered"
+    minimum_seed_wins: int = 2
+    minimum_family_wins: int = 0
+    minimum_protocol_wins: int = 0
+    scaling_reference_seeds: tuple[int, ...] = ()
 
     def validate(self) -> None:
         if not self.seeds or self.training_steps <= 0 or self.batch_size <= 0:
@@ -65,11 +69,17 @@ class MatchedTrainingConfig:
             raise ValueError("support minima cannot be negative")
         if self.checkpoint_selection != "final_preregistered":
             raise ValueError("validation-based checkpoint selection is forbidden")
+        if not 0 <= self.minimum_seed_wins <= len(self.seeds):
+            raise ValueError("minimum_seed_wins must fit the registered seed count")
+        if min(self.minimum_family_wins, self.minimum_protocol_wins) < 0:
+            raise ValueError("breadth minima cannot be negative")
+        if not set(self.scaling_reference_seeds).issubset(self.seeds):
+            raise ValueError("scaling_reference_seeds must be registered training seeds")
 
     @classmethod
     def from_mapping(cls, values: Mapping[str, Any]) -> "MatchedTrainingConfig":
         payload = dict(values)
-        for key in ("seeds", "checkpoints"):
+        for key in ("seeds", "checkpoints", "scaling_reference_seeds"):
             if key in payload:
                 payload[key] = tuple(map(int, payload[key]))
         result = cls(**payload)
@@ -401,11 +411,11 @@ class PaperScaleMatchedTrainer:
         if config.required_composite_stage is None:
             return {"required_composite_stage": None, "verified": True}
         if not manifest_path.is_file():
-            raise RuntimeError("S1e training requires a composite corpus manifest")
+            raise RuntimeError("matched training requires a composite corpus manifest")
         manifest_bytes = manifest_path.read_bytes()
         manifest = json.loads(manifest_bytes)
         if not manifest.get("valid"):
-            raise RuntimeError("S1e composite manifest is not valid")
+            raise RuntimeError("composite corpus manifest is not valid")
         if manifest.get("stage") != config.required_composite_stage:
             raise RuntimeError(
                 f"wrong composite stage {manifest.get('stage')!r}; "
@@ -413,11 +423,11 @@ class PaperScaleMatchedTrainer:
             )
         audit_path = root / str(manifest.get("production_audit", "production_audit.json"))
         if not audit_path.is_file():
-            raise RuntimeError("S1e production audit is missing")
+            raise RuntimeError("composite production audit is missing")
         audit_bytes = audit_path.read_bytes()
         audit = json.loads(audit_bytes)
         if not audit.get("valid") or audit.get("blockers"):
-            raise RuntimeError("S1e production audit did not pass")
+            raise RuntimeError("composite production audit did not pass")
         return {
             "required_composite_stage": config.required_composite_stage,
             "verified": True,
@@ -719,6 +729,20 @@ class PaperScaleMatchedTrainer:
             )
             for component in ("background", "targeted")
         }
+
+        def stratified_medians(section: str) -> Dict[str, Dict[str, float | None]]:
+            labels = sorted({
+                label
+                for row in final
+                for label in row.get(section, {})
+            })
+            return {
+                label: paired_medians(section, label, "soma_rmse_mv")
+                for label in labels
+            }
+
+        family_medians = stratified_medians("protocol_family_metrics")
+        protocol_medians = stratified_medians("protocol_metrics")
         seed_wins = {
             str(seed): next(
                 row["soma_rmse_mv"]
@@ -741,7 +765,139 @@ class PaperScaleMatchedTrainer:
             and active_medians["giada_voltage_bridge"]
             < active_medians["branch_elm_core"]
         )
-        seed_robustness_passed = sum(seed_wins.values()) >= 2
+        seed_robustness_passed = (
+            sum(seed_wins.values()) >= self.config.minimum_seed_wins
+        )
+        family_wins = {
+            label: bool(
+                values["giada_voltage_bridge"] is not None
+                and values["branch_elm_core"] is not None
+                and values["giada_voltage_bridge"] < values["branch_elm_core"]
+            )
+            for label, values in family_medians.items()
+        }
+        protocol_wins = {
+            label: bool(
+                values["giada_voltage_bridge"] is not None
+                and values["branch_elm_core"] is not None
+                and values["giada_voltage_bridge"] < values["branch_elm_core"]
+            )
+            for label, values in protocol_medians.items()
+        }
+        breadth_passed = (
+            sum(family_wins.values()) >= self.config.minimum_family_wins
+            and sum(protocol_wins.values()) >= self.config.minimum_protocol_wins
+        )
+
+        def seed_dispersion(*path: str) -> Dict[str, Dict[str, float | int | None]]:
+            result = {}
+            for name in ("branch_elm_core", "giada_voltage_bridge"):
+                values = [
+                    nested_value(row, *path)
+                    for row in final
+                    if row["model"] == name
+                ]
+                finite = np.asarray(
+                    [float(value) for value in values if value is not None],
+                    dtype=np.float64,
+                )
+                result[name] = {
+                    "mean": float(np.mean(finite)) if len(finite) else None,
+                    "sample_standard_deviation": (
+                        float(np.std(finite, ddof=1)) if len(finite) > 1 else None
+                    ),
+                    "median": float(np.median(finite)) if len(finite) else None,
+                    "seed_count": int(len(finite)),
+                }
+            return result
+
+        branch_by_seed = np.asarray([
+            next(
+                row["soma_rmse_mv"] for row in final
+                if row["seed"] == seed and row["model"] == "branch_elm_core"
+            )
+            for seed in self.config.seeds
+        ], dtype=np.float64)
+        giada_by_seed = np.asarray([
+            next(
+                row["soma_rmse_mv"] for row in final
+                if row["seed"] == seed and row["model"] == "giada_voltage_bridge"
+            )
+            for seed in self.config.seeds
+        ], dtype=np.float64)
+        paired_gain = branch_by_seed - giada_by_seed
+        try:
+            from scipy.stats import ttest_rel
+
+            paired_t = ttest_rel(branch_by_seed, giada_by_seed, alternative="greater")
+            paired_t_statistic = float(paired_t.statistic)
+            paired_t_pvalue = float(paired_t.pvalue)
+            if not math.isfinite(paired_t_statistic):
+                paired_t_statistic = None
+            if not math.isfinite(paired_t_pvalue):
+                paired_t_pvalue = None
+        except (ImportError, TypeError):  # pragma: no cover - old SciPy fallback
+            paired_t_statistic = None
+            paired_t_pvalue = None
+        bootstrap_rng = np.random.default_rng(20_260_906)
+        bootstrap_indices = bootstrap_rng.integers(
+            0, len(paired_gain), size=(20_000, len(paired_gain))
+        )
+        bootstrap_means = np.mean(paired_gain[bootstrap_indices], axis=1)
+        inference = {
+            "unit": "independent_training_seed_on_the_same_validation_corpus",
+            "paired_difference": "branch_elm_rmse_minus_giada_rmse_mv",
+            "mean_difference_mv": float(np.mean(paired_gain)),
+            "sample_standard_deviation_mv": (
+                float(np.std(paired_gain, ddof=1)) if len(paired_gain) > 1 else None
+            ),
+            "bootstrap_95_percent_ci_mean_difference_mv": [
+                float(value) for value in np.quantile(bootstrap_means, [0.025, 0.975])
+            ],
+            "paired_t_test_one_sided_giada_lower": {
+                "statistic": paired_t_statistic,
+                "p_value": paired_t_pvalue,
+            },
+            "interpretation_limit": (
+                "This quantifies optimization-seed variability; it does not replace "
+                "a fresh independent teacher-trajectory test."
+            ),
+        }
+        scaling_reference = None
+        if self.config.scaling_reference_seeds:
+            reference = set(self.config.scaling_reference_seeds)
+            reference_runs = [row for row in runs if row["seed"] in reference]
+            scaling_reference = {
+                "seeds": list(self.config.scaling_reference_seeds),
+                "final_median_soma_rmse_mv": {
+                    name: float(np.median([
+                        row["soma_rmse_mv"] for row in reference_runs
+                        if row["model"] == name
+                        and row["step"] == self.config.training_steps
+                    ]))
+                    for name in ("branch_elm_core", "giada_voltage_bridge")
+                },
+                "mini_scaling_law": [
+                    {
+                        "step": step,
+                        **{
+                            name: float(np.median([
+                                row["soma_rmse_mv"] for row in reference_runs
+                                if row["model"] == name and row["step"] == step
+                            ]))
+                            for name in ("branch_elm_core", "giada_voltage_bridge")
+                        },
+                    }
+                    for step in self.config.checkpoints
+                ],
+            }
+        all_registered_passed = (
+            primary_passed
+            and active_passed
+            and seed_robustness_passed
+            and breadth_passed
+        )
+        is_s2 = self.config.required_composite_stage == "s2_hybrid_production"
         report = {
             "schema_version": "giada-paper-scale-matched-training-v1",
             "valid": True,
@@ -764,17 +920,52 @@ class PaperScaleMatchedTrainer:
             "final_median_active_soma_rmse_mv": active_medians,
             "final_median_spike_transition_rmse_mv": spike_medians,
             "final_median_component_rmse_mv": component_medians,
+            "final_median_protocol_family_rmse_mv": family_medians,
+            "final_median_protocol_rmse_mv": protocol_medians,
             "final_seed_wins": seed_wins,
+            "final_family_wins": family_wins,
+            "final_protocol_wins": protocol_wins,
+            "seed_dispersion": {
+                "overall_soma_rmse_mv": seed_dispersion("soma_rmse_mv"),
+                "active_soma_rmse_mv": seed_dispersion("active_soma_rmse_mv"),
+                "somatic_upcrossing_rmse_mv": seed_dispersion(
+                    "activity_regime_metrics",
+                    "somatic_upcrossing_minus55mv",
+                    "soma_rmse_mv",
+                ),
+            },
+            "paired_statistical_inference": inference,
+            "common_seed_scaling_reference": scaling_reference,
             "giada_relative_rmse_reduction_vs_branch_elm": 1.0 - medians["giada_voltage_bridge"] / medians["branch_elm_core"],
             "registered_decision": {
                 "primary_overall_median_passed": primary_passed,
                 "active_stratum_median_passed": active_passed,
-                "at_least_two_of_three_seed_wins": seed_robustness_passed,
+                "minimum_seed_wins_required": self.config.minimum_seed_wins,
+                "observed_seed_wins": int(sum(seed_wins.values())),
+                "seed_robustness_passed": seed_robustness_passed,
+                "at_least_two_of_three_seed_wins": (
+                    seed_robustness_passed
+                    if len(self.config.seeds) == 3
+                    and self.config.minimum_seed_wins == 2
+                    else None
+                ),
+                "minimum_family_wins_required": self.config.minimum_family_wins,
+                "observed_family_wins": int(sum(family_wins.values())),
+                "minimum_protocol_wins_required": self.config.minimum_protocol_wins,
+                "observed_protocol_wins": int(sum(protocol_wins.values())),
+                "breadth_passed": breadth_passed,
+                "all_registered_gates_passed": all_registered_passed,
                 "s1e_advantage_confirmed": (
-                    primary_passed and active_passed and seed_robustness_passed
+                    all_registered_passed if not is_s2 else None
+                ),
+                "s2_advantage_confirmed": (
+                    all_registered_passed if is_s2 else None
                 ),
                 "s2_authorized": (
-                    primary_passed and active_passed and seed_robustness_passed
+                    all_registered_passed if not is_s2 else None
+                ),
+                "s3_authorized": (
+                    all_registered_passed if is_s2 else None
                 ),
             },
             "resumed_completed_seeds": resumed_seeds,

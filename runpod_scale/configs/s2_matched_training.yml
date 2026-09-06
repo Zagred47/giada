@@ -1,0 +1,32 @@
+giada_matched_training:
+  # The first three seeds preserve the S1e paired scaling comparison. Two
+  # prospectively added seeds provide a less fragile dispersion estimate.
+  seeds: [61017, 61029, 61043, 61071, 61103]
+  scaling_reference_seeds: [61017, 61029, 61043]
+  training_steps: 18000
+  # 18k steps preserves S1e's 25.6 effective passes over the train corpus.
+  # The extra checkpoints answer fixed-step and exposure-matched questions in
+  # the same run without validation-based model selection.
+  checkpoints: [100, 300, 600, 1000, 1800, 3000, 6000, 18000]
+  batch_size: 4096
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  voltage_scale_mv: 20.0
+  delta_limit_mv: 100.0
+  active_delta_threshold_mv: 5.0
+  active_weight: 4.0
+  normalization_sample_limit: 1000000
+  evaluation_sample_limit: 1000000
+  progress_interval: 100
+  expected_input_width: 76
+  expected_branch_elm_parameters: 8002
+  expected_giada_parameters: 8985
+  minimum_train_active_transitions: 49671
+  minimum_validation_active_transitions: 12303
+  minimum_validation_somatic_upcrossings: 4518
+  required_composite_stage: s2_hybrid_production
+  checkpoint_selection: final_preregistered
+  minimum_seed_wins: 4
+  minimum_family_wins: 5
+  minimum_protocol_wins: 12

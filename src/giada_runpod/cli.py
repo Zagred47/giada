@@ -293,6 +293,8 @@ def command_train(args: argparse.Namespace) -> None:
             "final_median_spike_transition_rmse_mv"
         ],
         "median_component_rmse_mv": report["final_median_component_rmse_mv"],
+        "seed_dispersion": report["seed_dispersion"],
+        "paired_statistical_inference": report["paired_statistical_inference"],
         "giada_reduction_vs_branch_elm": report["giada_relative_rmse_reduction_vs_branch_elm"],
         "decision": report["registered_decision"],
     }, indent=2), flush=True)
@@ -306,6 +308,29 @@ def command_compose_s1e(args: argparse.Namespace) -> None:
             print(f"[GIADA RunPod][S1e composite audit] {index}/{total} shards", flush=True)
 
     report = build_and_audit_s1e_composite(
+        Path(args.background),
+        Path(args.targeted),
+        Path(args.output),
+        progress=progress,
+    )
+    print(json.dumps({
+        "valid": report["valid"],
+        "blockers": report["blockers"],
+        "composition": report["composition"],
+        "support_checks": report["support_checks"],
+    }, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
+def command_compose_s2(args: argparse.Namespace) -> None:
+    from .production_corpus import build_and_audit_s2_composite
+
+    def progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 50 == 0:
+            print(f"[GIADA RunPod][S2 composite audit] {index}/{total} shards", flush=True)
+
+    report = build_and_audit_s2_composite(
         Path(args.background),
         Path(args.targeted),
         Path(args.output),
@@ -373,6 +398,13 @@ def parser() -> argparse.ArgumentParser:
     compose.add_argument("--targeted", required=True, type=Path)
     compose.add_argument("--output", required=True, type=Path)
     compose.set_defaults(func=command_compose_s1e)
+    compose_s2 = sub.add_parser(
+        "compose-s2", help="seal and audit the two-part S2 hybrid corpus"
+    )
+    compose_s2.add_argument("--background", required=True, type=Path)
+    compose_s2.add_argument("--targeted", required=True, type=Path)
+    compose_s2.add_argument("--output", required=True, type=Path)
+    compose_s2.set_defaults(func=command_compose_s2)
     return result
 
 

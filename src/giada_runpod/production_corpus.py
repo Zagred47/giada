@@ -1,4 +1,4 @@
-"""Prospective S1e hybrid-production composition and support gates."""
+"""Prospective hybrid-production composition and distribution gates."""
 
 from __future__ import annotations
 
@@ -8,26 +8,86 @@ from pathlib import Path
 from typing import Any, Dict, Mapping
 
 from .corpus_audit import audit_soma_corpus
-from .hybrid_inputs import (
-    PRODUCTION_BACKGROUND_PROTOCOLS,
-    PRODUCTION_TARGET_PROTOCOLS,
-)
+from .hybrid_inputs import PRODUCTION_BACKGROUND_PROTOCOLS, PRODUCTION_TARGET_PROTOCOLS
 
 
 SCHEMA_VERSION = "giada-runpod-composite-corpus-v1"
-EXPECTED_COMPONENTS = {
-    "background": {
-        "stage": "s1e_hybrid_background",
-        "purpose": "giada_hybrid_production_background",
-        "transition_count": 360_000,
+
+# Each scale is a sealed expansion of the same scientific mixture. Component
+# roots stay separate because background and targeted trajectories have
+# different natural durations.
+PRODUCTION_PROFILES: Dict[str, Dict[str, Any]] = {
+    "s1e": {
+        "composite_stage": "s1e_hybrid_production",
+        "audit_schema": "giada-runpod-s1e-production-audit-v1",
+        "total": 600_000,
+        "splits": {"train": 480_000, "validation": 120_000},
+        "components": {
+            "background": {
+                "stage": "s1e_hybrid_background",
+                "purpose": "giada_hybrid_production_background",
+                "transition_count": 360_000,
+            },
+            "targeted": {
+                "stage": "s1e_hybrid_targeted",
+                "purpose": "giada_hybrid_production_targeted",
+                "transition_count": 240_000,
+            },
+        },
+        "protocol_splits": {
+            **{
+                protocol: {"train": 144_000, "validation": 36_000}
+                for protocol in PRODUCTION_BACKGROUND_PROTOCOLS
+            },
+            **{
+                protocol: {"train": 16_000, "validation": 4_000}
+                for protocol in PRODUCTION_TARGET_PROTOCOLS
+            },
+        },
+        "support_ranges": {
+            ("train", "absolute_delta_ge_5mv_count"): (1_024, None),
+            ("validation", "absolute_delta_ge_5mv_count"): (256, None),
+            ("train", "somatic_upcrossings_minus55mv"): (512, None),
+            ("validation", "somatic_upcrossings_minus55mv"): (128, None),
+        },
     },
-    "targeted": {
-        "stage": "s1e_hybrid_targeted",
-        "purpose": "giada_hybrid_production_targeted",
-        "transition_count": 240_000,
+    "s2": {
+        "composite_stage": "s2_hybrid_production",
+        "audit_schema": "giada-runpod-s2-production-audit-v1",
+        "total": 3_600_000,
+        "splits": {"train": 2_880_000, "validation": 720_000},
+        "components": {
+            "background": {
+                "stage": "s2_hybrid_background",
+                "purpose": "giada_hybrid_production_background",
+                "transition_count": 2_160_000,
+            },
+            "targeted": {
+                "stage": "s2_hybrid_targeted",
+                "purpose": "giada_hybrid_production_targeted",
+                "transition_count": 1_440_000,
+            },
+        },
+        "protocol_splits": {
+            **{
+                protocol: {"train": 864_000, "validation": 216_000}
+                for protocol in PRODUCTION_BACKGROUND_PROTOCOLS
+            },
+            **{
+                protocol: {"train": 96_000, "validation": 24_000}
+                for protocol in PRODUCTION_TARGET_PROTOCOLS
+            },
+        },
+        # Prospective 75--125% fidelity bands around the sixfold-scaled S1e
+        # observations. Both a collapse and a major shift block training.
+        "support_ranges": {
+            ("train", "absolute_delta_ge_5mv_count"): (49_671, 82_785),
+            ("validation", "absolute_delta_ge_5mv_count"): (12_303, 20_505),
+            ("train", "somatic_upcrossings_minus55mv"): (18_279, 30_465),
+            ("validation", "somatic_upcrossings_minus55mv"): (4_518, 7_530),
+        },
     },
 }
-EXPECTED_SPLIT_TRANSITIONS = {"train": 480_000, "validation": 120_000}
 
 
 def _read_json(path: Path) -> Dict[str, Any]:
@@ -42,8 +102,9 @@ def _atomic_json(path: Path, payload: Mapping[str, Any]) -> None:
     temporary.replace(destination)
 
 
-def _component_check(component_id: str, root: Path) -> tuple[list[str], Dict[str, Any]]:
-    expected = EXPECTED_COMPONENTS[component_id]
+def _component_check(
+    component_id: str, root: Path, expected: Mapping[str, Any]
+) -> tuple[list[str], Dict[str, Any]]:
     blockers = []
     plan_path = root / "plan.json"
     validation_path = root / "validation_report.json"
@@ -72,34 +133,40 @@ def _component_check(component_id: str, root: Path) -> tuple[list[str], Dict[str
     }
 
 
-def build_and_audit_s1e_composite(
+def build_and_audit_hybrid_composite(
     background_root: Path,
     targeted_root: Path,
     output_root: Path,
     *,
+    scale: str,
     progress=None,
 ) -> Dict[str, Any]:
-    """Seal the two validated S1e components as one logical training corpus."""
+    """Seal two validated components and enforce a scale-specific contract."""
 
+    if scale not in PRODUCTION_PROFILES:
+        raise ValueError(f"unknown hybrid production scale {scale!r}")
+    profile = PRODUCTION_PROFILES[scale]
     roots = {
         "background": Path(background_root).resolve(),
         "targeted": Path(targeted_root).resolve(),
     }
     output = Path(output_root).resolve()
     output.mkdir(parents=True, exist_ok=True)
-    blockers = []
+    blockers: list[str] = []
     component_reports = {}
     for component_id, root in roots.items():
-        failures, report = _component_check(component_id, root)
+        failures, report = _component_check(
+            component_id, root, profile["components"][component_id]
+        )
         blockers.extend(failures)
         component_reports[component_id] = report
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "project": "GIADA",
-        "stage": "s1e_hybrid_production",
+        "stage": profile["composite_stage"],
         "valid": False,
-        "total_transition_count": 600_000,
-        "split_transition_counts": EXPECTED_SPLIT_TRANSITIONS,
+        "total_transition_count": profile["total"],
+        "split_transition_counts": profile["splits"],
         "components": [
             {
                 "component_id": component_id,
@@ -118,26 +185,16 @@ def build_and_audit_s1e_composite(
     blockers.extend(audit.get("blockers", []))
 
     checks = []
-    for split, expected_count in EXPECTED_SPLIT_TRANSITIONS.items():
+    for split, required in profile["splits"].items():
         observed = int(audit.get("splits", {}).get(split, {}).get("transition_count", -1))
         checks.append({
             "gate": f"{split}_transition_count",
             "observed": observed,
-            "required": expected_count,
-            "passed": observed == expected_count,
+            "required": required,
+            "passed": observed == required,
         })
-    expected_protocol_rows = {
-        **{
-            protocol: {"train": 144_000, "validation": 36_000}
-            for protocol in PRODUCTION_BACKGROUND_PROTOCOLS
-        },
-        **{
-            protocol: {"train": 16_000, "validation": 4_000}
-            for protocol in PRODUCTION_TARGET_PROTOCOLS
-        },
-    }
     protocol_splits = audit.get("protocol_splits", {})
-    for protocol, split_counts in expected_protocol_rows.items():
+    for protocol, split_counts in profile["protocol_splits"].items():
         for split, required in split_counts.items():
             observed = int(
                 protocol_splits.get(protocol, {}).get(split, {}).get(
@@ -152,30 +209,27 @@ def build_and_audit_s1e_composite(
                 "required": required,
                 "passed": observed == required,
             })
-    support_gates = (
-        ("train", "absolute_delta_ge_5mv_count", 1024),
-        ("validation", "absolute_delta_ge_5mv_count", 256),
-        ("train", "somatic_upcrossings_minus55mv", 512),
-        ("validation", "somatic_upcrossings_minus55mv", 128),
-    )
-    for split, metric, required in support_gates:
+    for (split, metric), (minimum, maximum) in profile["support_ranges"].items():
         observed = int(audit.get("splits", {}).get(split, {}).get(metric, -1))
+        passed = observed >= minimum and (maximum is None or observed <= maximum)
         checks.append({
             "gate": metric,
             "split": split,
             "observed": observed,
-            "required": required,
-            "passed": observed >= required,
+            "minimum": minimum,
+            "maximum": maximum,
+            "passed": passed,
         })
     failed_checks = [row for row in checks if not row["passed"]]
     blockers.extend(f"failed gate: {row}" for row in failed_checks)
     report = {
-        "schema_version": "giada-runpod-s1e-production-audit-v1",
+        "schema_version": profile["audit_schema"],
         "valid": not blockers,
         "blockers": blockers,
+        "scale": scale,
         "component_reports": component_reports,
         "composition": {
-            "total_transition_count": 600_000,
+            "total_transition_count": profile["total"],
             "long_stochastic_background_fraction": 0.6,
             "confirmed_targeted_fraction": 0.4,
             "train_fraction": 0.8,
@@ -191,3 +245,31 @@ def build_and_audit_s1e_composite(
     manifest["production_audit"] = "production_audit.json"
     _atomic_json(output / "composite_manifest.json", manifest)
     return report
+
+
+def build_and_audit_s1e_composite(
+    background_root: Path,
+    targeted_root: Path,
+    output_root: Path,
+    *,
+    progress=None,
+) -> Dict[str, Any]:
+    """Backward-compatible S1e entry point."""
+
+    return build_and_audit_hybrid_composite(
+        background_root, targeted_root, output_root, scale="s1e", progress=progress
+    )
+
+
+def build_and_audit_s2_composite(
+    background_root: Path,
+    targeted_root: Path,
+    output_root: Path,
+    *,
+    progress=None,
+) -> Dict[str, Any]:
+    """Seal the preregistered 3.6-million-transition S2 corpus."""
+
+    return build_and_audit_hybrid_composite(
+        background_root, targeted_root, output_root, scale="s2", progress=progress
+    )

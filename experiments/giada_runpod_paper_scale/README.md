@@ -86,5 +86,15 @@ median comparison. The immutable result and artifact hashes are recorded in
 `s1e_matched_training_result.json`. This authorizes S2 under a new frozen
 contract; it is not an autoregressive-rollout or fresh paper-test claim.
 
+That S2 contract is now frozen in `s2_hybrid_scale_preregistration.json`.
+S2 is an exact sixfold expansion of S1e: 2.16 million background and 1.44
+million targeted transitions, with the same 60/40 mixture, 80/20 complete-
+trajectory split, protocol registry, canonical weights and causal release
+semantics. It deliberately supersedes the old single-protocol `s2_soma.yml`
+for this paper claim. Training uses 18,000 fixed steps so that each model sees
+the same 25.6 effective corpus passes as at S1e. Five paired seeds report mean,
+sample standard deviation and paired uncertainty; the three original seeds
+remain identifiable for the direct S1e-to-S2 scaling comparison.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

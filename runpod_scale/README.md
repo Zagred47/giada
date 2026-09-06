@@ -431,6 +431,66 @@ component, family and protocol metrics. These strata are diagnostic outputs
 only and do not change training. The held-out event-rich and OOD corpora remain
 separate final tests.
 
+## S2: frozen sixfold hybrid scale-up
+
+S2 must use `s2_hybrid_background.yml` and `s2_hybrid_targeted.yml`; the old
+single-protocol `s2_soma.yml` is historical scaffolding and is not eligible
+for the paper comparison. The CPU pipeline creates 2.16 million long-
+background and 1.44 million targeted transitions, validates both components,
+then enforces exact protocol counts and preregistered distribution-fidelity
+bands before sealing the logical composite.
+
+```bash
+cd /workspace/giada
+git fetch origin runpod/paper-scale-data
+git checkout --detach FETCH_HEAD
+/workspace/.giada-venv/bin/python -m pytest tests/test_giada_runpod_scale.py -q
+
+export GIADA_ROOT=/workspace/giada
+export GIADA_TEACHER_ROOT=/workspace/neuron_as_deep_net
+export GIADA_PYTHON=/workspace/.giada-venv/bin/python
+export GIADA_WORKER_COUNT=8
+export GIADA_S2_ROOT=/workspace/giada-data/s2-hybrid-production-v1
+
+mkdir -p "$GIADA_S2_ROOT/logs"
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s2_hybrid_corpus.sh" \
+  >"$GIADA_S2_ROOT/logs/pipeline.log" 2>&1 &
+echo $! | tee "$GIADA_S2_ROOT/logs/pipeline.pid"
+tail -F "$GIADA_S2_ROOT/logs/pipeline.log"
+```
+
+After `composite/production_audit.json` reports `valid: true`, stop the CPU
+Pod and attach the same network volume to a GPU Pod. S2 uses 18,000 steps,
+which preserves S1e's effective sample exposure, and five paired seeds. Every
+checkpoint is diagnostic; only the final preregistered checkpoint determines
+the decision.
+
+```bash
+cd /workspace/giada
+git fetch origin runpod/paper-scale-data
+git checkout --detach FETCH_HEAD
+python -m pip install -r runpod_scale/requirements-gpu.txt
+
+export GIADA_ROOT=/workspace/giada
+export GIADA_GPU_PYTHON=python
+export GIADA_S2_CORPUS=/workspace/giada-data/s2-hybrid-production-v1/composite
+export GIADA_S2_RESULTS=/workspace/giada-results/s2-matched-v1
+
+mkdir -p /workspace/giada-results
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s2_matched_training.sh" \
+  >/workspace/giada-results/s2-matched-v1.log 2>&1 &
+echo $! | tee /workspace/giada-results/s2-matched-v1.pid
+tail -F /workspace/giada-results/s2-matched-v1.log
+```
+
+The S2 report includes medians, means and sample standard deviations across
+seeds, a paired one-sided test, a deterministic seed-bootstrap interval, and
+component/family/protocol breadth. These uncertainty summaries do not turn
+development validation into a fresh test and do not authorize architecture
+selection.
+
 ## What remains in the Kaggle track
 
 Architecture exploration, recursive-state repair, event-specific ablations,

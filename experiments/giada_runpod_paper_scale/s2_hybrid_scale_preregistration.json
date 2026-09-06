@@ -1,0 +1,105 @@
+{
+  "schema_version": "giada-runpod-s2-hybrid-scale-preregistration-v1",
+  "project": "GIADA",
+  "status": "preregistered_not_run",
+  "decision_date": "2026-09-06",
+  "question": "Does the S1e information-matched one-step soma advantage survive a sixfold increase in authentic teacher transitions under the same evolved GIADA hybrid distribution?",
+  "predecessors": [
+    "s1e_hybrid_production_result.json",
+    "s1e_matched_training_result.json"
+  ],
+  "corpus": {
+    "total_transition_count": 3600000,
+    "train_transition_count": 2880000,
+    "validation_transition_count": 720000,
+    "physical_merge_performed": false,
+    "long_stochastic_background": {
+      "transition_count": 2160000,
+      "fraction": 0.6,
+      "trajectory_duration_ms": 6000,
+      "trajectory_count": 360,
+      "protocol_count": 2,
+      "train_trajectories_per_protocol": 144,
+      "validation_trajectories_per_protocol": 36
+    },
+    "confirmed_targeted": {
+      "transition_count": 1440000,
+      "fraction": 0.4,
+      "trajectory_duration_ms": 80,
+      "trajectory_count": 18000,
+      "protocol_count": 12,
+      "train_episodes_per_protocol": 1200,
+      "validation_episodes_per_protocol": 300
+    },
+    "scale_relation": "Every S1e component/protocol/split count is multiplied by exactly six.",
+    "fresh_root_seeds": {
+      "background": 9500001,
+      "targeted": 9600001
+    },
+    "train_validation_seed_overlap_allowed": false
+  },
+  "immutable_data_method": {
+    "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "mixture": "60% long stochastic background and 40% confirmed targeted episodes",
+    "protocol_registry_changed_from_s1e": false,
+    "synaptic_weights": "canonical teacher weights",
+    "release": "authentic probabilistic release exposed causally as U_realized",
+    "target": "raw authentic NEURON V(t+1 ms)-V(t)",
+    "post_hoc_resplitting_allowed": false
+  },
+  "distribution_fidelity_gates": {
+    "basis": "75%--125% of the sixfold-scaled immutable S1e observations",
+    "train_absolute_delta_ge_5mv": [49671, 82785],
+    "validation_absolute_delta_ge_5mv": [12303, 20505],
+    "train_somatic_upcrossings_minus55mv": [18279, 30465],
+    "validation_somatic_upcrossings_minus55mv": [4518, 7530],
+    "every_protocol_split_count_exact": true,
+    "every_shard_structurally_and_cryptographically_valid": true
+  },
+  "matched_gpu_comparison": {
+    "same_76_value_input_tensor": true,
+    "models": {
+      "branch_elm_core_trainable_parameters": 8002,
+      "giada_voltage_bridge_trainable_parameters": 8985
+    },
+    "seeds": [61017, 61029, 61043, 61071, 61103],
+    "common_s1e_scaling_seeds": [61017, 61029, 61043],
+    "steps": 18000,
+    "checkpoints": [100, 300, 600, 1000, 1800, 3000, 6000, 18000],
+    "batch_size": 4096,
+    "effective_train_corpus_passes": 25.6,
+    "reason_for_18000_steps": "Six times S1e's 3000 steps preserves equal sample exposure rather than undertraining the larger corpus.",
+    "same_sample_order": true,
+    "same_loss_and_optimizer": true,
+    "checkpoint_selection": "final_preregistered",
+    "validation_used_for_selection": false
+  },
+  "registered_metrics": {
+    "primary": "median final overall soma RMSE across five seeds",
+    "co_primary": "median final RMSE for absolute voltage transitions at least 5 mV",
+    "robustness": [
+      "per-seed wins",
+      "per-family wins",
+      "per-protocol wins",
+      "mean and sample standard deviation across seeds",
+      "paired one-sided t-test and deterministic seed-bootstrap interval",
+      "fixed-step and exposure-matched mini scaling checkpoints"
+    ]
+  },
+  "decision_rule": {
+    "overall_pass": "GIADA median final overall RMSE is lower than Branch-ELM",
+    "active_pass": "GIADA median final active-stratum RMSE is lower than Branch-ELM",
+    "seed_robustness_pass": "GIADA wins at least four of five seeds",
+    "breadth_pass": "GIADA wins all five protocol families and at least twelve of fourteen protocols",
+    "s3_authorized": "All four registered passes are true after every corpus gate passes.",
+    "statistical_test_role": "Reported as uncertainty evidence, not silently substituted for the registered effect and breadth gates."
+  },
+  "scope_limits": {
+    "development_validation_only": true,
+    "fresh_paper_test_claimed": false,
+    "autoregressive_rollout_claimed": false,
+    "full_morphology_state_claimed": false,
+    "architecture_selection_authorized": false
+  },
+  "architecture_experiments_modified": false
+}
