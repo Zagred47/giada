@@ -47,7 +47,26 @@ run_component() {
     echo "[GIADA RunPod][S2][$label] shards $completed/$expected; failed markers $failed"
     sleep 30
   done
-  wait "$launcher_pid"
+  if ! wait "$launcher_pid"; then
+    echo "[GIADA RunPod][S2][$label] worker launcher failed; recent worker errors:" >&2
+    for worker_log in "$output"/logs/worker-*.log; do
+      [[ -f "$worker_log" ]] || continue
+      echo "--- $(basename "$worker_log") ---" >&2
+      tail -n 12 "$worker_log" >&2
+    done
+    return 1
+  fi
+  completed="$(find "$output/status" -maxdepth 1 -name '*.done.json' 2>/dev/null | wc -l)"
+  failed="$(find "$output/status" -maxdepth 1 -name '*.failed.json' 2>/dev/null | wc -l)"
+  if [[ "$completed" -ne "$expected" || "$failed" -ne 0 ]]; then
+    echo "[GIADA RunPod][S2][$label] generation incomplete: completed=$completed/$expected failed=$failed" >&2
+    for worker_log in "$output"/logs/worker-*.log; do
+      [[ -f "$worker_log" ]] || continue
+      echo "--- $(basename "$worker_log") ---" >&2
+      tail -n 12 "$worker_log" >&2
+    done
+    return 1
+  fi
   "$PYTHON_BIN" -m src.giada_runpod.cli validate \
     --plan "$output/plan.json" \
     --output "$output"

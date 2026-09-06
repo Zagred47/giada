@@ -217,7 +217,14 @@ def command_validate(args: argparse.Namespace) -> None:
         "total_size_bytes": sum(row["size_bytes"] for row in rows),
     }
     _write_json(output / "validation_report.json", validation)
-    print(json.dumps(validation, indent=2), flush=True)
+    terminal_summary = {
+        key: value
+        for key, value in validation.items()
+        if key != "blockers"
+    }
+    terminal_summary["blocker_count"] = len(blockers)
+    terminal_summary["blocker_examples"] = blockers[:10]
+    print(json.dumps(terminal_summary, indent=2), flush=True)
     if not validation["valid"]:
         raise SystemExit(2)
 

@@ -15,6 +15,7 @@ fi
 
 mkdir -p "$OUTPUT_ROOT/logs"
 cd "$GIADA_ROOT"
+pids=()
 for ((worker=0; worker<WORKER_COUNT; worker++)); do
   "$PYTHON_BIN" -m src.giada_runpod.cli worker \
     --plan "$PLAN" \
@@ -25,5 +26,16 @@ for ((worker=0; worker<WORKER_COUNT; worker++)); do
     --worker-count "$WORKER_COUNT" \
     --worker-seed "$((7000001 + worker))" \
     >"$OUTPUT_ROOT/logs/worker-$worker.log" 2>&1 &
+  pids+=("$!")
 done
-wait
+
+failures=0
+for pid in "${pids[@]}"; do
+  if ! wait "$pid"; then
+    failures=$((failures + 1))
+  fi
+done
+if ((failures > 0)); then
+  echo "[GIADA RunPod] $failures/$WORKER_COUNT CPU workers failed; inspect $OUTPUT_ROOT/logs" >&2
+  exit 1
+fi
