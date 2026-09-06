@@ -103,5 +103,19 @@ fingerprint over all 1,080 shard completion markers are frozen in
 Before allocating the GPU, training re-hashes every physical HDF5 and rejects
 any mismatch between a shard, its completion marker, or the frozen corpus.
 
+The preregistered S2 GPU comparison is also complete. Across five paired
+training seeds, the 8,985-parameter GIADA voltage-transition component reduced
+median overall soma RMSE from 2.121 to 1.529 mV (27.9%), active-transition RMSE
+from 9.927 to 8.434 mV (15.0%), and somatic-upcrossing RMSE from 11.048 to
+9.560 mV (13.5%) relative to the information-matched 8,002-parameter
+Branch-ELM core. GIADA won five of five seeds, all five protocol families and
+thirteen of fourteen protocols. The paired mean RMSE difference was 0.803 mV
+with a deterministic seed-bootstrap 95% interval of [0.408, 1.444] mV and a
+one-sided paired t-test p-value of 0.0331. All registered gates passed and S3
+is authorized under a separately frozen contract. This remains a one-step
+soma-voltage development-validation result, not an autoregressive, full-state,
+or fresh sealed paper-test claim. Exact metrics and artifact hashes are in
+`s2_matched_training_result.json`.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

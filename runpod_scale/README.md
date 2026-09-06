@@ -496,6 +496,14 @@ component/family/protocol breadth. These uncertainty summaries do not turn
 development validation into a fresh test and do not authorize architecture
 selection.
 
+S2 completed on the frozen 3.6-million-transition corpus. GIADA achieved
+1.529 mV median overall soma RMSE versus 2.121 mV for Branch-ELM, a 27.9%
+reduction, and won all five seeds, all five protocol families, and thirteen of
+fourteen protocols. Active and somatic-upcrossing reductions were 15.0% and
+13.5%. All preregistered gates passed, authorizing a separately preregistered
+S3 run. The immutable local result record is
+`experiments/giada_runpod_paper_scale/s2_matched_training_result.json`.
+
 ## What remains in the Kaggle track
 
 Architecture exploration, recursive-state repair, event-specific ablations,

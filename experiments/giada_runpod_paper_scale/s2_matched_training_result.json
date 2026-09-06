@@ -1,0 +1,178 @@
+{
+  "schema_version": "giada-runpod-s2-matched-training-result-v1",
+  "project": "GIADA",
+  "stage": "s2_information_matched_gpu_comparison",
+  "recorded_at": "2026-09-06",
+  "valid": true,
+  "blockers": [],
+  "preregistration": "s2_hybrid_scale_preregistration.json",
+  "code_revision": "fbf965d5e6dbf7b95acc19ccf58e162f2c6f891a",
+  "artifact": {
+    "archive_name": "giada_s2_information_matched_gpu_comparison.zip",
+    "archive_size_bytes": 2555820,
+    "archive_sha256": "efa6bbd512444a3355d5d2c0668159fec66ed383a315de7fc53c7159d96a9934",
+    "archive_member_count": 98,
+    "archive_bad_member": null,
+    "final_report_sha256": "4119f8e7fd052d0c5fd93818da1afedbed9db1056b0b99af5c67f9369d1de83d",
+    "normalization_sha256": "a5c5e7049b42e114832f2cbcc2ce5a6bdc0798e25dbe0f66d3739e6ed04f3d53",
+    "checkpoint_file_count": 90,
+    "completed_seed_report_count": 5
+  },
+  "execution_contract": {
+    "test_count_passed": 24,
+    "test_count_failed": 0,
+    "device": "cuda",
+    "checkpoint_selection": "final_preregistered",
+    "validation_used_for_checkpoint_selection": false,
+    "same_numeric_input": true,
+    "same_sample_order": true,
+    "same_optimizer_and_loss": true,
+    "same_target": "authentic_NEURON_one_ms_soma_voltage_transition",
+    "rollout_claimed": false,
+    "train_transition_count": 2880000,
+    "validation_transition_count": 720000,
+    "branch_elm_trainable_parameters": 8002,
+    "giada_trainable_parameters": 8985,
+    "training_steps": 18000,
+    "batch_size": 4096,
+    "seeds": [61017, 61029, 61043, 61071, 61103],
+    "resumed_completed_seeds": []
+  },
+  "corpus_identity": {
+    "stage": "s2_hybrid_production",
+    "total_transition_count": 3600000,
+    "shard_count": 1080,
+    "physical_mismatch_count": 0,
+    "background_plan_sha256": "a31a9bc19a9818a73d74a292f87689ecd27a2a03eb290e4fdf30896d9eda5c9b",
+    "background_validation_sha256": "23f3059e03eeb8cb09a0c997cf00152015617b2f125eb0c6724389a494af0597",
+    "targeted_plan_sha256": "ed245da27fb21785b65ceddccde25378987b0c3dca980923d230a6ca24ed3139",
+    "targeted_validation_sha256": "6c4fdfe5091eae4edaec9736f5140e78e2b266cbeb6ae54abfbbabb03776c5fc",
+    "composite_manifest_sha256": "f0e9051f734f5401b3b0802e5f6a9fbcac651e6e4bc907ac9172344af4da9ed8",
+    "production_audit_sha256": "dda70846227a1ab15c28d6207c394237512761d4a6e9845b4f6e53b5c737f3a5",
+    "shard_marker_fingerprint_sha256": "03066e7b87576660d8a90dbe619c7a9bb0b49da758882fe6cf952c5c2e98a077"
+  },
+  "registered_metrics": {
+    "overall_soma_rmse_mv": {
+      "branch_elm_core": 2.121388953080908,
+      "giada_voltage_bridge": 1.5294412109044906,
+      "giada_reduction_fraction": 0.2790378168589629
+    },
+    "active_absolute_delta_ge_5mv_rmse_mv": {
+      "branch_elm_core": 9.926656415097892,
+      "giada_voltage_bridge": 8.434026204400148,
+      "giada_reduction_fraction": 0.15036585817834258,
+      "validation_example_count": 16568
+    },
+    "somatic_upcrossing_minus55mv_rmse_mv": {
+      "branch_elm_core": 11.047897365210673,
+      "giada_voltage_bridge": 9.560327459233156,
+      "giada_reduction_fraction": 0.13464733213958047,
+      "validation_example_count": 6094
+    },
+    "background_component_rmse_mv": {
+      "branch_elm_core": 1.6741881690601652,
+      "giada_voltage_bridge": 1.1919571283424093,
+      "giada_reduction_fraction": 0.2880387340142684,
+      "validation_example_count": 432000
+    },
+    "targeted_component_rmse_mv": {
+      "branch_elm_core": 2.4357834883480987,
+      "giada_voltage_bridge": 1.976960020937568,
+      "giada_reduction_fraction": 0.18836791923640794,
+      "validation_example_count": 288000
+    }
+  },
+  "seed_dispersion": {
+    "overall_soma_rmse_mv": {
+      "branch_elm_core": {"mean": 2.3487036793891685, "sample_standard_deviation": 0.7365552530053567, "median": 2.121388953080908},
+      "giada_voltage_bridge": {"mean": 1.5459514793587215, "sample_standard_deviation": 0.22145315802475676, "median": 1.5294412109044906}
+    },
+    "active_soma_rmse_mv": {
+      "branch_elm_core": {"mean": 10.236163344840929, "sample_standard_deviation": 0.8545039153170078, "median": 9.926656415097892},
+      "giada_voltage_bridge": {"mean": 8.450402029362788, "sample_standard_deviation": 0.5723249227410583, "median": 8.434026204400148}
+    },
+    "somatic_upcrossing_rmse_mv": {
+      "branch_elm_core": {"mean": 11.704537958283305, "sample_standard_deviation": 1.2163557619132515, "median": 11.047897365210673},
+      "giada_voltage_bridge": {"mean": 9.755218216229874, "sample_standard_deviation": 0.8560451750553912, "median": 9.560327459233156}
+    }
+  },
+  "paired_statistical_inference": {
+    "unit": "independent_training_seed_on_the_same_validation_corpus",
+    "paired_difference": "branch_elm_rmse_minus_giada_rmse_mv",
+    "mean_difference_mv": 0.8027522000304469,
+    "sample_standard_deviation_mv": 0.7159188339565965,
+    "bootstrap_95_percent_ci_mean_difference_mv": [0.408444073750106, 1.444151412574976],
+    "paired_t_test_one_sided_giada_lower": {
+      "statistic": 2.5072793216450187,
+      "p_value": 0.033124727095613114
+    },
+    "interpretation_limit": "Optimization-seed uncertainty on one development-validation corpus; not a fresh independent teacher-trajectory test."
+  },
+  "protocol_family_median_rmse_mv": {
+    "bap_repair_matrix": {"branch_elm_core": 2.078470227396371, "giada_voltage_bridge": 1.7308193987941223, "giada_reduction_fraction": 0.1672628378409533},
+    "calcium_boundary": {"branch_elm_core": 3.00816520627411, "giada_voltage_bridge": 2.3149897450958106, "giada_reduction_fraction": 0.23043131398918792},
+    "neuronio_background": {"branch_elm_core": 1.6741881690601652, "giada_voltage_bridge": 1.1919571283424093, "giada_reduction_fraction": 0.2880387340142684},
+    "nmda_boundary": {"branch_elm_core": 2.4922315825937678, "giada_voltage_bridge": 1.8272732203534292, "giada_reduction_fraction": 0.26681242902326474},
+    "somatic_repair": {"branch_elm_core": 2.0416537923692353, "giada_voltage_bridge": 1.7798551414933568, "giada_reduction_fraction": 0.1282287192149627}
+  },
+  "final_per_seed": [
+    {"seed": 61017, "branch_elm_soma_rmse_mv": 2.121388953080908, "giada_soma_rmse_mv": 1.4270484524348594, "giada_won": true},
+    {"seed": 61029, "branch_elm_soma_rmse_mv": 3.6301375608518827, "giada_soma_rmse_mv": 1.5677300292921577, "giada_won": true},
+    {"seed": 61043, "branch_elm_soma_rmse_mv": 1.7789185778325383, "giada_soma_rmse_mv": 1.3071130106901474, "giada_won": true},
+    {"seed": 61071, "branch_elm_soma_rmse_mv": 2.2376186610216084, "giada_soma_rmse_mv": 1.8984246934719524, "giada_won": true},
+    {"seed": 61103, "branch_elm_soma_rmse_mv": 1.975454644158904, "giada_soma_rmse_mv": 1.5294412109044906, "giada_won": true}
+  ],
+  "mini_scaling_law": [
+    {"step": 100, "branch_elm_median_soma_rmse_mv": 7.196933339190461, "giada_median_soma_rmse_mv": 3.937321134184924, "giada_reduction_fraction": 0.4529168260119234},
+    {"step": 300, "branch_elm_median_soma_rmse_mv": 7.307643130067305, "giada_median_soma_rmse_mv": 3.6008713609118934, "giada_reduction_fraction": 0.5072458661676971},
+    {"step": 600, "branch_elm_median_soma_rmse_mv": 5.5564609032727965, "giada_median_soma_rmse_mv": 3.1455416041922386, "giada_reduction_fraction": 0.4338947652201618},
+    {"step": 1000, "branch_elm_median_soma_rmse_mv": 4.405223434750083, "giada_median_soma_rmse_mv": 2.9642027242104856, "giada_reduction_fraction": 0.32711637261626203},
+    {"step": 1800, "branch_elm_median_soma_rmse_mv": 4.355530893229842, "giada_median_soma_rmse_mv": 2.641864578428618, "giada_reduction_fraction": 0.39344602456268096},
+    {"step": 3000, "branch_elm_median_soma_rmse_mv": 3.148138529041418, "giada_median_soma_rmse_mv": 2.130097206312584, "giada_reduction_fraction": 0.3233788200034574},
+    {"step": 6000, "branch_elm_median_soma_rmse_mv": 3.20984424061793, "giada_median_soma_rmse_mv": 1.6991200907793926, "giada_reduction_fraction": 0.47065341387023396},
+    {"step": 18000, "branch_elm_median_soma_rmse_mv": 2.121388953080908, "giada_median_soma_rmse_mv": 1.5294412109044906, "giada_reduction_fraction": 0.2790378168589629}
+  ],
+  "s1e_to_s2_scaling": {
+    "overall_rmse_reduction_fraction": {"branch_elm_core": 0.34028988522131853, "giada_voltage_bridge": 0.39987967685602477},
+    "active_rmse_reduction_fraction": {"branch_elm_core": 0.3824441260923126, "giada_voltage_bridge": 0.2988334727385552},
+    "somatic_upcrossing_rmse_reduction_fraction": {"branch_elm_core": 0.45359200901480745, "giada_voltage_bridge": 0.3144324484583402},
+    "interpretation": "Both models improve with scale. GIADA's relative overall advantage grows, while Branch-ELM closes part of the active and upcrossing gap."
+  },
+  "breadth": {
+    "seed_wins": 5,
+    "seed_count": 5,
+    "family_wins": 5,
+    "family_count": 5,
+    "protocol_wins": 13,
+    "protocol_count": 14,
+    "only_protocol_not_won": {
+      "protocol": "giada_repair_bap_p2_factor3_soma_only_v1",
+      "branch_elm_core_rmse_mv": 2.666768271669709,
+      "giada_voltage_bridge_rmse_mv": 2.710951997965733,
+      "giada_reduction_fraction": -0.01656826607898676
+    }
+  },
+  "decision": {
+    "primary_overall_median_passed": true,
+    "active_stratum_median_passed": true,
+    "seed_robustness_passed": true,
+    "breadth_passed": true,
+    "all_registered_gates_passed": true,
+    "s2_advantage_confirmed": true,
+    "s3_authorized": true
+  },
+  "scientific_interpretation": {
+    "confirmed_claim": "The 8,985-parameter GIADA voltage-transition component outperforms the information-matched 8,002-parameter Branch-ELM core for authentic one-step soma-voltage prediction on the S2 development-validation corpus.",
+    "scaling_observation": "At six times the S1e data scale, median overall RMSE falls by 40.0% for GIADA and 34.0% for Branch-ELM; GIADA's relative overall advantage increases from 20.7% to 27.9%.",
+    "active_regime_observation": "GIADA remains better on active and somatic-upcrossing transitions, but Branch-ELM improves faster in these strata, reducing GIADA's relative margins to 15.0% and 13.5%.",
+    "robustness_observation": "GIADA wins every seed, every protocol family, and thirteen of fourteen protocols, with lower across-seed dispersion on all registered aggregate metrics.",
+    "not_claimed": [
+      "autoregressive rollout superiority",
+      "full-state or full-morphology surrogate superiority",
+      "fresh sealed paper-test superiority"
+    ],
+    "next_required_stage": "S3 medium-scale confirmation under a separately frozen contract, without architecture selection on S2 outcomes."
+  },
+  "paper_test_claimed": false,
+  "architecture_experiments_modified": false
+}
