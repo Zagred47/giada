@@ -452,6 +452,11 @@ export GIADA_PYTHON=/workspace/.giada-venv/bin/python
 export GIADA_WORKER_COUNT=8
 export GIADA_S2_ROOT=/workspace/giada-data/s2-hybrid-production-v1
 
+# Required when the network volume was written by a previous pod UID. The
+# launch script repeats these checks defensively before starting workers.
+git config --global --add safe.directory "$GIADA_ROOT"
+git config --global --add safe.directory "$GIADA_TEACHER_ROOT"
+
 mkdir -p "$GIADA_S2_ROOT/logs"
 nohup env PYTHONUNBUFFERED=1 \
   bash "$GIADA_ROOT/runpod_scale/scripts/launch_s2_hybrid_corpus.sh" \

@@ -13,6 +13,14 @@ if [[ ! -x "$PYTHON_BIN" ]]; then
   exit 1
 fi
 
+# Network-volume repositories can retain the UID of the pod that created
+# them. Register both controlled roots before the teacher provenance audit
+# invokes `git rev-parse` in a replacement pod.
+git config --global --add safe.directory "$GIADA_ROOT"
+git config --global --add safe.directory "$TEACHER_ROOT"
+git -C "$GIADA_ROOT" rev-parse --verify HEAD >/dev/null
+git -C "$TEACHER_ROOT" rev-parse --verify HEAD >/dev/null
+
 mkdir -p "$OUTPUT_ROOT/logs"
 cd "$GIADA_ROOT"
 pids=()

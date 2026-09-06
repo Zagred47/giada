@@ -22,12 +22,14 @@ fi
 if [[ ! -d "$GIADA_ROOT/.git" ]]; then
   git clone https://github.com/Zagred47/giada.git "$GIADA_ROOT"
 fi
+git config --global --add safe.directory "$GIADA_ROOT"
 git -C "$GIADA_ROOT" fetch origin "$GIADA_REF"
 git -C "$GIADA_ROOT" checkout --detach FETCH_HEAD
 
 if [[ ! -d "$TEACHER_ROOT/.git" ]]; then
   git clone https://github.com/SelfishGene/neuron_as_deep_net.git "$TEACHER_ROOT"
 fi
+git config --global --add safe.directory "$TEACHER_ROOT"
 git -C "$TEACHER_ROOT" fetch origin "$TEACHER_COMMIT"
 git -C "$TEACHER_ROOT" checkout --detach "$TEACHER_COMMIT"
 
