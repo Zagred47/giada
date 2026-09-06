@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -100,6 +101,55 @@ def _atomic_json(path: Path, payload: Mapping[str, Any]) -> None:
     temporary = destination.with_suffix(destination.suffix + ".tmp")
     temporary.write_text(json.dumps(dict(payload), indent=2, sort_keys=True), encoding="utf-8")
     temporary.replace(destination)
+
+
+def _sha256_file(path: Path, chunk_size: int = 8 * 1024 * 1024) -> str:
+    digest = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        while chunk := stream.read(chunk_size):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def fingerprint_validated_shards(composite_root: Path) -> Dict[str, Any]:
+    """Fingerprint every completion marker and verify its physical HDF5."""
+
+    root = Path(composite_root).resolve()
+    manifest = _read_json(root / "composite_manifest.json")
+    components = {
+        str(row["component_id"]): (root / str(row["root"])).resolve()
+        for row in manifest["components"]
+    }
+    aggregate = hashlib.sha256()
+    mismatches = []
+    shard_count = 0
+    total_size_bytes = 0
+    for component_id in sorted(components):
+        component_root = components[component_id]
+        for marker_path in sorted((component_root / "status").glob("*.done.json")):
+            relative = f"{component_id}/status/{marker_path.name}"
+            marker_sha256 = _sha256_file(marker_path)
+            aggregate.update(f"{marker_sha256}  {relative}\n".encode("utf-8"))
+            marker = _read_json(marker_path)
+            shard_id = str(marker.get("shard_id", marker_path.name.removesuffix(".done.json")))
+            shard_path = component_root / "shards" / f"{shard_id}.h5"
+            if not shard_path.is_file():
+                mismatches.append(f"missing physical shard {component_id}/{shard_id}")
+                continue
+            physical_sha256 = _sha256_file(shard_path)
+            if physical_sha256 != marker.get("sha256"):
+                mismatches.append(f"physical SHA-256 mismatch {component_id}/{shard_id}")
+            shard_count += 1
+            total_size_bytes += shard_path.stat().st_size
+    return {
+        "schema_version": "giada-runpod-corpus-fingerprint-v1",
+        "valid": not mismatches,
+        "marker_fingerprint_sha256": aggregate.hexdigest(),
+        "shard_count": shard_count,
+        "total_size_bytes": total_size_bytes,
+        "physical_mismatch_count": len(mismatches),
+        "physical_mismatch_examples": mismatches[:10],
+    }
 
 
 def _component_check(

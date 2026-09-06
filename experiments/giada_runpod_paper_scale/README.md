@@ -96,5 +96,12 @@ the same 25.6 effective corpus passes as at S1e. Five paired seeds report mean,
 sample standard deviation and paired uncertainty; the three original seeds
 remain identifiable for the direct S1e-to-S2 scaling comparison.
 
+The S2 corpus subsequently passed every registered structural, protocol and
+distribution-fidelity gate. Its six contract-file hashes and aggregate
+fingerprint over all 1,080 shard completion markers are frozen in
+`s2_hybrid_production_result.json` and in the matched-training configuration.
+Before allocating the GPU, training re-hashes every physical HDF5 and rejects
+any mismatch between a shard, its completion marker, or the frozen corpus.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

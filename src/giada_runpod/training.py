@@ -6,7 +6,7 @@ import hashlib
 import json
 import math
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Sequence
 
@@ -47,6 +47,7 @@ class MatchedTrainingConfig:
     minimum_family_wins: int = 0
     minimum_protocol_wins: int = 0
     scaling_reference_seeds: tuple[int, ...] = ()
+    expected_corpus_hashes: Mapping[str, str] = field(default_factory=dict)
 
     def validate(self) -> None:
         if not self.seeds or self.training_steps <= 0 or self.batch_size <= 0:
@@ -75,6 +76,23 @@ class MatchedTrainingConfig:
             raise ValueError("breadth minima cannot be negative")
         if not set(self.scaling_reference_seeds).issubset(self.seeds):
             raise ValueError("scaling_reference_seeds must be registered training seeds")
+        if self.required_composite_stage == "s2_hybrid_production":
+            required_hashes = {
+                "background_plan_sha256",
+                "background_validation_sha256",
+                "targeted_plan_sha256",
+                "targeted_validation_sha256",
+                "composite_manifest_sha256",
+                "production_audit_sha256",
+                "shard_marker_fingerprint_sha256",
+            }
+            if set(self.expected_corpus_hashes) != required_hashes:
+                raise ValueError("S2 requires the complete frozen corpus hash contract")
+            if any(
+                len(value) != 64 or any(char not in "0123456789abcdef" for char in value)
+                for value in self.expected_corpus_hashes.values()
+            ):
+                raise ValueError("S2 corpus hashes must be lowercase SHA-256 values")
 
     @classmethod
     def from_mapping(cls, values: Mapping[str, Any]) -> "MatchedTrainingConfig":
@@ -428,11 +446,54 @@ class PaperScaleMatchedTrainer:
         audit = json.loads(audit_bytes)
         if not audit.get("valid") or audit.get("blockers"):
             raise RuntimeError("composite production audit did not pass")
+        components = {
+            str(row["component_id"]): (root / str(row["root"])).resolve()
+            for row in manifest.get("components", [])
+        }
+        actual_hashes = {
+            "composite_manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
+            "production_audit_sha256": hashlib.sha256(audit_bytes).hexdigest(),
+        }
+        for component_id in ("background", "targeted"):
+            component_root = components.get(component_id)
+            if component_root is None:
+                raise RuntimeError(f"composite component {component_id!r} is missing")
+            for filename, suffix in (
+                ("plan.json", "plan_sha256"),
+                ("validation_report.json", "validation_sha256"),
+            ):
+                path = component_root / filename
+                if not path.is_file():
+                    raise RuntimeError(f"missing frozen corpus file {component_id}/{filename}")
+                actual_hashes[f"{component_id}_{suffix}"] = hashlib.sha256(
+                    path.read_bytes()
+                ).hexdigest()
+        fingerprint_report = None
+        if config.expected_corpus_hashes:
+            from .production_corpus import fingerprint_validated_shards
+
+            fingerprint_report = fingerprint_validated_shards(root)
+            actual_hashes["shard_marker_fingerprint_sha256"] = fingerprint_report[
+                "marker_fingerprint_sha256"
+            ]
+            if not fingerprint_report["valid"]:
+                raise RuntimeError(
+                    "one or more physical S2 shards no longer match their completion marker"
+                )
+            mismatches = {
+                key: {"expected": expected, "observed": actual_hashes.get(key)}
+                for key, expected in config.expected_corpus_hashes.items()
+                if actual_hashes.get(key) != expected
+            }
+            if mismatches:
+                raise RuntimeError(f"frozen S2 corpus hash mismatch: {mismatches}")
         return {
             "required_composite_stage": config.required_composite_stage,
             "verified": True,
-            "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
-            "production_audit_sha256": hashlib.sha256(audit_bytes).hexdigest(),
+            "manifest_sha256": actual_hashes["composite_manifest_sha256"],
+            "production_audit_sha256": actual_hashes["production_audit_sha256"],
+            "verified_corpus_hashes": actual_hashes,
+            "shard_fingerprint_report": fingerprint_report,
             "total_transition_count": manifest.get("total_transition_count"),
             "split_transition_counts": manifest.get("split_transition_counts"),
         }

@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 from types import SimpleNamespace
@@ -28,7 +29,10 @@ from src.giada_runpod.training import (
 )
 from src.giada_runpod import teacher as teacher_module
 from src.giada_runpod.corpus_audit import audit_soma_corpus
-from src.giada_runpod.production_corpus import PRODUCTION_PROFILES
+from src.giada_runpod.production_corpus import (
+    PRODUCTION_PROFILES,
+    fingerprint_validated_shards,
+)
 
 
 def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
@@ -402,6 +406,15 @@ def test_s2_hybrid_plan_is_exact_sixfold_expansion_without_seed_leakage() -> Non
 
 
 def test_s2_training_scales_exposure_and_preregisters_breadth() -> None:
+    frozen_hashes = {
+        "background_plan_sha256": "0" * 64,
+        "background_validation_sha256": "1" * 64,
+        "targeted_plan_sha256": "2" * 64,
+        "targeted_validation_sha256": "3" * 64,
+        "composite_manifest_sha256": "4" * 64,
+        "production_audit_sha256": "5" * 64,
+        "shard_marker_fingerprint_sha256": "6" * 64,
+    }
     config = MatchedTrainingConfig(
         seeds=(61017, 61029, 61043, 61071, 61103),
         training_steps=18_000,
@@ -411,9 +424,41 @@ def test_s2_training_scales_exposure_and_preregisters_breadth() -> None:
         minimum_family_wins=5,
         minimum_protocol_wins=12,
         scaling_reference_seeds=(61017, 61029, 61043),
+        expected_corpus_hashes=frozen_hashes,
     )
     config.validate()
     assert config.training_steps * config.batch_size / 2_880_000 == 25.6
+
+
+def test_corpus_fingerprint_covers_markers_and_physical_shards(tmp_path: Path) -> None:
+    composite = tmp_path / "composite"
+    composite.mkdir()
+    components = []
+    for component_id in ("background", "targeted"):
+        component = tmp_path / component_id
+        (component / "status").mkdir(parents=True)
+        (component / "shards").mkdir()
+        shard = component / "shards" / "shard-00000.h5"
+        shard.write_bytes(f"physical-{component_id}".encode())
+        marker = {
+            "shard_id": "shard-00000",
+            "sha256": hashlib.sha256(shard.read_bytes()).hexdigest(),
+        }
+        (component / "status" / "shard-00000.done.json").write_text(
+            json.dumps(marker, sort_keys=True), encoding="utf-8"
+        )
+        components.append({"component_id": component_id, "root": f"../{component_id}"})
+    (composite / "composite_manifest.json").write_text(
+        json.dumps({"components": components}), encoding="utf-8"
+    )
+    first = fingerprint_validated_shards(composite)
+    assert first["valid"]
+    assert first["shard_count"] == 2
+    assert len(first["marker_fingerprint_sha256"]) == 64
+    (tmp_path / "targeted" / "shards" / "shard-00000.h5").write_bytes(b"changed")
+    second = fingerprint_validated_shards(composite)
+    assert not second["valid"]
+    assert second["physical_mismatch_count"] == 1
 
 
 def test_s1e_training_verifies_sealed_composite_contract(tmp_path: Path) -> None:

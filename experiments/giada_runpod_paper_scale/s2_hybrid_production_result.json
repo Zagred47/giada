@@ -1,0 +1,67 @@
+{
+  "schema_version": "giada-runpod-s2-hybrid-production-result-v1",
+  "project": "GIADA",
+  "stage": "s2_hybrid_production",
+  "recorded_at": "2026-09-06",
+  "valid": true,
+  "blockers": [],
+  "composition": {
+    "total_transition_count": 3600000,
+    "train_transition_count": 2880000,
+    "validation_transition_count": 720000,
+    "long_stochastic_background_transition_count": 2160000,
+    "confirmed_targeted_transition_count": 1440000,
+    "validated_physical_shard_count": 1080,
+    "physical_merge_performed": false
+  },
+  "registered_distribution_fidelity_gates": {
+    "train_absolute_delta_ge_5mv": {
+      "observed": 66105,
+      "minimum": 49671,
+      "maximum": 82785,
+      "passed": true
+    },
+    "validation_absolute_delta_ge_5mv": {
+      "observed": 16568,
+      "minimum": 12303,
+      "maximum": 20505,
+      "passed": true
+    },
+    "train_somatic_upcrossings_minus55mv": {
+      "observed": 24269,
+      "minimum": 18279,
+      "maximum": 30465,
+      "passed": true
+    },
+    "validation_somatic_upcrossings_minus55mv": {
+      "observed": 6094,
+      "minimum": 4518,
+      "maximum": 7530,
+      "passed": true
+    }
+  },
+  "frozen_hashes": {
+    "background_plan_sha256": "a31a9bc19a9818a73d74a292f87689ecd27a2a03eb290e4fdf30896d9eda5c9b",
+    "background_validation_sha256": "23f3059e03eeb8cb09a0c997cf00152015617b2f125eb0c6724389a494af0597",
+    "targeted_plan_sha256": "ed245da27fb21785b65ceddccde25378987b0c3dca980923d230a6ca24ed3139",
+    "targeted_validation_sha256": "6c4fdfe5091eae4edaec9736f5140e78e2b266cbeb6ae54abfbbabb03776c5fc",
+    "composite_manifest_sha256": "f0e9051f734f5401b3b0802e5f6a9fbcac651e6e4bc907ac9172344af4da9ed8",
+    "production_audit_sha256": "dda70846227a1ab15c28d6207c394237512761d4a6e9845b4f6e53b5c737f3a5",
+    "shard_marker_fingerprint_sha256": "03066e7b87576660d8a90dbe619c7a9bb0b49da758882fe6cf952c5c2e98a077"
+  },
+  "protocol_contract": {
+    "background_protocol_count": 2,
+    "targeted_protocol_count": 12,
+    "every_protocol_present_in_both_splits": true,
+    "every_protocol_split_transition_count_exact": true
+  },
+  "scientific_interpretation": {
+    "sixfold_scale_up_completed": true,
+    "s1e_distribution_preserved": true,
+    "data_methodology_confirmed_at_s2_scale": true,
+    "model_advantage_not_yet_claimed": true,
+    "next_required_experiment": "s2_information_matched_gpu_comparison"
+  },
+  "paper_test_claimed": false,
+  "architecture_experiments_modified": false
+}
