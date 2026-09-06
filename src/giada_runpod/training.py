@@ -446,31 +446,39 @@ class PaperScaleMatchedTrainer:
         audit = json.loads(audit_bytes)
         if not audit.get("valid") or audit.get("blockers"):
             raise RuntimeError("composite production audit did not pass")
-        components = {
-            str(row["component_id"]): (root / str(row["root"])).resolve()
-            for row in manifest.get("components", [])
-        }
         actual_hashes = {
             "composite_manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
             "production_audit_sha256": hashlib.sha256(audit_bytes).hexdigest(),
         }
-        for component_id in ("background", "targeted"):
-            component_root = components.get(component_id)
-            if component_root is None:
-                raise RuntimeError(f"composite component {component_id!r} is missing")
-            for filename, suffix in (
-                ("plan.json", "plan_sha256"),
-                ("validation_report.json", "validation_sha256"),
-            ):
-                path = component_root / filename
-                if not path.is_file():
-                    raise RuntimeError(f"missing frozen corpus file {component_id}/{filename}")
-                actual_hashes[f"{component_id}_{suffix}"] = hashlib.sha256(
-                    path.read_bytes()
-                ).hexdigest()
         fingerprint_report = None
         if config.expected_corpus_hashes:
             from .production_corpus import fingerprint_validated_shards
+
+            # The complete component-level identity contract was introduced for
+            # S2.  Historical S1e runs deliberately carry no frozen hash map and
+            # remain verifiable through their sealed manifest and audit alone.
+            components = {
+                str(row["component_id"]): (root / str(row["root"])).resolve()
+                for row in manifest.get("components", [])
+            }
+            for component_id in ("background", "targeted"):
+                component_root = components.get(component_id)
+                if component_root is None:
+                    raise RuntimeError(
+                        f"composite component {component_id!r} is missing"
+                    )
+                for filename, suffix in (
+                    ("plan.json", "plan_sha256"),
+                    ("validation_report.json", "validation_sha256"),
+                ):
+                    path = component_root / filename
+                    if not path.is_file():
+                        raise RuntimeError(
+                            f"missing frozen corpus file {component_id}/{filename}"
+                        )
+                    actual_hashes[f"{component_id}_{suffix}"] = hashlib.sha256(
+                        path.read_bytes()
+                    ).hexdigest()
 
             fingerprint_report = fingerprint_validated_shards(root)
             actual_hashes["shard_marker_fingerprint_sha256"] = fingerprint_report[
