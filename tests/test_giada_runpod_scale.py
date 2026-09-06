@@ -21,7 +21,11 @@ from src.giada_runpod.hybrid_inputs import (
 )
 from src.giada_runpod.planning import build_shard_plan, load_shard_plan, write_shard_plan
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
-from src.giada_runpod.training import LeanSomaCorpus
+from src.giada_runpod.training import (
+    LeanSomaCorpus,
+    MatchedTrainingConfig,
+    PaperScaleMatchedTrainer,
+)
 from src.giada_runpod import teacher as teacher_module
 from src.giada_runpod.corpus_audit import audit_soma_corpus
 
@@ -331,6 +335,50 @@ def test_s1e_target_registry_excludes_failed_s1c_transcriptions() -> None:
     assert "giada_hybrid_bap_combined_v1" not in PRODUCTION_TARGET_PROTOCOLS
     assert "giada_repair_somatic_6na_positive_v1" in PRODUCTION_TARGET_PROTOCOLS
     assert "giada_repair_bap_p2_factor3_combined_v1" in PRODUCTION_TARGET_PROTOCOLS
+
+
+def test_s1e_training_config_forbids_validation_checkpoint_selection() -> None:
+    MatchedTrainingConfig(
+        required_composite_stage="s1e_hybrid_production",
+        checkpoint_selection="final_preregistered",
+    ).validate()
+    try:
+        MatchedTrainingConfig(checkpoint_selection="best_validation").validate()
+    except ValueError as error:
+        assert "checkpoint selection" in str(error)
+    else:  # pragma: no cover
+        raise AssertionError("validation checkpoint selection was accepted")
+
+
+def test_s1e_training_verifies_sealed_composite_contract(tmp_path: Path) -> None:
+    root = tmp_path / "composite"
+    root.mkdir()
+    audit_path = root / "production_audit.json"
+    audit_path.write_text(
+        json.dumps({"valid": True, "blockers": []}), encoding="utf-8"
+    )
+    (root / "composite_manifest.json").write_text(
+        json.dumps(
+            {
+                "schema_version": "giada-runpod-composite-corpus-v1",
+                "stage": "s1e_hybrid_production",
+                "valid": True,
+                "total_transition_count": 600000,
+                "split_transition_counts": {"train": 480000, "validation": 120000},
+                "production_audit": "production_audit.json",
+            }
+        ),
+        encoding="utf-8",
+    )
+    report = PaperScaleMatchedTrainer._validate_corpus_contract(
+        root,
+        MatchedTrainingConfig(
+            required_composite_stage="s1e_hybrid_production"
+        ),
+    )
+    assert report["verified"]
+    assert len(report["manifest_sha256"]) == 64
+    assert len(report["production_audit_sha256"]) == 64
 
 
 def test_runpod_teacher_session_uses_base_contract_without_calibration_artifacts(
@@ -666,5 +714,16 @@ def test_logical_composite_reads_both_components_without_index_collision(
     try:
         assert corpus.train_count == 2
         assert corpus.validation_count == 2
+        labeled = list(corpus.iter_raw(1, 2, include_labels=True))
+        assert {
+            str(label)
+            for chunk in labeled
+            for label in chunk["_component_label"]
+        } == {"background", "targeted"}
+        assert {
+            str(label)
+            for chunk in labeled
+            for label in chunk["_protocol_label"]
+        } == {"background_validation", "targeted_validation"}
     finally:
         corpus.close()

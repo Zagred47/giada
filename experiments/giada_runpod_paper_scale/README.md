@@ -70,5 +70,13 @@ manifest, without duplicating the HDF5 files. S1e remains development data;
 it is not a fresh paper test. Its preregistration is
 `s1e_hybrid_production_preregistration.json`.
 
+S1e generation subsequently passed every structural and support gate. The
+immutable observed outcome is recorded in `s1e_hybrid_production_result.json`.
+The paired GPU comparison is preregistered separately in
+`s1e_matched_training_preregistration.json`: it reuses the frozen S1
+architectures and optimization contract, adds stratified diagnostics without
+feeding them back into training, and selects the final 3,000-step checkpoint
+rather than selecting on validation.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

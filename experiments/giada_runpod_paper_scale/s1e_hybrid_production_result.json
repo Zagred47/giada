@@ -1,0 +1,54 @@
+{
+  "schema_version": "giada-runpod-s1e-hybrid-production-result-v1",
+  "project": "GIADA",
+  "stage": "s1e_hybrid_production",
+  "recorded_at": "2026-09-06",
+  "valid": true,
+  "blockers": [],
+  "composition": {
+    "total_transition_count": 600000,
+    "train_transition_count": 480000,
+    "validation_transition_count": 120000,
+    "long_stochastic_background_transition_count": 360000,
+    "confirmed_targeted_transition_count": 240000,
+    "validated_physical_shard_count": 180,
+    "physical_merge_performed": false
+  },
+  "registered_support_gates": {
+    "train_absolute_delta_ge_5mv": {
+      "observed": 11038,
+      "required": 1024,
+      "passed": true
+    },
+    "validation_absolute_delta_ge_5mv": {
+      "observed": 2734,
+      "required": 256,
+      "passed": true
+    },
+    "train_somatic_upcrossings_minus55mv": {
+      "observed": 4062,
+      "required": 512,
+      "passed": true
+    },
+    "validation_somatic_upcrossings_minus55mv": {
+      "observed": 1004,
+      "required": 128,
+      "passed": true
+    }
+  },
+  "protocol_contract": {
+    "background_protocol_count": 2,
+    "targeted_protocol_count": 12,
+    "every_protocol_present_in_both_splits": true,
+    "every_protocol_split_transition_count_exact": true
+  },
+  "scientific_interpretation": {
+    "s1_support_failure_repaired": true,
+    "hard_regimes_present_in_train_and_validation": true,
+    "data_methodology_confirmed_at_s1_scale": true,
+    "model_advantage_not_yet_claimed": true,
+    "next_required_experiment": "s1e_information_matched_gpu_comparison"
+  },
+  "paper_test_claimed": false,
+  "architecture_experiments_modified": false
+}

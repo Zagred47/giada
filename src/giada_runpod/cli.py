@@ -288,7 +288,13 @@ def command_train(args: argparse.Namespace) -> None:
     print(json.dumps({
         "valid": report["valid"],
         "median_rmse_mv": report["final_median_soma_rmse_mv"],
+        "median_active_rmse_mv": report["final_median_active_soma_rmse_mv"],
+        "median_spike_transition_rmse_mv": report[
+            "final_median_spike_transition_rmse_mv"
+        ],
+        "median_component_rmse_mv": report["final_median_component_rmse_mv"],
         "giada_reduction_vs_branch_elm": report["giada_relative_rmse_reduction_vs_branch_elm"],
+        "decision": report["registered_decision"],
     }, indent=2), flush=True)
 
 

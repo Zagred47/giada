@@ -1,7 +1,7 @@
 {
   "schema_version": "giada-runpod-paper-scale-preregistration-v1",
   "project": "GIADA",
-  "status": "s1e_hybrid_production_preregistered_not_run",
+  "status": "s1e_hybrid_production_validated_gpu_comparison_preregistered",
   "scientific_question": "Does GIADA's paired one-step soma RMSE advantage over the 8,002-parameter Branch-ELM core survive increasing authentic teacher time?",
   "historical_small_support_result": {
     "branch_elm_median_soma_rmse_mv": 14.823964911891716,
@@ -83,13 +83,15 @@
     "v2_correction": "Use the canonical-support slice [-600,0], add an analytic interval-feasibility invariant, and execute all eight samplers across multiple seeds in CI.",
     "v2_result_record": "s1b_v2_support_pilot_result.json",
     "v2_result": "The paired pilot recovered active support in both splits. High excitation plus low inhibition was robust under broad and fast temporal regimes; the fast arm was strongest. Pilot transitions remain development-only.",
-    "prospective_next_step": "Run the preregistered S1e two-component hybrid production corpus, validate both physical components, seal the logical composite, and repeat the aligned GPU comparison. S2 remains blocked until S1e support and comparison gates pass.",
+    "prospective_next_step": "S1e generation passed every preregistered structural and support gate. Run the frozen, information-matched S1e GPU comparison next. S2 remains blocked until its preregistered overall, active-stratum and seed-robustness gates pass.",
     "methodology_classification": "S1b is a NeuronIO stochastic control and must not be described as the primary GIADA data generator.",
     "pilot_role": "development-only input-support diagnosis, never a final held-out test",
     "s1c_result_record": "s1c_hybrid_pilot_result.json",
     "s1d_preregistration": "s1d_protocol_repair_preregistration.json",
     "s1d_result_record": "s1d_protocol_repair_result.json",
     "s1e_preregistration": "s1e_hybrid_production_preregistration.json",
+    "s1e_result_record": "s1e_hybrid_production_result.json",
+    "s1e_matched_training_preregistration": "s1e_matched_training_preregistration.json",
     "factorial_axes": [
       "full versus upper-range excitation",
       "full versus excitation-favouring inhibitory balance",

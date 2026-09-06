@@ -1,0 +1,59 @@
+{
+  "schema_version": "giada-runpod-s1e-matched-training-preregistration-v1",
+  "project": "GIADA",
+  "status": "preregistered_not_run",
+  "decision_date": "2026-09-06",
+  "question": "Does GIADA retain its one-step soma-voltage advantage over the 8,002-parameter Branch-ELM core when both are trained and evaluated on the validated event-rich S1e corpus?",
+  "immutable_inputs": {
+    "corpus_stage": "s1e_hybrid_production",
+    "train_transitions": 480000,
+    "validation_transitions": 120000,
+    "same_numeric_input_tensor": true,
+    "same_target": "authentic_NEURON_one_ms_soma_voltage_transition",
+    "teacher_endpoint_used_as_input": false,
+    "rollout_claimed": false
+  },
+  "models": {
+    "branch_elm_core_trainable_parameters": 8002,
+    "giada_voltage_bridge_trainable_parameters": 8985
+  },
+  "training": {
+    "seeds": [61017, 61029, 61043],
+    "steps": 3000,
+    "checkpoints": [100, 300, 1000, 3000],
+    "batch_size": 4096,
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.00001,
+    "active_delta_weight": 4.0,
+    "checkpoint_selection": "final_preregistered",
+    "validation_used_for_checkpoint_selection": false
+  },
+  "registered_metrics": {
+    "primary": "median final raw soma RMSE across three seeds",
+    "secondary": [
+      "median RMSE on absolute voltage transitions at least 5 mV",
+      "median RMSE on somatic -55 mV upcrossing transitions",
+      "background-component RMSE",
+      "targeted-component RMSE",
+      "per-protocol and per-family RMSE",
+      "three-seed win count",
+      "mini scaling law at 100, 300, 1000 and 3000 steps"
+    ]
+  },
+  "decision_rule": {
+    "primary_pass": "GIADA median final overall RMSE is lower than Branch-ELM",
+    "active_pass": "GIADA median final active-stratum RMSE is lower than Branch-ELM",
+    "seed_robustness_pass": "GIADA wins at least two of three seeds",
+    "s1e_advantage_confirmed": "all three passes are true",
+    "s2_authorized": "all three passes are true"
+  },
+  "anti_leakage": {
+    "normalization_fit": "train only",
+    "model_selection_from_validation": false,
+    "stratified_metrics_change_training": false,
+    "fresh_paper_test_accessed": false
+  },
+  "architecture_experiments_modified": false,
+  "paper_test_claimed": false
+}

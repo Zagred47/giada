@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import copy
+import hashlib
 import json
 import math
 import time
@@ -41,6 +41,8 @@ class MatchedTrainingConfig:
     minimum_train_active_transitions: int = 256
     minimum_validation_active_transitions: int = 64
     minimum_validation_somatic_upcrossings: int = 16
+    required_composite_stage: str | None = None
+    checkpoint_selection: str = "final_preregistered"
 
     def validate(self) -> None:
         if not self.seeds or self.training_steps <= 0 or self.batch_size <= 0:
@@ -61,6 +63,8 @@ class MatchedTrainingConfig:
             self.minimum_validation_somatic_upcrossings,
         ) < 0:
             raise ValueError("support minima cannot be negative")
+        if self.checkpoint_selection != "final_preregistered":
+            raise ValueError("validation-based checkpoint selection is forbidden")
 
     @classmethod
     def from_mapping(cls, values: Mapping[str, Any]) -> "MatchedTrainingConfig":
@@ -90,11 +94,24 @@ class LeanSomaCorpus:
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             if not manifest.get("valid"):
                 raise RuntimeError("composite corpus is not validated")
-        self.paths = [
-            path
-            for _, component_root, _ in corpus_components(self.root)
-            for path in sorted((component_root / "shards").glob("shard-*.h5"))
-        ]
+        self.paths = []
+        self.path_component: Dict[Path, str] = {}
+        self.path_trajectory_labels: Dict[Path, Dict[int, Dict[str, str]]] = {}
+        for component_id, component_root, plan_path in corpus_components(self.root):
+            labels: Dict[int, Dict[str, str]] = {}
+            if plan_path is not None and plan_path.is_file():
+                plan = json.loads(plan_path.read_text(encoding="utf-8"))
+                for shard in plan["shards"]:
+                    for row in shard["trajectories"]:
+                        labels[int(row["trajectory_index"])] = {
+                            "protocol": str(row.get("protocol", "unknown")),
+                            "family": str(row.get("protocol_family", "unknown")),
+                            "arm": str(row.get("protocol_arm", "unknown")),
+                        }
+            for path in sorted((component_root / "shards").glob("shard-*.h5")):
+                self.paths.append(path)
+                self.path_component[path] = component_id
+                self.path_trajectory_labels[path] = labels
         if not self.paths:
             raise FileNotFoundError(f"no paper-scale shards under {self.root}")
         self.rows: Dict[int, List[tuple[Path, np.ndarray]]] = {0: [], 1: []}
@@ -156,7 +173,14 @@ class LeanSomaCorpus:
         )
         return {name: self._read_sorted(handle, name, indices)[:, 0] if handle[name].ndim == 2 else self._read_sorted(handle, name, indices)[:, 0, :] for name in names}
 
-    def iter_raw(self, split_code: int, limit: int, chunk: int = 65536) -> Iterable[Dict[str, np.ndarray]]:
+    def iter_raw(
+        self,
+        split_code: int,
+        limit: int,
+        chunk: int = 65536,
+        *,
+        include_labels: bool = False,
+    ) -> Iterable[Dict[str, np.ndarray]]:
         remaining = int(limit)
         for path, available in self.rows[int(split_code)]:
             if remaining <= 0:
@@ -170,7 +194,31 @@ class LeanSomaCorpus:
                     "mean_child_delta_t_mv", "mechanism_state_t", "ion_state_t",
                     "causal_drive",
                 )
-                yield {name: np.asarray(handle[name][indices])[:, 0] if handle[name].ndim == 2 else np.asarray(handle[name][indices])[:, 0, :] for name in names}
+                result = {
+                    name: np.asarray(handle[name][indices])[:, 0]
+                    if handle[name].ndim == 2
+                    else np.asarray(handle[name][indices])[:, 0, :]
+                    for name in names
+                }
+                if include_labels:
+                    trajectory_indices = np.asarray(
+                        handle["trajectory_index"][indices], dtype=np.int64
+                    )
+                    lookup = self.path_trajectory_labels[path]
+                    rows = [lookup.get(int(index), {}) for index in trajectory_indices]
+                    result["_component_label"] = np.full(
+                        len(indices), self.path_component[path], dtype=object
+                    )
+                    result["_protocol_label"] = np.asarray(
+                        [row.get("protocol", "unknown") for row in rows], dtype=object
+                    )
+                    result["_family_label"] = np.asarray(
+                        [row.get("family", "unknown") for row in rows], dtype=object
+                    )
+                    result["_arm_label"] = np.asarray(
+                        [row.get("arm", "unknown") for row in rows], dtype=object
+                    )
+                yield result
             remaining -= len(take)
 
 
@@ -281,6 +329,7 @@ class PaperScaleMatchedTrainer:
         self.torch = torch
         from .corpus_audit import audit_soma_corpus
 
+        self.corpus_contract = self._validate_corpus_contract(corpus_root, config)
         self.support_preflight = audit_soma_corpus(corpus_root)
         train_support = self.support_preflight["splits"].get("train", {})
         validation_support = self.support_preflight["splits"].get(
@@ -317,19 +366,66 @@ class PaperScaleMatchedTrainer:
             )
         self.corpus = LeanSomaCorpus(corpus_root)
         self.output_dir = Path(output_dir)
-        if self.output_dir.exists():
-            raise FileExistsError(f"refusing to overwrite {self.output_dir}")
-        self.output_dir.mkdir(parents=True)
+        if (self.output_dir / "final_report.json").is_file():
+            raise FileExistsError(
+                f"completed result already exists in {self.output_dir}"
+            )
+        self.output_dir.mkdir(parents=True, exist_ok=True)
         self.config = config
         self.code_revision = str(code_revision)
         self.transform = FeatureTransform(self.corpus, config)
         self.transform.fit()
-        (self.output_dir / "normalization.json").write_text(
-            json.dumps(self.transform.to_dict(), indent=2, sort_keys=True), encoding="utf-8"
-        )
+        normalization_path = self.output_dir / "normalization.json"
+        normalization_payload = self.transform.to_dict()
+        if normalization_path.is_file():
+            existing = json.loads(normalization_path.read_text(encoding="utf-8"))
+            if existing != normalization_payload:
+                raise RuntimeError(
+                    "partial run normalization disagrees with the current corpus"
+                )
+        else:
+            normalization_path.write_text(
+                json.dumps(normalization_payload, indent=2, sort_keys=True),
+                encoding="utf-8",
+            )
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         if self.device.type != "cuda":
             raise RuntimeError("paper-scale matched training requires a CUDA GPU pod")
+
+    @staticmethod
+    def _validate_corpus_contract(
+        corpus_root: Path, config: MatchedTrainingConfig
+    ) -> Dict[str, Any]:
+        root = Path(corpus_root)
+        manifest_path = root / "composite_manifest.json"
+        if config.required_composite_stage is None:
+            return {"required_composite_stage": None, "verified": True}
+        if not manifest_path.is_file():
+            raise RuntimeError("S1e training requires a composite corpus manifest")
+        manifest_bytes = manifest_path.read_bytes()
+        manifest = json.loads(manifest_bytes)
+        if not manifest.get("valid"):
+            raise RuntimeError("S1e composite manifest is not valid")
+        if manifest.get("stage") != config.required_composite_stage:
+            raise RuntimeError(
+                f"wrong composite stage {manifest.get('stage')!r}; "
+                f"expected {config.required_composite_stage!r}"
+            )
+        audit_path = root / str(manifest.get("production_audit", "production_audit.json"))
+        if not audit_path.is_file():
+            raise RuntimeError("S1e production audit is missing")
+        audit_bytes = audit_path.read_bytes()
+        audit = json.loads(audit_bytes)
+        if not audit.get("valid") or audit.get("blockers"):
+            raise RuntimeError("S1e production audit did not pass")
+        return {
+            "required_composite_stage": config.required_composite_stage,
+            "verified": True,
+            "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
+            "production_audit_sha256": hashlib.sha256(audit_bytes).hexdigest(),
+            "total_transition_count": manifest.get("total_transition_count"),
+            "split_transition_counts": manifest.get("split_transition_counts"),
+        }
 
     @staticmethod
     def _trainable_count(model: Any) -> int:
@@ -365,15 +461,65 @@ class PaperScaleMatchedTrainer:
             raise RuntimeError(f"matched parameter contract changed: {counts} != {expected}")
         return {name: model.to(self.device) for name, model in models.items()}
 
+    @staticmethod
+    def _empty_metric_state() -> Dict[str, float | int]:
+        return {"squared": 0.0, "persistence_squared": 0.0, "count": 0}
+
+    @staticmethod
+    def _update_metric_state(
+        state: Dict[str, float | int],
+        error: np.ndarray,
+        target_mv: np.ndarray,
+        mask: np.ndarray,
+    ) -> None:
+        if not np.any(mask):
+            return
+        state["squared"] += float(np.sum(error[mask].astype(np.float64) ** 2))
+        state["persistence_squared"] += float(
+            np.sum(target_mv[mask].astype(np.float64) ** 2)
+        )
+        state["count"] += int(np.count_nonzero(mask))
+
+    @staticmethod
+    def _finish_metric_state(state: Mapping[str, float | int]) -> Dict[str, Any]:
+        count = int(state["count"])
+        if count == 0:
+            return {
+                "soma_rmse_mv": None,
+                "persistence_soma_rmse_mv": None,
+                "improvement_vs_persistence_fraction": None,
+                "example_count": 0,
+            }
+        rmse = math.sqrt(float(state["squared"]) / count)
+        persistence = math.sqrt(float(state["persistence_squared"]) / count)
+        return {
+            "soma_rmse_mv": rmse,
+            "persistence_soma_rmse_mv": persistence,
+            "improvement_vs_persistence_fraction": 1.0
+            - rmse / max(persistence, 1e-12),
+            "example_count": count,
+        }
+
     def _evaluate(self, model: Any) -> Dict[str, Any]:
         squared = 0.0
         persistence_squared = 0.0
         active_squared = 0.0
         active_count = 0
         count = 0
+        component_states: Dict[str, Dict[str, float | int]] = {}
+        protocol_states: Dict[str, Dict[str, float | int]] = {}
+        family_states: Dict[str, Dict[str, float | int]] = {}
+        activity_states = {
+            "quiescent_abs_delta_lt_1mv": self._empty_metric_state(),
+            "moderate_abs_delta_1_to_5mv": self._empty_metric_state(),
+            "active_abs_delta_ge_5mv": self._empty_metric_state(),
+            "somatic_upcrossing_minus55mv": self._empty_metric_state(),
+        }
         model.eval()
         with self.torch.no_grad():
-            for raw in self.corpus.iter_raw(1, self.config.evaluation_sample_limit):
+            for raw in self.corpus.iter_raw(
+                1, self.config.evaluation_sample_limit, include_labels=True
+            ):
                 features, target = self.transform.apply(raw)
                 prediction = model(self.torch.as_tensor(features, device=self.device)).cpu().numpy() * self.config.voltage_scale_mv
                 target_mv = target * self.config.voltage_scale_mv
@@ -384,6 +530,33 @@ class PaperScaleMatchedTrainer:
                 active_squared += float(np.sum(error[active].astype(np.float64) ** 2))
                 active_count += int(active.sum())
                 count += len(error)
+                absolute = np.abs(target_mv)
+                activity_masks = {
+                    "quiescent_abs_delta_lt_1mv": absolute < 1.0,
+                    "moderate_abs_delta_1_to_5mv": (absolute >= 1.0)
+                    & (absolute < 5.0),
+                    "active_abs_delta_ge_5mv": active,
+                    "somatic_upcrossing_minus55mv": (
+                        (raw["voltage_t_mv"] < -55.0)
+                        & (raw["voltage_t_plus_1_mv"] >= -55.0)
+                    ),
+                }
+                for label, mask in activity_masks.items():
+                    self._update_metric_state(
+                        activity_states[label], error, target_mv, mask
+                    )
+                for labels, states in (
+                    (raw["_component_label"], component_states),
+                    (raw["_protocol_label"], protocol_states),
+                    (raw["_family_label"], family_states),
+                ):
+                    for label in np.unique(labels):
+                        self._update_metric_state(
+                            states.setdefault(str(label), self._empty_metric_state()),
+                            error,
+                            target_mv,
+                            labels == label,
+                        )
         rmse = math.sqrt(squared / count)
         persistence = math.sqrt(persistence_squared / count)
         return {
@@ -396,11 +569,52 @@ class PaperScaleMatchedTrainer:
             ),
             "active_count": active_count,
             "example_count": count,
+            "activity_regime_metrics": {
+                label: self._finish_metric_state(state)
+                for label, state in activity_states.items()
+            },
+            "component_metrics": {
+                label: self._finish_metric_state(state)
+                for label, state in sorted(component_states.items())
+            },
+            "protocol_family_metrics": {
+                label: self._finish_metric_state(state)
+                for label, state in sorted(family_states.items())
+            },
+            "protocol_metrics": {
+                label: self._finish_metric_state(state)
+                for label, state in sorted(protocol_states.items())
+            },
         }
 
     def train(self) -> Dict[str, Any]:
         runs = []
+        resumed_seeds = []
+        configuration_payload = json.loads(json.dumps(asdict(self.config)))
         for seed in self.config.seeds:
+            seed_report_path = self.output_dir / f"seed{seed}_completed.json"
+            if seed_report_path.is_file():
+                seed_report = json.loads(
+                    seed_report_path.read_text(encoding="utf-8")
+                )
+                if (
+                    seed_report.get("code_revision") != self.code_revision
+                    or seed_report.get("configuration") != configuration_payload
+                ):
+                    raise RuntimeError(
+                        f"completed seed {seed} belongs to a different frozen run"
+                    )
+                seed_runs = seed_report.get("runs", [])
+                expected_rows = 2 * len(self.config.checkpoints)
+                if len(seed_runs) != expected_rows:
+                    raise RuntimeError(f"completed seed {seed} report is incomplete")
+                runs.extend(seed_runs)
+                resumed_seeds.append(seed)
+                print(
+                    f"[GIADA RunPod][matched seed={seed}] resumed completed seed",
+                    flush=True,
+                )
+                continue
             self.torch.manual_seed(seed)
             self.torch.cuda.manual_seed_all(seed)
             models = self._models()
@@ -408,7 +622,6 @@ class PaperScaleMatchedTrainer:
                 name: self.torch.optim.AdamW(model.parameters(), lr=self.config.learning_rate, weight_decay=self.config.weight_decay)
                 for name, model in models.items()
             }
-            best = {name: (math.inf, None) for name in models}
             rng = np.random.default_rng(seed)
             started = time.perf_counter()
             for step in range(1, self.config.training_steps + 1):
@@ -432,36 +645,144 @@ class PaperScaleMatchedTrainer:
                     for name, model in models.items():
                         metrics = self._evaluate(model)
                         runs.append({"seed": seed, "model": name, "step": step, **metrics})
-                        if metrics["soma_rmse_mv"] < best[name][0]:
-                            best[name] = (metrics["soma_rmse_mv"], copy.deepcopy(model.state_dict()))
+                        self.torch.save(
+                            {
+                                "seed": seed,
+                                "model": name,
+                                "step": step,
+                                "state_dict": model.state_dict(),
+                                "normalization": self.transform.to_dict(),
+                            },
+                            self.output_dir / f"{name}_seed{seed}_step{step}.pt",
+                        )
                 if step == 1 or step == self.config.training_steps or step % self.config.progress_interval == 0:
                     eta = (time.perf_counter() - started) / step * (self.config.training_steps - step)
                     compact = " ".join(f"{name}={value:.4g}" for name, value in losses.items())
                     print(f"[GIADA RunPod][matched seed={seed}] {step}/{self.config.training_steps} ETA {eta/60:.1f} min {compact}", flush=True)
             for name, model in models.items():
-                model.load_state_dict(best[name][1])
-                self.torch.save({"seed": seed, "model": name, "state_dict": model.state_dict(), "normalization": self.transform.to_dict()}, self.output_dir / f"{name}_seed{seed}.pt")
+                self.torch.save(
+                    {
+                        "seed": seed,
+                        "model": name,
+                        "step": self.config.training_steps,
+                        "state_dict": model.state_dict(),
+                        "normalization": self.transform.to_dict(),
+                    },
+                    self.output_dir / f"{name}_seed{seed}.pt",
+                )
+            seed_runs = [row for row in runs if row["seed"] == seed]
+            seed_payload = {
+                "schema_version": "giada-paper-scale-matched-seed-v1",
+                "code_revision": self.code_revision,
+                "configuration": configuration_payload,
+                "seed": seed,
+                "runs": seed_runs,
+            }
+            temporary = seed_report_path.with_suffix(".json.tmp")
+            temporary.write_text(
+                json.dumps(seed_payload, indent=2, sort_keys=True), encoding="utf-8"
+            )
+            temporary.replace(seed_report_path)
         final = [row for row in runs if row["step"] == self.config.training_steps]
         medians = {
             name: float(np.median([row["soma_rmse_mv"] for row in final if row["model"] == name]))
             for name in ("branch_elm_core", "giada_voltage_bridge")
         }
+
+        def nested_value(row: Mapping[str, Any], *path: str) -> Any:
+            value: Any = row
+            for key in path:
+                value = value[key]
+            return value
+
+        def paired_medians(*path: str) -> Dict[str, float | None]:
+            result: Dict[str, float | None] = {}
+            for name in ("branch_elm_core", "giada_voltage_bridge"):
+                values = [
+                    nested_value(row, *path)
+                    for row in final
+                    if row["model"] == name
+                ]
+                finite = [float(value) for value in values if value is not None]
+                result[name] = float(np.median(finite)) if finite else None
+            return result
+
+        active_medians = paired_medians("active_soma_rmse_mv")
+        spike_medians = paired_medians(
+            "activity_regime_metrics",
+            "somatic_upcrossing_minus55mv",
+            "soma_rmse_mv",
+        )
+        component_medians = {
+            component: paired_medians(
+                "component_metrics", component, "soma_rmse_mv"
+            )
+            for component in ("background", "targeted")
+        }
+        seed_wins = {
+            str(seed): next(
+                row["soma_rmse_mv"]
+                for row in final
+                if row["seed"] == seed and row["model"] == "giada_voltage_bridge"
+            )
+            < next(
+                row["soma_rmse_mv"]
+                for row in final
+                if row["seed"] == seed and row["model"] == "branch_elm_core"
+            )
+            for seed in self.config.seeds
+        }
+        primary_passed = (
+            medians["giada_voltage_bridge"] < medians["branch_elm_core"]
+        )
+        active_passed = bool(
+            active_medians["giada_voltage_bridge"] is not None
+            and active_medians["branch_elm_core"] is not None
+            and active_medians["giada_voltage_bridge"]
+            < active_medians["branch_elm_core"]
+        )
+        seed_robustness_passed = sum(seed_wins.values()) >= 2
         report = {
             "schema_version": "giada-paper-scale-matched-training-v1",
             "valid": True,
             "code_revision": self.code_revision,
+            "device": str(self.device),
             "same_numeric_input": True,
             "same_target": "authentic_NEURON_one_ms_soma_voltage_transition",
             "same_sample_order": True,
             "same_optimizer_and_loss": True,
             "rollout_claimed": False,
+            "checkpoint_selection": self.config.checkpoint_selection,
+            "validation_used_for_checkpoint_selection": False,
+            "corpus_contract": self.corpus_contract,
             "train_transition_count": self.corpus.train_count,
             "validation_transition_count": self.corpus.validation_count,
             "configuration": asdict(self.config),
             "corpus_support_preflight": self.support_preflight,
             "mini_scaling_law_runs": runs,
             "final_median_soma_rmse_mv": medians,
+            "final_median_active_soma_rmse_mv": active_medians,
+            "final_median_spike_transition_rmse_mv": spike_medians,
+            "final_median_component_rmse_mv": component_medians,
+            "final_seed_wins": seed_wins,
             "giada_relative_rmse_reduction_vs_branch_elm": 1.0 - medians["giada_voltage_bridge"] / medians["branch_elm_core"],
+            "registered_decision": {
+                "primary_overall_median_passed": primary_passed,
+                "active_stratum_median_passed": active_passed,
+                "at_least_two_of_three_seed_wins": seed_robustness_passed,
+                "s1e_advantage_confirmed": (
+                    primary_passed and active_passed and seed_robustness_passed
+                ),
+                "s2_authorized": (
+                    primary_passed and active_passed and seed_robustness_passed
+                ),
+            },
+            "resumed_completed_seeds": resumed_seeds,
         }
-        (self.output_dir / "final_report.json").write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
+        final_path = self.output_dir / "final_report.json"
+        temporary = final_path.with_suffix(".json.tmp")
+        temporary.write_text(
+            json.dumps(report, indent=2, sort_keys=True), encoding="utf-8"
+        )
+        temporary.replace(final_path)
         return report

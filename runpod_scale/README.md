@@ -398,11 +398,38 @@ python -m src.giada_runpod.cli train \
   --elm-repo /workspace/giada
 ```
 
+The original command above documents the frozen S1 run. S1e has now passed
+all generation and support gates. On a GPU pod attached to the same network
+volume, launch its preregistered information-matched comparison as one
+connection-independent job:
+
+```bash
+cd /workspace/giada
+git fetch origin runpod/paper-scale-data
+git checkout --detach FETCH_HEAD
+python -m pip install -r runpod_scale/requirements-gpu.txt
+
+export GIADA_ROOT=/workspace/giada
+export GIADA_GPU_PYTHON=python
+export GIADA_S1E_CORPUS=/workspace/giada-data/s1e-hybrid-production-v1/composite
+export GIADA_S1E_RESULTS=/workspace/giada-results/s1e-matched-v1
+
+mkdir -p /workspace/giada-results
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s1e_matched_training.sh" \
+  >/workspace/giada-results/s1e-matched-v1.log 2>&1 &
+echo $! | tee /workspace/giada-results/s1e-matched-v1.pid
+tail -F /workspace/giada-results/s1e-matched-v1.log
+```
+
 The run saves paired checkpoints at 100, 300, 1,000 and 3,000 steps for each
-seed. These checkpoints are the mini scaling law. The registered primary
-output is the median raw soma RMSE and GIADA's relative RMSE reduction versus
-Branch-ELM. The held-out event-rich and OOD corpora remain separate final
-tests; they are not used for normalization, tuning, or checkpoint selection.
+seed. Completed seeds are restartable; a partially interrupted seed is
+retrained from its frozen initialization. The final 3,000-step checkpoint is
+preregistered and validation is never used for checkpoint selection. In the
+same evaluation pass the code reports global, active, spike-transition,
+component, family and protocol metrics. These strata are diagnostic outputs
+only and do not change training. The held-out event-rich and OOD corpora remain
+separate final tests.
 
 ## What remains in the Kaggle track
 
