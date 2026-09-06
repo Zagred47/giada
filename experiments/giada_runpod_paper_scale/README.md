@@ -78,5 +78,13 @@ architectures and optimization contract, adds stratified diagnostics without
 feeding them back into training, and selects the final 3,000-step checkpoint
 rather than selecting on validation.
 
+The S1e GPU comparison then passed all three preregistered gates. GIADA reduced
+median overall soma RMSE by 20.7%, active-transition RMSE by 25.2%, and
+somatic-upcrossing RMSE by 31.0% relative to the information-matched
+8,002-parameter Branch-ELM core. It won all three seeds and every per-protocol
+median comparison. The immutable result and artifact hashes are recorded in
+`s1e_matched_training_result.json`. This authorizes S2 under a new frozen
+contract; it is not an autoregressive-rollout or fresh paper-test claim.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

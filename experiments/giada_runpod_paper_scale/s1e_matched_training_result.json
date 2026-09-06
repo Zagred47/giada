@@ -1,0 +1,242 @@
+{
+  "schema_version": "giada-runpod-s1e-matched-training-result-v1",
+  "project": "GIADA",
+  "stage": "s1e_information_matched_gpu_comparison",
+  "recorded_at": "2026-09-06",
+  "valid": true,
+  "blockers": [],
+  "preregistration": "s1e_matched_training_preregistration.json",
+  "code_revision": "cf7e781614b7e050068e9749d5cb88b71dde9d26",
+  "artifact": {
+    "archive_name": "giada_s1e_information_matched_gpu_comparison.zip",
+    "archive_size_bytes": 852633,
+    "archive_sha256": "0f1e8f622b36627185d960cdff38a6cc667b5df77fba9eb89e870a16ad494275",
+    "final_report_sha256": "8553cec0e7a51af983a20f985ae60d8439578c0d8b152ae65ae428f6b9d4ad85",
+    "normalization_sha256": "cf6920f78f2601fcb60c158ab4515c815e925a6e45aa969e77a5f508927f8c0a",
+    "checkpoint_file_count": 30,
+    "completed_seed_report_count": 3
+  },
+  "execution_contract": {
+    "test_count_passed": 20,
+    "test_count_failed": 0,
+    "checkpoint_selection": "final_preregistered",
+    "validation_used_for_checkpoint_selection": false,
+    "same_numeric_input": true,
+    "same_sample_order": true,
+    "same_optimizer_and_loss": true,
+    "same_target": "authentic_NEURON_one_ms_soma_voltage_transition",
+    "rollout_claimed": false,
+    "train_transition_count": 480000,
+    "validation_transition_count": 120000,
+    "branch_elm_trainable_parameters": 8002,
+    "giada_trainable_parameters": 8985,
+    "seeds": [61017, 61029, 61043]
+  },
+  "corpus_identity": {
+    "stage": "s1e_hybrid_production",
+    "manifest_sha256": "8cf26d0d0a62682b0a398553febdd915c346978d4fd8f43fe6d77f14b3325abc",
+    "production_audit_sha256": "6aeb510e8c4ded1df0deab2582a62c0e6799d4ce2e8efe329710ae2868647752"
+  },
+  "registered_metrics": {
+    "overall_soma_rmse_mv": {
+      "branch_elm_core": 3.215638059138427,
+      "giada_voltage_bridge": 2.5485576007356134,
+      "giada_reduction_fraction": 0.2074488627558867
+    },
+    "active_absolute_delta_ge_5mv_rmse_mv": {
+      "branch_elm_core": 16.07410249745553,
+      "giada_voltage_bridge": 12.028563652832991,
+      "giada_reduction_fraction": 0.25168054298913,
+      "validation_example_count": 2734
+    },
+    "somatic_upcrossing_minus55mv_rmse_mv": {
+      "branch_elm_core": 20.219135787693975,
+      "giada_voltage_bridge": 13.945128292222279,
+      "giada_reduction_fraction": 0.310300477792442,
+      "validation_example_count": 1004
+    },
+    "background_component_rmse_mv": {
+      "branch_elm_core": 2.4302077357400482,
+      "giada_voltage_bridge": 2.106138898100599,
+      "giada_reduction_fraction": 0.13335026173833,
+      "validation_example_count": 72000
+    },
+    "targeted_component_rmse_mv": {
+      "branch_elm_core": 4.1221300149525515,
+      "giada_voltage_bridge": 3.095825095758733,
+      "giada_reduction_fraction": 0.248974417466459,
+      "validation_example_count": 48000
+    }
+  },
+  "protocol_family_median_rmse_mv": {
+    "bap_repair_matrix": {
+      "branch_elm_core": 3.56729264872992,
+      "giada_voltage_bridge": 2.80736182956351,
+      "giada_reduction_fraction": 0.21302732744311625
+    },
+    "calcium_boundary": {
+      "branch_elm_core": 4.670887169691402,
+      "giada_voltage_bridge": 3.8446343723437253,
+      "giada_reduction_fraction": 0.1768941889046457
+    },
+    "neuronio_background": {
+      "branch_elm_core": 2.4302077357400482,
+      "giada_voltage_bridge": 2.106138898100599,
+      "giada_reduction_fraction": 0.13335026173832987
+    },
+    "nmda_boundary": {
+      "branch_elm_core": 5.0030052141620995,
+      "giada_voltage_bridge": 3.4200072279770826,
+      "giada_reduction_fraction": 0.31640942162202734
+    },
+    "somatic_repair": {
+      "branch_elm_core": 3.518799718073652,
+      "giada_voltage_bridge": 1.9428772692143943,
+      "giada_reduction_fraction": 0.44785795587194943
+    }
+  },
+  "per_protocol_median_rmse_mv": {
+    "giada_hybrid_calcium_paired_n12_v1": {
+      "branch_elm_core": 6.829352768658022,
+      "giada_voltage_bridge": 5.757381923629589,
+      "giada_reduction_fraction": 0.15696521783850925
+    },
+    "giada_hybrid_calcium_paired_n8_v1": {
+      "branch_elm_core": 4.622912753752623,
+      "giada_voltage_bridge": 3.327280672443572,
+      "giada_reduction_fraction": 0.2802631480028104
+    },
+    "giada_hybrid_calcium_unpaired_n12_v1": {
+      "branch_elm_core": 0.8022489279804225,
+      "giada_voltage_bridge": 0.1943983529395577,
+      "giada_reduction_fraction": 0.7576832499746242
+    },
+    "giada_hybrid_nmda_n12_v1": {
+      "branch_elm_core": 6.984729098991859,
+      "giada_voltage_bridge": 4.783796677605546,
+      "giada_reduction_fraction": 0.3151063398727926
+    },
+    "giada_hybrid_nmda_n8_v1": {
+      "branch_elm_core": 1.128575101427758,
+      "giada_voltage_bridge": 0.6802264652517767,
+      "giada_reduction_fraction": 0.39726965056093877
+    },
+    "giada_repair_bap_assist_only_n12_b3_w400_v1": {
+      "branch_elm_core": 0.8022333563280217,
+      "giada_voltage_bridge": 0.19446881024617316,
+      "giada_reduction_fraction": 0.7575907200664221
+    },
+    "giada_repair_bap_p2_factor3_combined_v1": {
+      "branch_elm_core": 5.334736816780643,
+      "giada_voltage_bridge": 4.4284896756392875,
+      "giada_reduction_fraction": 0.16987663539290565
+    },
+    "giada_repair_bap_p2_factor3_soma_only_v1": {
+      "branch_elm_core": 4.584981162407806,
+      "giada_voltage_bridge": 3.8710961800124877,
+      "giada_reduction_fraction": 0.1557007449122041
+    },
+    "giada_repair_bap_p3_factor3_combined_v1": {
+      "branch_elm_core": 3.0260886093679797,
+      "giada_voltage_bridge": 1.7389846435098713,
+      "giada_reduction_fraction": 0.4253358483534061
+    },
+    "giada_repair_bap_p3_factor3_soma_only_v1": {
+      "branch_elm_core": 2.0846161312604736,
+      "giada_voltage_bridge": 1.28430913578342,
+      "giada_reduction_fraction": 0.38391096733629515
+    },
+    "giada_repair_somatic_3na_negative_v1": {
+      "branch_elm_core": 1.4024682383517402,
+      "giada_voltage_bridge": 0.7687732144614843,
+      "giada_reduction_fraction": 0.4518426917354008
+    },
+    "giada_repair_somatic_6na_positive_v1": {
+      "branch_elm_core": 4.7746189117295,
+      "giada_voltage_bridge": 2.656750257462261,
+      "giada_reduction_fraction": 0.4435681032185431
+    },
+    "neuronio_nmda_ergodic_v1": {
+      "branch_elm_core": 0.8139031672230796,
+      "giada_voltage_bridge": 0.47043157038154093,
+      "giada_reduction_fraction": 0.4220054801032589
+    },
+    "neuronio_nmda_pilot_ex_high_inh_low_time_fast_v2": {
+      "branch_elm_core": 3.37020880655593,
+      "giada_voltage_bridge": 2.8996829575160565,
+      "giada_reduction_fraction": 0.13961326316772382
+    }
+  },
+  "final_per_seed": [
+    {
+      "seed": 61017,
+      "branch_elm_soma_rmse_mv": 3.215638059138427,
+      "giada_soma_rmse_mv": 2.5485576007356134,
+      "giada_won": true
+    },
+    {
+      "seed": 61029,
+      "branch_elm_soma_rmse_mv": 3.009069441098428,
+      "giada_soma_rmse_mv": 2.5004651742343196,
+      "giada_won": true
+    },
+    {
+      "seed": 61043,
+      "branch_elm_soma_rmse_mv": 6.955489378246985,
+      "giada_soma_rmse_mv": 2.6847013292846076,
+      "giada_won": true
+    }
+  ],
+  "mini_scaling_law": [
+    {
+      "step": 100,
+      "branch_elm_median_soma_rmse_mv": 6.9833081116160445,
+      "giada_median_soma_rmse_mv": 4.28366797060444,
+      "giada_reduction_fraction": 0.38658470997735583,
+      "giada_seed_wins": 3
+    },
+    {
+      "step": 300,
+      "branch_elm_median_soma_rmse_mv": 5.384309037873033,
+      "giada_median_soma_rmse_mv": 4.2139159157418105,
+      "giada_reduction_fraction": 0.21737108956761575,
+      "giada_seed_wins": 3
+    },
+    {
+      "step": 1000,
+      "branch_elm_median_soma_rmse_mv": 4.683026363953153,
+      "giada_median_soma_rmse_mv": 3.143753041521637,
+      "giada_reduction_fraction": 0.32869200444392677,
+      "giada_seed_wins": 3
+    },
+    {
+      "step": 3000,
+      "branch_elm_median_soma_rmse_mv": 3.215638059138427,
+      "giada_median_soma_rmse_mv": 2.5485576007356134,
+      "giada_reduction_fraction": 0.2074488627558867,
+      "giada_seed_wins": 3
+    }
+  ],
+  "decision": {
+    "primary_overall_median_passed": true,
+    "active_stratum_median_passed": true,
+    "at_least_two_of_three_seed_wins": true,
+    "observed_seed_wins": 3,
+    "all_protocol_median_rmse_comparisons_favour_giada": true,
+    "s1e_advantage_confirmed": true,
+    "s2_authorized": true
+  },
+  "scientific_interpretation": {
+    "confirmed_claim": "GIADA outperforms the information-matched Branch-ELM core for one-step soma-voltage prediction on the event-rich S1e development-validation corpus.",
+    "important_observation": "The relative advantage is larger on active and somatic-upcrossing strata than on the overall validation mixture.",
+    "robustness_observation": "GIADA wins all three preregistered seeds and has markedly lower between-seed dispersion at the final checkpoint.",
+    "not_claimed": [
+      "autoregressive rollout superiority",
+      "full-morphology state superiority",
+      "fresh sealed paper-test superiority"
+    ],
+    "next_required_stage": "S2 scale-up under a separately frozen contract"
+  },
+  "paper_test_claimed": false,
+  "architecture_experiments_modified": false
+}
