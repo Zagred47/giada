@@ -15,7 +15,8 @@ as the amount of authentic teacher time increases?
 - Both models consume the same numeric tensor.
 - Both predict the raw authentic NEURON soma transition
   `V(t+1 ms) - V(t)`.
-- Both use the same samples, order, loss, optimizer family, and three seeds.
+- Both use the same samples, order, loss, optimizer family, and paired seeds
+  fixed by each stage contract (five seeds from S2 onward).
 - This comparison is one-step only; it does not make an autoregressive claim.
 - S1/S1b reproduce the published NeuronIO NMDA sampler as a stochastic control.
   They are not the primary GIADA data methodology.
@@ -503,6 +504,54 @@ fourteen protocols. Active and somatic-upcrossing reductions were 15.0% and
 13.5%. All preregistered gates passed, authorizing a separately preregistered
 S3 run. The immutable local result record is
 `experiments/giada_runpod_paper_scale/s2_matched_training_result.json`.
+
+## S3: preregistered eightfold expansion of S2
+
+S3 is authorized and preregistered, but has not yet been run. It preserves the
+validated S2 method exactly and multiplies every component, protocol and split
+count by eight: 17.28 million background plus 11.52 million targeted
+transitions. The two physical components remain separate and are joined only
+by the validated composite manifest.
+
+On the CPU Pod attached to the persistent network volume:
+
+```bash
+cd /workspace/giada
+git config --global --add safe.directory /workspace/giada
+git config --global --add safe.directory /workspace/neuron_as_deep_net
+git fetch origin runpod/paper-scale-data
+git checkout --detach FETCH_HEAD
+/workspace/.giada-venv/bin/python -m pytest tests/test_giada_runpod_scale.py -q
+
+export GIADA_ROOT=/workspace/giada
+export GIADA_TEACHER_ROOT=/workspace/neuron_as_deep_net
+export GIADA_PYTHON=/workspace/.giada-venv/bin/python
+export GIADA_WORKER_COUNT=8
+export GIADA_S3_ROOT=/workspace/giada-data/s3-hybrid-production-v1
+
+mkdir -p "$GIADA_S3_ROOT/logs"
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s3_hybrid_corpus.sh" \
+  >"$GIADA_S3_ROOT/logs/pipeline.log" 2>&1 &
+echo $! | tee "$GIADA_S3_ROOT/logs/pipeline.pid"
+tail -F "$GIADA_S3_ROOT/logs/pipeline.log"
+```
+
+The launcher is resumable at shard granularity and processes background before
+targeted episodes. Disconnecting the web terminal does not stop it. Do not
+start GPU training merely because generation reaches 100%: first require
+`composite/production_audit.json` to report `valid: true`, compute and record
+the frozen corpus hashes and physical-shard fingerprint, then create the S3
+GPU configuration from the already registered settings. This deliberate
+pause prevents a changed or partially persisted corpus from entering training.
+
+S3 training is already scientifically fixed at five paired seeds, 144,000
+steps, batch size 4,096 and final-checkpoint selection. It will evaluate the
+entire 5.76-million-transition development split. S4 requires GIADA to retain
+lower median overall, active and somatic-upcrossing RMSE, at least four of five
+seed wins, all five family wins and at least twelve of fourteen protocol wins.
+The scale track remains one-step soma-voltage only and cannot select a new
+architecture or make a fresh-test, full-state or rollout claim.
 
 ## What remains in the Kaggle track
 

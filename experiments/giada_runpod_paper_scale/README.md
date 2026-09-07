@@ -117,5 +117,24 @@ soma-voltage development-validation result, not an autoregressive, full-state,
 or fresh sealed paper-test claim. Exact metrics and artifact hashes are in
 `s2_matched_training_result.json`.
 
+S3 is now prospectively frozen in `s3_hybrid_scale_preregistration.json`.
+It multiplies every S2 component, protocol and split count by exactly eight:
+17.28 million long-background and 11.52 million targeted transitions, for
+28.8 million total. The teacher, 60/40 mixture, 80/20 complete-trajectory
+split, canonical weights, causal-release semantics, model definitions, loss,
+optimizer and five paired seeds remain unchanged. New root seeds keep S3
+teacher trajectories independent of S2.
+
+The S3 CPU corpus must pass exact structural, cryptographic, per-protocol and
+distribution-fidelity gates before a GPU configuration is created. Training
+is preregistered for 144,000 steps, preserving 25.6 effective train-corpus
+passes. Unlike the earlier one-million-row cap, every registered S3
+checkpoint will evaluate the complete 5.76-million-transition development
+split; this prevents physical component ordering from silently biasing the
+comparison. Because the somatic-upcrossing margin narrowed from 31.0% at S1e
+to 13.5% at S2, a positive upcrossing advantage is now an explicit safety gate
+for S4 rather than a descriptive metric. This addition was frozen before S3
+generation and does not modify either architecture.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

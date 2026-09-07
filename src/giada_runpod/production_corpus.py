@@ -88,6 +88,43 @@ PRODUCTION_PROFILES: Dict[str, Dict[str, Any]] = {
             ("validation", "somatic_upcrossings_minus55mv"): (4_518, 7_530),
         },
     },
+    "s3": {
+        "composite_stage": "s3_hybrid_production",
+        "audit_schema": "giada-runpod-s3-production-audit-v1",
+        "total": 28_800_000,
+        "splits": {"train": 23_040_000, "validation": 5_760_000},
+        "components": {
+            "background": {
+                "stage": "s3_hybrid_background",
+                "purpose": "giada_hybrid_production_background",
+                "transition_count": 17_280_000,
+            },
+            "targeted": {
+                "stage": "s3_hybrid_targeted",
+                "purpose": "giada_hybrid_production_targeted",
+                "transition_count": 11_520_000,
+            },
+        },
+        "protocol_splits": {
+            **{
+                protocol: {"train": 6_912_000, "validation": 1_728_000}
+                for protocol in PRODUCTION_BACKGROUND_PROTOCOLS
+            },
+            **{
+                protocol: {"train": 768_000, "validation": 192_000}
+                for protocol in PRODUCTION_TARGET_PROTOCOLS
+            },
+        },
+        # Frozen before S3 generation: 75--125% bands around eight times the
+        # observed S2 support. These detect both support collapse and a major
+        # distribution shift without tuning the protocol mixture post hoc.
+        "support_ranges": {
+            ("train", "absolute_delta_ge_5mv_count"): (396_630, 661_050),
+            ("validation", "absolute_delta_ge_5mv_count"): (99_408, 165_680),
+            ("train", "somatic_upcrossings_minus55mv"): (145_614, 242_690),
+            ("validation", "somatic_upcrossings_minus55mv"): (36_564, 60_940),
+        },
+    },
 }
 
 
@@ -322,4 +359,18 @@ def build_and_audit_s2_composite(
 
     return build_and_audit_hybrid_composite(
         background_root, targeted_root, output_root, scale="s2", progress=progress
+    )
+
+
+def build_and_audit_s3_composite(
+    background_root: Path,
+    targeted_root: Path,
+    output_root: Path,
+    *,
+    progress=None,
+) -> Dict[str, Any]:
+    """Seal the preregistered 28.8-million-transition S3 corpus."""
+
+    return build_and_audit_hybrid_composite(
+        background_root, targeted_root, output_root, scale="s3", progress=progress
     )

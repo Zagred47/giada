@@ -46,6 +46,7 @@ class MatchedTrainingConfig:
     minimum_seed_wins: int = 2
     minimum_family_wins: int = 0
     minimum_protocol_wins: int = 0
+    require_spike_transition_advantage: bool = False
     scaling_reference_seeds: tuple[int, ...] = ()
     expected_corpus_hashes: Mapping[str, str] = field(default_factory=dict)
 
@@ -76,7 +77,10 @@ class MatchedTrainingConfig:
             raise ValueError("breadth minima cannot be negative")
         if not set(self.scaling_reference_seeds).issubset(self.seeds):
             raise ValueError("scaling_reference_seeds must be registered training seeds")
-        if self.required_composite_stage == "s2_hybrid_production":
+        if self.required_composite_stage in {
+            "s2_hybrid_production",
+            "s3_hybrid_production",
+        }:
             required_hashes = {
                 "background_plan_sha256",
                 "background_validation_sha256",
@@ -87,12 +91,16 @@ class MatchedTrainingConfig:
                 "shard_marker_fingerprint_sha256",
             }
             if set(self.expected_corpus_hashes) != required_hashes:
-                raise ValueError("S2 requires the complete frozen corpus hash contract")
+                raise ValueError(
+                    "S2/S3 requires the complete frozen corpus hash contract"
+                )
             if any(
                 len(value) != 64 or any(char not in "0123456789abcdef" for char in value)
                 for value in self.expected_corpus_hashes.values()
             ):
-                raise ValueError("S2 corpus hashes must be lowercase SHA-256 values")
+                raise ValueError(
+                    "S2/S3 corpus hashes must be lowercase SHA-256 values"
+                )
 
     @classmethod
     def from_mapping(cls, values: Mapping[str, Any]) -> "MatchedTrainingConfig":
@@ -486,7 +494,7 @@ class PaperScaleMatchedTrainer:
             ]
             if not fingerprint_report["valid"]:
                 raise RuntimeError(
-                    "one or more physical S2 shards no longer match their completion marker"
+                    "one or more physical frozen shards no longer match their completion marker"
                 )
             mismatches = {
                 key: {"expected": expected, "observed": actual_hashes.get(key)}
@@ -494,7 +502,7 @@ class PaperScaleMatchedTrainer:
                 if actual_hashes.get(key) != expected
             }
             if mismatches:
-                raise RuntimeError(f"frozen S2 corpus hash mismatch: {mismatches}")
+                raise RuntimeError(f"frozen corpus hash mismatch: {mismatches}")
         return {
             "required_composite_stage": config.required_composite_stage,
             "verified": True,
@@ -834,6 +842,12 @@ class PaperScaleMatchedTrainer:
             and active_medians["giada_voltage_bridge"]
             < active_medians["branch_elm_core"]
         )
+        spike_transition_passed = bool(
+            spike_medians["giada_voltage_bridge"] is not None
+            and spike_medians["branch_elm_core"] is not None
+            and spike_medians["giada_voltage_bridge"]
+            < spike_medians["branch_elm_core"]
+        )
         seed_robustness_passed = (
             sum(seed_wins.values()) >= self.config.minimum_seed_wins
         )
@@ -965,8 +979,15 @@ class PaperScaleMatchedTrainer:
             and active_passed
             and seed_robustness_passed
             and breadth_passed
+            and (
+                spike_transition_passed
+                or not self.config.require_spike_transition_advantage
+            )
         )
-        is_s2 = self.config.required_composite_stage == "s2_hybrid_production"
+        stage = self.config.required_composite_stage
+        is_s1e = stage == "s1e_hybrid_production"
+        is_s2 = stage == "s2_hybrid_production"
+        is_s3 = stage == "s3_hybrid_production"
         report = {
             "schema_version": "giada-paper-scale-matched-training-v1",
             "valid": True,
@@ -1009,6 +1030,10 @@ class PaperScaleMatchedTrainer:
             "registered_decision": {
                 "primary_overall_median_passed": primary_passed,
                 "active_stratum_median_passed": active_passed,
+                "spike_transition_advantage_required": (
+                    self.config.require_spike_transition_advantage
+                ),
+                "spike_transition_median_passed": spike_transition_passed,
                 "minimum_seed_wins_required": self.config.minimum_seed_wins,
                 "observed_seed_wins": int(sum(seed_wins.values())),
                 "seed_robustness_passed": seed_robustness_passed,
@@ -1025,16 +1050,22 @@ class PaperScaleMatchedTrainer:
                 "breadth_passed": breadth_passed,
                 "all_registered_gates_passed": all_registered_passed,
                 "s1e_advantage_confirmed": (
-                    all_registered_passed if not is_s2 else None
+                    all_registered_passed if is_s1e else None
                 ),
                 "s2_advantage_confirmed": (
                     all_registered_passed if is_s2 else None
                 ),
+                "s3_advantage_confirmed": (
+                    all_registered_passed if is_s3 else None
+                ),
                 "s2_authorized": (
-                    all_registered_passed if not is_s2 else None
+                    all_registered_passed if is_s1e else None
                 ),
                 "s3_authorized": (
                     all_registered_passed if is_s2 else None
+                ),
+                "s4_authorized": (
+                    all_registered_passed if is_s3 else None
                 ),
             },
             "resumed_completed_seeds": resumed_seeds,

@@ -1,0 +1,138 @@
+{
+  "schema_version": "giada-runpod-s3-hybrid-scale-preregistration-v1",
+  "project": "GIADA",
+  "status": "preregistered_not_run",
+  "decision_date": "2026-09-07",
+  "question": "Does the information-matched GIADA one-step soma-voltage advantage remain robust when every validated S2 data component is expanded by exactly eight, without changing either architecture?",
+  "predecessors": [
+    "s2_hybrid_production_result.json",
+    "s2_matched_training_result.json"
+  ],
+  "authorization": {
+    "s2_all_registered_gates_passed": true,
+    "s2_s3_authorized": true,
+    "architecture_selection_on_s2_authorized": false
+  },
+  "corpus": {
+    "total_transition_count": 28800000,
+    "train_transition_count": 23040000,
+    "validation_transition_count": 5760000,
+    "physical_merge_performed": false,
+    "long_stochastic_background": {
+      "transition_count": 17280000,
+      "fraction": 0.6,
+      "trajectory_duration_ms": 6000,
+      "trajectory_count": 2880,
+      "protocol_count": 2,
+      "train_trajectories_per_protocol": 1152,
+      "validation_trajectories_per_protocol": 288
+    },
+    "confirmed_targeted": {
+      "transition_count": 11520000,
+      "fraction": 0.4,
+      "trajectory_duration_ms": 80,
+      "trajectory_count": 144000,
+      "protocol_count": 12,
+      "train_episodes_per_protocol": 9600,
+      "validation_episodes_per_protocol": 2400
+    },
+    "scale_relation": "Every S2 component, protocol and split count is multiplied by exactly eight; S3 is 48 times S1e in total transitions.",
+    "fresh_root_seeds": {
+      "background": 9700001,
+      "targeted": 9800001
+    },
+    "train_validation_seed_overlap_allowed": false
+  },
+  "immutable_data_method": {
+    "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "mixture": "60% long stochastic background and 40% confirmed targeted episodes",
+    "protocol_registry_changed_from_s2": false,
+    "synaptic_weights": "canonical teacher weights",
+    "release": "authentic probabilistic release exposed causally as U_realized",
+    "target": "raw authentic NEURON V(t+1 ms)-V(t)",
+    "post_hoc_resplitting_allowed": false,
+    "architecture_or_loss_changes_allowed": false
+  },
+  "distribution_fidelity_gates": {
+    "basis": "Prospectively frozen 75%--125% bands around eight times the observed S2 support counts.",
+    "train_absolute_delta_ge_5mv": [396630, 661050],
+    "validation_absolute_delta_ge_5mv": [99408, 165680],
+    "train_somatic_upcrossings_minus55mv": [145614, 242690],
+    "validation_somatic_upcrossings_minus55mv": [36564, 60940],
+    "every_protocol_split_count_exact": true,
+    "every_shard_structurally_and_cryptographically_valid": true,
+    "training_before_all_corpus_gates_pass": false
+  },
+  "matched_gpu_comparison": {
+    "same_76_value_input_tensor": true,
+    "models": {
+      "branch_elm_core_trainable_parameters": 8002,
+      "giada_voltage_bridge_trainable_parameters": 8985
+    },
+    "seeds": [61017, 61029, 61043, 61071, 61103],
+    "common_scaling_reference_seeds": [61017, 61029, 61043],
+    "steps": 144000,
+    "checkpoints": [
+      100,
+      300,
+      600,
+      1000,
+      1800,
+      3000,
+      6000,
+      18000,
+      36000,
+      72000,
+      144000
+    ],
+    "batch_size": 4096,
+    "effective_train_corpus_passes": 25.6,
+    "reason_for_144000_steps": "Eight times S2's 18,000 steps preserves the same 25.6 effective train-corpus passes.",
+    "evaluation_sample_limit": 5760000,
+    "evaluation_sampling": "complete S3 development-validation split at every registered checkpoint",
+    "reason_for_complete_evaluation": "The previous one-million-row cap would cover only part of S3 validation and could be biased by physical component order.",
+    "same_sample_order": true,
+    "same_loss_and_optimizer": true,
+    "checkpoint_selection": "final_preregistered",
+    "validation_used_for_selection": false,
+    "normalization_rule_changed_from_s2": false
+  },
+  "registered_metrics": {
+    "primary": "median final overall soma RMSE across five seeds",
+    "co_primary": "median final RMSE for absolute voltage transitions at least 5 mV",
+    "safety_metric": "median final somatic-upcrossing transition RMSE",
+    "robustness": [
+      "per-seed wins",
+      "per-family wins",
+      "per-protocol wins",
+      "background and targeted component RMSE",
+      "mean and sample standard deviation across seeds",
+      "paired one-sided t-test and deterministic seed-bootstrap interval",
+      "fixed-step and equal-exposure mini scaling checkpoints",
+      "S1e-to-S2-to-S3 overall, active and upcrossing margin trajectories"
+    ]
+  },
+  "decision_rule": {
+    "overall_pass": "GIADA median final overall RMSE is lower than Branch-ELM",
+    "active_pass": "GIADA median final active-stratum RMSE is lower than Branch-ELM",
+    "spike_transition_pass": "GIADA median final somatic-upcrossing RMSE is lower than Branch-ELM",
+    "seed_robustness_pass": "GIADA wins at least four of five seeds",
+    "breadth_pass": "GIADA wins all five protocol families and at least twelve of fourteen protocols",
+    "s4_authorized": "All five registered passes are true after every corpus gate and frozen-identity check passes.",
+    "why_spike_is_now_a_gate": "The upcrossing advantage narrowed from 31.0% at S1e to 13.5% at S2; S3 must test whether it survives rather than hide it inside the aggregate metric.",
+    "statistical_test_role": "Reported as uncertainty evidence, not silently substituted for the registered effect, safety and breadth gates."
+  },
+  "artifact_freezing": {
+    "gpu_config_created_before_corpus_identity_is_known": false,
+    "next_action_after_cpu_validation": "Record all six contract-file SHA-256 values and the aggregate physical-shard fingerprint, then create the immutable S3 GPU configuration without changing any scientific setting in this preregistration."
+  },
+  "scope_limits": {
+    "development_validation_only": true,
+    "fresh_paper_test_claimed": false,
+    "autoregressive_rollout_claimed": false,
+    "full_morphology_state_claimed": false,
+    "architecture_selection_authorized": false,
+    "s4_is_automatic": false
+  },
+  "architecture_experiments_modified": false
+}

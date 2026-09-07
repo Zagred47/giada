@@ -430,6 +430,91 @@ def test_s2_training_scales_exposure_and_preregisters_breadth() -> None:
     assert config.training_steps * config.batch_size / 2_880_000 == 25.6
 
 
+def test_s3_hybrid_plan_is_exact_eightfold_s2_expansion() -> None:
+    background = ScaleConfig(
+        stage="s3_hybrid_background",
+        target_transitions=17_280_000,
+        trajectory_duration_ms=6000,
+        trajectories_per_shard=1,
+        root_seed=9_700_001,
+        validation_trajectory_fraction=0.2,
+        purpose="giada_hybrid_production_background",
+        input_protocols=PRODUCTION_BACKGROUND_PROTOCOLS,
+    )
+    targeted = ScaleConfig(
+        stage="s3_hybrid_targeted",
+        target_transitions=11_520_000,
+        trajectory_duration_ms=80,
+        trajectories_per_shard=25,
+        root_seed=9_800_001,
+        validation_trajectory_fraction=0.2,
+        purpose="giada_hybrid_production_targeted",
+        input_protocols=PRODUCTION_TARGET_PROTOCOLS,
+    )
+    background_rows = [
+        row for shard in build_shard_plan(background) for row in shard.trajectories
+    ]
+    targeted_rows = [
+        row for shard in build_shard_plan(targeted) for row in shard.trajectories
+    ]
+    assert len(background_rows) == 2_880
+    assert len(targeted_rows) == 144_000
+    assert background.shard_count == 2_880
+    assert targeted.shard_count == 5_760
+    for protocol in PRODUCTION_BACKGROUND_PROTOCOLS:
+        rows = [row for row in background_rows if row.protocol == protocol]
+        assert sum(row.split == "train" for row in rows) == 1_152
+        assert sum(row.split == "validation" for row in rows) == 288
+    for protocol in PRODUCTION_TARGET_PROTOCOLS:
+        rows = [row for row in targeted_rows if row.protocol == protocol]
+        assert sum(row.split == "train" for row in rows) == 9_600
+        assert sum(row.split == "validation" for row in rows) == 2_400
+    train_seeds = {
+        row.seed for row in background_rows + targeted_rows if row.split == "train"
+    }
+    validation_seeds = {
+        row.seed
+        for row in background_rows + targeted_rows
+        if row.split == "validation"
+    }
+    assert not train_seeds & validation_seeds
+    assert PRODUCTION_PROFILES["s3"]["splits"] == {
+        "train": 23_040_000,
+        "validation": 5_760_000,
+    }
+
+
+def test_s3_training_preserves_exposure_and_evaluates_full_validation() -> None:
+    frozen_hashes = {
+        "background_plan_sha256": "0" * 64,
+        "background_validation_sha256": "1" * 64,
+        "targeted_plan_sha256": "2" * 64,
+        "targeted_validation_sha256": "3" * 64,
+        "composite_manifest_sha256": "4" * 64,
+        "production_audit_sha256": "5" * 64,
+        "shard_marker_fingerprint_sha256": "6" * 64,
+    }
+    config = MatchedTrainingConfig(
+        seeds=(61017, 61029, 61043, 61071, 61103),
+        training_steps=144_000,
+        checkpoints=(
+            100, 300, 600, 1000, 1800, 3000, 6000, 18_000,
+            36_000, 72_000, 144_000,
+        ),
+        evaluation_sample_limit=5_760_000,
+        required_composite_stage="s3_hybrid_production",
+        minimum_seed_wins=4,
+        minimum_family_wins=5,
+        minimum_protocol_wins=12,
+        require_spike_transition_advantage=True,
+        scaling_reference_seeds=(61017, 61029, 61043),
+        expected_corpus_hashes=frozen_hashes,
+    )
+    config.validate()
+    assert config.training_steps * config.batch_size / 23_040_000 == 25.6
+    assert config.evaluation_sample_limit == 5_760_000
+
+
 def test_corpus_fingerprint_covers_markers_and_physical_shards(tmp_path: Path) -> None:
     composite = tmp_path / "composite"
     composite.mkdir()

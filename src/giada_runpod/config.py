@@ -33,6 +33,9 @@ STAGE_TRANSITIONS = {
     "s2_hybrid_background": 2_160_000,
     "s2_hybrid_targeted": 1_440_000,
     "s2": 3_600_000,
+    # Exact eight-fold expansion of every S2 component/protocol/split count.
+    "s3_hybrid_background": 17_280_000,
+    "s3_hybrid_targeted": 11_520_000,
     "s3": 28_800_000,
     "s4": 230_400_000,
 }
@@ -162,8 +165,11 @@ class ScaleConfig:
             if self.stage not in {
                 "s1e_hybrid_background",
                 "s2_hybrid_background",
+                "s3_hybrid_background",
             }:
-                raise ValueError("hybrid production background requires an S1e/S2 component stage")
+                raise ValueError(
+                    "hybrid production background requires an S1e/S2/S3 component stage"
+                )
             if tuple(self.input_protocols) != PRODUCTION_BACKGROUND_PROTOCOLS:
                 raise ValueError("hybrid production background protocol registry changed")
             if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 6000:
@@ -176,8 +182,11 @@ class ScaleConfig:
             if self.stage not in {
                 "s1e_hybrid_targeted",
                 "s2_hybrid_targeted",
+                "s3_hybrid_targeted",
             }:
-                raise ValueError("hybrid production targeted requires an S1e/S2 component stage")
+                raise ValueError(
+                    "hybrid production targeted requires an S1e/S2/S3 component stage"
+                )
             if tuple(self.input_protocols) != PRODUCTION_TARGET_PROTOCOLS:
                 raise ValueError("hybrid production targeted protocol registry changed")
             if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 80:

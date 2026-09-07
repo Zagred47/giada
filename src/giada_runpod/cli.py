@@ -353,6 +353,29 @@ def command_compose_s2(args: argparse.Namespace) -> None:
         raise SystemExit(2)
 
 
+def command_compose_s3(args: argparse.Namespace) -> None:
+    from .production_corpus import build_and_audit_s3_composite
+
+    def progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 200 == 0:
+            print(f"[GIADA RunPod][S3 composite audit] {index}/{total} shards", flush=True)
+
+    report = build_and_audit_s3_composite(
+        Path(args.background),
+        Path(args.targeted),
+        Path(args.output),
+        progress=progress,
+    )
+    print(json.dumps({
+        "valid": report["valid"],
+        "blockers": report["blockers"],
+        "composition": report["composition"],
+        "support_checks": report["support_checks"],
+    }, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="GIADA paper-scale RunPod workflow")
     sub = result.add_subparsers(dest="command", required=True)
@@ -412,6 +435,13 @@ def parser() -> argparse.ArgumentParser:
     compose_s2.add_argument("--targeted", required=True, type=Path)
     compose_s2.add_argument("--output", required=True, type=Path)
     compose_s2.set_defaults(func=command_compose_s2)
+    compose_s3 = sub.add_parser(
+        "compose-s3", help="seal and audit the two-part S3 hybrid corpus"
+    )
+    compose_s3.add_argument("--background", required=True, type=Path)
+    compose_s3.add_argument("--targeted", required=True, type=Path)
+    compose_s3.add_argument("--output", required=True, type=Path)
+    compose_s3.set_defaults(func=command_compose_s3)
     return result
 
 

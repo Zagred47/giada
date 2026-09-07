@@ -1,0 +1,27 @@
+giada_runpod_scale:
+  stage: s3_hybrid_targeted
+  target_transitions: 11520000
+  trajectory_duration_ms: 80
+  trajectories_per_shard: 25
+  storage_profile: soma_paper
+  sampled_segments_per_transition: 1
+  root_seed: 9800001
+  validation_trajectory_fraction: 0.2
+  compression: lzf
+  chunk_transitions: 256
+  progress_interval_s: 30
+  purpose: giada_hybrid_production_targeted
+  # Exact 8x S2: 9,600 train + 2,400 validation episodes per protocol.
+  input_protocols:
+    - giada_repair_somatic_3na_negative_v1
+    - giada_repair_somatic_6na_positive_v1
+    - giada_hybrid_nmda_n8_v1
+    - giada_hybrid_nmda_n12_v1
+    - giada_hybrid_calcium_unpaired_n12_v1
+    - giada_hybrid_calcium_paired_n8_v1
+    - giada_hybrid_calcium_paired_n12_v1
+    - giada_repair_bap_assist_only_n12_b3_w400_v1
+    - giada_repair_bap_p2_factor3_soma_only_v1
+    - giada_repair_bap_p2_factor3_combined_v1
+    - giada_repair_bap_p3_factor3_soma_only_v1
+    - giada_repair_bap_p3_factor3_combined_v1
