@@ -1,0 +1,40 @@
+giada_matched_training:
+  # Frozen before GPU execution. The architectures and optimization contract
+  # are identical to S2; only corpus scale and equal-exposure step count grow.
+  seeds: [61017, 61029, 61043, 61071, 61103]
+  scaling_reference_seeds: [61017, 61029, 61043]
+  training_steps: 144000
+  checkpoints: [100, 300, 600, 1000, 1800, 3000, 6000, 18000, 36000, 72000, 144000]
+  batch_size: 4096
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  gradient_clip_norm: 1.0
+  voltage_scale_mv: 20.0
+  delta_limit_mv: 100.0
+  active_delta_threshold_mv: 5.0
+  active_weight: 4.0
+  # Preserve S2 normalization semantics. Evaluation instead covers the entire
+  # S3 development split so physical component ordering cannot bias metrics.
+  normalization_sample_limit: 1000000
+  evaluation_sample_limit: 5760000
+  progress_interval: 500
+  expected_input_width: 76
+  expected_branch_elm_parameters: 8002
+  expected_giada_parameters: 8985
+  minimum_train_active_transitions: 396630
+  minimum_validation_active_transitions: 99408
+  minimum_validation_somatic_upcrossings: 36564
+  required_composite_stage: s3_hybrid_production
+  checkpoint_selection: final_preregistered
+  minimum_seed_wins: 4
+  minimum_family_wins: 5
+  minimum_protocol_wins: 12
+  require_spike_transition_advantage: true
+  expected_corpus_hashes:
+    background_plan_sha256: b0d207aaf421352f2b724395533f0c600214e266e3584a4e075d2a27fdbf3e32
+    background_validation_sha256: 2fadea68488de3b10cd6482724ea76674cf70406b45d89f854558a0abe00df1c
+    targeted_plan_sha256: 696dd53cdcc007883e21d58f6f4bca2bb99e9b0c3ff47674bf56ce3f7831f1ec
+    targeted_validation_sha256: 59505b5c8db7542fa9a0e407b98aae2b2f97f430b929b81efa6d565efb321b9e
+    composite_manifest_sha256: 922893139f85827614a32ca1422a39d19e649324b3612a756fb4d1dca5ce5371
+    production_audit_sha256: 970aecf5f078cb7abde732c436655a5c011083240acb195ee067df4c90ee3509
+    shard_marker_fingerprint_sha256: 4196dbfd08f2f6d75963caa14a6b7d0b1de7e1a771a55611bd442a3c52ea4fb0

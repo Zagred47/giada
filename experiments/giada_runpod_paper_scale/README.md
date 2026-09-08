@@ -136,5 +136,12 @@ to 13.5% at S2, a positive upcrossing advantage is now an explicit safety gate
 for S4 rather than a descriptive metric. This addition was frozen before S3
 generation and does not modify either architecture.
 
+The S3 corpus has now passed the structural and distribution audit plus a
+second physical fingerprint pass: all 8,640 shards, totalling 5,852,939,725
+bytes, match their completion markers and there are zero mismatches. The seven
+corpus identity hashes are frozen in the S3 preregistration and in
+`runpod_scale/configs/s3_matched_training.yml`; GPU execution is now allowed
+under those settings, while post-hoc scientific changes remain forbidden.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

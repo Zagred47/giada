@@ -1,7 +1,7 @@
 {
   "schema_version": "giada-runpod-s3-hybrid-scale-preregistration-v1",
   "project": "GIADA",
-  "status": "preregistered_not_run",
+  "status": "corpus_generated_validated_and_fingerprinted_gpu_ready",
   "decision_date": "2026-09-07",
   "question": "Does the information-matched GIADA one-step soma-voltage advantage remain robust when every validated S2 data component is expanded by exactly eight, without changing either architecture?",
   "predecessors": [
@@ -124,7 +124,18 @@
   },
   "artifact_freezing": {
     "gpu_config_created_before_corpus_identity_is_known": false,
-    "next_action_after_cpu_validation": "Record all six contract-file SHA-256 values and the aggregate physical-shard fingerprint, then create the immutable S3 GPU configuration without changing any scientific setting in this preregistration."
+    "physical_shard_count": 8640,
+    "physical_total_size_bytes": 5852939725,
+    "physical_mismatch_count": 0,
+    "background_plan_sha256": "b0d207aaf421352f2b724395533f0c600214e266e3584a4e075d2a27fdbf3e32",
+    "background_validation_sha256": "2fadea68488de3b10cd6482724ea76674cf70406b45d89f854558a0abe00df1c",
+    "targeted_plan_sha256": "696dd53cdcc007883e21d58f6f4bca2bb99e9b0c3ff47674bf56ce3f7831f1ec",
+    "targeted_validation_sha256": "59505b5c8db7542fa9a0e407b98aae2b2f97f430b929b81efa6d565efb321b9e",
+    "composite_manifest_sha256": "922893139f85827614a32ca1422a39d19e649324b3612a756fb4d1dca5ce5371",
+    "production_audit_sha256": "970aecf5f078cb7abde732c436655a5c011083240acb195ee067df4c90ee3509",
+    "shard_marker_fingerprint_sha256": "4196dbfd08f2f6d75963caa14a6b7d0b1de7e1a771a55611bd442a3c52ea4fb0",
+    "gpu_config": "runpod_scale/configs/s3_matched_training.yml",
+    "next_action_after_cpu_validation": "Run the immutable S3 information-matched GPU comparison. No scientific training setting changed after corpus observation."
   },
   "scope_limits": {
     "development_validation_only": true,

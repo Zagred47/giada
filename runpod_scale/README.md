@@ -544,6 +544,11 @@ start GPU training merely because generation reaches 100%: first require
 the frozen corpus hashes and physical-shard fingerprint, then create the S3
 GPU configuration from the already registered settings. This deliberate
 pause prevents a changed or partially persisted corpus from entering training.
+The completed S3 corpus passed this check on 2026-09-08: all 8,640 physical
+shards (5,852,939,725 bytes) matched their completion markers, with aggregate
+fingerprint
+`4196dbfd08f2f6d75963caa14a6b7d0b1de7e1a771a55611bd442a3c52ea4fb0`.
+The immutable GPU configuration is now `s3_matched_training.yml`.
 
 S3 training is already scientifically fixed at five paired seeds, 144,000
 steps, batch size 4,096 and final-checkpoint selection. It will evaluate the

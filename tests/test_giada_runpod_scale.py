@@ -515,6 +515,25 @@ def test_s3_training_preserves_exposure_and_evaluates_full_validation() -> None:
     assert config.evaluation_sample_limit == 5_760_000
 
 
+def test_frozen_s3_training_config_matches_preregistration() -> None:
+    import yaml
+
+    values = yaml.safe_load(
+        Path("runpod_scale/configs/s3_matched_training.yml").read_text(
+            encoding="utf-8"
+        )
+    )["giada_matched_training"]
+    config = MatchedTrainingConfig.from_mapping(values)
+    assert config.required_composite_stage == "s3_hybrid_production"
+    assert config.training_steps == 144_000
+    assert config.training_steps * config.batch_size / 23_040_000 == 25.6
+    assert config.evaluation_sample_limit == 5_760_000
+    assert config.require_spike_transition_advantage
+    assert config.expected_corpus_hashes[
+        "shard_marker_fingerprint_sha256"
+    ] == "4196dbfd08f2f6d75963caa14a6b7d0b1de7e1a771a55611bd442a3c52ea4fb0"
+
+
 def test_corpus_fingerprint_covers_markers_and_physical_shards(tmp_path: Path) -> None:
     composite = tmp_path / "composite"
     composite.mkdir()
