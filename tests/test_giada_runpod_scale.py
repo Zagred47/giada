@@ -569,6 +569,17 @@ def test_corpus_fingerprint_covers_markers_and_physical_shards(tmp_path: Path) -
     assert second["physical_mismatch_count"] == 1
 
 
+def test_training_corpus_verification_progress_is_throttled(capsys) -> None:
+    for index in (1, 2, 199, 200, 201, 400, 401, 432):
+        PaperScaleMatchedTrainer._report_corpus_fingerprint_progress(index, 432)
+    assert capsys.readouterr().out.splitlines() == [
+        "[GIADA RunPod][training corpus verification] 1/432 shards",
+        "[GIADA RunPod][training corpus verification] 200/432 shards",
+        "[GIADA RunPod][training corpus verification] 400/432 shards",
+        "[GIADA RunPod][training corpus verification] 432/432 shards",
+    ]
+
+
 def test_s1e_training_verifies_sealed_composite_contract(tmp_path: Path) -> None:
     root = tmp_path / "composite"
     root.mkdir()

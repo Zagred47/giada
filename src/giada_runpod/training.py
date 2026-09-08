@@ -8,7 +8,7 @@ import math
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Mapping, Sequence
+from typing import Any, Callable, Dict, Iterable, List, Mapping, Sequence
 
 import numpy as np
 
@@ -365,7 +365,11 @@ class PaperScaleMatchedTrainer:
         self.torch = torch
         from .corpus_audit import audit_soma_corpus
 
-        self.corpus_contract = self._validate_corpus_contract(corpus_root, config)
+        self.corpus_contract = self._validate_corpus_contract(
+            corpus_root,
+            config,
+            fingerprint_progress=self._report_corpus_fingerprint_progress,
+        )
         self.support_preflight = audit_soma_corpus(corpus_root)
         train_support = self.support_preflight["splits"].get("train", {})
         validation_support = self.support_preflight["splits"].get(
@@ -429,8 +433,19 @@ class PaperScaleMatchedTrainer:
             raise RuntimeError("paper-scale matched training requires a CUDA GPU pod")
 
     @staticmethod
+    def _report_corpus_fingerprint_progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 200 == 0:
+            print(
+                f"[GIADA RunPod][training corpus verification] {index}/{total} shards",
+                flush=True,
+            )
+
+    @staticmethod
     def _validate_corpus_contract(
-        corpus_root: Path, config: MatchedTrainingConfig
+        corpus_root: Path,
+        config: MatchedTrainingConfig,
+        *,
+        fingerprint_progress: Callable[[int, int], None] | None = None,
     ) -> Dict[str, Any]:
         root = Path(corpus_root)
         manifest_path = root / "composite_manifest.json"
@@ -488,7 +503,9 @@ class PaperScaleMatchedTrainer:
                         path.read_bytes()
                     ).hexdigest()
 
-            fingerprint_report = fingerprint_validated_shards(root)
+            fingerprint_report = fingerprint_validated_shards(
+                root, progress=fingerprint_progress
+            )
             actual_hashes["shard_marker_fingerprint_sha256"] = fingerprint_report[
                 "marker_fingerprint_sha256"
             ]
