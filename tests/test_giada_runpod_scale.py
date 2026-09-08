@@ -536,10 +536,14 @@ def test_corpus_fingerprint_covers_markers_and_physical_shards(tmp_path: Path) -
     (composite / "composite_manifest.json").write_text(
         json.dumps({"components": components}), encoding="utf-8"
     )
-    first = fingerprint_validated_shards(composite)
+    progress = []
+    first = fingerprint_validated_shards(
+        composite, progress=lambda index, total: progress.append((index, total))
+    )
     assert first["valid"]
     assert first["shard_count"] == 2
     assert len(first["marker_fingerprint_sha256"]) == 64
+    assert progress == [(1, 2), (2, 2)]
     (tmp_path / "targeted" / "shards" / "shard-00000.h5").write_bytes(b"changed")
     second = fingerprint_validated_shards(composite)
     assert not second["valid"]

@@ -376,6 +376,23 @@ def command_compose_s3(args: argparse.Namespace) -> None:
         raise SystemExit(2)
 
 
+def command_fingerprint_corpus(args: argparse.Namespace) -> None:
+    from .production_corpus import fingerprint_validated_shards
+
+    def progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 200 == 0:
+            print(
+                f"[GIADA RunPod][physical fingerprint] {index}/{total} shards",
+                flush=True,
+            )
+
+    report = fingerprint_validated_shards(Path(args.corpus), progress=progress)
+    _write_json(Path(args.output), report)
+    print(json.dumps(report, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="GIADA paper-scale RunPod workflow")
     sub = result.add_subparsers(dest="command", required=True)
@@ -442,6 +459,13 @@ def parser() -> argparse.ArgumentParser:
     compose_s3.add_argument("--targeted", required=True, type=Path)
     compose_s3.add_argument("--output", required=True, type=Path)
     compose_s3.set_defaults(func=command_compose_s3)
+    fingerprint = sub.add_parser(
+        "fingerprint-corpus",
+        help="verify physical shard hashes and write the aggregate fingerprint",
+    )
+    fingerprint.add_argument("--corpus", required=True, type=Path)
+    fingerprint.add_argument("--output", required=True, type=Path)
+    fingerprint.set_defaults(func=command_fingerprint_corpus)
     return result
 
 
