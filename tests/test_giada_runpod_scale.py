@@ -31,6 +31,9 @@ from src.giada_runpod.optimization_forensic import (
     LateOptimizationForensicConfig,
     summarize_candidates,
 )
+from src.giada_runpod.matched_exposure_extension import (
+    MatchedExposureExtensionConfig,
+)
 from src.giada_runpod import teacher as teacher_module
 from src.giada_runpod.corpus_audit import audit_soma_corpus
 from src.giada_runpod.production_corpus import (
@@ -603,6 +606,31 @@ def test_s3_forensic_selection_prefers_registered_gates_before_margin() -> None:
     assert selected["learning_rate"] == 3e-4
     assert selected["readout"] == "raw"
     assert selected["all_diagnostic_gates_passed"]
+
+
+def test_s3_matched_exposure_extension_is_exact_and_has_no_new_selection() -> None:
+    import yaml
+
+    base_values = yaml.safe_load(
+        Path("runpod_scale/configs/s3_matched_training.yml").read_text(
+            encoding="utf-8"
+        )
+    )["giada_matched_training"]
+    base = MatchedTrainingConfig.from_mapping(base_values)
+    values = yaml.safe_load(
+        Path("runpod_scale/configs/s3_matched_exposure_extension.yml").read_text(
+            encoding="utf-8"
+        )
+    )["giada_matched_exposure_extension"]
+    config = MatchedExposureExtensionConfig.from_mapping(values, base=base)
+    assert config.seeds == base.seeds
+    assert config.source_continuation_step == 12_000
+    assert config.target_continuation_step == 72_000
+    assert config.target_continuation_step - config.source_continuation_step == 60_000
+    assert config.learning_rate == 3e-4
+    assert config.readout == "raw"
+    assert len(config.source_state_hashes) == 5
+    assert config.target_continuation_step * base.batch_size / 23_040_000 == 12.8
 
 
 def test_corpus_fingerprint_covers_markers_and_physical_shards(tmp_path: Path) -> None:

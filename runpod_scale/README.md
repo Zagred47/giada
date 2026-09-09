@@ -595,6 +595,36 @@ web console does not stop it. Operational review is required if wall time
 exceeds four hours. Completion is
 `/workspace/giada-results/s3-optimization-forensic-v1/final_report.json`.
 
+The completed forensic selected `3e-4` with raw readout and won all five seeds
+on the full S3 development-validation split. To test whether that schedule
+remains stable at the original 144k-step exposure, the matched-exposure
+extension resumes the exact five `state_step12000.pt` files, including AdamW
+and NumPy RNG state, and continues them for 60,000 more updates. No candidate
+selection occurs in this extension.
+
+```bash
+cd /workspace/giada
+git fetch origin runpod/paper-scale-data
+git checkout --detach FETCH_HEAD
+
+export GIADA_ROOT=/workspace/giada
+export GIADA_GPU_PYTHON=python
+export GIADA_S3_CORPUS=/workspace/giada-data/s3-hybrid-production-v1/composite
+export GIADA_S3_FORENSIC_SOURCE=/workspace/giada-results/s3-optimization-forensic-v2
+export GIADA_S3_MATCHED_EXPOSURE_RESULTS=/workspace/giada-results/s3-matched-exposure-v1
+
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s3_matched_exposure_extension.sh" \
+  > /workspace/giada-results/s3-matched-exposure-v1.log 2>&1 &
+echo $! | tee /workspace/giada-results/s3-matched-exposure-v1.pid
+tail -F /workspace/giada-results/s3-matched-exposure-v1.log
+```
+
+The extension checkpoints every 12,000 continuation steps and is resumable.
+Its expected RTX 4090 wall time is three to five hours; review the process if
+it exceeds six hours. The final full-development report is diagnostic because
+the schedule was selected on this same split.
+
 ## What remains in the Kaggle track
 
 Architecture exploration, recursive-state repair, event-specific ablations,

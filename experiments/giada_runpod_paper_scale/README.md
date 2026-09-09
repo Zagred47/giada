@@ -175,5 +175,23 @@ candidate is run on the other two seeds and evaluated on all 5.76 million
 development-validation transitions. No data, architecture, loss, or Kaggle
 architecture experiment is changed, and this result cannot authorize S4.
 
+The forensic completed successfully at revision `3a5afb5`. The frozen
+`3e-4`/raw candidate won all five seeds on the complete development-validation
+split and reduced median overall, active and somatic-upcrossing RMSE by 20.3%,
+16.6% and 10.2%, respectively. Crucially, GIADA itself improved by 13.6% and
+38.9% relative to its failed original S3 endpoints for seeds 61017 and 61103;
+the restored five-of-five result is therefore not explained only by a worse
+Branch-ELM endpoint. GIADA's across-seed overall standard deviation also fell
+from 0.248 to 0.038 mV. Exact per-seed values and artifact hashes are in
+`s3_late_optimization_forensic_result.json`.
+
+The next bounded run is frozen in
+`s3_matched_exposure_extension_preregistration.json`. It resumes the five
+hash-locked 84k states, including AdamW and NumPy RNG state, and adds exactly
+60,000 updates at the already selected `3e-4` learning rate. This reaches the
+same 144k-step exposure as original S3 without new hyperparameter selection.
+It remains a same-development-set stability diagnostic and cannot authorize
+S4 or overwrite the original S3 decision.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

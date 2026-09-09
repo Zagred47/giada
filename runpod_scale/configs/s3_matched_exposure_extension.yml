@@ -1,0 +1,26 @@
+giada_matched_exposure_extension:
+  # Frozen after the bounded forensic selected fresh-AdamW lr=3e-4/raw and
+  # before any continuation beyond its 12,000-step endpoint.
+  seeds: [61017, 61029, 61043, 61071, 61103]
+  source_continuation_step: 12000
+  target_continuation_step: 72000
+  checkpoints: [24000, 36000, 48000, 60000, 72000]
+  learning_rate: 0.0003
+  readout: raw
+  ema_decay: 0.999
+  diagnostic_evaluation_samples: 262144
+  diagnostic_evaluation_seed: 73100001
+  progress_interval: 500
+
+  source_code_revision: 3a5afb5f0c7b2ae884948601f6e8301ce14d7c57
+  source_configuration_sha256: 0eea5f32443ff3b907c021e8bb7e786b932629208a67eefd1638b51ac5669c2e
+  source_final_report_sha256: 8f779801d170745b003851a658d9ecb69fe753017955c9531fd37d8cf06e925c
+  source_selection_sha256: 484bf7e5e5052b5c7acc492da5aac8d0fba1835b1b2cffaacdf8d8342ae0f8bf
+  source_sample_manifest_sha256: d6eac9cc95d92cc0a0ff9dd2c6d1c4990ceebaa2b81b7f821e89c7ddeee55b50
+  source_normalization_sha256: f15423e51d7c84ced03cd9e289320b041c8a41e048a0ca73e84bebe7351e2024
+  source_state_hashes:
+    arms/seed61017_lr3e-04/state_step12000.pt: 767b8d74c8f76a65c3aec31336bfc70e86ae4cf9dda540ef4c6547babe30f803
+    arms/seed61029_lr3e-04/state_step12000.pt: 97f34bb76e2322cb6f86ebf251c026987dd3c7eb286e4db42ee32fbb90c10706
+    arms/seed61043_lr3e-04/state_step12000.pt: efbb921ce778a1842f549bf8621e606cfa88dd0430bc4538c3259492d696df0f
+    arms/seed61071_lr3e-04/state_step12000.pt: 37db54af30b8dd718bcd1d326729d6d2435623ff3282a0f3ce5f462354b98667
+    arms/seed61103_lr3e-04/state_step12000.pt: e948acbf56d5c20ce508cab3d4f645a85cc1be88041ff966d04d59a0d44cc152

@@ -1,0 +1,74 @@
+{
+  "schema_version": "giada-s3-matched-exposure-extension-preregistration-v1",
+  "project": "GIADA",
+  "stage": "s3_matched_exposure_extension",
+  "frozen_before_execution": true,
+  "scientific_status": "diagnostic_equal_exposure",
+  "source_artifact": {
+    "archive_name": "giada_s3_late_optimization_forensic_v2.zip",
+    "archive_size_bytes": 7161203,
+    "archive_sha256": "94704d28da1ff443227473195f4d7632ade574ce2f9eb8673937e22f4f070ab8",
+    "entry_count": 83,
+    "file_count": 68,
+    "final_report_sha256": "8f779801d170745b003851a658d9ecb69fe753017955c9531fd37d8cf06e925c",
+    "normalization_sha256": "f15423e51d7c84ced03cd9e289320b041c8a41e048a0ca73e84bebe7351e2024",
+    "source_code_revision": "3a5afb5f0c7b2ae884948601f6e8301ce14d7c57",
+    "source_configuration_sha256": "0eea5f32443ff3b907c021e8bb7e786b932629208a67eefd1638b51ac5669c2e"
+  },
+  "frozen_candidate": {
+    "learning_rate": 0.0003,
+    "readout": "raw",
+    "forensic_full_validation_seed_wins": 5,
+    "forensic_full_validation_seed_count": 5,
+    "forensic_overall_median_rmse_mv": {
+      "branch_elm_core": 1.1075464842170262,
+      "giada_voltage_bridge": 0.8829513622631708
+    },
+    "forensic_active_median_rmse_mv": {
+      "branch_elm_core": 6.415061912810674,
+      "giada_voltage_bridge": 5.347348488756821
+    },
+    "forensic_spike_median_rmse_mv": {
+      "branch_elm_core": 8.048101975604677,
+      "giada_voltage_bridge": 7.230363816771009
+    }
+  },
+  "continuation": {
+    "source_absolute_s3_step": 84000,
+    "target_absolute_s3_step": 144000,
+    "additional_steps": 60000,
+    "seeds": [61017, 61029, 61043, 61071, 61103],
+    "checkpoint_absolute_s3_steps": [96000, 108000, 120000, 132000, 144000],
+    "exact_adamw_state_continuation": true,
+    "exact_numpy_rng_state_continuation": true,
+    "learning_rate_changed_during_extension": false,
+    "hyperparameter_selection_during_extension": false,
+    "architecture_modified": false,
+    "loss_modified": false,
+    "dataset_modified": false
+  },
+  "evaluation": {
+    "diagnostic_checkpoints": "Same deterministic 262,144-row global S3 development-validation sample used by the source forensic.",
+    "final": "Complete 5.76-million-transition S3 development-validation split, raw readout, all five paired seeds.",
+    "stability_gate": "At least four of five overall paired seed wins and lower GIADA median overall, active-transition and somatic-upcrossing RMSE."
+  },
+  "compute_budget": {
+    "paired_seed_runs": 5,
+    "additional_steps_per_seed": 60000,
+    "total_additional_paired_steps": 300000,
+    "relative_to_original_s3_training": 0.4166666666666667,
+    "target_wall_hours_rtx_4090": "3-5",
+    "operational_review_hours": 6
+  },
+  "interpretation_contract": {
+    "may_diagnose": "Whether the selected 3e-4/raw schedule remains robust at the same 144k-step exposure as frozen S3.",
+    "may_not_claim": [
+      "independent S3 confirmation",
+      "retroactive replacement of the frozen S3 decision",
+      "S4 authorization",
+      "fresh teacher-trajectory test superiority",
+      "architecture improvement"
+    ],
+    "reason": "The schedule was selected on the same S3 development-validation corpus."
+  }
+}

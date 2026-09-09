@@ -351,6 +351,49 @@ def command_forensic_s3(args: argparse.Namespace) -> None:
     )
 
 
+def command_extend_s3_matched_exposure(args: argparse.Namespace) -> None:
+    import yaml
+    from .matched_exposure_extension import (
+        MatchedExposureExtensionConfig,
+        S3MatchedExposureExtension,
+    )
+    from .training import MatchedTrainingConfig
+
+    base_values = yaml.safe_load(Path(args.base_config).read_text(encoding="utf-8"))
+    base_config = MatchedTrainingConfig.from_mapping(
+        base_values.get("giada_matched_training", base_values)
+    )
+    values = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
+    config = MatchedExposureExtensionConfig.from_mapping(
+        values.get("giada_matched_exposure_extension", values), base=base_config
+    )
+    extension = S3MatchedExposureExtension(
+        Path(args.corpus),
+        Path(args.source),
+        Path(args.output),
+        base_config,
+        config,
+        code_revision=_revision(Path(args.elm_repo)),
+    )
+    try:
+        report = extension.run()
+    finally:
+        extension.corpus.close()
+    print(
+        json.dumps(
+            {
+                "valid": report["valid"],
+                "full_development_validation": report[
+                    "full_development_validation"
+                ],
+                "interpretation": report["interpretation"],
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
+
+
 def command_compose_s1e(args: argparse.Namespace) -> None:
     from .production_corpus import build_and_audit_s1e_composite
 
@@ -493,6 +536,17 @@ def parser() -> argparse.ArgumentParser:
     forensic.add_argument("--output", required=True, type=Path)
     forensic.add_argument("--elm-repo", default=Path.cwd(), type=Path)
     forensic.set_defaults(func=command_forensic_s3)
+    extension = sub.add_parser(
+        "extend-s3-matched-exposure",
+        help="continue the selected S3 forensic arm exactly to 144k exposure",
+    )
+    extension.add_argument("--base-config", required=True, type=Path)
+    extension.add_argument("--config", required=True, type=Path)
+    extension.add_argument("--corpus", required=True, type=Path)
+    extension.add_argument("--source", required=True, type=Path)
+    extension.add_argument("--output", required=True, type=Path)
+    extension.add_argument("--elm-repo", default=Path.cwd(), type=Path)
+    extension.set_defaults(func=command_extend_s3_matched_exposure)
     compose = sub.add_parser(
         "compose-s1e", help="seal and audit the two-part S1e hybrid corpus"
     )
