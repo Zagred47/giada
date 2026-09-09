@@ -143,5 +143,25 @@ corpus identity hashes are frozen in the S3 preregistration and in
 `runpod_scale/configs/s3_matched_training.yml`; GPU execution is now allowed
 under those settings, while post-hoc scientific changes remain forbidden.
 
+The preregistered S3 GPU comparison is complete but does not authorize S4.
+At the final 144,000-step checkpoint GIADA reduced median overall soma RMSE
+from 1.045 to 0.882 mV (15.5%), active-transition RMSE from 6.132 to 5.461 mV
+(10.9%), and somatic-upcrossing RMSE from 7.651 to 7.284 mV (4.8%). It won all
+five protocol families and all fourteen protocols, so the biological breadth
+and all three median-error gates survived. It nevertheless won only three of
+five paired seeds, below the preregistered four-of-five requirement. The paired
+mean advantage was only 0.032 mV, its deterministic bootstrap interval crossed
+zero, and the one-sided paired t-test gave p=0.396.
+
+The registered checkpoint trajectory localizes the failure to late
+optimization rather than to a general inability to learn S3. GIADA won five of
+five seeds at every checkpoint through 72,000 steps, where its median advantage
+was 32.6%. During the final 72,000 constant-learning-rate updates, seeds 61017
+and 61103 deteriorated enough to lose even though the GIADA median continued to
+improve. The favorable 72,000-step result is retrospective and cannot replace
+the frozen final-checkpoint rule. A separate preregistered optimization
+forensic is required before any new scale claim. Exact metrics and artifact
+hashes are in `s3_matched_training_result.json`.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

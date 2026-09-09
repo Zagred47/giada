@@ -1,0 +1,199 @@
+{
+  "schema_version": "giada-runpod-s3-matched-training-result-v1",
+  "project": "GIADA",
+  "stage": "s3_information_matched_gpu_comparison",
+  "recorded_at": "2026-09-09",
+  "valid": true,
+  "blockers": [
+    "GIADA won only three of five final checkpoints; the preregistered seed-robustness gate required four wins"
+  ],
+  "preregistration": "s3_hybrid_scale_preregistration.json",
+  "code_revision": "c904e731959c8df8a4d4ddfbdd11e74cb7c90a98",
+  "artifact": {
+    "archive_name": "giada_s3_information_matched_gpu_comparison.zip",
+    "archive_size_bytes": 3414985,
+    "archive_sha256": "1be9dfeada66f335089fbff240da08ba9608b1fa1899f4ba2ade552e082f9368",
+    "archive_entry_count": 128,
+    "archive_file_count": 127,
+    "final_report_sha256": "a19dbcd302ade7497957690f7d5f2bbe940544995d8d84392833d6abdeacfd95",
+    "normalization_sha256": "f15423e51d7c84ced03cd9e289320b041c8a41e048a0ca73e84bebe7351e2024",
+    "checkpoint_file_count": 120,
+    "completed_seed_report_count": 5
+  },
+  "execution_contract": {
+    "device": "cuda",
+    "checkpoint_selection": "final_preregistered",
+    "validation_used_for_checkpoint_selection": false,
+    "same_numeric_input": true,
+    "same_sample_order": true,
+    "same_optimizer_and_loss": true,
+    "same_target": "authentic_NEURON_one_ms_soma_voltage_transition",
+    "rollout_claimed": false,
+    "train_transition_count": 23040000,
+    "validation_transition_count": 5760000,
+    "branch_elm_trainable_parameters": 8002,
+    "giada_trainable_parameters": 8985,
+    "training_steps": 144000,
+    "batch_size": 4096,
+    "learning_rate": 0.001,
+    "learning_rate_schedule": "constant",
+    "effective_train_corpus_passes": 25.6,
+    "seeds": [61017, 61029, 61043, 61071, 61103],
+    "resumed_completed_seeds": []
+  },
+  "registered_metrics": {
+    "overall_soma_rmse_mv": {
+      "branch_elm_core": 1.044640841620206,
+      "giada_voltage_bridge": 0.8822585729002643,
+      "giada_reduction_fraction": 0.15544315543712772
+    },
+    "active_absolute_delta_ge_5mv_rmse_mv": {
+      "branch_elm_core": 6.1324349510277925,
+      "giada_voltage_bridge": 5.460998883573514,
+      "giada_reduction_fraction": 0.109489309355291,
+      "validation_example_count": 131200
+    },
+    "somatic_upcrossing_minus55mv_rmse_mv": {
+      "branch_elm_core": 7.650963229173413,
+      "giada_voltage_bridge": 7.2839149444486315,
+      "giada_reduction_fraction": 0.0479741274046661,
+      "validation_example_count": 48198
+    },
+    "background_component_rmse_mv": {
+      "branch_elm_core": 0.9230170213320295,
+      "giada_voltage_bridge": 0.8279029052215789,
+      "giada_reduction_fraction": 0.103046979538025,
+      "validation_example_count": 3456000
+    },
+    "targeted_component_rmse_mv": {
+      "branch_elm_core": 1.2364737155666823,
+      "giada_voltage_bridge": 0.9785761321263516,
+      "giada_reduction_fraction": 0.208575063257317,
+      "validation_example_count": 2304000
+    }
+  },
+  "seed_dispersion": {
+    "overall_soma_rmse_mv": {
+      "branch_elm_core": {
+        "mean": 1.0496971166232771,
+        "sample_standard_deviation": 0.02222318016429801,
+        "median": 1.044640841620206
+      },
+      "giada_voltage_bridge": {
+        "mean": 1.017659579058588,
+        "sample_standard_deviation": 0.24772490070546374,
+        "median": 0.8822585729002643
+      }
+    },
+    "active_soma_rmse_mv": {
+      "branch_elm_core": {
+        "mean": 6.169845248732825,
+        "sample_standard_deviation": 0.1591849295627062,
+        "median": 6.1324349510277925
+      },
+      "giada_voltage_bridge": {
+        "mean": 6.012436039268946,
+        "sample_standard_deviation": 1.1113750504676376,
+        "median": 5.460998883573514
+      }
+    },
+    "somatic_upcrossing_rmse_mv": {
+      "branch_elm_core": {
+        "mean": 7.759220255606212,
+        "sample_standard_deviation": 0.3236325059930447,
+        "median": 7.650963229173413
+      },
+      "giada_voltage_bridge": {
+        "mean": 7.520242144496874,
+        "sample_standard_deviation": 0.43523064041704523,
+        "median": 7.2839149444486315
+      }
+    }
+  },
+  "paired_statistical_inference": {
+    "unit": "independent_training_seed_on_the_same_validation_corpus",
+    "paired_difference": "branch_elm_rmse_minus_giada_rmse_mv",
+    "mean_difference_mv": 0.032037537564689036,
+    "sample_standard_deviation_mv": 0.25453769672262455,
+    "bootstrap_95_percent_ci_mean_difference_mv": [-0.18491004685119658, 0.20925174705482635],
+    "paired_t_test_one_sided_giada_lower": {
+      "statistic": 0.2814440169324444,
+      "p_value": 0.3961647027183502
+    },
+    "interpretation_limit": "Optimization-seed uncertainty on one development-validation corpus; not a fresh independent teacher-trajectory test."
+  },
+  "protocol_family_median_rmse_mv": {
+    "bap_repair_matrix": {"branch_elm_core": 0.8193399568152518, "giada_voltage_bridge": 0.5618037223291235},
+    "calcium_boundary": {"branch_elm_core": 1.4569521771876848, "giada_voltage_bridge": 0.9567149288869065},
+    "neuronio_background": {"branch_elm_core": 0.9230170213320295, "giada_voltage_bridge": 0.8279029052215789},
+    "nmda_boundary": {"branch_elm_core": 0.9531418011228524, "giada_voltage_bridge": 0.691315624766614},
+    "somatic_repair": {"branch_elm_core": 1.779603803519586, "giada_voltage_bridge": 1.7492971066079905}
+  },
+  "final_per_seed": [
+    {"seed": 61017, "branch_elm_soma_rmse_mv": 1.0432342654833338, "giada_soma_rmse_mv": 1.1030918139088544, "giada_won": false},
+    {"seed": 61029, "branch_elm_soma_rmse_mv": 1.0183552754890401, "giada_soma_rmse_mv": 0.8822585729002643, "giada_won": true},
+    {"seed": 61043, "branch_elm_soma_rmse_mv": 1.0692167992464787, "giada_soma_rmse_mv": 0.8628405451208024, "giada_won": true},
+    {"seed": 61071, "branch_elm_soma_rmse_mv": 1.0730384012773269, "giada_soma_rmse_mv": 0.8243336390603252, "giada_won": true},
+    {"seed": 61103, "branch_elm_soma_rmse_mv": 1.044640841620206, "giada_soma_rmse_mv": 1.415773324302694, "giada_won": false}
+  ],
+  "mini_scaling_law": [
+    {"step": 100, "branch_elm_median_soma_rmse_mv": 6.50589639675432, "giada_median_soma_rmse_mv": 3.8794856257185457, "giada_reduction_fraction": 0.40369698668211895, "giada_seed_wins": 5},
+    {"step": 300, "branch_elm_median_soma_rmse_mv": 6.285528754118758, "giada_median_soma_rmse_mv": 3.7450447010618837, "giada_reduction_fraction": 0.4041798474618631, "giada_seed_wins": 5},
+    {"step": 600, "branch_elm_median_soma_rmse_mv": 5.227607511249246, "giada_median_soma_rmse_mv": 3.349658024149591, "giada_reduction_fraction": 0.3592368943266133, "giada_seed_wins": 5},
+    {"step": 1000, "branch_elm_median_soma_rmse_mv": 4.4388083210075555, "giada_median_soma_rmse_mv": 3.0258360926920496, "giada_reduction_fraction": 0.3183224248788419, "giada_seed_wins": 5},
+    {"step": 1800, "branch_elm_median_soma_rmse_mv": 3.4242559739667118, "giada_median_soma_rmse_mv": 2.5975908839636914, "giada_reduction_fraction": 0.2414145134849246, "giada_seed_wins": 5},
+    {"step": 3000, "branch_elm_median_soma_rmse_mv": 3.636367304520439, "giada_median_soma_rmse_mv": 2.083446072227541, "giada_reduction_fraction": 0.42705290809386365, "giada_seed_wins": 5},
+    {"step": 6000, "branch_elm_median_soma_rmse_mv": 2.788825188360689, "giada_median_soma_rmse_mv": 1.6955951905336997, "giada_reduction_fraction": 0.3920037736282802, "giada_seed_wins": 5},
+    {"step": 18000, "branch_elm_median_soma_rmse_mv": 1.9593324635327911, "giada_median_soma_rmse_mv": 1.3333078651441086, "giada_reduction_fraction": 0.31950912366343565, "giada_seed_wins": 5},
+    {"step": 36000, "branch_elm_median_soma_rmse_mv": 1.6896558027540234, "giada_median_soma_rmse_mv": 1.049856060099514, "giada_reduction_fraction": 0.3786568492894704, "giada_seed_wins": 5},
+    {"step": 72000, "branch_elm_median_soma_rmse_mv": 1.4573988496145722, "giada_median_soma_rmse_mv": 0.9816776911541306, "giada_reduction_fraction": 0.32641795935700935, "giada_seed_wins": 5},
+    {"step": 144000, "branch_elm_median_soma_rmse_mv": 1.044640841620206, "giada_median_soma_rmse_mv": 0.8822585729002643, "giada_reduction_fraction": 0.15544315543712772, "giada_seed_wins": 3}
+  ],
+  "s2_to_s3_scaling": {
+    "overall_rmse_reduction_fraction": {"branch_elm_core": 0.5075675113217373, "giada_voltage_bridge": 0.4231497316732372},
+    "active_rmse_reduction_fraction": {"branch_elm_core": 0.38222552543465693, "giada_voltage_bridge": 0.3525039226550618},
+    "somatic_upcrossing_rmse_reduction_fraction": {"branch_elm_core": 0.3074733611061641, "giada_voltage_bridge": 0.23811030788344123},
+    "interpretation": "Both models improve strongly with eightfold data scale, but Branch-ELM improves faster on all three aggregate strata and closes part of GIADA's relative margin."
+  },
+  "late_optimization_forensic": {
+    "observation": "GIADA won all five seeds at every registered checkpoint through 72,000 steps, then lost seeds 61017 and 61103 at the final 144,000-step checkpoint.",
+    "seed_61017": {"giada_rmse_72000_mv": 0.9816776911541306, "giada_rmse_144000_mv": 1.1030918139088544, "final_giada_won": false},
+    "seed_61103": {"giada_rmse_72000_mv": 0.9636009919034694, "giada_rmse_144000_mv": 1.415773324302694, "final_giada_won": false},
+    "global_overfitting_claimed": false,
+    "diagnosis": "architecture-specific late optimization instability under an unchanged constant 1e-3 learning rate is supported; global capacity failure is contradicted by continued median improvement and complete family/protocol breadth"
+  },
+  "breadth": {
+    "seed_wins": 3,
+    "seed_count": 5,
+    "family_wins": 5,
+    "family_count": 5,
+    "protocol_wins": 14,
+    "protocol_count": 14
+  },
+  "decision": {
+    "primary_overall_median_passed": true,
+    "active_stratum_median_passed": true,
+    "spike_transition_median_passed": true,
+    "seed_robustness_passed": false,
+    "breadth_passed": true,
+    "all_registered_gates_passed": false,
+    "s3_advantage_confirmed": false,
+    "s4_authorized": false
+  },
+  "scientific_interpretation": {
+    "confirmed_observation": "At the preregistered final checkpoint, GIADA retains lower median overall, active-transition and somatic-upcrossing RMSE and wins all fourteen protocols, but fails the four-of-five paired-seed robustness requirement.",
+    "optimization_observation": "The failure is temporally localized. All five seeds favor GIADA through 72,000 steps; only the final constant-learning-rate interval creates the two overall losses.",
+    "scaling_observation": "From S2 to S3 both models improve substantially, while Branch-ELM scales faster and GIADA's median overall margin contracts from 27.9% to 15.5%.",
+    "not_claimed": [
+      "S3 advantage confirmation",
+      "S4 authorization",
+      "global overfitting",
+      "autoregressive rollout superiority",
+      "full-state or full-morphology surrogate superiority",
+      "fresh sealed paper-test superiority"
+    ],
+    "next_required_stage": "A preregistered late-optimization forensic must isolate stopping time, learning-rate decay and parameter averaging without treating the retrospectively favorable 72,000-step checkpoint as a confirmed S3 result."
+  },
+  "paper_test_claimed": false,
+  "architecture_experiments_modified": false
+}
