@@ -7,7 +7,6 @@ tests learning rate plus raw/EMA readout on shared minibatch streams.
 
 from __future__ import annotations
 
-import copy
 import hashlib
 import json
 import time
@@ -402,9 +401,14 @@ class S3LateOptimizationForensic(PaperScaleMatchedTrainer):
             return completion
         run_dir.mkdir(parents=True, exist_ok=True)
         models = self._load_models(seed)
-        ema_models = {name: copy.deepcopy(model).to(self.device) for name, model in models.items()}
-        for model in ema_models.values():
-            model.requires_grad_(False)
+        # ELM exposes scripted/derived tensors whose deep-copied parameters can
+        # cease to be leaves.  Build independent architecture-identical EMA
+        # modules and load values instead.  They are never passed to an
+        # optimizer and every EMA forward runs under ``torch.no_grad()`` in the
+        # evaluation path, so changing their requires_grad flags is unnecessary.
+        ema_models = self._models()
+        for name in MODEL_NAMES:
+            ema_models[name].load_state_dict(models[name].state_dict())
         optimizers = {
             name: self.torch.optim.AdamW(
                 model.parameters(),
