@@ -27,6 +27,10 @@ from src.giada_runpod.training import (
     MatchedTrainingConfig,
     PaperScaleMatchedTrainer,
 )
+from src.giada_runpod.optimization_forensic import (
+    LateOptimizationForensicConfig,
+    summarize_candidates,
+)
 from src.giada_runpod import teacher as teacher_module
 from src.giada_runpod.corpus_audit import audit_soma_corpus
 from src.giada_runpod.production_corpus import (
@@ -534,6 +538,73 @@ def test_frozen_s3_training_config_matches_preregistration() -> None:
     ] == "4196dbfd08f2f6d75963caa14a6b7d0b1de7e1a771a55611bd442a3c52ea4fb0"
 
 
+def test_s3_forensic_config_locks_source_and_bounded_factorial() -> None:
+    import yaml
+
+    base_values = yaml.safe_load(
+        Path("runpod_scale/configs/s3_matched_training.yml").read_text(
+            encoding="utf-8"
+        )
+    )["giada_matched_training"]
+    base = MatchedTrainingConfig.from_mapping(base_values)
+    values = yaml.safe_load(
+        Path("runpod_scale/configs/s3_late_optimization_forensic.yml").read_text(
+            encoding="utf-8"
+        )
+    )["giada_late_optimization_forensic"]
+    config = LateOptimizationForensicConfig.from_mapping(values, base=base)
+    assert config.source_checkpoint_step == 72_000
+    assert config.discovery_seeds == (61017, 61043, 61103)
+    assert config.confirmation_seeds == (61029, 61071)
+    assert config.learning_rates == (1e-3, 3e-4, 1e-4)
+    assert config.continuation_steps == 12_000
+    assert len(config.source_checkpoint_hashes) == 10
+
+
+def test_s3_forensic_selection_prefers_registered_gates_before_margin() -> None:
+    def metrics(value: float) -> dict:
+        return {
+            "soma_rmse_mv": value,
+            "active_soma_rmse_mv": value,
+            "activity_regime_metrics": {
+                "somatic_upcrossing_minus55mv": {"soma_rmse_mv": value}
+            },
+        }
+
+    rows = []
+    seeds = (1, 2, 3)
+    # The first candidate has a larger aggregate margin but loses seed 3.
+    for rate, branch, giada in (
+        (1e-3, (2.0, 2.0, 1.0), (1.0, 1.0, 1.1)),
+        (3e-4, (2.0, 2.0, 2.0), (1.8, 1.8, 1.8)),
+    ):
+        for readout in ("raw", "ema"):
+            for seed, branch_value, giada_value in zip(seeds, branch, giada):
+                rows.extend(
+                    (
+                        {
+                            "seed": seed,
+                            "learning_rate": rate,
+                            "readout": readout,
+                            "model": "branch_elm_core",
+                            "metrics": metrics(branch_value),
+                        },
+                        {
+                            "seed": seed,
+                            "learning_rate": rate,
+                            "readout": readout,
+                            "model": "giada_voltage_bridge",
+                            "metrics": metrics(giada_value),
+                        },
+                    )
+                )
+    candidates = summarize_candidates(rows, seeds, (1e-3, 3e-4))
+    selected = max(candidates, key=lambda row: tuple(row["selection_score"]))
+    assert selected["learning_rate"] == 3e-4
+    assert selected["readout"] == "raw"
+    assert selected["all_diagnostic_gates_passed"]
+
+
 def test_corpus_fingerprint_covers_markers_and_physical_shards(tmp_path: Path) -> None:
     composite = tmp_path / "composite"
     composite.mkdir()
@@ -984,5 +1055,14 @@ def test_logical_composite_reads_both_components_without_index_collision(
             for chunk in labeled
             for label in chunk["_protocol_label"]
         } == {"background_validation", "targeted_validation"}
+        first = corpus.sample_raw_global(
+            1, 200, np.random.default_rng(19), include_labels=True
+        )
+        second = corpus.sample_raw_global(
+            1, 200, np.random.default_rng(19), include_labels=True
+        )
+        for name in first:
+            np.testing.assert_array_equal(first[name], second[name])
+        assert set(first["_component_label"]) == {"background", "targeted"}
     finally:
         corpus.close()

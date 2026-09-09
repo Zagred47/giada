@@ -163,5 +163,17 @@ the frozen final-checkpoint rule. A separate preregistered optimization
 forensic is required before any new scale claim. Exact metrics and artifact
 hashes are in `s3_matched_training_result.json`.
 
+The bounded follow-up is frozen in
+`s3_late_optimization_forensic_preregistration.json`. It is explicitly a
+diagnostic, not a retroactive S3 rescue: the 72,000-step files contain weights
+and normalization but no AdamW or RNG state. Consequently all arms load the
+same hash-locked weights and reset AdamW. The `1e-3` arm is the reset control;
+`3e-4` and `1e-4` isolate late step size. Raw and EMA (`0.999`) readouts share
+each trained trajectory. Discovery uses the two late-failure seeds plus one
+winner control on one fixed global sample; only the registered winning
+candidate is run on the other two seeds and evaluated on all 5.76 million
+development-validation transitions. No data, architecture, loss, or Kaggle
+architecture experiment is changed, and this result cannot authorize S4.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

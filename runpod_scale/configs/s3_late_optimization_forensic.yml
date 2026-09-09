@@ -1,0 +1,30 @@
+giada_late_optimization_forensic:
+  # Diagnostic-only continuation from the frozen S3 72k weights. Historical
+  # AdamW/RNG states were not saved, so every arm uses the same explicit reset.
+  source_checkpoint_step: 72000
+  discovery_seeds: [61017, 61043, 61103]
+  confirmation_seeds: [61029, 61071]
+  learning_rates: [0.001, 0.0003, 0.0001]
+  continuation_steps: 12000
+  checkpoints: [3000, 6000, 12000]
+  ema_decay: 0.999
+  diagnostic_evaluation_samples: 262144
+  diagnostic_evaluation_seed: 73100001
+  continuation_stream_seed_offset: 74000000
+  progress_interval: 500
+  selection_rule: lexicographic_registered_gates_seed_wins_margin
+
+  source_code_revision: c904e731959c8df8a4d4ddfbdd11e74cb7c90a98
+  source_final_report_sha256: a19dbcd302ade7497957690f7d5f2bbe940544995d8d84392833d6abdeacfd95
+  source_normalization_sha256: f15423e51d7c84ced03cd9e289320b041c8a41e048a0ca73e84bebe7351e2024
+  source_checkpoint_hashes:
+    branch_elm_core_seed61017_step72000.pt: f7b1c6c3b1e0f11428180ce94e041ef5bd631bd5c31b69e0ea9436358e4a0f95
+    giada_voltage_bridge_seed61017_step72000.pt: 1d86f556a52c3858cffb51b1666b708f28fde46fc811df8ee2121ec49d83f2bd
+    branch_elm_core_seed61029_step72000.pt: cba6df5913105f5d9c0328c99a58db47e75b5a58a9ed71e9c66f9f819acd2f48
+    giada_voltage_bridge_seed61029_step72000.pt: 3457a8ec65a6b7dcea8ac81a234283f5d82137c8af6a576fb040bff5f7a0f0d9
+    branch_elm_core_seed61043_step72000.pt: a952fb7176eb61996ca609f8421c33ee5f26c5c81d31b7c9519d8c78211b615d
+    giada_voltage_bridge_seed61043_step72000.pt: 0180206a5df77b5461e246b4296b233f42fa3fc0b40484130521f05daf86925f
+    branch_elm_core_seed61071_step72000.pt: bead3ec7341645c8e6cb2165e4b68f53129bbb097c997ec7100cbf174633b3f7
+    giada_voltage_bridge_seed61071_step72000.pt: 07996f81ec0ebcf62584369eabf5d89aaca44c5501ffc7d0948201d6bf0c5137
+    branch_elm_core_seed61103_step72000.pt: 72530a3f12486ccf97378e857933201d863b0826760a6a8647206d076e2f3b73
+    giada_voltage_bridge_seed61103_step72000.pt: 827cd8977ef01830c72693bbf663566d6de0fdcd332b2570fa4cdc48348fe13d

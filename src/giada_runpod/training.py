@@ -209,6 +209,90 @@ class LeanSomaCorpus:
         )
         return {name: self._read_sorted(handle, name, indices)[:, 0] if handle[name].ndim == 2 else self._read_sorted(handle, name, indices)[:, 0, :] for name in names}
 
+    def sample_raw_global(
+        self,
+        split_code: int,
+        count: int,
+        rng: np.random.Generator,
+        *,
+        include_labels: bool = False,
+    ) -> Dict[str, np.ndarray]:
+        """Sample the complete split proportionally instead of one shard.
+
+        ``sample_raw`` intentionally selects a single shard for each training
+        minibatch.  A diagnostic evaluation sample must instead represent the
+        physical mixture of the complete split.  Multinomial allocation keeps
+        every row equally likely while making the sampled rows and labels
+        exactly reproducible from ``rng``.
+        """
+        requested = int(count)
+        if requested <= 0:
+            raise ValueError("global sample count must be positive")
+        groups = self.rows[int(split_code)]
+        sizes = np.asarray([len(indices) for _, indices in groups], dtype=np.float64)
+        allocations = rng.multinomial(requested, sizes / sizes.sum())
+        names = (
+            "voltage_t_mv", "voltage_t_plus_1_mv", "parent_delta_t_mv",
+            "mean_child_delta_t_mv", "mechanism_state_t", "ion_state_t",
+            "causal_drive",
+        )
+        collected: Dict[str, List[np.ndarray]] = {name: [] for name in names}
+        labels: Dict[str, List[np.ndarray]] = {
+            "_component_label": [],
+            "_protocol_label": [],
+            "_family_label": [],
+            "_arm_label": [],
+        }
+        for allocation, (path, available) in zip(allocations, groups):
+            if allocation == 0:
+                continue
+            positions = rng.integers(0, len(available), size=int(allocation))
+            indices = available[positions]
+            handle = self._handle(path)
+            for name in names:
+                values = self._read_sorted(handle, name, indices)
+                collected[name].append(
+                    values[:, 0] if handle[name].ndim == 2 else values[:, 0, :]
+                )
+            if include_labels:
+                trajectory_indices = self._read_sorted(
+                    handle, "trajectory_index", indices
+                ).astype(np.int64)
+                lookup = self.path_trajectory_labels[path]
+                rows = [lookup.get(int(index), {}) for index in trajectory_indices]
+                labels["_component_label"].append(
+                    np.full(int(allocation), self.path_component[path], dtype=object)
+                )
+                labels["_protocol_label"].append(
+                    np.asarray(
+                        [row.get("protocol", "unknown") for row in rows],
+                        dtype=object,
+                    )
+                )
+                labels["_family_label"].append(
+                    np.asarray(
+                        [row.get("family", "unknown") for row in rows],
+                        dtype=object,
+                    )
+                )
+                labels["_arm_label"].append(
+                    np.asarray(
+                        [row.get("arm", "unknown") for row in rows], dtype=object
+                    )
+                )
+        result = {
+            name: np.concatenate(chunks, axis=0) for name, chunks in collected.items()
+        }
+        if include_labels:
+            result.update(
+                {
+                    name: np.concatenate(chunks, axis=0)
+                    for name, chunks in labels.items()
+                }
+            )
+        permutation = rng.permutation(requested)
+        return {name: values[permutation] for name, values in result.items()}
+
     def iter_raw(
         self,
         split_code: int,

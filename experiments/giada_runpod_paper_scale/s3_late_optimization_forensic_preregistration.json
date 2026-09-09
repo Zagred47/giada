@@ -1,0 +1,89 @@
+{
+  "schema_version": "giada-s3-late-optimization-forensic-preregistration-v1",
+  "project": "GIADA",
+  "stage": "s3_late_optimization_forensic",
+  "frozen_before_execution": true,
+  "scientific_status": "diagnostic_only",
+  "problem": "The frozen S3 endpoint retained a 15.5% median GIADA advantage and won all 14 protocols, but only three of five paired seeds; GIADA had won all five seeds at every checkpoint through 72,000 steps.",
+  "hypotheses": [
+    {
+      "id": "optimizer_state_accumulation",
+      "test": "A fresh AdamW control at learning rate 1e-3 improves late robustness from the exact 72k weights.",
+      "limit": "Historical AdamW state was not saved, so this tests reset versus the historical trajectory contextually, not as an exact causal continuation."
+    },
+    {
+      "id": "late_step_size",
+      "test": "Fresh AdamW at 3e-4 or 1e-4 is more robust than the fresh 1e-3 reset control under the same minibatch stream."
+    },
+    {
+      "id": "endpoint_wandering",
+      "test": "EMA readout improves paired seed robustness relative to raw weights without changing training compute or architecture."
+    }
+  ],
+  "source": {
+    "checkpoint_step": 72000,
+    "source_code_revision": "c904e731959c8df8a4d4ddfbdd11e74cb7c90a98",
+    "weights_and_normalization_hash_locked": true,
+    "optimizer_state_available": false,
+    "rng_state_available": false,
+    "exact_continuation_claimed": false
+  },
+  "design": {
+    "discovery_seeds": [61017, 61043, 61103],
+    "discovery_seed_roles": {
+      "61017": "late_failure",
+      "61043": "winner_control",
+      "61103": "late_failure"
+    },
+    "confirmation_seeds": [61029, 61071],
+    "learning_rates": [0.001, 0.0003, 0.0001],
+    "optimizer": "fresh AdamW in every arm",
+    "shared_minibatch_stream_within_seed": true,
+    "continuation_steps": 12000,
+    "checkpoints": [3000, 6000, 12000],
+    "readouts": ["raw", "ema_decay_0.999"],
+    "architectures_modified": false,
+    "loss_modified": false,
+    "data_regenerated": false
+  },
+  "evaluation": {
+    "discovery_sample": {
+      "split": "S3 development validation",
+      "count": 262144,
+      "seed": 73100001,
+      "sampling": "global row-proportional sampling with replacement",
+      "shared_by_all_candidates": true
+    },
+    "candidate_selection": "Lexicographically maximize: all discovery gates passed; seed wins; median-stratum wins; overall Branch-ELM-minus-GIADA margin. Preserve listed learning-rate/readout order on exact ties.",
+    "discovery_gates": [
+      "GIADA wins all three discovery seeds on overall soma RMSE",
+      "GIADA has lower median overall soma RMSE",
+      "GIADA has lower median active-transition RMSE",
+      "GIADA has lower median somatic-upcrossing RMSE"
+    ],
+    "post_selection": "Train only the selected learning-rate arm on the two held-out optimizer seeds, then evaluate the selected raw-or-EMA readout for all five seeds on the complete 5.76M-transition development-validation split."
+  },
+  "compute_budget": {
+    "paired_model_training_arms": 11,
+    "steps_per_arm": 12000,
+    "total_paired_training_steps": 132000,
+    "relative_to_original_s3_paired_training_steps": 0.18333333333333332,
+    "target_wall_hours_rtx_4090": "2-3.5",
+    "hard_operational_review_hours": 4
+  },
+  "interpretation_contract": {
+    "may_diagnose": [
+      "whether lower late learning rate improves seed robustness under optimizer reset",
+      "whether EMA reduces endpoint wandering",
+      "whether AdamW reset alone is a plausible contributor"
+    ],
+    "may_not_claim": [
+      "S3 confirmation",
+      "S4 authorization",
+      "fresh independent test superiority",
+      "exact continuation of the original optimizer trajectory",
+      "architecture improvement"
+    ],
+    "next_decision": "A favorable diagnostic can freeze a prospective training schedule for a new confirmation run; it cannot retroactively replace the failed S3 preregistered endpoint."
+  }
+}

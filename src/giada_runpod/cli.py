@@ -307,6 +307,50 @@ def command_train(args: argparse.Namespace) -> None:
     }, indent=2), flush=True)
 
 
+def command_forensic_s3(args: argparse.Namespace) -> None:
+    import yaml
+    from .optimization_forensic import (
+        LateOptimizationForensicConfig,
+        S3LateOptimizationForensic,
+    )
+    from .training import MatchedTrainingConfig
+
+    base_values = yaml.safe_load(Path(args.base_config).read_text(encoding="utf-8"))
+    base_config = MatchedTrainingConfig.from_mapping(
+        base_values.get("giada_matched_training", base_values)
+    )
+    values = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
+    config = LateOptimizationForensicConfig.from_mapping(
+        values.get("giada_late_optimization_forensic", values), base=base_config
+    )
+    forensic = S3LateOptimizationForensic(
+        Path(args.corpus),
+        Path(args.source),
+        Path(args.output),
+        base_config,
+        config,
+        code_revision=_revision(Path(args.elm_repo)),
+    )
+    try:
+        report = forensic.run()
+    finally:
+        forensic.corpus.close()
+    print(
+        json.dumps(
+            {
+                "valid": report["valid"],
+                "selected": report["diagnostic_selection"]["selected"],
+                "full_development_validation": report[
+                    "full_development_validation"
+                ],
+                "s4_authorized": report["interpretation"]["s4_authorized"],
+            },
+            indent=2,
+        ),
+        flush=True,
+    )
+
+
 def command_compose_s1e(args: argparse.Namespace) -> None:
     from .production_corpus import build_and_audit_s1e_composite
 
@@ -438,6 +482,17 @@ def parser() -> argparse.ArgumentParser:
     train.add_argument("--output", required=True, type=Path)
     train.add_argument("--elm-repo", default=Path.cwd(), type=Path)
     train.set_defaults(func=command_train)
+    forensic = sub.add_parser(
+        "forensic-s3",
+        help="diagnose S3 late optimization from frozen 72k checkpoints",
+    )
+    forensic.add_argument("--base-config", required=True, type=Path)
+    forensic.add_argument("--config", required=True, type=Path)
+    forensic.add_argument("--corpus", required=True, type=Path)
+    forensic.add_argument("--source", required=True, type=Path)
+    forensic.add_argument("--output", required=True, type=Path)
+    forensic.add_argument("--elm-repo", default=Path.cwd(), type=Path)
+    forensic.set_defaults(func=command_forensic_s3)
     compose = sub.add_parser(
         "compose-s1e", help="seal and audit the two-part S1e hybrid corpus"
     )

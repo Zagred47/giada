@@ -558,6 +558,43 @@ seed wins, all five family wins and at least twelve of fourteen protocol wins.
 The scale track remains one-step soma-voltage only and cannot select a new
 architecture or make a fresh-test, full-state or rollout claim.
 
+## S3 late-optimization forensic
+
+The failed four-of-five seed gate is followed by one bounded diagnostic from
+the frozen 72k checkpoints. It compares fresh-AdamW learning rates `1e-3`,
+`3e-4`, and `1e-4` on shared minibatch streams, and records raw plus EMA
+readouts. This is not an exact continuation because the historical optimizer
+and RNG states were not saved. It does not modify the architectures and cannot
+replace the frozen S3 decision.
+
+On the same RTX 4090 pod that still mounts the S3 corpus and
+`/workspace/giada-results/s3-matched-v1`, fetch the RunPod branch revision and
+launch it under `nohup`:
+
+```bash
+cd /workspace/giada
+git config --global --add safe.directory /workspace/giada
+git fetch origin runpod/paper-scale-data
+git checkout --detach FETCH_HEAD
+
+export GIADA_ROOT=/workspace/giada
+export GIADA_GPU_PYTHON=python
+export GIADA_S3_CORPUS=/workspace/giada-data/s3-hybrid-production-v1/composite
+export GIADA_S3_SOURCE_RESULTS=/workspace/giada-results/s3-matched-v1
+export GIADA_S3_FORENSIC_RESULTS=/workspace/giada-results/s3-optimization-forensic-v1
+
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s3_optimization_forensic.sh" \
+  > /workspace/giada-results/s3-optimization-forensic-v1.log 2>&1 &
+echo $! | tee /workspace/giada-results/s3-optimization-forensic-v1.pid
+tail -F /workspace/giada-results/s3-optimization-forensic-v1.log
+```
+
+The run is resumable at every 3,000-step diagnostic checkpoint. A disconnected
+web console does not stop it. Operational review is required if wall time
+exceeds four hours. Completion is
+`/workspace/giada-results/s3-optimization-forensic-v1/final_report.json`.
+
 ## What remains in the Kaggle track
 
 Architecture exploration, recursive-state repair, event-specific ablations,
