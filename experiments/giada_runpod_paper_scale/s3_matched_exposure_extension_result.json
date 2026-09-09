@@ -1,0 +1,140 @@
+{
+  "schema_version": "giada-s3-matched-exposure-extension-result-v1",
+  "project": "GIADA",
+  "stage": "s3_matched_exposure_extension",
+  "status": "completed_and_independently_verified",
+  "execution": {
+    "code_revision": "61505220fa670481e34b00fe315c0dfb725aa171",
+    "configuration_sha256": "1e2fe8a138b8132896b2154c52ff74a191fa6f1c5f0faa826cf75fb7760d3a53",
+    "source_absolute_s3_step": 84000,
+    "target_absolute_s3_step": 144000,
+    "additional_steps_per_seed": 60000,
+    "learning_rate": 0.0003,
+    "readout": "raw",
+    "exact_optimizer_state_continuation": true,
+    "exact_numpy_rng_state_continuation": true,
+    "architecture_modified": false,
+    "loss_modified": false,
+    "dataset_modified": false,
+    "hyperparameter_selection_during_extension": false
+  },
+  "artifact": {
+    "filename": "s3-matched-exposure-v1.zip",
+    "archive_size_bytes": 4617721,
+    "archive_sha256": "3c8af3ec3bd3ed460599296525a5c5e27993f174fe309da7ff01fe5ce2339460",
+    "entry_count": 37,
+    "file_count": 37,
+    "uncompressed_size_bytes": 12557574,
+    "zip_crc_check_passed": true,
+    "unsafe_path_count": 0,
+    "final_report_sha256": "7e7493cf100baee30f5f527a79d03c55384ba8c8a6f60aed4cdddedb1cb038a2",
+    "normalization_sha256": "f15423e51d7c84ced03cd9e289320b041c8a41e048a0ca73e84bebe7351e2024"
+  },
+  "final_state_sha256": {
+    "61017": "6361df7ab65d30085188653f8dfb24d4687779619bae5691a09af29e5342c3c6",
+    "61029": "2b0ddd4d37c2e8251cfd5aa0029e99aae78133fcea6f83bcf123b2b90627d655",
+    "61043": "fd7eb238990385c160ea6712f3b8bd14c888fa35de450f40a3637a6b52c4a446",
+    "61071": "e008fbc05883ed516f1c51aefb9100d970c64c97fbe2c0455a7c30d40c7ae773",
+    "61103": "2e482f746aa099f0e20837370fe98a7526427d761e7572cadd90c64baede11ae"
+  },
+  "full_evaluation_sha256": {
+    "61017": "f3d41a8af53062e030876aae24561b6e03207818f2af55d4ba1bc9ce92d01dcc",
+    "61029": "7630114d81aaba3961e9d2540ce36a72238878714530d2624026d071be183929",
+    "61043": "ccf8571bf6e0a8071794ed666471c8c87c36f56284f312bcc102e126c3aca6eb",
+    "61071": "bc7ce12ccaac02cbed1fe56a61de9d3a8a3728f0b6226efef05a8b8aa2046738",
+    "61103": "9fa97a031eb81ebee74b7ef602c83bc488d79229ea83add2d6102cfd442fabcf"
+  },
+  "full_development_validation": {
+    "example_count_per_seed": 5760000,
+    "seed_wins": {
+      "61017": true,
+      "61029": true,
+      "61043": true,
+      "61071": true,
+      "61103": true
+    },
+    "observed_seed_wins": 5,
+    "median_rmse_mv": {
+      "overall": {
+        "branch_elm_core": 1.0137646303793242,
+        "giada_voltage_bridge": 0.818041982962365,
+        "giada_relative_reduction": 0.193065176621643
+      },
+      "active": {
+        "branch_elm_core": 6.048328221245328,
+        "giada_voltage_bridge": 5.070818204020947,
+        "giada_relative_reduction": 0.161616562704184
+      },
+      "somatic_upcrossing": {
+        "branch_elm_core": 8.023197911972778,
+        "giada_voltage_bridge": 7.152358265910031,
+        "giada_relative_reduction": 0.108540217456585
+      }
+    },
+    "per_seed": [
+      {
+        "seed": 61017,
+        "branch_elm_rmse_mv": 0.9802505756720321,
+        "giada_rmse_mv": 0.8916366706253347,
+        "giada_relative_reduction": 0.09039923795601572,
+        "branch_elm_active_rmse_mv": 5.887132553514181,
+        "giada_active_rmse_mv": 5.550692142854525,
+        "branch_elm_spike_rmse_mv": 7.732481065518872,
+        "giada_spike_rmse_mv": 7.29491467138633
+      },
+      {
+        "seed": 61029,
+        "branch_elm_rmse_mv": 0.9785192397694515,
+        "giada_rmse_mv": 0.818041982962365,
+        "giada_relative_reduction": 0.1640001037127247,
+        "branch_elm_active_rmse_mv": 5.898866773377808,
+        "giada_active_rmse_mv": 5.070818204020947,
+        "branch_elm_spike_rmse_mv": 7.738245746134952,
+        "giada_spike_rmse_mv": 6.951458370630152
+      },
+      {
+        "seed": 61043,
+        "branch_elm_rmse_mv": 1.0865828865371376,
+        "giada_rmse_mv": 0.7962582989628328,
+        "giada_relative_reduction": 0.26719046579092426,
+        "branch_elm_active_rmse_mv": 6.231969832844229,
+        "giada_active_rmse_mv": 4.977787325985801,
+        "branch_elm_spike_rmse_mv": 8.023197911972778,
+        "giada_spike_rmse_mv": 7.152358265910031
+      },
+      {
+        "seed": 61071,
+        "branch_elm_rmse_mv": 1.1980249499411362,
+        "giada_rmse_mv": 0.8491063629975595,
+        "giada_relative_reduction": 0.291244841737829,
+        "branch_elm_active_rmse_mv": 6.664030970992513,
+        "giada_active_rmse_mv": 5.319472571092394,
+        "branch_elm_spike_rmse_mv": 8.637334246382313,
+        "giada_spike_rmse_mv": 7.23977177591883
+      },
+      {
+        "seed": 61103,
+        "branch_elm_rmse_mv": 1.0137646303793242,
+        "giada_rmse_mv": 0.7825569630718986,
+        "giada_relative_reduction": 0.22806839021490988,
+        "branch_elm_active_rmse_mv": 6.048328221245328,
+        "giada_active_rmse_mv": 4.939797286486078,
+        "branch_elm_spike_rmse_mv": 8.093201014504926,
+        "giada_spike_rmse_mv": 6.999469667145713
+      }
+    ],
+    "overall_seed_gain_range": [
+      0.09039923795601572,
+      0.291244841737829
+    ],
+    "all_three_median_strata_favor_giada": true,
+    "matched_exposure_stability_passed": true
+  },
+  "decision": {
+    "schedule_stability_at_equal_exposure_confirmed": true,
+    "original_s3_decision_overridden": false,
+    "paper_confirmation_claimed": false,
+    "s4_authorized": false,
+    "reason": "The 3e-4 schedule was selected on the same S3 development-validation corpus. The result establishes equal-exposure optimization stability but requires a sealed fresh teacher-trajectory evaluation before a paper-confirmation or S4-authorization claim."
+  }
+}

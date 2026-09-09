@@ -193,5 +193,18 @@ same 144k-step exposure as original S3 without new hyperparameter selection.
 It remains a same-development-set stability diagnostic and cannot authorize
 S4 or overwrite the original S3 decision.
 
+The matched-exposure extension completed successfully at revision `6150522`
+and has been independently verified from the downloaded archive. At exactly
+144,000 total updates GIADA won all five paired seeds. Median overall RMSE fell
+from 1.014 to 0.818 mV (19.3%), active-transition RMSE from 6.048 to 5.071 mV
+(16.2%), and somatic-upcrossing RMSE from 8.023 to 7.152 mV (10.9%). Every seed
+was evaluated on all 5.76 million S3 development-validation transitions, and
+the per-seed overall reduction ranged from 9.0% to 29.1%. The archive, final
+states and evaluation hashes are frozen in
+`s3_matched_exposure_extension_result.json`. This resolves the equal-exposure
+stability question but, because `3e-4` was selected on this same development
+corpus, it still does not constitute a fresh paper confirmation or authorize
+S4.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.
