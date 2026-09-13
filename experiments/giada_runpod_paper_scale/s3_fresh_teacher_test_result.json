@@ -1,0 +1,146 @@
+{
+  "schema_version": "giada-s3-fresh-teacher-test-result-v1",
+  "project": "GIADA",
+  "stage": "s3_fresh_teacher_test",
+  "recorded_at": "2026-09-13",
+  "status": "completed_and_independently_verified",
+  "source_preregistration": "s3_fresh_teacher_test_preregistration.json",
+  "execution": {
+    "code_revision": "cd510144b5d1db391393a35efb827575e929a76a",
+    "evaluation_only": true,
+    "training_performed": false,
+    "checkpoint_or_hyperparameter_selection_performed": false,
+    "fresh_trajectories_used_for_training_or_tuning": false,
+    "same_frozen_models_and_normalization": true
+  },
+  "artifact": {
+    "filename": "giada_s3_fresh_teacher_test_v1.zip",
+    "archive_size_bytes": 24676,
+    "archive_sha256": "7c6ae761eae558cbabe2f8e63e29d56705baa32285c615e7fe3f6e5273d8f443",
+    "archive_entry_count": 8,
+    "archive_file_count": 6,
+    "uncompressed_size_bytes": 158208,
+    "zip_crc_check_passed": true,
+    "unsafe_path_count": 0,
+    "final_report_sha256": "31d23af865fd4e8d077d1fcc01defdea9ead4e2e8d6c731b22f6e3e6fe6cbc62",
+    "seed_report_sha256": {
+      "61017": "b66b1493d9027af985e4a5c2d4a2fef072a6cacd6882df271f45b2b4011f4478",
+      "61029": "68679fcbcbac0d2f9fdbd6c8b74aaebdd9a1950c2cd9c7fc0f829d441c12a2a6",
+      "61043": "2a2c4d8041f2e29585693cd120e5b6e34b4a9ed27d9bb5e28f23916cc1ab73bb",
+      "61071": "4f4b65e6e501c4b7cb57d991f677f9b13b1ef8613c38290ef315cd5243b6a50b",
+      "61103": "9317ba5d73a51d1967b39f68229877214b99d40d5953681fd945616407dcf958"
+    }
+  },
+  "frozen_source": {
+    "absolute_training_step": 144000,
+    "learning_rate": 0.0003,
+    "readout": "raw",
+    "code_revision": "61505220fa670481e34b00fe315c0dfb725aa171",
+    "configuration_sha256": "1e2fe8a138b8132896b2154c52ff74a191fa6f1c5f0faa826cf75fb7760d3a53",
+    "final_report_sha256": "7e7493cf100baee30f5f527a79d03c55384ba8c8a6f60aed4cdddedb1cb038a2",
+    "normalization_sha256": "f15423e51d7c84ced03cd9e289320b041c8a41e048a0ca73e84bebe7351e2024"
+  },
+  "corpus": {
+    "selection_role": "sealed_fresh_test",
+    "transition_count": 1680000,
+    "shard_count": 504,
+    "total_size_bytes": 341753023,
+    "background_plan_sha256": "ad3bbd7f8948e2c838056966050005c37f2f2e540c39f786ccf64b417d48c956",
+    "targeted_plan_sha256": "c01120095cc1e78e465351e717bdcc2153b49bf30ab60fbf9681893490a2a160",
+    "composite_manifest_sha256": "f957421bf9559265ff7b349708987d770124cf6fd0bec146c04f06acd37ade6c",
+    "production_audit_sha256": "c6229d4129b4f7c6d2d1f9d269dac5dd8399f1eda9baa053fd956e3a3f6d7c21",
+    "corpus_fingerprint_sha256": "37584bede949d9f3348a52cbf8ad0b04e7065967fc5c73a65ed6843485206d85",
+    "marker_fingerprint_sha256": "aed0179543e83037012dd199be30a2bc2548a743cb5f9010bc060fbafac21be9",
+    "physical_mismatch_count": 0,
+    "verified": true
+  },
+  "median_rmse_mv": {
+    "overall": {
+      "branch_elm_core": 1.0414587742741122,
+      "giada_voltage_bridge": 0.8313825005749627,
+      "giada_relative_reduction": 0.20171348006124468
+    },
+    "active": {
+      "branch_elm_core": 6.160420586538316,
+      "giada_voltage_bridge": 5.1078419397760975,
+      "giada_relative_reduction": 0.17086149102584033
+    },
+    "somatic_upcrossing": {
+      "branch_elm_core": 8.153179027160258,
+      "giada_voltage_bridge": 7.277841841978522,
+      "giada_relative_reduction": 0.10736145769224138
+    }
+  },
+  "per_seed_overall_rmse_mv": [
+    {
+      "seed": 61017,
+      "branch_elm_core": 1.006315603657013,
+      "giada_voltage_bridge": 0.9040183464428021,
+      "giada_relative_reduction": 0.10165524298982968,
+      "giada_won": true
+    },
+    {
+      "seed": 61029,
+      "branch_elm_core": 1.016023501440863,
+      "giada_voltage_bridge": 0.8313825005749627,
+      "giada_relative_reduction": 0.18172906493211388,
+      "giada_won": true
+    },
+    {
+      "seed": 61043,
+      "branch_elm_core": 1.1166616553675193,
+      "giada_voltage_bridge": 0.8108371178575215,
+      "giada_relative_reduction": 0.27387394923070385,
+      "giada_won": true
+    },
+    {
+      "seed": 61071,
+      "branch_elm_core": 1.2224710697374073,
+      "giada_voltage_bridge": 0.85639962799704,
+      "giada_relative_reduction": 0.2994520286021993,
+      "giada_won": true
+    },
+    {
+      "seed": 61103,
+      "branch_elm_core": 1.0414587742741122,
+      "giada_voltage_bridge": 0.7963570719636868,
+      "giada_relative_reduction": 0.23534460351660022,
+      "giada_won": true
+    }
+  ],
+  "breadth": {
+    "seed_wins": 5,
+    "seed_count": 5,
+    "family_wins": 5,
+    "family_count": 5,
+    "protocol_wins": 14,
+    "protocol_count": 14
+  },
+  "paired_statistical_inference": {
+    "unit": "independent_training_seed_on_the_same_sealed_fresh_teacher_test_corpus",
+    "mean_difference_mv": 0.2407871879281803,
+    "sample_standard_deviation_mv": 0.10280621498607373,
+    "bootstrap_95_percent_ci_mean_difference_mv": [
+      0.15947146200370607,
+      0.31777873216223107
+    ],
+    "paired_t_test_one_sided_giada_lower": {
+      "statistic": 5.237198163470589,
+      "p_value": 0.003176195980076182
+    }
+  },
+  "decision": {
+    "overall_median_passed": true,
+    "active_median_passed": true,
+    "somatic_upcrossing_median_passed": true,
+    "seed_robustness_passed": true,
+    "family_breadth_passed": true,
+    "protocol_breadth_passed": true,
+    "all_preregistered_gates_passed": true,
+    "fresh_independent_teacher_trajectory_confirmation": true,
+    "paper_confirmation_claimed": true,
+    "s4_authorized": true
+  },
+  "interpretation_limit": "The five optimization seeds share one sealed independent teacher-test corpus. The rows are not treated as independent biological experiments, and the result confirms the registered one-step authentic NEURON soma-voltage transition claim rather than unrestricted biological generalization.",
+  "architecture_experiments_modified": false
+}

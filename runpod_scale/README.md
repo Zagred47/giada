@@ -671,6 +671,15 @@ fresh plans, the composite audit, and every physical shard before inference.
 It is resumable seed by seed. A disconnected web console does not stop either
 launcher.
 
+The sealed evaluation completed at revision `cd51014`. The downloaded
+artifact passed CRC, path-safety, source-identity, corpus-identity, per-seed,
+and aggregate recomputation checks. GIADA improved median overall RMSE by
+20.2%, active-transition RMSE by 17.1%, and somatic-upcrossing RMSE by 10.7%
+on the 1.68-million-transition fresh corpus. It won 5/5 seeds, 5/5 protocol
+families, and 14/14 protocols; every preregistered gate passed and S4 is
+authorized. The immutable evidence record is
+`experiments/giada_runpod_paper_scale/s3_fresh_teacher_test_result.json`.
+
 ## What remains in the Kaggle track
 
 Architecture exploration, recursive-state repair, event-specific ablations,

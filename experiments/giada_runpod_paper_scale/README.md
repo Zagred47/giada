@@ -216,5 +216,20 @@ S4 is authorized only if the corpus integrity/support gates, all three median
 strata, at least four of five seed wins, all five family wins, and at least
 twelve of fourteen protocol wins pass together.
 
+The sealed fresh teacher test completed successfully at revision `cd51014`
+and has been independently verified from the downloaded archive. No training,
+checkpoint selection, hyperparameter selection, or normalization refit was
+performed on its 1.68 million new transitions. GIADA won all five paired
+optimization seeds, all five protocol families, and all fourteen individual
+protocols. Median overall RMSE fell from 1.041 to 0.831 mV (20.2%), active
+transition RMSE from 6.160 to 5.108 mV (17.1%), and somatic-upcrossing RMSE
+from 8.153 to 7.278 mV (10.7%). The paired mean improvement was 0.241 mV
+(`p=0.00318`, one-sided paired t-test; bootstrap 95% CI 0.159--0.318 mV).
+Every preregistered gate passed, so the registered one-step authentic NEURON
+soma-voltage claim is confirmed on the sealed corpus and S4 is authorized.
+Exact artifact, source, corpus, and per-seed hashes are frozen in
+`s3_fresh_teacher_test_result.json`. The five seeds share one test corpus and
+therefore do not represent five independent biological datasets.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.
