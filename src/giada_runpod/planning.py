@@ -6,7 +6,7 @@ import hashlib
 import json
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Mapping
+from typing import Any, Dict, Iterable, Iterator, List, Mapping
 
 from .config import ScaleConfig
 
@@ -54,7 +54,7 @@ def _split_for(index: int, count: int, validation_fraction: float) -> str:
     return "validation" if ranks < validation_count else "train"
 
 
-def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
+def _iter_trajectory_plan(config: ScaleConfig) -> Iterator[TrajectoryPlan]:
     config.validate()
     count = config.trajectory_count
     protocols = tuple(config.input_protocols)
@@ -79,7 +79,6 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
             if min(train_repeats, validation_repeats) <= 0:
                 raise RuntimeError("paired plan requires both train and validation replicas")
             split_repeats = (("train", train_repeats), ("validation", validation_repeats))
-        trajectories = []
         index = 0
         # Keep every split's Random123 seed namespace disjoint even when a
         # scale contains more than 1,000 paired replicates. Preserve the
@@ -97,27 +96,24 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
                         + len(family_seeds),
                     )
                     pair_id = f"{split}-{spec.family}-rep{replicate:03d}"
-                    trajectories.append(
-                        TrajectoryPlan(
-                            trajectory_id=f"{config.stage}-{pair_id}-{spec.arm}",
-                            trajectory_index=index,
-                            seed=family_seed,
-                            split=split,
-                            duration_ms=config.trajectory_duration_ms,
-                            protocol=spec.protocol,
-                            protocol_family=spec.family,
-                            protocol_arm=spec.arm,
-                            pair_id=pair_id,
-                        )
+                    yield TrajectoryPlan(
+                        trajectory_id=f"{config.stage}-{pair_id}-{spec.arm}",
+                        trajectory_index=index,
+                        seed=family_seed,
+                        split=split,
+                        duration_ms=config.trajectory_duration_ms,
+                        protocol=spec.protocol,
+                        protocol_family=spec.family,
+                        protocol_arm=spec.arm,
+                        pair_id=pair_id,
                     )
                     index += 1
-        protocol_for = {}
-        validation = set()
-    else:
-        protocol_for = {index: protocols[index % len(protocols)] for index in range(count)}
-    if paired_purpose:
-        pass
-    elif config.purpose == "giada_fresh_test_background":
+        if index != count:
+            raise RuntimeError("paired trajectory accounting failed")
+        return
+
+    protocol_for = {index: protocols[index % len(protocols)] for index in range(count)}
+    if config.purpose == "giada_fresh_test_background":
         validation = set(range(count))
     elif len(protocols) == 1:
         # Preserve the original S0--S4 split identity exactly.
@@ -155,42 +151,73 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
                 ).digest(),
             )
             validation.update(ranked[:validation_count])
-    if not paired_purpose:
-        trajectories = [
-            TrajectoryPlan(
-                trajectory_id=f"{config.stage}-neuronio-{index:06d}",
-                trajectory_index=index,
-                seed=config.root_seed + index,
-                split="validation" if index in validation else "train",
-                duration_ms=config.trajectory_duration_ms,
-                protocol=protocol_for[index],
-            )
-            for index in range(count)
-        ]
-    shards: List[ShardPlan] = []
+    for index in range(count):
+        yield TrajectoryPlan(
+            trajectory_id=f"{config.stage}-neuronio-{index:06d}",
+            trajectory_index=index,
+            seed=config.root_seed + index,
+            split="validation" if index in validation else "train",
+            duration_ms=config.trajectory_duration_ms,
+            protocol=protocol_for[index],
+        )
+
+
+def iter_shard_plan(config: ScaleConfig) -> Iterator[ShardPlan]:
+    """Yield the canonical plan without retaining every trajectory in RAM."""
+
+    config.validate()
     width = max(5, len(str(config.shard_count - 1)))
-    for shard_index, start in enumerate(
-        range(0, count, config.trajectories_per_shard)
-    ):
-        rows = tuple(trajectories[start : start + config.trajectories_per_shard])
+    rows: list[TrajectoryPlan] = []
+    transition_count = 0
+    shard_index = 0
+    for trajectory in _iter_trajectory_plan(config):
+        rows.append(trajectory)
+        if len(rows) < config.trajectories_per_shard:
+            continue
+        immutable_rows = tuple(rows)
         identity = {
             "schema_version": "giada-runpod-plan-v1",
             "config": config.to_dict(),
             "shard_index": shard_index,
-            "trajectories": [asdict(row) for row in rows],
+            "trajectories": [asdict(row) for row in immutable_rows],
         }
-        shards.append(
-            ShardPlan(
-                shard_id=f"shard-{shard_index:0{width}d}",
-                shard_index=shard_index,
-                trajectories=rows,
-                expected_transition_count=sum(row.duration_ms for row in rows),
-                plan_sha256=hashlib.sha256(_canonical_json(identity).encode()).hexdigest(),
-            )
+        shard = ShardPlan(
+            shard_id=f"shard-{shard_index:0{width}d}",
+            shard_index=shard_index,
+            trajectories=immutable_rows,
+            expected_transition_count=sum(row.duration_ms for row in immutable_rows),
+            plan_sha256=hashlib.sha256(_canonical_json(identity).encode()).hexdigest(),
         )
-    if sum(row.expected_transition_count for row in shards) != config.target_transitions:
+        transition_count += shard.expected_transition_count
+        yield shard
+        shard_index += 1
+        rows = []
+    if rows:
+        immutable_rows = tuple(rows)
+        identity = {
+            "schema_version": "giada-runpod-plan-v1",
+            "config": config.to_dict(),
+            "shard_index": shard_index,
+            "trajectories": [asdict(row) for row in immutable_rows],
+        }
+        shard = ShardPlan(
+            shard_id=f"shard-{shard_index:0{width}d}",
+            shard_index=shard_index,
+            trajectories=immutable_rows,
+            expected_transition_count=sum(row.duration_ms for row in immutable_rows),
+            plan_sha256=hashlib.sha256(_canonical_json(identity).encode()).hexdigest(),
+        )
+        transition_count += shard.expected_transition_count
+        yield shard
+        shard_index += 1
+    if transition_count != config.target_transitions:
         raise RuntimeError("shard plan transition accounting failed")
-    return shards
+    if shard_index != config.shard_count:
+        raise RuntimeError("shard plan count accounting failed")
+
+
+def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
+    return list(iter_shard_plan(config))
 
 
 def write_shard_plan(path: Path, config: ScaleConfig, shards: Iterable[ShardPlan]) -> None:

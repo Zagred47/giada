@@ -43,6 +43,15 @@ STAGE_TRANSITIONS = {
     "s3_fresh_test_background": 1_008_000,
     "s3_fresh_test_targeted": 672_000,
     "s3_fresh_teacher_test": 1_680_000,
+    # Disposable, non-training corpus for multi-pod determinism, recovery and
+    # throughput qualification before any S4 production shard is authorized.
+    "s4_distributed_canary_background": 360_000,
+    "s4_distributed_canary_targeted": 240_000,
+    # Candidate physical realization of the authorized S4 hybrid corpus.
+    # These are an exact eight-fold expansion of S3 while preserving its
+    # 60/40 methodology and 80/20 train/validation split.
+    "s4_hybrid_background": 138_240_000,
+    "s4_hybrid_targeted": 92_160_000,
     "s4": 230_400_000,
 }
 
@@ -181,9 +190,11 @@ class ScaleConfig:
                 "s1e_hybrid_background",
                 "s2_hybrid_background",
                 "s3_hybrid_background",
+                "s4_distributed_canary_background",
+                "s4_hybrid_background",
             }:
                 raise ValueError(
-                    "hybrid production background requires an S1e/S2/S3 component stage"
+                    "hybrid production background requires an S1e/S2/S3/S4 component stage"
                 )
             if tuple(self.input_protocols) != PRODUCTION_BACKGROUND_PROTOCOLS:
                 raise ValueError("hybrid production background protocol registry changed")
@@ -198,9 +209,11 @@ class ScaleConfig:
                 "s1e_hybrid_targeted",
                 "s2_hybrid_targeted",
                 "s3_hybrid_targeted",
+                "s4_distributed_canary_targeted",
+                "s4_hybrid_targeted",
             }:
                 raise ValueError(
-                    "hybrid production targeted requires an S1e/S2/S3 component stage"
+                    "hybrid production targeted requires an S1e/S2/S3/S4 component stage"
                 )
             if tuple(self.input_protocols) != PRODUCTION_TARGET_PROTOCOLS:
                 raise ValueError("hybrid production targeted protocol registry changed")

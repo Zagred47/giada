@@ -346,6 +346,33 @@ class ScaleTeacherGenerator:
         shard_path = output_root / "shards" / f"{shard.shard_id}.h5"
         done_path = output_root / "status" / f"{shard.shard_id}.done.json"
         failed_path = output_root / "status" / f"{shard.shard_id}.failed.json"
+        if done_path.is_file() != shard_path.is_file():
+            if shard_path.is_file():
+                validation = validate_lean_shard(
+                    shard_path,
+                    expected_transition_count=shard.expected_transition_count,
+                )
+                if (
+                    validation["valid"]
+                    and validation.get("plan_sha256") == shard.plan_sha256
+                ):
+                    recovered = {
+                        **validation,
+                        "schema_version": "giada-runpod-shard-completion-v1",
+                        "shard_id": shard.shard_id,
+                        "plan_sha256": shard.plan_sha256,
+                        "trajectory_count": len(shard.trajectories),
+                        "elapsed_seconds": 0.0,
+                        "transitions_per_second": 0.0,
+                        "recovered_complete_file": True,
+                        "resumed": True,
+                    }
+                    _atomic_json(done_path, recovered)
+                    failed_path.unlink(missing_ok=True)
+                    return recovered
+            raise RuntimeError(
+                f"orphan completion artifact for {shard.shard_id} failed safe recovery"
+            )
         if done_path.is_file() and shard_path.is_file():
             done = json.loads(done_path.read_text(encoding="utf-8"))
             validation = validate_lean_shard(

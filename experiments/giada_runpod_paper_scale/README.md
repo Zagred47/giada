@@ -231,5 +231,14 @@ Exact artifact, source, corpus, and per-seed hashes are frozen in
 `s3_fresh_teacher_test_result.json`. The five seeds share one test corpus and
 therefore do not represent five independent biological datasets.
 
+S4 CPU generation is not launched directly from the old monolithic parity
+configuration. Its first authorized action is the frozen distributed canary
+in `s4_cpu_distributed_canary_preregistration.json`. The canary preserves the
+S3 hybrid methodology but produces disposable data only. It must establish
+cross-host byte determinism, exclusive collision refusal, explicit
+kill/resume recovery, disjoint shared-volume writes, and stable 8-versus-16
+process throughput before the S4 physical packing and concurrency are sealed.
+The scientific S4 composition remains an exact 8x expansion of S3 throughout.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

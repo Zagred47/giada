@@ -60,6 +60,33 @@ def command_plan(args: argparse.Namespace) -> None:
     print(json.dumps(report, indent=2), flush=True)
 
 
+def command_plan_distributed(args: argparse.Namespace) -> None:
+    from .distributed_generation import write_distributed_plan
+
+    config = load_scale_config(args.config)
+    destination = Path(args.output) / "distributed_plan"
+    manifest = write_distributed_plan(
+        destination,
+        config,
+        int(args.global_worker_count),
+    )
+    report = {
+        "schema_version": "giada-runpod-distributed-run-manifest-v1",
+        "project": "GIADA",
+        "track": "paper_scale_data_validation",
+        "config": config.to_dict(),
+        "distributed_plan": str(destination.resolve()),
+        "plan_identity_sha256": manifest["plan_identity_sha256"],
+        "global_worker_count": manifest["global_worker_count"],
+        "shard_count": manifest["shard_count"],
+        "trajectory_count": manifest["trajectory_count"],
+        "transition_count": manifest["transition_count"],
+        "architecture_experiments_modified": False,
+    }
+    _write_json(Path(args.output) / "distributed_run_manifest.json", report)
+    print(json.dumps(report, indent=2), flush=True)
+
+
 def _new_generator(args: argparse.Namespace, work_suffix: str):
     from .teacher import ScaleTeacherGenerator
 
@@ -72,46 +99,98 @@ def _new_generator(args: argparse.Namespace, work_suffix: str):
 
 
 def command_worker(args: argparse.Namespace) -> None:
-    config, shards = load_shard_plan(args.plan)
     if not 0 <= args.worker_index < args.worker_count:
         raise ValueError("worker index must lie in [0, worker_count)")
-    assigned = [row for row in shards if row.shard_index % args.worker_count == args.worker_index]
+    distributed = args.distributed_plan is not None
+    if distributed:
+        from .distributed_generation import (
+            acquire_exclusive_claim,
+            load_worker_partition,
+        )
+
+        config, assigned, manifest = load_worker_partition(
+            args.distributed_plan,
+            args.worker_index,
+            args.worker_count,
+        )
+        worker_claim = acquire_exclusive_claim(
+            Path(args.output) / "claims" / "workers" / f"worker-{args.worker_index:05d}.claim.json",
+            kind="worker",
+            identity=manifest["plan_identity_sha256"],
+            worker_index=args.worker_index,
+            global_worker_count=args.worker_count,
+            recover_stale=args.recover_stale_claims,
+        )
+    else:
+        config, shards = load_shard_plan(args.plan)
+        assigned = [
+            row
+            for row in shards
+            if row.shard_index % args.worker_count == args.worker_index
+        ]
+        worker_claim = None
     print(
         f"[GIADA RunPod][worker {args.worker_index}/{args.worker_count}] "
         f"assigned {len(assigned)} shards",
         flush=True,
     )
-    generator = _new_generator(args, f"worker-{args.worker_index:03d}")
-    prepare = generator.prepare()
-    print(
-        f"[GIADA RunPod][worker {args.worker_index}] teacher ready; "
-        f"burn-in={prepare['burnin_duration_ms']:.0f} ms",
-        flush=True,
-    )
-    started = time.perf_counter()
-    for completed, shard in enumerate(assigned, 1):
-        try:
-            report = generator.generate_shard(config, shard, Path(args.output))
-        except Exception as error:
-            failure = {
-                "schema_version": "giada-runpod-shard-failure-v1",
-                "shard_id": shard.shard_id,
-                "plan_sha256": shard.plan_sha256,
-                "worker_index": args.worker_index,
-                "error_type": type(error).__name__,
-                "error": str(error),
-                "traceback_tail": traceback.format_exc().splitlines()[-20:],
-            }
-            _write_json(Path(args.output) / "status" / f"{shard.shard_id}.failed.json", failure)
-            raise
-        elapsed = max(time.perf_counter() - started, 1e-9)
-        eta = elapsed / completed * (len(assigned) - completed)
+    if not assigned:
+        if worker_claim is not None:
+            worker_claim.release()
         print(
-            f"[GIADA RunPod][worker {args.worker_index}] {completed}/{len(assigned)} "
-            f"{shard.shard_id} {'resume' if report['resumed'] else 'done'}; "
-            f"{report['transitions_per_second']:.2f} transition/s; ETA {eta/60:.1f} min",
+            f"[GIADA RunPod][worker {args.worker_index}] empty partition complete",
             flush=True,
         )
+        return
+    completed_normally = False
+    try:
+        generator = _new_generator(args, f"worker-{args.worker_index:05d}")
+        prepare = generator.prepare()
+        print(
+            f"[GIADA RunPod][worker {args.worker_index}] teacher ready; "
+            f"burn-in={prepare['burnin_duration_ms']:.0f} ms",
+            flush=True,
+        )
+        started = time.perf_counter()
+        for completed, shard in enumerate(assigned, 1):
+            shard_claim = None
+            if distributed:
+                shard_claim = acquire_exclusive_claim(
+                    Path(args.output) / "claims" / "shards" / f"{shard.shard_id}.claim.json",
+                    kind="shard",
+                    identity=shard.plan_sha256,
+                    worker_index=args.worker_index,
+                    global_worker_count=args.worker_count,
+                    recover_stale=args.recover_stale_claims,
+                )
+            try:
+                report = generator.generate_shard(config, shard, Path(args.output))
+            except Exception as error:
+                failure = {
+                    "schema_version": "giada-runpod-shard-failure-v1",
+                    "shard_id": shard.shard_id,
+                    "plan_sha256": shard.plan_sha256,
+                    "worker_index": args.worker_index,
+                    "error_type": type(error).__name__,
+                    "error": str(error),
+                    "traceback_tail": traceback.format_exc().splitlines()[-20:],
+                }
+                _write_json(Path(args.output) / "status" / f"{shard.shard_id}.failed.json", failure)
+                raise
+            if shard_claim is not None:
+                shard_claim.release()
+            elapsed = max(time.perf_counter() - started, 1e-9)
+            eta = elapsed / completed * (len(assigned) - completed)
+            print(
+                f"[GIADA RunPod][worker {args.worker_index}] {completed}/{len(assigned)} "
+                f"{shard.shard_id} {'resume' if report['resumed'] else 'done'}; "
+                f"{report['transitions_per_second']:.2f} transition/s; ETA {eta/60:.1f} min",
+                flush=True,
+            )
+        completed_normally = True
+    finally:
+        if worker_claim is not None and completed_normally:
+            worker_claim.release()
 
 
 def command_benchmark(args: argparse.Namespace) -> None:
@@ -188,7 +267,28 @@ def command_benchmark(args: argparse.Namespace) -> None:
 
 
 def command_validate(args: argparse.Namespace) -> None:
-    config, shards = load_shard_plan(args.plan)
+    if args.distributed_plan is not None:
+        from .distributed_generation import (
+            load_distributed_manifest,
+            load_worker_partition,
+        )
+
+        config, manifest = load_distributed_manifest(args.distributed_plan)
+        worker_count = int(manifest["global_worker_count"])
+        total_shards = int(manifest["shard_count"])
+
+        def planned_shards():
+            for worker_index in range(worker_count):
+                _, partition, _ = load_worker_partition(
+                    args.distributed_plan, worker_index, worker_count
+                )
+                yield from partition
+
+        shards = planned_shards()
+    else:
+        config, loaded_shards = load_shard_plan(args.plan)
+        total_shards = len(loaded_shards)
+        shards = iter(loaded_shards)
     output = Path(args.output)
     blockers = []
     rows = []
@@ -205,13 +305,13 @@ def command_validate(args: argparse.Namespace) -> None:
         if done.get("plan_sha256") != shard.plan_sha256 or done.get("sha256") != report["sha256"]:
             blockers.append(f"identity mismatch {shard.shard_id}")
         rows.append(report)
-        if index == 1 or index == len(shards) or index % max(1, len(shards) // 20) == 0:
-            print(f"[GIADA RunPod][validation] {index}/{len(shards)}", flush=True)
+        if index == 1 or index == total_shards or index % max(1, total_shards // 20) == 0:
+            print(f"[GIADA RunPod][validation] {index}/{total_shards}", flush=True)
     validation = {
         "schema_version": "giada-runpod-validation-v1",
         "valid": not blockers,
         "blockers": blockers,
-        "expected_shard_count": len(shards),
+        "expected_shard_count": total_shards,
         "validated_shard_count": len(rows),
         "expected_transition_count": config.target_transitions,
         "validated_transition_count": sum(row["transition_count"] for row in rows),
@@ -543,6 +643,14 @@ def parser() -> argparse.ArgumentParser:
     plan.add_argument("--config", required=True, type=Path)
     plan.add_argument("--output", required=True, type=Path)
     plan.set_defaults(func=command_plan)
+    distributed_plan = sub.add_parser(
+        "plan-distributed",
+        help="stream an immutable plan into globally indexed worker partitions",
+    )
+    distributed_plan.add_argument("--config", required=True, type=Path)
+    distributed_plan.add_argument("--output", required=True, type=Path)
+    distributed_plan.add_argument("--global-worker-count", required=True, type=int)
+    distributed_plan.set_defaults(func=command_plan_distributed)
     for name, function in (("worker", command_worker), ("benchmark", command_benchmark)):
         item = sub.add_parser(name)
         item.add_argument("--config", type=Path)
@@ -552,13 +660,16 @@ def parser() -> argparse.ArgumentParser:
         item.add_argument("--teacher-repo", required=True, type=Path)
         item.add_argument("--worker-seed", default=7_000_001, type=int)
         if name == "worker":
+            item.add_argument("--distributed-plan", type=Path)
             item.add_argument("--worker-index", required=True, type=int)
             item.add_argument("--worker-count", required=True, type=int)
+            item.add_argument("--recover-stale-claims", action="store_true")
         else:
             item.add_argument("--duration-ms", default=6000, type=int)
         item.set_defaults(func=function)
     validate = sub.add_parser("validate", help="hash and validate every completed shard")
-    validate.add_argument("--plan", required=True, type=Path)
+    validate.add_argument("--plan", type=Path)
+    validate.add_argument("--distributed-plan", type=Path)
     validate.add_argument("--output", required=True, type=Path)
     validate.set_defaults(func=command_validate)
     audit = sub.add_parser(
@@ -656,8 +767,13 @@ def main(argv: list[str] | None = None) -> None:
     args = parser().parse_args(argv)
     if args.command == "benchmark" and args.config is None:
         raise SystemExit("benchmark requires --config")
-    if args.command == "worker" and args.plan is None:
-        raise SystemExit("worker requires --plan")
+    if args.command == "worker":
+        if (args.plan is None) == (args.distributed_plan is None):
+            raise SystemExit("worker requires exactly one of --plan or --distributed-plan")
+        if args.recover_stale_claims and args.distributed_plan is None:
+            raise SystemExit("--recover-stale-claims requires --distributed-plan")
+    if args.command == "validate" and (args.plan is None) == (args.distributed_plan is None):
+        raise SystemExit("validate requires exactly one of --plan or --distributed-plan")
     args.func(args)
 
 

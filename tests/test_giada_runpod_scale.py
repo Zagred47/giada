@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from src.giada_runpod.config import ScaleConfig
+from src.giada_runpod.config import ScaleConfig, load_scale_config
 from src.giada_runpod.neuronio_inputs import (
     PILOT_PROTOCOLS,
     DendriticSynapseMap,
@@ -20,7 +20,17 @@ from src.giada_runpod.hybrid_inputs import (
     hybrid_protocol_spec,
     sample_hybrid_actions,
 )
-from src.giada_runpod.planning import build_shard_plan, load_shard_plan, write_shard_plan
+from src.giada_runpod.planning import (
+    build_shard_plan,
+    iter_shard_plan,
+    load_shard_plan,
+    write_shard_plan,
+)
+from src.giada_runpod.distributed_generation import (
+    acquire_exclusive_claim,
+    load_worker_partition,
+    write_distributed_plan,
+)
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
 from src.giada_runpod.training import (
     FeatureTransform,
@@ -89,6 +99,137 @@ def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
     loaded_config, loaded_shards = load_shard_plan(path)
     assert loaded_config == config
     assert loaded_shards == shards
+
+
+def test_streamed_plan_preserves_canonical_plan_identity() -> None:
+    config = ScaleConfig(
+        stage="s1",
+        target_transitions=600_000,
+        trajectories_per_shard=1,
+    )
+    assert list(iter_shard_plan(config)) == build_shard_plan(config)
+
+
+def test_distributed_plan_is_hashed_disjoint_and_exact(tmp_path: Path) -> None:
+    config = ScaleConfig(
+        stage="s1",
+        target_transitions=600_000,
+        trajectories_per_shard=1,
+    )
+    root = tmp_path / "distributed_plan"
+    manifest = write_distributed_plan(root, config, global_worker_count=8)
+    all_shards = []
+    for worker_index in range(8):
+        loaded_config, shards, loaded_manifest = load_worker_partition(
+            root, worker_index, 8
+        )
+        assert loaded_config == config
+        assert loaded_manifest["plan_identity_sha256"] == manifest["plan_identity_sha256"]
+        assert all(row.shard_index % 8 == worker_index for row in shards)
+        all_shards.extend(shards)
+    assert len(all_shards) == config.shard_count
+    assert len({row.shard_index for row in all_shards}) == config.shard_count
+    assert sum(row.expected_transition_count for row in all_shards) == 600_000
+    assert sorted(all_shards, key=lambda row: row.shard_index) == build_shard_plan(config)
+
+
+def test_distributed_partition_tampering_is_rejected(tmp_path: Path) -> None:
+    config = ScaleConfig(
+        stage="s1",
+        target_transitions=600_000,
+        trajectories_per_shard=1,
+    )
+    root = tmp_path / "distributed_plan"
+    write_distributed_plan(root, config, global_worker_count=2)
+    partition = root / "workers" / "worker-00000.jsonl"
+    partition.write_text(partition.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    try:
+        load_worker_partition(root, 0, 2)
+    except ValueError as error:
+        assert "partition hash mismatch" in str(error)
+    else:
+        raise AssertionError("tampered partition was accepted")
+
+
+def test_exclusive_claim_refuses_collision_and_requires_explicit_recovery(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "claims" / "worker.claim.json"
+    first = acquire_exclusive_claim(
+        path,
+        kind="worker",
+        identity="a" * 64,
+        worker_index=7,
+        global_worker_count=128,
+    )
+    try:
+        acquire_exclusive_claim(
+            path,
+            kind="worker",
+            identity="a" * 64,
+            worker_index=7,
+            global_worker_count=128,
+        )
+    except RuntimeError as error:
+        assert "refusing concurrent write" in str(error)
+    else:
+        raise AssertionError("duplicate worker claim was accepted")
+    recovered = acquire_exclusive_claim(
+        path,
+        kind="worker",
+        identity="a" * 64,
+        worker_index=7,
+        global_worker_count=128,
+        recover_stale=True,
+    )
+    assert recovered.owner["worker_index"] == 7
+    recovered.release()
+    first.acquired = False
+
+
+def test_s4_candidate_configs_preserve_authorized_hybrid_composition() -> None:
+    config_root = Path("runpod_scale/configs")
+    background = load_scale_config(config_root / "s4_hybrid_background_candidate.yml")
+    targeted = load_scale_config(config_root / "s4_hybrid_targeted_candidate.yml")
+    assert background.target_transitions == 138_240_000
+    assert targeted.target_transitions == 92_160_000
+    assert background.target_transitions + targeted.target_transitions == 230_400_000
+    assert background.target_transitions / 230_400_000 == 0.6
+    assert targeted.target_transitions / 230_400_000 == 0.4
+    assert background.shard_count == 11_520
+    assert targeted.shard_count == 11_520
+    assert background.root_seed != targeted.root_seed
+    assert tuple(background.input_protocols) == PRODUCTION_BACKGROUND_PROTOCOLS
+    assert tuple(targeted.input_protocols) == PRODUCTION_TARGET_PROTOCOLS
+
+
+def test_s4_canary_distributed_plans_have_exact_balanced_coverage(
+    tmp_path: Path,
+) -> None:
+    config_root = Path("runpod_scale/configs")
+    expected = {
+        "s4_distributed_canary_background.yml": (360_000, 30),
+        "s4_distributed_canary_targeted.yml": (240_000, 30),
+    }
+    for filename, (transition_count, shard_count) in expected.items():
+        config = load_scale_config(config_root / filename)
+        root = tmp_path / filename.removesuffix(".yml")
+        manifest = write_distributed_plan(root, config, global_worker_count=128)
+        assert manifest["transition_count"] == transition_count
+        assert manifest["shard_count"] == shard_count
+        observed = []
+        for worker_index in range(128):
+            _, partition, _ = load_worker_partition(root, worker_index, 128)
+            observed.extend(partition)
+        assert len(observed) == shard_count
+        assert len({row.shard_index for row in observed}) == shard_count
+        trajectories = [item for shard in observed for item in shard.trajectories]
+        split_counts = {
+            split: sum(row.split == split for row in trajectories)
+            for split in ("train", "validation")
+        }
+        assert split_counts["train"] == int(0.8 * len(trajectories))
+        assert split_counts["validation"] == int(0.2 * len(trajectories))
 
 
 def test_s1b_support_pilot_is_paired_within_every_factorial_cell() -> None:
@@ -874,6 +1015,67 @@ def test_lean_shard_is_atomic_and_validated(tmp_path: Path) -> None:
     report = validate_lean_shard(path, expected_transition_count=3)
     assert report["valid"]
     assert report["sha256"] == completion["sha256"]
+
+
+def test_complete_orphan_shard_recovers_only_with_matching_plan_identity(
+    tmp_path: Path,
+) -> None:
+    shard = build_shard_plan(
+        ScaleConfig(
+            stage="s1",
+            target_transitions=600_000,
+            trajectories_per_shard=1,
+        )
+    )[0]
+    # Use a three-row physical fixture while retaining the real immutable
+    # identity; recovery checks both its declared count and plan hash.
+    fixture = type(shard)(
+        shard_id=shard.shard_id,
+        shard_index=shard.shard_index,
+        trajectories=shard.trajectories,
+        expected_transition_count=3,
+        plan_sha256=shard.plan_sha256,
+    )
+    path = tmp_path / "shards" / f"{fixture.shard_id}.h5"
+    writer = LeanShardWriter(
+        path,
+        segment_count_per_transition=1,
+        mechanism_group_count=3,
+        ion_count=2,
+        schema_metadata={"project": "GIADA", "plan_sha256": fixture.plan_sha256},
+        compression="lzf",
+        chunk_transitions=2,
+    )
+    for step in range(3):
+        writer.append(
+            {
+                "segment_id": np.asarray([0]),
+                "voltage_t_mv": np.asarray([-76.0]),
+                "voltage_t_plus_1_mv": np.asarray([-75.5]),
+                "parent_delta_t_mv": np.asarray([0.0]),
+                "mean_child_delta_t_mv": np.asarray([0.1]),
+                "mechanism_state_t": np.zeros((1, 3)),
+                "ion_state_t": np.zeros((1, 2)),
+                "causal_drive": np.zeros((1, 12)),
+                "trajectory_index": 0,
+                "step_index": step,
+                "seed": 1,
+                "split_code": 0,
+                "scheduled_event_count": 0,
+                "realized_event_count": 0,
+            },
+            [],
+        )
+    writer.close(expected_transition_count=3)
+    generator = object.__new__(teacher_module.ScaleTeacherGenerator)
+    generator.prepared = True
+    recovered = generator.generate_shard(
+        ScaleConfig(stage="s1", target_transitions=600_000), fixture, tmp_path
+    )
+    assert recovered["resumed"]
+    assert recovered["recovered_complete_file"]
+    assert recovered["plan_sha256"] == fixture.plan_sha256
+    assert (tmp_path / "status" / f"{fixture.shard_id}.done.json").is_file()
 
 
 def test_corpus_sampling_with_replacement_avoids_h5py_duplicate_index_error(

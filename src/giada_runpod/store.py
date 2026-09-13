@@ -224,6 +224,7 @@ def validate_lean_shard(path: Path, *, expected_transition_count: int | None = N
         raise RuntimeError("lean RunPod storage requires h5py") from error
     source = Path(path)
     blockers = []
+    schema_metadata: Dict[str, Any] = {}
     with h5py.File(source, "r") as handle:
         count = int(handle.attrs.get("transition_count", -1))
         if handle.attrs.get("schema_version") != SCHEMA_VERSION:
@@ -247,6 +248,10 @@ def validate_lean_shard(path: Path, *, expected_transition_count: int | None = N
             event_rows = handle["events/transition_row"][...]
             if len(event_rows) and (event_rows.min() < 0 or event_rows.max() >= count):
                 blockers.append("event transition reference out of range")
+        try:
+            schema_metadata = json.loads(str(handle.attrs.get("schema_metadata_json", "{}")))
+        except (TypeError, ValueError):
+            blockers.append("invalid schema metadata JSON")
     return {
         "valid": not blockers,
         "blockers": blockers,
@@ -254,4 +259,5 @@ def validate_lean_shard(path: Path, *, expected_transition_count: int | None = N
         "transition_count": count,
         "size_bytes": source.stat().st_size,
         "sha256": sha256_file(source),
+        "plan_sha256": schema_metadata.get("plan_sha256"),
     }

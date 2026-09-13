@@ -42,7 +42,7 @@ operationally prohibitive.
 | S1 | 10 minutes | 600,000 | first scaling check |
 | S2 | 1 hour | 3,600,000 | stability across more trajectories |
 | S3 | 8 hours | 28,800,000 | medium-scale confirmation |
-| S4 | 64 hours | 230,400,000 | NeuronIO train+validation time parity |
+| S4 | 64 hours | 230,400,000 | exact 8x S3 hybrid scale-up |
 
 Advancement is sequential: benchmark first, then S1; proceed to S2/S3/S4 only
 if the paired advantage and data integrity survive the previous stage. This is
@@ -679,6 +679,85 @@ on the 1.68-million-transition fresh corpus. It won 5/5 seeds, 5/5 protocol
 families, and 14/14 protocols; every preregistered gate passed and S4 is
 authorized. The immutable evidence record is
 `experiments/giada_runpod_paper_scale/s3_fresh_teacher_test_result.json`.
+
+## S4 distributed CPU qualification
+
+Do **not** run `configs/s4_soma_parity.yml`. It is the legacy monolithic
+NeuronIO-style plan and does not represent the authorized GIADA hybrid
+methodology. S4 preserves the sealed S3 design exactly: 230.4 million
+transitions, 60% long stochastic background, 40% confirmed targeted cases,
+the same 14 protocols, and an 80/20 train/validation split.
+
+Before creating any production shard, run the frozen qualification in
+`experiments/giada_runpod_paper_scale/s4_cpu_distributed_canary_preregistration.json`.
+The coordinator writes one immutable 128-worker namespace. Every live pod
+receives a distinct contiguous subset of those global indices; the global
+count is never changed when pods disappear or are added.
+
+Create the two small canary plans once from the coordinator pod:
+
+```bash
+export GIADA_ROOT=/workspace/giada
+export GIADA_PYTHON=/workspace/.giada-venv/bin/python
+export GIADA_CANARY_PLANS=/workspace/giada-plans/s4-distributed-canary-v1
+
+"$GIADA_PYTHON" -m src.giada_runpod.cli plan-distributed \
+  --config "$GIADA_ROOT/runpod_scale/configs/s4_distributed_canary_background.yml" \
+  --output "$GIADA_CANARY_PLANS/background" \
+  --global-worker-count 128
+
+"$GIADA_PYTHON" -m src.giada_runpod.cli plan-distributed \
+  --config "$GIADA_ROOT/runpod_scale/configs/s4_distributed_canary_targeted.yml" \
+  --output "$GIADA_CANARY_PLANS/targeted" \
+  --global-worker-count 128
+```
+
+On each pod, launch only its assigned range. This example owns global workers
+16 through 31; another live pod must not use any of them:
+
+```bash
+export GIADA_ROOT=/workspace/giada
+export GIADA_TEACHER_ROOT=/workspace/neuron_as_deep_net
+export GIADA_PYTHON=/workspace/.giada-venv/bin/python
+export GIADA_OUTPUT_ROOT=/workspace/giada-data/s4-canary-background-shared-v1
+export GIADA_DISTRIBUTED_PLAN=/workspace/giada-plans/s4-distributed-canary-v1/background/distributed_plan
+export GIADA_GLOBAL_WORKER_COUNT=128
+export GIADA_WORKER_START=16
+export GIADA_LOCAL_WORKER_COUNT=16
+
+mkdir -p "$GIADA_OUTPUT_ROOT"
+nohup bash "$GIADA_ROOT/runpod_scale/scripts/launch_distributed_worker_range.sh" \
+  >"$GIADA_OUTPUT_ROOT/pod-16-31.log" 2>&1 &
+echo $! >"$GIADA_OUTPUT_ROOT/pod-16-31.pid"
+```
+
+Monitor a shared output without attaching to any worker:
+
+```bash
+watch -n 30 bash "$GIADA_ROOT/runpod_scale/scripts/status_distributed.sh"
+```
+
+The launcher fixes all BLAS/OpenMP thread pools to one, uses the global worker
+index in the runtime and seed, and writes pod-attempt-specific logs. Atomic
+worker and shard claims reject overlapping launches before teacher setup or
+HDF5 writes. A failed or killed worker deliberately leaves stale claims.
+Recover them only after confirming that the old pod/process is stopped, by
+rerunning that exact global range with `GIADA_RECOVER_STALE_CLAIMS=1`.
+
+Final validation reads the authenticated worker partitions sequentially, so
+it does not reconstruct the million-episode S4 plan in memory:
+
+```bash
+"$GIADA_PYTHON" -m src.giada_runpod.cli validate \
+  --distributed-plan "$GIADA_DISTRIBUTED_PLAN" \
+  --output "$GIADA_OUTPUT_ROOT"
+```
+
+The current production candidates use two 6-second trajectories per
+background shard and 100 80-ms episodes per targeted shard. Those values are
+not production-frozen until cross-host determinism, duplicate refusal,
+kill/resume, shared-volume disjointness, and 8-versus-16-process throughput
+all pass. The canary output is disposable and must never be used for training.
 
 ## What remains in the Kaggle track
 

@@ -1,0 +1,65 @@
+{
+  "schema_version": "giada-s4-cpu-distributed-canary-preregistration-v1",
+  "project": "GIADA",
+  "status": "frozen_before_run",
+  "purpose": "Qualify deterministic, crash-safe multi-pod CPU generation before authorizing any S4 production shard.",
+  "production_data_authorized_by_this_run": false,
+  "methodology": {
+    "composition": {
+      "long_stochastic_background_fraction": 0.6,
+      "confirmed_targeted_fraction": 0.4
+    },
+    "train_fraction": 0.8,
+    "validation_fraction": 0.2,
+    "background_protocol_count": 2,
+    "targeted_protocol_count": 12,
+    "architecture_experiments_modified": false
+  },
+  "candidate_physical_packing": {
+    "background_trajectories_per_shard": 2,
+    "background_transitions_per_shard": 12000,
+    "targeted_episodes_per_shard": 100,
+    "targeted_transitions_per_shard": 8000,
+    "note": "Packing may be changed only after this canary; trajectory seeds, protocols, split counts and S4 transition counts may not be changed by a packing decision."
+  },
+  "distributed_identity": {
+    "global_worker_count": 128,
+    "assignment_rule": "shard_index modulo global_worker_count",
+    "worker_seed_rule": "7000001 plus global_worker_index",
+    "global_worker_count_never_changes_during_resume": true,
+    "worker_ranges_must_be_disjoint_across_live_pods": true,
+    "automatic_stale_claim_stealing_forbidden": true
+  },
+  "canary_corpora": {
+    "background": {
+      "config": "runpod_scale/configs/s4_distributed_canary_background.yml",
+      "transition_count": 360000,
+      "shard_count": 30
+    },
+    "targeted": {
+      "config": "runpod_scale/configs/s4_distributed_canary_targeted.yml",
+      "transition_count": 240000,
+      "shard_count": 30
+    }
+  },
+  "required_experiments": [
+    "Generate the same planned shard on two independent hosts in separate output roots with the same global worker index and seed; require identical validated HDF5 SHA-256.",
+    "Launch the same global worker index twice against one shared output; require the second process to refuse before touching an HDF5 partial.",
+    "Kill one worker during a partial shard, confirm its stale claims, explicitly recover only after the old pod is stopped, and require the regenerated shard to match the independent reference hash.",
+    "Run disjoint global worker ranges concurrently on one shared network volume; require exact coverage with no duplicate shard indices, failures or physical mismatches.",
+    "Measure background and targeted aggregate throughput at local concurrency 8 and 16 with BLAS/OpenMP threads fixed to one."
+  ],
+  "acceptance_gates": {
+    "cross_host_hdf5_hash_mismatch_count": 0,
+    "duplicate_worker_refuses_before_shard_write": true,
+    "crash_resume_valid_and_reference_hash_equal": true,
+    "missing_shard_count": 0,
+    "duplicate_shard_count": 0,
+    "failed_marker_count": 0,
+    "physical_mismatch_count": 0,
+    "all_plan_partition_hashes_valid": true,
+    "production_shard_duration_target_minutes": [3, 8],
+    "concurrency_selection_rule": "Choose the fastest stable aggregate transitions/s per dollar; reject a level that produces failures, materially worse throughput, or memory pressure."
+  },
+  "production_authorization": "S4 production planning remains blocked until every canary gate passes and the selected packing and concurrency are recorded in a separate sealed result."
+}

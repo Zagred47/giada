@@ -1,0 +1,18 @@
+giada_runpod_scale:
+  stage: s4_hybrid_background
+  target_transitions: 138240000
+  trajectory_duration_ms: 6000
+  trajectories_per_shard: 2
+  storage_profile: soma_paper
+  sampled_segments_per_transition: 1
+  root_seed: 99300001
+  validation_trajectory_fraction: 0.2
+  compression: lzf
+  chunk_transitions: 256
+  progress_interval_s: 30
+  purpose: giada_hybrid_production_background
+  # Candidate only until the distributed RunPod canary is sealed. Exact 8x S3
+  # data composition; two trajectories per physical shard reduce metadata I/O.
+  input_protocols:
+    - neuronio_nmda_ergodic_v1
+    - neuronio_nmda_pilot_ex_high_inh_low_time_fast_v2
