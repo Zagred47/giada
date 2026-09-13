@@ -37,6 +37,12 @@ STAGE_TRANSITIONS = {
     "s3_hybrid_background": 17_280_000,
     "s3_hybrid_targeted": 11_520_000,
     "s3": 28_800_000,
+    # Sealed, evaluation-only teacher trajectories.  This corpus preserves the
+    # S3 60/40 mixture while using a wholly disjoint seed namespace and no
+    # training split.
+    "s3_fresh_test_background": 1_008_000,
+    "s3_fresh_test_targeted": 672_000,
+    "s3_fresh_teacher_test": 1_680_000,
     "s4": 230_400_000,
 }
 
@@ -88,7 +94,14 @@ class ScaleConfig:
             raise ValueError(
                 "spatial_probe is deliberately capped at s2; use soma_paper for s3/s4"
             )
-        if not 0.0 < self.validation_trajectory_fraction < 0.5:
+        fresh_test = self.purpose in {
+            "giada_fresh_test_background",
+            "giada_fresh_test_targeted",
+        }
+        if fresh_test:
+            if self.validation_trajectory_fraction != 1.0:
+                raise ValueError("sealed fresh-test components require an all-test split")
+        elif not 0.0 < self.validation_trajectory_fraction < 0.5:
             if not (
                 self.purpose in {
                     "input_support_pilot",
@@ -108,6 +121,8 @@ class ScaleConfig:
             "giada_protocol_repair_pilot",
             "giada_hybrid_production_background",
             "giada_hybrid_production_targeted",
+            "giada_fresh_test_background",
+            "giada_fresh_test_targeted",
         }:
             raise ValueError("unknown generation purpose")
         if not self.input_protocols or len(set(self.input_protocols)) != len(
@@ -198,6 +213,31 @@ class ScaleConfig:
             )
             if remainder or per_protocol <= 1:
                 raise ValueError("hybrid targeted plan must balance every protocol")
+        if self.purpose == "giada_fresh_test_background":
+            from .hybrid_inputs import PRODUCTION_BACKGROUND_PROTOCOLS
+
+            if self.stage != "s3_fresh_test_background":
+                raise ValueError("fresh background test requires its sealed component stage")
+            if tuple(self.input_protocols) != PRODUCTION_BACKGROUND_PROTOCOLS:
+                raise ValueError("fresh background protocol registry changed")
+            if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 6000:
+                raise ValueError("fresh background test requires 6000 ms soma trajectories")
+            if self.trajectory_count % len(PRODUCTION_BACKGROUND_PROTOCOLS):
+                raise ValueError("fresh background test must balance every protocol")
+        if self.purpose == "giada_fresh_test_targeted":
+            from .hybrid_inputs import PRODUCTION_TARGET_PROTOCOLS
+
+            if self.stage != "s3_fresh_test_targeted":
+                raise ValueError("fresh targeted test requires its sealed component stage")
+            if tuple(self.input_protocols) != PRODUCTION_TARGET_PROTOCOLS:
+                raise ValueError("fresh targeted protocol registry changed")
+            if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 80:
+                raise ValueError("fresh targeted test requires 80 ms soma episodes")
+            per_protocol, remainder = divmod(
+                self.trajectory_count, len(PRODUCTION_TARGET_PROTOCOLS)
+            )
+            if remainder or per_protocol <= 0:
+                raise ValueError("fresh targeted test must balance every protocol")
         if self.compression not in {"lzf", "gzip", "none"}:
             raise ValueError("compression must be lzf, gzip, or none")
         if self.chunk_transitions <= 0 or self.progress_interval_s <= 0:

@@ -116,7 +116,7 @@ class MatchedTrainingConfig:
 class LeanSomaCorpus:
     """Lazy reader for validated soma_paper shards."""
 
-    def __init__(self, root: Path) -> None:
+    def __init__(self, root: Path, *, require_train_split: bool = True) -> None:
         try:
             import h5py
         except ImportError as error:  # pragma: no cover
@@ -168,8 +168,9 @@ class LeanSomaCorpus:
                     indices = np.flatnonzero(split == code)
                     if len(indices):
                         self.rows[code].append((path, indices))
-        if not self.rows[0] or not self.rows[1]:
-            raise RuntimeError("paper-scale corpus requires train and validation rows")
+        if not self.rows[1] or (require_train_split and not self.rows[0]):
+            requirement = "train and validation" if require_train_split else "test"
+            raise RuntimeError(f"paper-scale corpus requires {requirement} rows")
         assert self.metadata is not None
         self.train_count = sum(len(indices) for _, indices in self.rows[0])
         self.validation_count = sum(len(indices) for _, indices in self.rows[1])
@@ -437,6 +438,30 @@ class FeatureTransform:
             "feature_slices": {name: [value.start, value.stop] for name, value in self.slices.items()},
             "input_width": self.width,
         }
+
+    def load_dict(self, payload: Mapping[str, Any]) -> None:
+        """Restore a frozen training transform without fitting on test data."""
+
+        if payload.get("fit_split") != "train":
+            raise ValueError("frozen normalization must have been fit on training data")
+        self.state_center = np.asarray(payload["state_center"], dtype=np.float32)
+        self.state_scale = np.asarray(payload["state_scale"], dtype=np.float32)
+        self.ion_center = np.asarray(payload["ion_center"], dtype=np.float32)
+        self.ion_scale = np.asarray(payload["ion_scale"], dtype=np.float32)
+        if len(self.state_center) != len(self.presence) or len(self.state_scale) != len(self.presence):
+            raise ValueError("frozen mechanism normalization width changed")
+        expected_ions = len(self.corpus.metadata["ion_names"])
+        if len(self.ion_center) != expected_ions or len(self.ion_scale) != expected_ions:
+            raise ValueError("frozen ion normalization width changed")
+        if np.any(self.state_scale <= 0) or np.any(self.ion_scale <= 0):
+            raise ValueError("frozen normalization scales must be positive")
+        self.slices = {
+            str(name): slice(int(bounds[0]), int(bounds[1]))
+            for name, bounds in payload["feature_slices"].items()
+        }
+        self.width = int(payload["input_width"])
+        if self.width != self.config.expected_input_width:
+            raise ValueError("frozen input width disagrees with the matched architecture")
 
 
 class PaperScaleMatchedTrainer:

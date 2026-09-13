@@ -23,9 +23,14 @@ from src.giada_runpod.hybrid_inputs import (
 from src.giada_runpod.planning import build_shard_plan, load_shard_plan, write_shard_plan
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
 from src.giada_runpod.training import (
+    FeatureTransform,
     LeanSomaCorpus,
     MatchedTrainingConfig,
     PaperScaleMatchedTrainer,
+)
+from src.giada_runpod.fresh_test_evaluation import (
+    FreshTeacherTestConfig,
+    S3FreshTeacherTestEvaluator,
 )
 from src.giada_runpod.optimization_forensic import (
     LateOptimizationForensicConfig,
@@ -40,6 +45,29 @@ from src.giada_runpod.production_corpus import (
     PRODUCTION_PROFILES,
     fingerprint_validated_shards,
 )
+
+
+def _fresh_test_config() -> FreshTeacherTestConfig:
+    seeds = (61017, 61029, 61043, 61071, 61103)
+    return FreshTeacherTestConfig(
+        seeds=seeds,
+        source_absolute_step=144_000,
+        source_code_revision="a" * 40,
+        source_configuration_sha256="1" * 64,
+        source_final_report_sha256="2" * 64,
+        source_normalization_sha256="3" * 64,
+        source_state_hashes={
+            f"seeds/seed{seed}/state_step72000.pt": str(index) * 64
+            for index, seed in enumerate(seeds, 4)
+        },
+        expected_fresh_stage="s3_fresh_teacher_test",
+        expected_transition_count=1_680_000,
+        background_plan_sha256="9" * 64,
+        targeted_plan_sha256="a" * 64,
+        minimum_seed_wins=4,
+        minimum_family_wins=5,
+        minimum_protocol_wins=12,
+    )
 
 
 def test_s1_plan_is_exact_disjoint_and_roundtrips(tmp_path: Path) -> None:
@@ -1094,3 +1122,136 @@ def test_logical_composite_reads_both_components_without_index_collision(
         assert set(first["_component_label"]) == {"background", "targeted"}
     finally:
         corpus.close()
+
+
+def test_s3_fresh_test_plan_is_balanced_all_test_and_hash_locked() -> None:
+    background = ScaleConfig(
+        stage="s3_fresh_test_background",
+        target_transitions=1_008_000,
+        trajectory_duration_ms=6000,
+        trajectories_per_shard=1,
+        root_seed=99_100_001,
+        validation_trajectory_fraction=1.0,
+        progress_interval_s=30,
+        purpose="giada_fresh_test_background",
+        input_protocols=PRODUCTION_BACKGROUND_PROTOCOLS,
+    )
+    targeted = ScaleConfig(
+        stage="s3_fresh_test_targeted",
+        target_transitions=672_000,
+        trajectory_duration_ms=80,
+        trajectories_per_shard=25,
+        root_seed=99_200_001,
+        validation_trajectory_fraction=1.0,
+        progress_interval_s=30,
+        purpose="giada_fresh_test_targeted",
+        input_protocols=PRODUCTION_TARGET_PROTOCOLS,
+    )
+    background_shards = build_shard_plan(background)
+    targeted_shards = build_shard_plan(targeted)
+    background_rows = [row for shard in background_shards for row in shard.trajectories]
+    targeted_rows = [row for shard in targeted_shards for row in shard.trajectories]
+    assert len(background_shards) == 168
+    assert len(targeted_shards) == 336
+    assert len(background_rows) == 168
+    assert len(targeted_rows) == 8_400
+    assert {row.split for row in background_rows + targeted_rows} == {"validation"}
+    for protocol in PRODUCTION_BACKGROUND_PROTOCOLS:
+        assert sum(row.protocol == protocol for row in background_rows) == 84
+    for protocol in PRODUCTION_TARGET_PROTOCOLS:
+        assert sum(row.protocol == protocol for row in targeted_rows) == 700
+    assert not {row.seed for row in background_rows} & {row.seed for row in targeted_rows}
+    # Hash the exact LF payload written on RunPod Linux, independent of the
+    # local test host's newline translation.
+    def linux_plan_sha(config: ScaleConfig, shards) -> str:
+        payload = {
+            "schema_version": "giada-runpod-plan-v1",
+            "config": config.to_dict(),
+            "shards": [shard.to_dict() for shard in shards],
+        }
+        return hashlib.sha256(
+            json.dumps(payload, indent=2, sort_keys=True).encode("utf-8")
+        ).hexdigest()
+
+    assert linux_plan_sha(background, background_shards) == (
+        "ad3bbd7f8948e2c838056966050005c37f2f2e540c39f786ccf64b417d48c956"
+    )
+    assert linux_plan_sha(targeted, targeted_shards) == (
+        "c01120095cc1e78e465351e717bdcc2153b49bf30ab60fbf9681893490a2a160"
+    )
+    assert PRODUCTION_PROFILES["s3_fresh_test"]["splits"] == {
+        "validation": 1_680_000
+    }
+
+
+def test_frozen_feature_transform_roundtrips_without_test_fit() -> None:
+    corpus = SimpleNamespace(
+        metadata={
+            "mechanism_presence": [[1, 0]],
+            "segment_static": [[0.0, 1.0]],
+            "region_names": ["soma", "basal"],
+            "segment_region_ids": [0],
+            "ion_names": ["ca", "na"],
+        }
+    )
+    config = MatchedTrainingConfig(expected_input_width=8)
+    transform = FeatureTransform(corpus, config)
+    payload = {
+        "fit_split": "train",
+        "state_center": [0.1, 0.2],
+        "state_scale": [1.0, 2.0],
+        "ion_center": [0.3, 0.4],
+        "ion_scale": [3.0, 4.0],
+        "feature_slices": {"all": [0, 8]},
+        "input_width": 8,
+    }
+    transform.load_dict(payload)
+    assert transform.width == 8
+    np.testing.assert_allclose(transform.state_center, [0.1, 0.2])
+    assert transform.slices["all"] == slice(0, 8)
+
+
+def test_fresh_test_summary_applies_all_preregistered_gates() -> None:
+    config = _fresh_test_config()
+    config.validate()
+    families = (
+        "neuronio_background",
+        "somatic_repair",
+        "nmda_boundary",
+        "calcium_boundary",
+        "bap_repair_matrix",
+    )
+    protocols = (*PRODUCTION_BACKGROUND_PROTOCOLS, *PRODUCTION_TARGET_PROTOCOLS)
+
+    def metrics(value: float) -> dict:
+        metric = {
+            "soma_rmse_mv": value,
+            "active_soma_rmse_mv": value,
+            "activity_regime_metrics": {
+                "somatic_upcrossing_minus55mv": {"soma_rmse_mv": value}
+            },
+            "protocol_family_metrics": {
+                label: {"soma_rmse_mv": value} for label in families
+            },
+            "protocol_metrics": {
+                label: {"soma_rmse_mv": value} for label in protocols
+            },
+        }
+        return metric
+
+    rows = [
+        {
+            "seed": seed,
+            "metrics": {
+                "branch_elm_core": metrics(2.0 + 0.1 * index),
+                "giada_voltage_bridge": metrics(1.0 + 0.05 * index),
+            },
+        }
+        for index, seed in enumerate(config.seeds)
+    ]
+    summary = S3FreshTeacherTestEvaluator.summarize(rows, config)
+    assert summary["decision"]["observed_seed_wins"] == 5
+    assert summary["decision"]["observed_family_wins"] == 5
+    assert summary["decision"]["observed_protocol_wins"] == 14
+    assert summary["decision"]["s4_authorized"]
+    assert summary["relative_overall_reduction_vs_branch_elm"] == 0.5

@@ -625,6 +625,52 @@ Its expected RTX 4090 wall time is three to five hours; review the process if
 it exceeds six hours. The final full-development report is diagnostic because
 the schedule was selected on this same split.
 
+## S3 sealed fresh teacher test
+
+The matched-exposure result is followed by one independent evaluation-only
+test. The CPU launcher creates 1.68 million new transitions (1.008M background
+and 0.672M targeted), validates all 504 shards, audits preregistered support
+bands, and writes a second physical fingerprint. The test uses no training
+split and cannot be used to select another learning rate or checkpoint.
+
+```bash
+export GIADA_ROOT=/workspace/giada
+export GIADA_TEACHER_ROOT=/workspace/neuron_as_deep_net
+export GIADA_PYTHON=/workspace/.giada-venv/bin/python
+export GIADA_WORKER_COUNT=8
+export GIADA_S3_FRESH_TEST_ROOT=/workspace/giada-data/s3-fresh-teacher-test-v1
+
+mkdir -p "$GIADA_S3_FRESH_TEST_ROOT/logs"
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s3_fresh_test_corpus.sh" \
+  >"$GIADA_S3_FRESH_TEST_ROOT/logs/pipeline.log" 2>&1 &
+echo $! | tee "$GIADA_S3_FRESH_TEST_ROOT/logs/pipeline.pid"
+tail -F "$GIADA_S3_FRESH_TEST_ROOT/logs/pipeline.log"
+```
+
+After the CPU log reports `sealed corpus complete`, mount the same network
+volume on the GPU pod. The five frozen checkpoint files must be present under
+`/workspace/giada-results/s3-matched-exposure-v1`.
+
+```bash
+export GIADA_ROOT=/workspace/giada
+export GIADA_GPU_PYTHON=python
+export GIADA_S3_FRESH_TEST_CORPUS=/workspace/giada-data/s3-fresh-teacher-test-v1/composite
+export GIADA_S3_MATCHED_SOURCE=/workspace/giada-results/s3-matched-exposure-v1
+export GIADA_S3_FRESH_TEST_RESULTS=/workspace/giada-results/s3-fresh-teacher-test-v1
+
+nohup env PYTHONUNBUFFERED=1 \
+  bash "$GIADA_ROOT/runpod_scale/scripts/launch_s3_fresh_test_evaluation.sh" \
+  >/workspace/giada-results/s3-fresh-teacher-test-v1.log 2>&1 &
+echo $! | tee /workspace/giada-results/s3-fresh-teacher-test-v1.pid
+tail -F /workspace/giada-results/s3-fresh-teacher-test-v1.log
+```
+
+The evaluator verifies source checkpoint hashes, source normalization, both
+fresh plans, the composite audit, and every physical shard before inference.
+It is resumable seed by seed. A disconnected web console does not stop either
+launcher.
+
 ## What remains in the Kaggle track
 
 Architecture exploration, recursive-state repair, event-specific ablations,

@@ -108,6 +108,7 @@ def audit_soma_corpus(
     *,
     plan_path: Path | None = None,
     progress: ProgressCallback | None = None,
+    required_split_codes: tuple[int, ...] = (0, 1),
 ) -> Dict[str, Any]:
     """Read every shard and summarize target/activity support without mutation."""
 
@@ -192,7 +193,9 @@ def audit_soma_corpus(
         if progress is not None:
             progress(index, len(path_rows))
 
-    missing = [code for code, state in states.items() if not state["delta"]]
+    if not required_split_codes or any(code not in (0, 1) for code in required_split_codes):
+        raise ValueError("required split codes must be a non-empty subset of (0, 1)")
+    missing = [code for code in required_split_codes if not states[code]["delta"]]
     report = {
         "schema_version": "giada-runpod-soma-corpus-audit-v1",
         "valid": not missing and not blockers,

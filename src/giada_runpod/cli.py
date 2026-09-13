@@ -124,6 +124,7 @@ def command_benchmark(args: argparse.Namespace) -> None:
         "giada_hybrid_pilot",
         "giada_protocol_repair_pilot",
         "giada_hybrid_production_targeted",
+        "giada_fresh_test_targeted",
     }:
         from .hybrid_inputs import hybrid_protocol_spec
 
@@ -394,6 +395,37 @@ def command_extend_s3_matched_exposure(args: argparse.Namespace) -> None:
     )
 
 
+def command_evaluate_s3_fresh_test(args: argparse.Namespace) -> None:
+    import yaml
+    from .fresh_test_evaluation import (
+        FreshTeacherTestConfig,
+        S3FreshTeacherTestEvaluator,
+    )
+
+    values = yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
+    config = FreshTeacherTestConfig.from_mapping(
+        values.get("giada_s3_fresh_test_evaluation", values)
+    )
+    evaluator = S3FreshTeacherTestEvaluator(
+        Path(args.corpus),
+        Path(args.source),
+        Path(args.output),
+        config,
+        code_revision=_revision(Path(args.elm_repo)),
+    )
+    try:
+        report = evaluator.run()
+    finally:
+        evaluator.corpus.close()
+    print(json.dumps({
+        "valid": report["valid"],
+        "median_rmse_mv": report["median_rmse_mv"],
+        "relative_overall_reduction_vs_branch_elm": report[
+            "relative_overall_reduction_vs_branch_elm"
+        ],
+        "decision": report["decision"],
+        "interpretation": report["interpretation"],
+    }, indent=2), flush=True)
 def command_compose_s1e(args: argparse.Namespace) -> None:
     from .production_corpus import build_and_audit_s1e_composite
 
@@ -458,6 +490,30 @@ def command_compose_s3(args: argparse.Namespace) -> None:
         "blockers": report["blockers"],
         "composition": report["composition"],
         "support_checks": report["support_checks"],
+    }, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
+def command_compose_s3_fresh_test(args: argparse.Namespace) -> None:
+    from .production_corpus import build_and_audit_s3_fresh_test_composite
+
+    def progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 100 == 0:
+            print(
+                f"[GIADA RunPod][S3 fresh test audit] {index}/{total} shards",
+                flush=True,
+            )
+
+    report = build_and_audit_s3_fresh_test_composite(
+        Path(args.background), Path(args.targeted), Path(args.output), progress=progress
+    )
+    print(json.dumps({
+        "valid": report["valid"],
+        "blockers": report["blockers"],
+        "composition": report["composition"],
+        "support_checks": report["support_checks"],
+        "selection_role": "sealed_fresh_test",
     }, indent=2), flush=True)
     if not report["valid"]:
         raise SystemExit(2)
@@ -547,6 +603,16 @@ def parser() -> argparse.ArgumentParser:
     extension.add_argument("--output", required=True, type=Path)
     extension.add_argument("--elm-repo", default=Path.cwd(), type=Path)
     extension.set_defaults(func=command_extend_s3_matched_exposure)
+    fresh_evaluation = sub.add_parser(
+        "evaluate-s3-fresh-test",
+        help="evaluate frozen 144k S3 models on sealed fresh teacher trajectories",
+    )
+    fresh_evaluation.add_argument("--config", required=True, type=Path)
+    fresh_evaluation.add_argument("--corpus", required=True, type=Path)
+    fresh_evaluation.add_argument("--source", required=True, type=Path)
+    fresh_evaluation.add_argument("--output", required=True, type=Path)
+    fresh_evaluation.add_argument("--elm-repo", default=Path.cwd(), type=Path)
+    fresh_evaluation.set_defaults(func=command_evaluate_s3_fresh_test)
     compose = sub.add_parser(
         "compose-s1e", help="seal and audit the two-part S1e hybrid corpus"
     )
@@ -568,6 +634,14 @@ def parser() -> argparse.ArgumentParser:
     compose_s3.add_argument("--targeted", required=True, type=Path)
     compose_s3.add_argument("--output", required=True, type=Path)
     compose_s3.set_defaults(func=command_compose_s3)
+    compose_fresh = sub.add_parser(
+        "compose-s3-fresh-test",
+        help="seal and audit the independent S3 teacher-trajectory test",
+    )
+    compose_fresh.add_argument("--background", required=True, type=Path)
+    compose_fresh.add_argument("--targeted", required=True, type=Path)
+    compose_fresh.add_argument("--output", required=True, type=Path)
+    compose_fresh.set_defaults(func=command_compose_s3_fresh_test)
     fingerprint = sub.add_parser(
         "fingerprint-corpus",
         help="verify physical shard hashes and write the aggregate fingerprint",

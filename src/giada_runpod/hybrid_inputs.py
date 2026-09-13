@@ -112,7 +112,10 @@ def protocol_specs_for_purpose(purpose: str) -> tuple[HybridProtocolSpec, ...]:
         return HYBRID_PROTOCOL_SPECS
     if purpose == "giada_protocol_repair_pilot":
         return PROTOCOL_REPAIR_SPECS
-    if purpose == "giada_hybrid_production_targeted":
+    if purpose in {
+        "giada_hybrid_production_targeted",
+        "giada_fresh_test_targeted",
+    }:
         return tuple(_BY_PROTOCOL[name] for name in PRODUCTION_TARGET_PROTOCOLS)
     raise ValueError(f"no paired GIADA protocol registry for purpose {purpose!r}")
 

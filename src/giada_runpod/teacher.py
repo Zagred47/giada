@@ -372,9 +372,9 @@ class ScaleTeacherGenerator:
                 else "GIADA_protocol_repair_paired_v1"
                 if config.purpose == "giada_protocol_repair_pilot"
                 else "GIADA_hybrid_confirmed_targeted_production_v1"
-                if config.purpose == "giada_hybrid_production_targeted"
+                if config.purpose in {"giada_hybrid_production_targeted", "giada_fresh_test_targeted"}
                 else "GIADA_hybrid_long_stochastic_background_production_v1"
-                if config.purpose == "giada_hybrid_production_background"
+                if config.purpose in {"giada_hybrid_production_background", "giada_fresh_test_background"}
                 else "NeuronIO_NMDA_ranges_temporal_smoothing_spatial_length_weighting"
             ),
             "generation_purpose": config.purpose,
@@ -411,6 +411,7 @@ class ScaleTeacherGenerator:
                     "giada_hybrid_pilot",
                     "giada_protocol_repair_pilot",
                     "giada_hybrid_production_targeted",
+                    "giada_fresh_test_targeted",
                 }:
                     actions_by_step, input_metadata = sample_hybrid_actions(
                         trajectory.duration_ms,
@@ -443,6 +444,7 @@ class ScaleTeacherGenerator:
                         "giada_hybrid_pilot",
                         "giada_protocol_repair_pilot",
                         "giada_hybrid_production_targeted",
+                        "giada_fresh_test_targeted",
                     }:
                         observer = lambda: ordered_segment_voltages(
                             self.session.audit.live_segments
@@ -466,6 +468,7 @@ class ScaleTeacherGenerator:
                         "giada_hybrid_pilot",
                         "giada_protocol_repair_pilot",
                         "giada_hybrid_production_targeted",
+                        "giada_fresh_test_targeted",
                     }:
                         micro_voltage = np.stack(
                             (state_t["voltage_t_mv"], state_t1["voltage_t_mv"])

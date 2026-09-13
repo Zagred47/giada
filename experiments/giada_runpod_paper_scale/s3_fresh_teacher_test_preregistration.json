@@ -1,0 +1,64 @@
+{
+  "schema_version": "giada-s3-fresh-teacher-test-preregistration-v1",
+  "project": "GIADA",
+  "status": "frozen_before_teacher_generation",
+  "purpose": "Independent evaluation-only confirmation of the frozen 144k S3 matched-exposure models.",
+  "selection_role": "sealed_fresh_test",
+  "scientific_contract": {
+    "training_performed": false,
+    "hyperparameter_or_checkpoint_selection": false,
+    "architecture_modified": false,
+    "loss_modified": false,
+    "normalization_refit": false,
+    "fresh_test_rows_used_for_training_or_tuning": false,
+    "same_test_corpus_for_all_five_training_seeds": true,
+    "claim_scope": "one-step authentic NEURON soma-voltage transition"
+  },
+  "frozen_source": {
+    "absolute_training_step": 144000,
+    "learning_rate": 0.0003,
+    "readout": "raw",
+    "seeds": [61017, 61029, 61043, 61071, 61103],
+    "code_revision": "61505220fa670481e34b00fe315c0dfb725aa171",
+    "configuration_sha256": "1e2fe8a138b8132896b2154c52ff74a191fa6f1c5f0faa826cf75fb7760d3a53",
+    "final_report_sha256": "7e7493cf100baee30f5f527a79d03c55384ba8c8a6f60aed4cdddedb1cb038a2",
+    "normalization_sha256": "f15423e51d7c84ced03cd9e289320b041c8a41e048a0ca73e84bebe7351e2024"
+  },
+  "fresh_corpus": {
+    "total_transitions": 1680000,
+    "relation_to_s3_development_validation": "exactly 7/24 of 5,760,000 transitions",
+    "background": {
+      "transitions": 1008000,
+      "fraction": 0.6,
+      "trajectory_duration_ms": 6000,
+      "trajectory_count": 168,
+      "per_protocol_transitions": 504000,
+      "root_seed": 99100001,
+      "plan_sha256": "ad3bbd7f8948e2c838056966050005c37f2f2e540c39f786ccf64b417d48c956"
+    },
+    "targeted": {
+      "transitions": 672000,
+      "fraction": 0.4,
+      "trajectory_duration_ms": 80,
+      "trajectory_count": 8400,
+      "per_protocol_transitions": 56000,
+      "root_seed": 99200001,
+      "plan_sha256": "c01120095cc1e78e465351e717bdcc2153b49bf30ab60fbf9681893490a2a160"
+    },
+    "all_rows_are_test": true,
+    "physical_fingerprint_required": true,
+    "support_gates": {
+      "absolute_delta_ge_5mv_count": {"minimum": 28700, "maximum": 47834},
+      "somatic_upcrossings_minus55mv": {"minimum": 10543, "maximum": 17572}
+    }
+  },
+  "decision": {
+    "giada_lower_median_overall_rmse": true,
+    "giada_lower_median_active_rmse": true,
+    "giada_lower_median_somatic_upcrossing_rmse": true,
+    "minimum_seed_wins": 4,
+    "minimum_family_wins": 5,
+    "minimum_protocol_wins": 12,
+    "s4_authorized_only_if_every_gate_and_corpus_integrity_pass": true
+  }
+}

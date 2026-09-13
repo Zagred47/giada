@@ -125,6 +125,46 @@ PRODUCTION_PROFILES: Dict[str, Dict[str, Any]] = {
             ("validation", "somatic_upcrossings_minus55mv"): (36_564, 60_940),
         },
     },
+    "s3_fresh_test": {
+        "composite_stage": "s3_fresh_teacher_test",
+        "audit_schema": "giada-runpod-s3-fresh-teacher-test-audit-v1",
+        "total": 1_680_000,
+        # Internally split_code=1 is retained for compatibility with the lazy
+        # evaluator.  Its scientific role is sealed_fresh_test, not model
+        # selection or development validation.
+        "splits": {"validation": 1_680_000},
+        "required_split_codes": (1,),
+        "selection_role": "sealed_fresh_test",
+        "components": {
+            "background": {
+                "stage": "s3_fresh_test_background",
+                "purpose": "giada_fresh_test_background",
+                "transition_count": 1_008_000,
+            },
+            "targeted": {
+                "stage": "s3_fresh_test_targeted",
+                "purpose": "giada_fresh_test_targeted",
+                "transition_count": 672_000,
+            },
+        },
+        "protocol_splits": {
+            **{
+                protocol: {"validation": 504_000}
+                for protocol in PRODUCTION_BACKGROUND_PROTOCOLS
+            },
+            **{
+                protocol: {"validation": 56_000}
+                for protocol in PRODUCTION_TARGET_PROTOCOLS
+            },
+        },
+        # Frozen at 75--125% of the S3 validation observations scaled by
+        # exactly 7/24 (1.68M / 5.76M).  These are integrity/support gates,
+        # never tuning targets.
+        "support_ranges": {
+            ("validation", "absolute_delta_ge_5mv_count"): (28_700, 47_834),
+            ("validation", "somatic_upcrossings_minus55mv"): (10_543, 17_572),
+        },
+    },
 }
 
 
@@ -276,11 +316,15 @@ def build_and_audit_hybrid_composite(
             for component_id, root in roots.items()
         ],
         "physical_merge_performed": False,
-        "selection_role": "development_validation",
+        "selection_role": profile.get("selection_role", "development_validation"),
         "paper_test_claimed": False,
     }
     _atomic_json(output / "composite_manifest.json", manifest)
-    audit = audit_soma_corpus(output, progress=progress)
+    audit = audit_soma_corpus(
+        output,
+        progress=progress,
+        required_split_codes=tuple(profile.get("required_split_codes", (0, 1))),
+    )
     blockers.extend(audit.get("blockers", []))
 
     checks = []
@@ -331,8 +375,8 @@ def build_and_audit_hybrid_composite(
             "total_transition_count": profile["total"],
             "long_stochastic_background_fraction": 0.6,
             "confirmed_targeted_fraction": 0.4,
-            "train_fraction": 0.8,
-            "validation_fraction": 0.2,
+            "train_fraction": 0.0 if scale == "s3_fresh_test" else 0.8,
+            "validation_fraction": 1.0 if scale == "s3_fresh_test" else 0.2,
         },
         "support_checks": checks,
         "corpus_audit": audit,
@@ -385,4 +429,22 @@ def build_and_audit_s3_composite(
 
     return build_and_audit_hybrid_composite(
         background_root, targeted_root, output_root, scale="s3", progress=progress
+    )
+
+
+def build_and_audit_s3_fresh_test_composite(
+    background_root: Path,
+    targeted_root: Path,
+    output_root: Path,
+    *,
+    progress=None,
+) -> Dict[str, Any]:
+    """Seal the preregistered independent S3 teacher-trajectory test."""
+
+    return build_and_audit_hybrid_composite(
+        background_root,
+        targeted_root,
+        output_root,
+        scale="s3_fresh_test",
+        progress=progress,
     )

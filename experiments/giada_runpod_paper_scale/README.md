@@ -206,5 +206,15 @@ stability question but, because `3e-4` was selected on this same development
 corpus, it still does not constitute a fresh paper confirmation or authorize
 S4.
 
+The next and only confirmatory step is frozen in
+`s3_fresh_teacher_test_preregistration.json`. It performs no training and no
+selection. It generates 1.68 million wholly new teacher transitions in a
+disjoint seed namespace, preserving the exact S3 60/40 mixture and all 14
+protocol proportions, then evaluates the five frozen raw 144k checkpoint
+pairs with the original training normalization. All rows are sealed test rows.
+S4 is authorized only if the corpus integrity/support gates, all three median
+strata, at least four of five seed wins, all five family wins, and at least
+twelve of fourteen protocol wins pass together.
+
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.

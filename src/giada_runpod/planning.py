@@ -62,6 +62,7 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
         "giada_hybrid_pilot",
         "giada_protocol_repair_pilot",
         "giada_hybrid_production_targeted",
+        "giada_fresh_test_targeted",
     }
     if paired_purpose:
         from .hybrid_inputs import protocol_specs_for_purpose
@@ -70,21 +71,21 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
         per_protocol, remainder = divmod(count, len(specs))
         if remainder:
             raise RuntimeError("paired plan cannot balance protocol counts")
-        validation_repeats = int(
-            round(per_protocol * config.validation_trajectory_fraction)
-        )
+        validation_repeats = int(round(per_protocol * config.validation_trajectory_fraction))
         train_repeats = per_protocol - validation_repeats
-        if min(train_repeats, validation_repeats) <= 0:
-            raise RuntimeError("paired plan requires both train and validation replicas")
+        if config.purpose == "giada_fresh_test_targeted":
+            split_repeats = (("validation", validation_repeats),)
+        else:
+            if min(train_repeats, validation_repeats) <= 0:
+                raise RuntimeError("paired plan requires both train and validation replicas")
+            split_repeats = (("train", train_repeats), ("validation", validation_repeats))
         trajectories = []
         index = 0
         # Keep every split's Random123 seed namespace disjoint even when a
         # scale contains more than 1,000 paired replicates. Preserve the
         # historical 100k stride for S1e and smaller plans.
         split_seed_stride = max(100_000, (per_protocol + 1) * 100)
-        for split_index, (split, repeats) in enumerate(
-            (("train", train_repeats), ("validation", validation_repeats))
-        ):
+        for split_index, (split, repeats) in enumerate(split_repeats):
             for replicate in range(repeats):
                 family_seeds: Dict[str, int] = {}
                 for spec in specs:
@@ -116,6 +117,8 @@ def build_shard_plan(config: ScaleConfig) -> List[ShardPlan]:
         protocol_for = {index: protocols[index % len(protocols)] for index in range(count)}
     if paired_purpose:
         pass
+    elif config.purpose == "giada_fresh_test_background":
+        validation = set(range(count))
     elif len(protocols) == 1:
         # Preserve the original S0--S4 split identity exactly.
         validation_count = max(

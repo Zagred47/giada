@@ -1,0 +1,17 @@
+giada_runpod_scale:
+  stage: s3_fresh_test_background
+  target_transitions: 1008000
+  trajectory_duration_ms: 6000
+  trajectories_per_shard: 1
+  storage_profile: soma_paper
+  sampled_segments_per_transition: 1
+  root_seed: 99100001
+  validation_trajectory_fraction: 1.0
+  compression: lzf
+  chunk_transitions: 256
+  progress_interval_s: 30
+  purpose: giada_fresh_test_background
+  # Sealed independent test: 84 new trajectories per protocol; no train rows.
+  input_protocols:
+    - neuronio_nmda_ergodic_v1
+    - neuronio_nmda_pilot_ex_high_inh_low_time_fast_v2

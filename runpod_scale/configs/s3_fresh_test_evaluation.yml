@@ -1,0 +1,20 @@
+giada_s3_fresh_test_evaluation:
+  seeds: [61017, 61029, 61043, 61071, 61103]
+  source_absolute_step: 144000
+  source_code_revision: 61505220fa670481e34b00fe315c0dfb725aa171
+  source_configuration_sha256: 1e2fe8a138b8132896b2154c52ff74a191fa6f1c5f0faa826cf75fb7760d3a53
+  source_final_report_sha256: 7e7493cf100baee30f5f527a79d03c55384ba8c8a6f60aed4cdddedb1cb038a2
+  source_normalization_sha256: f15423e51d7c84ced03cd9e289320b041c8a41e048a0ca73e84bebe7351e2024
+  source_state_hashes:
+    seeds/seed61017/state_step72000.pt: 6361df7ab65d30085188653f8dfb24d4687779619bae5691a09af29e5342c3c6
+    seeds/seed61029/state_step72000.pt: 2b0ddd4d37c2e8251cfd5aa0029e99aae78133fcea6f83bcf123b2b90627d655
+    seeds/seed61043/state_step72000.pt: fd7eb238990385c160ea6712f3b8bd14c888fa35de450f40a3637a6b52c4a446
+    seeds/seed61071/state_step72000.pt: e008fbc05883ed516f1c51aefb9100d970c64c97fbe2c0455a7c30d40c7ae773
+    seeds/seed61103/state_step72000.pt: 2e482f746aa099f0e20837370fe98a7526427d761e7572cadd90c64baede11ae
+  expected_fresh_stage: s3_fresh_teacher_test
+  expected_transition_count: 1680000
+  background_plan_sha256: ad3bbd7f8948e2c838056966050005c37f2f2e540c39f786ccf64b417d48c956
+  targeted_plan_sha256: c01120095cc1e78e465351e717bdcc2153b49bf30ab60fbf9681893490a2a160
+  minimum_seed_wins: 4
+  minimum_family_wins: 5
+  minimum_protocol_wins: 12
