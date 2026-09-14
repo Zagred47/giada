@@ -682,6 +682,13 @@ authorized. The immutable evidence record is
 
 ## S4 distributed CPU qualification
 
+The user-reported canary has now completed the cross-pod, duplicate refusal,
+shared-output and process-crash recovery checks. Its evidence and limits are
+recorded in `experiments/giada_runpod_paper_scale/s4_cpu_distributed_canary_result.json`.
+For production use **[S4_PRODUCTION.md](S4_PRODUCTION.md)** and the identical
+hostname-bound `s4_cpu.sh start` command on registered pods. The commands below
+remain the historical canary procedure, not the production launch sequence.
+
 Do **not** run `configs/s4_soma_parity.yml`. It is the legacy monolithic
 NeuronIO-style plan and does not represent the authorized GIADA hybrid
 methodology. S4 preserves the sealed S3 design exactly: 230.4 million
@@ -753,11 +760,11 @@ it does not reconstruct the million-episode S4 plan in memory:
   --output "$GIADA_OUTPUT_ROOT"
 ```
 
-The current production candidates use two 6-second trajectories per
-background shard and 100 80-ms episodes per targeted shard. Those values are
-not production-frozen until cross-host determinism, duplicate refusal,
-kill/resume, shared-volume disjointness, and 8-versus-16-process throughput
-all pass. The canary output is disposable and must never be used for training.
+The selected production packing uses two 6-second trajectories per background
+shard and 100 80-ms episodes per targeted shard. The coordinator freezes the
+canonical plan identities before launching production. The historical candidate
+config filenames are retained, without changing any numerical setting. Canary
+output remains separate and must never be used for training.
 
 ## What remains in the Kaggle track
 

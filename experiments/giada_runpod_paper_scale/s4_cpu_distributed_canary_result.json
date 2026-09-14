@@ -1,0 +1,62 @@
+{
+  "schema_version": "giada-s4-cpu-distributed-canary-result-v1",
+  "recorded_at": "2026-09-14",
+  "status": "reported_operational_checks_passed",
+  "evidence_source": "User-supplied RunPod terminal transcripts in the project conversation. Remote HDF5 files were not independently downloaded in this preparation turn.",
+  "qualified_generation_revision": "a0b6e080c1ab711e5e4ce979bc3dde0b0e90d8ee",
+  "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "pods": ["e374159d3660", "5b20edd19fd3"],
+  "underlying_physical_host_independence_verified": false,
+  "plan_identities": {
+    "background": "e8f14a2a65b7ea6fc998edf96e79b254c950f84f551bb67af9dc9f7214ed7f7e",
+    "targeted": "e2bbbcbf9abf724c203c20193c78334acd9ca971abd7237593f721e5776b3aa1"
+  },
+  "shared_volume": {
+    "background_output": "/workspace/giada-data/s4-canary-background-shared-v2",
+    "targeted_output": "/workspace/giada-data/s4-canary-targeted-shared-v1",
+    "background_validated_shards": 30,
+    "background_validated_transitions": 360000,
+    "background_size_bytes": 96006628,
+    "targeted_validated_shards": 30,
+    "targeted_validated_transitions": 240000,
+    "targeted_size_bytes": 17384467,
+    "both_reference_hdf5_hash_lists_identical": true,
+    "blockers": 0,
+    "claims_after_completion": 0
+  },
+  "duplicate_refusal": {
+    "original_worker": 0,
+    "original_pid": 8856,
+    "original_host": "e374159d3660",
+    "duplicate_host": "5b20edd19fd3",
+    "exit_code": 1,
+    "error": "exclusive worker claim already exists; refusing concurrent write",
+    "partial_and_both_claim_hashes_unchanged": true
+  },
+  "recovery": {
+    "output": "/workspace/giada-data/s4-canary-recovery-v1",
+    "interruption": "SIGKILL of the intentionally paused worker after an HDF5 partial existed",
+    "original_process_absence_verified_before_recovery": true,
+    "whole_pod_shutdown_tested": false,
+    "recovery_host": "5b20edd19fd3",
+    "same_worker_index_and_seed": true,
+    "completed_transitions": 12000,
+    "reference_hdf5_byte_identical": true,
+    "remaining_claims_or_partials": 0
+  },
+  "selected_packing": {
+    "background_trajectories_per_shard": 2,
+    "targeted_trajectories_per_shard": 100,
+    "global_worker_count": 128,
+    "worker_seed_rule": "7000001 + global_worker_index",
+    "ordinary_launch_recovery_enabled": false
+  },
+  "scope": {
+    "allow_production_preparation_with_selected_packing": true,
+    "scientific_protocol_or_seed_changes_authorized": false,
+    "automatic_live_claim_stealing_authorized": false,
+    "full_fleet_throughput_measured": false,
+    "24_hour_guarantee_claimed": false,
+    "canary_data_eligible_for_training": false
+  }
+}

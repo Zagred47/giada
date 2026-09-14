@@ -12,6 +12,8 @@ import sys
 
 plan_root = pathlib.Path(sys.argv[1])
 output_root = pathlib.Path(sys.argv[2])
+if not output_root.is_dir():
+    raise SystemExit(f"Generation output does not exist (not started): {output_root}")
 manifest = json.loads((plan_root / "manifest.json").read_text())
 status = output_root / "status"
 claims = output_root / "claims"

@@ -135,6 +135,20 @@ class LeanSomaCorpus:
         self.path_trajectory_labels: Dict[Path, Dict[int, Dict[str, str]]] = {}
         for component_id, component_root, plan_path in corpus_components(self.root):
             labels: Dict[int, Dict[str, str]] = {}
+            distributed_labels = {}
+            if plan_path is not None and plan_path.is_dir():
+                from .distributed_generation import load_distributed_manifest, load_worker_partition
+
+                _, manifest = load_distributed_manifest(plan_path)
+                for worker in range(manifest['global_worker_count']):
+                    _, shards, _ = load_worker_partition(plan_path, worker, manifest['global_worker_count'])
+                    for shard in shards:
+                        distributed_labels[shard.shard_id] = {
+                            row.trajectory_index: {
+                                'protocol': row.protocol, 'family': row.protocol_family,
+                                'arm': row.protocol_arm,
+                            } for row in shard.trajectories
+                        }
             if plan_path is not None and plan_path.is_file():
                 plan = json.loads(plan_path.read_text(encoding="utf-8"))
                 for shard in plan["shards"]:
@@ -147,7 +161,7 @@ class LeanSomaCorpus:
             for path in sorted((component_root / "shards").glob("shard-*.h5")):
                 self.paths.append(path)
                 self.path_component[path] = component_id
-                self.path_trajectory_labels[path] = labels
+                self.path_trajectory_labels[path] = distributed_labels.get(path.stem, labels)
         if not self.paths:
             raise FileNotFoundError(f"no paper-scale shards under {self.root}")
         self.rows: Dict[int, List[tuple[Path, np.ndarray]]] = {0: [], 1: []}
@@ -599,8 +613,18 @@ class PaperScaleMatchedTrainer:
                     raise RuntimeError(
                         f"composite component {component_id!r} is missing"
                     )
+                plan_name = next(str(row.get('plan', 'plan.json')) for row in manifest['components']
+                                 if row['component_id'] == component_id)
+                plan_file = component_root / plan_name
+                if plan_file.is_dir():
+                    from .distributed_generation import load_distributed_manifest, load_worker_partition
+
+                    _, distributed = load_distributed_manifest(plan_file)
+                    for worker in range(distributed['global_worker_count']):
+                        load_worker_partition(plan_file, worker, distributed['global_worker_count'])
+                    plan_name = str(Path(plan_name) / 'manifest.json')
                 for filename, suffix in (
-                    ("plan.json", "plan_sha256"),
+                    (plan_name, "plan_sha256"),
                     ("validation_report.json", "validation_sha256"),
                 ):
                     path = component_root / filename

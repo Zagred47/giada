@@ -118,7 +118,34 @@ def audit_soma_corpus(
         raise RuntimeError("soma corpus audit requires h5py") from error
 
     root = Path(corpus_root)
+    if not required_split_codes or any(code not in (0, 1) for code in required_split_codes):
+        raise ValueError("required split codes must be a non-empty subset of (0, 1)")
     sources = corpus_components(root, plan_path)
+    if sources and all(plan is not None and plan.is_dir() for _, _, plan in sources):
+        from .distributed_audit import add_counts, audit_distributed_component, empty_counts
+
+        combined = {name: empty_counts() for name in ('train', 'validation')}
+        protocols, blockers, validations = {}, [], {}
+        shard_count = 0
+        for component_id, component_root, component_plan in sources:
+            report = audit_distributed_component(component_root, component_plan, progress=progress)
+            validations[component_id] = {'valid': report['valid'],
+                'validated_shard_count': report['validated_shard_count'],
+                'validated_transition_count': report['validated_transition_count']}
+            blockers.extend(report['blockers'])
+            shard_count += report['validated_shard_count']
+            for split, values in report['splits'].items():
+                add_counts(combined[split], values)
+            for protocol, by_split in report['protocol_splits'].items():
+                for split, values in by_split.items():
+                    add_counts(protocols.setdefault(protocol, {}).setdefault(split, empty_counts()), values)
+        missing = [code for code in required_split_codes
+                   if combined['validation' if code == 1 else 'train']['transition_count'] == 0]
+        return dict(schema_version='giada-runpod-soma-corpus-audit-v1',
+                    valid=not blockers and not missing, blockers=blockers,
+                    missing_split_codes=missing, splits=combined, protocol_splits=protocols,
+                    shard_count=shard_count, quantiles_computed=False,
+                    source_validation={'valid': not blockers, 'components': validations})
     path_rows = [
         (component_id, component_root, component_plan, path)
         for component_id, component_root, component_plan in sources

@@ -242,3 +242,13 @@ The scientific S4 composition remains an exact 8x expansion of S3 throughout.
 
 Operational source, configs, and instructions live in `runpod_scale/` and
 `src/giada_runpod/`. Generated HDF5 shards and checkpoints never enter Git.
+
+The user-reported S4 canary outcomes are now recorded in
+`s4_cpu_distributed_canary_result.json`: both distributed components matched
+their single-pod references, a duplicate was rejected without touching the
+partial or claims, and a killed worker was recovered on the other pod with an
+identical HDF5. This tested process loss, not whole-pod shutdown, and does not
+establish physical-host independence or a 128-writer performance guarantee.
+The selected packing and the prospectively scaled support-density gates are
+documented in `runpod_scale/S4_PRODUCTION.md`. Generation is not launched by
+this record. The 24-hour planning envelope is conditional on the actual fleet.
