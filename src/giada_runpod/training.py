@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import time
+from collections import OrderedDict
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Mapping, Sequence
@@ -80,6 +81,7 @@ class MatchedTrainingConfig:
         if self.required_composite_stage in {
             "s2_hybrid_production",
             "s3_hybrid_production",
+            "s4_hybrid_production",
         }:
             required_hashes = {
                 "background_plan_sha256",
@@ -92,14 +94,14 @@ class MatchedTrainingConfig:
             }
             if set(self.expected_corpus_hashes) != required_hashes:
                 raise ValueError(
-                    "S2/S3 requires the complete frozen corpus hash contract"
+                    "S2/S3/S4 requires the complete frozen corpus hash contract"
                 )
             if any(
                 len(value) != 64 or any(char not in "0123456789abcdef" for char in value)
                 for value in self.expected_corpus_hashes.values()
             ):
                 raise ValueError(
-                    "S2/S3 corpus hashes must be lowercase SHA-256 values"
+                    "S2/S3/S4 corpus hashes must be lowercase SHA-256 values"
                 )
 
     @classmethod
@@ -116,12 +118,16 @@ class MatchedTrainingConfig:
 class LeanSomaCorpus:
     """Lazy reader for validated soma_paper shards."""
 
-    def __init__(self, root: Path, *, require_train_split: bool = True) -> None:
+    def __init__(self, root: Path, *, require_train_split: bool = True,
+                 max_open_handles: int = 64, progress=None) -> None:
         try:
             import h5py
         except ImportError as error:  # pragma: no cover
             raise RuntimeError("paper-scale training requires h5py") from error
         self.h5py = h5py
+        if max_open_handles < 1:
+            raise ValueError("max_open_handles must be positive")
+        self.max_open_handles = max_open_handles
         from .corpus_audit import corpus_components
 
         self.root = Path(root)
@@ -166,7 +172,7 @@ class LeanSomaCorpus:
             raise FileNotFoundError(f"no paper-scale shards under {self.root}")
         self.rows: Dict[int, List[tuple[Path, np.ndarray]]] = {0: [], 1: []}
         self.metadata: Dict[str, Any] | None = None
-        for path in self.paths:
+        for path_index, path in enumerate(self.paths, start=1):
             with h5py.File(path, "r") as handle:
                 metadata = json.loads(handle.attrs["schema_metadata_json"])
                 if metadata.get("storage_profile") != "soma_paper":
@@ -182,16 +188,23 @@ class LeanSomaCorpus:
                     indices = np.flatnonzero(split == code)
                     if len(indices):
                         self.rows[code].append((path, indices))
+            if progress is not None:
+                progress(path_index, len(self.paths))
         if not self.rows[1] or (require_train_split and not self.rows[0]):
             requirement = "train and validation" if require_train_split else "test"
             raise RuntimeError(f"paper-scale corpus requires {requirement} rows")
         assert self.metadata is not None
         self.train_count = sum(len(indices) for _, indices in self.rows[0])
         self.validation_count = sum(len(indices) for _, indices in self.rows[1])
-        self._handles: Dict[Path, Any] = {}
+        self._handles: Dict[Path, Any] = OrderedDict()
 
     def _handle(self, path: Path) -> Any:
-        if path not in self._handles:
+        if path in self._handles:
+            self._handles.move_to_end(path)
+        else:
+            if len(self._handles) >= self.max_open_handles:
+                _, oldest = self._handles.popitem(last=False)
+                oldest.close()
             self._handles[path] = self.h5py.File(path, "r")
         return self._handles[path]
 
@@ -231,6 +244,7 @@ class LeanSomaCorpus:
         rng: np.random.Generator,
         *,
         include_labels: bool = False,
+        progress=None,
     ) -> Dict[str, np.ndarray]:
         """Sample the complete split proportionally instead of one shard.
 
@@ -258,7 +272,9 @@ class LeanSomaCorpus:
             "_family_label": [],
             "_arm_label": [],
         }
-        for allocation, (path, available) in zip(allocations, groups):
+        for group_index, (allocation, (path, available)) in enumerate(zip(allocations, groups), start=1):
+            if progress is not None:
+                progress(group_index, len(groups))
             if allocation == 0:
                 continue
             positions = rng.integers(0, len(available), size=int(allocation))
@@ -920,6 +936,10 @@ class PaperScaleMatchedTrainer:
                 json.dumps(seed_payload, indent=2, sort_keys=True), encoding="utf-8"
             )
             temporary.replace(seed_report_path)
+        return self._write_report(runs, resumed_seeds)
+
+    def _write_report(self, runs, resumed_seeds):
+        """Summarize complete paired seed results without running an optimizer."""
         final = [row for row in runs if row["step"] == self.config.training_steps]
         medians = {
             name: float(np.median([row["soma_rmse_mv"] for row in final if row["model"] == name]))

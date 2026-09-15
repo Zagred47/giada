@@ -680,6 +680,13 @@ families, and 14/14 protocols; every preregistered gate passed and S4 is
 authorized. The immutable evidence record is
 `experiments/giada_runpod_paper_scale/s3_fresh_teacher_test_result.json`.
 
+## S4 GPU production
+
+After the CPU corpus is sealed, use **[S4_GPU_PRODUCTION.md](S4_GPU_PRODUCTION.md)**
+for the five independent paired-seed jobs, exact checkpoint restart, per-pod
+CUDA checks and strict final aggregation. Prepare on the first GPU only and
+measure its production throughput before deploying the remaining four.
+
 ## S4 distributed CPU qualification
 
 The user-reported canary has now completed the cross-pod, duplicate refusal,
