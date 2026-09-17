@@ -3,7 +3,11 @@ from pathlib import Path
 
 from src.giada_runpod.config import load_scale_config
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
-from src.giada_runpod.surrogate_validity_audit import audit_corpus, audit_shard
+from src.giada_runpod.surrogate_validity_audit import (
+    audit_corpus,
+    audit_shard,
+    verify_output_spike_corpus,
+)
 from src.giada_runpod.teacher import detect_neuronio_spike_peaks
 
 
@@ -115,7 +119,7 @@ def test_neuronio_peak_detector_handles_interior_and_boundary_peaks():
 
 
 def test_output_spike_extension_roundtrips(tmp_path):
-    path = tmp_path / "spike.h5"
+    path = tmp_path / "shards" / "spike.h5"
     writer = LeanShardWriter(
         path,
         segment_count_per_transition=1,
@@ -143,6 +147,13 @@ def test_output_spike_extension_roundtrips(tmp_path):
         "neuronio_local_maximum_above_minus25mv_at_0.125ms"
     )
     assert validation["valid"]
+    corpus = verify_output_spike_corpus(tmp_path)
+    assert corpus["valid"]
+    assert corpus["shards"] == 1
+    assert corpus["transitions"] == 1
+    assert corpus["explicit_output_spikes"] == 1
+    assert corpus["shards_with_spikes"] == 1
+    assert corpus["high_resolution_sample_count_histogram"] == {"9": 1}
 
 
 def test_surrogate_validity_configs_are_all_test_and_balanced():

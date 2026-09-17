@@ -318,3 +318,59 @@ def audit_corpus(
             ),
         },
     }
+
+
+def verify_output_spike_corpus(corpus: Path) -> Dict[str, Any]:
+    """Validate every shard's explicit output-spike extension concisely."""
+
+    try:
+        import h5py
+    except ImportError as error:  # pragma: no cover
+        raise RuntimeError("output-spike verification requires h5py") from error
+
+    from .store import validate_lean_shard
+
+    root = Path(corpus).resolve()
+    shards = sorted((root / "shards").glob("*.h5"))
+    blockers: list[str] = []
+    total_transitions = 0
+    total_spikes = 0
+    spiking_shards = 0
+    detectors: set[str] = set()
+    sample_histogram: Counter[int] = Counter()
+    for path in shards:
+        validation = validate_lean_shard(path)
+        blockers.extend(f"{path.name}: {message}" for message in validation["blockers"])
+        with h5py.File(path, "r") as handle:
+            total_transitions += int(handle.attrs.get("transition_count", -1))
+            count = int(handle.attrs.get("output_spike_count", -1))
+            if count < 0:
+                blockers.append(f"{path.name}: missing output_spike_count attribute")
+                count = 0
+            total_spikes += count
+            spiking_shards += int(count > 0)
+            detectors.add(str(handle.attrs.get("output_spike_detector", "")))
+            if "high_resolution_sample_count" in handle:
+                sample_histogram.update(
+                    int(value) for value in handle["high_resolution_sample_count"][...]
+                )
+    if not shards:
+        blockers.append("no shards found")
+    expected_detector = "neuronio_local_maximum_above_minus25mv_at_0.125ms"
+    if detectors != {expected_detector}:
+        blockers.append(f"unexpected output spike detectors: {sorted(detectors)}")
+    return {
+        "schema_version": "giada-output-spike-corpus-verification-v1",
+        "valid": not blockers,
+        "corpus": str(root),
+        "shards": len(shards),
+        "transitions": total_transitions,
+        "explicit_output_spikes": total_spikes,
+        "shards_with_spikes": spiking_shards,
+        "detectors": sorted(detectors),
+        "high_resolution_sample_count_histogram": {
+            str(key): sample_histogram[key] for key in sorted(sample_histogram)
+        },
+        "blockers": blockers[:20],
+        "blocker_count": len(blockers),
+    }

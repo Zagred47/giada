@@ -656,6 +656,17 @@ def command_audit_surrogate_validity(args: argparse.Namespace) -> None:
         raise SystemExit(2)
 
 
+def command_verify_output_spikes(args: argparse.Namespace) -> None:
+    from .surrogate_validity_audit import verify_output_spike_corpus
+
+    report = verify_output_spike_corpus(Path(args.corpus))
+    if args.output is not None:
+        _write_json(Path(args.output), report)
+    print(json.dumps(report, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="GIADA paper-scale RunPod workflow")
     sub = result.add_subparsers(dest="command", required=True)
@@ -788,6 +799,13 @@ def parser() -> argparse.ArgumentParser:
     recoverability.add_argument("--output", required=True, type=Path)
     recoverability.add_argument("--sample-shards-per-component", default=4, type=int)
     recoverability.set_defaults(func=command_audit_surrogate_validity)
+    output_spikes = sub.add_parser(
+        "verify-output-spikes",
+        help="validate explicit NeuronIO-compatible output spikes in every shard",
+    )
+    output_spikes.add_argument("--corpus", required=True, type=Path)
+    output_spikes.add_argument("--output", type=Path)
+    output_spikes.set_defaults(func=command_verify_output_spikes)
     return result
 
 
