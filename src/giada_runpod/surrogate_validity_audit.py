@@ -175,9 +175,47 @@ def audit_shard(path: Path) -> Dict[str, Any]:
         endpoint_upcross = (voltage_t < -55.0) & (voltage_t1 >= -55.0)
         hidden_peak = (voltage_t < -25.0) & (voltage_t1 < -25.0) & (voltage_max >= -25.0)
         selected_segments = np.unique(np.asarray(handle["segment_id"][...], dtype=np.int64))
-        exact_output_spike_labels = "output_spike_time_ms" in handle or "events/output_spike_time_ms" in handle
+        exact_output_spike_labels = (
+            "output_spikes/offset_ms" in handle
+            or "output_spike_time_ms" in handle
+            or "events/output_spike_time_ms" in handle
+        )
         if not exact_output_spike_labels:
             warnings.append("no explicit postsynaptic somatic spike-time dataset")
+        output_spike_rows = 0
+        output_spike_detector = None
+        if "output_spikes/offset_ms" in handle:
+            spike_fields = (
+                "output_spikes/transition_row",
+                "output_spikes/offset_ms",
+                "output_spikes/peak_voltage_mv",
+            )
+            missing = [name for name in spike_fields if name not in handle]
+            if missing:
+                blockers.append(f"incomplete output spike table: {missing}")
+            else:
+                spike_lengths = {name: len(handle[name]) for name in spike_fields}
+                if len(set(spike_lengths.values())) != 1:
+                    blockers.append(f"output spike dataset length mismatch: {spike_lengths}")
+                output_spike_rows = min(spike_lengths.values(), default=0)
+                spike_transition_rows = np.asarray(
+                    handle["output_spikes/transition_row"][...], dtype=np.int64
+                )
+                spike_offsets = np.asarray(
+                    handle["output_spikes/offset_ms"][...], dtype=np.float64
+                )
+                if output_spike_rows and (
+                    spike_transition_rows.min() < 0
+                    or spike_transition_rows.max() >= transition_count
+                ):
+                    blockers.append("output spike transition reference out of range")
+                if not np.all((spike_offsets >= 0.0) & (spike_offsets < 1.0)):
+                    blockers.append("output spike offset outside [0, 1 ms)")
+                if "output_spike_count" not in handle:
+                    blockers.append("missing per-row output spike count")
+                elif int(np.asarray(handle["output_spike_count"][...]).sum()) != output_spike_rows:
+                    blockers.append("per-row output spike counts do not match spike table")
+            output_spike_detector = str(handle.attrs.get("output_spike_detector", ""))
 
         return {
             "path": str(source),
@@ -209,6 +247,8 @@ def audit_shard(path: Path) -> Dict[str, Any]:
             "endpoint_minus55_upcrossings": int(endpoint_upcross.sum()),
             "hidden_above_minus25_excursions_detectable_from_max": int(hidden_peak.sum()),
             "explicit_output_spike_times_present": exact_output_spike_labels,
+            "explicit_output_spike_rows": output_spike_rows,
+            "output_spike_detector": output_spike_detector,
         }
 
 
@@ -245,6 +285,7 @@ def audit_corpus(
                 "release_success_count", "release_failure_count",
                 "causal_drive_nonzero_rows", "endpoint_minus55_upcrossings",
                 "hidden_above_minus25_excursions_detectable_from_max",
+                "explicit_output_spike_rows",
                 "step_continuity_gaps", "voltage_boundary_discontinuities",
             ):
                 totals[key] += int(report.get(key, 0))
@@ -277,4 +318,3 @@ def audit_corpus(
             ),
         },
     }
-

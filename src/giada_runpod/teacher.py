@@ -87,6 +87,44 @@ def _release_seed(seed: int) -> int:
     return int.from_bytes(hashlib.sha256(f"giada-release|{seed}".encode()).digest()[:4], "big")
 
 
+def detect_neuronio_spike_peaks(
+    times_ms: Sequence[float],
+    soma_voltage_mv: Sequence[float],
+    *,
+    previous_voltage_mv: float | None = None,
+    threshold_mv: float = -25.0,
+) -> tuple[list[Dict[str, float]], float]:
+    """Apply the original NeuronIO local-maximum spike definition.
+
+    ``_drive_one_ms`` includes both interval endpoints.  The last endpoint is
+    used only as right context, matching the original ``np.arange`` sampling;
+    it belongs to the next transition.  ``previous_voltage_mv`` is the sample
+    immediately before the current boundary and makes integer-time peaks
+    detectable without storing the full microtrace.
+    """
+
+    times = np.asarray(times_ms, dtype=np.float64)
+    voltage = np.asarray(soma_voltage_mv, dtype=np.float64)
+    if times.ndim != 1 or voltage.ndim != 1 or len(times) != len(voltage):
+        raise ValueError("spike detector requires equal one-dimensional time/voltage arrays")
+    if len(times) < 3 or not np.all(np.diff(times) > 0.0):
+        raise ValueError("spike detector requires at least three increasing samples")
+    expected = 0.125
+    if not np.allclose(np.diff(times), expected, atol=1.0e-9, rtol=0.0):
+        raise ValueError("NeuronIO-compatible spike detection requires 0.125 ms samples")
+    spikes: list[Dict[str, float]] = []
+    first = 0 if previous_voltage_mv is not None else 1
+    for index in range(first, len(voltage) - 1):
+        left = float(previous_voltage_mv) if index == 0 else float(voltage[index - 1])
+        center = float(voltage[index])
+        right = float(voltage[index + 1])
+        if center - left > 0.0 and right - center < 0.0 and center > threshold_mv:
+            offset = float(times[index] - times[0])
+            if 0.0 <= offset < 1.0:
+                spikes.append({"offset_ms": offset, "peak_voltage_mv": center})
+    return spikes, float(voltage[-2])
+
+
 def ordered_segment_voltages(live_segments: Mapping[int, Any]) -> np.ndarray:
     """Read the canonical contiguous segment-id order from the audit mapping."""
 
@@ -398,6 +436,10 @@ class ScaleTeacherGenerator:
                 if config.purpose == "giada_hybrid_pilot"
                 else "GIADA_protocol_repair_paired_v1"
                 if config.purpose == "giada_protocol_repair_pilot"
+                else "GIADA_hybrid_confirmed_targeted_evaluation_v1"
+                if config.purpose == "surrogate_validity_eval_targeted"
+                else "GIADA_hybrid_long_stochastic_background_evaluation_v1"
+                if config.purpose == "surrogate_validity_eval_background"
                 else "GIADA_hybrid_confirmed_targeted_production_v1"
                 if config.purpose in {"giada_hybrid_production_targeted", "giada_fresh_test_targeted"}
                 else "GIADA_hybrid_long_stochastic_background_production_v1"
@@ -429,16 +471,22 @@ class ScaleTeacherGenerator:
             schema_metadata=metadata,
             compression=config.compression,
             chunk_transitions=config.chunk_transitions,
+            store_output_spikes=config.purpose in {
+                "surrogate_validity_eval_background",
+                "surrogate_validity_eval_targeted",
+            },
         )
         try:
             local_row = 0
             last_progress = started
             for trajectory in shard.trajectories:
+                previous_spike_sample = None
                 if config.purpose in {
                     "giada_hybrid_pilot",
                     "giada_protocol_repair_pilot",
                     "giada_hybrid_production_targeted",
                     "giada_fresh_test_targeted",
+                    "surrogate_validity_eval_targeted",
                 }:
                     actions_by_step, input_metadata = sample_hybrid_actions(
                         trajectory.duration_ms,
@@ -472,19 +520,35 @@ class ScaleTeacherGenerator:
                         "giada_protocol_repair_pilot",
                         "giada_hybrid_production_targeted",
                         "giada_fresh_test_targeted",
+                        "surrogate_validity_eval_targeted",
                     }:
                         observer = lambda: ordered_segment_voltages(
                             self.session.audit.live_segments
                         )[segments].copy()
-                        _, scheduled, samples = self.session._drive_one_ms(
+                        times, scheduled, samples = self.session._drive_one_ms(
                             float(self.session.h.t),
                             actions,
                             observer,
-                            sample_interval_ms=0.025,
+                            sample_interval_ms=(
+                                0.125
+                                if config.purpose == "surrogate_validity_eval_targeted"
+                                else 0.025
+                            ),
+                        )
+                        micro_voltage = np.asarray(samples, dtype=np.float32)
+                    elif config.purpose == "surrogate_validity_eval_background":
+                        observer = lambda: ordered_segment_voltages(
+                            self.session.audit.live_segments
+                        )[segments].copy()
+                        times, scheduled, samples = self.session._drive_one_ms(
+                            float(self.session.h.t),
+                            actions,
+                            observer,
+                            sample_interval_ms=0.125,
                         )
                         micro_voltage = np.asarray(samples, dtype=np.float32)
                     else:
-                        _, scheduled, _ = self.session._drive_one_ms(
+                        times, scheduled, _ = self.session._drive_one_ms(
                             float(self.session.h.t),
                             actions,
                             lambda: 0.0,
@@ -496,9 +560,21 @@ class ScaleTeacherGenerator:
                         "giada_protocol_repair_pilot",
                         "giada_hybrid_production_targeted",
                         "giada_fresh_test_targeted",
+                        "surrogate_validity_eval_targeted",
+                        "surrogate_validity_eval_background",
                     }:
                         micro_voltage = np.stack(
                             (state_t["voltage_t_mv"], state_t1["voltage_t_mv"])
+                        )
+                    output_spikes = []
+                    if config.purpose in {
+                        "surrogate_validity_eval_background",
+                        "surrogate_validity_eval_targeted",
+                    }:
+                        output_spikes, previous_spike_sample = detect_neuronio_spike_peaks(
+                            times,
+                            micro_voltage[:, 0],
+                            previous_voltage_mv=previous_spike_sample,
                         )
                     views = build_input_views(scheduled, self.session._last_release_outcomes)
                     realized = []
@@ -539,7 +615,7 @@ class ScaleTeacherGenerator:
                         "scheduled_event_count": len(scheduled_synaptic),
                         "realized_event_count": len([a for a in realized if a.get("kind") == "synaptic_event"]),
                     }
-                    writer.append(row, outcome_events)
+                    writer.append(row, outcome_events, output_spikes=output_spikes)
                     local_row += 1
                     now = time.perf_counter()
                     if (

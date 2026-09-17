@@ -1,8 +1,10 @@
 import json
 from pathlib import Path
 
-from src.giada_runpod.store import LeanShardWriter
+from src.giada_runpod.config import load_scale_config
+from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
 from src.giada_runpod.surrogate_validity_audit import audit_corpus, audit_shard
+from src.giada_runpod.teacher import detect_neuronio_spike_peaks
 
 
 def _write_shard(root: Path, *, break_events: bool = False) -> Path:
@@ -98,3 +100,56 @@ def test_corpus_resolves_composite_and_samples_read_only(tmp_path):
     assert report["components"]["targeted"]["sampled_shards"] == 1
     assert not report["interpretation"]["original_neuronio_spike_times_recoverable_exactly"]
 
+
+def test_neuronio_peak_detector_handles_interior_and_boundary_peaks():
+    times = [index * 0.125 for index in range(9)]
+    interior = [-70, -60, -10, -20, -40, -50, -60, -65, -66]
+    spikes, previous = detect_neuronio_spike_peaks(times, interior)
+    assert spikes == [{"offset_ms": 0.25, "peak_voltage_mv": -10.0}]
+    boundary = [-5, -20, -40, -50, -60, -65, -66, -67, -68]
+    spikes, _ = detect_neuronio_spike_peaks(
+        times, boundary, previous_voltage_mv=-30.0
+    )
+    assert spikes == [{"offset_ms": 0.0, "peak_voltage_mv": -5.0}]
+    assert previous == -65.0
+
+
+def test_output_spike_extension_roundtrips(tmp_path):
+    path = tmp_path / "spike.h5"
+    writer = LeanShardWriter(
+        path,
+        segment_count_per_transition=1,
+        mechanism_group_count=1,
+        ion_count=1,
+        schema_metadata={"storage_profile": "soma_paper"},
+        store_output_spikes=True,
+    )
+    writer.append({
+        "segment_id": [0], "voltage_t_mv": [-60.0],
+        "voltage_t_plus_1_mv": [-50.0], "parent_delta_t_mv": [0.0],
+        "mean_child_delta_t_mv": [0.0], "mechanism_state_t": [[0.1]],
+        "ion_state_t": [[0.2]], "causal_drive": [[0.0] * 12],
+        "trajectory_index": 0, "step_index": 0, "seed": 1, "split_code": 1,
+        "scheduled_event_count": 0, "realized_event_count": 0,
+        "high_resolution_sample_count": 9,
+    }, [], output_spikes=[{"offset_ms": 0.25, "peak_voltage_mv": 30.0}])
+    completion = writer.close(expected_transition_count=1)
+    report = audit_shard(path)
+    validation = validate_lean_shard(path, expected_transition_count=1)
+    assert completion["output_spike_count"] == 1
+    assert report["explicit_output_spike_times_present"]
+    assert report["explicit_output_spike_rows"] == 1
+    assert report["output_spike_detector"] == (
+        "neuronio_local_maximum_above_minus25mv_at_0.125ms"
+    )
+    assert validation["valid"]
+
+
+def test_surrogate_validity_configs_are_all_test_and_balanced():
+    config_root = Path(__file__).parents[1] / "runpod_scale" / "configs"
+    background = load_scale_config(config_root / "surrogate_validity_eval_background.yml")
+    targeted = load_scale_config(config_root / "surrogate_validity_eval_targeted.yml")
+    assert background.validation_trajectory_fraction == 1.0
+    assert targeted.validation_trajectory_fraction == 1.0
+    assert background.trajectory_count == 60
+    assert targeted.trajectory_count == 3000

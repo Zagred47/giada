@@ -53,6 +53,12 @@ STAGE_TRANSITIONS = {
     "s4_hybrid_background": 138_240_000,
     "s4_hybrid_targeted": 92_160_000,
     "s4": 230_400_000,
+    # Small, evaluation-only repair of the observability contract.  These
+    # stages reuse the qualified canary scale but use disjoint seeds and store
+    # explicit NeuronIO-compatible somatic spike peaks.  They are never used
+    # for training.
+    "surrogate_validity_eval_background": 360_000,
+    "surrogate_validity_eval_targeted": 240_000,
 }
 
 
@@ -106,6 +112,8 @@ class ScaleConfig:
         fresh_test = self.purpose in {
             "giada_fresh_test_background",
             "giada_fresh_test_targeted",
+            "surrogate_validity_eval_background",
+            "surrogate_validity_eval_targeted",
         }
         if fresh_test:
             if self.validation_trajectory_fraction != 1.0:
@@ -132,6 +140,8 @@ class ScaleConfig:
             "giada_hybrid_production_targeted",
             "giada_fresh_test_background",
             "giada_fresh_test_targeted",
+            "surrogate_validity_eval_background",
+            "surrogate_validity_eval_targeted",
         }:
             raise ValueError("unknown generation purpose")
         if not self.input_protocols or len(set(self.input_protocols)) != len(
@@ -251,6 +261,31 @@ class ScaleConfig:
             )
             if remainder or per_protocol <= 0:
                 raise ValueError("fresh targeted test must balance every protocol")
+        if self.purpose == "surrogate_validity_eval_background":
+            from .hybrid_inputs import PRODUCTION_BACKGROUND_PROTOCOLS
+
+            if self.stage != "surrogate_validity_eval_background":
+                raise ValueError("surrogate-validity background requires its evaluation stage")
+            if tuple(self.input_protocols) != PRODUCTION_BACKGROUND_PROTOCOLS:
+                raise ValueError("surrogate-validity background protocol registry changed")
+            if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 6000:
+                raise ValueError("surrogate-validity background requires 6000 ms soma trajectories")
+            if self.trajectory_count % len(PRODUCTION_BACKGROUND_PROTOCOLS):
+                raise ValueError("surrogate-validity background must balance every protocol")
+        if self.purpose == "surrogate_validity_eval_targeted":
+            from .hybrid_inputs import PRODUCTION_TARGET_PROTOCOLS
+
+            if self.stage != "surrogate_validity_eval_targeted":
+                raise ValueError("surrogate-validity targeted requires its evaluation stage")
+            if tuple(self.input_protocols) != PRODUCTION_TARGET_PROTOCOLS:
+                raise ValueError("surrogate-validity targeted protocol registry changed")
+            if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 80:
+                raise ValueError("surrogate-validity targeted requires 80 ms soma episodes")
+            per_protocol, remainder = divmod(
+                self.trajectory_count, len(PRODUCTION_TARGET_PROTOCOLS)
+            )
+            if remainder or per_protocol <= 0:
+                raise ValueError("surrogate-validity targeted must balance every protocol")
         if self.compression not in {"lzf", "gzip", "none"}:
             raise ValueError("compression must be lzf, gzip, or none")
         if self.chunk_transitions <= 0 or self.progress_interval_s <= 0:

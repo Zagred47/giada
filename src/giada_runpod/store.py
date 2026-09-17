@@ -39,6 +39,7 @@ class LeanShardWriter:
         schema_metadata: Mapping[str, Any],
         compression: str = "lzf",
         chunk_transitions: int = 256,
+        store_output_spikes: bool = False,
     ) -> None:
         try:
             import h5py
@@ -66,6 +67,7 @@ class LeanShardWriter:
             }
         )
         self.datasets: Dict[str, Any] = {}
+        self.store_output_spikes = bool(store_output_spikes)
         chunk = max(1, int(chunk_transitions))
 
         def dataset(name: str, tail: tuple[int, ...], dtype: Any) -> Any:
@@ -101,6 +103,8 @@ class LeanShardWriter:
         dataset("scheduled_event_count", (), "i4")
         dataset("realized_event_count", (), "i4")
         dataset("high_resolution_sample_count", (), "u1")
+        if self.store_output_spikes:
+            dataset("output_spike_count", (), "u1")
         self.event_datasets: Dict[str, Any] = {}
         event_chunk = max(256, chunk * 8)
 
@@ -129,8 +133,31 @@ class LeanShardWriter:
             event_dataset(name, dtype)
         self.count = 0
         self.event_count = 0
+        self.output_spike_datasets: Dict[str, Any] = {}
+        if self.store_output_spikes:
+            for name, dtype in (
+                ("transition_row", "i8"),
+                ("offset_ms", "f4"),
+                ("peak_voltage_mv", "f4"),
+            ):
+                self.output_spike_datasets[name] = self.handle.create_dataset(
+                    f"output_spikes/{name}",
+                    shape=(0,),
+                    maxshape=(None,),
+                    chunks=(event_chunk,),
+                    dtype=dtype,
+                    compression=compression_value,
+                    shuffle=bool(compression_value),
+                )
+        self.output_spike_count = 0
 
-    def append(self, row: Mapping[str, Any], realized_events: Sequence[Mapping[str, Any]]) -> None:
+    def append(
+        self,
+        row: Mapping[str, Any],
+        realized_events: Sequence[Mapping[str, Any]],
+        *,
+        output_spikes: Sequence[Mapping[str, Any]] = (),
+    ) -> None:
         index = self.count
         required = {
             "segment_id",
@@ -157,6 +184,12 @@ class LeanShardWriter:
         normalized.setdefault("voltage_min_mv", np.minimum(start, end))
         normalized.setdefault("voltage_max_mv", np.maximum(start, end))
         normalized.setdefault("high_resolution_sample_count", 2)
+        if self.store_output_spikes:
+            if len(output_spikes) > 255:
+                raise ValueError("more than 255 output spikes in one millisecond")
+            normalized.setdefault("output_spike_count", len(output_spikes))
+        elif output_spikes:
+            raise ValueError("output spikes supplied to a writer without spike storage")
         for name, dataset in self.datasets.items():
             dataset.resize(index + 1, axis=0)
             dataset[index] = normalized[name]
@@ -181,6 +214,23 @@ class LeanShardWriter:
                 for name, dataset in self.event_datasets.items():
                     dataset[target] = values[name]
             self.event_count = stop
+        if output_spikes:
+            start = self.output_spike_count
+            stop = start + len(output_spikes)
+            for dataset in self.output_spike_datasets.values():
+                dataset.resize(stop, axis=0)
+            for offset, spike in enumerate(output_spikes):
+                target = start + offset
+                values = {
+                    "transition_row": index,
+                    "offset_ms": float(spike["offset_ms"]),
+                    "peak_voltage_mv": float(spike["peak_voltage_mv"]),
+                }
+                if not 0.0 <= values["offset_ms"] < 1.0:
+                    raise ValueError("output spike offset must lie in [0, 1 ms)")
+                for name, dataset in self.output_spike_datasets.items():
+                    dataset[target] = values[name]
+            self.output_spike_count = stop
         self.count += 1
 
     def close(self, *, expected_transition_count: int) -> Dict[str, Any]:
@@ -192,6 +242,11 @@ class LeanShardWriter:
             )
         self.handle.attrs["transition_count"] = self.count
         self.handle.attrs["causal_release_outcome_count"] = self.event_count
+        self.handle.attrs["output_spike_count"] = self.output_spike_count
+        self.handle.attrs["output_spike_detector"] = (
+            "neuronio_local_maximum_above_minus25mv_at_0.125ms"
+            if self.store_output_spikes else "not_recorded"
+        )
         self.handle.attrs["complete"] = True
         self.handle.flush()
         self.handle.close()
@@ -201,6 +256,7 @@ class LeanShardWriter:
             "path": str(self.path),
             "transition_count": self.count,
             "causal_release_outcome_count": self.event_count,
+            "output_spike_count": self.output_spike_count,
             "size_bytes": self.path.stat().st_size,
             "sha256": sha256_file(self.path),
         }
@@ -248,6 +304,39 @@ def validate_lean_shard(path: Path, *, expected_transition_count: int | None = N
             event_rows = handle["events/transition_row"][...]
             if len(event_rows) and (event_rows.min() < 0 or event_rows.max() >= count):
                 blockers.append("event transition reference out of range")
+        spike_fields = (
+            "output_spikes/transition_row",
+            "output_spikes/offset_ms",
+            "output_spikes/peak_voltage_mv",
+        )
+        present_spike_fields = [name for name in spike_fields if name in handle]
+        if present_spike_fields and len(present_spike_fields) != len(spike_fields):
+            blockers.append("incomplete output spike table")
+        elif len(present_spike_fields) == len(spike_fields):
+            spike_lengths = [len(handle[name]) for name in spike_fields]
+            if len(set(spike_lengths)) != 1:
+                blockers.append("output spike dataset length mismatch")
+            else:
+                spike_count = spike_lengths[0]
+                spike_rows = handle["output_spikes/transition_row"][...]
+                spike_offsets = handle["output_spikes/offset_ms"][...]
+                spike_peaks = handle["output_spikes/peak_voltage_mv"][...]
+                if spike_count and (spike_rows.min() < 0 or spike_rows.max() >= count):
+                    blockers.append("output spike transition reference out of range")
+                if not np.all((spike_offsets >= 0.0) & (spike_offsets < 1.0)):
+                    blockers.append("output spike offset outside [0, 1 ms)")
+                if not np.isfinite(spike_peaks).all():
+                    blockers.append("non-finite output spike peak voltage")
+                if "output_spike_count" not in handle:
+                    blockers.append("missing per-row output spike count")
+                else:
+                    row_counts = handle["output_spike_count"][...]
+                    if len(row_counts) != count:
+                        blockers.append("row count mismatch in output_spike_count")
+                    elif int(row_counts.sum()) != spike_count:
+                        blockers.append("per-row output spike counts do not match spike table")
+                if int(handle.attrs.get("output_spike_count", -1)) != spike_count:
+                    blockers.append("output spike attribute count mismatch")
         try:
             schema_metadata = json.loads(str(handle.attrs.get("schema_metadata_json", "{}")))
         except (TypeError, ValueError):
