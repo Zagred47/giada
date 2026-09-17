@@ -636,6 +636,26 @@ def command_fingerprint_corpus(args: argparse.Namespace) -> None:
         raise SystemExit(2)
 
 
+def command_audit_surrogate_validity(args: argparse.Namespace) -> None:
+    from .surrogate_validity_audit import audit_corpus
+
+    def progress(component: str, index: int, total: int, path: Path) -> None:
+        print(
+            f"[GIADA RunPod][surrogate audit] {component} {index}/{total} {path.name}",
+            flush=True,
+        )
+
+    report = audit_corpus(
+        Path(args.corpus),
+        sample_shards_per_component=int(args.sample_shards_per_component),
+        progress=progress,
+    )
+    _write_json(Path(args.output), report)
+    print(json.dumps(report, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="GIADA paper-scale RunPod workflow")
     sub = result.add_subparsers(dest="command", required=True)
@@ -760,6 +780,14 @@ def parser() -> argparse.ArgumentParser:
     fingerprint.add_argument("--corpus", required=True, type=Path)
     fingerprint.add_argument("--output", required=True, type=Path)
     fingerprint.set_defaults(func=command_fingerprint_corpus)
+    recoverability = sub.add_parser(
+        "audit-surrogate-validity",
+        help="read-only audit of S4 events, trajectory continuity, state, and spike recoverability",
+    )
+    recoverability.add_argument("--corpus", required=True, type=Path)
+    recoverability.add_argument("--output", required=True, type=Path)
+    recoverability.add_argument("--sample-shards-per-component", default=4, type=int)
+    recoverability.set_defaults(func=command_audit_surrogate_validity)
     return result
 
 
