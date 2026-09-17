@@ -165,6 +165,37 @@ PRODUCTION_PROFILES: Dict[str, Dict[str, Any]] = {
             ("validation", "somatic_upcrossings_minus55mv"): (10_543, 17_572),
         },
     },
+    "surrogate_validity_eval": {
+        "composite_stage": "surrogate_validity_eval",
+        "audit_schema": "giada-surrogate-validity-evaluation-audit-v1",
+        "total": 600_000,
+        "splits": {"validation": 600_000},
+        "required_split_codes": (1,),
+        "selection_role": "sealed_independent_surrogate_validity_test",
+        "components": {
+            "background": {
+                "stage": "surrogate_validity_eval_background",
+                "purpose": "surrogate_validity_eval_background",
+                "transition_count": 360_000,
+            },
+            "targeted": {
+                "stage": "surrogate_validity_eval_targeted",
+                "purpose": "surrogate_validity_eval_targeted",
+                "transition_count": 240_000,
+            },
+        },
+        "protocol_splits": {
+            **{
+                protocol: {"validation": 180_000}
+                for protocol in PRODUCTION_BACKGROUND_PROTOCOLS
+            },
+            **{
+                protocol: {"validation": 20_000}
+                for protocol in PRODUCTION_TARGET_PROTOCOLS
+            },
+        },
+        "support_ranges": {},
+    },
 }
 
 
@@ -375,8 +406,8 @@ def build_and_audit_hybrid_composite(
             "total_transition_count": profile["total"],
             "long_stochastic_background_fraction": 0.6,
             "confirmed_targeted_fraction": 0.4,
-            "train_fraction": 0.0 if scale == "s3_fresh_test" else 0.8,
-            "validation_fraction": 1.0 if scale == "s3_fresh_test" else 0.2,
+            "train_fraction": 0.0 if "fresh_test" in scale or scale == "surrogate_validity_eval" else 0.8,
+            "validation_fraction": 1.0 if "fresh_test" in scale or scale == "surrogate_validity_eval" else 0.2,
         },
         "support_checks": checks,
         "corpus_audit": audit,
@@ -446,5 +477,23 @@ def build_and_audit_s3_fresh_test_composite(
         targeted_root,
         output_root,
         scale="s3_fresh_test",
+        progress=progress,
+    )
+
+
+def build_and_audit_surrogate_validity_composite(
+    background_root: Path,
+    targeted_root: Path,
+    output_root: Path,
+    *,
+    progress=None,
+) -> Dict[str, Any]:
+    """Seal the independent, explicitly spike-annotated validity benchmark."""
+
+    return build_and_audit_hybrid_composite(
+        background_root,
+        targeted_root,
+        output_root,
+        scale="surrogate_validity_eval",
         progress=progress,
     )

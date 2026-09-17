@@ -667,6 +667,58 @@ def command_verify_output_spikes(args: argparse.Namespace) -> None:
         raise SystemExit(2)
 
 
+def command_seal_surrogate_validity_eval(args: argparse.Namespace) -> None:
+    from .production_corpus import (
+        build_and_audit_surrogate_validity_composite,
+        fingerprint_validated_shards,
+    )
+    from .surrogate_validity_audit import verify_output_spike_corpus
+
+    background = Path(args.background).resolve()
+    targeted = Path(args.targeted).resolve()
+    output = Path(args.output).resolve()
+
+    def audit_progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 10 == 0:
+            print(f"[GIADA validity seal][audit] {index}/{total} shards", flush=True)
+
+    def fingerprint_progress(index: int, total: int) -> None:
+        if index == 1 or index == total or index % 10 == 0:
+            print(f"[GIADA validity seal][fingerprint] {index}/{total} shards", flush=True)
+
+    composition = build_and_audit_surrogate_validity_composite(
+        background, targeted, output, progress=audit_progress
+    )
+    spikes = {
+        "background": verify_output_spike_corpus(background),
+        "targeted": verify_output_spike_corpus(targeted),
+    }
+    fingerprint = fingerprint_validated_shards(output, progress=fingerprint_progress)
+    blockers = list(composition["blockers"])
+    for component, report in spikes.items():
+        blockers.extend(f"{component}: {item}" for item in report["blockers"])
+        if int(report["explicit_output_spikes"]) <= 0:
+            blockers.append(f"{component}: no explicit output spikes observed")
+    if not fingerprint["valid"]:
+        blockers.extend(fingerprint["physical_mismatch_examples"])
+    report = {
+        "schema_version": "giada-surrogate-validity-seal-v1",
+        "valid": not blockers,
+        "selection_role": "sealed_independent_surrogate_validity_test",
+        "paper_test_claimed": True,
+        "composition": composition["composition"],
+        "output_spikes": spikes,
+        "physical_fingerprint": fingerprint,
+        "blockers": blockers,
+    }
+    _write_json(output / "seal_report.json", report)
+    if report["valid"]:
+        _write_json(output / "SEALED.json", report)
+    print(json.dumps(report, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="GIADA paper-scale RunPod workflow")
     sub = result.add_subparsers(dest="command", required=True)
@@ -806,6 +858,14 @@ def parser() -> argparse.ArgumentParser:
     output_spikes.add_argument("--corpus", required=True, type=Path)
     output_spikes.add_argument("--output", type=Path)
     output_spikes.set_defaults(func=command_verify_output_spikes)
+    seal_validity = sub.add_parser(
+        "seal-surrogate-validity-eval",
+        help="audit, physically fingerprint, and seal the independent validity benchmark",
+    )
+    seal_validity.add_argument("--background", required=True, type=Path)
+    seal_validity.add_argument("--targeted", required=True, type=Path)
+    seal_validity.add_argument("--output", required=True, type=Path)
+    seal_validity.set_defaults(func=command_seal_surrogate_validity_eval)
     return result
 
 
