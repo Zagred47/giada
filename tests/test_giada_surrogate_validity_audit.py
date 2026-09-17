@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+from src.hayflow_data import InputAction
 from src.giada_runpod.config import load_scale_config
 from src.giada_runpod.store import LeanShardWriter, validate_lean_shard
 from src.giada_runpod.surrogate_validity_audit import (
@@ -9,6 +10,10 @@ from src.giada_runpod.surrogate_validity_audit import (
     verify_output_spike_corpus,
 )
 from src.giada_runpod.teacher import detect_neuronio_spike_peaks
+from src.giada_runpod.hybrid_inputs import (
+    NEURONIO_COMPATIBLE_TARGET_PROTOCOLS,
+    sample_neuronio_contextualized_target_actions,
+)
 
 
 def _write_shard(root: Path, *, break_events: bool = False) -> Path:
@@ -164,3 +169,33 @@ def test_surrogate_validity_configs_are_all_test_and_balanced():
     assert targeted.validation_trajectory_fraction == 1.0
     assert background.trajectory_count == 60
     assert targeted.trajectory_count == 3000
+    contextual = load_scale_config(
+        config_root / "surrogate_validity_eval_neuronio_contextual.yml"
+    )
+    assert contextual.validation_trajectory_fraction == 1.0
+    assert contextual.trajectory_duration_ms == 720
+    assert contextual.trajectory_count == 400
+    assert tuple(contextual.input_protocols) == NEURONIO_COMPATIBLE_TARGET_PROTOCOLS
+
+
+def test_contextual_target_has_visible_history_and_shifted_stimulus(monkeypatch):
+    background = {1: (InputAction("synaptic_event", 0.0, synapse_id=0),)}
+    target = {20: (InputAction("synaptic_event", 0.25, synapse_id=10),)}
+    monkeypatch.setattr(
+        "src.giada_runpod.hybrid_inputs.sample_neuronio_actions",
+        lambda *args, **kwargs: (background, {"sampler": "test"}),
+    )
+    monkeypatch.setattr(
+        "src.giada_runpod.hybrid_inputs.sample_hybrid_actions",
+        lambda *args, **kwargs: (target, {"stimulus_step": 20}),
+    )
+    mapping = object()
+    schedule, metadata = sample_neuronio_contextualized_target_actions(
+        720,
+        mapping,
+        seed=1,
+        protocol=NEURONIO_COMPATIBLE_TARGET_PROTOCOLS[0],
+    )
+    assert 1 in schedule
+    assert 520 in schedule
+    assert metadata["contextual_stimulus_step"] == 520

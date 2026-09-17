@@ -27,7 +27,10 @@ from .neuronio_inputs import (
     neuronio_input_config_for_protocol,
     sample_neuronio_actions,
 )
-from .hybrid_inputs import sample_hybrid_actions
+from .hybrid_inputs import (
+    sample_hybrid_actions,
+    sample_neuronio_contextualized_target_actions,
+)
 from .planning import ShardPlan
 from .store import LeanShardWriter, validate_lean_shard
 
@@ -438,6 +441,8 @@ class ScaleTeacherGenerator:
                 if config.purpose == "giada_protocol_repair_pilot"
                 else "GIADA_hybrid_confirmed_targeted_evaluation_v1"
                 if config.purpose == "surrogate_validity_eval_targeted"
+                else "NeuronIO_contextualized_input_observable_target_evaluation_v1"
+                if config.purpose == "surrogate_validity_eval_neuronio_contextual"
                 else "GIADA_hybrid_long_stochastic_background_evaluation_v1"
                 if config.purpose == "surrogate_validity_eval_background"
                 else "GIADA_hybrid_confirmed_targeted_production_v1"
@@ -474,6 +479,7 @@ class ScaleTeacherGenerator:
             store_output_spikes=config.purpose in {
                 "surrogate_validity_eval_background",
                 "surrogate_validity_eval_targeted",
+                "surrogate_validity_eval_neuronio_contextual",
             },
         )
         try:
@@ -489,6 +495,13 @@ class ScaleTeacherGenerator:
                     "surrogate_validity_eval_targeted",
                 }:
                     actions_by_step, input_metadata = sample_hybrid_actions(
+                        trajectory.duration_ms,
+                        self.mapping,
+                        seed=trajectory.seed,
+                        protocol=trajectory.protocol,
+                    )
+                elif config.purpose == "surrogate_validity_eval_neuronio_contextual":
+                    actions_by_step, input_metadata = sample_neuronio_contextualized_target_actions(
                         trajectory.duration_ms,
                         self.mapping,
                         seed=trajectory.seed,
@@ -521,6 +534,7 @@ class ScaleTeacherGenerator:
                         "giada_hybrid_production_targeted",
                         "giada_fresh_test_targeted",
                         "surrogate_validity_eval_targeted",
+                        "surrogate_validity_eval_neuronio_contextual",
                     }:
                         observer = lambda: ordered_segment_voltages(
                             self.session.audit.live_segments
@@ -561,6 +575,7 @@ class ScaleTeacherGenerator:
                         "giada_hybrid_production_targeted",
                         "giada_fresh_test_targeted",
                         "surrogate_validity_eval_targeted",
+                        "surrogate_validity_eval_neuronio_contextual",
                         "surrogate_validity_eval_background",
                     }:
                         micro_voltage = np.stack(

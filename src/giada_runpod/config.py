@@ -59,6 +59,10 @@ STAGE_TRANSITIONS = {
     # for training.
     "surrogate_validity_eval_background": 360_000,
     "surrogate_validity_eval_targeted": 240_000,
+    # Four input-observable difficult regimes, each with 500 ms of canonical
+    # NeuronIO context and 200 ms of post-stimulus observation.  This is a
+    # small evaluation-only supplement, not a replacement training corpus.
+    "surrogate_validity_eval_neuronio_contextual": 288_000,
 }
 
 
@@ -114,6 +118,7 @@ class ScaleConfig:
             "giada_fresh_test_targeted",
             "surrogate_validity_eval_background",
             "surrogate_validity_eval_targeted",
+            "surrogate_validity_eval_neuronio_contextual",
         }
         if fresh_test:
             if self.validation_trajectory_fraction != 1.0:
@@ -142,6 +147,7 @@ class ScaleConfig:
             "giada_fresh_test_targeted",
             "surrogate_validity_eval_background",
             "surrogate_validity_eval_targeted",
+            "surrogate_validity_eval_neuronio_contextual",
         }:
             raise ValueError("unknown generation purpose")
         if not self.input_protocols or len(set(self.input_protocols)) != len(
@@ -236,6 +242,22 @@ class ScaleConfig:
             )
             if remainder or per_protocol <= 1:
                 raise ValueError("hybrid targeted plan must balance every protocol")
+        if self.purpose == "surrogate_validity_eval_neuronio_contextual":
+            from .hybrid_inputs import NEURONIO_COMPATIBLE_TARGET_PROTOCOLS
+
+            if self.stage != "surrogate_validity_eval_neuronio_contextual":
+                raise ValueError("contextual NeuronIO evaluation requires its dedicated stage")
+            if tuple(self.input_protocols) != NEURONIO_COMPATIBLE_TARGET_PROTOCOLS:
+                raise ValueError("contextual NeuronIO protocol registry changed")
+            if self.storage_profile != "soma_paper" or self.trajectory_duration_ms != 720:
+                raise ValueError("contextual NeuronIO evaluation requires 720 ms soma trajectories")
+            if self.validation_trajectory_fraction != 1.0:
+                raise ValueError("contextual NeuronIO evaluation must be all-test")
+            per_protocol, remainder = divmod(
+                self.trajectory_count, len(NEURONIO_COMPATIBLE_TARGET_PROTOCOLS)
+            )
+            if remainder or per_protocol != 100:
+                raise ValueError("contextual NeuronIO evaluation requires 100 trajectories per protocol")
         if self.purpose == "giada_fresh_test_background":
             from .hybrid_inputs import PRODUCTION_BACKGROUND_PROTOCOLS
 

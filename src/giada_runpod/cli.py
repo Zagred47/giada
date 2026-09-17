@@ -719,6 +719,73 @@ def command_seal_surrogate_validity_eval(args: argparse.Namespace) -> None:
         raise SystemExit(2)
 
 
+def command_seal_neuronio_contextual_eval(args: argparse.Namespace) -> None:
+    """Seal the small input-contract-compatible NeuronIO challenge set."""
+
+    import hashlib
+
+    from .surrogate_validity_audit import verify_output_spike_corpus
+
+    root = Path(args.corpus).resolve()
+    plan_path = root / "plan.json"
+    validation_path = root / "validation_report.json"
+    if not plan_path.is_file() or not validation_path.is_file():
+        raise FileNotFoundError("plan.json and validation_report.json are required")
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    validation = json.loads(validation_path.read_text(encoding="utf-8"))
+    spikes = verify_output_spike_corpus(root)
+    markers = sorted((root / "status").glob("*.done.json"))
+    aggregate = hashlib.sha256()
+    mismatches = []
+    total_size = 0
+    for marker_path in markers:
+        marker_bytes = marker_path.read_bytes()
+        marker = json.loads(marker_bytes)
+        shard = root / "shards" / f"{marker['shard_id']}.h5"
+        observed = hashlib.sha256(shard.read_bytes()).hexdigest()
+        if observed != marker.get("sha256"):
+            mismatches.append(marker["shard_id"])
+        total_size += shard.stat().st_size
+        aggregate.update(hashlib.sha256(marker_bytes).hexdigest().encode("ascii"))
+        aggregate.update(b"  ")
+        aggregate.update(marker_path.name.encode("utf-8"))
+        aggregate.update(b"\n")
+    expected_shards = len(plan["shards"])
+    blockers = []
+    if not validation.get("valid"):
+        blockers.append("component validation failed")
+    if not spikes.get("valid") or int(spikes.get("explicit_output_spikes", 0)) <= 0:
+        blockers.append("explicit output-spike verification failed")
+    if len(markers) != expected_shards:
+        blockers.append(f"done marker count {len(markers)} != {expected_shards}")
+    if mismatches:
+        blockers.append(f"physical shard hash mismatches: {mismatches[:10]}")
+    report = {
+        "schema_version": "giada-neuronio-contextual-eval-seal-v1",
+        "valid": not blockers,
+        "selection_role": "sealed_independent_input_contract_challenge_test",
+        "paper_test_claimed": True,
+        "model_contract": {
+            "input_channels": 1278,
+            "receptive_field_ms": 153,
+            "ignored_prefix_ms": 500,
+            "hidden_somatic_current_arms_excluded": True,
+        },
+        "shard_count": len(markers),
+        "total_size_bytes": total_size,
+        "marker_fingerprint_sha256": aggregate.hexdigest(),
+        "physical_mismatch_count": len(mismatches),
+        "output_spikes": spikes,
+        "blockers": blockers,
+    }
+    _write_json(root / "seal_report.json", report)
+    if report["valid"]:
+        _write_json(root / "SEALED.json", report)
+    print(json.dumps(report, indent=2), flush=True)
+    if not report["valid"]:
+        raise SystemExit(2)
+
+
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description="GIADA paper-scale RunPod workflow")
     sub = result.add_subparsers(dest="command", required=True)
@@ -866,6 +933,12 @@ def parser() -> argparse.ArgumentParser:
     seal_validity.add_argument("--targeted", required=True, type=Path)
     seal_validity.add_argument("--output", required=True, type=Path)
     seal_validity.set_defaults(func=command_seal_surrogate_validity_eval)
+    seal_contextual = sub.add_parser(
+        "seal-neuronio-contextual-eval",
+        help="seal the contextual input-observable NeuronIO challenge set",
+    )
+    seal_contextual.add_argument("--corpus", required=True, type=Path)
+    seal_contextual.set_defaults(func=command_seal_neuronio_contextual_eval)
     return result
 
 

@@ -102,6 +102,18 @@ PRODUCTION_TARGET_PROTOCOLS = (
     "giada_repair_bap_p3_factor3_soma_only_v1",
     "giada_repair_bap_p3_factor3_combined_v1",
 )
+
+# Targeted arms that are fully observable under the published NeuronIO input
+# contract (one excitatory and one inhibitory binary channel per dendritic
+# segment).  Arms containing somatic current injection are deliberately
+# excluded: scoring NeuronIO on an intervention it cannot observe would not be
+# a fair model comparison.
+NEURONIO_COMPATIBLE_TARGET_PROTOCOLS = (
+    "giada_hybrid_nmda_n8_v1",
+    "giada_hybrid_nmda_n12_v1",
+    "giada_hybrid_calcium_unpaired_n12_v1",
+    "giada_repair_bap_assist_only_n12_b3_w400_v1",
+)
 _BY_PROTOCOL = {
     row.protocol: row for row in (*HYBRID_PROTOCOL_SPECS, *PROTOCOL_REPAIR_SPECS)
 }
@@ -282,5 +294,55 @@ def sample_hybrid_actions(
         "canonical_synaptic_weights_unchanged": True,
         "seed": int(seed),
         **source_metadata,
+    }
+    return schedule, metadata
+
+
+def sample_neuronio_contextualized_target_actions(
+    duration_ms: int,
+    mapping: DendriticSynapseMap,
+    *,
+    seed: int,
+    protocol: str,
+    context_ms: int = 500,
+) -> tuple[Dict[int, Tuple[InputAction, ...]], Dict[str, Any]]:
+    """Place an input-observable targeted event after canonical context.
+
+    The original NeuronIO paper ignores the first 500 ms of each trajectory
+    and its selected model has a 153 ms causal receptive field.  The earlier
+    80 ms targeted episodes are therefore unsuitable for a faithful checkpoint
+    evaluation.  This sampler preserves the registered event pattern but
+    translates its step-20 stimulus to ``context_ms + 20`` while supplying a
+    canonical stochastic NeuronIO history throughout the trajectory.
+    """
+
+    if protocol not in NEURONIO_COMPATIBLE_TARGET_PROTOCOLS:
+        raise ValueError(
+            f"protocol {protocol!r} is not observable under the NeuronIO input contract"
+        )
+    if int(context_ms) < 500:
+        raise ValueError("NeuronIO contextual evaluation requires at least 500 ms context")
+    if int(duration_ms) <= int(context_ms) + 40:
+        raise ValueError("contextual trajectory leaves insufficient post-stimulus time")
+    background, background_metadata = sample_neuronio_actions(
+        int(duration_ms), mapping, seed=int(seed), protocol=CANONICAL_NEURONIO_PROTOCOL
+    )
+    targeted, targeted_metadata = sample_hybrid_actions(
+        int(duration_ms), mapping, seed=int(seed), protocol=str(protocol)
+    )
+    shift = int(context_ms)
+    translated = {int(step) + shift: actions for step, actions in targeted.items()}
+    if any(action.kind != "synaptic_event" for actions in translated.values() for action in actions):
+        raise RuntimeError("NeuronIO-compatible targeted schedule contains a hidden intervention")
+    schedule = _merge(background, translated)
+    metadata = {
+        "schema_version": "giada-neuronio-contextual-target-v1",
+        "protocol": str(protocol),
+        "context_ms": shift,
+        "original_stimulus_step": int(targeted_metadata["stimulus_step"]),
+        "contextual_stimulus_step": shift + int(targeted_metadata["stimulus_step"]),
+        "input_contract": "NeuronIO_639_excitatory_plus_639_inhibitory_binary_channels",
+        "background_sampler": background_metadata,
+        "targeted_protocol": targeted_metadata,
     }
     return schedule, metadata
