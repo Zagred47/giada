@@ -1,0 +1,2410 @@
+{
+  "baseId": "app9dZ7ghujkFJIo5",
+  "workspaceId": "wspgYRLa5VF8kuMUO",
+  "tableIds": {
+    "sources": "tblnpA57WIZY8Pjoz",
+    "segments": "tblYFEfVDs2DYMZLU",
+    "actors": "tblhtzJf7ZEFLbq8n",
+    "artifacts": "tblG8bHLgK88LKgg4",
+    "programs": "tbldEHmvXIKU2ycSy",
+    "questions": "tbl8350s68Le4dMLS",
+    "objectives": "tblj6ZG5XZ9DgiwGv",
+    "capabilities": "tblrwZIVBXg8fgx4T",
+    "capdeps": "tblpxzm1Oa7elMTSa",
+    "definitions": "tblLlEFHj0PbLCIqd",
+    "systems": "tblXgrxq9OMY5RGf6",
+    "phenomena": "tblLeAz96rdeNRuLi",
+    "levels": "tblTCopoDgL7XG8W4",
+    "quantities": "tblAcfab7Joc1hx07",
+    "mechanisms": "tblFXL07lapkqnzTM",
+    "constraints": "tblPhXVzOyPOo4CLR",
+    "crosslevels": "tblpO2teijkHYntRc",
+    "claims": "tblqjU8aVM8csgjtk",
+    "assumptions": "tbldSkzQA9g3QX7Om",
+    "claimrels": "tbltzi3MX24XkNVGK",
+    "predictions": "tblPsHQ90EiUXddxH",
+    "causal": "tblUNT1bCX0obKuqZ",
+    "evidence": "tblWWhDt7RqQb4ru1",
+    "approaches": "tblZnvzYZ9Vva5Qch",
+    "choices": "tblfKT71DdPEcWyBx",
+    "mappings": "tblJGbHAauApAQfz5",
+    "validity": "tblPZyMkaJKzHEZIQ",
+    "models": "tblhqNMkBAnia7Wxz",
+    "types": "tblCd3KAgubx4cwry",
+    "instances": "tbl3YlCMWI9DiCpah",
+    "ports": "tblyvPG9WvHzpcROT",
+    "connections": "tblT64nQkp5xAG4RE",
+    "equations": "tbluC5Bp65CJ74Md3",
+    "symbols": "tblH7k6WfL49Z09uw",
+    "bindings": "tblkT9LEnU1Qw2pnX",
+    "composition": "tblG3VLGi6pnZoI0p",
+    "substitutions": "tblx1VQK1kUy4vuU9",
+    "implementations": "tblRoTRJyLGgSLUMB",
+    "numerics": "tblrXidhZ0NbtAhuC",
+    "parameters": "tblBBvblF54JEILy8",
+    "losses": "tblilVMvJr42vpk9m",
+    "recipes": "tblORHEV4fs9PMzXP",
+    "trained": "tblznacXMRRrOHBBk",
+    "strategies": "tblTtd025mCxfxCK1",
+    "patterns": "tbloHmujP4HJ4BE0h",
+    "analogies": "tblGz6mNQYfb5Xp0Y",
+    "candidates": "tblsuXCmriaLsJ94y",
+    "transformations": "tblhbF6JMz1vj3OaB",
+    "campaigns": "tbl3kMCtoEsZXk0Tm",
+    "playgrounds": "tbl2kqfR5lDeirCUV",
+    "tasks": "tblXF0hZSnCZYk2tt",
+    "generators": "tbl13dhKxXqO7AENB",
+    "datasets": "tblXdxobiaSfobSkr",
+    "partitions": "tbly1TbxinvumZQJE",
+    "experiments": "tblGuNATKyxx7TQQL",
+    "protocols": "tblnM133884C8blBb",
+    "factors": "tblAr3p6QF8D5d5Pe",
+    "factorlevels": "tbl0FhaHls9vb3XtE",
+    "arms": "tbluk4duwsaBv3e2d",
+    "assignments": "tblmoUlUpayHZxlwQ",
+    "contrasts": "tbluTflq5KPB0ASBV",
+    "blocks": "tblDINcdQ4YmLNlFm",
+    "runs": "tblFIJ1ALOog9qQnH",
+    "checkpoints": "tblUxuQDfxwJUMGLe",
+    "quality": "tbl6ufYRv1ZWtAuWt",
+    "deviations": "tbla4RDh3SE6XeSBW",
+    "metrics": "tblQz0z1LFlwz6ONk",
+    "evaluations": "tblf5udl3Na97Inm1",
+    "observations": "tbl2UOMH9VKRsg3zG",
+    "analyses": "tbl82hX1zcgkkrtdG",
+    "findings": "tblfaHyYZ2zrdccUY",
+    "anomalies": "tblJkcldtIOfvXXK7",
+    "confirmations": "tbluy3NijRSDVUuBG",
+    "decisions": "tblkgQPbxD9mR3xsn",
+    "lessons": "tblFFe4wg9JwpefAn",
+    "rules": "tblye5iN3KO8lOnHH",
+    "applications": "tblHr5RzRQO671jqe",
+    "actions": "tblYrWXe1JwzKI5lj"
+  },
+  "relationships": [
+    {
+      "from": "sources",
+      "to": "actors",
+      "name": "Autori",
+      "single": false,
+      "fieldId": "fldH6568MPwFojv4D",
+      "inverseFieldId": "fld7TOpSFhTdT0fII"
+    },
+    {
+      "from": "sources",
+      "to": "artifacts",
+      "name": "Artefatti originali",
+      "single": false,
+      "fieldId": "fldMBAyebKmz1GQSs",
+      "inverseFieldId": "fld4JLfRlsryKM2UR"
+    },
+    {
+      "from": "segments",
+      "to": "sources",
+      "name": "Fonte",
+      "single": true,
+      "fieldId": "fldsyOASv8pPPMpkI",
+      "inverseFieldId": "fldNJlPec2y809c9W"
+    },
+    {
+      "from": "artifacts",
+      "to": "artifacts",
+      "name": "Artefatti di origine",
+      "single": false,
+      "fieldId": "fldFio32ffmk14gMY",
+      "inverseFieldId": "fldLBLpfZ9iTm3iVn"
+    },
+    {
+      "from": "questions",
+      "to": "programs",
+      "name": "Programma",
+      "single": true,
+      "fieldId": "fldGK9NOiPojtVDt5",
+      "inverseFieldId": "fldVYxRIjMxK7QdMj"
+    },
+    {
+      "from": "objectives",
+      "to": "programs",
+      "name": "Programmi",
+      "single": false,
+      "fieldId": "fld033iXssd1nbeQq",
+      "inverseFieldId": "flddJ2JCnEccECClm"
+    },
+    {
+      "from": "capabilities",
+      "to": "objectives",
+      "name": "Obiettivi",
+      "single": false,
+      "fieldId": "fldGDT4cN5ojJred1",
+      "inverseFieldId": "fldHHzTQXY9F9MwB8"
+    },
+    {
+      "from": "capdeps",
+      "to": "capabilities",
+      "name": "Prerequisito",
+      "single": true,
+      "fieldId": "fldQwSjBg6PZpHkkh",
+      "inverseFieldId": "fldjSxHSMUGj5mH6D"
+    },
+    {
+      "from": "capdeps",
+      "to": "capabilities",
+      "name": "Capacità dipendente",
+      "single": true,
+      "fieldId": "fldfSnCms63aMo914",
+      "inverseFieldId": "fldJ842QGznYcxb72"
+    },
+    {
+      "from": "capdeps",
+      "to": "claims",
+      "name": "Ipotesi giustificativa",
+      "single": false,
+      "fieldId": "fldM8ssbf3klBzVce",
+      "inverseFieldId": "fldM9yryBylmVsAFh"
+    },
+    {
+      "from": "definitions",
+      "to": "definitions",
+      "name": "Versione precedente",
+      "single": true,
+      "fieldId": "fld94eulDMOeWy3nA",
+      "inverseFieldId": "fldiHcSV4OYPYJM3r"
+    },
+    {
+      "from": "systems",
+      "to": "levels",
+      "name": "Livelli",
+      "single": false,
+      "fieldId": "fldsXRbWQepcrFHFS",
+      "inverseFieldId": "fldEPGS3ICdWEbYlU"
+    },
+    {
+      "from": "systems",
+      "to": "sources",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fld5d4DogaSoKRYtQ",
+      "inverseFieldId": "fld2jzcvf7Us3Ta7Y"
+    },
+    {
+      "from": "phenomena",
+      "to": "systems",
+      "name": "Sistemi",
+      "single": false,
+      "fieldId": "fldofVYn86wsJeX9l",
+      "inverseFieldId": "fldIIznm8I7l44O3P"
+    },
+    {
+      "from": "phenomena",
+      "to": "definitions",
+      "name": "Definizioni operative",
+      "single": false,
+      "fieldId": "fldEQrVLlWzNG7F3q",
+      "inverseFieldId": "fldj7O7uy1S316dVI"
+    },
+    {
+      "from": "quantities",
+      "to": "systems",
+      "name": "Sistemi",
+      "single": false,
+      "fieldId": "fldibKe7rClByNiOf",
+      "inverseFieldId": "fldjmvHQNDr4j2Ioh"
+    },
+    {
+      "from": "quantities",
+      "to": "levels",
+      "name": "Livelli",
+      "single": false,
+      "fieldId": "fldvdbFxSyakHREGe",
+      "inverseFieldId": "fldBUCHYAGXXmXJfN"
+    },
+    {
+      "from": "mechanisms",
+      "to": "systems",
+      "name": "Sistemi",
+      "single": false,
+      "fieldId": "fld7vFhdFw9xYjsIy",
+      "inverseFieldId": "fldTLO7rOrGpsvczn"
+    },
+    {
+      "from": "mechanisms",
+      "to": "quantities",
+      "name": "Grandezze",
+      "single": false,
+      "fieldId": "fldb0m64j0vlVQME5",
+      "inverseFieldId": "fldxqwIbLbeVcVchf"
+    },
+    {
+      "from": "mechanisms",
+      "to": "phenomena",
+      "name": "Fenomeni",
+      "single": false,
+      "fieldId": "fldsSyVEb690dlMEF",
+      "inverseFieldId": "fldNHO3Cm3Y8rNNWx"
+    },
+    {
+      "from": "mechanisms",
+      "to": "claims",
+      "name": "Affermazioni di supporto",
+      "single": false,
+      "fieldId": "fldYqZh4MYA5zvqVz",
+      "inverseFieldId": "fldC0zRVGDcrxDXx3"
+    },
+    {
+      "from": "constraints",
+      "to": "systems",
+      "name": "Sistemi",
+      "single": false,
+      "fieldId": "fldu4WhPONGdB0QXY",
+      "inverseFieldId": "fldOFSCltZnJ3azla"
+    },
+    {
+      "from": "constraints",
+      "to": "quantities",
+      "name": "Grandezze",
+      "single": false,
+      "fieldId": "fld1hKb4KutzAjsjU",
+      "inverseFieldId": "fldTmaRgwB0jTHuhH"
+    },
+    {
+      "from": "constraints",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fldxaXLUfbxCfUhgy",
+      "inverseFieldId": "fldiBYzB8okSnnOUQ"
+    },
+    {
+      "from": "crosslevels",
+      "to": "levels",
+      "name": "Livello origine",
+      "single": true,
+      "fieldId": "fldPDutZPVuvgSLyX",
+      "inverseFieldId": "fldqJwfkR8Shy7xkn"
+    },
+    {
+      "from": "crosslevels",
+      "to": "levels",
+      "name": "Livello destinazione",
+      "single": true,
+      "fieldId": "flda30sNfJk5v2gbo",
+      "inverseFieldId": "fld5195Zjyoe9pqSz"
+    },
+    {
+      "from": "crosslevels",
+      "to": "systems",
+      "name": "Sistemi",
+      "single": false,
+      "fieldId": "fldEhnkliaiaGPSaL",
+      "inverseFieldId": "fldaeuAiNhPRDnsef"
+    },
+    {
+      "from": "crosslevels",
+      "to": "claims",
+      "name": "Ipotesi",
+      "single": false,
+      "fieldId": "fld2JGYeblZujw5QN",
+      "inverseFieldId": "fldtFqPHjNQsCaDvJ"
+    },
+    {
+      "from": "claims",
+      "to": "questions",
+      "name": "Domande",
+      "single": false,
+      "fieldId": "fldBg7fdVTV3QRYYR",
+      "inverseFieldId": "fldEM4SsCTKdq0ZXA"
+    },
+    {
+      "from": "claims",
+      "to": "segments",
+      "name": "Passaggi fonte",
+      "single": false,
+      "fieldId": "fld1yxxCdQIKUTr3o",
+      "inverseFieldId": "fldSjhgnXkRsN6xSD"
+    },
+    {
+      "from": "claims",
+      "to": "models",
+      "name": "Modelli oggetto",
+      "single": false,
+      "fieldId": "fldrs9hp5BJaiJJ9w",
+      "inverseFieldId": "fldUnVWK8dZMRrnQN"
+    },
+    {
+      "from": "claims",
+      "to": "instances",
+      "name": "Componenti oggetto",
+      "single": false,
+      "fieldId": "fldO5B11MJ6B3bN8Z",
+      "inverseFieldId": "fld7JNRWlTmKRaBQ8"
+    },
+    {
+      "from": "claims",
+      "to": "equations",
+      "name": "Equazioni oggetto",
+      "single": false,
+      "fieldId": "fld0cyrU7z3lgnGri",
+      "inverseFieldId": "fldGXY2AArAUFqiGg"
+    },
+    {
+      "from": "claims",
+      "to": "mechanisms",
+      "name": "Meccanismi oggetto",
+      "single": false,
+      "fieldId": "fldbHCj8nUi9FfPr0",
+      "inverseFieldId": "fld2a191VNHnsBlTW"
+    },
+    {
+      "from": "claims",
+      "to": "parameters",
+      "name": "Parametrizzazioni oggetto",
+      "single": false,
+      "fieldId": "fldjIzyz2FzkrntCk",
+      "inverseFieldId": "fld1hRIrkULLIPGXW"
+    },
+    {
+      "from": "claims",
+      "to": "recipes",
+      "name": "Ricette oggetto",
+      "single": false,
+      "fieldId": "fldtIv7JUzBTeny1j",
+      "inverseFieldId": "fld8bsAsRoIzlxjqS"
+    },
+    {
+      "from": "claims",
+      "to": "validity",
+      "name": "Domini di validità",
+      "single": false,
+      "fieldId": "fldeIU5gljlLtLjk1",
+      "inverseFieldId": "fldvCx219pI3eo4In"
+    },
+    {
+      "from": "claims",
+      "to": "mappings",
+      "name": "Corrispondenze oggetto",
+      "single": false,
+      "fieldId": "fldl4vkmr7todcrIa",
+      "inverseFieldId": "fld0FnUIq3I3xCzt4"
+    },
+    {
+      "from": "assumptions",
+      "to": "programs",
+      "name": "Programmi",
+      "single": false,
+      "fieldId": "fldfbp6aaJHTmZhJG",
+      "inverseFieldId": "fldqTu1PUc7psKIzF"
+    },
+    {
+      "from": "assumptions",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fldNzu87qCoh2B9pT",
+      "inverseFieldId": "fldE78A3fh5zZkPZr"
+    },
+    {
+      "from": "assumptions",
+      "to": "claims",
+      "name": "Ipotesi correlate",
+      "single": false,
+      "fieldId": "fldGBEkV7ZbI0pySw",
+      "inverseFieldId": "fldn09q7Ys4pNG46z"
+    },
+    {
+      "from": "claimrels",
+      "to": "claims",
+      "name": "Enunciato origine",
+      "single": true,
+      "fieldId": "fldZTDKwFzoAdy0xq",
+      "inverseFieldId": "fldWgPcGUQzrCfwIV"
+    },
+    {
+      "from": "claimrels",
+      "to": "claims",
+      "name": "Enunciato destinazione",
+      "single": true,
+      "fieldId": "fldU0rSsD672ur3BJ",
+      "inverseFieldId": "fldGrnR6YpOu4IX7p"
+    },
+    {
+      "from": "predictions",
+      "to": "claims",
+      "name": "Ipotesi",
+      "single": false,
+      "fieldId": "fldF62AtIpAKC63mV",
+      "inverseFieldId": "fldNKdCWed8GtMJWA"
+    },
+    {
+      "from": "predictions",
+      "to": "evaluations",
+      "name": "Specifica di valutazione",
+      "single": true,
+      "fieldId": "fldETwxwSHAAF43I5",
+      "inverseFieldId": "fld2yB8sj1cDly0cj"
+    },
+    {
+      "from": "predictions",
+      "to": "contrasts",
+      "name": "Contrasti",
+      "single": false,
+      "fieldId": "fldVVUvkyh8pExiI4",
+      "inverseFieldId": "fldhCNfkDeelMCtVS"
+    },
+    {
+      "from": "causal",
+      "to": "claims",
+      "name": "Ipotesi",
+      "single": false,
+      "fieldId": "fldZtguiKgtvZh4dj",
+      "inverseFieldId": "fldggFgq9bSRfRIf1"
+    },
+    {
+      "from": "causal",
+      "to": "assumptions",
+      "name": "Assunzioni",
+      "single": false,
+      "fieldId": "fldV7yTWYrJXqducp",
+      "inverseFieldId": "fldkuS3VmSmkgRC1x"
+    },
+    {
+      "from": "causal",
+      "to": "mechanisms",
+      "name": "Meccanismi",
+      "single": false,
+      "fieldId": "fldDSHSrJPfwTP0mk",
+      "inverseFieldId": "fldBrzWVIeJD1LKbn"
+    },
+    {
+      "from": "evidence",
+      "to": "claims",
+      "name": "Affermazione valutata",
+      "single": true,
+      "fieldId": "fldzDr7IhMwkcELwG",
+      "inverseFieldId": "fld21P7Z38jhllXCw"
+    },
+    {
+      "from": "evidence",
+      "to": "assumptions",
+      "name": "Assunzione valutata",
+      "single": true,
+      "fieldId": "fldyCjfwA4HhVDOhL",
+      "inverseFieldId": "fldbh6boe9XsPNQt4"
+    },
+    {
+      "from": "evidence",
+      "to": "findings",
+      "name": "Risultati a sostegno",
+      "single": false,
+      "fieldId": "fldzPthPEKWp0B8dE",
+      "inverseFieldId": "fldb5iUtfy1H6reyF"
+    },
+    {
+      "from": "evidence",
+      "to": "segments",
+      "name": "Passaggi fonte",
+      "single": false,
+      "fieldId": "fld8tbfA0sBUMtuOK",
+      "inverseFieldId": "fldD9FJg2cVvw3azg"
+    },
+    {
+      "from": "evidence",
+      "to": "actors",
+      "name": "Valutatore",
+      "single": true,
+      "fieldId": "fldbUCpuMqzfvv1po",
+      "inverseFieldId": "fldZELzkp97Rj3sLp"
+    },
+    {
+      "from": "evidence",
+      "to": "validity",
+      "name": "Domini di validità",
+      "single": false,
+      "fieldId": "fld595PSHoc6S4ZRt",
+      "inverseFieldId": "fldRKPRzmCE0gmZRr"
+    },
+    {
+      "from": "approaches",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fld6wTgUr0iGuvkSU",
+      "inverseFieldId": "fldMSrYhgvPoCyOsl"
+    },
+    {
+      "from": "choices",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fldFsmacAMnmoydPH",
+      "inverseFieldId": "fldlZvaKO0mN7oQLa"
+    },
+    {
+      "from": "choices",
+      "to": "approaches",
+      "name": "Approcci",
+      "single": false,
+      "fieldId": "fldAgp66jCZ6IGpwm",
+      "inverseFieldId": "fld4FDMrQztZTKRdH"
+    },
+    {
+      "from": "choices",
+      "to": "instances",
+      "name": "Componenti",
+      "single": false,
+      "fieldId": "fldPIjhoiiMDFd6qu",
+      "inverseFieldId": "fld8JBLe47rB3ex8t"
+    },
+    {
+      "from": "choices",
+      "to": "quantities",
+      "name": "Grandezze",
+      "single": false,
+      "fieldId": "fldcYxZPJRgfPwdC0",
+      "inverseFieldId": "fldA7apNo8GeOKomc"
+    },
+    {
+      "from": "choices",
+      "to": "assumptions",
+      "name": "Assunzioni",
+      "single": false,
+      "fieldId": "fldaIlQAiqieIvK0d",
+      "inverseFieldId": "fldz32I91qnsqfI7N"
+    },
+    {
+      "from": "choices",
+      "to": "claims",
+      "name": "Ipotesi",
+      "single": false,
+      "fieldId": "flde0mWwfsDwQNDvb",
+      "inverseFieldId": "fldwnvVrfGEy0ephV"
+    },
+    {
+      "from": "mappings",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fldDj3W6Uhdak2uMl",
+      "inverseFieldId": "fldvVK49kyUoxlDCW"
+    },
+    {
+      "from": "mappings",
+      "to": "instances",
+      "name": "Componenti",
+      "single": false,
+      "fieldId": "fldK5gZ0FHtJyN4ai",
+      "inverseFieldId": "flde5wkBJn3JA70jV"
+    },
+    {
+      "from": "mappings",
+      "to": "symbols",
+      "name": "Simboli",
+      "single": false,
+      "fieldId": "flddGTk4YfHduDW8z",
+      "inverseFieldId": "flds0CLNXhrk0hd8f"
+    },
+    {
+      "from": "mappings",
+      "to": "quantities",
+      "name": "Grandezze",
+      "single": false,
+      "fieldId": "fldURrBFV0KBXhnDR",
+      "inverseFieldId": "fldiQRiQvVL1MrOrs"
+    },
+    {
+      "from": "mappings",
+      "to": "mechanisms",
+      "name": "Meccanismi",
+      "single": false,
+      "fieldId": "fldCJxNNQHK6qGNfZ",
+      "inverseFieldId": "fldMKGDR52pP9tYIe"
+    },
+    {
+      "from": "mappings",
+      "to": "claims",
+      "name": "Ipotesi di corrispondenza",
+      "single": false,
+      "fieldId": "fldSDCATOHkhYIbFm",
+      "inverseFieldId": "fldMttnkdNKUfLftx"
+    },
+    {
+      "from": "validity",
+      "to": "systems",
+      "name": "Sistemi",
+      "single": false,
+      "fieldId": "fldNtIzxMuCen7ru3",
+      "inverseFieldId": "fldJiUxcxvzRL6Me7"
+    },
+    {
+      "from": "models",
+      "to": "models",
+      "name": "Versione precedente",
+      "single": true,
+      "fieldId": "fldzWAarzeSJBpBC3",
+      "inverseFieldId": "fldghQDWG0RDuTKSG"
+    },
+    {
+      "from": "models",
+      "to": "systems",
+      "name": "Sistemi rappresentati",
+      "single": false,
+      "fieldId": "fldqkGGfZlsb9ubyA",
+      "inverseFieldId": "fldDwoOaZDHT8w15u"
+    },
+    {
+      "from": "models",
+      "to": "objectives",
+      "name": "Obiettivi",
+      "single": false,
+      "fieldId": "fldhcVmZzM9x634uf",
+      "inverseFieldId": "fldnn3Z6lEcb8RkFt"
+    },
+    {
+      "from": "models",
+      "to": "approaches",
+      "name": "Approcci",
+      "single": false,
+      "fieldId": "fld5P4eFv0PFaDDsa",
+      "inverseFieldId": "fldL6QuvnDzLMm3EF"
+    },
+    {
+      "from": "models",
+      "to": "assumptions",
+      "name": "Assunzioni",
+      "single": false,
+      "fieldId": "fldJyxfv8WeSQiMY8",
+      "inverseFieldId": "fldgBpB71gtUTW0ql"
+    },
+    {
+      "from": "models",
+      "to": "validity",
+      "name": "Domini di validità",
+      "single": false,
+      "fieldId": "fldw0BvzpqMf5Etsf",
+      "inverseFieldId": "fldNujOybbgh7rlWN"
+    },
+    {
+      "from": "models",
+      "to": "constraints",
+      "name": "Vincoli",
+      "single": false,
+      "fieldId": "fldxhTeudqE1zR4e5",
+      "inverseFieldId": "fldpxkMZC5PnNXDq7"
+    },
+    {
+      "from": "types",
+      "to": "mechanisms",
+      "name": "Meccanismi rappresentati",
+      "single": false,
+      "fieldId": "fldWgrXrO5xvqNuMv",
+      "inverseFieldId": "flduXhfl9v8qUCqMr"
+    },
+    {
+      "from": "types",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fld75wTCMcasNkIsh",
+      "inverseFieldId": "fld93pe5BcWy9SvMj"
+    },
+    {
+      "from": "instances",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fldyeiHUiixKU7lks",
+      "inverseFieldId": "fldznv6PUlZSdVfdT"
+    },
+    {
+      "from": "instances",
+      "to": "types",
+      "name": "Tipo componente",
+      "single": true,
+      "fieldId": "fldgoTl7dDloCNjcv",
+      "inverseFieldId": "fldcSX9gP6plEz9Hq"
+    },
+    {
+      "from": "ports",
+      "to": "instances",
+      "name": "Componente",
+      "single": true,
+      "fieldId": "fldMcfEhgiHMIyfdC",
+      "inverseFieldId": "flddY1KYKDZQ7iCvy"
+    },
+    {
+      "from": "ports",
+      "to": "symbols",
+      "name": "Simboli",
+      "single": false,
+      "fieldId": "fldXKmMJTEPT57heR",
+      "inverseFieldId": "fldoXpCbrRe4uLSAy"
+    },
+    {
+      "from": "ports",
+      "to": "quantities",
+      "name": "Grandezze",
+      "single": false,
+      "fieldId": "fldmfWTTylscYtHHb",
+      "inverseFieldId": "fldylV07QkB4fR33h"
+    },
+    {
+      "from": "connections",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fldpWZaG36GV61Oi3",
+      "inverseFieldId": "fldtl1cw9puUi3gAn"
+    },
+    {
+      "from": "connections",
+      "to": "ports",
+      "name": "Porta origine",
+      "single": true,
+      "fieldId": "fldI5VWywvLXvnIHY",
+      "inverseFieldId": "fld6vIcuwIXJm6zUs"
+    },
+    {
+      "from": "connections",
+      "to": "ports",
+      "name": "Porta destinazione",
+      "single": true,
+      "fieldId": "fldHQvzosZTgYVbnc",
+      "inverseFieldId": "fldr0BGvHSdmzKH2G"
+    },
+    {
+      "from": "equations",
+      "to": "symbols",
+      "name": "Simboli",
+      "single": false,
+      "fieldId": "fld6Ta57mQKm5X00j",
+      "inverseFieldId": "fldmVdHnp1x7hMlBE"
+    },
+    {
+      "from": "equations",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fldHRFlqbm3OJ28sg",
+      "inverseFieldId": "fld7SEBp9QRqrOGAe"
+    },
+    {
+      "from": "symbols",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fldu9KHKfTnBJcOVS",
+      "inverseFieldId": "fldZqoOXvnbkcxC4w"
+    },
+    {
+      "from": "symbols",
+      "to": "quantities",
+      "name": "Grandezze",
+      "single": false,
+      "fieldId": "fldKsM9Wvldrg7chI",
+      "inverseFieldId": "fldwucflwSWrceTxC"
+    },
+    {
+      "from": "bindings",
+      "to": "instances",
+      "name": "Componente",
+      "single": true,
+      "fieldId": "fldvRM6vF36UeO2eR",
+      "inverseFieldId": "fldXIQhySq4RGE9XD"
+    },
+    {
+      "from": "bindings",
+      "to": "equations",
+      "name": "Equazione",
+      "single": true,
+      "fieldId": "fldoOESrZFvhmcDPO",
+      "inverseFieldId": "fld5FWRKlrC1sZzbC"
+    },
+    {
+      "from": "bindings",
+      "to": "symbols",
+      "name": "Simboli associati",
+      "single": false,
+      "fieldId": "fldynWOKbpZSbrWkb",
+      "inverseFieldId": "fldqYQnHM651wsK20"
+    },
+    {
+      "from": "bindings",
+      "to": "ports",
+      "name": "Porte associate",
+      "single": false,
+      "fieldId": "fldFnBLqVCw9s4232",
+      "inverseFieldId": "fldiM0w8vsuJ9pntX"
+    },
+    {
+      "from": "composition",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fldHm6jk6vAsRxYIK",
+      "inverseFieldId": "flddoVOJAzO8zmx5O"
+    },
+    {
+      "from": "composition",
+      "to": "instances",
+      "name": "Contenitore",
+      "single": true,
+      "fieldId": "fldkhYpIcG50CxsSY",
+      "inverseFieldId": "fld4EXvzweDDu8yvn"
+    },
+    {
+      "from": "composition",
+      "to": "instances",
+      "name": "Parte",
+      "single": true,
+      "fieldId": "fldx04bbZXEajPJCs",
+      "inverseFieldId": "fldI7XReuHtq8ARER"
+    },
+    {
+      "from": "substitutions",
+      "to": "models",
+      "name": "Modello originale",
+      "single": true,
+      "fieldId": "flduZgiuOdES2eNVD",
+      "inverseFieldId": "fldxL6cE2rBicvDST"
+    },
+    {
+      "from": "substitutions",
+      "to": "models",
+      "name": "Modello sostitutivo",
+      "single": true,
+      "fieldId": "fldyD7dgGgvlF9zda",
+      "inverseFieldId": "fldvx65vAXMhqrjiT"
+    },
+    {
+      "from": "substitutions",
+      "to": "instances",
+      "name": "Componenti originali",
+      "single": false,
+      "fieldId": "fld6PqiMrY9JSFW4B",
+      "inverseFieldId": "fldd8mDyxoPDqZMX1"
+    },
+    {
+      "from": "substitutions",
+      "to": "instances",
+      "name": "Componenti sostitutivi",
+      "single": false,
+      "fieldId": "fldO0zUX7JMIJvSGb",
+      "inverseFieldId": "fldNF7mvKzc07U9pu"
+    },
+    {
+      "from": "substitutions",
+      "to": "claims",
+      "name": "Ipotesi di equivalenza",
+      "single": false,
+      "fieldId": "fldmkpHtVEuUatR2B",
+      "inverseFieldId": "fldCQ7s6vqBkAEj7o"
+    },
+    {
+      "from": "substitutions",
+      "to": "experiments",
+      "name": "Esperimenti di verifica",
+      "single": false,
+      "fieldId": "fldr6wD6ovsbwdmlC",
+      "inverseFieldId": "fldeWX6CTdDXCBwxA"
+    },
+    {
+      "from": "implementations",
+      "to": "models",
+      "name": "Modelli implementati",
+      "single": false,
+      "fieldId": "fldPy2R1rEhjDaZa7",
+      "inverseFieldId": "fldVHC7WiZYT6RaQS"
+    },
+    {
+      "from": "implementations",
+      "to": "numerics",
+      "name": "Schemi numerici",
+      "single": false,
+      "fieldId": "fldiyUarpzA1UGDGM",
+      "inverseFieldId": "fldAp1zJBDVGVCM5S"
+    },
+    {
+      "from": "implementations",
+      "to": "artifacts",
+      "name": "Artefatti codice",
+      "single": false,
+      "fieldId": "fldocaFhUK0cWs86L",
+      "inverseFieldId": "fldtrsi68uQKVHs45"
+    },
+    {
+      "from": "numerics",
+      "to": "equations",
+      "name": "Equazioni",
+      "single": false,
+      "fieldId": "fldnpdT3yQUYQjb0j",
+      "inverseFieldId": "fldnhhYVDFVt57FUG"
+    },
+    {
+      "from": "parameters",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fldy1b0AZzz4V7H90",
+      "inverseFieldId": "fldFJKXCedWPjMxtt"
+    },
+    {
+      "from": "parameters",
+      "to": "instances",
+      "name": "Componenti associati",
+      "single": false,
+      "fieldId": "fldHVq5RKvY319v9W",
+      "inverseFieldId": "fldSCDUCWYrJlPOSn"
+    },
+    {
+      "from": "parameters",
+      "to": "symbols",
+      "name": "Simboli parametrizzati",
+      "single": false,
+      "fieldId": "fldYNHYgMSaC6Ziv3",
+      "inverseFieldId": "fldu8GblHEgtcTela"
+    },
+    {
+      "from": "losses",
+      "to": "equations",
+      "name": "Equazioni",
+      "single": false,
+      "fieldId": "fldVVRG2p8cXN5eF9",
+      "inverseFieldId": "fldGXli17gS3i717Q"
+    },
+    {
+      "from": "losses",
+      "to": "symbols",
+      "name": "Target simbolici",
+      "single": false,
+      "fieldId": "fld6y4fX7OIihbxJ4",
+      "inverseFieldId": "fldkfVF9CG6Xuv9pc"
+    },
+    {
+      "from": "recipes",
+      "to": "losses",
+      "name": "Loss",
+      "single": false,
+      "fieldId": "fldsbzginoT79mocD",
+      "inverseFieldId": "fld2AmEYv7PRWsbmO"
+    },
+    {
+      "from": "recipes",
+      "to": "parameters",
+      "name": "Parametrizzazioni",
+      "single": false,
+      "fieldId": "fldC6kn6GxH1ewjcR",
+      "inverseFieldId": "fldLSVNj6Es46Vris"
+    },
+    {
+      "from": "recipes",
+      "to": "recipes",
+      "name": "Versione precedente",
+      "single": true,
+      "fieldId": "fldymj4OQZJstXufl",
+      "inverseFieldId": "fldjEhskTcTwT2zJF"
+    },
+    {
+      "from": "trained",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fldXVGPqAyhXSHDNd",
+      "inverseFieldId": "fldpWyAwqj0pABpRo"
+    },
+    {
+      "from": "trained",
+      "to": "implementations",
+      "name": "Implementazione",
+      "single": true,
+      "fieldId": "fld06DoyKuFqUyqYt",
+      "inverseFieldId": "fld4ZO1qxjY0c0QlH"
+    },
+    {
+      "from": "trained",
+      "to": "runs",
+      "name": "Run di origine",
+      "single": true,
+      "fieldId": "fldgiheDVjWzt2liM",
+      "inverseFieldId": "fld4fFUTnEilXd9t2"
+    },
+    {
+      "from": "trained",
+      "to": "checkpoints",
+      "name": "Checkpoint selezionato",
+      "single": true,
+      "fieldId": "fldKGiKWKFpBPWn6o",
+      "inverseFieldId": "fldV9FTzJsCtQVsuG"
+    },
+    {
+      "from": "trained",
+      "to": "partitions",
+      "name": "Partizioni di selezione",
+      "single": false,
+      "fieldId": "fld0E638SUzpXIZQL",
+      "inverseFieldId": "fldiHD6uPotWNoDw0"
+    },
+    {
+      "from": "strategies",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fldWgpKMqytjdt4bg",
+      "inverseFieldId": "fldjKgYmbUvzvx9t7"
+    },
+    {
+      "from": "patterns",
+      "to": "types",
+      "name": "Tipi componenti",
+      "single": false,
+      "fieldId": "fldQ4B2CkYPBVYxES",
+      "inverseFieldId": "fld7D1M5R8SeRf1BT"
+    },
+    {
+      "from": "patterns",
+      "to": "claims",
+      "name": "Ipotesi",
+      "single": false,
+      "fieldId": "fldZWp3GFRiyQkwkC",
+      "inverseFieldId": "fldUBxb2IBwluW0o4"
+    },
+    {
+      "from": "analogies",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fld53LmngaZcb7RFp",
+      "inverseFieldId": "fld1ZLBIc91L1hmL8"
+    },
+    {
+      "from": "analogies",
+      "to": "strategies",
+      "name": "Strategie ispirate",
+      "single": false,
+      "fieldId": "fldgBctdqIIgEyJAo",
+      "inverseFieldId": "fld3548dAs1pFQvxN"
+    },
+    {
+      "from": "analogies",
+      "to": "claims",
+      "name": "Ipotesi generate",
+      "single": false,
+      "fieldId": "fldWjvG9uIKAPbald",
+      "inverseFieldId": "fldVs7bwqXfD6wloz"
+    },
+    {
+      "from": "candidates",
+      "to": "campaigns",
+      "name": "Campagna",
+      "single": true,
+      "fieldId": "fldT5aJHhrKimSDGf",
+      "inverseFieldId": "fldQXuKJrVeWcg16e"
+    },
+    {
+      "from": "candidates",
+      "to": "models",
+      "name": "Specifiche proposte",
+      "single": false,
+      "fieldId": "fldoYlAL7yXD9gWQm",
+      "inverseFieldId": "fldkfLPKoXTeWnQ5p"
+    },
+    {
+      "from": "candidates",
+      "to": "patterns",
+      "name": "Pattern",
+      "single": false,
+      "fieldId": "fld186NzOnd6XC6GY",
+      "inverseFieldId": "fldWiuMI6bRqKdbmi"
+    },
+    {
+      "from": "candidates",
+      "to": "claims",
+      "name": "Ipotesi",
+      "single": false,
+      "fieldId": "fld28L5a3vwHRnjYb",
+      "inverseFieldId": "fldwKvlUhBaZDx4AK"
+    },
+    {
+      "from": "transformations",
+      "to": "candidates",
+      "name": "Candidato origine",
+      "single": true,
+      "fieldId": "fldWL58k6vl6JrjZK",
+      "inverseFieldId": "fldxmSgcFYkqEclZN"
+    },
+    {
+      "from": "transformations",
+      "to": "candidates",
+      "name": "Candidato destinazione",
+      "single": true,
+      "fieldId": "fldIJjLW8NRF3vdlW",
+      "inverseFieldId": "fldnHAnfiKCuCqFTB"
+    },
+    {
+      "from": "transformations",
+      "to": "instances",
+      "name": "Componenti coinvolti",
+      "single": false,
+      "fieldId": "fldwSd8dYWmjsDS3N",
+      "inverseFieldId": "fldsUCISAxfxlXdCN"
+    },
+    {
+      "from": "transformations",
+      "to": "claims",
+      "name": "Ipotesi",
+      "single": false,
+      "fieldId": "fldFqsSJOAYzbqU0U",
+      "inverseFieldId": "fldZZflNzBIslfoxC"
+    },
+    {
+      "from": "campaigns",
+      "to": "programs",
+      "name": "Programma",
+      "single": true,
+      "fieldId": "fld4meecxzWWY62lT",
+      "inverseFieldId": "fldMninWdJB8jp8F8"
+    },
+    {
+      "from": "campaigns",
+      "to": "strategies",
+      "name": "Strategie",
+      "single": false,
+      "fieldId": "fldmj2rpOMFVEKP0g",
+      "inverseFieldId": "fldlsjrpf7kJjLAX4"
+    },
+    {
+      "from": "playgrounds",
+      "to": "programs",
+      "name": "Programmi",
+      "single": false,
+      "fieldId": "fldYC5Da8e4SZGuRn",
+      "inverseFieldId": "fldqDjoomZWzOnWhx"
+    },
+    {
+      "from": "playgrounds",
+      "to": "capabilities",
+      "name": "Capacità",
+      "single": false,
+      "fieldId": "fldmUX6ayamxZWVyG",
+      "inverseFieldId": "fld8yX7GvYIO51I1z"
+    },
+    {
+      "from": "playgrounds",
+      "to": "systems",
+      "name": "Sistemi di riferimento",
+      "single": false,
+      "fieldId": "fldKj5rBFNexDFr52",
+      "inverseFieldId": "fld98oD0fwXD2KUqM"
+    },
+    {
+      "from": "tasks",
+      "to": "playgrounds",
+      "name": "Playground",
+      "single": true,
+      "fieldId": "fld5KmHHNO8ba3wqi",
+      "inverseFieldId": "fldxzLIfelyJiPlGW"
+    },
+    {
+      "from": "tasks",
+      "to": "capabilities",
+      "name": "Capacità",
+      "single": false,
+      "fieldId": "fld5QuH6jkJxo7hMQ",
+      "inverseFieldId": "fld2ycnK4ZQDCKpoG"
+    },
+    {
+      "from": "generators",
+      "to": "implementations",
+      "name": "Teacher implementato",
+      "single": true,
+      "fieldId": "fldgMytZSax6CC2Qj",
+      "inverseFieldId": "flduPOm1Up6WBdTso"
+    },
+    {
+      "from": "generators",
+      "to": "numerics",
+      "name": "Schemi numerici",
+      "single": false,
+      "fieldId": "fldHkRSld5qmkwzbb",
+      "inverseFieldId": "fldKOWWUlkgjIeAw4"
+    },
+    {
+      "from": "generators",
+      "to": "artifacts",
+      "name": "Artefatti codice",
+      "single": false,
+      "fieldId": "fldBIcNXW9IWHGS5G",
+      "inverseFieldId": "fldo5NXFqs2t9Qab8"
+    },
+    {
+      "from": "generators",
+      "to": "definitions",
+      "name": "Definizioni eventi",
+      "single": false,
+      "fieldId": "fldlxl9TlTObC4a3x",
+      "inverseFieldId": "fldyNwCD4C1zhreQZ"
+    },
+    {
+      "from": "datasets",
+      "to": "generators",
+      "name": "Generatore",
+      "single": true,
+      "fieldId": "fldipqaEiuqVYcVLI",
+      "inverseFieldId": "fld8W15EpImqEJ1pl"
+    },
+    {
+      "from": "datasets",
+      "to": "datasets",
+      "name": "Versione precedente",
+      "single": true,
+      "fieldId": "fldu30ZOHNcbFIlzj",
+      "inverseFieldId": "fldNiBW6nl5sxpbuE"
+    },
+    {
+      "from": "datasets",
+      "to": "artifacts",
+      "name": "Artefatti",
+      "single": false,
+      "fieldId": "flddMOARreCQuoYpY",
+      "inverseFieldId": "fldKAWAFzxAGxBXtZ"
+    },
+    {
+      "from": "datasets",
+      "to": "tasks",
+      "name": "Compiti",
+      "single": false,
+      "fieldId": "fldLqWnbVsAaSSKD4",
+      "inverseFieldId": "fldLbAM8btgEDnVLj"
+    },
+    {
+      "from": "datasets",
+      "to": "definitions",
+      "name": "Definizioni operative",
+      "single": false,
+      "fieldId": "fldCiInmuna4kUsJX",
+      "inverseFieldId": "fld6QHgsEkPT3mdZF"
+    },
+    {
+      "from": "partitions",
+      "to": "datasets",
+      "name": "Dataset",
+      "single": true,
+      "fieldId": "fld7DaAcjBqDMwyqw",
+      "inverseFieldId": "fldw4PqpJ6U1v3pvH"
+    },
+    {
+      "from": "experiments",
+      "to": "programs",
+      "name": "Programma",
+      "single": true,
+      "fieldId": "fldPhw8x9yy2vwnOw",
+      "inverseFieldId": "fldlNKqtU7TeaWL9N"
+    },
+    {
+      "from": "experiments",
+      "to": "questions",
+      "name": "Domande",
+      "single": false,
+      "fieldId": "fld8UsWD6AGXcs8LB",
+      "inverseFieldId": "fldj261pBSznFUjUC"
+    },
+    {
+      "from": "experiments",
+      "to": "claims",
+      "name": "Ipotesi",
+      "single": false,
+      "fieldId": "fldSP4v83vEXowe7r",
+      "inverseFieldId": "fldGMQygrEEp67LYU"
+    },
+    {
+      "from": "experiments",
+      "to": "playgrounds",
+      "name": "Playground",
+      "single": false,
+      "fieldId": "fldRvsDInLSxaBLba",
+      "inverseFieldId": "fldMmfKWfwVwjaqXG"
+    },
+    {
+      "from": "experiments",
+      "to": "campaigns",
+      "name": "Campagna",
+      "single": true,
+      "fieldId": "fld2vorrpIpWaJBU9",
+      "inverseFieldId": "flda9EfCycEMuaPS5"
+    },
+    {
+      "from": "protocols",
+      "to": "experiments",
+      "name": "Esperimento",
+      "single": true,
+      "fieldId": "fldzYHRSjC0ov4BKb",
+      "inverseFieldId": "fldSVM6BIAoevpYQC"
+    },
+    {
+      "from": "protocols",
+      "to": "protocols",
+      "name": "Versione precedente",
+      "single": true,
+      "fieldId": "fldpfUH2P3mpRu2B6",
+      "inverseFieldId": "fldXGaaTvJNgqSF4P"
+    },
+    {
+      "from": "protocols",
+      "to": "predictions",
+      "name": "Predizioni",
+      "single": false,
+      "fieldId": "fldARMHwfjpewT4tD",
+      "inverseFieldId": "fldCUWRJhFWPo0mT2"
+    },
+    {
+      "from": "protocols",
+      "to": "partitions",
+      "name": "Partizioni autorizzate",
+      "single": false,
+      "fieldId": "fldCQHeCbAh9j3Qv7",
+      "inverseFieldId": "fld2VxbHVXH9eiAzA"
+    },
+    {
+      "from": "protocols",
+      "to": "artifacts",
+      "name": "Artefatto preregistrazione",
+      "single": true,
+      "fieldId": "fldkkWQCILvNiCuvY",
+      "inverseFieldId": "fldDimjpO3pqBmw4Y"
+    },
+    {
+      "from": "protocols",
+      "to": "actors",
+      "name": "Autori",
+      "single": false,
+      "fieldId": "fldJAYNsyYgGJdXhl",
+      "inverseFieldId": "fldwd4oBkAA3R8fhc"
+    },
+    {
+      "from": "factors",
+      "to": "protocols",
+      "name": "Protocollo",
+      "single": true,
+      "fieldId": "fldqWuQFDCJZeXKwV",
+      "inverseFieldId": "fld0yPrg13a64ZdYv"
+    },
+    {
+      "from": "factorlevels",
+      "to": "factors",
+      "name": "Fattore",
+      "single": true,
+      "fieldId": "fldGVvpRLQOHvhyGf",
+      "inverseFieldId": "fldfZ2CyOQmYiBDpQ"
+    },
+    {
+      "from": "arms",
+      "to": "protocols",
+      "name": "Protocollo",
+      "single": true,
+      "fieldId": "fldKJ7mhg9LZyeZ6m",
+      "inverseFieldId": "fldSW3jbYrJFUwfJy"
+    },
+    {
+      "from": "arms",
+      "to": "models",
+      "name": "Modello",
+      "single": true,
+      "fieldId": "fld06y1JyhGdBKbsb",
+      "inverseFieldId": "fldP9IDuLFinS5GI7"
+    },
+    {
+      "from": "arms",
+      "to": "implementations",
+      "name": "Implementazione",
+      "single": true,
+      "fieldId": "fldMgabGclQSv615U",
+      "inverseFieldId": "fldJeS7A8S14SsvQF"
+    },
+    {
+      "from": "arms",
+      "to": "recipes",
+      "name": "Ricetta",
+      "single": true,
+      "fieldId": "fldMyl5JIQceTrveh",
+      "inverseFieldId": "fldr7SLofTtHT1g4B"
+    },
+    {
+      "from": "arms",
+      "to": "partitions",
+      "name": "Partizioni",
+      "single": false,
+      "fieldId": "fldw9xZuubK7jnPu7",
+      "inverseFieldId": "fldmK3cl25WnONpO4"
+    },
+    {
+      "from": "assignments",
+      "to": "arms",
+      "name": "Braccio",
+      "single": true,
+      "fieldId": "fldYENAuHRTv4Nzt9",
+      "inverseFieldId": "fld6BYhcvs1E5t5au"
+    },
+    {
+      "from": "assignments",
+      "to": "factorlevels",
+      "name": "Livello",
+      "single": true,
+      "fieldId": "fldJrEiCNKvRawtAc",
+      "inverseFieldId": "fld4dTTc9gamREDUl"
+    },
+    {
+      "from": "contrasts",
+      "to": "protocols",
+      "name": "Protocollo",
+      "single": true,
+      "fieldId": "fldwHTz73M5D98IT5",
+      "inverseFieldId": "fldbFUHleydt1N0tS"
+    },
+    {
+      "from": "contrasts",
+      "to": "arms",
+      "name": "Bracci",
+      "single": false,
+      "fieldId": "flduLHSDAt2pZoAyA",
+      "inverseFieldId": "fldZda4pHN0rhuziP"
+    },
+    {
+      "from": "contrasts",
+      "to": "predictions",
+      "name": "Predizioni",
+      "single": false,
+      "fieldId": "fldjh6uGCXpji4LYy",
+      "inverseFieldId": "fldjeAYjMVW5nI5e7"
+    },
+    {
+      "from": "contrasts",
+      "to": "evaluations",
+      "name": "Specifiche di valutazione",
+      "single": false,
+      "fieldId": "fldj3DvjZl6JdC8Ww",
+      "inverseFieldId": "fldiaFFgCKVBTStMJ"
+    },
+    {
+      "from": "blocks",
+      "to": "protocols",
+      "name": "Protocollo",
+      "single": true,
+      "fieldId": "fldNdsmMz2Jtz574j",
+      "inverseFieldId": "fld4Nd64evBcLZmBW"
+    },
+    {
+      "from": "runs",
+      "to": "arms",
+      "name": "Braccio",
+      "single": true,
+      "fieldId": "fldH8BxHnUI8L5DGU",
+      "inverseFieldId": "fldSw7iYhL7RM3VOk"
+    },
+    {
+      "from": "runs",
+      "to": "blocks",
+      "name": "Blocco",
+      "single": true,
+      "fieldId": "fldeHMCMkOUKhaxpL",
+      "inverseFieldId": "fldVRcFxf7uLLnOTP"
+    },
+    {
+      "from": "runs",
+      "to": "implementations",
+      "name": "Implementazione effettiva",
+      "single": true,
+      "fieldId": "fldEugpXcsTK5MRNV",
+      "inverseFieldId": "fldbvLnQGER4chqXe"
+    },
+    {
+      "from": "runs",
+      "to": "recipes",
+      "name": "Ricetta effettiva",
+      "single": true,
+      "fieldId": "fld0liFWUjFcrhrat",
+      "inverseFieldId": "fld07k9hxpc9cbtqG"
+    },
+    {
+      "from": "runs",
+      "to": "partitions",
+      "name": "Partizioni effettive",
+      "single": false,
+      "fieldId": "fldoTxIHgcSHpzMHR",
+      "inverseFieldId": "fldiD17q3IWsrcrrp"
+    },
+    {
+      "from": "runs",
+      "to": "artifacts",
+      "name": "Artefatti prodotti",
+      "single": false,
+      "fieldId": "fldZ5He4nOs4VdNvi",
+      "inverseFieldId": "fldqct09IUjoLdgF0"
+    },
+    {
+      "from": "runs",
+      "to": "actors",
+      "name": "Responsabili",
+      "single": false,
+      "fieldId": "fldgUgjgZu24ukm2l",
+      "inverseFieldId": "fldpWDH64rwD62DA9"
+    },
+    {
+      "from": "checkpoints",
+      "to": "runs",
+      "name": "Run",
+      "single": true,
+      "fieldId": "fldYLGu0hldnEpUsp",
+      "inverseFieldId": "fld4R8XwQMz7g481Q"
+    },
+    {
+      "from": "checkpoints",
+      "to": "artifacts",
+      "name": "Artefatto",
+      "single": true,
+      "fieldId": "fldMFdfXJPZa1y9gN",
+      "inverseFieldId": "fld7lhB5GaDi7GPGr"
+    },
+    {
+      "from": "quality",
+      "to": "runs",
+      "name": "Run",
+      "single": true,
+      "fieldId": "flduNGDKhI5TGf03N",
+      "inverseFieldId": "fldyRVPjo0mXHldZV"
+    },
+    {
+      "from": "quality",
+      "to": "datasets",
+      "name": "Dataset",
+      "single": false,
+      "fieldId": "fld7kRE7wrm4chwrL",
+      "inverseFieldId": "fldEhlWBLWWQfcxf1"
+    },
+    {
+      "from": "quality",
+      "to": "implementations",
+      "name": "Implementazioni",
+      "single": false,
+      "fieldId": "fldNV72YUiR5GNjSP",
+      "inverseFieldId": "fldknpOaBc7DaScI2"
+    },
+    {
+      "from": "quality",
+      "to": "artifacts",
+      "name": "Artefatti diagnostici",
+      "single": false,
+      "fieldId": "fldb1uzQIpApyiOZk",
+      "inverseFieldId": "fldtz4d1xLAPiMl1B"
+    },
+    {
+      "from": "deviations",
+      "to": "runs",
+      "name": "Run",
+      "single": true,
+      "fieldId": "fldTUDBLkE1O4Botn",
+      "inverseFieldId": "fldrNX4Xl4WKFvYia"
+    },
+    {
+      "from": "deviations",
+      "to": "protocols",
+      "name": "Protocollo previsto",
+      "single": true,
+      "fieldId": "fldqV70eDG3tJcNJA",
+      "inverseFieldId": "fldf08OxNnuiB8Kfn"
+    },
+    {
+      "from": "deviations",
+      "to": "protocols",
+      "name": "Protocollo sostitutivo",
+      "single": true,
+      "fieldId": "fld3SOpGt7kJoaGBP",
+      "inverseFieldId": "fldkksHf3zhn6RrDN"
+    },
+    {
+      "from": "deviations",
+      "to": "actors",
+      "name": "Responsabili",
+      "single": false,
+      "fieldId": "fld22bQOxT0xsLC1X",
+      "inverseFieldId": "fldQyBhaDjFphxS59"
+    },
+    {
+      "from": "metrics",
+      "to": "equations",
+      "name": "Equazioni",
+      "single": false,
+      "fieldId": "fldsGPSioMOzCpTw9",
+      "inverseFieldId": "fldWcJnl6iIbs7zz1"
+    },
+    {
+      "from": "metrics",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fldbjopz7cQWq3tF8",
+      "inverseFieldId": "fldazPTpZT88MBmeD"
+    },
+    {
+      "from": "evaluations",
+      "to": "metrics",
+      "name": "Metrica",
+      "single": true,
+      "fieldId": "fldjJ9mXoTKg88hZm",
+      "inverseFieldId": "fldvhAY24qhSPAswA"
+    },
+    {
+      "from": "evaluations",
+      "to": "protocols",
+      "name": "Protocollo",
+      "single": true,
+      "fieldId": "fldEaSIYHKLjK1Cmz",
+      "inverseFieldId": "fld6lHoGkY43YdOIc"
+    },
+    {
+      "from": "evaluations",
+      "to": "definitions",
+      "name": "Definizioni etichette",
+      "single": false,
+      "fieldId": "fldZR2iJ9IaeDlGDu",
+      "inverseFieldId": "fldnqU74jvvznXFXR"
+    },
+    {
+      "from": "evaluations",
+      "to": "partitions",
+      "name": "Partizioni",
+      "single": false,
+      "fieldId": "fldsPtyImM8QeV5Ad",
+      "inverseFieldId": "fldPy7ZvaGuGf1gGf"
+    },
+    {
+      "from": "evaluations",
+      "to": "quantities",
+      "name": "Grandezze",
+      "single": false,
+      "fieldId": "fldsGRjbntHKx2NxU",
+      "inverseFieldId": "fldZ0aCGcIQbwRdrI"
+    },
+    {
+      "from": "evaluations",
+      "to": "evaluations",
+      "name": "Versione precedente",
+      "single": true,
+      "fieldId": "fldS3HEQ8WYaWSt3N",
+      "inverseFieldId": "fldoq8uERtGSTrpEn"
+    },
+    {
+      "from": "observations",
+      "to": "evaluations",
+      "name": "Specifica di valutazione",
+      "single": true,
+      "fieldId": "fldw5ukaVeipdb1Mm",
+      "inverseFieldId": "fldFETOup6pjhtMfc"
+    },
+    {
+      "from": "observations",
+      "to": "runs",
+      "name": "Run",
+      "single": true,
+      "fieldId": "fldFIAu0YuD5UimNv",
+      "inverseFieldId": "fldY70eVnmzHR7MZx"
+    },
+    {
+      "from": "observations",
+      "to": "checkpoints",
+      "name": "Checkpoint",
+      "single": true,
+      "fieldId": "fldSp0iVWwnDBMaNE",
+      "inverseFieldId": "fldGHgLpS2Jc7IpCn"
+    },
+    {
+      "from": "observations",
+      "to": "trained",
+      "name": "Modello addestrato",
+      "single": true,
+      "fieldId": "fldSptYbHtZKDBoNs",
+      "inverseFieldId": "fldnzdvSzjOKIJHdv"
+    },
+    {
+      "from": "observations",
+      "to": "analyses",
+      "name": "Analisi",
+      "single": true,
+      "fieldId": "fldRWdcxSHSEt0w9T",
+      "inverseFieldId": "fldGlBvpnfdk4K0SW"
+    },
+    {
+      "from": "observations",
+      "to": "artifacts",
+      "name": "Artefatti dettagliati",
+      "single": false,
+      "fieldId": "fldQkh4yUQXtLH5Bw",
+      "inverseFieldId": "fldy0kiTp7BG4j68p"
+    },
+    {
+      "from": "analyses",
+      "to": "runs",
+      "name": "Run analizzati",
+      "single": false,
+      "fieldId": "fldC5fT2ixjoG4K48",
+      "inverseFieldId": "fldNQXPTBYtKMuIq0"
+    },
+    {
+      "from": "analyses",
+      "to": "contrasts",
+      "name": "Contrasti",
+      "single": false,
+      "fieldId": "fld3y4Y9kbweJ5kDo",
+      "inverseFieldId": "fldLRLazU1ZeUuySD"
+    },
+    {
+      "from": "analyses",
+      "to": "artifacts",
+      "name": "Input artefatti",
+      "single": false,
+      "fieldId": "fldjWJtkc8PdiKmvC",
+      "inverseFieldId": "fld7CxbgCXwUM4NNt"
+    },
+    {
+      "from": "analyses",
+      "to": "artifacts",
+      "name": "Output artefatti",
+      "single": false,
+      "fieldId": "fldFmVVXsKFEhxWUw",
+      "inverseFieldId": "fldM865VwAuTwSeyu"
+    },
+    {
+      "from": "findings",
+      "to": "analyses",
+      "name": "Analisi",
+      "single": false,
+      "fieldId": "fld6RRXAezvkiy3Ah",
+      "inverseFieldId": "fldsdJpy8AaF4Z3QJ"
+    },
+    {
+      "from": "findings",
+      "to": "observations",
+      "name": "Osservazioni",
+      "single": false,
+      "fieldId": "fld6T3N6yemVml04C",
+      "inverseFieldId": "fld8BQkwAk6ugX61X"
+    },
+    {
+      "from": "findings",
+      "to": "experiments",
+      "name": "Esperimenti",
+      "single": false,
+      "fieldId": "fldYAbc64NIZGKzWO",
+      "inverseFieldId": "fld75HWsQpTge8Cv6"
+    },
+    {
+      "from": "findings",
+      "to": "validity",
+      "name": "Domini di validità",
+      "single": false,
+      "fieldId": "flduQBGqeIrhFjoew",
+      "inverseFieldId": "fld5c2XbA5h5jLC21"
+    },
+    {
+      "from": "anomalies",
+      "to": "runs",
+      "name": "Run",
+      "single": false,
+      "fieldId": "fldgQOqf3RgKIitGa",
+      "inverseFieldId": "fldJct5wFYrKWSZOg"
+    },
+    {
+      "from": "anomalies",
+      "to": "observations",
+      "name": "Osservazioni",
+      "single": false,
+      "fieldId": "fldD4LUmzkPC2jsRy",
+      "inverseFieldId": "fldVlV5S274iKXeLu"
+    },
+    {
+      "from": "anomalies",
+      "to": "claims",
+      "name": "Ipotesi esplicative",
+      "single": false,
+      "fieldId": "fldoyshFFebLJl5NU",
+      "inverseFieldId": "fldhblz9QaL5xZMzj"
+    },
+    {
+      "from": "confirmations",
+      "to": "findings",
+      "name": "Risultati da confermare",
+      "single": false,
+      "fieldId": "fldQC82SDpNnZHsVT",
+      "inverseFieldId": "fldTkqGHCtsGhE6dR"
+    },
+    {
+      "from": "confirmations",
+      "to": "experiments",
+      "name": "Esperimenti di verifica",
+      "single": false,
+      "fieldId": "fldAf00hnU1VwBC6U",
+      "inverseFieldId": "fldFHD3DQUZ4TThfH"
+    },
+    {
+      "from": "confirmations",
+      "to": "validity",
+      "name": "Domini di origine",
+      "single": false,
+      "fieldId": "fld2cDNxbDAWQlHxM",
+      "inverseFieldId": "fldJnpQXajfoZ9ZWX"
+    },
+    {
+      "from": "confirmations",
+      "to": "validity",
+      "name": "Domini di destinazione",
+      "single": false,
+      "fieldId": "fldSR3ICgDnFeR7ia",
+      "inverseFieldId": "fldvpGlGrnv9f1H93"
+    },
+    {
+      "from": "decisions",
+      "to": "programs",
+      "name": "Programma",
+      "single": true,
+      "fieldId": "fld5n2FeRMRNzIZTl",
+      "inverseFieldId": "fldVO1d8pr348rS4u"
+    },
+    {
+      "from": "decisions",
+      "to": "evidence",
+      "name": "Valutazioni delle evidenze",
+      "single": false,
+      "fieldId": "fldyMOckgkXfrxIFp",
+      "inverseFieldId": "fldRaOy3jJUWmQsxK"
+    },
+    {
+      "from": "decisions",
+      "to": "findings",
+      "name": "Risultati",
+      "single": false,
+      "fieldId": "fldpPpy9MTdwYYfvG",
+      "inverseFieldId": "fldw7I3GqPu0PuSLu"
+    },
+    {
+      "from": "decisions",
+      "to": "candidates",
+      "name": "Candidati",
+      "single": false,
+      "fieldId": "fldYm1YuTbDyecT3y",
+      "inverseFieldId": "fldzfrFwNjyYkCSxu"
+    },
+    {
+      "from": "decisions",
+      "to": "actors",
+      "name": "Responsabili",
+      "single": false,
+      "fieldId": "fldeE0mamtVWsmGhH",
+      "inverseFieldId": "fld6o3pyI5M4lwB5g"
+    },
+    {
+      "from": "lessons",
+      "to": "findings",
+      "name": "Risultati",
+      "single": false,
+      "fieldId": "fld8HA1BGl990GAVS",
+      "inverseFieldId": "fldByihGBJcbOynhM"
+    },
+    {
+      "from": "lessons",
+      "to": "decisions",
+      "name": "Decisioni",
+      "single": false,
+      "fieldId": "fldA6VxnHn3pchKBe",
+      "inverseFieldId": "fldPWPhrQIqadQafc"
+    },
+    {
+      "from": "lessons",
+      "to": "validity",
+      "name": "Domini di validità",
+      "single": false,
+      "fieldId": "fldtC2hGrW8U5VGOb",
+      "inverseFieldId": "fldxOsNTDeDQKavs8"
+    },
+    {
+      "from": "rules",
+      "to": "segments",
+      "name": "Fonti",
+      "single": false,
+      "fieldId": "fld1F05UNNwVn032z",
+      "inverseFieldId": "fldGCnZ5AIvJdtVbq"
+    },
+    {
+      "from": "rules",
+      "to": "lessons",
+      "name": "Lezioni",
+      "single": false,
+      "fieldId": "fldos90Wfme5TMHUg",
+      "inverseFieldId": "fldxH6rfwM7DbYUAv"
+    },
+    {
+      "from": "applications",
+      "to": "rules",
+      "name": "Regola",
+      "single": true,
+      "fieldId": "fld1Tmhji4sYqapvb",
+      "inverseFieldId": "fld7ICUQhE7vTXJd9"
+    },
+    {
+      "from": "applications",
+      "to": "experiments",
+      "name": "Esperimento",
+      "single": true,
+      "fieldId": "fldkmbA4trKSZ3qwU",
+      "inverseFieldId": "fldkFqQftYUGy2siC"
+    },
+    {
+      "from": "applications",
+      "to": "protocols",
+      "name": "Protocollo",
+      "single": true,
+      "fieldId": "fldkry5yETSHyicoh",
+      "inverseFieldId": "fldJ6IqzFnNeqIWQa"
+    },
+    {
+      "from": "actions",
+      "to": "programs",
+      "name": "Programma",
+      "single": true,
+      "fieldId": "fldyiTgFzV1vvmM5o",
+      "inverseFieldId": "fldyDyAYGjluLkrHK"
+    },
+    {
+      "from": "actions",
+      "to": "decisions",
+      "name": "Decisioni di origine",
+      "single": false,
+      "fieldId": "fldkCr0yLshDXWuxz",
+      "inverseFieldId": "fldUSmiF5JjK64uS5"
+    },
+    {
+      "from": "actions",
+      "to": "questions",
+      "name": "Domande",
+      "single": false,
+      "fieldId": "fldgrmwbCk1T9fq46",
+      "inverseFieldId": "fldAn8rI4IDtMAtO1"
+    },
+    {
+      "from": "actions",
+      "to": "experiments",
+      "name": "Esperimenti previsti",
+      "single": false,
+      "fieldId": "fldI2FlCVIjw2HQwC",
+      "inverseFieldId": "fldnTFjWQUe3eEcDr"
+    },
+    {
+      "from": "actions",
+      "to": "actions",
+      "name": "Dipende da",
+      "single": false,
+      "fieldId": "fld8zz84auBO3DIGQ",
+      "inverseFieldId": "fldlLL729Jw86riOj"
+    },
+    {
+      "from": "actions",
+      "to": "actors",
+      "name": "Responsabili",
+      "single": false,
+      "fieldId": "fldazVEmaizg09aw8",
+      "inverseFieldId": "fld3Quzv5FjPkVKMm"
+    }
+  ],
+  "recordCounts": [
+    {
+      "key": "sources",
+      "tableId": "tblnpA57WIZY8Pjoz",
+      "count": 0
+    },
+    {
+      "key": "segments",
+      "tableId": "tblYFEfVDs2DYMZLU",
+      "count": 0
+    },
+    {
+      "key": "actors",
+      "tableId": "tblhtzJf7ZEFLbq8n",
+      "count": 0
+    },
+    {
+      "key": "artifacts",
+      "tableId": "tblG8bHLgK88LKgg4",
+      "count": 0
+    },
+    {
+      "key": "programs",
+      "tableId": "tbldEHmvXIKU2ycSy",
+      "count": 0
+    },
+    {
+      "key": "questions",
+      "tableId": "tbl8350s68Le4dMLS",
+      "count": 0
+    },
+    {
+      "key": "objectives",
+      "tableId": "tblj6ZG5XZ9DgiwGv",
+      "count": 0
+    },
+    {
+      "key": "capabilities",
+      "tableId": "tblrwZIVBXg8fgx4T",
+      "count": 0
+    },
+    {
+      "key": "capdeps",
+      "tableId": "tblpxzm1Oa7elMTSa",
+      "count": 0
+    },
+    {
+      "key": "definitions",
+      "tableId": "tblLlEFHj0PbLCIqd",
+      "count": 0
+    },
+    {
+      "key": "systems",
+      "tableId": "tblXgrxq9OMY5RGf6",
+      "count": 0
+    },
+    {
+      "key": "phenomena",
+      "tableId": "tblLeAz96rdeNRuLi",
+      "count": 0
+    },
+    {
+      "key": "levels",
+      "tableId": "tblTCopoDgL7XG8W4",
+      "count": 0
+    },
+    {
+      "key": "quantities",
+      "tableId": "tblAcfab7Joc1hx07",
+      "count": 0
+    },
+    {
+      "key": "mechanisms",
+      "tableId": "tblFXL07lapkqnzTM",
+      "count": 0
+    },
+    {
+      "key": "constraints",
+      "tableId": "tblPhXVzOyPOo4CLR",
+      "count": 0
+    },
+    {
+      "key": "crosslevels",
+      "tableId": "tblpO2teijkHYntRc",
+      "count": 0
+    },
+    {
+      "key": "claims",
+      "tableId": "tblqjU8aVM8csgjtk",
+      "count": 0
+    },
+    {
+      "key": "assumptions",
+      "tableId": "tbldSkzQA9g3QX7Om",
+      "count": 0
+    },
+    {
+      "key": "claimrels",
+      "tableId": "tbltzi3MX24XkNVGK",
+      "count": 0
+    },
+    {
+      "key": "predictions",
+      "tableId": "tblPsHQ90EiUXddxH",
+      "count": 0
+    },
+    {
+      "key": "causal",
+      "tableId": "tblUNT1bCX0obKuqZ",
+      "count": 0
+    },
+    {
+      "key": "evidence",
+      "tableId": "tblWWhDt7RqQb4ru1",
+      "count": 0
+    },
+    {
+      "key": "approaches",
+      "tableId": "tblZnvzYZ9Vva5Qch",
+      "count": 0
+    },
+    {
+      "key": "choices",
+      "tableId": "tblfKT71DdPEcWyBx",
+      "count": 0
+    },
+    {
+      "key": "mappings",
+      "tableId": "tblJGbHAauApAQfz5",
+      "count": 0
+    },
+    {
+      "key": "validity",
+      "tableId": "tblPZyMkaJKzHEZIQ",
+      "count": 0
+    },
+    {
+      "key": "models",
+      "tableId": "tblhqNMkBAnia7Wxz",
+      "count": 0
+    },
+    {
+      "key": "types",
+      "tableId": "tblCd3KAgubx4cwry",
+      "count": 0
+    },
+    {
+      "key": "instances",
+      "tableId": "tbl3YlCMWI9DiCpah",
+      "count": 0
+    },
+    {
+      "key": "ports",
+      "tableId": "tblyvPG9WvHzpcROT",
+      "count": 0
+    },
+    {
+      "key": "connections",
+      "tableId": "tblT64nQkp5xAG4RE",
+      "count": 0
+    },
+    {
+      "key": "equations",
+      "tableId": "tbluC5Bp65CJ74Md3",
+      "count": 0
+    },
+    {
+      "key": "symbols",
+      "tableId": "tblH7k6WfL49Z09uw",
+      "count": 0
+    },
+    {
+      "key": "bindings",
+      "tableId": "tblkT9LEnU1Qw2pnX",
+      "count": 0
+    },
+    {
+      "key": "composition",
+      "tableId": "tblG3VLGi6pnZoI0p",
+      "count": 0
+    },
+    {
+      "key": "substitutions",
+      "tableId": "tblx1VQK1kUy4vuU9",
+      "count": 0
+    },
+    {
+      "key": "implementations",
+      "tableId": "tblRoTRJyLGgSLUMB",
+      "count": 0
+    },
+    {
+      "key": "numerics",
+      "tableId": "tblrXidhZ0NbtAhuC",
+      "count": 0
+    },
+    {
+      "key": "parameters",
+      "tableId": "tblBBvblF54JEILy8",
+      "count": 0
+    },
+    {
+      "key": "losses",
+      "tableId": "tblilVMvJr42vpk9m",
+      "count": 0
+    },
+    {
+      "key": "recipes",
+      "tableId": "tblORHEV4fs9PMzXP",
+      "count": 0
+    },
+    {
+      "key": "trained",
+      "tableId": "tblznacXMRRrOHBBk",
+      "count": 0
+    },
+    {
+      "key": "strategies",
+      "tableId": "tblTtd025mCxfxCK1",
+      "count": 0
+    },
+    {
+      "key": "patterns",
+      "tableId": "tbloHmujP4HJ4BE0h",
+      "count": 0
+    },
+    {
+      "key": "analogies",
+      "tableId": "tblGz6mNQYfb5Xp0Y",
+      "count": 0
+    },
+    {
+      "key": "candidates",
+      "tableId": "tblsuXCmriaLsJ94y",
+      "count": 0
+    },
+    {
+      "key": "transformations",
+      "tableId": "tblhbF6JMz1vj3OaB",
+      "count": 0
+    },
+    {
+      "key": "campaigns",
+      "tableId": "tbl3kMCtoEsZXk0Tm",
+      "count": 0
+    },
+    {
+      "key": "playgrounds",
+      "tableId": "tbl2kqfR5lDeirCUV",
+      "count": 0
+    },
+    {
+      "key": "tasks",
+      "tableId": "tblXF0hZSnCZYk2tt",
+      "count": 0
+    },
+    {
+      "key": "generators",
+      "tableId": "tbl13dhKxXqO7AENB",
+      "count": 0
+    },
+    {
+      "key": "datasets",
+      "tableId": "tblXdxobiaSfobSkr",
+      "count": 0
+    },
+    {
+      "key": "partitions",
+      "tableId": "tbly1TbxinvumZQJE",
+      "count": 0
+    },
+    {
+      "key": "experiments",
+      "tableId": "tblGuNATKyxx7TQQL",
+      "count": 0
+    },
+    {
+      "key": "protocols",
+      "tableId": "tblnM133884C8blBb",
+      "count": 0
+    },
+    {
+      "key": "factors",
+      "tableId": "tblAr3p6QF8D5d5Pe",
+      "count": 0
+    },
+    {
+      "key": "factorlevels",
+      "tableId": "tbl0FhaHls9vb3XtE",
+      "count": 0
+    },
+    {
+      "key": "arms",
+      "tableId": "tbluk4duwsaBv3e2d",
+      "count": 0
+    },
+    {
+      "key": "assignments",
+      "tableId": "tblmoUlUpayHZxlwQ",
+      "count": 0
+    },
+    {
+      "key": "contrasts",
+      "tableId": "tbluTflq5KPB0ASBV",
+      "count": 0
+    },
+    {
+      "key": "blocks",
+      "tableId": "tblDINcdQ4YmLNlFm",
+      "count": 0
+    },
+    {
+      "key": "runs",
+      "tableId": "tblFIJ1ALOog9qQnH",
+      "count": 0
+    },
+    {
+      "key": "checkpoints",
+      "tableId": "tblUxuQDfxwJUMGLe",
+      "count": 0
+    },
+    {
+      "key": "quality",
+      "tableId": "tbl6ufYRv1ZWtAuWt",
+      "count": 0
+    },
+    {
+      "key": "deviations",
+      "tableId": "tbla4RDh3SE6XeSBW",
+      "count": 0
+    },
+    {
+      "key": "metrics",
+      "tableId": "tblQz0z1LFlwz6ONk",
+      "count": 0
+    },
+    {
+      "key": "evaluations",
+      "tableId": "tblf5udl3Na97Inm1",
+      "count": 0
+    },
+    {
+      "key": "observations",
+      "tableId": "tbl2UOMH9VKRsg3zG",
+      "count": 0
+    },
+    {
+      "key": "analyses",
+      "tableId": "tbl82hX1zcgkkrtdG",
+      "count": 0
+    },
+    {
+      "key": "findings",
+      "tableId": "tblfaHyYZ2zrdccUY",
+      "count": 0
+    },
+    {
+      "key": "anomalies",
+      "tableId": "tblJkcldtIOfvXXK7",
+      "count": 0
+    },
+    {
+      "key": "confirmations",
+      "tableId": "tbluy3NijRSDVUuBG",
+      "count": 0
+    },
+    {
+      "key": "decisions",
+      "tableId": "tblkgQPbxD9mR3xsn",
+      "count": 0
+    },
+    {
+      "key": "lessons",
+      "tableId": "tblFFe4wg9JwpefAn",
+      "count": 0
+    },
+    {
+      "key": "rules",
+      "tableId": "tblye5iN3KO8lOnHH",
+      "count": 0
+    },
+    {
+      "key": "applications",
+      "tableId": "tblHr5RzRQO671jqe",
+      "count": 0
+    },
+    {
+      "key": "actions",
+      "tableId": "tblYrWXe1JwzKI5lj",
+      "count": 0
+    }
+  ],
+  "relationValidation": {
+    "checked": 241,
+    "issues": []
+  }
+}

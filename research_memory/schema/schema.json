@@ -1,0 +1,4873 @@
+{
+  "schema_version": "1.0",
+  "base_name": "Scientific Modeling & Experimentation Lab",
+  "base_id": "app9dZ7ghujkFJIo5",
+  "workspace_id": "wspgYRLa5VF8kuMUO",
+  "categories": {
+    "10": "Disegno sperimentale",
+    "11": "Esecuzione e validità tecnica",
+    "12": "Misure, analisi e risultati",
+    "13": "Conferme, decisioni e metodo",
+    "01": "Fonti e provenienza",
+    "02": "Programmi e obiettivi",
+    "03": "Sistemi e conoscenza di dominio",
+    "04": "Ipotesi, assunzioni ed evidenze",
+    "05": "Approcci e scelte di modellazione",
+    "06": "Struttura matematica e architetturale",
+    "07": "Implementazione, numerica e apprendimento",
+    "08": "Progettazione ed esplorazione",
+    "09": "Playground e dati"
+  },
+  "tables": [
+    {
+      "key": "sources",
+      "name": "01 · Fonti",
+      "description": "Provenienza documentale; una fonte non è automaticamente evidenza valida.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Paper"
+              },
+              {
+                "name": "Trascrizione"
+              },
+              {
+                "name": "Video"
+              },
+              {
+                "name": "Documentazione"
+              },
+              {
+                "name": "Conversazione"
+              },
+              {
+                "name": "Dataset"
+              },
+              {
+                "name": "Altro"
+              }
+            ]
+          }
+        },
+        {
+          "name": "URL",
+          "type": "url"
+        },
+        {
+          "name": "Versione o data",
+          "type": "singleLineText"
+        },
+        {
+          "name": "DOI",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "segments",
+      "name": "01 · Passaggi delle fonti",
+      "description": "Estratti grezzi localizzabili, distinti dalle interpretazioni.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Testo originale",
+          "type": "multilineText"
+        },
+        {
+          "name": "Localizzatore pagina o timestamp",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Contesto",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "actors",
+      "name": "01 · Attori",
+      "description": "Persone, gruppi e agenti responsabili di fonti, protocolli e valutazioni.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Persona"
+              },
+              {
+                "name": "Gruppo"
+              },
+              {
+                "name": "Organizzazione"
+              },
+              {
+                "name": "Agente"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Affiliazione",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "artifacts",
+      "name": "01 · Artefatti",
+      "description": "Metadati di file esterni; non conservare qui array o checkpoint binari.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Codice"
+              },
+              {
+                "name": "Dataset"
+              },
+              {
+                "name": "Checkpoint"
+              },
+              {
+                "name": "Report"
+              },
+              {
+                "name": "Figura"
+              },
+              {
+                "name": "Log"
+              },
+              {
+                "name": "Schema"
+              },
+              {
+                "name": "Altro"
+              }
+            ]
+          }
+        },
+        {
+          "name": "URL",
+          "type": "url"
+        },
+        {
+          "name": "Percorso",
+          "type": "singleLineText"
+        },
+        {
+          "name": "SHA-256",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Dimensione byte",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        }
+      ]
+    },
+    {
+      "key": "programs",
+      "name": "02 · Programmi di ricerca",
+      "description": "Problemi generali e confini del programma.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Ambito",
+          "type": "multilineText"
+        },
+        {
+          "name": "Criteri di completamento",
+          "type": "multilineText"
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Proposto"
+              },
+              {
+                "name": "Attivo"
+              },
+              {
+                "name": "Sospeso"
+              },
+              {
+                "name": "Concluso"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "questions",
+      "name": "02 · Domande di ricerca",
+      "description": "Interrogativi aperti collegati a ipotesi ed esperimenti.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Domanda",
+          "type": "multilineText"
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Aperta"
+              },
+              {
+                "name": "In studio"
+              },
+              {
+                "name": "Parzialmente risolta"
+              },
+              {
+                "name": "Risolta"
+              },
+              {
+                "name": "Abbandonata"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "objectives",
+      "name": "02 · Obiettivi di modellazione",
+      "description": "Scopi distinti da metriche e implementazioni.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Scopo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Predizione"
+              },
+              {
+                "name": "Spiegazione"
+              },
+              {
+                "name": "Controllo"
+              },
+              {
+                "name": "Riproduzione"
+              },
+              {
+                "name": "Accelerazione"
+              },
+              {
+                "name": "Altro"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Priorità e compromessi",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "capabilities",
+      "name": "02 · Capacità",
+      "description": "Skill atomiche o composite verificabili.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Comportamento richiesto",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "capdeps",
+      "name": "02 · Dipendenze tra capacità",
+      "description": "Relazione diretta prerequisito → capacità dipendente; non prova di necessità.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Prerequisito ipotizzato"
+              },
+              {
+                "name": "Prerequisito verificato"
+              },
+              {
+                "name": "Composizione"
+              },
+              {
+                "name": "Facilitazione"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Giustificazione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "definitions",
+      "name": "02 · Definizioni operative",
+      "description": "Definizioni versionate di fenomeni, etichette e concetti operativi.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Regola operativa",
+          "type": "multilineText"
+        },
+        {
+          "name": "Parametri e soglie",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "systems",
+      "name": "03 · Sistemi di dominio",
+      "description": "Sistemi reali di interesse, separati dai modelli che li rappresentano.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Dominio",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Confini",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "phenomena",
+      "name": "03 · Fenomeni",
+      "description": "Comportamenti osservati o da spiegare.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni di osservazione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "levels",
+      "name": "03 · Livelli di descrizione",
+      "description": "Scale di descrizione e risoluzione; non implica gerarchia causale automatica.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Scala",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Risoluzione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "quantities",
+      "name": "03 · Grandezze di dominio",
+      "description": "Significato, unità e accessibilità delle quantità.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Dominio dei valori",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Accessibilità",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Osservata"
+              },
+              {
+                "name": "Derivata"
+              },
+              {
+                "name": "Latente"
+              },
+              {
+                "name": "Imposta"
+              },
+              {
+                "name": "Mista"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Procedura di misura",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "mechanisms",
+      "name": "03 · Meccanismi",
+      "description": "Processi generativi proposti o sostenuti da evidenze, non verità implicite.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Processo",
+          "type": "multilineText"
+        },
+        {
+          "name": "Stato epistemico",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Proposto"
+              },
+              {
+                "name": "Supportato nel dominio"
+              },
+              {
+                "name": "Contestato"
+              },
+              {
+                "name": "Non determinato"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Condizioni e limiti",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "constraints",
+      "name": "03 · Vincoli di dominio",
+      "description": "Vincoli fisici, biologici, geometrici e operativi.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Fisico"
+              },
+              {
+                "name": "Biologico"
+              },
+              {
+                "name": "Geometrico"
+              },
+              {
+                "name": "Operativo"
+              },
+              {
+                "name": "Altro"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Espressione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Ambito di validità",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "crosslevels",
+      "name": "03 · Relazioni tra livelli",
+      "description": "Relazione diretta tra livelli: aggregazione, riduzione o emergenza.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Aggregazione"
+              },
+              {
+                "name": "Riduzione"
+              },
+              {
+                "name": "Composizione"
+              },
+              {
+                "name": "Emergenza ipotizzata"
+              },
+              {
+                "name": "Emergenza osservata"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Giustificazione e limiti",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "claims",
+      "name": "04 · Affermazioni e ipotesi",
+      "description": "Enunciati scopiati. Proprietà matematica, intento, osservazione e interpretazione non sono equivalenti.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Enunciato",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Ipotesi"
+              },
+              {
+                "name": "Proprietà matematica"
+              },
+              {
+                "name": "Intento progettuale"
+              },
+              {
+                "name": "Interpretazione causale"
+              },
+              {
+                "name": "Affermazione di fonte"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Aperta"
+              },
+              {
+                "name": "Supportata nel dominio"
+              },
+              {
+                "name": "Contraddetta nel dominio"
+              },
+              {
+                "name": "Indeterminata"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Condizioni di falsificazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "assumptions",
+      "name": "04 · Assunzioni di ricerca",
+      "description": "Premesse esplicite adottate senza considerarle già dimostrate.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Premessa",
+          "type": "multilineText"
+        },
+        {
+          "name": "Motivo di adozione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Conseguenze se falsa",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni di revisione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "claimrels",
+      "name": "04 · Relazioni tra ipotesi",
+      "description": "Relazioni dirette tra enunciati.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Alternativa"
+              },
+              {
+                "name": "Incompatibilità"
+              },
+              {
+                "name": "Implica"
+              },
+              {
+                "name": "Dipende da"
+              },
+              {
+                "name": "Raffina"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Giustificazione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "predictions",
+      "name": "04 · Predizioni",
+      "description": "Aspettative formulate prima del test, oppure esplicitamente post hoc.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Risultato atteso",
+          "type": "multilineText"
+        },
+        {
+          "name": "Soglia o intervallo",
+          "type": "multilineText"
+        },
+        {
+          "name": "Origine",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Preregistrata"
+              },
+              {
+                "name": "Esplorativa"
+              },
+              {
+                "name": "Post hoc"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Registrata il",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "causal",
+      "name": "04 · Modelli causali",
+      "description": "Strutture causali proposte; archi, interventi e confondenti espliciti.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Nodi e archi",
+          "type": "multilineText"
+        },
+        {
+          "name": "Confondenti",
+          "type": "multilineText"
+        },
+        {
+          "name": "Assunzioni di identificazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Interventi",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "evidence",
+      "name": "04 · Valutazioni delle evidenze",
+      "description": "Una valutazione collega un risultato o fonte a un enunciato; non sovrascrive la storia.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Esito",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Sostiene"
+              },
+              {
+                "name": "Contraddice"
+              },
+              {
+                "name": "Indeterminata"
+              },
+              {
+                "name": "Non pertinente"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Argomentazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti e spiegazioni alternative",
+          "type": "multilineText"
+        },
+        {
+          "name": "Data valutazione",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "approaches",
+      "name": "05 · Approcci di modellazione",
+      "description": "Approcci non esclusivi: meccanicistico, fenomenologico, appreso, ibrido.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Principi",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "choices",
+      "name": "05 · Scelte di modellazione",
+      "description": "Decisioni su ciò che è esplicito, appreso, fissato, approssimato o omesso.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Trattamento",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Esplicito"
+              },
+              {
+                "name": "Appreso"
+              },
+              {
+                "name": "Fissato"
+              },
+              {
+                "name": "Approssimato"
+              },
+              {
+                "name": "Omesso"
+              },
+              {
+                "name": "Ibrido"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Motivazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Conseguenze attese",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "mappings",
+      "name": "05 · Corrispondenze modello-dominio",
+      "description": "Associa simboli e componenti a quantità e meccanismi reali; significato non garantito dal nome.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Corrispondenza",
+          "type": "multilineText"
+        },
+        {
+          "name": "Informazione omessa",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "validity",
+      "name": "05 · Domini di validità",
+      "description": "Regimi, scale, distribuzioni e budget ai quali si applicano i risultati.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni",
+          "type": "multilineText"
+        },
+        {
+          "name": "Esclusioni",
+          "type": "multilineText"
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Ipotizzato"
+              },
+              {
+                "name": "Verificato parzialmente"
+              },
+              {
+                "name": "Verificato nel protocollo"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "models",
+      "name": "06 · Specifiche dei modelli",
+      "description": "Modelli matematici versionati, indipendenti dal codice e dall'addestramento.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Ruolo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Teacher"
+              },
+              {
+                "name": "Surrogate"
+              },
+              {
+                "name": "Baseline"
+              },
+              {
+                "name": "Controllo"
+              },
+              {
+                "name": "Altro"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Contratto di stato",
+          "type": "multilineText"
+        },
+        {
+          "name": "Contratto di input e output",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "types",
+      "name": "06 · Tipi di componenti",
+      "description": "Definizioni riutilizzabili: canale, compartimento, MLP, gate, solver.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Semantica",
+          "type": "multilineText"
+        },
+        {
+          "name": "Configurazione ammessa",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "instances",
+      "name": "06 · Istanze dei componenti",
+      "description": "Occorrenze concrete in una versione di modello; stesso tipo non implica pesi condivisi.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Identificatore locale",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Configurazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Ruolo",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "ports",
+      "name": "06 · Porte dei componenti",
+      "description": "Input/output tipizzati con semantica temporale e fisica.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Direzione",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Input"
+              },
+              {
+                "name": "Output"
+              },
+              {
+                "name": "Bidirezionale"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Shape",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Dtype",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Semantica temporale",
+          "type": "multilineText"
+        },
+        {
+          "name": "Informazione causalmente disponibile",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "connections",
+      "name": "06 · Connessioni",
+      "description": "Archi diretti tra porte; distinti dal contenimento dei componenti.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Feedforward"
+              },
+              {
+                "name": "Ricorrenza"
+              },
+              {
+                "name": "Feedback"
+              },
+              {
+                "name": "Accoppiamento fisico"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Ritardo",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        },
+        {
+          "name": "Unità ritardo",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Trasformazione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "equations",
+      "name": "06 · Relazioni matematiche",
+      "description": "Equazioni, vincoli e distribuzioni versionati.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Equazione"
+              },
+              {
+                "name": "Disuguaglianza"
+              },
+              {
+                "name": "Distribuzione"
+              },
+              {
+                "name": "Regola di aggiornamento"
+              },
+              {
+                "name": "Vincolo"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Espressione LaTeX",
+          "type": "multilineText"
+        },
+        {
+          "name": "Ipotesi matematiche",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "symbols",
+      "name": "06 · Simboli matematici",
+      "description": "Simboli con ambito nella specifica di modello.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Simbolo",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Ruolo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Stato"
+              },
+              {
+                "name": "Input"
+              },
+              {
+                "name": "Output"
+              },
+              {
+                "name": "Parametro"
+              },
+              {
+                "name": "Ausiliario"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Shape",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Dominio",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "bindings",
+      "name": "06 · Associazioni componente-equazione",
+      "description": "Associazione tra equazione e istanza, con mappatura esplicita dei simboli.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Mappatura simboli e porte",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "composition",
+      "name": "06 · Composizione dei componenti",
+      "description": "Relazione parte-di diretta contenitore → parte, scopiata per versione. Vietare cicli di contenimento.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Ruolo della parte",
+          "type": "multilineText"
+        },
+        {
+          "name": "Molteplicità",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        },
+        {
+          "name": "Vincoli di composizione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "substitutions",
+      "name": "06 · Corrispondenze teacher-surrogate",
+      "description": "Sostituzioni anche molti-a-molti tra componenti originali e appresi.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Mappatura stati e output",
+          "type": "multilineText"
+        },
+        {
+          "name": "Informazione mantenuta",
+          "type": "multilineText"
+        },
+        {
+          "name": "Informazione omessa",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni di equivalenza",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "implementations",
+      "name": "07 · Implementazioni",
+      "description": "Realizzazioni di specifiche matematiche in codice versionato.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Repository URL",
+          "type": "url"
+        },
+        {
+          "name": "Commit",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Percorso entrypoint",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Ambiente",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "numerics",
+      "name": "07 · Schemi numerici",
+      "description": "Integrazione, discretizzazione e gestione degli eventi.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Metodo",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Precisione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Passo e tolleranze",
+          "type": "multilineText"
+        },
+        {
+          "name": "Gestione eventi",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "parameters",
+      "name": "07 · Parametrizzazioni",
+      "description": "Vincoli, trasformazioni e gruppi di parametri condivisi.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Trasformazioni",
+          "type": "multilineText"
+        },
+        {
+          "name": "Vincoli",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condivisione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Gradi di libertà",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        }
+      ]
+    },
+    {
+      "key": "losses",
+      "name": "07 · Obiettivi di apprendimento",
+      "description": "Loss versionate con termini, pesi e target; non sono automaticamente metriche primarie.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Termini e pesi",
+          "type": "multilineText"
+        },
+        {
+          "name": "Target",
+          "type": "multilineText"
+        },
+        {
+          "name": "Normalizzazione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "recipes",
+      "name": "07 · Ricette di addestramento",
+      "description": "Procedure versionate, budget e controlli di ottimizzazione.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Ottimizzatore",
+          "type": "multilineText"
+        },
+        {
+          "name": "Inizializzazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Curriculum",
+          "type": "multilineText"
+        },
+        {
+          "name": "Budget e checkpoint",
+          "type": "multilineText"
+        },
+        {
+          "name": "Componenti congelati e addestrabili",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "trained",
+      "name": "07 · Istanze addestrate",
+      "description": "Risultati concreti di una esecuzione e checkpoint selezionato.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Identificatore modello",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Regola di selezione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Parametri addestrabili",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        }
+      ]
+    },
+    {
+      "key": "strategies",
+      "name": "08 · Strategie di progettazione",
+      "description": "Strategie di generazione e selezione di idee.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Procedura",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni di utilità",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "patterns",
+      "name": "08 · Pattern progettuali",
+      "description": "Schemi riutilizzabili; il loro valore va verificato nel contesto.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Struttura",
+          "type": "multilineText"
+        },
+        {
+          "name": "Funzione ipotizzata",
+          "type": "multilineText"
+        },
+        {
+          "name": "Failure modes",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "analogies",
+      "name": "08 · Analogie tra domini",
+      "description": "Analogie generatrici di ipotesi, non prove.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Dominio origine",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Dominio destinazione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Corrispondenza",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti dell'analogia",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "candidates",
+      "name": "08 · Candidati progettuali",
+      "description": "Proposte anche non implementate, con razionale.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Razionale",
+          "type": "multilineText"
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Proposto"
+              },
+              {
+                "name": "Implementato"
+              },
+              {
+                "name": "Testato"
+              },
+              {
+                "name": "Scartato"
+              },
+              {
+                "name": "Selezionato"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "transformations",
+      "name": "08 · Trasformazioni progettuali",
+      "description": "Modifica diretta tra candidati: aggiunta, rimozione, sostituzione, composizione.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Aggiunta"
+              },
+              {
+                "name": "Rimozione"
+              },
+              {
+                "name": "Sostituzione"
+              },
+              {
+                "name": "Composizione"
+              },
+              {
+                "name": "Semplificazione"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Modifica",
+          "type": "multilineText"
+        },
+        {
+          "name": "Effetto atteso",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "campaigns",
+      "name": "08 · Campagne di esplorazione",
+      "description": "Spazio di ricerca, budget e regole di arresto.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Spazio ammesso",
+          "type": "multilineText"
+        },
+        {
+          "name": "Budget",
+          "type": "multilineText"
+        },
+        {
+          "name": "Selezione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Arresto",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "playgrounds",
+      "name": "09 · Playground",
+      "description": "Ambienti controllati per skill, learnability e probing.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Variabili controllate",
+          "type": "multilineText"
+        },
+        {
+          "name": "Difficoltà",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti di trasferimento",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "tasks",
+      "name": "09 · Famiglie di compiti",
+      "description": "Compiti e assi di difficoltà controllata.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Compito",
+          "type": "multilineText"
+        },
+        {
+          "name": "Assi di difficoltà",
+          "type": "multilineText"
+        },
+        {
+          "name": "Distribuzione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "generators",
+      "name": "09 · Generatori e acquisizione",
+      "description": "Generazione dati teacher o acquisizione empirica versionata.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Procedura",
+          "type": "multilineText"
+        },
+        {
+          "name": "Distribuzioni input",
+          "type": "multilineText"
+        },
+        {
+          "name": "Seed e RNG",
+          "type": "multilineText"
+        },
+        {
+          "name": "Variabili registrate",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "datasets",
+      "name": "09 · Versioni dei dataset",
+      "description": "Dataset immutabili con contratto, provenienza e copertura.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Fingerprint",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Schema",
+          "type": "multilineText"
+        },
+        {
+          "name": "Copertura",
+          "type": "multilineText"
+        },
+        {
+          "name": "Numero esempi",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        }
+      ]
+    },
+    {
+      "key": "partitions",
+      "name": "09 · Partizioni e ruoli dati",
+      "description": "Split con restrizioni di accesso e gruppi indipendenti.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Ruolo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Fit"
+              },
+              {
+                "name": "Selezione"
+              },
+              {
+                "name": "Development"
+              },
+              {
+                "name": "Validation"
+              },
+              {
+                "name": "Test sigillato"
+              },
+              {
+                "name": "Diagnostico"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Regola di assegnazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Gruppi seed episodi snapshot",
+          "type": "multilineText"
+        },
+        {
+          "name": "Restrizioni di accesso",
+          "type": "multilineText"
+        },
+        {
+          "name": "Hash appartenenza",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "experiments",
+      "name": "10 · Esperimenti",
+      "description": "Test di ipotesi con guadagno informativo esplicito.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Obiettivo informativo",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Esplorativo"
+              },
+              {
+                "name": "Confermativo"
+              },
+              {
+                "name": "Replica"
+              },
+              {
+                "name": "Forensic"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Progettato"
+              },
+              {
+                "name": "Preregistrato"
+              },
+              {
+                "name": "In corso"
+              },
+              {
+                "name": "Concluso"
+              },
+              {
+                "name": "Interrotto"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "protocols",
+      "name": "10 · Versioni dei protocolli",
+      "description": "Procedure versionate e preregistrazione; non alterare retroattivamente.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Modalità",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Componente isolato"
+              },
+              {
+                "name": "Ricomposizione"
+              },
+              {
+                "name": "Sistema completo"
+              },
+              {
+                "name": "Altro"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Procedura",
+          "type": "multilineText"
+        },
+        {
+          "name": "Criteri di successo",
+          "type": "multilineText"
+        },
+        {
+          "name": "Regole di arresto",
+          "type": "multilineText"
+        },
+        {
+          "name": "Registrato il",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Hash preregistrazione",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "factors",
+      "name": "10 · Fattori",
+      "description": "Variabili manipolate nel disegno sperimentale.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Categorico"
+              },
+              {
+                "name": "Numerico"
+              },
+              {
+                "name": "Ordinale"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Interpretazione causale",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "factorlevels",
+      "name": "10 · Livelli dei fattori",
+      "description": "Valori ammessi di un fattore.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Valore",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Unità",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "arms",
+      "name": "10 · Bracci sperimentali",
+      "description": "Condizioni sperimentali con controllo o trattamento.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Ruolo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Trattamento"
+              },
+              {
+                "name": "Baseline"
+              },
+              {
+                "name": "Controllo negativo"
+              },
+              {
+                "name": "Oracle diagnostico"
+              },
+              {
+                "name": "Ablazione"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Configurazione residua",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "assignments",
+      "name": "10 · Assegnazioni dei fattori",
+      "description": "Una assegnazione collega un braccio a un livello di fattore.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "contrasts",
+      "name": "10 · Contrasti pianificati",
+      "description": "Confronti e interazioni preregistrati, con regole interpretative.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Contrasto e coefficienti",
+          "type": "multilineText"
+        },
+        {
+          "name": "Soglia interpretativa",
+          "type": "multilineText"
+        },
+        {
+          "name": "Confondenti controllati",
+          "type": "multilineText"
+        },
+        {
+          "name": "Correzione confronti multipli",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "blocks",
+      "name": "11 · Blocchi di esecuzione",
+      "description": "Appaiamento per seed, inizializzazione e flussi dati.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Seed",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Hash stream",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Regola di appaiamento",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "runs",
+      "name": "11 · Esecuzioni sperimentali",
+      "description": "Esecuzione effettiva distinta dal protocollo previsto.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Pianificata"
+              },
+              {
+                "name": "In corso"
+              },
+              {
+                "name": "Completata"
+              },
+              {
+                "name": "Fallita"
+              },
+              {
+                "name": "Interrotta"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Seed",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Inizio UTC",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Fine UTC",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Hardware e ambiente",
+          "type": "multilineText"
+        },
+        {
+          "name": "Configurazione effettiva",
+          "type": "multilineText"
+        },
+        {
+          "name": "Validità tecnica",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "checkpoints",
+      "name": "11 · Checkpoint",
+      "description": "Punti intermedi della medesima traiettoria per curve a budget crescente.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Step",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        },
+        {
+          "name": "Budget consumato",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        },
+        {
+          "name": "Unità budget",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Timestamp UTC",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "quality",
+      "name": "11 · Controlli di qualità",
+      "description": "Integrità, replay, leakage e coerenza; distinti dal successo scientifico.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo controllo",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Regola",
+          "type": "multilineText"
+        },
+        {
+          "name": "Esito",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Superato"
+              },
+              {
+                "name": "Fallito"
+              },
+              {
+                "name": "Non eseguito"
+              },
+              {
+                "name": "Non applicabile"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Dettagli",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "deviations",
+      "name": "11 · Deviazioni dal protocollo",
+      "description": "Incidenti e modifiche senza riscrivere il protocollo originale.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Deviazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Motivazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Impatto",
+          "type": "multilineText"
+        },
+        {
+          "name": "Timestamp UTC",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "metrics",
+      "name": "12 · Definizioni delle metriche",
+      "description": "Formule riutilizzabili; separate dalla specifica applicazione.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Famiglia",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Regressione"
+              },
+              {
+                "name": "Classificazione"
+              },
+              {
+                "name": "Eventi temporali"
+              },
+              {
+                "name": "Probabilistica"
+              },
+              {
+                "name": "Fisica"
+              },
+              {
+                "name": "Computazionale"
+              },
+              {
+                "name": "Probe"
+              },
+              {
+                "name": "Altro"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Formula",
+          "type": "multilineText"
+        },
+        {
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Direzione",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Minimizzare"
+              },
+              {
+                "name": "Massimizzare"
+              },
+              {
+                "name": "Target"
+              },
+              {
+                "name": "Descrittiva"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Parametri",
+          "type": "multilineText"
+        },
+        {
+          "name": "Casi degeneri",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "evaluations",
+      "name": "12 · Specifiche di valutazione",
+      "description": "Applicazione versionata della metrica: target, orizzonte, popolazione e aggregazione.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Target",
+          "type": "multilineText"
+        },
+        {
+          "name": "Popolazione e regioni",
+          "type": "multilineText"
+        },
+        {
+          "name": "Orizzonte e finestre",
+          "type": "multilineText"
+        },
+        {
+          "name": "Aggregazione e pesi",
+          "type": "multilineText"
+        },
+        {
+          "name": "Matching eventi",
+          "type": "multilineText"
+        },
+        {
+          "name": "Gestione classi assenti",
+          "type": "multilineText"
+        },
+        {
+          "name": "Ruolo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Primaria"
+              },
+              {
+                "name": "Secondaria"
+              },
+              {
+                "name": "Diagnostica"
+              },
+              {
+                "name": "Controllo"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "observations",
+      "name": "12 · Risultati delle metriche",
+      "description": "Valori scalari e riferimenti a misure dettagliate. Non inferire causalità dal solo valore.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Valore",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        },
+        {
+          "name": "Numerosità",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        },
+        {
+          "name": "Limite inferiore",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        },
+        {
+          "name": "Limite superiore",
+          "type": "number",
+          "options": {
+            "precision": 6
+          }
+        },
+        {
+          "name": "Metodo di incertezza",
+          "type": "multilineText"
+        },
+        {
+          "name": "Strato o sottogruppo",
+          "type": "multilineText"
+        },
+        {
+          "name": "Motivo valore mancante",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "analyses",
+      "name": "12 · Esecuzioni delle analisi",
+      "description": "Procedure analitiche versionate e riproducibili.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Commit",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Procedura",
+          "type": "multilineText"
+        },
+        {
+          "name": "Configurazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Origine",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Preregistrata"
+              },
+              {
+                "name": "Esplorativa"
+              },
+              {
+                "name": "Post hoc"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "findings",
+      "name": "12 · Risultati scientifici",
+      "description": "Conclusioni empiriche scopiated separate dalle valutazioni delle ipotesi.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Risultato",
+          "type": "multilineText"
+        },
+        {
+          "name": "Incertezza",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limitazioni",
+          "type": "multilineText"
+        },
+        {
+          "name": "Esito",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Positivo"
+              },
+              {
+                "name": "Negativo"
+              },
+              {
+                "name": "Misto"
+              },
+              {
+                "name": "Inconcludente"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "anomalies",
+      "name": "12 · Anomalie",
+      "description": "Comportamenti inattesi che richiedono spiegazione.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Atteso",
+          "type": "multilineText"
+        },
+        {
+          "name": "Osservato",
+          "type": "multilineText"
+        },
+        {
+          "name": "Possibili cause",
+          "type": "multilineText"
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Aperta"
+              },
+              {
+                "name": "In analisi"
+              },
+              {
+                "name": "Spiegata"
+              },
+              {
+                "name": "Non risolta"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "confirmations",
+      "name": "13 · Studi di conferma e trasferimento",
+      "description": "Repliche, nuove condizioni e trasferimento da playground a sistema reale.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Tipo",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Replica"
+              },
+              {
+                "name": "Conferma indipendente"
+              },
+              {
+                "name": "Trasferimento"
+              },
+              {
+                "name": "Scaling"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Indipendenza",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni nuove",
+          "type": "multilineText"
+        },
+        {
+          "name": "Esito",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "decisions",
+      "name": "13 · Decisioni",
+      "description": "Decisioni motivate dalle evidenze, non dal solo ranking.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Esito",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Continuare"
+              },
+              {
+                "name": "Modificare"
+              },
+              {
+                "name": "Scartare"
+              },
+              {
+                "name": "Ampliare"
+              },
+              {
+                "name": "Sospendere"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Motivazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni di revisione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Data",
+          "type": "singleLineText"
+        }
+      ]
+    },
+    {
+      "key": "lessons",
+      "name": "13 · Lezioni apprese",
+      "description": "Conoscenza riutilizzabile con ambito esplicito.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Lezione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Condizioni",
+          "type": "multilineText"
+        },
+        {
+          "name": "Limiti",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "rules",
+      "name": "13 · Regole metodologiche",
+      "description": "Principi operativi versionati.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Regola",
+          "type": "multilineText"
+        },
+        {
+          "name": "Motivazione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "applications",
+      "name": "13 · Applicazioni del metodo",
+      "description": "Applicazione concreta di una regola in un esperimento.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Modalità di applicazione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Scostamenti",
+          "type": "multilineText"
+        },
+        {
+          "name": "Valutazione",
+          "type": "multilineText"
+        }
+      ]
+    },
+    {
+      "key": "actions",
+      "name": "13 · Azioni di ricerca",
+      "description": "Passi successivi con dipendenze e condizioni di avvio.",
+      "fields": [
+        {
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "name": "Stato",
+          "type": "singleSelect",
+          "options": {
+            "choices": [
+              {
+                "name": "Proposta"
+              },
+              {
+                "name": "Pronta"
+              },
+              {
+                "name": "In corso"
+              },
+              {
+                "name": "Bloccata"
+              },
+              {
+                "name": "Conclusa"
+              },
+              {
+                "name": "Rinviata"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Criteri di avvio",
+          "type": "multilineText"
+        },
+        {
+          "name": "Risultato atteso",
+          "type": "multilineText"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "sources",
+      "name": "Autori",
+      "to": "actors",
+      "single": false
+    },
+    {
+      "from": "sources",
+      "name": "Artefatti originali",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "segments",
+      "name": "Fonte",
+      "to": "sources",
+      "single": true
+    },
+    {
+      "from": "artifacts",
+      "name": "Artefatti di origine",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "questions",
+      "name": "Programma",
+      "to": "programs",
+      "single": true
+    },
+    {
+      "from": "objectives",
+      "name": "Programmi",
+      "to": "programs",
+      "single": false
+    },
+    {
+      "from": "capabilities",
+      "name": "Obiettivi",
+      "to": "objectives",
+      "single": false
+    },
+    {
+      "from": "capdeps",
+      "name": "Prerequisito",
+      "to": "capabilities",
+      "single": true
+    },
+    {
+      "from": "capdeps",
+      "name": "Capacità dipendente",
+      "to": "capabilities",
+      "single": true
+    },
+    {
+      "from": "capdeps",
+      "name": "Ipotesi giustificativa",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "definitions",
+      "name": "Versione precedente",
+      "to": "definitions",
+      "single": true
+    },
+    {
+      "from": "systems",
+      "name": "Livelli",
+      "to": "levels",
+      "single": false
+    },
+    {
+      "from": "systems",
+      "name": "Fonti",
+      "to": "sources",
+      "single": false
+    },
+    {
+      "from": "phenomena",
+      "name": "Sistemi",
+      "to": "systems",
+      "single": false
+    },
+    {
+      "from": "phenomena",
+      "name": "Definizioni operative",
+      "to": "definitions",
+      "single": false
+    },
+    {
+      "from": "quantities",
+      "name": "Sistemi",
+      "to": "systems",
+      "single": false
+    },
+    {
+      "from": "quantities",
+      "name": "Livelli",
+      "to": "levels",
+      "single": false
+    },
+    {
+      "from": "mechanisms",
+      "name": "Sistemi",
+      "to": "systems",
+      "single": false
+    },
+    {
+      "from": "mechanisms",
+      "name": "Grandezze",
+      "to": "quantities",
+      "single": false
+    },
+    {
+      "from": "mechanisms",
+      "name": "Fenomeni",
+      "to": "phenomena",
+      "single": false
+    },
+    {
+      "from": "mechanisms",
+      "name": "Affermazioni di supporto",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "constraints",
+      "name": "Sistemi",
+      "to": "systems",
+      "single": false
+    },
+    {
+      "from": "constraints",
+      "name": "Grandezze",
+      "to": "quantities",
+      "single": false
+    },
+    {
+      "from": "constraints",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "crosslevels",
+      "name": "Livello origine",
+      "to": "levels",
+      "single": true
+    },
+    {
+      "from": "crosslevels",
+      "name": "Livello destinazione",
+      "to": "levels",
+      "single": true
+    },
+    {
+      "from": "crosslevels",
+      "name": "Sistemi",
+      "to": "systems",
+      "single": false
+    },
+    {
+      "from": "crosslevels",
+      "name": "Ipotesi",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Domande",
+      "to": "questions",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Passaggi fonte",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Modelli oggetto",
+      "to": "models",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Componenti oggetto",
+      "to": "instances",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Equazioni oggetto",
+      "to": "equations",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Meccanismi oggetto",
+      "to": "mechanisms",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Parametrizzazioni oggetto",
+      "to": "parameters",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Ricette oggetto",
+      "to": "recipes",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Domini di validità",
+      "to": "validity",
+      "single": false
+    },
+    {
+      "from": "claims",
+      "name": "Corrispondenze oggetto",
+      "to": "mappings",
+      "single": false
+    },
+    {
+      "from": "assumptions",
+      "name": "Programmi",
+      "to": "programs",
+      "single": false
+    },
+    {
+      "from": "assumptions",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "assumptions",
+      "name": "Ipotesi correlate",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "claimrels",
+      "name": "Enunciato origine",
+      "to": "claims",
+      "single": true
+    },
+    {
+      "from": "claimrels",
+      "name": "Enunciato destinazione",
+      "to": "claims",
+      "single": true
+    },
+    {
+      "from": "predictions",
+      "name": "Ipotesi",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "predictions",
+      "name": "Specifica di valutazione",
+      "to": "evaluations",
+      "single": true
+    },
+    {
+      "from": "predictions",
+      "name": "Contrasti",
+      "to": "contrasts",
+      "single": false
+    },
+    {
+      "from": "causal",
+      "name": "Ipotesi",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "causal",
+      "name": "Assunzioni",
+      "to": "assumptions",
+      "single": false
+    },
+    {
+      "from": "causal",
+      "name": "Meccanismi",
+      "to": "mechanisms",
+      "single": false
+    },
+    {
+      "from": "evidence",
+      "name": "Affermazione valutata",
+      "to": "claims",
+      "single": true
+    },
+    {
+      "from": "evidence",
+      "name": "Assunzione valutata",
+      "to": "assumptions",
+      "single": true
+    },
+    {
+      "from": "evidence",
+      "name": "Risultati a sostegno",
+      "to": "findings",
+      "single": false
+    },
+    {
+      "from": "evidence",
+      "name": "Passaggi fonte",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "evidence",
+      "name": "Valutatore",
+      "to": "actors",
+      "single": true
+    },
+    {
+      "from": "evidence",
+      "name": "Domini di validità",
+      "to": "validity",
+      "single": false
+    },
+    {
+      "from": "approaches",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "choices",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "choices",
+      "name": "Approcci",
+      "to": "approaches",
+      "single": false
+    },
+    {
+      "from": "choices",
+      "name": "Componenti",
+      "to": "instances",
+      "single": false
+    },
+    {
+      "from": "choices",
+      "name": "Grandezze",
+      "to": "quantities",
+      "single": false
+    },
+    {
+      "from": "choices",
+      "name": "Assunzioni",
+      "to": "assumptions",
+      "single": false
+    },
+    {
+      "from": "choices",
+      "name": "Ipotesi",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "mappings",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "mappings",
+      "name": "Componenti",
+      "to": "instances",
+      "single": false
+    },
+    {
+      "from": "mappings",
+      "name": "Simboli",
+      "to": "symbols",
+      "single": false
+    },
+    {
+      "from": "mappings",
+      "name": "Grandezze",
+      "to": "quantities",
+      "single": false
+    },
+    {
+      "from": "mappings",
+      "name": "Meccanismi",
+      "to": "mechanisms",
+      "single": false
+    },
+    {
+      "from": "mappings",
+      "name": "Ipotesi di corrispondenza",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "validity",
+      "name": "Sistemi",
+      "to": "systems",
+      "single": false
+    },
+    {
+      "from": "models",
+      "name": "Versione precedente",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "models",
+      "name": "Sistemi rappresentati",
+      "to": "systems",
+      "single": false
+    },
+    {
+      "from": "models",
+      "name": "Obiettivi",
+      "to": "objectives",
+      "single": false
+    },
+    {
+      "from": "models",
+      "name": "Approcci",
+      "to": "approaches",
+      "single": false
+    },
+    {
+      "from": "models",
+      "name": "Assunzioni",
+      "to": "assumptions",
+      "single": false
+    },
+    {
+      "from": "models",
+      "name": "Domini di validità",
+      "to": "validity",
+      "single": false
+    },
+    {
+      "from": "models",
+      "name": "Vincoli",
+      "to": "constraints",
+      "single": false
+    },
+    {
+      "from": "types",
+      "name": "Meccanismi rappresentati",
+      "to": "mechanisms",
+      "single": false
+    },
+    {
+      "from": "types",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "instances",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "instances",
+      "name": "Tipo componente",
+      "to": "types",
+      "single": true
+    },
+    {
+      "from": "ports",
+      "name": "Componente",
+      "to": "instances",
+      "single": true
+    },
+    {
+      "from": "ports",
+      "name": "Simboli",
+      "to": "symbols",
+      "single": false
+    },
+    {
+      "from": "ports",
+      "name": "Grandezze",
+      "to": "quantities",
+      "single": false
+    },
+    {
+      "from": "connections",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "connections",
+      "name": "Porta origine",
+      "to": "ports",
+      "single": true
+    },
+    {
+      "from": "connections",
+      "name": "Porta destinazione",
+      "to": "ports",
+      "single": true
+    },
+    {
+      "from": "equations",
+      "name": "Simboli",
+      "to": "symbols",
+      "single": false
+    },
+    {
+      "from": "equations",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "symbols",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "symbols",
+      "name": "Grandezze",
+      "to": "quantities",
+      "single": false
+    },
+    {
+      "from": "bindings",
+      "name": "Componente",
+      "to": "instances",
+      "single": true
+    },
+    {
+      "from": "bindings",
+      "name": "Equazione",
+      "to": "equations",
+      "single": true
+    },
+    {
+      "from": "bindings",
+      "name": "Simboli associati",
+      "to": "symbols",
+      "single": false
+    },
+    {
+      "from": "bindings",
+      "name": "Porte associate",
+      "to": "ports",
+      "single": false
+    },
+    {
+      "from": "composition",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "composition",
+      "name": "Contenitore",
+      "to": "instances",
+      "single": true
+    },
+    {
+      "from": "composition",
+      "name": "Parte",
+      "to": "instances",
+      "single": true
+    },
+    {
+      "from": "substitutions",
+      "name": "Modello originale",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "substitutions",
+      "name": "Modello sostitutivo",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "substitutions",
+      "name": "Componenti originali",
+      "to": "instances",
+      "single": false
+    },
+    {
+      "from": "substitutions",
+      "name": "Componenti sostitutivi",
+      "to": "instances",
+      "single": false
+    },
+    {
+      "from": "substitutions",
+      "name": "Ipotesi di equivalenza",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "substitutions",
+      "name": "Esperimenti di verifica",
+      "to": "experiments",
+      "single": false
+    },
+    {
+      "from": "implementations",
+      "name": "Modelli implementati",
+      "to": "models",
+      "single": false
+    },
+    {
+      "from": "implementations",
+      "name": "Schemi numerici",
+      "to": "numerics",
+      "single": false
+    },
+    {
+      "from": "implementations",
+      "name": "Artefatti codice",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "numerics",
+      "name": "Equazioni",
+      "to": "equations",
+      "single": false
+    },
+    {
+      "from": "parameters",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "parameters",
+      "name": "Componenti associati",
+      "to": "instances",
+      "single": false
+    },
+    {
+      "from": "parameters",
+      "name": "Simboli parametrizzati",
+      "to": "symbols",
+      "single": false
+    },
+    {
+      "from": "losses",
+      "name": "Equazioni",
+      "to": "equations",
+      "single": false
+    },
+    {
+      "from": "losses",
+      "name": "Target simbolici",
+      "to": "symbols",
+      "single": false
+    },
+    {
+      "from": "recipes",
+      "name": "Loss",
+      "to": "losses",
+      "single": false
+    },
+    {
+      "from": "recipes",
+      "name": "Parametrizzazioni",
+      "to": "parameters",
+      "single": false
+    },
+    {
+      "from": "recipes",
+      "name": "Versione precedente",
+      "to": "recipes",
+      "single": true
+    },
+    {
+      "from": "trained",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "trained",
+      "name": "Implementazione",
+      "to": "implementations",
+      "single": true
+    },
+    {
+      "from": "trained",
+      "name": "Run di origine",
+      "to": "runs",
+      "single": true
+    },
+    {
+      "from": "trained",
+      "name": "Checkpoint selezionato",
+      "to": "checkpoints",
+      "single": true
+    },
+    {
+      "from": "trained",
+      "name": "Partizioni di selezione",
+      "to": "partitions",
+      "single": false
+    },
+    {
+      "from": "strategies",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "patterns",
+      "name": "Tipi componenti",
+      "to": "types",
+      "single": false
+    },
+    {
+      "from": "patterns",
+      "name": "Ipotesi",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "analogies",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "analogies",
+      "name": "Strategie ispirate",
+      "to": "strategies",
+      "single": false
+    },
+    {
+      "from": "analogies",
+      "name": "Ipotesi generate",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "candidates",
+      "name": "Campagna",
+      "to": "campaigns",
+      "single": true
+    },
+    {
+      "from": "candidates",
+      "name": "Specifiche proposte",
+      "to": "models",
+      "single": false
+    },
+    {
+      "from": "candidates",
+      "name": "Pattern",
+      "to": "patterns",
+      "single": false
+    },
+    {
+      "from": "candidates",
+      "name": "Ipotesi",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "transformations",
+      "name": "Candidato origine",
+      "to": "candidates",
+      "single": true
+    },
+    {
+      "from": "transformations",
+      "name": "Candidato destinazione",
+      "to": "candidates",
+      "single": true
+    },
+    {
+      "from": "transformations",
+      "name": "Componenti coinvolti",
+      "to": "instances",
+      "single": false
+    },
+    {
+      "from": "transformations",
+      "name": "Ipotesi",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "campaigns",
+      "name": "Programma",
+      "to": "programs",
+      "single": true
+    },
+    {
+      "from": "campaigns",
+      "name": "Strategie",
+      "to": "strategies",
+      "single": false
+    },
+    {
+      "from": "playgrounds",
+      "name": "Programmi",
+      "to": "programs",
+      "single": false
+    },
+    {
+      "from": "playgrounds",
+      "name": "Capacità",
+      "to": "capabilities",
+      "single": false
+    },
+    {
+      "from": "playgrounds",
+      "name": "Sistemi di riferimento",
+      "to": "systems",
+      "single": false
+    },
+    {
+      "from": "tasks",
+      "name": "Playground",
+      "to": "playgrounds",
+      "single": true
+    },
+    {
+      "from": "tasks",
+      "name": "Capacità",
+      "to": "capabilities",
+      "single": false
+    },
+    {
+      "from": "generators",
+      "name": "Teacher implementato",
+      "to": "implementations",
+      "single": true
+    },
+    {
+      "from": "generators",
+      "name": "Schemi numerici",
+      "to": "numerics",
+      "single": false
+    },
+    {
+      "from": "generators",
+      "name": "Artefatti codice",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "generators",
+      "name": "Definizioni eventi",
+      "to": "definitions",
+      "single": false
+    },
+    {
+      "from": "datasets",
+      "name": "Generatore",
+      "to": "generators",
+      "single": true
+    },
+    {
+      "from": "datasets",
+      "name": "Versione precedente",
+      "to": "datasets",
+      "single": true
+    },
+    {
+      "from": "datasets",
+      "name": "Artefatti",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "datasets",
+      "name": "Compiti",
+      "to": "tasks",
+      "single": false
+    },
+    {
+      "from": "datasets",
+      "name": "Definizioni operative",
+      "to": "definitions",
+      "single": false
+    },
+    {
+      "from": "partitions",
+      "name": "Dataset",
+      "to": "datasets",
+      "single": true
+    },
+    {
+      "from": "experiments",
+      "name": "Programma",
+      "to": "programs",
+      "single": true
+    },
+    {
+      "from": "experiments",
+      "name": "Domande",
+      "to": "questions",
+      "single": false
+    },
+    {
+      "from": "experiments",
+      "name": "Ipotesi",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "experiments",
+      "name": "Playground",
+      "to": "playgrounds",
+      "single": false
+    },
+    {
+      "from": "experiments",
+      "name": "Campagna",
+      "to": "campaigns",
+      "single": true
+    },
+    {
+      "from": "protocols",
+      "name": "Esperimento",
+      "to": "experiments",
+      "single": true
+    },
+    {
+      "from": "protocols",
+      "name": "Versione precedente",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "protocols",
+      "name": "Predizioni",
+      "to": "predictions",
+      "single": false
+    },
+    {
+      "from": "protocols",
+      "name": "Partizioni autorizzate",
+      "to": "partitions",
+      "single": false
+    },
+    {
+      "from": "protocols",
+      "name": "Artefatto preregistrazione",
+      "to": "artifacts",
+      "single": true
+    },
+    {
+      "from": "protocols",
+      "name": "Autori",
+      "to": "actors",
+      "single": false
+    },
+    {
+      "from": "factors",
+      "name": "Protocollo",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "factorlevels",
+      "name": "Fattore",
+      "to": "factors",
+      "single": true
+    },
+    {
+      "from": "arms",
+      "name": "Protocollo",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "arms",
+      "name": "Modello",
+      "to": "models",
+      "single": true
+    },
+    {
+      "from": "arms",
+      "name": "Implementazione",
+      "to": "implementations",
+      "single": true
+    },
+    {
+      "from": "arms",
+      "name": "Ricetta",
+      "to": "recipes",
+      "single": true
+    },
+    {
+      "from": "arms",
+      "name": "Partizioni",
+      "to": "partitions",
+      "single": false
+    },
+    {
+      "from": "assignments",
+      "name": "Braccio",
+      "to": "arms",
+      "single": true
+    },
+    {
+      "from": "assignments",
+      "name": "Livello",
+      "to": "factorlevels",
+      "single": true
+    },
+    {
+      "from": "contrasts",
+      "name": "Protocollo",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "contrasts",
+      "name": "Bracci",
+      "to": "arms",
+      "single": false
+    },
+    {
+      "from": "contrasts",
+      "name": "Predizioni",
+      "to": "predictions",
+      "single": false
+    },
+    {
+      "from": "contrasts",
+      "name": "Specifiche di valutazione",
+      "to": "evaluations",
+      "single": false
+    },
+    {
+      "from": "blocks",
+      "name": "Protocollo",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "runs",
+      "name": "Braccio",
+      "to": "arms",
+      "single": true
+    },
+    {
+      "from": "runs",
+      "name": "Blocco",
+      "to": "blocks",
+      "single": true
+    },
+    {
+      "from": "runs",
+      "name": "Implementazione effettiva",
+      "to": "implementations",
+      "single": true
+    },
+    {
+      "from": "runs",
+      "name": "Ricetta effettiva",
+      "to": "recipes",
+      "single": true
+    },
+    {
+      "from": "runs",
+      "name": "Partizioni effettive",
+      "to": "partitions",
+      "single": false
+    },
+    {
+      "from": "runs",
+      "name": "Artefatti prodotti",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "runs",
+      "name": "Responsabili",
+      "to": "actors",
+      "single": false
+    },
+    {
+      "from": "checkpoints",
+      "name": "Run",
+      "to": "runs",
+      "single": true
+    },
+    {
+      "from": "checkpoints",
+      "name": "Artefatto",
+      "to": "artifacts",
+      "single": true
+    },
+    {
+      "from": "quality",
+      "name": "Run",
+      "to": "runs",
+      "single": true
+    },
+    {
+      "from": "quality",
+      "name": "Dataset",
+      "to": "datasets",
+      "single": false
+    },
+    {
+      "from": "quality",
+      "name": "Implementazioni",
+      "to": "implementations",
+      "single": false
+    },
+    {
+      "from": "quality",
+      "name": "Artefatti diagnostici",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "deviations",
+      "name": "Run",
+      "to": "runs",
+      "single": true
+    },
+    {
+      "from": "deviations",
+      "name": "Protocollo previsto",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "deviations",
+      "name": "Protocollo sostitutivo",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "deviations",
+      "name": "Responsabili",
+      "to": "actors",
+      "single": false
+    },
+    {
+      "from": "metrics",
+      "name": "Equazioni",
+      "to": "equations",
+      "single": false
+    },
+    {
+      "from": "metrics",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "evaluations",
+      "name": "Metrica",
+      "to": "metrics",
+      "single": true
+    },
+    {
+      "from": "evaluations",
+      "name": "Protocollo",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "evaluations",
+      "name": "Definizioni etichette",
+      "to": "definitions",
+      "single": false
+    },
+    {
+      "from": "evaluations",
+      "name": "Partizioni",
+      "to": "partitions",
+      "single": false
+    },
+    {
+      "from": "evaluations",
+      "name": "Grandezze",
+      "to": "quantities",
+      "single": false
+    },
+    {
+      "from": "evaluations",
+      "name": "Versione precedente",
+      "to": "evaluations",
+      "single": true
+    },
+    {
+      "from": "observations",
+      "name": "Specifica di valutazione",
+      "to": "evaluations",
+      "single": true
+    },
+    {
+      "from": "observations",
+      "name": "Run",
+      "to": "runs",
+      "single": true
+    },
+    {
+      "from": "observations",
+      "name": "Checkpoint",
+      "to": "checkpoints",
+      "single": true
+    },
+    {
+      "from": "observations",
+      "name": "Modello addestrato",
+      "to": "trained",
+      "single": true
+    },
+    {
+      "from": "observations",
+      "name": "Analisi",
+      "to": "analyses",
+      "single": true
+    },
+    {
+      "from": "observations",
+      "name": "Artefatti dettagliati",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "analyses",
+      "name": "Run analizzati",
+      "to": "runs",
+      "single": false
+    },
+    {
+      "from": "analyses",
+      "name": "Contrasti",
+      "to": "contrasts",
+      "single": false
+    },
+    {
+      "from": "analyses",
+      "name": "Input artefatti",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "analyses",
+      "name": "Output artefatti",
+      "to": "artifacts",
+      "single": false
+    },
+    {
+      "from": "findings",
+      "name": "Analisi",
+      "to": "analyses",
+      "single": false
+    },
+    {
+      "from": "findings",
+      "name": "Osservazioni",
+      "to": "observations",
+      "single": false
+    },
+    {
+      "from": "findings",
+      "name": "Esperimenti",
+      "to": "experiments",
+      "single": false
+    },
+    {
+      "from": "findings",
+      "name": "Domini di validità",
+      "to": "validity",
+      "single": false
+    },
+    {
+      "from": "anomalies",
+      "name": "Run",
+      "to": "runs",
+      "single": false
+    },
+    {
+      "from": "anomalies",
+      "name": "Osservazioni",
+      "to": "observations",
+      "single": false
+    },
+    {
+      "from": "anomalies",
+      "name": "Ipotesi esplicative",
+      "to": "claims",
+      "single": false
+    },
+    {
+      "from": "confirmations",
+      "name": "Risultati da confermare",
+      "to": "findings",
+      "single": false
+    },
+    {
+      "from": "confirmations",
+      "name": "Esperimenti di verifica",
+      "to": "experiments",
+      "single": false
+    },
+    {
+      "from": "confirmations",
+      "name": "Domini di origine",
+      "to": "validity",
+      "single": false
+    },
+    {
+      "from": "confirmations",
+      "name": "Domini di destinazione",
+      "to": "validity",
+      "single": false
+    },
+    {
+      "from": "decisions",
+      "name": "Programma",
+      "to": "programs",
+      "single": true
+    },
+    {
+      "from": "decisions",
+      "name": "Valutazioni delle evidenze",
+      "to": "evidence",
+      "single": false
+    },
+    {
+      "from": "decisions",
+      "name": "Risultati",
+      "to": "findings",
+      "single": false
+    },
+    {
+      "from": "decisions",
+      "name": "Candidati",
+      "to": "candidates",
+      "single": false
+    },
+    {
+      "from": "decisions",
+      "name": "Responsabili",
+      "to": "actors",
+      "single": false
+    },
+    {
+      "from": "lessons",
+      "name": "Risultati",
+      "to": "findings",
+      "single": false
+    },
+    {
+      "from": "lessons",
+      "name": "Decisioni",
+      "to": "decisions",
+      "single": false
+    },
+    {
+      "from": "lessons",
+      "name": "Domini di validità",
+      "to": "validity",
+      "single": false
+    },
+    {
+      "from": "rules",
+      "name": "Fonti",
+      "to": "segments",
+      "single": false
+    },
+    {
+      "from": "rules",
+      "name": "Lezioni",
+      "to": "lessons",
+      "single": false
+    },
+    {
+      "from": "applications",
+      "name": "Regola",
+      "to": "rules",
+      "single": true
+    },
+    {
+      "from": "applications",
+      "name": "Esperimento",
+      "to": "experiments",
+      "single": true
+    },
+    {
+      "from": "applications",
+      "name": "Protocollo",
+      "to": "protocols",
+      "single": true
+    },
+    {
+      "from": "actions",
+      "name": "Programma",
+      "to": "programs",
+      "single": true
+    },
+    {
+      "from": "actions",
+      "name": "Decisioni di origine",
+      "to": "decisions",
+      "single": false
+    },
+    {
+      "from": "actions",
+      "name": "Domande",
+      "to": "questions",
+      "single": false
+    },
+    {
+      "from": "actions",
+      "name": "Esperimenti previsti",
+      "to": "experiments",
+      "single": false
+    },
+    {
+      "from": "actions",
+      "name": "Dipende da",
+      "to": "actions",
+      "single": false
+    },
+    {
+      "from": "actions",
+      "name": "Responsabili",
+      "to": "actors",
+      "single": false
+    }
+  ],
+  "constraints_notes": [
+    "Le cardinalità singole sono documentate nelle descrizioni, ma il connettore non consente prefersSingleRecordLink.",
+    "I codici stabili non sono vincoli UNIQUE applicati dal database.",
+    "Le tabelle di relazione richiedono estremi coerenti; verificare lo stesso modello per composizione e connessioni.",
+    "Il contenimento e le dipendenze operative devono essere aciclici; le connessioni dinamiche possono essere ricorrenti.",
+    "Valutazioni delle evidenze: identificare un bersaglio primario (affermazione oppure assunzione).",
+    "Le osservazioni si riferiscono a una specifica di valutazione; non confrontare metriche con popolazioni o aggregazioni diverse.",
+    "Nessun record creato. Nessuna automazione o dato di esempio."
+  ]
+}

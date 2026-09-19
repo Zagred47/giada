@@ -1,0 +1,5910 @@
+{
+  "tables": [
+    {
+      "id": "tblnpA57WIZY8Pjoz",
+      "name": "01 · Fonti",
+      "description": "Provenienza documentale; una fonte non è automaticamente evidenza valida.",
+      "primaryFieldId": "fldNHGQfpEti609hz",
+      "fields": [
+        {
+          "id": "fldNHGQfpEti609hz",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldGnHpj5242oxCfh",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldMDGebuqnlnNHEK",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldDOlNKyPwo3oETs",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldRNlZvJAjPBxyhk",
+          "name": "URL",
+          "type": "url"
+        },
+        {
+          "id": "fld4A8vpvIknNPGNa",
+          "name": "Versione o data",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld6SuKr3z6h3P9pj",
+          "name": "DOI",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldH6568MPwFojv4D",
+          "name": "Autori",
+          "type": "multipleRecordLinks",
+          "description": "Collegamento agli autori della fonte. Più record ammessi."
+        },
+        {
+          "id": "fldMBAyebKmz1GQSs",
+          "name": "Artefatti originali",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldNJlPec2y809c9W",
+          "name": "↩ 01 · Passaggi delle fonti — Fonte",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Fonte» in «01 · Passaggi delle fonti». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fld2jzcvf7Us3Ta7Y",
+          "name": "↩ 03 · Sistemi di dominio — Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Fonti» in «03 · Sistemi di dominio». È lo stesso collegamento, non una seconda relazione da compilare."
+        }
+      ]
+    },
+    {
+      "id": "tblYFEfVDs2DYMZLU",
+      "name": "01 · Passaggi delle fonti",
+      "description": "Estratti grezzi localizzabili, distinti dalle interpretazioni.",
+      "primaryFieldId": "fldLnvlN2PTMnZaIH",
+      "fields": [
+        {
+          "id": "fldLnvlN2PTMnZaIH",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldwDCIFkbZl3VI8A",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldRa3vuJfH6Tk2dN",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldDdW8FSsrHTdi86",
+          "name": "Testo originale",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldgDDjTASPzQN6pv",
+          "name": "Localizzatore pagina o timestamp",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldKZlLv6QleqLKYI",
+          "name": "Contesto",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldsyOASv8pPPMpkI",
+          "name": "Fonte",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Fonti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldiBYzB8okSnnOUQ",
+          "name": "↩ 03 · Vincoli di dominio — Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Fonti» in «03 · Vincoli di dominio». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldSjhgnXkRsN6xSD",
+          "name": "↩ 04 · Affermazioni e ipotesi — Passaggi fonte",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Passaggi fonte» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldE78A3fh5zZkPZr",
+          "name": "↩ 04 · Assunzioni di ricerca — Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Fonti» in «04 · Assunzioni di ricerca». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldD9FJg2cVvw3azg",
+          "name": "04 · Valutazioni delle evidenze",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldMSrYhgvPoCyOsl",
+          "name": "05 · Approcci di modellazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld93pe5BcWy9SvMj",
+          "name": "06 · Tipi di componenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld7SEBp9QRqrOGAe",
+          "name": "06 · Relazioni matematiche",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldjKgYmbUvzvx9t7",
+          "name": "08 · Strategie di progettazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld1ZLBIc91L1hmL8",
+          "name": "08 · Analogie tra domini",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldazPTpZT88MBmeD",
+          "name": "12 · Definizioni delle metriche",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldGCnZ5AIvJdtVbq",
+          "name": "13 · Regole metodologiche",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblhtzJf7ZEFLbq8n",
+      "name": "01 · Attori",
+      "description": "Persone, gruppi e agenti responsabili di fonti, protocolli e valutazioni.",
+      "primaryFieldId": "fldPwcp8ulYzIzAVE",
+      "fields": [
+        {
+          "id": "fldPwcp8ulYzIzAVE",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldGIwFixlOKDIX2H",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldZz1RcCK10vzPGX",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldYI1suCMMpVZ22F",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldoy67YgMn50r4I9",
+          "name": "Affiliazione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld7TOpSFhTdT0fII",
+          "name": "↩ 01 · Fonti — Autori",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Autori» in «01 · Fonti». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldZELzkp97Rj3sLp",
+          "name": "04 · Valutazioni delle evidenze",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldwd4oBkAA3R8fhc",
+          "name": "10 · Versioni dei protocolli",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldpWDH64rwD62DA9",
+          "name": "11 · Esecuzioni sperimentali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldQyBhaDjFphxS59",
+          "name": "11 · Deviazioni dal protocollo",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld6o3pyI5M4lwB5g",
+          "name": "13 · Decisioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld3Quzv5FjPkVKMm",
+          "name": "13 · Azioni di ricerca",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblG8bHLgK88LKgg4",
+      "name": "01 · Artefatti",
+      "description": "Metadati di file esterni; non conservare qui array o checkpoint binari.",
+      "primaryFieldId": "fldw98aVU9j6cBJYh",
+      "fields": [
+        {
+          "id": "fldw98aVU9j6cBJYh",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldwnMJjQrllvC78Z",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldwLVADFDuK4I0rk",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld5CPJ02rTmLlE99",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldWuMKQAeTpYtqUA",
+          "name": "URL",
+          "type": "url"
+        },
+        {
+          "id": "fldJ42OE1ARQhyh59",
+          "name": "Percorso",
+          "type": "singleLineText"
+        },
+        {
+          "id": "flducpwJgNyg4cIlF",
+          "name": "SHA-256",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldmWDLbrTfgIENdj",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldybOB1VowNUBprP",
+          "name": "Dimensione byte",
+          "type": "number"
+        },
+        {
+          "id": "fld4JLfRlsryKM2UR",
+          "name": "↩ 01 · Fonti — Artefatti originali",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Artefatti originali» in «01 · Fonti». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldFio32ffmk14gMY",
+          "name": "Artefatti di origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldLBLpfZ9iTm3iVn",
+          "name": "↩ 01 · Artefatti — Artefatti di origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Artefatti di origine» in «01 · Artefatti». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldtrsi68uQKVHs45",
+          "name": "07 · Implementazioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldo5NXFqs2t9Qab8",
+          "name": "09 · Generatori e acquisizione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldKAWAFzxAGxBXtZ",
+          "name": "09 · Versioni dei dataset",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldDimjpO3pqBmw4Y",
+          "name": "10 · Versioni dei protocolli",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldqct09IUjoLdgF0",
+          "name": "11 · Esecuzioni sperimentali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld7lhB5GaDi7GPGr",
+          "name": "11 · Checkpoint",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldtz4d1xLAPiMl1B",
+          "name": "11 · Controlli di qualità",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldy0kiTp7BG4j68p",
+          "name": "12 · Risultati delle metriche",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld7CxbgCXwUM4NNt",
+          "name": "↩ 12 · Esecuzioni delle analisi — Input artefatti",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Input artefatti» in «12 · Esecuzioni delle analisi»."
+        },
+        {
+          "id": "fldM865VwAuTwSeyu",
+          "name": "↩ 12 · Esecuzioni delle analisi — Output artefatti",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Output artefatti» in «12 · Esecuzioni delle analisi»."
+        }
+      ]
+    },
+    {
+      "id": "tbldEHmvXIKU2ycSy",
+      "name": "02 · Programmi di ricerca",
+      "description": "Problemi generali e confini del programma.",
+      "primaryFieldId": "fldrYCV2eEVVu4WtK",
+      "fields": [
+        {
+          "id": "fldrYCV2eEVVu4WtK",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldhuXZQ3MDzMznPi",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldayitZuCVLKbRH2",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldS0VBr6uQgQORCz",
+          "name": "Ambito",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldyTZW4w2rQSO1JQ",
+          "name": "Criteri di completamento",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldUMvhIuq00fEPKD",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldVYxRIjMxK7QdMj",
+          "name": "↩ 02 · Domande di ricerca — Programma",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Programma» in «02 · Domande di ricerca». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "flddJ2JCnEccECClm",
+          "name": "↩ 02 · Obiettivi di modellazione — Programmi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Programmi» in «02 · Obiettivi di modellazione». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldqTu1PUc7psKIzF",
+          "name": "↩ 04 · Assunzioni di ricerca — Programmi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Programmi» in «04 · Assunzioni di ricerca». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldMninWdJB8jp8F8",
+          "name": "08 · Campagne di esplorazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldqDjoomZWzOnWhx",
+          "name": "09 · Playground",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldlNKqtU7TeaWL9N",
+          "name": "10 · Esperimenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldVO1d8pr348rS4u",
+          "name": "13 · Decisioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldyDyAYGjluLkrHK",
+          "name": "13 · Azioni di ricerca",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbl8350s68Le4dMLS",
+      "name": "02 · Domande di ricerca",
+      "description": "Interrogativi aperti collegati a ipotesi ed esperimenti.",
+      "primaryFieldId": "fldvER0OXNvszn36s",
+      "fields": [
+        {
+          "id": "fldvER0OXNvszn36s",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldRJmEWvdtbr0xoC",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldF6LDGDaySPXohO",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldTzYqwWHaHk7eE7",
+          "name": "Domanda",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldu0VJMDCla5XqQv",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldGK9NOiPojtVDt5",
+          "name": "Programma",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Programmi di ricerca. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldEM4SsCTKdq0ZXA",
+          "name": "↩ 04 · Affermazioni e ipotesi — Domande",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Domande» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldj261pBSznFUjUC",
+          "name": "10 · Esperimenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldAn8rI4IDtMAtO1",
+          "name": "13 · Azioni di ricerca",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblj6ZG5XZ9DgiwGv",
+      "name": "02 · Obiettivi di modellazione",
+      "description": "Scopi distinti da metriche e implementazioni.",
+      "primaryFieldId": "fldVVEKqrFujyWqsY",
+      "fields": [
+        {
+          "id": "fldVVEKqrFujyWqsY",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld2mK1nUSboWaigy",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld3z7eeJUmejxum1",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld7Gll8nkeXlFdPp",
+          "name": "Scopo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fld70YJEzF6QrIYCG",
+          "name": "Priorità e compromessi",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld033iXssd1nbeQq",
+          "name": "Programmi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Programmi di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldHHzTQXY9F9MwB8",
+          "name": "↩ 02 · Capacità — Obiettivi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Obiettivi» in «02 · Capacità». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldnn3Z6lEcb8RkFt",
+          "name": "06 · Specifiche dei modelli",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblrwZIVBXg8fgx4T",
+      "name": "02 · Capacità",
+      "description": "Skill atomiche o composite verificabili.",
+      "primaryFieldId": "fldbHzEUdEBXbPvKx",
+      "fields": [
+        {
+          "id": "fldbHzEUdEBXbPvKx",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldEiZxtBBAgUBdPd",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldPJpdK5JNPN5auf",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld4OasYVusgfqQqN",
+          "name": "Comportamento richiesto",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldJwdvp3iWkUZzT6",
+          "name": "Condizioni",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldGDT4cN5ojJred1",
+          "name": "Obiettivi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Obiettivi di modellazione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldjSxHSMUGj5mH6D",
+          "name": "↩ 02 · Dipendenze tra capacità — Prerequisito",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Prerequisito» in «02 · Dipendenze tra capacità». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldJ842QGznYcxb72",
+          "name": "↩ 02 · Dipendenze tra capacità — Capacità dipendente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Capacità dipendente» in «02 · Dipendenze tra capacità». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fld8yX7GvYIO51I1z",
+          "name": "09 · Playground",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld2ycnK4ZQDCKpoG",
+          "name": "09 · Famiglie di compiti",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblpxzm1Oa7elMTSa",
+      "name": "02 · Dipendenze tra capacità",
+      "description": "Relazione diretta prerequisito → capacità dipendente; non prova di necessità.",
+      "primaryFieldId": "fld8l5V0qi5mBRUZJ",
+      "fields": [
+        {
+          "id": "fld8l5V0qi5mBRUZJ",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldfaWernJAhf1dLk",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldllRPnr7IpV4FoN",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldpXln9CXCDQCxAg",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldS9WwhQ4MaGGIrs",
+          "name": "Giustificazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldQwSjBg6PZpHkkh",
+          "name": "Prerequisito",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Capacità. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldfSnCms63aMo914",
+          "name": "Capacità dipendente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Capacità. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldM8ssbf3klBzVce",
+          "name": "Ipotesi giustificativa",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblLlEFHj0PbLCIqd",
+      "name": "02 · Definizioni operative",
+      "description": "Definizioni versionate di fenomeni, etichette e concetti operativi.",
+      "primaryFieldId": "fldYvg1fo7s7z6sDY",
+      "fields": [
+        {
+          "id": "fldYvg1fo7s7z6sDY",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldKubwEJVqOg6lSJ",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldPhnvyDhlxTlv8V",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldDUwsFJRTazTkPh",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldJkYZ0qRpxkZMCd",
+          "name": "Regola operativa",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldvGkUTWYvbNGHP2",
+          "name": "Parametri e soglie",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldX9PbxuVZB64z8n",
+          "name": "Limiti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld94eulDMOeWy3nA",
+          "name": "Versione precedente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Definizioni operative. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldiHcSV4OYPYJM3r",
+          "name": "↩ 02 · Definizioni operative — Versione precedente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Versione precedente» in «02 · Definizioni operative». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldj7O7uy1S316dVI",
+          "name": "↩ 03 · Fenomeni — Definizioni operative",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Definizioni operative» in «03 · Fenomeni». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldyNwCD4C1zhreQZ",
+          "name": "09 · Generatori e acquisizione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld6QHgsEkPT3mdZF",
+          "name": "09 · Versioni dei dataset",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldnqU74jvvznXFXR",
+          "name": "12 · Specifiche di valutazione",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblXgrxq9OMY5RGf6",
+      "name": "03 · Sistemi di dominio",
+      "description": "Sistemi reali di interesse, separati dai modelli che li rappresentano.",
+      "primaryFieldId": "fld1yoJkgTFky8bTO",
+      "fields": [
+        {
+          "id": "fld1yoJkgTFky8bTO",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldieQHvYeyueS7G3",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldVcAeMIMT2No2yA",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "flddBnCJCACxkClJl",
+          "name": "Dominio",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldOuW9B3DaxqgLap",
+          "name": "Confini",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldsXRbWQepcrFHFS",
+          "name": "Livelli",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Livelli di descrizione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld5d4DogaSoKRYtQ",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldIIznm8I7l44O3P",
+          "name": "↩ 03 · Fenomeni — Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Sistemi» in «03 · Fenomeni». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldjmvHQNDr4j2Ioh",
+          "name": "↩ 03 · Grandezze di dominio — Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Sistemi» in «03 · Grandezze di dominio». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldTLO7rOrGpsvczn",
+          "name": "↩ 03 · Meccanismi — Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Sistemi» in «03 · Meccanismi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldOFSCltZnJ3azla",
+          "name": "↩ 03 · Vincoli di dominio — Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Sistemi» in «03 · Vincoli di dominio». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldaeuAiNhPRDnsef",
+          "name": "↩ 03 · Relazioni tra livelli — Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Sistemi» in «03 · Relazioni tra livelli». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldJiUxcxvzRL6Me7",
+          "name": "05 · Domini di validità",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldDwoOaZDHT8w15u",
+          "name": "06 · Specifiche dei modelli",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld98oD0fwXD2KUqM",
+          "name": "09 · Playground",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblLeAz96rdeNRuLi",
+      "name": "03 · Fenomeni",
+      "description": "Comportamenti osservati o da spiegare.",
+      "primaryFieldId": "fldHy6OEp3JlWUAMV",
+      "fields": [
+        {
+          "id": "fldHy6OEp3JlWUAMV",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldsje4j0A2ar2OH8",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld39aVuaGlUmXgSY",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld0QJRoe1xSSOqms",
+          "name": "Condizioni di osservazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldofVYn86wsJeX9l",
+          "name": "Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Sistemi di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldEQrVLlWzNG7F3q",
+          "name": "Definizioni operative",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Definizioni operative. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldNHO3Cm3Y8rNNWx",
+          "name": "↩ 03 · Meccanismi — Fenomeni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Fenomeni» in «03 · Meccanismi». È lo stesso collegamento, non una seconda relazione da compilare."
+        }
+      ]
+    },
+    {
+      "id": "tblTCopoDgL7XG8W4",
+      "name": "03 · Livelli di descrizione",
+      "description": "Scale di descrizione e risoluzione; non implica gerarchia causale automatica.",
+      "primaryFieldId": "fldvnsiV65A7qcDoF",
+      "fields": [
+        {
+          "id": "fldvnsiV65A7qcDoF",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldCXkAUB6CnyHhEE",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldFJyX6ORBnSj4KO",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldJShOwMhuj5AWxF",
+          "name": "Scala",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldBWz6G1XXvnhqJA",
+          "name": "Risoluzione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldEPGS3ICdWEbYlU",
+          "name": "↩ 03 · Sistemi di dominio — Livelli",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Livelli» in «03 · Sistemi di dominio». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldBUCHYAGXXmXJfN",
+          "name": "↩ 03 · Grandezze di dominio — Livelli",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Livelli» in «03 · Grandezze di dominio». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldqJwfkR8Shy7xkn",
+          "name": "↩ 03 · Relazioni tra livelli — Livello origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Livello origine» in «03 · Relazioni tra livelli». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fld5195Zjyoe9pqSz",
+          "name": "↩ 03 · Relazioni tra livelli — Livello destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Livello destinazione» in «03 · Relazioni tra livelli». È lo stesso collegamento, non una seconda relazione da compilare."
+        }
+      ]
+    },
+    {
+      "id": "tblAcfab7Joc1hx07",
+      "name": "03 · Grandezze di dominio",
+      "description": "Significato, unità e accessibilità delle quantità.",
+      "primaryFieldId": "fldQqpUZcOTXxans0",
+      "fields": [
+        {
+          "id": "fldQqpUZcOTXxans0",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldLN4k3zokWEbS0O",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldCPy4mfnJ5kpTbC",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldljp27FnkAfw5M4",
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld1LJ3SpplF7p6jB",
+          "name": "Dominio dei valori",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldCfbimoWkztLIl9",
+          "name": "Accessibilità",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fld1YYVKPawOHMCG4",
+          "name": "Procedura di misura",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldibKe7rClByNiOf",
+          "name": "Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Sistemi di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldvdbFxSyakHREGe",
+          "name": "Livelli",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Livelli di descrizione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldxqwIbLbeVcVchf",
+          "name": "↩ 03 · Meccanismi — Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Grandezze» in «03 · Meccanismi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldTmaRgwB0jTHuhH",
+          "name": "↩ 03 · Vincoli di dominio — Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Grandezze» in «03 · Vincoli di dominio». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldA7apNo8GeOKomc",
+          "name": "05 · Scelte di modellazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldiQRiQvVL1MrOrs",
+          "name": "05 · Corrispondenze modello-dominio",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldylV07QkB4fR33h",
+          "name": "06 · Porte dei componenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldwucflwSWrceTxC",
+          "name": "06 · Simboli matematici",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldZ0aCGcIQbwRdrI",
+          "name": "12 · Specifiche di valutazione",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblFXL07lapkqnzTM",
+      "name": "03 · Meccanismi",
+      "description": "Processi generativi proposti o sostenuti da evidenze, non verità implicite.",
+      "primaryFieldId": "flda32Tj5AEbARv79",
+      "fields": [
+        {
+          "id": "flda32Tj5AEbARv79",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld9o6M5zIZstpPYn",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld2K7YuYMKOdmeAR",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldYlMbmanHzSMnvP",
+          "name": "Processo",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldMXAyr0cnQS2pwk",
+          "name": "Stato epistemico",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldHOaqgtIl9leS0b",
+          "name": "Condizioni e limiti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld7vFhdFw9xYjsIy",
+          "name": "Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Sistemi di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldb0m64j0vlVQME5",
+          "name": "Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Grandezze di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldsSyVEb690dlMEF",
+          "name": "Fenomeni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Fenomeni. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldYqZh4MYA5zvqVz",
+          "name": "Affermazioni di supporto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld2a191VNHnsBlTW",
+          "name": "↩ 04 · Affermazioni e ipotesi — Meccanismi oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Meccanismi oggetto» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldBrzWVIeJD1LKbn",
+          "name": "↩ 04 · Modelli causali — Meccanismi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Meccanismi» in «04 · Modelli causali». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldMKGDR52pP9tYIe",
+          "name": "05 · Corrispondenze modello-dominio",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "flduXhfl9v8qUCqMr",
+          "name": "06 · Tipi di componenti",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblPhXVzOyPOo4CLR",
+      "name": "03 · Vincoli di dominio",
+      "description": "Vincoli fisici, biologici, geometrici e operativi.",
+      "primaryFieldId": "fldznQwen0u6hmTeE",
+      "fields": [
+        {
+          "id": "fldznQwen0u6hmTeE",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldO1BaV42JiKqwi1",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldmsainJxBaYZDa3",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld5RdYG9fV33WSpV",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldXOwWsZrWyGNpwh",
+          "name": "Espressione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldVwWhCruY9WB65s",
+          "name": "Ambito di validità",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldu4WhPONGdB0QXY",
+          "name": "Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Sistemi di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld1hKb4KutzAjsjU",
+          "name": "Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Grandezze di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldxaXLUfbxCfUhgy",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldpxkMZC5PnNXDq7",
+          "name": "06 · Specifiche dei modelli",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblpO2teijkHYntRc",
+      "name": "03 · Relazioni tra livelli",
+      "description": "Relazione diretta tra livelli: aggregazione, riduzione o emergenza.",
+      "primaryFieldId": "fldccTtgIGlCOSgL9",
+      "fields": [
+        {
+          "id": "fldccTtgIGlCOSgL9",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldW4yxFUBDPDoNeO",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldugnzt7u5JpJz0Z",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldoou7LFyBWzFhAo",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldJw7P5fOsiT50H0",
+          "name": "Giustificazione e limiti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldPDutZPVuvgSLyX",
+          "name": "Livello origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Livelli di descrizione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "flda30sNfJk5v2gbo",
+          "name": "Livello destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Livelli di descrizione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldEhnkliaiaGPSaL",
+          "name": "Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Sistemi di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld2JGYeblZujw5QN",
+          "name": "Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblqjU8aVM8csgjtk",
+      "name": "04 · Affermazioni e ipotesi",
+      "description": "Enunciati scopiati. Proprietà matematica, intento, osservazione e interpretazione non sono equivalenti.",
+      "primaryFieldId": "fldD3WgtsOkJFiQ0f",
+      "fields": [
+        {
+          "id": "fldD3WgtsOkJFiQ0f",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldTw6RHc13ABlCQ5",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldSpqkLWRRVAcGyT",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldxSHSKYTFeHnKO6",
+          "name": "Enunciato",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldWmQYnlPnpnDCwv",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldGKzruZ7lMxuhv9",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldgYqyJBiFHOFL5Q",
+          "name": "Condizioni di falsificazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldnstZ0ARy2ZeMxz",
+          "name": "Limiti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldM9yryBylmVsAFh",
+          "name": "↩ 02 · Dipendenze tra capacità — Ipotesi giustificativa",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Ipotesi giustificativa» in «02 · Dipendenze tra capacità». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldC0zRVGDcrxDXx3",
+          "name": "↩ 03 · Meccanismi — Affermazioni di supporto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Affermazioni di supporto» in «03 · Meccanismi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldtFqPHjNQsCaDvJ",
+          "name": "↩ 03 · Relazioni tra livelli — Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Ipotesi» in «03 · Relazioni tra livelli». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldBg7fdVTV3QRYYR",
+          "name": "Domande",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Domande di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld1yxxCdQIKUTr3o",
+          "name": "Passaggi fonte",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldrs9hp5BJaiJJ9w",
+          "name": "Modelli oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldO5B11MJ6B3bN8Z",
+          "name": "Componenti oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld0cyrU7z3lgnGri",
+          "name": "Equazioni oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Relazioni matematiche. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldbHCj8nUi9FfPr0",
+          "name": "Meccanismi oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Meccanismi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldjIzyz2FzkrntCk",
+          "name": "Parametrizzazioni oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Parametrizzazioni. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldtIv7JUzBTeny1j",
+          "name": "Ricette oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Ricette di addestramento. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldeIU5gljlLtLjk1",
+          "name": "Domini di validità",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Domini di validità. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldl4vkmr7todcrIa",
+          "name": "Corrispondenze oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Corrispondenze modello-dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldn09q7Ys4pNG46z",
+          "name": "↩ 04 · Assunzioni di ricerca — Ipotesi correlate",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Ipotesi correlate» in «04 · Assunzioni di ricerca». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldWgPcGUQzrCfwIV",
+          "name": "↩ 04 · Relazioni tra ipotesi — Enunciato origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Enunciato origine» in «04 · Relazioni tra ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldGrnR6YpOu4IX7p",
+          "name": "↩ 04 · Relazioni tra ipotesi — Enunciato destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Enunciato destinazione» in «04 · Relazioni tra ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldNKdCWed8GtMJWA",
+          "name": "↩ 04 · Predizioni — Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Ipotesi» in «04 · Predizioni». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldggFgq9bSRfRIf1",
+          "name": "↩ 04 · Modelli causali — Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Ipotesi» in «04 · Modelli causali». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fld21P7Z38jhllXCw",
+          "name": "↩ 04 · Valutazioni delle evidenze — Affermazione valutata",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Affermazione valutata» in «04 · Valutazioni delle evidenze». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldwnvVrfGEy0ephV",
+          "name": "05 · Scelte di modellazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldMttnkdNKUfLftx",
+          "name": "05 · Corrispondenze modello-dominio",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldCQ7s6vqBkAEj7o",
+          "name": "06 · Corrispondenze teacher-surrogate",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldUBxb2IBwluW0o4",
+          "name": "08 · Pattern progettuali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldVs7bwqXfD6wloz",
+          "name": "08 · Analogie tra domini",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldwKvlUhBaZDx4AK",
+          "name": "08 · Candidati progettuali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldZZflNzBIslfoxC",
+          "name": "08 · Trasformazioni progettuali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldGMQygrEEp67LYU",
+          "name": "10 · Esperimenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldhblz9QaL5xZMzj",
+          "name": "12 · Anomalie",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbldSkzQA9g3QX7Om",
+      "name": "04 · Assunzioni di ricerca",
+      "description": "Premesse esplicite adottate senza considerarle già dimostrate.",
+      "primaryFieldId": "fldeNA00cGoOopeVa",
+      "fields": [
+        {
+          "id": "fldeNA00cGoOopeVa",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldlcvW3XP2Hhv8EY",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld9bV0KChMLSJj2s",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldtMgC2XJVkYOBG7",
+          "name": "Premessa",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldss1dsPFLGtnzJ5",
+          "name": "Motivo di adozione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldgH1NHRLiHHhm6l",
+          "name": "Conseguenze se falsa",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldad5ATzO3L0daFJ",
+          "name": "Condizioni di revisione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldfbp6aaJHTmZhJG",
+          "name": "Programmi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Programmi di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldNzu87qCoh2B9pT",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldGBEkV7ZbI0pySw",
+          "name": "Ipotesi correlate",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldkuS3VmSmkgRC1x",
+          "name": "↩ 04 · Modelli causali — Assunzioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Assunzioni» in «04 · Modelli causali». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldbh6boe9XsPNQt4",
+          "name": "04 · Valutazioni delle evidenze",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldz32I91qnsqfI7N",
+          "name": "05 · Scelte di modellazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldgBpB71gtUTW0ql",
+          "name": "06 · Specifiche dei modelli",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbltzi3MX24XkNVGK",
+      "name": "04 · Relazioni tra ipotesi",
+      "description": "Relazioni dirette tra enunciati.",
+      "primaryFieldId": "fldXxqeOAlvopdFAk",
+      "fields": [
+        {
+          "id": "fldXxqeOAlvopdFAk",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld0fsGgMO0X0rsim",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldSa9maKPLjWlUJK",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldT1ocVcP8lyHKfl",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldL0uZ1B6aHJ2tZv",
+          "name": "Giustificazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZTDKwFzoAdy0xq",
+          "name": "Enunciato origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldU0rSsD672ur3BJ",
+          "name": "Enunciato destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: un solo record (da validare in compilazione)."
+        }
+      ]
+    },
+    {
+      "id": "tblPsHQ90EiUXddxH",
+      "name": "04 · Predizioni",
+      "description": "Aspettative formulate prima del test, oppure esplicitamente post hoc.",
+      "primaryFieldId": "fldJSkVuXMOgGFkN8",
+      "fields": [
+        {
+          "id": "fldJSkVuXMOgGFkN8",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldWila5hCJWUzknW",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldbPV0JdHR1dTzO9",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldGZclfgI81G8EhK",
+          "name": "Risultato atteso",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldpoW81HouiwkwvJ",
+          "name": "Soglia o intervallo",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldcjkpdRsKyY2zM3",
+          "name": "Origine",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fld9HzzWRkgSyJ1LQ",
+          "name": "Registrata il",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldF62AtIpAKC63mV",
+          "name": "Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldETwxwSHAAF43I5",
+          "name": "Specifica di valutazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Specifiche di valutazione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldVVUvkyh8pExiI4",
+          "name": "Contrasti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Contrasti pianificati. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldCUWRJhFWPo0mT2",
+          "name": "10 · Versioni dei protocolli",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldjeAYjMVW5nI5e7",
+          "name": "10 · Contrasti pianificati",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblUNT1bCX0obKuqZ",
+      "name": "04 · Modelli causali",
+      "description": "Strutture causali proposte; archi, interventi e confondenti espliciti.",
+      "primaryFieldId": "fldC8wNkssbZPMc5Y",
+      "fields": [
+        {
+          "id": "fldC8wNkssbZPMc5Y",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldEXqg7hjXzoOo3H",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldBPVzL71G7QMCjW",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldESpbTsQPkMof63",
+          "name": "Nodi e archi",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldzISAHOWEcAPxat",
+          "name": "Confondenti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldrYpCeCPKFEcjLT",
+          "name": "Assunzioni di identificazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldDJOCzFGL2iadrK",
+          "name": "Interventi",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZtguiKgtvZh4dj",
+          "name": "Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldV7yTWYrJXqducp",
+          "name": "Assunzioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Assunzioni di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldDSHSrJPfwTP0mk",
+          "name": "Meccanismi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Meccanismi. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblWWhDt7RqQb4ru1",
+      "name": "04 · Valutazioni delle evidenze",
+      "description": "Una valutazione collega un risultato o fonte a un enunciato; non sovrascrive la storia.",
+      "primaryFieldId": "fld2JkJoQIfeVxSvI",
+      "fields": [
+        {
+          "id": "fld2JkJoQIfeVxSvI",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldW8YCcSzGz0A99i",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldh83wNHNpikBOoX",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldS1gt42h6ElFDc4",
+          "name": "Esito",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldrn0P4pep6pTLSH",
+          "name": "Argomentazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld9WZIqaXXD0lFQ7",
+          "name": "Limiti e spiegazioni alternative",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld4PXyhEdodSkhIX",
+          "name": "Data valutazione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldzDr7IhMwkcELwG",
+          "name": "Affermazione valutata",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldyCjfwA4HhVDOhL",
+          "name": "Assunzione valutata",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Assunzioni di ricerca. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldzPthPEKWp0B8dE",
+          "name": "Risultati a sostegno",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Risultati scientifici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld8tbfA0sBUMtuOK",
+          "name": "Passaggi fonte",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldbUCpuMqzfvv1po",
+          "name": "Valutatore",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Attori. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld595PSHoc6S4ZRt",
+          "name": "Domini di validità",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Domini di validità. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldRaOy3jJUWmQsxK",
+          "name": "13 · Decisioni",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblZnvzYZ9Vva5Qch",
+      "name": "05 · Approcci di modellazione",
+      "description": "Approcci non esclusivi: meccanicistico, fenomenologico, appreso, ibrido.",
+      "primaryFieldId": "fldidEvTnqPguIljn",
+      "fields": [
+        {
+          "id": "fldidEvTnqPguIljn",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldzmR14rFwUCoZXc",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldODx06VLm5A1UDZ",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld2AY7MBCj726k0e",
+          "name": "Principi",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldTJcnFmgDRfVMqu",
+          "name": "Limiti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld6wTgUr0iGuvkSU",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld4FDMrQztZTKRdH",
+          "name": "05 · Scelte di modellazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldL6QuvnDzLMm3EF",
+          "name": "06 · Specifiche dei modelli",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblfKT71DdPEcWyBx",
+      "name": "05 · Scelte di modellazione",
+      "description": "Decisioni su ciò che è esplicito, appreso, fissato, approssimato o omesso.",
+      "primaryFieldId": "fldDr5nkGahIUUDEY",
+      "fields": [
+        {
+          "id": "fldDr5nkGahIUUDEY",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld2SmQPqyxaRM7KG",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldxk1VitsCScYKVS",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldGvABCmZs8su9fJ",
+          "name": "Trattamento",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldjWbq9AtWxO7T87",
+          "name": "Motivazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld9Ppy142PAxO6xR",
+          "name": "Conseguenze attese",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldFsmacAMnmoydPH",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldAgp66jCZ6IGpwm",
+          "name": "Approcci",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Approcci di modellazione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldPIjhoiiMDFd6qu",
+          "name": "Componenti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldcYxZPJRgfPwdC0",
+          "name": "Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Grandezze di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldaIlQAiqieIvK0d",
+          "name": "Assunzioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Assunzioni di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "flde0mWwfsDwQNDvb",
+          "name": "Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblJGbHAauApAQfz5",
+      "name": "05 · Corrispondenze modello-dominio",
+      "description": "Associa simboli e componenti a quantità e meccanismi reali; significato non garantito dal nome.",
+      "primaryFieldId": "fldD996km92HrqAKw",
+      "fields": [
+        {
+          "id": "fldD996km92HrqAKw",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld27wPLwH6i81qZO",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldZLXA2X0Txl1j2U",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldGCqI3vu0vOijiJ",
+          "name": "Corrispondenza",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldX22T9w1n0WctjJ",
+          "name": "Informazione omessa",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld4Gqmf1vpIo7fPE",
+          "name": "Limiti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld0FnUIq3I3xCzt4",
+          "name": "↩ 04 · Affermazioni e ipotesi — Corrispondenze oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Corrispondenze oggetto» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldDj3W6Uhdak2uMl",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldK5gZ0FHtJyN4ai",
+          "name": "Componenti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "flddGTk4YfHduDW8z",
+          "name": "Simboli",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Simboli matematici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldURrBFV0KBXhnDR",
+          "name": "Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Grandezze di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldCJxNNQHK6qGNfZ",
+          "name": "Meccanismi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Meccanismi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldSDCATOHkhYIbFm",
+          "name": "Ipotesi di corrispondenza",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblPZyMkaJKzHEZIQ",
+      "name": "05 · Domini di validità",
+      "description": "Regimi, scale, distribuzioni e budget ai quali si applicano i risultati.",
+      "primaryFieldId": "fldKz9eKMaL8duiKV",
+      "fields": [
+        {
+          "id": "fldKz9eKMaL8duiKV",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldQgiaEmy1J3zQkU",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldApJoH6SZnRyAJD",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldczPM8qz598MKwV",
+          "name": "Condizioni",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldaMGXhFJ9XOAAOU",
+          "name": "Esclusioni",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldJvROWx3JOQlQCP",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldvCx219pI3eo4In",
+          "name": "↩ 04 · Affermazioni e ipotesi — Domini di validità",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Domini di validità» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldRKPRzmCE0gmZRr",
+          "name": "04 · Valutazioni delle evidenze",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldNtIzxMuCen7ru3",
+          "name": "Sistemi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Sistemi di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldNujOybbgh7rlWN",
+          "name": "06 · Specifiche dei modelli",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld5c2XbA5h5jLC21",
+          "name": "12 · Risultati scientifici",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldJnpQXajfoZ9ZWX",
+          "name": "↩ 13 · Studi di conferma e trasferimento — Domini di origine",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Domini di origine» in «13 · Studi di conferma e trasferimento»."
+        },
+        {
+          "id": "fldvpGlGrnv9f1H93",
+          "name": "↩ 13 · Studi di conferma e trasferimento — Domini di destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Domini di destinazione» in «13 · Studi di conferma e trasferimento»."
+        },
+        {
+          "id": "fldxOsNTDeDQKavs8",
+          "name": "13 · Lezioni apprese",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblhqNMkBAnia7Wxz",
+      "name": "06 · Specifiche dei modelli",
+      "description": "Modelli matematici versionati, indipendenti dal codice e dall'addestramento.",
+      "primaryFieldId": "fldi5tpQHDmY9xREA",
+      "fields": [
+        {
+          "id": "fldi5tpQHDmY9xREA",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldbJeAzmBDNozNdG",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldnehgDOviZhvIa8",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZunWyYSSSxt3bQ",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldqLarOmIADPGv6g",
+          "name": "Ruolo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldmBzUPsKweITuWu",
+          "name": "Contratto di stato",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld11m5vgUlLuStaN",
+          "name": "Contratto di input e output",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldUnVWK8dZMRrnQN",
+          "name": "↩ 04 · Affermazioni e ipotesi — Modelli oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Modelli oggetto» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldlZvaKO0mN7oQLa",
+          "name": "05 · Scelte di modellazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldvVK49kyUoxlDCW",
+          "name": "05 · Corrispondenze modello-dominio",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldzWAarzeSJBpBC3",
+          "name": "Versione precedente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldghQDWG0RDuTKSG",
+          "name": "From field: Versione precedente",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldqkGGfZlsb9ubyA",
+          "name": "Sistemi rappresentati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Sistemi di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldhcVmZzM9x634uf",
+          "name": "Obiettivi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Obiettivi di modellazione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld5P4eFv0PFaDDsa",
+          "name": "Approcci",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Approcci di modellazione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldJyxfv8WeSQiMY8",
+          "name": "Assunzioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Assunzioni di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldw0BvzpqMf5Etsf",
+          "name": "Domini di validità",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Domini di validità. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldxhTeudqE1zR4e5",
+          "name": "Vincoli",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Vincoli di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldznv6PUlZSdVfdT",
+          "name": "06 · Istanze dei componenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldtl1cw9puUi3gAn",
+          "name": "06 · Connessioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldZqoOXvnbkcxC4w",
+          "name": "06 · Simboli matematici",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "flddoVOJAzO8zmx5O",
+          "name": "06 · Composizione dei componenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldxL6cE2rBicvDST",
+          "name": "↩ 06 · Corrispondenze teacher-surrogate — Modello originale",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Modello originale» in «06 · Corrispondenze teacher-surrogate»."
+        },
+        {
+          "id": "fldvx65vAXMhqrjiT",
+          "name": "↩ 06 · Corrispondenze teacher-surrogate — Modello sostitutivo",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Modello sostitutivo» in «06 · Corrispondenze teacher-surrogate»."
+        },
+        {
+          "id": "fldVHC7WiZYT6RaQS",
+          "name": "07 · Implementazioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldFJKXCedWPjMxtt",
+          "name": "07 · Parametrizzazioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldpWyAwqj0pABpRo",
+          "name": "07 · Istanze addestrate",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldkfLPKoXTeWnQ5p",
+          "name": "08 · Candidati progettuali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldP9IDuLFinS5GI7",
+          "name": "10 · Bracci sperimentali",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblCd3KAgubx4cwry",
+      "name": "06 · Tipi di componenti",
+      "description": "Definizioni riutilizzabili: canale, compartimento, MLP, gate, solver.",
+      "primaryFieldId": "fldo7TU749KfsfrCr",
+      "fields": [
+        {
+          "id": "fldo7TU749KfsfrCr",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldoPu3O8Qq0t6qQF",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldYzQbr5Bv9SRTOJ",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldFt4srfjSHmeUph",
+          "name": "Semantica",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldvVr2Vk0hpft1bD",
+          "name": "Configurazione ammessa",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldWgrXrO5xvqNuMv",
+          "name": "Meccanismi rappresentati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Meccanismi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld75wTCMcasNkIsh",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldcSX9gP6plEz9Hq",
+          "name": "06 · Istanze dei componenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld7D1M5R8SeRf1BT",
+          "name": "08 · Pattern progettuali",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbl3YlCMWI9DiCpah",
+      "name": "06 · Istanze dei componenti",
+      "description": "Occorrenze concrete in una versione di modello; stesso tipo non implica pesi condivisi.",
+      "primaryFieldId": "fldmzY3Xg1I876OEF",
+      "fields": [
+        {
+          "id": "fldmzY3Xg1I876OEF",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldoDsmFTTps3v4qz",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldenfgTZ8GsGcC6Y",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldeCmCydoL99hxiH",
+          "name": "Identificatore locale",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldNjkI2C5yaKqBd4",
+          "name": "Configurazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldFy11SG7YjNmrBq",
+          "name": "Ruolo",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld7JNRWlTmKRaBQ8",
+          "name": "↩ 04 · Affermazioni e ipotesi — Componenti oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Componenti oggetto» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fld8JBLe47rB3ex8t",
+          "name": "05 · Scelte di modellazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "flde5wkBJn3JA70jV",
+          "name": "05 · Corrispondenze modello-dominio",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldyeiHUiixKU7lks",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldgoTl7dDloCNjcv",
+          "name": "Tipo componente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Tipi di componenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "flddY1KYKDZQ7iCvy",
+          "name": "06 · Porte dei componenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldXIQhySq4RGE9XD",
+          "name": "06 · Associazioni componente-equazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld4EXvzweDDu8yvn",
+          "name": "↩ 06 · Composizione dei componenti — Contenitore",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Contenitore» in «06 · Composizione dei componenti»."
+        },
+        {
+          "id": "fldI7XReuHtq8ARER",
+          "name": "↩ 06 · Composizione dei componenti — Parte",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Parte» in «06 · Composizione dei componenti»."
+        },
+        {
+          "id": "fldd8mDyxoPDqZMX1",
+          "name": "↩ 06 · Corrispondenze teacher-surrogate — Componenti originali",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Componenti originali» in «06 · Corrispondenze teacher-surrogate»."
+        },
+        {
+          "id": "fldNF7mvKzc07U9pu",
+          "name": "↩ 06 · Corrispondenze teacher-surrogate — Componenti sostitutivi",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Componenti sostitutivi» in «06 · Corrispondenze teacher-surrogate»."
+        },
+        {
+          "id": "fldSCDUCWYrJlPOSn",
+          "name": "07 · Parametrizzazioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldsUCISAxfxlXdCN",
+          "name": "08 · Trasformazioni progettuali",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblyvPG9WvHzpcROT",
+      "name": "06 · Porte dei componenti",
+      "description": "Input/output tipizzati con semantica temporale e fisica.",
+      "primaryFieldId": "fldYPAUkaoaQxCDhk",
+      "fields": [
+        {
+          "id": "fldYPAUkaoaQxCDhk",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldkUijzGXHOOTegt",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "flddvo7ytaQhCnkSV",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZKI28eMKxWRRN1",
+          "name": "Direzione",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fld2JQRH5FkyrGq7a",
+          "name": "Shape",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldNIXEjF01H0o9jE",
+          "name": "Dtype",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldtVDa8sH9Zzm1KY",
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldBuRlIdXs6VaqhD",
+          "name": "Semantica temporale",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldY5on9p0eyNk8OO",
+          "name": "Informazione causalmente disponibile",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldMcfEhgiHMIyfdC",
+          "name": "Componente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldXKmMJTEPT57heR",
+          "name": "Simboli",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Simboli matematici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldmfWTTylscYtHHb",
+          "name": "Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Grandezze di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld6vIcuwIXJm6zUs",
+          "name": "↩ 06 · Connessioni — Porta origine",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Porta origine» in «06 · Connessioni»."
+        },
+        {
+          "id": "fldr0BGvHSdmzKH2G",
+          "name": "↩ 06 · Connessioni — Porta destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Porta destinazione» in «06 · Connessioni»."
+        },
+        {
+          "id": "fldiM0w8vsuJ9pntX",
+          "name": "06 · Associazioni componente-equazione",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblT64nQkp5xAG4RE",
+      "name": "06 · Connessioni",
+      "description": "Archi diretti tra porte; distinti dal contenimento dei componenti.",
+      "primaryFieldId": "fldOaBUbzmd0EoEA0",
+      "fields": [
+        {
+          "id": "fldOaBUbzmd0EoEA0",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldJcOynjjSgb9vNM",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldKg7yv3oOYbbZau",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldDDHqKCb9jYgQUZ",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldhpCLsd8BnmwTJE",
+          "name": "Ritardo",
+          "type": "number"
+        },
+        {
+          "id": "fldEVf0Od62FXmxGQ",
+          "name": "Unità ritardo",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldUxs6FLDLWOcZK9",
+          "name": "Trasformazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldpWZaG36GV61Oi3",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldI5VWywvLXvnIHY",
+          "name": "Porta origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Porte dei componenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldHQvzosZTgYVbnc",
+          "name": "Porta destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Porte dei componenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        }
+      ]
+    },
+    {
+      "id": "tbluC5Bp65CJ74Md3",
+      "name": "06 · Relazioni matematiche",
+      "description": "Equazioni, vincoli e distribuzioni versionati.",
+      "primaryFieldId": "fldzBW1qFizoxwzrz",
+      "fields": [
+        {
+          "id": "fldzBW1qFizoxwzrz",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldckejZJw2Lvv3iP",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldNMLwj8LMxzCZCt",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld7S12JQZJiCq4M8",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldLMYWw24mTWzwqp",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldTDm5Uk5ZHva5pP",
+          "name": "Espressione LaTeX",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldzqyQ5PcpfkBEXw",
+          "name": "Ipotesi matematiche",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldGXY2AArAUFqiGg",
+          "name": "↩ 04 · Affermazioni e ipotesi — Equazioni oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Equazioni oggetto» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fld6Ta57mQKm5X00j",
+          "name": "Simboli",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Simboli matematici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldHRFlqbm3OJ28sg",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld5FWRKlrC1sZzbC",
+          "name": "06 · Associazioni componente-equazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldnhhYVDFVt57FUG",
+          "name": "07 · Schemi numerici",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldGXli17gS3i717Q",
+          "name": "07 · Obiettivi di apprendimento",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldWcJnl6iIbs7zz1",
+          "name": "12 · Definizioni delle metriche",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblH7k6WfL49Z09uw",
+      "name": "06 · Simboli matematici",
+      "description": "Simboli con ambito nella specifica di modello.",
+      "primaryFieldId": "fld8u3wY8k7eQQfL1",
+      "fields": [
+        {
+          "id": "fld8u3wY8k7eQQfL1",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldNJnIyABrpoezDp",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldu1SroSXECmRHM0",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld0r23kGvKOvJe3I",
+          "name": "Simbolo",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldd7LFt6r1ZwReIJ",
+          "name": "Ruolo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldPQWPsvAqFVPLOE",
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldWTqXoU61mqQ8pn",
+          "name": "Shape",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldkCpKJDwGkSFBIw",
+          "name": "Dominio",
+          "type": "multilineText"
+        },
+        {
+          "id": "flds0CLNXhrk0hd8f",
+          "name": "05 · Corrispondenze modello-dominio",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldoXpCbrRe4uLSAy",
+          "name": "06 · Porte dei componenti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldmVdHnp1x7hMlBE",
+          "name": "06 · Relazioni matematiche",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldu9KHKfTnBJcOVS",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldKsM9Wvldrg7chI",
+          "name": "Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Grandezze di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldqYQnHM651wsK20",
+          "name": "06 · Associazioni componente-equazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldu8GblHEgtcTela",
+          "name": "07 · Parametrizzazioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldkfVF9CG6Xuv9pc",
+          "name": "07 · Obiettivi di apprendimento",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblkT9LEnU1Qw2pnX",
+      "name": "06 · Associazioni componente-equazione",
+      "description": "Associazione tra equazione e istanza, con mappatura esplicita dei simboli.",
+      "primaryFieldId": "flduDFFp5KfgAe4Mm",
+      "fields": [
+        {
+          "id": "flduDFFp5KfgAe4Mm",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldyQuRncfjRX8cey",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldVQwNSniZxVkZnb",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldyLvEZ1jcmd3Bbf",
+          "name": "Mappatura simboli e porte",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldmcdCO71P3XsTSN",
+          "name": "Condizioni",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldvRM6vF36UeO2eR",
+          "name": "Componente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldoOESrZFvhmcDPO",
+          "name": "Equazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Relazioni matematiche. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldynWOKbpZSbrWkb",
+          "name": "Simboli associati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Simboli matematici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldFnBLqVCw9s4232",
+          "name": "Porte associate",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Porte dei componenti. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblG3VLGi6pnZoI0p",
+      "name": "06 · Composizione dei componenti",
+      "description": "Relazione parte-di diretta contenitore → parte, scopiata per versione. Vietare cicli di contenimento.",
+      "primaryFieldId": "fldrwpBGp9eefc3c1",
+      "fields": [
+        {
+          "id": "fldrwpBGp9eefc3c1",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldOyv5CPqQgwrgFz",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldRGvnMCSMaCNWoB",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "flduOQRgxIUuvE8Zs",
+          "name": "Ruolo della parte",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldsw72bWXlalowv7",
+          "name": "Molteplicità",
+          "type": "number"
+        },
+        {
+          "id": "fld1JXYHqYojsmbgH",
+          "name": "Vincoli di composizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldHm6jk6vAsRxYIK",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldkhYpIcG50CxsSY",
+          "name": "Contenitore",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldx04bbZXEajPJCs",
+          "name": "Parte",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        }
+      ]
+    },
+    {
+      "id": "tblx1VQK1kUy4vuU9",
+      "name": "06 · Corrispondenze teacher-surrogate",
+      "description": "Sostituzioni anche molti-a-molti tra componenti originali e appresi.",
+      "primaryFieldId": "flda4OSe6GVWA3DLr",
+      "fields": [
+        {
+          "id": "flda4OSe6GVWA3DLr",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldNRdfisYj1mt5hy",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldTDzyBU3kxnhyi1",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldQBH9WuOvE6WcTt",
+          "name": "Mappatura stati e output",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldpGLN6Wx3I88c5h",
+          "name": "Informazione mantenuta",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldVdTDTwrAAFvPlP",
+          "name": "Informazione omessa",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldq4C2Gom5KGV0ZO",
+          "name": "Condizioni di equivalenza",
+          "type": "multilineText"
+        },
+        {
+          "id": "flduZgiuOdES2eNVD",
+          "name": "Modello originale",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldyD7dgGgvlF9zda",
+          "name": "Modello sostitutivo",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld6PqiMrY9JSFW4B",
+          "name": "Componenti originali",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldO0zUX7JMIJvSGb",
+          "name": "Componenti sostitutivi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldmkpHtVEuUatR2B",
+          "name": "Ipotesi di equivalenza",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldr6wD6ovsbwdmlC",
+          "name": "Esperimenti di verifica",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Esperimenti. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblRoTRJyLGgSLUMB",
+      "name": "07 · Implementazioni",
+      "description": "Realizzazioni di specifiche matematiche in codice versionato.",
+      "primaryFieldId": "fldntVmYkbf5iJNa7",
+      "fields": [
+        {
+          "id": "fldntVmYkbf5iJNa7",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldc3ws6rkFqKAdvS",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldineFyCFWVCm6un",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld8NwAbGx1yrs08c",
+          "name": "Repository URL",
+          "type": "url"
+        },
+        {
+          "id": "fld5ZHjzJMcJC32rZ",
+          "name": "Commit",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldf31JVAmPiuZ8nI",
+          "name": "Percorso entrypoint",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldivXGY3IeFGqP5y",
+          "name": "Ambiente",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldPy2R1rEhjDaZa7",
+          "name": "Modelli implementati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldiyUarpzA1UGDGM",
+          "name": "Schemi numerici",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Schemi numerici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldocaFhUK0cWs86L",
+          "name": "Artefatti codice",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld4ZO1qxjY0c0QlH",
+          "name": "07 · Istanze addestrate",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "flduPOm1Up6WBdTso",
+          "name": "09 · Generatori e acquisizione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldJeS7A8S14SsvQF",
+          "name": "10 · Bracci sperimentali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldbvLnQGER4chqXe",
+          "name": "11 · Esecuzioni sperimentali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldknpOaBc7DaScI2",
+          "name": "11 · Controlli di qualità",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblrXidhZ0NbtAhuC",
+      "name": "07 · Schemi numerici",
+      "description": "Integrazione, discretizzazione e gestione degli eventi.",
+      "primaryFieldId": "fldcGNcIBK85d49bd",
+      "fields": [
+        {
+          "id": "fldcGNcIBK85d49bd",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldYKRBcSFXUcHQOh",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldLGwJ3wzX9RjmkZ",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldjngJQJ4f9eruD4",
+          "name": "Metodo",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldA1eIV6Lt35eFCP",
+          "name": "Precisione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldgHtKE3EWC7DlrA",
+          "name": "Passo e tolleranze",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld3MWv0kCAG8k0tl",
+          "name": "Gestione eventi",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldAp1zJBDVGVCM5S",
+          "name": "07 · Implementazioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldnpdT3yQUYQjb0j",
+          "name": "Equazioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Relazioni matematiche. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldKOWWUlkgjIeAw4",
+          "name": "09 · Generatori e acquisizione",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblBBvblF54JEILy8",
+      "name": "07 · Parametrizzazioni",
+      "description": "Vincoli, trasformazioni e gruppi di parametri condivisi.",
+      "primaryFieldId": "fld13Jo95bBDwim8s",
+      "fields": [
+        {
+          "id": "fld13Jo95bBDwim8s",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "flduOiD60KLdxIm4L",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldNF3366Klq3IRfK",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldW2ae69wYyB0Rmu",
+          "name": "Trasformazioni",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldC2AMXFIiBi2ZAw",
+          "name": "Vincoli",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldRikMdvEMobM2q4",
+          "name": "Condivisione",
+          "type": "multilineText"
+        },
+        {
+          "id": "flditWdXZGKVZ8q9w",
+          "name": "Gradi di libertà",
+          "type": "number"
+        },
+        {
+          "id": "fld1hRIrkULLIPGXW",
+          "name": "↩ 04 · Affermazioni e ipotesi — Parametrizzazioni oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Parametrizzazioni oggetto» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldy1b0AZzz4V7H90",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldHVq5RKvY319v9W",
+          "name": "Componenti associati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldYNHYgMSaC6Ziv3",
+          "name": "Simboli parametrizzati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Simboli matematici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldLSVNj6Es46Vris",
+          "name": "07 · Ricette di addestramento",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblilVMvJr42vpk9m",
+      "name": "07 · Obiettivi di apprendimento",
+      "description": "Loss versionate con termini, pesi e target; non sono automaticamente metriche primarie.",
+      "primaryFieldId": "fldhcWfw9FWPgddjh",
+      "fields": [
+        {
+          "id": "fldhcWfw9FWPgddjh",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldFasxuEGgqsLbcn",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldBwrzgbZbYLRfXa",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld2pHQpfXlkpm8Cx",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldi8pvvrRitOCn2j",
+          "name": "Termini e pesi",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldAy62SjpdpAHgFi",
+          "name": "Target",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldkFqVXKFp65M37c",
+          "name": "Normalizzazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldVVRG2p8cXN5eF9",
+          "name": "Equazioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Relazioni matematiche. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld6y4fX7OIihbxJ4",
+          "name": "Target simbolici",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Simboli matematici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld2AmEYv7PRWsbmO",
+          "name": "07 · Ricette di addestramento",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblORHEV4fs9PMzXP",
+      "name": "07 · Ricette di addestramento",
+      "description": "Procedure versionate, budget e controlli di ottimizzazione.",
+      "primaryFieldId": "fldTdvMK6xnwndPmm",
+      "fields": [
+        {
+          "id": "fldTdvMK6xnwndPmm",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldSN1qN3p36Wgosl",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "flddpGwfwVuE68446",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldWIOipCE7ynTs3z",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldsHcrTLmFy0n3Yy",
+          "name": "Ottimizzatore",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldYm6DgOjTbbtm8V",
+          "name": "Inizializzazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldu0TpjL5goDKUX5",
+          "name": "Curriculum",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldReLu4TcgB7eVL0",
+          "name": "Budget e checkpoint",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldHNDVD3PrxY916L",
+          "name": "Componenti congelati e addestrabili",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld8bsAsRoIzlxjqS",
+          "name": "↩ 04 · Affermazioni e ipotesi — Ricette oggetto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Ricette oggetto» in «04 · Affermazioni e ipotesi». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldsbzginoT79mocD",
+          "name": "Loss",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Obiettivi di apprendimento. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldC6kn6GxH1ewjcR",
+          "name": "Parametrizzazioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Parametrizzazioni. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldymj4OQZJstXufl",
+          "name": "Versione precedente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Ricette di addestramento. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldjEhskTcTwT2zJF",
+          "name": "From field: Versione precedente",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldr7SLofTtHT1g4B",
+          "name": "10 · Bracci sperimentali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld07k9hxpc9cbtqG",
+          "name": "11 · Esecuzioni sperimentali",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblznacXMRRrOHBBk",
+      "name": "07 · Istanze addestrate",
+      "description": "Risultati concreti di una esecuzione e checkpoint selezionato.",
+      "primaryFieldId": "fld1dzAKlLJ2lWsdt",
+      "fields": [
+        {
+          "id": "fld1dzAKlLJ2lWsdt",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldZBcoiRDM36A9Ee",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldrtEzVw8WKpepW1",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldfoyf8nsfL7kXGQ",
+          "name": "Identificatore modello",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldeNUYeSWB893lQN",
+          "name": "Regola di selezione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld7eq7EdJW9VnKnM",
+          "name": "Parametri addestrabili",
+          "type": "number"
+        },
+        {
+          "id": "fldXVGPqAyhXSHDNd",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld06DoyKuFqUyqYt",
+          "name": "Implementazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Implementazioni. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldgiheDVjWzt2liM",
+          "name": "Run di origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Esecuzioni sperimentali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldKGiKWKFpBPWn6o",
+          "name": "Checkpoint selezionato",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Checkpoint. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld0E638SUzpXIZQL",
+          "name": "Partizioni di selezione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Partizioni e ruoli dati. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldnzdvSzjOKIJHdv",
+          "name": "12 · Risultati delle metriche",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblTtd025mCxfxCK1",
+      "name": "08 · Strategie di progettazione",
+      "description": "Strategie di generazione e selezione di idee.",
+      "primaryFieldId": "fld9NzWxZMNxyFLWO",
+      "fields": [
+        {
+          "id": "fld9NzWxZMNxyFLWO",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldR09BnZWeVombx0",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldfDyHjoW6DTXY6x",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld09sP5AUZgApTNJ",
+          "name": "Procedura",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld2f3g7xschYLTVr",
+          "name": "Condizioni di utilità",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldP7s9uRQRDgbzEo",
+          "name": "Limiti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldWgpKMqytjdt4bg",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld3548dAs1pFQvxN",
+          "name": "08 · Analogie tra domini",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldlsjrpf7kJjLAX4",
+          "name": "08 · Campagne di esplorazione",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbloHmujP4HJ4BE0h",
+      "name": "08 · Pattern progettuali",
+      "description": "Schemi riutilizzabili; il loro valore va verificato nel contesto.",
+      "primaryFieldId": "fldCPnzPmBErV4zUg",
+      "fields": [
+        {
+          "id": "fldCPnzPmBErV4zUg",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldbqjmbt5eOQWEdG",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldXsGBe9nlIfIzFd",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld1aFhAC5R2bimei",
+          "name": "Struttura",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldhJmkKX9AaVdP0g",
+          "name": "Funzione ipotizzata",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldmTpw4sVCbPrSua",
+          "name": "Failure modes",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldQ4B2CkYPBVYxES",
+          "name": "Tipi componenti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Tipi di componenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldZWp3GFRiyQkwkC",
+          "name": "Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldWiuMI6bRqKdbmi",
+          "name": "08 · Candidati progettuali",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblGz6mNQYfb5Xp0Y",
+      "name": "08 · Analogie tra domini",
+      "description": "Analogie generatrici di ipotesi, non prove.",
+      "primaryFieldId": "fldNUehcHcq3OtEuO",
+      "fields": [
+        {
+          "id": "fldNUehcHcq3OtEuO",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldTngcXCIWMoDDe6",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "flds6Olk6PkodNx57",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldGU3aQydThnCazL",
+          "name": "Dominio origine",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldx0bIU5OmFr4dLz",
+          "name": "Dominio destinazione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldwGzurMSKl93DR6",
+          "name": "Corrispondenza",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldSBCghYzqI90bPZ",
+          "name": "Limiti dell'analogia",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld53LmngaZcb7RFp",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldgBctdqIIgEyJAo",
+          "name": "Strategie ispirate",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 08 · Strategie di progettazione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldWjvG9uIKAPbald",
+          "name": "Ipotesi generate",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblsuXCmriaLsJ94y",
+      "name": "08 · Candidati progettuali",
+      "description": "Proposte anche non implementate, con razionale.",
+      "primaryFieldId": "fldrMJxw3zPULLn5S",
+      "fields": [
+        {
+          "id": "fldrMJxw3zPULLn5S",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldNCPxSLB2oNrtww",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldb4WBPngqHcCI4b",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "flda7gtM6HMck3Dkp",
+          "name": "Razionale",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldDqy1959zMYwnt6",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldT5aJHhrKimSDGf",
+          "name": "Campagna",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 08 · Campagne di esplorazione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldoYlAL7yXD9gWQm",
+          "name": "Specifiche proposte",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld186NzOnd6XC6GY",
+          "name": "Pattern",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 08 · Pattern progettuali. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld28L5a3vwHRnjYb",
+          "name": "Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldxmSgcFYkqEclZN",
+          "name": "↩ 08 · Trasformazioni progettuali — Candidato origine",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Candidato origine» in «08 · Trasformazioni progettuali»."
+        },
+        {
+          "id": "fldnHAnfiKCuCqFTB",
+          "name": "↩ 08 · Trasformazioni progettuali — Candidato destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Candidato destinazione» in «08 · Trasformazioni progettuali»."
+        },
+        {
+          "id": "fldzfrFwNjyYkCSxu",
+          "name": "13 · Decisioni",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblhbF6JMz1vj3OaB",
+      "name": "08 · Trasformazioni progettuali",
+      "description": "Modifica diretta tra candidati: aggiunta, rimozione, sostituzione, composizione.",
+      "primaryFieldId": "fldb4gj6ozaY1wfB0",
+      "fields": [
+        {
+          "id": "fldb4gj6ozaY1wfB0",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld7DDsQvFFWCly5L",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldwVa0gyqZlTR8bc",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZN1SfDAnhvTtbk",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldoLv7pqXU7hoHF3",
+          "name": "Modifica",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldmvBnsJBUFOCjFH",
+          "name": "Effetto atteso",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldWL58k6vl6JrjZK",
+          "name": "Candidato origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 08 · Candidati progettuali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldIJjLW8NRF3vdlW",
+          "name": "Candidato destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 08 · Candidati progettuali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldwSd8dYWmjsDS3N",
+          "name": "Componenti coinvolti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Istanze dei componenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldFqsSJOAYzbqU0U",
+          "name": "Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tbl3kMCtoEsZXk0Tm",
+      "name": "08 · Campagne di esplorazione",
+      "description": "Spazio di ricerca, budget e regole di arresto.",
+      "primaryFieldId": "fldeT06Z4WblIoFpw",
+      "fields": [
+        {
+          "id": "fldeT06Z4WblIoFpw",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldVGPLCCd2LAqxtV",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldaMZq0bE5daDGOZ",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldWQhMCKjClFaBa9",
+          "name": "Spazio ammesso",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldHqlrPKpJ5quWHy",
+          "name": "Budget",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldMNmwcFgz3B6Jog",
+          "name": "Selezione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld11xDpzULwMeBco",
+          "name": "Arresto",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldQXuKJrVeWcg16e",
+          "name": "08 · Candidati progettuali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld4meecxzWWY62lT",
+          "name": "Programma",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Programmi di ricerca. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldmj2rpOMFVEKP0g",
+          "name": "Strategie",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 08 · Strategie di progettazione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "flda9EfCycEMuaPS5",
+          "name": "10 · Esperimenti",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbl2kqfR5lDeirCUV",
+      "name": "09 · Playground",
+      "description": "Ambienti controllati per skill, learnability e probing.",
+      "primaryFieldId": "fldDIcocnKb7buuGM",
+      "fields": [
+        {
+          "id": "fldDIcocnKb7buuGM",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldhBbp5bq2ThqPP5",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldHOjuHfIb1KM6kx",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld0ISwsYssyy35zo",
+          "name": "Variabili controllate",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldNPg13AzuhuZ1qI",
+          "name": "Difficoltà",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldMBlzYKK4XYTEzx",
+          "name": "Limiti di trasferimento",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldYC5Da8e4SZGuRn",
+          "name": "Programmi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Programmi di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldmUX6ayamxZWVyG",
+          "name": "Capacità",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Capacità. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldKj5rBFNexDFr52",
+          "name": "Sistemi di riferimento",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Sistemi di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldxzLIfelyJiPlGW",
+          "name": "09 · Famiglie di compiti",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldMmfKWfwVwjaqXG",
+          "name": "10 · Esperimenti",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblXF0hZSnCZYk2tt",
+      "name": "09 · Famiglie di compiti",
+      "description": "Compiti e assi di difficoltà controllata.",
+      "primaryFieldId": "fldGkF6VZpRu2a4oB",
+      "fields": [
+        {
+          "id": "fldGkF6VZpRu2a4oB",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldfsTPiKh81aLOcx",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldOTWFRN7v9eYNuy",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld2AupTLw4BGADhO",
+          "name": "Compito",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldUesVVV1FrN0Oh3",
+          "name": "Assi di difficoltà",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldKlt2Q6hJLSI40h",
+          "name": "Distribuzione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld5KmHHNO8ba3wqi",
+          "name": "Playground",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Playground. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld5QuH6jkJxo7hMQ",
+          "name": "Capacità",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Capacità. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldLbAM8btgEDnVLj",
+          "name": "09 · Versioni dei dataset",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbl13dhKxXqO7AENB",
+      "name": "09 · Generatori e acquisizione",
+      "description": "Generazione dati teacher o acquisizione empirica versionata.",
+      "primaryFieldId": "fldB96aZlLet9u26n",
+      "fields": [
+        {
+          "id": "fldB96aZlLet9u26n",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldAwh0nxobP1voh2",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldugveUjNbXBrnqn",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldckWZ1ChaZQXhnx",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldrNV31bOJM786ps",
+          "name": "Procedura",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldbCqnwtDHrpUCFX",
+          "name": "Distribuzioni input",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldheH3eartjUXcwJ",
+          "name": "Seed e RNG",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld2UmoFdsrXQxQtE",
+          "name": "Variabili registrate",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldgMytZSax6CC2Qj",
+          "name": "Teacher implementato",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Implementazioni. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldHkRSld5qmkwzbb",
+          "name": "Schemi numerici",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Schemi numerici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldBIcNXW9IWHGS5G",
+          "name": "Artefatti codice",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldlxl9TlTObC4a3x",
+          "name": "Definizioni eventi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Definizioni operative. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld8W15EpImqEJ1pl",
+          "name": "09 · Versioni dei dataset",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblXdxobiaSfobSkr",
+      "name": "09 · Versioni dei dataset",
+      "description": "Dataset immutabili con contratto, provenienza e copertura.",
+      "primaryFieldId": "flddQdfVlTPcfSGHo",
+      "fields": [
+        {
+          "id": "flddQdfVlTPcfSGHo",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldSk3gkidy55zrCk",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld506TvihFBSBmcz",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldmEAOWTYTnlsgSA",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldmJ4WvVNBugIfsj",
+          "name": "Fingerprint",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldcKH7CQh27LY7UF",
+          "name": "Schema",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldljd07GvCZ9ntWZ",
+          "name": "Copertura",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldBnqc6xlZCrsV44",
+          "name": "Numero esempi",
+          "type": "number"
+        },
+        {
+          "id": "fldipqaEiuqVYcVLI",
+          "name": "Generatore",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Generatori e acquisizione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldu30ZOHNcbFIlzj",
+          "name": "Versione precedente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Versioni dei dataset. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldNiBW6nl5sxpbuE",
+          "name": "From field: Versione precedente",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "flddMOARreCQuoYpY",
+          "name": "Artefatti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldLqWnbVsAaSSKD4",
+          "name": "Compiti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Famiglie di compiti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldCiInmuna4kUsJX",
+          "name": "Definizioni operative",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Definizioni operative. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldw4PqpJ6U1v3pvH",
+          "name": "09 · Partizioni e ruoli dati",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldEhlWBLWWQfcxf1",
+          "name": "11 · Controlli di qualità",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbly1TbxinvumZQJE",
+      "name": "09 · Partizioni e ruoli dati",
+      "description": "Split con restrizioni di accesso e gruppi indipendenti.",
+      "primaryFieldId": "fld6dDFdexxeFdm83",
+      "fields": [
+        {
+          "id": "fld6dDFdexxeFdm83",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldKcIe6mhyHQIYTz",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldaO5i3iURWivMs0",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldV9xDiHkMXDymRY",
+          "name": "Ruolo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldJT9am6bHp4BmKI",
+          "name": "Regola di assegnazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldYE9CJtzMbllycU",
+          "name": "Gruppi seed episodi snapshot",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldqwDjYXiUtDnhHq",
+          "name": "Restrizioni di accesso",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldbDQfxpbLcMNeru",
+          "name": "Hash appartenenza",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldiHD6uPotWNoDw0",
+          "name": "07 · Istanze addestrate",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld7DaAcjBqDMwyqw",
+          "name": "Dataset",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Versioni dei dataset. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld2VxbHVXH9eiAzA",
+          "name": "10 · Versioni dei protocolli",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldmK3cl25WnONpO4",
+          "name": "10 · Bracci sperimentali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldiD17q3IWsrcrrp",
+          "name": "11 · Esecuzioni sperimentali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldPy7ZvaGuGf1gGf",
+          "name": "12 · Specifiche di valutazione",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblGuNATKyxx7TQQL",
+      "name": "10 · Esperimenti",
+      "description": "Test di ipotesi con guadagno informativo esplicito.",
+      "primaryFieldId": "fldFzIJN2R3bt1Cll",
+      "fields": [
+        {
+          "id": "fldFzIJN2R3bt1Cll",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldSQ2XAuUjvNYCvY",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldutU2o1AMhw929L",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldyeCfji17c7BfPP",
+          "name": "Obiettivo informativo",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldSdolNHsOdN294o",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldqsatkPNXzdeeO1",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldeWX6CTdDXCBwxA",
+          "name": "06 · Corrispondenze teacher-surrogate",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldPhw8x9yy2vwnOw",
+          "name": "Programma",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Programmi di ricerca. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld8UsWD6AGXcs8LB",
+          "name": "Domande",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Domande di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldSP4v83vEXowe7r",
+          "name": "Ipotesi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldRvsDInLSxaBLba",
+          "name": "Playground",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Playground. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld2vorrpIpWaJBU9",
+          "name": "Campagna",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 08 · Campagne di esplorazione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldSVM6BIAoevpYQC",
+          "name": "10 · Versioni dei protocolli",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld75HWsQpTge8Cv6",
+          "name": "12 · Risultati scientifici",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldFHD3DQUZ4TThfH",
+          "name": "13 · Studi di conferma e trasferimento",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldkFqQftYUGy2siC",
+          "name": "13 · Applicazioni del metodo",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldnTFjWQUe3eEcDr",
+          "name": "13 · Azioni di ricerca",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblnM133884C8blBb",
+      "name": "10 · Versioni dei protocolli",
+      "description": "Procedure versionate e preregistrazione; non alterare retroattivamente.",
+      "primaryFieldId": "fld43sXbznp3IMZYL",
+      "fields": [
+        {
+          "id": "fld43sXbznp3IMZYL",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldODG8tJ39IE4DeM",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldEQ7XB9ZpGNTbd5",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldTRHy1C66ZPwHP6",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldXNrWQrGlph6l1g",
+          "name": "Modalità",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldmDbF0PWDV8gesU",
+          "name": "Procedura",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldNViv4mPeLTWwCS",
+          "name": "Criteri di successo",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldNtSPrXFVAEpq2B",
+          "name": "Regole di arresto",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld1aLwlMava44xpk",
+          "name": "Registrato il",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldY1kvKgn1aBhiVp",
+          "name": "Hash preregistrazione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldzYHRSjC0ov4BKb",
+          "name": "Esperimento",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Esperimenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldpfUH2P3mpRu2B6",
+          "name": "Versione precedente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldXGaaTvJNgqSF4P",
+          "name": "From field: Versione precedente",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldARMHwfjpewT4tD",
+          "name": "Predizioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Predizioni. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldCQHeCbAh9j3Qv7",
+          "name": "Partizioni autorizzate",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Partizioni e ruoli dati. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldkkWQCILvNiCuvY",
+          "name": "Artefatto preregistrazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldJAYNsyYgGJdXhl",
+          "name": "Autori",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Attori. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld0yPrg13a64ZdYv",
+          "name": "10 · Fattori",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldSW3jbYrJFUwfJy",
+          "name": "10 · Bracci sperimentali",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldbFUHleydt1N0tS",
+          "name": "10 · Contrasti pianificati",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld4Nd64evBcLZmBW",
+          "name": "11 · Blocchi di esecuzione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldf08OxNnuiB8Kfn",
+          "name": "↩ 11 · Deviazioni dal protocollo — Protocollo previsto",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Protocollo previsto» in «11 · Deviazioni dal protocollo»."
+        },
+        {
+          "id": "fldkksHf3zhn6RrDN",
+          "name": "↩ 11 · Deviazioni dal protocollo — Protocollo sostitutivo",
+          "type": "multipleRecordLinks",
+          "description": "Inverso automatico del ruolo «Protocollo sostitutivo» in «11 · Deviazioni dal protocollo»."
+        },
+        {
+          "id": "fld6lHoGkY43YdOIc",
+          "name": "12 · Specifiche di valutazione",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldJ6IqzFnNeqIWQa",
+          "name": "13 · Applicazioni del metodo",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblAr3p6QF8D5d5Pe",
+      "name": "10 · Fattori",
+      "description": "Variabili manipolate nel disegno sperimentale.",
+      "primaryFieldId": "fldH8XmxuVlmpjf6G",
+      "fields": [
+        {
+          "id": "fldH8XmxuVlmpjf6G",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld60eDCHVpfaKfre",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldYaGzzzkWGfo37y",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldreAHPY7DLjCten",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fld8W4efUYmQuZ0sJ",
+          "name": "Interpretazione causale",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldqWuQFDCJZeXKwV",
+          "name": "Protocollo",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldfZ2CyOQmYiBDpQ",
+          "name": "10 · Livelli dei fattori",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbl0FhaHls9vb3XtE",
+      "name": "10 · Livelli dei fattori",
+      "description": "Valori ammessi di un fattore.",
+      "primaryFieldId": "fld8b1pZrySaS2KWr",
+      "fields": [
+        {
+          "id": "fld8b1pZrySaS2KWr",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldRg2ELP5G60hQmy",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldXVfmIvhQ85AfIN",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZrAdRnrl1stcHY",
+          "name": "Valore",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldyZwGdpdB5sfWkh",
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldGVvpRLQOHvhyGf",
+          "name": "Fattore",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Fattori. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld4dTTc9gamREDUl",
+          "name": "10 · Assegnazioni dei fattori",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbluk4duwsaBv3e2d",
+      "name": "10 · Bracci sperimentali",
+      "description": "Condizioni sperimentali con controllo o trattamento.",
+      "primaryFieldId": "fldpcraSFXV8gqrLc",
+      "fields": [
+        {
+          "id": "fldpcraSFXV8gqrLc",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldi6TVLcO5fFXEen",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldHxJlFOjDM6PY7b",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldEocdLK87f8S217",
+          "name": "Ruolo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldOcNZY7vcRyX4sb",
+          "name": "Configurazione residua",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldKJ7mhg9LZyeZ6m",
+          "name": "Protocollo",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld06y1JyhGdBKbsb",
+          "name": "Modello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Specifiche dei modelli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldMgabGclQSv615U",
+          "name": "Implementazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Implementazioni. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldMyl5JIQceTrveh",
+          "name": "Ricetta",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Ricette di addestramento. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldw9xZuubK7jnPu7",
+          "name": "Partizioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Partizioni e ruoli dati. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld6BYhcvs1E5t5au",
+          "name": "10 · Assegnazioni dei fattori",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldZda4pHN0rhuziP",
+          "name": "10 · Contrasti pianificati",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldSw7iYhL7RM3VOk",
+          "name": "11 · Esecuzioni sperimentali",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblmoUlUpayHZxlwQ",
+      "name": "10 · Assegnazioni dei fattori",
+      "description": "Una assegnazione collega un braccio a un livello di fattore.",
+      "primaryFieldId": "fldWrdBQOYHnvPoS3",
+      "fields": [
+        {
+          "id": "fldWrdBQOYHnvPoS3",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldLMw38izYn1M2xg",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldPyV80VFhVxnALJ",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldYENAuHRTv4Nzt9",
+          "name": "Braccio",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Bracci sperimentali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldJrEiCNKvRawtAc",
+          "name": "Livello",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Livelli dei fattori. Cardinalità prevista: un solo record (da validare in compilazione)."
+        }
+      ]
+    },
+    {
+      "id": "tbluTflq5KPB0ASBV",
+      "name": "10 · Contrasti pianificati",
+      "description": "Confronti e interazioni preregistrati, con regole interpretative.",
+      "primaryFieldId": "fldLoyiPzdA8DJ6EU",
+      "fields": [
+        {
+          "id": "fldLoyiPzdA8DJ6EU",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldkGsY479qI5VPwv",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldZrGF1Kelq4PCvr",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldxj9CRnMEwtnzcS",
+          "name": "Contrasto e coefficienti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldFzdnNiGgwnJOqq",
+          "name": "Soglia interpretativa",
+          "type": "multilineText"
+        },
+        {
+          "id": "flderTJJrwmXWqGXi",
+          "name": "Confondenti controllati",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld7ahlzVP3LPWOpL",
+          "name": "Correzione confronti multipli",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldhCNfkDeelMCtVS",
+          "name": "↩ 04 · Predizioni — Contrasti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Contrasti» in «04 · Predizioni». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldwHTz73M5D98IT5",
+          "name": "Protocollo",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "flduLHSDAt2pZoAyA",
+          "name": "Bracci",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Bracci sperimentali. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldjh6uGCXpji4LYy",
+          "name": "Predizioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Predizioni. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldj3DvjZl6JdC8Ww",
+          "name": "Specifiche di valutazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Specifiche di valutazione. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldLRLazU1ZeUuySD",
+          "name": "12 · Esecuzioni delle analisi",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblDINcdQ4YmLNlFm",
+      "name": "11 · Blocchi di esecuzione",
+      "description": "Appaiamento per seed, inizializzazione e flussi dati.",
+      "primaryFieldId": "fldLbi81dP34ogqx4",
+      "fields": [
+        {
+          "id": "fldLbi81dP34ogqx4",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldDACBun6GS7qBiI",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldvWAOeSBcE5LXSr",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldO9yFI3fUDfvyWI",
+          "name": "Seed",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld2WJK5mUgkVigki",
+          "name": "Hash stream",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldf4FIay1S850M6r",
+          "name": "Regola di appaiamento",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldNdsmMz2Jtz574j",
+          "name": "Protocollo",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldVRcFxf7uLLnOTP",
+          "name": "11 · Esecuzioni sperimentali",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblFIJ1ALOog9qQnH",
+      "name": "11 · Esecuzioni sperimentali",
+      "description": "Esecuzione effettiva distinta dal protocollo previsto.",
+      "primaryFieldId": "fldiqFJAS49e1GCUB",
+      "fields": [
+        {
+          "id": "fldiqFJAS49e1GCUB",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld6Hz6eqI6olPf0m",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld87AYFrpWvw5KKz",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldEG2dz830yNYHGk",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldMhX465YTTfDlHZ",
+          "name": "Seed",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldoWjG1NxlSfBNt0",
+          "name": "Inizio UTC",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldMqpwgskr9iAPtc",
+          "name": "Fine UTC",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldJIPPVhBHN1LNCM",
+          "name": "Hardware e ambiente",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldUk0uhWI0IdEREU",
+          "name": "Configurazione effettiva",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldRW0TaoQM2T65IF",
+          "name": "Validità tecnica",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld4fFUTnEilXd9t2",
+          "name": "07 · Istanze addestrate",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldH8BxHnUI8L5DGU",
+          "name": "Braccio",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Bracci sperimentali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldeHMCMkOUKhaxpL",
+          "name": "Blocco",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Blocchi di esecuzione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldEugpXcsTK5MRNV",
+          "name": "Implementazione effettiva",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Implementazioni. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld0liFWUjFcrhrat",
+          "name": "Ricetta effettiva",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Ricette di addestramento. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldoTxIHgcSHpzMHR",
+          "name": "Partizioni effettive",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Partizioni e ruoli dati. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldZ5He4nOs4VdNvi",
+          "name": "Artefatti prodotti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldgUgjgZu24ukm2l",
+          "name": "Responsabili",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Attori. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld4R8XwQMz7g481Q",
+          "name": "11 · Checkpoint",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldyRVPjo0mXHldZV",
+          "name": "11 · Controlli di qualità",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldrNX4Xl4WKFvYia",
+          "name": "11 · Deviazioni dal protocollo",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldY70eVnmzHR7MZx",
+          "name": "12 · Risultati delle metriche",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldNQXPTBYtKMuIq0",
+          "name": "12 · Esecuzioni delle analisi",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldJct5wFYrKWSZOg",
+          "name": "12 · Anomalie",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblUxuQDfxwJUMGLe",
+      "name": "11 · Checkpoint",
+      "description": "Punti intermedi della medesima traiettoria per curve a budget crescente.",
+      "primaryFieldId": "fldlqo2uSoNOfQX6P",
+      "fields": [
+        {
+          "id": "fldlqo2uSoNOfQX6P",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldM5Un5dPEWSSW7r",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldjH7iONSbeJTJ0f",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldGTWYEaF3aoElxp",
+          "name": "Step",
+          "type": "number"
+        },
+        {
+          "id": "fldeYn025yDYHIi2W",
+          "name": "Budget consumato",
+          "type": "number"
+        },
+        {
+          "id": "fldPomH0btIObRYEQ",
+          "name": "Unità budget",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldjZVcYJVHGELqCi",
+          "name": "Timestamp UTC",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldV9FTzJsCtQVsuG",
+          "name": "07 · Istanze addestrate",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldYLGu0hldnEpUsp",
+          "name": "Run",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Esecuzioni sperimentali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldMFdfXJPZa1y9gN",
+          "name": "Artefatto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldGHgLpS2Jc7IpCn",
+          "name": "12 · Risultati delle metriche",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbl6ufYRv1ZWtAuWt",
+      "name": "11 · Controlli di qualità",
+      "description": "Integrità, replay, leakage e coerenza; distinti dal successo scientifico.",
+      "primaryFieldId": "fldDOGgHmcXF8EN73",
+      "fields": [
+        {
+          "id": "fldDOGgHmcXF8EN73",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld3vsLUIuN8NZSC6",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldFX4nBN1dCN5Wqa",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldRW1NnYtieeoLQi",
+          "name": "Tipo controllo",
+          "type": "singleLineText"
+        },
+        {
+          "id": "flduD6wCYAdkqGLfl",
+          "name": "Regola",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldT5hCNSnORZ71IQ",
+          "name": "Esito",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldiA7bJ9iAByMLhr",
+          "name": "Dettagli",
+          "type": "multilineText"
+        },
+        {
+          "id": "flduNGDKhI5TGf03N",
+          "name": "Run",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Esecuzioni sperimentali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld7kRE7wrm4chwrL",
+          "name": "Dataset",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Versioni dei dataset. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldNV72YUiR5GNjSP",
+          "name": "Implementazioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Implementazioni. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldb1uzQIpApyiOZk",
+          "name": "Artefatti diagnostici",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tbla4RDh3SE6XeSBW",
+      "name": "11 · Deviazioni dal protocollo",
+      "description": "Incidenti e modifiche senza riscrivere il protocollo originale.",
+      "primaryFieldId": "fldkZH4oECwExInyE",
+      "fields": [
+        {
+          "id": "fldkZH4oECwExInyE",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldYEPqc80mQFeQEk",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldKzmpBUyEavbUW9",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld4zZtqXqGseazNL",
+          "name": "Deviazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldXurDokm2fE34Gy",
+          "name": "Motivazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldmHXXgh0RC7TBf7",
+          "name": "Impatto",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldtwosST9PwguQHe",
+          "name": "Timestamp UTC",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldTUDBLkE1O4Botn",
+          "name": "Run",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Esecuzioni sperimentali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldqV70eDG3tJcNJA",
+          "name": "Protocollo previsto",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld3SOpGt7kJoaGBP",
+          "name": "Protocollo sostitutivo",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fld22bQOxT0xsLC1X",
+          "name": "Responsabili",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Attori. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblQz0z1LFlwz6ONk",
+      "name": "12 · Definizioni delle metriche",
+      "description": "Formule riutilizzabili; separate dalla specifica applicazione.",
+      "primaryFieldId": "fldPSEdFocPYKNjCv",
+      "fields": [
+        {
+          "id": "fldPSEdFocPYKNjCv",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldKROwrwmhjbVX0B",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldS8e8KltyEJebOm",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZ9kRgdhsAiVyae",
+          "name": "Famiglia",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldVjEn0w67TCsRLd",
+          "name": "Formula",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldX9mOeEsZ99mtWi",
+          "name": "Unità",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldjPEvabTveyUuiH",
+          "name": "Direzione",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldP5U8hP6kvKdIpg",
+          "name": "Parametri",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldjaCQHafO4O8Tn8",
+          "name": "Casi degeneri",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldsGPSioMOzCpTw9",
+          "name": "Equazioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 06 · Relazioni matematiche. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldbjopz7cQWq3tF8",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldvhAY24qhSPAswA",
+          "name": "12 · Specifiche di valutazione",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblf5udl3Na97Inm1",
+      "name": "12 · Specifiche di valutazione",
+      "description": "Applicazione versionata della metrica: target, orizzonte, popolazione e aggregazione.",
+      "primaryFieldId": "fldxvBFz4AVzYdIpW",
+      "fields": [
+        {
+          "id": "fldxvBFz4AVzYdIpW",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldAlbluPsuHprMyr",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldHMIAtOdSCUD8kR",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldQ4H7HTyRSXdkte",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld5KSdKSps1sNZlC",
+          "name": "Target",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldfpUD6Xq4JVfwny",
+          "name": "Popolazione e regioni",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldiaqxX94BO9QBrJ",
+          "name": "Orizzonte e finestre",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldO2YZX0cy5pEf1J",
+          "name": "Aggregazione e pesi",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldPYezHk7eyaLWxh",
+          "name": "Matching eventi",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldI4vxRDTtE840MH",
+          "name": "Gestione classi assenti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldXIGJmePNcPHPGt",
+          "name": "Ruolo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fld2yB8sj1cDly0cj",
+          "name": "↩ 04 · Predizioni — Specifica di valutazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione inversa automatica di «Specifica di valutazione» in «04 · Predizioni». È lo stesso collegamento, non una seconda relazione da compilare."
+        },
+        {
+          "id": "fldiaFFgCKVBTStMJ",
+          "name": "10 · Contrasti pianificati",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldjJ9mXoTKg88hZm",
+          "name": "Metrica",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Definizioni delle metriche. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldEaSIYHKLjK1Cmz",
+          "name": "Protocollo",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldZR2iJ9IaeDlGDu",
+          "name": "Definizioni etichette",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Definizioni operative. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldsPtyImM8QeV5Ad",
+          "name": "Partizioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 09 · Partizioni e ruoli dati. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldsGRjbntHKx2NxU",
+          "name": "Grandezze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 03 · Grandezze di dominio. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldS3HEQ8WYaWSt3N",
+          "name": "Versione precedente",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Specifiche di valutazione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldoq8uERtGSTrpEn",
+          "name": "From field: Versione precedente",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldFETOup6pjhtMfc",
+          "name": "12 · Risultati delle metriche",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbl2UOMH9VKRsg3zG",
+      "name": "12 · Risultati delle metriche",
+      "description": "Valori scalari e riferimenti a misure dettagliate. Non inferire causalità dal solo valore.",
+      "primaryFieldId": "flddKSyBADtb3yTfs",
+      "fields": [
+        {
+          "id": "flddKSyBADtb3yTfs",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldM4Q1XZniPW9zCM",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldEqYnOFpmAKNKAg",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZm7knGyjHoTibw",
+          "name": "Valore",
+          "type": "number"
+        },
+        {
+          "id": "fldF9hGiSx0WFq2N4",
+          "name": "Numerosità",
+          "type": "number"
+        },
+        {
+          "id": "fldvkpLJ033f1l55k",
+          "name": "Limite inferiore",
+          "type": "number"
+        },
+        {
+          "id": "fldxDPJbvpnc2B6Hr",
+          "name": "Limite superiore",
+          "type": "number"
+        },
+        {
+          "id": "fldlqnCmRNip4EmxQ",
+          "name": "Metodo di incertezza",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldhmtBz9Tn666zYf",
+          "name": "Strato o sottogruppo",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld5efZeHP13tPZIE",
+          "name": "Motivo valore mancante",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldw5ukaVeipdb1Mm",
+          "name": "Specifica di valutazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Specifiche di valutazione. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldFIAu0YuD5UimNv",
+          "name": "Run",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Esecuzioni sperimentali. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldSp0iVWwnDBMaNE",
+          "name": "Checkpoint",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Checkpoint. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldSptYbHtZKDBoNs",
+          "name": "Modello addestrato",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 07 · Istanze addestrate. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldRWdcxSHSEt0w9T",
+          "name": "Analisi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Esecuzioni delle analisi. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldQkh4yUQXtLH5Bw",
+          "name": "Artefatti dettagliati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld8BQkwAk6ugX61X",
+          "name": "12 · Risultati scientifici",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldVlV5S274iKXeLu",
+          "name": "12 · Anomalie",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tbl82hX1zcgkkrtdG",
+      "name": "12 · Esecuzioni delle analisi",
+      "description": "Procedure analitiche versionate e riproducibili.",
+      "primaryFieldId": "fldSYlhINKxkcZ5ol",
+      "fields": [
+        {
+          "id": "fldSYlhINKxkcZ5ol",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld1WfU0wh60Do0zz",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldeoR2n4DFq8G9f0",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld0eD46zHuvBwTfj",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldCiv4KXY5HGE7Rw",
+          "name": "Commit",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld63zK9qAD3E5MxJ",
+          "name": "Procedura",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldEs9U9kkw2x9fKn",
+          "name": "Configurazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldXBRlVSBOLkebAx",
+          "name": "Origine",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldGlBvpnfdk4K0SW",
+          "name": "12 · Risultati delle metriche",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldC5fT2ixjoG4K48",
+          "name": "Run analizzati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Esecuzioni sperimentali. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld3y4Y9kbweJ5kDo",
+          "name": "Contrasti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Contrasti pianificati. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldjWJtkc8PdiKmvC",
+          "name": "Input artefatti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldFmVVXsKFEhxWUw",
+          "name": "Output artefatti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Artefatti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldsdJpy8AaF4Z3QJ",
+          "name": "12 · Risultati scientifici",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblfaHyYZ2zrdccUY",
+      "name": "12 · Risultati scientifici",
+      "description": "Conclusioni empiriche scopiated separate dalle valutazioni delle ipotesi.",
+      "primaryFieldId": "fldhoJJ1jrMBcOUrl",
+      "fields": [
+        {
+          "id": "fldhoJJ1jrMBcOUrl",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldAH67e9psRNS6ym",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld617j6OxMbAcouu",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldMuvZsGvQ2lJDib",
+          "name": "Risultato",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldUZXkcamhiuYbOm",
+          "name": "Incertezza",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldbpwerh1Ibdisrk",
+          "name": "Limitazioni",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldCeLjZXpGED4yv1",
+          "name": "Esito",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldb5iUtfy1H6reyF",
+          "name": "04 · Valutazioni delle evidenze",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fld6RRXAezvkiy3Ah",
+          "name": "Analisi",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Esecuzioni delle analisi. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld6T3N6yemVml04C",
+          "name": "Osservazioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Risultati delle metriche. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldYAbc64NIZGKzWO",
+          "name": "Esperimenti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Esperimenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "flduQBGqeIrhFjoew",
+          "name": "Domini di validità",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Domini di validità. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldTkqGHCtsGhE6dR",
+          "name": "13 · Studi di conferma e trasferimento",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldw7I3GqPu0PuSLu",
+          "name": "13 · Decisioni",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldByihGBJcbOynhM",
+          "name": "13 · Lezioni apprese",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblJkcldtIOfvXXK7",
+      "name": "12 · Anomalie",
+      "description": "Comportamenti inattesi che richiedono spiegazione.",
+      "primaryFieldId": "fld3yTRCD9i99L2cZ",
+      "fields": [
+        {
+          "id": "fld3yTRCD9i99L2cZ",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldyb7KQNpbCCQmn9",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldDaWg2jvkURgrOR",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldS5I5TME5ICt5N9",
+          "name": "Atteso",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldmYdUBplW3HZBQi",
+          "name": "Osservato",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld9wDHFCcnVC3ULr",
+          "name": "Possibili cause",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldCJq7olfJP5FvZ4",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldgQOqf3RgKIitGa",
+          "name": "Run",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 11 · Esecuzioni sperimentali. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldD4LUmzkPC2jsRy",
+          "name": "Osservazioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Risultati delle metriche. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldoyshFFebLJl5NU",
+          "name": "Ipotesi esplicative",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Affermazioni e ipotesi. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tbluy3NijRSDVUuBG",
+      "name": "13 · Studi di conferma e trasferimento",
+      "description": "Repliche, nuove condizioni e trasferimento da playground a sistema reale.",
+      "primaryFieldId": "fldqUClrQ8xaMuRHe",
+      "fields": [
+        {
+          "id": "fldqUClrQ8xaMuRHe",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld3j530gTHuNS3tc",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldUYEjo5RewMW80d",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldqKQMPTEdd66ljH",
+          "name": "Tipo",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldQjgTAsUtFA8hVY",
+          "name": "Indipendenza",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldxUw9ydV6aup3SZ",
+          "name": "Condizioni nuove",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld3LufsQNS2Pvt3O",
+          "name": "Esito",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldQC82SDpNnZHsVT",
+          "name": "Risultati da confermare",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Risultati scientifici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldAf00hnU1VwBC6U",
+          "name": "Esperimenti di verifica",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Esperimenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld2cDNxbDAWQlHxM",
+          "name": "Domini di origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Domini di validità. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldSR3ICgDnFeR7ia",
+          "name": "Domini di destinazione",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Domini di validità. Cardinalità prevista: zero o più record."
+        }
+      ]
+    },
+    {
+      "id": "tblkgQPbxD9mR3xsn",
+      "name": "13 · Decisioni",
+      "description": "Decisioni motivate dalle evidenze, non dal solo ranking.",
+      "primaryFieldId": "flduKvZ5tp3l0ciE8",
+      "fields": [
+        {
+          "id": "flduKvZ5tp3l0ciE8",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldKMdJcN5OyfXPBg",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldylCdEP8jwOCbl4",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZCyabVIEfvk4Dk",
+          "name": "Esito",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldU0fysH3Vsyd5uc",
+          "name": "Motivazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld6c39TA0qX8gmL9",
+          "name": "Condizioni di revisione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldhFipvsrVYbv5aa",
+          "name": "Data",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld5n2FeRMRNzIZTl",
+          "name": "Programma",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Programmi di ricerca. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldyMOckgkXfrxIFp",
+          "name": "Valutazioni delle evidenze",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 04 · Valutazioni delle evidenze. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldpPpy9MTdwYYfvG",
+          "name": "Risultati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Risultati scientifici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldYm1YuTbDyecT3y",
+          "name": "Candidati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 08 · Candidati progettuali. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldeE0mamtVWsmGhH",
+          "name": "Responsabili",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Attori. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldPWPhrQIqadQafc",
+          "name": "13 · Lezioni apprese",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldUSmiF5JjK64uS5",
+          "name": "13 · Azioni di ricerca",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblFFe4wg9JwpefAn",
+      "name": "13 · Lezioni apprese",
+      "description": "Conoscenza riutilizzabile con ambito esplicito.",
+      "primaryFieldId": "fldyA7uijRS7Y622e",
+      "fields": [
+        {
+          "id": "fldyA7uijRS7Y622e",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldIDYmf8bUihcJqM",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld4O1beno3odFKvI",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldZsfT23fGdO1DaJ",
+          "name": "Lezione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldlrDUqy9XFwhwtd",
+          "name": "Condizioni",
+          "type": "multilineText"
+        },
+        {
+          "id": "flduABc689z61ZI9l",
+          "name": "Limiti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld8HA1BGl990GAVS",
+          "name": "Risultati",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 12 · Risultati scientifici. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldA6VxnHn3pchKBe",
+          "name": "Decisioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 13 · Decisioni. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldtC2hGrW8U5VGOb",
+          "name": "Domini di validità",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 05 · Domini di validità. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldxH6rfwM7DbYUAv",
+          "name": "13 · Regole metodologiche",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblye5iN3KO8lOnHH",
+      "name": "13 · Regole metodologiche",
+      "description": "Principi operativi versionati.",
+      "primaryFieldId": "fldTovrrB8R7Ns4b4",
+      "fields": [
+        {
+          "id": "fldTovrrB8R7Ns4b4",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldgATKdDbgIgab0D",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldkDQq5tJ9H2LigP",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldyAI20rXL1WuQbo",
+          "name": "Versione",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldm5jd6gzMnu0K6h",
+          "name": "Regola",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld3XSPPYA0hmxiFR",
+          "name": "Motivazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld1F05UNNwVn032z",
+          "name": "Fonti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Passaggi delle fonti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldos90Wfme5TMHUg",
+          "name": "Lezioni",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 13 · Lezioni apprese. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld7ICUQhE7vTXJd9",
+          "name": "13 · Applicazioni del metodo",
+          "type": "multipleRecordLinks"
+        }
+      ]
+    },
+    {
+      "id": "tblHr5RzRQO671jqe",
+      "name": "13 · Applicazioni del metodo",
+      "description": "Applicazione concreta di una regola in un esperimento.",
+      "primaryFieldId": "fldTQZFZaWBKrfrAb",
+      "fields": [
+        {
+          "id": "fldTQZFZaWBKrfrAb",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldoyYKtQmx1xKvHG",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fld0t647B2gjl70Uv",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldo6UW8Tt982IWDN",
+          "name": "Modalità di applicazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldsehJD7dYYj7F9z",
+          "name": "Scostamenti",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldevO7ODOv43Wauk",
+          "name": "Valutazione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld1Tmhji4sYqapvb",
+          "name": "Regola",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 13 · Regole metodologiche. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldkmbA4trKSZ3qwU",
+          "name": "Esperimento",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Esperimenti. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldkry5yETSHyicoh",
+          "name": "Protocollo",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Versioni dei protocolli. Cardinalità prevista: un solo record (da validare in compilazione)."
+        }
+      ]
+    },
+    {
+      "id": "tblYrWXe1JwzKI5lj",
+      "name": "13 · Azioni di ricerca",
+      "description": "Passi successivi con dipendenze e condizioni di avvio.",
+      "primaryFieldId": "fldMeQ3of9b3RZvPb",
+      "fields": [
+        {
+          "id": "fldMeQ3of9b3RZvPb",
+          "name": "Nome",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldFPSQrhxnfHL9n7",
+          "name": "Codice stabile",
+          "type": "singleLineText"
+        },
+        {
+          "id": "fldQT49hS3JSMm8FP",
+          "name": "Descrizione",
+          "type": "multilineText"
+        },
+        {
+          "id": "fld0tHGV6BV3tjAqn",
+          "name": "Stato",
+          "type": "singleSelect"
+        },
+        {
+          "id": "fldL6j0RgbU09Usnb",
+          "name": "Criteri di avvio",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldilkZX7GrkdJNu2",
+          "name": "Risultato atteso",
+          "type": "multilineText"
+        },
+        {
+          "id": "fldyiTgFzV1vvmM5o",
+          "name": "Programma",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Programmi di ricerca. Cardinalità prevista: un solo record (da validare in compilazione)."
+        },
+        {
+          "id": "fldkCr0yLshDXWuxz",
+          "name": "Decisioni di origine",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 13 · Decisioni. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldgrmwbCk1T9fq46",
+          "name": "Domande",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 02 · Domande di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldI2FlCVIjw2HQwC",
+          "name": "Esperimenti previsti",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 10 · Esperimenti. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fld8zz84auBO3DIGQ",
+          "name": "Dipende da",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 13 · Azioni di ricerca. Cardinalità prevista: zero o più record."
+        },
+        {
+          "id": "fldlLL729Jw86riOj",
+          "name": "From field: Dipende da",
+          "type": "multipleRecordLinks"
+        },
+        {
+          "id": "fldazVEmaizg09aw8",
+          "name": "Responsabili",
+          "type": "multipleRecordLinks",
+          "description": "Relazione verso 01 · Attori. Cardinalità prevista: zero o più record."
+        }
+      ]
+    }
+  ]
+}
