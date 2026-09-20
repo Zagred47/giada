@@ -98,6 +98,34 @@
         }
       },
       {
+        "id": "recfc1cc11b855ade",
+        "createdTime": "2026-09-20T21:32:31Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Report",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [],
+          "fldFio32ffmk14gMY": [],
+          "fldJ42OE1ARQhyh59": "experiments/teacher_double_oracle_result_v1.json",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "giada-double-oracle-v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "00cff4e0e23c449667e8034070eecc69012d02323bfe1b1d12d36337f7f00b84",
+          "fldw98aVU9j6cBJYh": "GIADA Ca_HVA double-oracle result v1",
+          "fldwLVADFDuK4I0rk": "Report completo di 7.360 confronti formula-vs-NEURON, con emendamento di strumentazione e verifica indipendente della provenienza.",
+          "fldwnMJjQrllvC78Z": "artifact-giada-cahva-double-oracle-result-v1",
+          "fldy0kiTp7BG4j68p": [],
+          "fldybOB1VowNUBprP": 2216725
+        }
+      },
+      {
         "id": "recfdTqjUoE8OHaZT",
         "createdTime": "2026-09-20T14:03:35Z",
         "cellValuesByFieldId": {
@@ -244,7 +272,7 @@
           "fldRJmEWvdtbr0xoC": "rq-cahva-double-oracle-v1",
           "fldTzYqwWHaHk7eE7": "Per i gate m e h di Ca_HVA, la formula estratta direttamente da PROCEDURE rates e integrata esponenzialmente coincide con il DERIVATIVE states autentico compilato ed eseguito da NEURON sull'intera griglia preregistrata?",
           "fldj261pBSznFUjUC": [],
-          "fldu0VJMDCla5XqQv": "Aperta",
+          "fldu0VJMDCla5XqQv": "Risolta",
           "fldvER0OXNvszn36s": "Le formule estratte e NEURON isolato coincidono per Ca_HVA?"
         }
       }
@@ -602,6 +630,27 @@
     ],
     "tblfaHyYZ2zrdccUY": [
       {
+        "id": "rec1294587a5a8f65",
+        "createdTime": "2026-09-20T21:32:30Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Risultato del doppio oracle indipendente della Task 0.4 su formula estratta dal MOD e meccanismo NMODL autentico compilato.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task-0-4-cahva-double-oracle-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Tutti i 7.360 casi preregistrati per i gate m e h hanno superato la soglia atol=rtol=1e-10; failure_count=0 e massimo errore assoluto 2.22044604925031e-16. Nessun valore non finito. Il target atomico held-voltage è accettato.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Trascurabile entro la griglia e la precisione float64 testate; la differenza residua è compatibile con arrotondamento floating-point.",
+          "fldYAbc64NIZGKzWO": [],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Il risultato certifica Ca_HVA isolato a voltaggio controllato. Non certifica ancora voltaggio accoppiato, coupling assiale, interazioni tra meccanismi o validità embedded nell'intero neurone.",
+          "fldhoJJ1jrMBcOUrl": "Formula estratta e NEURON coincidono per la dinamica atomica Ca_HVA",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "recOmPq6g3UC6LJM4",
         "createdTime": "2026-09-20T14:05:10Z",
         "cellValuesByFieldId": {
@@ -797,7 +846,7 @@
         "id": "reccGHHVFD3yUeSVl",
         "createdTime": "2026-09-20T16:28:24.000Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld0tHGV6BV3tjAqn": "Conclusa",
           "fld8zz84auBO3DIGQ": [
             "reci06Go7piCq0YNQ"
           ],
@@ -810,7 +859,7 @@
           "fldgrmwbCk1T9fq46": [
             "recfWnDcWw4mhjHpO"
           ],
-          "fldilkZX7GrkdJNu2": "Report JSON/Markdown con 7.360 casi, zero mismatch, massimo errore e worst case; solo un esito valido autorizza il dataset atomico e la Task 1.",
+          "fldilkZX7GrkdJNu2": "Conseguito: 7.360/7.360 casi passati, zero mismatch, massimo errore assoluto 2.22044604925031e-16; il target atomico Ca_HVA a voltaggio controllato è accettato.",
           "fldkCr0yLshDXWuxz": [],
           "fldlLL729Jw86riOj": [],
           "fldyiTgFzV1vvmM5o": [

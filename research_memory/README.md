@@ -71,6 +71,20 @@ La successiva sincronizzazione sara una fase separata: riconciliazione per
 `Codice stabile`, rimappatura degli ID e delle relazioni, readback completo e
 verifica. Non applicare una politica automatica last-write-wins.
 
+Le scritture locali passano dall'interfaccia versionata, non da SQL ad hoc:
+
+```sh
+python -m research_memory local-upsert findings fields.json
+python -m research_memory local-upsert actions patch.json --record-id recXXXXXXXXXXXXXX
+python -m research_memory verify
+```
+
+`local-upsert` genera per i nuovi record un ID locale deterministico, mantiene
+automaticamente i collegamenti reciproci e aggiorna anche lo snapshot JSON
+versionato. Questi ID sono provvisori: durante la futura sincronizzazione i
+record verranno riconciliati per `Codice stabile` e le relazioni saranno
+rimappate sugli ID Airtable effettivi.
+
 La sezione seguente documenta il protocollo storico di doppia scrittura e resta
 come specifica per quella futura riconciliazione; non e il flusso operativo
 attivo.

@@ -103,6 +103,31 @@ class MemoryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.mirror.stage("sources", {"Nome": "Again", "Codice stabile": "SRC-1"})
 
+    def test_local_upsert_publishes_and_maintains_reciprocal_links(self):
+        actor = self.mirror.local_upsert(
+            "actors", {"Nome": "Local actor", "Codice stabile": "ACT-LOCAL-1"}
+        )
+        source = self.mirror.local_upsert(
+            "sources",
+            {
+                "Nome": "Local source",
+                "Codice stabile": "SRC-LOCAL-1",
+                "Autori": [actor["record_id"]],
+            },
+        )
+        self.assertTrue(self.mirror.verify()["valid"])
+        self.assertEqual(self.mirror.status()["records"], 2)
+        edge = self.mirror.query(
+            "SELECT source_id,target_id FROM v_links "
+            f"WHERE source_id='{source['record_id']}' AND target_id='{actor['record_id']}'"
+        )["rows"]
+        self.assertEqual(len(edge), 1)
+        updated = self.mirror.local_upsert(
+            "sources", {"Nome": "Renamed", "Codice stabile": "SRC-LOCAL-1"}
+        )
+        self.assertEqual(updated["record_id"], source["record_id"])
+        self.assertEqual(self.mirror.query("SELECT Nome FROM sources")["rows"][0]["Nome"], "Renamed")
+
     def test_successful_dual_write_and_multiple_updates(self):
         remote = FakeRemote(self)
         op = self.mirror.stage("sources", {"Nome": "A", "Codice stabile": "SRC-1"})

@@ -60,6 +60,11 @@ causale di **dove**, **quando** e **perché** ogni rappresentazione fallisce.
   `.mod` ed esecuzione NEURON isolata. Nessun dataset viene accettato finché i
   due percorsi non coincidono entro tolleranza preregistrata.
 
+  **Completata (2026-09-20):** 7.360/7.360 confronti superati con zero
+  fallimenti e massimo errore assoluto `2.22e-16`, contro soglia
+  `atol=rtol=1e-10`. Il risultato certifica il target atomico di `Ca_HVA` a
+  voltaggio controllato; non certifica ancora il trasferimento accoppiato.
+
 - **Task 0.5 — Split per dominio** → Separare interpolation, boundary, OOD e
   conferma embedded. Non dividere casualmente punti adiacenti della stessa
   curva tra train e test.

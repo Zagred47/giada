@@ -6,6 +6,7 @@ All user SQL is read-only. Airtable record and field IDs are preserved.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 import hashlib
 import json
 import math
@@ -308,6 +309,99 @@ class Mirror:
                 snapshot["tables"][self.contract.tables[r["table_key"]]["id"]].append({"id": r["record_id"], "createdTime": r["created_time"], "cellValuesByFieldId": json.loads(r["fields_json"])})
         return snapshot
 
+    def local_upsert(self, table, values, record_id=None):
+        """Publish one semantic record to the local mirror without Airtable.
+
+        Local IDs intentionally retain Airtable's syntactic shape so existing
+        relationship tables and validators remain usable.  Stable codes, not
+        these provisional IDs, are the identity used during a future explicit
+        reconciliation with Airtable.
+        """
+
+        key = self.contract.key(table)
+        patch = self.contract.normalize(key, values, partial=True)
+        code_fid = self.field_id(key, "Codice stabile")
+        name_fid = self.field_id(key, "Nome")
+        snapshot = self.export_snapshot()
+        table_id = self.contract.tables[key]["id"]
+        records = snapshot["tables"][table_id]
+
+        by_code = []
+        for row in records:
+            normalized = self.contract.normalize(key, row.get("cellValuesByFieldId", {}))
+            if normalized[code_fid] == patch.get(code_fid):
+                by_code.append(row)
+        if record_id is not None:
+            matches = [row for row in records if row["id"] == record_id]
+            if len(matches) != 1:
+                raise ValueError("Local update target missing or ambiguous")
+            row = matches[0]
+            current = self.contract.normalize(key, row.get("cellValuesByFieldId", {}))
+            stable_code = current[code_fid]
+            if not stable_code or (code_fid in patch and patch[code_fid] != stable_code):
+                raise ValueError("Local updates require an immutable stable code")
+            patch[code_fid] = stable_code
+        elif by_code:
+            if len(by_code) != 1:
+                raise ValueError("Duplicate local stable code")
+            row = by_code[0]
+            current = self.contract.normalize(key, row.get("cellValuesByFieldId", {}))
+            stable_code = current[code_fid]
+        else:
+            stable_code = patch.get(code_fid)
+            if not stable_code or not patch.get(name_fid):
+                raise ValueError("New local records require Nome and Codice stabile")
+            provisional = "rec" + hashlib.sha256((key + "\0" + stable_code).encode("utf-8")).hexdigest()[:14]
+            all_ids = {item["id"] for rows in snapshot["tables"].values() for item in rows}
+            if provisional in all_ids:
+                raise ValueError("Deterministic local record ID collision")
+            row = {
+                "id": provisional,
+                "createdTime": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
+                "cellValuesByFieldId": {},
+            }
+            records.append(row)
+            current = self.contract.normalize(key, {})
+
+        before = dict(current)
+        merged = dict(current)
+        merged.update(patch)
+        merged = self.contract.normalize(key, merged)
+        row["cellValuesByFieldId"] = merged
+
+        # Maintain reciprocal link fields automatically and deterministically.
+        for field_id, value in patch.items():
+            if field_id not in self.contract.link_fields:
+                continue
+            link, reverse = self.contract.link_fields[field_id]
+            if link["single"] and not reverse and len(value) > 1:
+                raise ValueError("Relationship is intended to have one target")
+            target_key = link["from"] if reverse else link["to"]
+            inverse_id = link["fieldId"] if reverse else link["inverseFieldId"]
+            target_table_id = self.contract.tables[target_key]["id"]
+            target_rows = {item["id"]: item for item in snapshot["tables"][target_table_id]}
+            old_targets, new_targets = set(before[field_id]), set(merged[field_id])
+            if any(target not in target_rows for target in new_targets):
+                raise ValueError("Linked local record does not exist")
+            for target in old_targets | new_targets:
+                target_row = target_rows.get(target)
+                if target_row is None:
+                    continue
+                target_fields = self.contract.normalize(target_key, target_row.get("cellValuesByFieldId", {}))
+                inverse = list(target_fields[inverse_id])
+                if target in old_targets - new_targets and row["id"] in inverse:
+                    inverse.remove(row["id"])
+                if target in new_targets and row["id"] not in inverse:
+                    inverse.append(row["id"])
+                target_fields[inverse_id] = inverse
+                target_row["cellValuesByFieldId"] = target_fields
+
+        result = self.import_snapshot(snapshot)
+        with self.connect() as conn:
+            conn.execute("INSERT OR REPLACE INTO _mirror_meta VALUES ('operating_mode','local_sqlite_authoritative_pending_airtable_reconciliation')")
+        result.update({"record_id": row["id"], "stable_code": stable_code, "table": key})
+        return result
+
     def stage(self, table, values, record_id=None):
         key = self.contract.key(table)
         patch = self.contract.normalize(key, values, partial=True)
@@ -530,6 +624,7 @@ def main(argv=None):
     for command in ("import-snapshot", "export-snapshot"):
         p = sub.add_parser(command); p.add_argument("path", type=Path)
     p = sub.add_parser("stage"); p.add_argument("table"); p.add_argument("fields", type=Path); p.add_argument("--record-id")
+    p = sub.add_parser("local-upsert"); p.add_argument("table"); p.add_argument("fields", type=Path); p.add_argument("--record-id"); p.add_argument("--snapshot", type=Path, default=ROOT / "data" / "airtable_snapshot.json")
     p = sub.add_parser("payload"); p.add_argument("operation_id")
     p = sub.add_parser("preflight"); p.add_argument("operation_id"); p.add_argument("snapshot", type=Path)
     p = sub.add_parser("sync"); p.add_argument("operation_id")
@@ -550,6 +645,10 @@ def main(argv=None):
         write_json(args.path, mirror.export_snapshot()); result = {"exported": str(args.path)}
     elif args.command == "stage":
         result = mirror.stage(args.table, read_json(args.fields), args.record_id)
+    elif args.command == "local-upsert":
+        result = mirror.local_upsert(args.table, read_json(args.fields), args.record_id)
+        write_json(args.snapshot, mirror.export_snapshot())
+        result["snapshot"] = str(args.snapshot)
     elif args.command == "payload":
         result = mirror.payload(args.operation_id)
     elif args.command == "preflight":
