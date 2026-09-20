@@ -1,0 +1,538 @@
+{
+  "schema_version": "giada-atomic-domain-splits-v1",
+  "task": "0.5",
+  "mechanism": "Ca_HVA",
+  "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "unit_of_split": "complete domain stratum, never random adjacent points",
+  "roles": {
+    "fit": "optimization only",
+    "development": "model selection and debugging allowed",
+    "sealed_test": "single final evaluation; no selection or threshold tuning",
+    "embedded_confirmation": "future independent coupled-teacher protocols; contains no atomic rows"
+  },
+  "strata": {
+    "train": {
+      "role": "fit",
+      "varied_axis": "support",
+      "purpose": "Fit only on non-reserved support; no adjacent points from held voltage windows.",
+      "voltages_mv": [
+        -99.0,
+        -98.0,
+        -97.0,
+        -96.0,
+        -95.0,
+        -94.0,
+        -93.0,
+        -92.0,
+        -91.0,
+        -90.0,
+        -89.0,
+        -88.0,
+        -76.0,
+        -75.0,
+        -74.0,
+        -73.0,
+        -72.0,
+        -71.0,
+        -70.0,
+        -69.0,
+        -68.0,
+        -67.0,
+        -66.0,
+        -65.0,
+        -64.0,
+        -63.0,
+        -51.0,
+        -50.0,
+        -49.0,
+        -48.0,
+        -47.0,
+        -46.0,
+        -45.0,
+        -44.0,
+        -43.0,
+        -42.0,
+        -41.0,
+        -40.0,
+        -39.0,
+        -38.0,
+        -37.0,
+        -36.0,
+        -35.0,
+        -34.0,
+        -33.0,
+        -32.0,
+        -31.0,
+        -30.0,
+        -29.0,
+        -25.0,
+        -24.0,
+        -23.0,
+        -22.0,
+        -21.0,
+        -20.0,
+        -19.0,
+        -18.0,
+        -6.0,
+        -5.0,
+        -4.0,
+        -3.0,
+        -2.0,
+        -1.0,
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        9.0,
+        10.0,
+        11.0,
+        12.0,
+        24.0,
+        25.0,
+        26.0,
+        27.0,
+        28.0,
+        29.0,
+        30.0,
+        31.0,
+        32.0,
+        33.0,
+        34.0,
+        35.0,
+        36.0,
+        37.0,
+        38.0,
+        39.0
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 8096,
+      "case_fingerprint_sha256": "5aa69605914229ee455f9acb190536c60465ca735294f58dd11c1a9215a968e8"
+    },
+    "interpolation_voltage_development": {
+      "role": "development",
+      "varied_axis": "voltage",
+      "purpose": "Model selection on complete contiguous voltage windows inside the fit envelope.",
+      "voltages_mv": [
+        -85.0,
+        -84.0,
+        -83.0,
+        -82.0,
+        -81.0,
+        -80.0,
+        -79.0,
+        -15.0,
+        -14.0,
+        -13.0,
+        -12.0,
+        -11.0,
+        -10.0,
+        -9.0
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 1232,
+      "case_fingerprint_sha256": "15e349798e881ceb7d7fb9e97fb6e966dd028f9f97ac8636645dd3cb3f6b1fe6"
+    },
+    "interpolation_voltage_test": {
+      "role": "sealed_test",
+      "varied_axis": "voltage",
+      "purpose": "Sealed interpolation confirmation on different contiguous voltage windows.",
+      "voltages_mv": [
+        -60.0,
+        -59.0,
+        -58.0,
+        -57.0,
+        -56.0,
+        -55.0,
+        -54.0,
+        15.0,
+        16.0,
+        17.0,
+        18.0,
+        19.0,
+        20.0,
+        21.0
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 1232,
+      "case_fingerprint_sha256": "45f3657375b1587f19dd69bd7a70ef0709c76ea3f86bbc465b52994f0c2f69ad"
+    },
+    "interpolation_state_development": {
+      "role": "development",
+      "varied_axis": "state",
+      "purpose": "State interpolation with voltage and dt held on fit support.",
+      "voltages_mv": [
+        -90.0,
+        -70.0,
+        -40.0,
+        0.0,
+        30.0
+      ],
+      "states": [
+        0.15,
+        0.65
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 80,
+      "case_fingerprint_sha256": "7c347fbe5281cbf3e335af930c1e9bbdf5bde646c3edd00b752d5d0306771dcd"
+    },
+    "interpolation_state_test": {
+      "role": "sealed_test",
+      "varied_axis": "state",
+      "purpose": "Sealed state interpolation at disjoint occupancy values.",
+      "voltages_mv": [
+        -90.0,
+        -70.0,
+        -40.0,
+        0.0,
+        30.0
+      ],
+      "states": [
+        0.35,
+        0.85
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 80,
+      "case_fingerprint_sha256": "73bc9313ff6115820d5dd3d219b0e51e7d5c1216ecd3727f3a854595915db135"
+    },
+    "interpolation_dt_development": {
+      "role": "development",
+      "varied_axis": "dt",
+      "purpose": "Variable-step development with voltage and state on fit support.",
+      "voltages_mv": [
+        -90.0,
+        -70.0,
+        -40.0,
+        0.0,
+        30.0
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        0.05,
+        0.25
+      ],
+      "case_count": 220,
+      "case_fingerprint_sha256": "e43642659a57ab00c7582f0d4e45ee3631facbaaa0f6ff9a8833bc13a68551c9"
+    },
+    "interpolation_dt_test": {
+      "role": "sealed_test",
+      "varied_axis": "dt",
+      "purpose": "Sealed variable-step interpolation at a disjoint time step.",
+      "voltages_mv": [
+        -90.0,
+        -70.0,
+        -40.0,
+        0.0,
+        30.0
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        0.75
+      ],
+      "case_count": 110,
+      "case_fingerprint_sha256": "707dcde44a2081c80e4408ebb9f3121a00a9539355efb67a3453718b2845c453"
+    },
+    "boundary_singularity_test": {
+      "role": "sealed_test",
+      "varied_axis": "voltage_boundary",
+      "purpose": "Exact and one-sided probes of the teacher's -27 mV singularity handling.",
+      "voltages_mv": [
+        -27.0001,
+        -27.0,
+        -26.9999
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 264,
+      "case_fingerprint_sha256": "419e44f83ff99e30f6336fa59190243ee20df729560ea2848e737e72cc132cee"
+    },
+    "boundary_state_test": {
+      "role": "sealed_test",
+      "varied_axis": "state_boundary",
+      "purpose": "Physical occupancy boundaries and their near-boundary controls.",
+      "voltages_mv": [
+        -90.0,
+        -70.0,
+        -40.0,
+        0.0,
+        30.0
+      ],
+      "states": [
+        0.0,
+        0.01,
+        0.99,
+        1.0
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 160,
+      "case_fingerprint_sha256": "8625b9494dfd64270c50778c28447cc589886bbeb607fa974d36bd53b76ccd1d"
+    },
+    "boundary_support_edge_test": {
+      "role": "sealed_test",
+      "varied_axis": "support_edge",
+      "purpose": "Edges of the declared in-support voltage envelope.",
+      "voltages_mv": [
+        -100.0,
+        40.0
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 176,
+      "case_fingerprint_sha256": "c4d6d1163b477852a7178c3b029338654a4e27c4bc8e4e4dacf313381c9d7f84"
+    },
+    "ood_voltage_test": {
+      "role": "sealed_test",
+      "varied_axis": "voltage_ood",
+      "purpose": "Voltage extrapolation with state and dt held in support.",
+      "voltages_mv": [
+        -120.0,
+        -115.0,
+        -110.0,
+        -105.0,
+        45.0,
+        50.0,
+        55.0,
+        60.0
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        0.025,
+        0.1,
+        0.5,
+        1.0
+      ],
+      "case_count": 704,
+      "case_fingerprint_sha256": "d457118d8c85b6844e4e7a6b7c4176d1727b57c8a9da46e92928309032f1bcc8"
+    },
+    "ood_dt_test": {
+      "role": "sealed_test",
+      "varied_axis": "dt_ood",
+      "purpose": "Time-step extrapolation with voltage and state held in support.",
+      "voltages_mv": [
+        -90.0,
+        -70.0,
+        -40.0,
+        0.0,
+        30.0
+      ],
+      "states": [
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.95
+      ],
+      "dt_ms": [
+        1.5,
+        2.0
+      ],
+      "case_count": 220,
+      "case_fingerprint_sha256": "d4f802c0ec8e1fd2a6fda15458679c22398a24c662ddf601741d6025dfb8e522"
+    },
+    "factorial_stress_test": {
+      "role": "sealed_test",
+      "varied_axis": "multi_axis_ood",
+      "purpose": "Deliberately confounded stress test, reported separately from single-axis OOD.",
+      "voltages_mv": [
+        -120.0,
+        60.0
+      ],
+      "states": [
+        0.0,
+        1.0
+      ],
+      "dt_ms": [
+        2.0
+      ],
+      "case_count": 8,
+      "case_fingerprint_sha256": "2876dbe865acd84cadb506eae5662d660a93f7dff321708b2919c96a55dd0ed1"
+    }
+  },
+  "excluded_guards": {
+    "voltage_window_guard_mv": 2.0,
+    "singularity_guard_range_mv": [
+      -28.0,
+      -26.0
+    ],
+    "train_to_ood_voltage_gap_mv": [
+      [
+        -104.0,
+        -101.0
+      ],
+      [
+        41.0,
+        44.0
+      ]
+    ],
+    "policy": "Guard points are not fit data and are not scored; they prevent near-duplicate support leakage."
+  },
+  "embedded_confirmation": {
+    "atomic_rows": 0,
+    "status": "reserved_not_generated",
+    "required_later": [
+      "held-out voltage-path protocols",
+      "independent initial states or snapshots",
+      "teacher-coupled gate and current readout",
+      "no model selection on outcomes"
+    ]
+  },
+  "validation": {
+    "valid": true,
+    "stratum_count": 13,
+    "total_case_count": 12582,
+    "overlap_count": 0,
+    "fit_evaluation_overlap_count": 0,
+    "overlaps": [],
+    "all_strata_nonempty": true,
+    "development_and_test_are_disjoint": true
+  }
+}

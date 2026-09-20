@@ -69,6 +69,12 @@ causale di **dove**, **quando** e **perché** ogni rappresentazione fallisce.
   conferma embedded. Non dividere casualmente punti adiacenti della stessa
   curva tra train e test.
 
+  **Completata (2026-09-20):** contratto deterministico di 12.582 casi in 13
+  strati, con 8.096 casi di fit, finestre contigue di sviluppo/test, boundary
+  fisici e numerici, OOD a singolo asse e stress multifattoriale separato.
+  Overlap tra strati e tra fit/evaluation: zero. La conferma embedded resta
+  intenzionalmente vuota e riservata a protocolli teacher-coupled futuri.
+
 - **Task 0.6 — Baseline GPU comune** → Stessi batch, seed, precisione, budget,
   misure temporali e stream di dati per tutti i bracci.
 

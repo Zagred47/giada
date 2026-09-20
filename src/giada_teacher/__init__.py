@@ -11,6 +11,11 @@ from .double_oracle import (
     run_double_oracle,
     write_double_oracle_report,
 )
+from .domain_splits import (
+    AtomicDomainSplitConfig,
+    build_atomic_domain_splits,
+    render_atomic_domain_splits_markdown,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -18,4 +23,6 @@ __all__ = [
     "build_atomic_data_contract", "validate_atomic_data_contract", "write_atomic_data_contract",
     "ExtractedGateFormula", "NeuronIsolatedGateOracle", "OracleUnavailable",
     "compile_nmodl", "run_double_oracle", "write_double_oracle_report",
+    "AtomicDomainSplitConfig", "build_atomic_domain_splits",
+    "render_atomic_domain_splits_markdown",
 ]

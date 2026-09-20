@@ -36,6 +36,36 @@
         }
       },
       {
+        "id": "rec82addcb818e774",
+        "createdTime": "2026-09-20T21:46:55Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Schema",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [
+            "recf7dfc476c07483"
+          ],
+          "fldFio32ffmk14gMY": [],
+          "fldJ42OE1ARQhyh59": "experiments/teacher_atomic_domain_splits_v1.json",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "giada-atomic-domain-splits-v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "e278a501a77fecc759e8818124344dd2e7bd85ce830b49854a37b8f259f2180e",
+          "fldw98aVU9j6cBJYh": "GIADA atomic domain splits v1",
+          "fldwLVADFDuK4I0rk": "Contratto deterministico della Task 0.5 con 13 strati e audit automatico di overlap e leakage.",
+          "fldwnMJjQrllvC78Z": "artifact-giada-atomic-domain-splits-v1",
+          "fldy0kiTp7BG4j68p": [],
+          "fldybOB1VowNUBprP": 11571
+        }
+      },
+      {
         "id": "recDYi4Jt6qbNQ2It",
         "createdTime": "2026-09-20T15:43:56Z",
         "cellValuesByFieldId": {
@@ -236,6 +266,21 @@
           ],
           "fldu0VJMDCla5XqQv": "Risolta",
           "fldvER0OXNvszn36s": "Qual è il contratto dati atomico sufficiente per ciascuna famiglia causale?"
+        }
+      },
+      {
+        "id": "recca647cf046e354",
+        "createdTime": "2026-09-20T21:46:55Z",
+        "cellValuesByFieldId": {
+          "fldAn8rI4IDtMAtO1": [],
+          "fldEM4SsCTKdq0ZXA": [],
+          "fldF6LDGDaySPXohO": "Domanda metodologica che precede generazione dati e selezione architetturale.",
+          "fldGK9NOiPojtVDt5": [],
+          "fldRJmEWvdtbr0xoC": "rq-atomic-domain-splits-v1",
+          "fldTzYqwWHaHk7eE7": "Quale partizionamento separa fit, interpolazione, boundary, OOD e futura conferma embedded evitando punti adiacenti della stessa curva tra train e test?",
+          "fldj261pBSznFUjUC": [],
+          "fldu0VJMDCla5XqQv": "Risolta",
+          "fldvER0OXNvszn36s": "Come separare i domini atomici senza leakage locale?"
         }
       },
       {
@@ -463,6 +508,39 @@
             "reclkqGbcD23aIje6"
           ]
         }
+      },
+      {
+        "id": "recf7dfc476c07483",
+        "createdTime": "2026-09-20T21:47:15Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-20",
+          "fld43sXbznp3IMZYL": "Ca_HVA atomic domain split protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo preregistrato di partizionamento per gli esperimenti atomici dei gate m e h.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Tutti gli strati non vuoti; zero duplicati tra strati; zero overlap fit/evaluation; guard band rispettate; OOD a singolo asse separato dallo stress multifattoriale.",
+          "fldNtSPrXFVAEpq2B": "Bloccare la generazione se cambia teacher, hash del contratto, dominio, guard band o se compare qualunque overlap. Ogni modifica richiede nuova versione e nuova preregistrazione.",
+          "fldODG8tJ39IE4DeM": "protocol-cahva-atomic-domain-splits-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "1.0.0",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Componente isolato",
+          "fldY1kvKgn1aBhiVp": "e278a501a77fecc759e8818124344dd2e7bd85ce830b49854a37b8f259f2180e",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [
+            "rec82addcb818e774"
+          ],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Generare esclusivamente i 13 strati dichiarati nell'artefatto. Fit solo sullo strato train; sviluppo solo sugli strati development; aprire i sealed_test una sola volta dopo il congelamento del candidato. Non trasformare righe atomiche in conferma embedded.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": []
+        }
       }
     ],
     "tblAr3p6QF8D5d5Pe": [],
@@ -646,6 +724,27 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Il risultato certifica Ca_HVA isolato a voltaggio controllato. Non certifica ancora voltaggio accoppiato, coupling assiale, interazioni tra meccanismi o validità embedded nell'intero neurone.",
           "fldhoJJ1jrMBcOUrl": "Formula estratta e NEURON coincidono per la dinamica atomica Ca_HVA",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "rec521ce0fe38bae5",
+        "createdTime": "2026-09-20T21:46:55Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Risultato della Task 0.5 sul contratto di partizionamento per Ca_HVA.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task-0-5-atomic-domain-splits-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Sono stati definiti 13 strati per 12.582 casi: fit, sviluppo, test sigillati di interpolazione, boundary, OOD a singolo asse e stress multifattoriale. Le finestre di voltaggio sono contigue e protette da guard band. Overlap tra strati e fit/evaluation pari a zero.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Bassa per disgiunzione e determinismo, verificati automaticamente. L'adeguatezza biologica dell'intervallo di supporto sarà valutata negli esperimenti atomici e embedded.",
+          "fldYAbc64NIZGKzWO": [],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Lo schema definisce i domini ma non misura ancora learnability. La conferma embedded contiene zero righe atomiche e richiederà protocolli coupled-teacher indipendenti.",
+          "fldhoJJ1jrMBcOUrl": "Gli split atomici possono isolare dominio e ruolo senza overlap",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }
@@ -843,6 +942,27 @@
         }
       },
       {
+        "id": "recad9008f30ad206",
+        "createdTime": "2026-09-20T21:46:55Z",
+        "cellValuesByFieldId": {
+          "fld0tHGV6BV3tjAqn": "Conclusa",
+          "fld8zz84auBO3DIGQ": [
+            "reccGHHVFD3yUeSVl"
+          ],
+          "fldFPSQrhxnfHL9n7": "action-task-0-5-atomic-domain-splits-v1",
+          "fldI2FlCVIjw2HQwC": [],
+          "fldL6j0RgbU09Usnb": "Task 0.4 superata; target atomico accettato; assi V, stato e dt espliciti.",
+          "fldMeQ3of9b3RZvPb": "Task 0.5 — Split atomici per dominio",
+          "fldQT49hS3JSMm8FP": "Definire split deterministici e leakage-resistant per il playground Ca_HVA.",
+          "fldazVEmaizg09aw8": [],
+          "fldgrmwbCk1T9fq46": [],
+          "fldilkZX7GrkdJNu2": "Conseguito: 13 strati, 12.582 casi pianificati, zero overlap, ruoli development e sealed test distinti, conferma embedded riservata.",
+          "fldkCr0yLshDXWuxz": [],
+          "fldlLL729Jw86riOj": [],
+          "fldyiTgFzV1vvmM5o": []
+        }
+      },
+      {
         "id": "reccGHHVFD3yUeSVl",
         "createdTime": "2026-09-20T16:28:24.000Z",
         "cellValuesByFieldId": {
@@ -861,7 +981,9 @@
           ],
           "fldilkZX7GrkdJNu2": "Conseguito: 7.360/7.360 casi passati, zero mismatch, massimo errore assoluto 2.22044604925031e-16; il target atomico Ca_HVA a voltaggio controllato è accettato.",
           "fldkCr0yLshDXWuxz": [],
-          "fldlLL729Jw86riOj": [],
+          "fldlLL729Jw86riOj": [
+            "recad9008f30ad206"
+          ],
           "fldyiTgFzV1vvmM5o": [
             "rec0wPKrtqWymCBjr"
           ]
