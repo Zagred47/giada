@@ -36,6 +36,36 @@
         }
       },
       {
+        "id": "rec3851ad49812859",
+        "createdTime": "2026-09-20T21:57:00Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Schema",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [
+            "recf3a7fd176e8db6"
+          ],
+          "fldFio32ffmk14gMY": [],
+          "fldJ42OE1ARQhyh59": "experiments/teacher_common_gpu_baseline_v1.json",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "giada-common-gpu-baseline-v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "2c87316834f0461d16916d1f2ebecb3f68c7f0283a9bc6a6017c0c410d2b5873",
+          "fldw98aVU9j6cBJYh": "GIADA common GPU baseline v1",
+          "fldwLVADFDuK4I0rk": "Contratto e helper runtime della Task 0.6 per confronti GPU appaiati, deterministici e misurabili.",
+          "fldwnMJjQrllvC78Z": "artifact-giada-common-gpu-baseline-v1",
+          "fldy0kiTp7BG4j68p": [],
+          "fldybOB1VowNUBprP": 5131
+        }
+      },
+      {
         "id": "rec82addcb818e774",
         "createdTime": "2026-09-20T21:46:55Z",
         "cellValuesByFieldId": {
@@ -284,6 +314,21 @@
         }
       },
       {
+        "id": "recd762156fa83378",
+        "createdTime": "2026-09-20T21:57:01Z",
+        "cellValuesByFieldId": {
+          "fldAn8rI4IDtMAtO1": [],
+          "fldEM4SsCTKdq0ZXA": [],
+          "fldF6LDGDaySPXohO": "Domanda di equità sperimentale precedente ai training dei gate.",
+          "fldGK9NOiPojtVDt5": [],
+          "fldRJmEWvdtbr0xoC": "rq-common-gpu-baseline-v1",
+          "fldTzYqwWHaHk7eE7": "Quali seed, stream dati, precisione, budget, checkpoint, metriche e misure temporali devono rimanere appaiati affinché le differenze tra primitive siano attribuibili al modello?",
+          "fldj261pBSznFUjUC": [],
+          "fldu0VJMDCla5XqQv": "Risolta",
+          "fldvER0OXNvszn36s": "Quale contratto rende confrontabili i modelli atomici su GPU?"
+        }
+      },
+      {
         "id": "recexQ08Q8qnqA1ms",
         "createdTime": "2026-09-20T13:59:09Z",
         "cellValuesByFieldId": {
@@ -507,6 +552,39 @@
           "fldzYHRSjC0ov4BKb": [
             "reclkqGbcD23aIje6"
           ]
+        }
+      },
+      {
+        "id": "recf3a7fd176e8db6",
+        "createdTime": "2026-09-20T21:57:18Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-20",
+          "fld43sXbznp3IMZYL": "GIADA common atomic GPU protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo comune per tutti i bracci appresi e analitici del playground atomico Ca_HVA.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Manifest ambiente completo; hash degli stream identici tra bracci appaiati; nessun accesso al test durante il training; tutti i checkpoint e metriche richiesti; timing e memoria validi.",
+          "fldNtSPrXFVAEpq2B": "Fallire su operazioni CUDA non deterministiche, drift di split/stream/precisione/budget, accesso prematuro al test o assenza degli artefatti obbligatori.",
+          "fldODG8tJ39IE4DeM": "protocol-common-atomic-gpu-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "1.0.0",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Componente isolato",
+          "fldY1kvKgn1aBhiVp": "2c87316834f0461d16916d1f2ebecb3f68c7f0283a9bc6a6017c0c410d2b5873",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [
+            "rec3851ad49812859"
+          ],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Usare gli split Task 0.5. Per ogni braccio appreso eseguire seed 17/29/43, stessi stream minibatch, batch 1024, float32 senza AMP, AdamW, identica griglia LR e checkpoint. Selezionare solo su development. Congelare candidato e normalizzazione prima di aprire sealed test. Misurare eager e compiled separatamente con CUDA events sincronizzati.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": []
         }
       },
       {
@@ -750,6 +828,27 @@
         }
       },
       {
+        "id": "rec896e0da948da7d",
+        "createdTime": "2026-09-20T21:57:01Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Risultato metodologico della Task 0.6.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task-0-6-common-gpu-baseline-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "È stato fissato un contratto comune con seed 17/29/43, identici indici minibatch, batch 1024, float32 senza AMP, AdamW e uguale griglia LR, checkpoint a budget crescenti, test sigillato non selettivo e timing CUDA sincronizzato. Eager e torch.compile vengono riportati separatamente.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Il contratto elimina molte fonti di confondimento; rumore hardware residuo e differenze intrinseche di capacità restano da riportare, non da nascondere.",
+          "fldYAbc64NIZGKzWO": [],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "L'uguaglianza del budget non implica uguaglianza di capacità o costo. Analitici e modelli appresi devono condividere righe e metriche, ma non un budget di ottimizzazione fittizio.",
+          "fldhoJJ1jrMBcOUrl": "Il confronto GPU richiede stream appaiati e firewall di selezione",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "recOmPq6g3UC6LJM4",
         "createdTime": "2026-09-20T14:05:10Z",
         "cellValuesByFieldId": {
@@ -942,6 +1041,27 @@
         }
       },
       {
+        "id": "rec69d8a616008996",
+        "createdTime": "2026-09-20T21:57:01Z",
+        "cellValuesByFieldId": {
+          "fld0tHGV6BV3tjAqn": "Conclusa",
+          "fld8zz84auBO3DIGQ": [
+            "recad9008f30ad206"
+          ],
+          "fldFPSQrhxnfHL9n7": "action-task-0-6-common-gpu-baseline-v1",
+          "fldI2FlCVIjw2HQwC": [],
+          "fldL6j0RgbU09Usnb": "Task 0.5 conclusa; split deterministici e ruoli fit/development/sealed test disponibili.",
+          "fldMeQ3of9b3RZvPb": "Task 0.6 — Baseline GPU comune",
+          "fldQT49hS3JSMm8FP": "Fissare contratto e runtime comuni prima dei training atomici.",
+          "fldazVEmaizg09aw8": [],
+          "fldgrmwbCk1T9fq46": [],
+          "fldilkZX7GrkdJNu2": "Conseguito: contratto validato, stream appaiati riproducibili, determinismo fail-closed, budget/checkpoint comuni e timing CUDA corretto.",
+          "fldkCr0yLshDXWuxz": [],
+          "fldlLL729Jw86riOj": [],
+          "fldyiTgFzV1vvmM5o": []
+        }
+      },
+      {
         "id": "recad9008f30ad206",
         "createdTime": "2026-09-20T21:46:55Z",
         "cellValuesByFieldId": {
@@ -958,7 +1078,9 @@
           "fldgrmwbCk1T9fq46": [],
           "fldilkZX7GrkdJNu2": "Conseguito: 13 strati, 12.582 casi pianificati, zero overlap, ruoli development e sealed test distinti, conferma embedded riservata.",
           "fldkCr0yLshDXWuxz": [],
-          "fldlLL729Jw86riOj": [],
+          "fldlLL729Jw86riOj": [
+            "rec69d8a616008996"
+          ],
           "fldyiTgFzV1vvmM5o": []
         }
       },

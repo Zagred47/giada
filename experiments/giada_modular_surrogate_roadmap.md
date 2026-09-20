@@ -78,6 +78,11 @@ causale di **dove**, **quando** e **perché** ogni rappresentazione fallisce.
 - **Task 0.6 — Baseline GPU comune** → Stessi batch, seed, precisione, budget,
   misure temporali e stream di dati per tutti i bracci.
 
+  **Completata (2026-09-20):** contratto GPU comune con tre seed appaiati,
+  stream minibatch persistibili, float32 primario senza AMP, griglia LR e
+  checkpoint uguali, firewall development/test e benchmarking CUDA distinto
+  tra eager e compiled. Helper runtime deterministici inclusi.
+
 ### ✅ Gate 0 — Integrità del contratto
 
 Si procede soltanto se:
