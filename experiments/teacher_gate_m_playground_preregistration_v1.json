@@ -1,0 +1,45 @@
+{
+  "schema_version": "giada-task1-preregistration-v1",
+  "task": "1",
+  "name": "Ca_HVA m-gate held-voltage learnability playground",
+  "scope": "Atomic held-voltage gate dynamics only",
+  "causal_map": "(V_t, m_t, dt) -> m_t+1",
+  "teacher": {
+    "commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "mechanism": "Ca_HVA",
+    "gate": "m",
+    "target_dtype": "float64",
+    "accepted_by_double_oracle": true
+  },
+  "learned_arms": {
+    "direct_mlp": "Unstructured capacity control predicting m_t+1 directly",
+    "physical_tau": "Predict m_inf(V) and positive tau(V), then apply the exponential solver",
+    "direct_z": "Predict bounded m_inf(V) and z(V,dt), then apply a convex update"
+  },
+  "reference_arms": {
+    "formula_oracle": "Exact extracted teacher formula",
+    "linear_rate_lut": "Linear interpolation of m_inf and log(tau) sampled only on fit voltages",
+    "persistence_control": "m_t+1 = m_t"
+  },
+  "fairness": {
+    "common_contract": "giada-common-gpu-baseline-v1",
+    "paired_minibatches": true,
+    "same_seeds_learning_rate_trials_and_checkpoints": true,
+    "seed_policy": "learning rate and checkpoint selected by mean development score across all three seeds; no seed selection",
+    "selection_role": "development only",
+    "sealed_test_opened_after_freeze": true,
+    "privileged_rates_used_for_training": false
+  },
+  "registered_primary_gate": {
+    "any_learned_aggregate_sealed_rmse_max": 0.001,
+    "physical_tau_aggregate_sealed_rmse_max": 0.001,
+    "physical_tau_1000_step_rollout_rmse_max": 0.005,
+    "structured_arm_occupancy_violations_max": 0,
+    "finite_metrics_required": true
+  },
+  "interpretation": {
+    "positive": "The held-voltage m-gate primitive is atomically learnable under the registered budget.",
+    "negative": "Failure localizes the problem to representation or optimization before any coupled-neuron experiment.",
+    "forbidden_claim": "No result from this task establishes sufficiency under a varying or endogenous voltage path."
+  }
+}

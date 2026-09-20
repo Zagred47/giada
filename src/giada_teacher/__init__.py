@@ -27,6 +27,13 @@ from .gpu_baseline_runtime import (
     environment_manifest,
     benchmark_cuda,
 )
+from .atomic_gate_playground import (
+    AtomicGateTaskConfig,
+    materialize_atomic_gate_dataset,
+    build_atomic_gate_models,
+    train_and_select_atomic_gate,
+    evaluate_frozen_atomic_gate,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -40,4 +47,7 @@ __all__ = [
     "render_gpu_baseline_markdown",
     "paired_index_stream", "configure_torch_runtime", "environment_manifest",
     "benchmark_cuda",
+    "AtomicGateTaskConfig", "materialize_atomic_gate_dataset",
+    "build_atomic_gate_models", "train_and_select_atomic_gate",
+    "evaluate_frozen_atomic_gate",
 ]
