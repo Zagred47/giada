@@ -34,6 +34,12 @@ from .atomic_gate_playground import (
     train_and_select_atomic_gate,
     evaluate_frozen_atomic_gate,
 )
+from .atomic_gate_diagnosis import (
+    GateMDiagnosisConfig,
+    prepare_gate_m_diagnosis,
+    run_gate_m_diagnosis,
+    evaluate_gate_m_diagnosis,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -50,4 +56,6 @@ __all__ = [
     "AtomicGateTaskConfig", "materialize_atomic_gate_dataset",
     "build_atomic_gate_models", "train_and_select_atomic_gate",
     "evaluate_frozen_atomic_gate",
+    "GateMDiagnosisConfig", "prepare_gate_m_diagnosis",
+    "run_gate_m_diagnosis", "evaluate_gate_m_diagnosis",
 ]

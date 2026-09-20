@@ -1,0 +1,63 @@
+{
+  "schema_version": "giada-task1b-preregistration-v1",
+  "task": "1b",
+  "name": "Ca_HVA m-gate data-budget-capacity diagnosis",
+  "prior_evidence": "Task 1 valid NO-GO at registered one-step threshold; physical-tau stable and still improving at 10000 steps",
+  "primary_family": "physical_tau",
+  "factorial_axes": {
+    "fit_density": ["base", "dense"],
+    "hidden_width": [8, 16, 32],
+    "objective": ["endpoint_only", "endpoint_plus_privileged_rates"]
+  },
+  "shared_training": {
+    "seeds": [17, 29, 43],
+    "learning_rate": 0.003,
+    "batch_size": 1024,
+    "all_arm_checkpoints": [0, 1000, 3000, 10000],
+    "extended_checkpoints": [30000, 50000],
+    "extended_variants": [
+      "base-w16-endpoint_only",
+      "dense-w16-endpoint_only",
+      "base-w32-endpoint_only",
+      "base-w16-endpoint_plus_privileged_rates",
+      "dense-w32-endpoint_plus_privileged_rates"
+    ],
+    "privileged_rate_loss": "0.1 * MSE(m_inf) + 0.01 * MSE(log tau)",
+    "privileged_rates_are_targets_only": true,
+    "privileged_rates_are_not_deployment_inputs": true
+  },
+  "diagnostic_contrasts": {
+    "factorial_comparison_checkpoint": 10000,
+    "factorial_comparison_policy": "density, capacity and objective contrasts use every arm at the same fixed 10000-step checkpoint; extended checkpoints are used only for the budget contrast and final candidate selection",
+    "data_limited": "dense improves matched base development RMSE by at least 20%",
+    "capacity_limited": "width 32 improves matched width 16 development RMSE by at least 20%",
+    "objective_or_identifiability_limited": "auxiliary-rate objective improves matched endpoint-only development RMSE by at least 20%",
+    "budget_limited": "50000-step checkpoint improves its own 10000-step development RMSE by at least 20% and the curve has not reversed"
+  },
+  "fresh_confirmation": {
+    "used_for_selection": false,
+    "voltage_grid": "disjoint half-step in-support points plus new OOD points",
+    "state_values": [0.025, 0.125, 0.375, 0.625, 0.875, 0.975],
+    "dt_ms": [0.075, 0.3, 0.8, 1.25],
+    "old_atomic_sealed_rows_reused": false
+  },
+  "decisions": {
+    "scientific_gate": {
+      "fresh_confirmation_rmse_max": 0.001,
+      "rollout_1000_rmse_max": 0.005,
+      "occupancy_violations_max": 0
+    },
+    "engineering_continuation_gate": {
+      "fresh_confirmation_rmse_max": 0.0025,
+      "rollout_1000_rmse_max": 0.005,
+      "occupancy_violations_max": 0,
+      "meaning": "Task 2 may start while Task 1 accuracy remains an explicit unresolved refinement debt"
+    }
+  },
+  "forbidden_interpretations": [
+    "The old Task 1 sealed set may not select Task 1b variants.",
+    "Auxiliary teacher rates may not become deployment inputs.",
+    "Engineering continuation may not be reported as passing the scientific 1e-3 gate.",
+    "Held-voltage evidence may not be generalized to coupled voltage paths."
+  ]
+}
