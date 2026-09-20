@@ -1,4 +1,4 @@
-# 🧭 HayFlow — Roadmap modulare per surrogate biofisici
+# 🧭 GIADA — Roadmap modulare per surrogate biofisici
 
 > **Stato:** documento di direzione sperimentale, da usare per pianificare i run.
 >
