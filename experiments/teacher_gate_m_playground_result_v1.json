@@ -1,0 +1,73 @@
+{
+  "schema_version": "giada-task1-result-summary-v1",
+  "task": "1",
+  "artifact": {
+    "name": "giada_gate_m_atomic_playground.zip",
+    "sha256": "1999d66b4c189a3e2b9b45e941efa469619c424a82cdb1761a6e4792cab70f7c",
+    "selection_freeze_sha256": "36f5e9c69c8ab08dd41e56a12e3377e0f177779fd698d8bb68d5b7a1ebb8363c",
+    "final_report_sha256": "9b647a742e4b89a3ff23d0eb0831c3435ea43e1453a888b39db3439935098e51",
+    "checkpoint_hash_verified": true,
+    "final_report_hash_verified": true,
+    "sealed_test_opened_once": true
+  },
+  "environment": {
+    "gpu": "Tesla T4",
+    "torch": "2.10.0+cu128",
+    "cuda": "12.8",
+    "python": "3.12.13"
+  },
+  "registered_decision": {
+    "valid_artifact": true,
+    "any_learned_pass": false,
+    "physical_tau_pass": false,
+    "physical_tau_rollout_pass": true,
+    "task1_gate_passed": false,
+    "classification": "NO-GO for the current candidates at the registered budget; not a rejection of the physical-tau hypothesis"
+  },
+  "aggregate_sealed_rmse": {
+    "direct_mlp": 0.004336234555836046,
+    "physical_tau": 0.0021104144786553655,
+    "direct_z": 0.0026236226303319077,
+    "linear_rate_lut": 0.008643602532671008,
+    "persistence_control": 0.3620566892873554,
+    "formula_oracle": 0.0
+  },
+  "physical_tau": {
+    "non_ood_macro_rmse": 0.0013139710025151222,
+    "ood_voltage_rmse": 0.0097242,
+    "ood_voltage_max_absolute_error_across_aggregated_metrics": 0.0554664,
+    "rollout_rmse": {
+      "10_steps": 0.0017010339801728067,
+      "100_steps": 0.0011129928682563957,
+      "1000_steps": 0.001018287824683716
+    },
+    "seed_macro_rmse": {
+      "17": 0.002576897994242557,
+      "29": 0.0017789799950654651,
+      "43": 0.0019753654466580757
+    },
+    "occupancy_violation_count": 0,
+    "parameter_count": 338,
+    "compiled_latency_ms": {
+      "batch_1_median": 0.5858400166034698,
+      "batch_64_median": 0.6043039858341217,
+      "batch_1024_median": 0.6033439934253693
+    }
+  },
+  "optimization_diagnosis": {
+    "selected_learning_rate": 0.003,
+    "selected_checkpoint_step": 10000,
+    "development_rmse_by_step": {
+      "0": 0.19442412739934026,
+      "100": 0.050902268519651794,
+      "300": 0.023523012927251907,
+      "1000": 0.00898713435746244,
+      "3000": 0.004673865377712144,
+      "10000": 0.0013395117106210434
+    },
+    "observed_saturation": false,
+    "interpretation": "The error was still falling at the final checkpoint; OOD-voltage extrapolation, seed dispersion and unfinished optimization dominate the registered failure."
+  },
+  "scientific_conclusion": "The physical-tau inductive bias is strongly supported relative to the direct MLP and direct-z controls and is recursively stable, but the registered one-step accuracy threshold was not met. A targeted optimization/capacity/OOD-support diagnosis is warranted before advancing the m gate or generalizing to h.",
+  "claim_scope": "Held-voltage Ca_HVA m gate only; no varying-voltage, coupled-neuron or embedded-teacher claim."
+}
