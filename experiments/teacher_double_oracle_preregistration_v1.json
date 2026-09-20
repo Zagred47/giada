@@ -1,0 +1,41 @@
+{
+  "schema_version": "giada-double-oracle-preregistration-v1",
+  "task": "0.4",
+  "status": "preregistered_not_yet_executed_with_neuron",
+  "scope": {
+    "mechanism": "Ca_HVA",
+    "gates": ["m", "h"],
+    "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "mod_source_sha256": "d582257fed34aa4d47211d297e149313405906ab32788a5f8732380f64e6514f"
+  },
+  "oracle_a": {
+    "name": "formula_extracted_from_mod",
+    "implementation": "interpret sequential assignments extracted from PROCEDURE rates and apply the exact exponential update",
+    "forbidden_shortcut": "do not hardcode precomputed x_inf/tau tables or reuse NEURON outputs"
+  },
+  "oracle_b": {
+    "name": "authentic_isolated_neuron_nmodl",
+    "implementation": "compile Ca_HVA.mod and invoke states_Ca_HVA through NEURON without membrane integration",
+    "forbidden_shortcut": "do not call the Python formula from the NEURON path"
+  },
+  "grid": {
+    "voltages_mv": "every integer from -120 through 60, plus -27.0001, -27.0 and -26.9999",
+    "initial_states": [0.0, 0.1, 0.5, 0.9, 1.0],
+    "dt_ms": [0.025, 0.1, 1.0, 2.0],
+    "expected_case_count": 7360
+  },
+  "precision": "float64",
+  "acceptance": {
+    "absolute_tolerance": 1e-10,
+    "relative_tolerance": 1e-10,
+    "rule": "every case must satisfy abs(error) <= atol + rtol * abs(formula_reference)",
+    "failure_count_required": 0
+  },
+  "failure_policy": "Any mismatch blocks atomic dataset acceptance and Task 1. Diagnose source parsing, NMODL semantics, singular-voltage handling, state procedure invocation and precision before changing tolerance.",
+  "execution": {
+    "notebook": "notebooks/00d_teacher_double_oracle.ipynb",
+    "script": "scripts/run_teacher_double_oracle.py",
+    "local_neuron_execution_completed": false,
+    "reason": "The local Codex Python runtime has no compatible NEURON wheel; authentic execution is delegated to the pinned Linux/Kaggle notebook. Formula extraction and failure-detection tests passed locally."
+  }
+}

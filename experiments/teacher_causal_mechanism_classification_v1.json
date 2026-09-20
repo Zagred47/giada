@@ -1,0 +1,664 @@
+{
+  "schema_version": "giada-teacher-causal-classification-v1",
+  "task": "0.2",
+  "input_inventory_schema": "giada-teacher-mechanism-inventory-v1",
+  "input_inventory_sha256": "66a81e39bb6218536b252d8fa0fd4e023df3d4b73bd3a6260130702d969f2c6d",
+  "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "classification_policy": {
+    "multi_label": true,
+    "primary_family_is_exclusive": true,
+    "secondary_families_capture_composed_behavior": true,
+    "runtime_mechanisms_may_lack_nmodl_files": true,
+    "neural_replacement_strategy_deferred": true
+  },
+  "summary": {
+    "mechanism_count": 20,
+    "nmodl_mechanism_count": 18,
+    "implicit_runtime_mechanism_count": 2,
+    "primary_family_counts": {
+      "axial_coupling": 1,
+      "calcium_dependent_gate": 1,
+      "event_driven_synapse": 5,
+      "ion_concentration_dynamics": 1,
+      "passive_membrane": 1,
+      "prescribed_time_dependent_point_process": 1,
+      "voltage_dependent_gate": 10
+    },
+    "secondary_family_counts": {
+      "morphology_dependent_cable_dynamics": 1,
+      "stochastic_release": 5,
+      "synaptic_conductance_dynamics": 5,
+      "voltage_dependent_nmda_current": 3
+    }
+  },
+  "mechanisms": [
+    {
+      "id": "nmodl:Ca_HVA",
+      "name": "Ca_HVA",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "Ca_HVA.mod",
+        "state_variables": [
+          "h",
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "eca"
+        ],
+        "ion_writes": [
+          "ica"
+        ],
+        "currents": [
+          "ica"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:Ca_LVAst",
+      "name": "Ca_LVAst",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "Ca_LVAst.mod",
+        "state_variables": [
+          "h",
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "eca"
+        ],
+        "ion_writes": [
+          "ica"
+        ],
+        "currents": [
+          "ica"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:CaDynamics_E2",
+      "name": "CaDynamics_E2",
+      "source_kind": "nmodl",
+      "primary_family": "ion_concentration_dynamics",
+      "secondary_families": [],
+      "rationale": "STATE is an ionic concentration updated from an ionic current and written through USEION.",
+      "evidence": {
+        "source_file": "CaDynamics_E2.mod",
+        "state_variables": [
+          "cai"
+        ],
+        "assigned_voltage": false,
+        "ion_reads": [
+          "ica"
+        ],
+        "ion_writes": [
+          "cai"
+        ],
+        "currents": [],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:epsp",
+      "name": "epsp",
+      "source_kind": "nmodl",
+      "primary_family": "prescribed_time_dependent_point_process",
+      "secondary_families": [],
+      "rationale": "POINT_PROCESS current is prescribed analytically from time and parameters, without NET_RECEIVE or STATE.",
+      "evidence": {
+        "source_file": "epsp.mod",
+        "state_variables": [],
+        "assigned_voltage": false,
+        "ion_reads": [],
+        "ion_writes": [],
+        "currents": [
+          "i"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": []
+      }
+    },
+    {
+      "id": "nmodl:Ih",
+      "name": "Ih",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "Ih.mod",
+        "state_variables": [
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [],
+        "ion_writes": [],
+        "currents": [
+          "ihcn"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:Im",
+      "name": "Im",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "Im.mod",
+        "state_variables": [
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "ek"
+        ],
+        "ion_writes": [
+          "ik"
+        ],
+        "currents": [
+          "ik"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:K_Pst",
+      "name": "K_Pst",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "K_Pst.mod",
+        "state_variables": [
+          "h",
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "ek"
+        ],
+        "ion_writes": [
+          "ik"
+        ],
+        "currents": [
+          "ik"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:K_Tst",
+      "name": "K_Tst",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "K_Tst.mod",
+        "state_variables": [
+          "h",
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "ek"
+        ],
+        "ion_writes": [
+          "ik"
+        ],
+        "currents": [
+          "ik"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:Nap_Et2",
+      "name": "Nap_Et2",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "Nap_Et2.mod",
+        "state_variables": [
+          "h",
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "ena"
+        ],
+        "ion_writes": [
+          "ina"
+        ],
+        "currents": [
+          "ina"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:NaTa_t",
+      "name": "NaTa_t",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "NaTa_t.mod",
+        "state_variables": [
+          "h",
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "ena"
+        ],
+        "ion_writes": [
+          "ina"
+        ],
+        "currents": [
+          "ina"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:NaTs2_t",
+      "name": "NaTs2_t",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "NaTs2_t.mod",
+        "state_variables": [
+          "h",
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "ena"
+        ],
+        "ion_writes": [
+          "ina"
+        ],
+        "currents": [
+          "ina"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:ProbAMPANMDA2",
+      "name": "ProbAMPANMDA2",
+      "source_kind": "nmodl",
+      "primary_family": "event_driven_synapse",
+      "secondary_families": [
+        "stochastic_release",
+        "synaptic_conductance_dynamics",
+        "voltage_dependent_nmda_current"
+      ],
+      "rationale": "NET_RECEIVE changes synaptic state; an explicit random API controls probabilistic release/recovery.",
+      "evidence": {
+        "source_file": "ProbAMPANMDA2.mod",
+        "state_variables": [
+          "A_AMPA",
+          "A_NMDA",
+          "B_AMPA",
+          "B_NMDA"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [],
+        "ion_writes": [],
+        "currents": [
+          "i_AMPA",
+          "i_NMDA"
+        ],
+        "has_net_receive": true,
+        "random_api": [
+          "erand",
+          "setRNG"
+        ],
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:ProbAMPANMDA3",
+      "name": "ProbAMPANMDA3",
+      "source_kind": "nmodl",
+      "primary_family": "event_driven_synapse",
+      "secondary_families": [
+        "stochastic_release",
+        "synaptic_conductance_dynamics",
+        "voltage_dependent_nmda_current"
+      ],
+      "rationale": "NET_RECEIVE changes synaptic state; an explicit random API controls probabilistic release/recovery.",
+      "evidence": {
+        "source_file": "ProbAMPANMDA_3.mod",
+        "state_variables": [
+          "A_AMPA",
+          "A_NMDA",
+          "B_AMPA",
+          "B_NMDA"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [],
+        "ion_writes": [],
+        "currents": [
+          "i_AMPA",
+          "i_NMDA"
+        ],
+        "has_net_receive": true,
+        "random_api": [
+          "erand",
+          "setRNG"
+        ],
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:ProbAMPANMDA_EMS",
+      "name": "ProbAMPANMDA_EMS",
+      "source_kind": "nmodl",
+      "primary_family": "event_driven_synapse",
+      "secondary_families": [
+        "stochastic_release",
+        "synaptic_conductance_dynamics",
+        "voltage_dependent_nmda_current"
+      ],
+      "rationale": "NET_RECEIVE changes synaptic state; an explicit random API controls probabilistic release/recovery.",
+      "evidence": {
+        "source_file": "ProbAMPANMDA_EMS.mod",
+        "state_variables": [
+          "A_AMPA",
+          "A_NMDA",
+          "B_AMPA",
+          "B_NMDA"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [],
+        "ion_writes": [],
+        "currents": [
+          "i"
+        ],
+        "has_net_receive": true,
+        "random_api": [
+          "setRNG",
+          "urand"
+        ],
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:ProbGABAAB_EMS",
+      "name": "ProbGABAAB_EMS",
+      "source_kind": "nmodl",
+      "primary_family": "event_driven_synapse",
+      "secondary_families": [
+        "stochastic_release",
+        "synaptic_conductance_dynamics"
+      ],
+      "rationale": "NET_RECEIVE changes synaptic state; an explicit random API controls probabilistic release/recovery.",
+      "evidence": {
+        "source_file": "ProbGABAAB_EMS.mod",
+        "state_variables": [
+          "A_GABAA",
+          "A_GABAB",
+          "B_GABAA",
+          "B_GABAB"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [],
+        "ion_writes": [],
+        "currents": [
+          "i"
+        ],
+        "has_net_receive": true,
+        "random_api": [
+          "setRNG",
+          "urand"
+        ],
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:ProbUDFsyn2",
+      "name": "ProbUDFsyn2",
+      "source_kind": "nmodl",
+      "primary_family": "event_driven_synapse",
+      "secondary_families": [
+        "stochastic_release",
+        "synaptic_conductance_dynamics"
+      ],
+      "rationale": "NET_RECEIVE changes synaptic state; an explicit random API controls probabilistic release/recovery.",
+      "evidence": {
+        "source_file": "ProbUDFsyn2.mod",
+        "state_variables": [
+          "A",
+          "B"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [],
+        "ion_writes": [],
+        "currents": [
+          "i"
+        ],
+        "has_net_receive": true,
+        "random_api": [
+          "erand",
+          "setRNG"
+        ],
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:SK_E2",
+      "name": "SK_E2",
+      "source_kind": "nmodl",
+      "primary_family": "calcium_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE reads intracellular calcium and controls potassium current.",
+      "evidence": {
+        "source_file": "SK_E2.mod",
+        "state_variables": [
+          "z"
+        ],
+        "assigned_voltage": false,
+        "ion_reads": [
+          "cai",
+          "ek"
+        ],
+        "ion_writes": [
+          "ik"
+        ],
+        "currents": [
+          "ik"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nmodl:SKv3_1",
+      "name": "SKv3_1",
+      "source_kind": "nmodl",
+      "primary_family": "voltage_dependent_gate",
+      "secondary_families": [],
+      "rationale": "Dynamic gate STATE is driven by membrane voltage and controls a membrane current.",
+      "evidence": {
+        "source_file": "SKv3_1.mod",
+        "state_variables": [
+          "m"
+        ],
+        "assigned_voltage": true,
+        "ion_reads": [
+          "ek"
+        ],
+        "ion_writes": [
+          "ik"
+        ],
+        "currents": [
+          "ik"
+        ],
+        "has_net_receive": false,
+        "random_api": [],
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      }
+    },
+    {
+      "id": "neuron-runtime:passive-membrane",
+      "name": "Passive membrane",
+      "source_kind": "neuron_runtime",
+      "primary_family": "passive_membrane",
+      "secondary_families": [],
+      "rationale": "Membrane capacitance and passive/leak terms are part of the compartment membrane equation, not a dedicated file in the teacher mods directory.",
+      "evidence": {
+        "contract": "C_m dV/dt plus passive membrane current",
+        "nmodl_file": null
+      }
+    },
+    {
+      "id": "neuron-runtime:axial-coupling",
+      "name": "Axial coupling",
+      "source_kind": "neuron_runtime",
+      "primary_family": "axial_coupling",
+      "secondary_families": [
+        "morphology_dependent_cable_dynamics"
+      ],
+      "rationale": "Inter-segment current is generated by NEURON's cable equation from morphology, Ra and topology, not by a density mechanism file.",
+      "evidence": {
+        "contract": "tree topology, segment geometry and axial resistance",
+        "nmodl_file": null
+      }
+    }
+  ],
+  "validation": {
+    "valid": true,
+    "failures": [],
+    "nmodl_coverage": 18,
+    "inventory_nmodl_count": 18,
+    "implicit_mechanism_count": 2
+  }
+}

@@ -60,7 +60,22 @@ python research_memory/queries/validate_review_catalog.py
 
 Il comando `query` è in sola lettura, limita risultati e lavoro computazionale, e rifiuta ATTACH, PRAGMA e DML. Usare le query per cambiare lente, non per trasformare automaticamente un'associazione in evidenza causale.
 
-## Scrittura obbligatoria su entrambi
+## Modalita operativa corrente: solo mirror SQLite
+
+Per decisione dell'utente, Airtable e temporaneamente congelato. Fino a una
+richiesta esplicita di sincronizzazione, agenti e script devono interrogare e
+aggiornare soltanto il mirror SQLite versionato; non devono effettuare readback
+o scritture remote e non devono descrivere Airtable come sincronizzato.
+
+La successiva sincronizzazione sara una fase separata: riconciliazione per
+`Codice stabile`, rimappatura degli ID e delle relazioni, readback completo e
+verifica. Non applicare una politica automatica last-write-wins.
+
+La sezione seguente documenta il protocollo storico di doppia scrittura e resta
+come specifica per quella futura riconciliazione; non e il flusso operativo
+attivo.
+
+## Protocollo di doppia scrittura sospeso
 
 Le scritture non sono transazioni distribuite: Airtable e SQLite non possono eseguire un commit atomico condiviso. Il protocollo usa una **outbox persistente**, preflight contro modifiche concorrenti, upsert con codice stabile e readback finale.
 

@@ -1,0 +1,644 @@
+{
+  "schema_version": "giada-atomic-data-contract-v1",
+  "task": "0.3",
+  "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "inventory_source_sha256": "6d74150e95f3606fe01aeb70310fe5365f9897cd594f97b75efc24839b5dbba1",
+  "classification_artifact_sha256": "8dd37b0d4d2ed77c939e298678cf1adba9649de5686fea7e7d833b02a5858590",
+  "global_contract": {
+    "canonical_macro_step_ms": 1.0,
+    "event_ordering": "stable total order by absolute timestamp then source order",
+    "boundary_state_policy": "store causal S_t and S_t+1; privileged observables are targets/diagnostics, never silent deployment inputs",
+    "control_path_policy": "constant-control playgrounds and coupled path-aware deployment are distinct contracts",
+    "precision": {
+      "reference_dtype": "float64",
+      "candidate_training_dtype": "float32",
+      "float32_requires_equivalence_audit": true,
+      "event_time_dtype": "float64"
+    }
+  },
+  "family_contracts": {
+    "family:voltage_dependent_gate": {
+      "state": [
+        "gate occupancy x_t for every declared STATE gate"
+      ],
+      "inputs": [
+        "membrane-voltage control path V(tau), tau in [t,t+dt]"
+      ],
+      "parameters": [
+        "mechanism kinetic parameters",
+        "temperature-dependent constants if active"
+      ],
+      "targets": [
+        "gate STATE at t+dt",
+        "optional x_inf(V) and tau_x(V) privileged targets"
+      ],
+      "step": {
+        "macro_dt_ms": 1.0,
+        "validation_micro_dt_ms": 0.025
+      },
+      "solver": "exponential/Rush-Larsen update when voltage is held; path-aware or jointly coupled update otherwise",
+      "privileged_observables": [
+        "x_inf",
+        "tau_x",
+        "gate derivative",
+        "resulting conductance/current"
+      ],
+      "sufficiency": "(x_t,V_t) is sufficient only for the voltage-clamp constant-V playground; coupled use requires V(tau) or a joint voltage-state solver.",
+      "forbidden_inputs": [
+        "teacher gate at t+dt",
+        "teacher endpoint voltage V_t+dt in causal deployment"
+      ]
+    },
+    "family:calcium_dependent_gate": {
+      "state": [
+        "calcium-dependent gate occupancy x_t"
+      ],
+      "inputs": [
+        "intracellular-calcium control path cai(tau)",
+        "membrane voltage for analytic current readout"
+      ],
+      "parameters": [
+        "calcium activation kinetics",
+        "maximal conductance",
+        "reversal potential"
+      ],
+      "targets": [
+        "gate STATE at t+dt",
+        "analytic current/conductance as diagnostic target"
+      ],
+      "step": {
+        "macro_dt_ms": 1.0,
+        "validation_micro_dt_ms": 0.025
+      },
+      "solver": "exponential gate update under held calcium; path-aware or jointly coupled update otherwise",
+      "privileged_observables": [
+        "x_inf(cai)",
+        "tau_x(cai)",
+        "potassium current"
+      ],
+      "sufficiency": "Endpoint cai alone is not assumed sufficient when calcium changes materially inside the step.",
+      "forbidden_inputs": [
+        "teacher gate at t+dt",
+        "future calcium samples unavailable to the deployed joint solver"
+      ]
+    },
+    "family:ion_concentration_dynamics": {
+      "state": [
+        "intracellular ion concentration at t"
+      ],
+      "inputs": [
+        "causal ionic-current path over the step"
+      ],
+      "parameters": [
+        "decay time constant",
+        "conversion factor/depth",
+        "resting or minimum concentration"
+      ],
+      "targets": [
+        "ion concentration at t+dt",
+        "integrated ionic influx"
+      ],
+      "step": {
+        "macro_dt_ms": 1.0,
+        "validation_micro_dt_ms": 0.025
+      },
+      "solver": "exponential decay with current forcing; integrate forcing on the native or audited micro-grid",
+      "privileged_observables": [
+        "current integral",
+        "decay-only counterfactual",
+        "source-only counterfactual"
+      ],
+      "sufficiency": "Initial concentration plus the within-step current forcing and fixed parameters is the atomic Markov contract.",
+      "forbidden_inputs": [
+        "teacher concentration at t+dt"
+      ]
+    },
+    "family:event_driven_synapse": {
+      "state": [
+        "all synaptic decay/rise STATE",
+        "short-term-plasticity NET_RECEIVE weights/state",
+        "synapse RNG state"
+      ],
+      "inputs": [
+        "ordered presynaptic events with intra-step timestamps and weights",
+        "postsynaptic voltage path for voltage-dependent current"
+      ],
+      "parameters": [
+        "rise/decay constants",
+        "reversal potentials",
+        "release/STP parameters",
+        "NMDA block parameters when present"
+      ],
+      "targets": [
+        "synaptic state at t+dt",
+        "release outcomes",
+        "conductance/current microtrace",
+        "RNG state at t+dt"
+      ],
+      "step": {
+        "macro_dt_ms": 1.0,
+        "event_time_resolution": "float64 continuous intra-step",
+        "validation_micro_dt_ms": 0.025
+      },
+      "solver": "exact ordered event jumps plus analytic/exponential inter-event decay",
+      "privileged_observables": [
+        "realized release",
+        "AMPA/NMDA or GABAA/GABAB component currents",
+        "pre/post-event state"
+      ],
+      "sufficiency": "Event order, exact timestamps, complete synaptic/STP state and RNG state are required for replay.",
+      "forbidden_inputs": [
+        "future release outcome when training the release predictor",
+        "unordered event counts",
+        "teacher endpoint state"
+      ],
+      "causal_interface_note": "U_realized may enter the membrane core only after an authentic causal synaptic front-end has generated it; it is not a legal input to that release decision itself."
+    },
+    "family:prescribed_time_dependent_point_process": {
+      "state": [
+        "phase/time relative to onset when the source remains active; otherwise empty"
+      ],
+      "inputs": [
+        "absolute or relative time over the step",
+        "onset/delay control"
+      ],
+      "parameters": [
+        "amplitude",
+        "rise/decay or duration parameters",
+        "reversal/current parameters"
+      ],
+      "targets": [
+        "current microtrace",
+        "current at t+dt",
+        "phase at t+dt"
+      ],
+      "step": {
+        "macro_dt_ms": 1.0,
+        "validation_micro_dt_ms": 0.025
+      },
+      "solver": "analytic waveform evaluation",
+      "privileged_observables": [
+        "waveform phase",
+        "analytic current"
+      ],
+      "sufficiency": "The contract is Markov only if phase/time-since-onset is represented explicitly or derivable from the supplied clock and onset.",
+      "forbidden_inputs": [
+        "teacher current at t+dt"
+      ]
+    },
+    "family:passive_membrane": {
+      "state": [
+        "segment voltage V_t"
+      ],
+      "inputs": [
+        "total causal transmembrane-current path",
+        "axial-current contribution or joint axial solve",
+        "externally applied current path"
+      ],
+      "parameters": [
+        "segment capacitance",
+        "area",
+        "passive conductance",
+        "passive reversal potential"
+      ],
+      "targets": [
+        "segment voltage V_t+dt",
+        "capacitive and passive current balance"
+      ],
+      "step": {
+        "macro_dt_ms": 1.0,
+        "validation_micro_dt_ms": 0.025
+      },
+      "solver": "implicit or structure-preserving membrane update; coupled with axial tree solve in deployment",
+      "privileged_observables": [
+        "total membrane source",
+        "capacitive current",
+        "current-balance residual"
+      ],
+      "sufficiency": "V_t is sufficient only together with all causal current forcing and the axial boundary/coupling contract.",
+      "forbidden_inputs": [
+        "teacher V_t+dt",
+        "teacher total current computed from future state"
+      ]
+    },
+    "family:axial_coupling": {
+      "state": [
+        "voltage vector on the complete instantiated segment tree"
+      ],
+      "inputs": [
+        "local membrane source for every segment over the step"
+      ],
+      "parameters": [
+        "parent topology",
+        "segment geometry",
+        "axial resistance",
+        "capacitance/area discretization"
+      ],
+      "targets": [
+        "coupled voltage vector at t+dt",
+        "axial currents",
+        "tree-solve residual"
+      ],
+      "step": {
+        "macro_dt_ms": 1.0,
+        "validation_micro_dt_ms": 0.025
+      },
+      "solver": "Hines/tree-structured implicit solve or numerically equivalent differentiable solver",
+      "privileged_observables": [
+        "axial current per edge",
+        "linear-system residual",
+        "condition diagnostics"
+      ],
+      "sufficiency": "The complete voltage vector, full tree coefficients and causal local membrane sources are required; isolated segment transitions are insufficient.",
+      "forbidden_inputs": [
+        "teacher endpoint voltage",
+        "future teacher axial currents"
+      ]
+    }
+  },
+  "mechanism_bindings": [
+    {
+      "mechanism_id": "nmodl:Ca_HVA",
+      "mechanism": "Ca_HVA",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m",
+        "h"
+      ],
+      "declared_parameters": [
+        "gCa_HVAbar"
+      ],
+      "currents": [
+        "ica"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:Ca_LVAst",
+      "mechanism": "Ca_LVAst",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m",
+        "h"
+      ],
+      "declared_parameters": [
+        "gCa_LVAstbar"
+      ],
+      "currents": [
+        "ica"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:CaDynamics_E2",
+      "mechanism": "CaDynamics_E2",
+      "family": "ion_concentration_dynamics",
+      "declared_state": [
+        "cai"
+      ],
+      "declared_parameters": [
+        "gamma",
+        "decay",
+        "depth",
+        "minCai"
+      ],
+      "currents": [],
+      "contract_ref": "family:ion_concentration_dynamics"
+    },
+    {
+      "mechanism_id": "nmodl:epsp",
+      "mechanism": "epsp",
+      "family": "prescribed_time_dependent_point_process",
+      "declared_state": [],
+      "declared_parameters": [
+        "onset",
+        "tau0",
+        "tau1",
+        "imax",
+        "v"
+      ],
+      "currents": [
+        "i"
+      ],
+      "contract_ref": "family:prescribed_time_dependent_point_process"
+    },
+    {
+      "mechanism_id": "nmodl:Ih",
+      "mechanism": "Ih",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m"
+      ],
+      "declared_parameters": [
+        "gIhbar",
+        "ehcn",
+        "vhalf",
+        "vshift"
+      ],
+      "currents": [
+        "ihcn"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:Im",
+      "mechanism": "Im",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m"
+      ],
+      "declared_parameters": [
+        "gImbar"
+      ],
+      "currents": [
+        "ik"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:K_Pst",
+      "mechanism": "K_Pst",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m",
+        "h"
+      ],
+      "declared_parameters": [
+        "gK_Pstbar"
+      ],
+      "currents": [
+        "ik"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:K_Tst",
+      "mechanism": "K_Tst",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m",
+        "h"
+      ],
+      "declared_parameters": [
+        "gK_Tstbar"
+      ],
+      "currents": [
+        "ik"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:Nap_Et2",
+      "mechanism": "Nap_Et2",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m",
+        "h"
+      ],
+      "declared_parameters": [
+        "gNap_Et2bar"
+      ],
+      "currents": [
+        "ina"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:NaTa_t",
+      "mechanism": "NaTa_t",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m",
+        "h"
+      ],
+      "declared_parameters": [
+        "gNaTa_tbar"
+      ],
+      "currents": [
+        "ina"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:NaTs2_t",
+      "mechanism": "NaTs2_t",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m",
+        "h"
+      ],
+      "declared_parameters": [
+        "gNaTs2_tbar"
+      ],
+      "currents": [
+        "ina"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:ProbAMPANMDA2",
+      "mechanism": "ProbAMPANMDA2",
+      "family": "event_driven_synapse",
+      "declared_state": [
+        "A_AMPA",
+        "B_AMPA",
+        "A_NMDA",
+        "B_NMDA"
+      ],
+      "declared_parameters": [
+        "tau_r_AMPA",
+        "tau_d_AMPA",
+        "tau_r_NMDA",
+        "tau_d_NMDA",
+        "Use",
+        "Dep",
+        "Fac",
+        "e",
+        "mg",
+        "mggate",
+        "gmax",
+        "u0"
+      ],
+      "currents": [
+        "i_AMPA",
+        "i_NMDA"
+      ],
+      "contract_ref": "family:event_driven_synapse"
+    },
+    {
+      "mechanism_id": "nmodl:ProbAMPANMDA3",
+      "mechanism": "ProbAMPANMDA3",
+      "family": "event_driven_synapse",
+      "declared_state": [
+        "A_AMPA",
+        "B_AMPA",
+        "A_NMDA",
+        "B_NMDA"
+      ],
+      "declared_parameters": [
+        "tau_r_AMPA",
+        "tau_d_AMPA",
+        "tau_r_NMDA",
+        "tau_d_NMDA",
+        "Use",
+        "Dep",
+        "Fac",
+        "e",
+        "mg",
+        "mggate",
+        "gmax",
+        "u0"
+      ],
+      "currents": [
+        "i_AMPA",
+        "i_NMDA"
+      ],
+      "contract_ref": "family:event_driven_synapse"
+    },
+    {
+      "mechanism_id": "nmodl:ProbAMPANMDA_EMS",
+      "mechanism": "ProbAMPANMDA_EMS",
+      "family": "event_driven_synapse",
+      "declared_state": [
+        "A_AMPA",
+        "B_AMPA",
+        "A_NMDA",
+        "B_NMDA"
+      ],
+      "declared_parameters": [
+        "tau_r_AMPA",
+        "tau_d_AMPA",
+        "tau_r_NMDA",
+        "tau_d_NMDA",
+        "Use",
+        "Dep",
+        "Fac",
+        "e",
+        "mg",
+        "mggate",
+        "gmax",
+        "u0",
+        "synapseID",
+        "verboseLevel",
+        "NMDA_ratio"
+      ],
+      "currents": [
+        "i"
+      ],
+      "contract_ref": "family:event_driven_synapse"
+    },
+    {
+      "mechanism_id": "nmodl:ProbGABAAB_EMS",
+      "mechanism": "ProbGABAAB_EMS",
+      "family": "event_driven_synapse",
+      "declared_state": [
+        "A_GABAA",
+        "B_GABAA",
+        "A_GABAB",
+        "B_GABAB"
+      ],
+      "declared_parameters": [
+        "tau_r_GABAA",
+        "tau_d_GABAA",
+        "tau_r_GABAB",
+        "tau_d_GABAB",
+        "Use",
+        "Dep",
+        "Fac",
+        "e_GABAA",
+        "e_GABAB",
+        "gmax",
+        "u0",
+        "synapseID",
+        "verboseLevel",
+        "GABAB_ratio"
+      ],
+      "currents": [
+        "i"
+      ],
+      "contract_ref": "family:event_driven_synapse"
+    },
+    {
+      "mechanism_id": "nmodl:ProbUDFsyn2",
+      "mechanism": "ProbUDFsyn2",
+      "family": "event_driven_synapse",
+      "declared_state": [
+        "A",
+        "B"
+      ],
+      "declared_parameters": [
+        "tau_r",
+        "tau_d",
+        "Use",
+        "Dep",
+        "Fac",
+        "e",
+        "gmax",
+        "u0"
+      ],
+      "currents": [
+        "i"
+      ],
+      "contract_ref": "family:event_driven_synapse"
+    },
+    {
+      "mechanism_id": "nmodl:SK_E2",
+      "mechanism": "SK_E2",
+      "family": "calcium_dependent_gate",
+      "declared_state": [
+        "z"
+      ],
+      "declared_parameters": [
+        "v",
+        "gSK_E2bar",
+        "zTau",
+        "ek",
+        "cai"
+      ],
+      "currents": [
+        "ik"
+      ],
+      "contract_ref": "family:calcium_dependent_gate"
+    },
+    {
+      "mechanism_id": "nmodl:SKv3_1",
+      "mechanism": "SKv3_1",
+      "family": "voltage_dependent_gate",
+      "declared_state": [
+        "m"
+      ],
+      "declared_parameters": [
+        "gSKv3_1bar"
+      ],
+      "currents": [
+        "ik"
+      ],
+      "contract_ref": "family:voltage_dependent_gate"
+    },
+    {
+      "mechanism_id": "neuron-runtime:passive-membrane",
+      "mechanism": "Passive membrane",
+      "family": "passive_membrane",
+      "declared_state": [],
+      "declared_parameters": [],
+      "currents": [],
+      "contract_ref": "family:passive_membrane"
+    },
+    {
+      "mechanism_id": "neuron-runtime:axial-coupling",
+      "mechanism": "Axial coupling",
+      "family": "axial_coupling",
+      "declared_state": [],
+      "declared_parameters": [],
+      "currents": [],
+      "contract_ref": "family:axial_coupling"
+    }
+  ],
+  "validation": {
+    "valid": true,
+    "failures": [],
+    "family_count": 7,
+    "mechanism_binding_count": 20,
+    "classification_mechanism_count": 20
+  }
+}

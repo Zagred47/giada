@@ -1,0 +1,4366 @@
+{
+  "schema_version": "giada-teacher-mechanism-inventory-v1",
+  "scope": "syntactic-and-executable-contract-only",
+  "teacher_root": "C:\\Users\\belli\\Documents\\GIADA NEW\\neuron_as_deep_net",
+  "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "mod_directory": "C:\\Users\\belli\\Documents\\GIADA NEW\\neuron_as_deep_net\\L5PC_NEURON_simulation\\mods",
+  "combined_source_sha256": "6d74150e95f3606fe01aeb70310fe5365f9897cd594f97b75efc24839b5dbba1",
+  "summary": {
+    "mod_file_count": 18,
+    "state_variable_count": 37,
+    "parameter_count": 88,
+    "assigned_variable_count": 159,
+    "ion_contract_count": 12,
+    "current_count": 19,
+    "net_receive_mechanism_count": 5
+  },
+  "mechanisms": [
+    {
+      "file": "Ca_HVA.mod",
+      "sha256": "d582257fed34aa4d47211d297e149313405906ab32788a5f8732380f64e6514f",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "Ca_HVA",
+        "ions": [
+          {
+            "ion": "ca",
+            "read": [
+              "eca"
+            ],
+            "write": [
+              "ica"
+            ]
+          }
+        ],
+        "currents": [
+          "ica"
+        ],
+        "range": [
+          "gCa_HVA",
+          "gCa_HVAbar",
+          "ica"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          },
+          {
+            "name": "h"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gCa_HVAbar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "eca"
+          },
+          {
+            "name": "ica"
+          },
+          {
+            "name": "gCa_HVA"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "mAlpha"
+          },
+          {
+            "name": "mBeta"
+          },
+          {
+            "name": "hInf"
+          },
+          {
+            "name": "hTau"
+          },
+          {
+            "name": "hAlpha"
+          },
+          {
+            "name": "hBeta"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 51,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 39,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 45,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 4,
+          "target": "h",
+          "expression": "hInf",
+          "dependencies": [
+            "hInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gCa_HVA",
+          "expression": "gCa_HVAbar*m*m*h",
+          "dependencies": [
+            "gCa_HVAbar",
+            "h",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ica",
+          "expression": "gCa_HVA*(v-eca)",
+          "dependencies": [
+            "eca",
+            "gCa_HVA",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "h'",
+          "expression": "(hInf-h)/hTau",
+          "dependencies": [
+            "hInf",
+            "hTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Ca_LVAst.mod",
+      "sha256": "19fdcc86f07c12676254f04d08a5def4c3105d71e47dc14ca30dc1b196804cd1",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "Ca_LVAst",
+        "ions": [
+          {
+            "ion": "ca",
+            "read": [
+              "eca"
+            ],
+            "write": [
+              "ica"
+            ]
+          }
+        ],
+        "currents": [
+          "ica"
+        ],
+        "range": [
+          "gCa_LVAst",
+          "gCa_LVAstbar",
+          "ica"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          },
+          {
+            "name": "h"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gCa_LVAstbar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "eca"
+          },
+          {
+            "name": "ica"
+          },
+          {
+            "name": "gCa_LVAst"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "hInf"
+          },
+          {
+            "name": "hTau"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 49,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 37,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 43,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 4,
+          "target": "h",
+          "expression": "hInf",
+          "dependencies": [
+            "hInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gCa_LVAst",
+          "expression": "gCa_LVAstbar*m*m*h",
+          "dependencies": [
+            "gCa_LVAstbar",
+            "h",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ica",
+          "expression": "gCa_LVAst*(v-eca)",
+          "dependencies": [
+            "eca",
+            "gCa_LVAst",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "h'",
+          "expression": "(hInf-h)/hTau",
+          "dependencies": [
+            "hInf",
+            "hTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "CaDynamics_E2.mod",
+      "sha256": "ee668bce03aff2e4e806c6f8468bbcae44188d4b1049206485fc7268b008f8ff",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "CaDynamics_E2",
+        "ions": [
+          {
+            "ion": "ca",
+            "read": [
+              "ica"
+            ],
+            "write": [
+              "cai"
+            ]
+          }
+        ],
+        "currents": [],
+        "range": [
+          "decay",
+          "depth",
+          "gamma",
+          "minCai"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "cai"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gamma",
+            "default": "0.05"
+          },
+          {
+            "name": "decay",
+            "default": "80"
+          },
+          {
+            "name": "depth",
+            "default": "0.1"
+          },
+          {
+            "name": "minCai",
+            "default": "1e-4"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "ica"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "breakpoint": {
+          "source_line": 31,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 33,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [],
+      "equations": [
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 2,
+          "target": "cai'",
+          "expression": "-(10000)*(ica*gamma/(2*FARADAY*depth)) - (cai - minCai)/decay",
+          "dependencies": [
+            "decay",
+            "depth",
+            "gamma",
+            "ica",
+            "minCai"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "epsp.mod",
+      "sha256": "07ae157ce0f56fc8643bc2f988ad9776471513ac31817f72417b5e38784175f5",
+      "mechanism": {
+        "kind": "POINT_PROCESS",
+        "name": "epsp",
+        "ions": [],
+        "currents": [
+          "i"
+        ],
+        "range": [
+          "i",
+          "imax",
+          "myv",
+          "onset",
+          "tau0",
+          "tau1"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [],
+        "parameter": [
+          {
+            "name": "onset",
+            "default": "0"
+          },
+          {
+            "name": "tau0",
+            "default": "0.2"
+          },
+          {
+            "name": "tau1",
+            "default": "3.0"
+          },
+          {
+            "name": "imax",
+            "default": "0"
+          },
+          {
+            "name": "v"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "i"
+          },
+          {
+            "name": "myv"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": []
+      },
+      "executable_blocks": {
+        "breakpoint": {
+          "source_line": 33,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "curr",
+        "myexp"
+      ],
+      "equations": [
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 2,
+          "target": "myv",
+          "expression": "v",
+          "dependencies": [
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "i",
+          "expression": "curr(t)",
+          "dependencies": [
+            "curr",
+            "t"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Ih.mod",
+      "sha256": "55d7fd5b436eaabc3d48bb81adb9e167cdad6c27536bc44a019433637ab5c566",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "Ih",
+        "ions": [],
+        "currents": [
+          "ihcn"
+        ],
+        "range": [
+          "gIh",
+          "gIhbar",
+          "ihcn",
+          "vshift"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gIhbar",
+            "default": "0.00001"
+          },
+          {
+            "name": "ehcn",
+            "default": "-45.0"
+          },
+          {
+            "name": "vhalf",
+            "default": "-154.9"
+          },
+          {
+            "name": "vshift",
+            "default": "0"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "ihcn"
+          },
+          {
+            "name": "gIh"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "mAlpha"
+          },
+          {
+            "name": "mBeta"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 47,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 36,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 42,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gIh",
+          "expression": "gIhbar*m",
+          "dependencies": [
+            "gIhbar",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ihcn",
+          "expression": "gIh*(v-ehcn)",
+          "dependencies": [
+            "ehcn",
+            "gIh",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Im.mod",
+      "sha256": "ff876d9cd4f13692ad9a8bd902fb506ca66f31ecb6583cc636df81b61ab6a04f",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "Im",
+        "ions": [
+          {
+            "ion": "k",
+            "read": [
+              "ek"
+            ],
+            "write": [
+              "ik"
+            ]
+          }
+        ],
+        "currents": [
+          "ik"
+        ],
+        "range": [
+          "gIm",
+          "gImbar",
+          "ik"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gImbar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "ek"
+          },
+          {
+            "name": "ik"
+          },
+          {
+            "name": "gIm"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "mAlpha"
+          },
+          {
+            "name": "mBeta"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 45,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 34,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 40,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gIm",
+          "expression": "gImbar*m",
+          "dependencies": [
+            "gImbar",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ik",
+          "expression": "gIm*(v-ek)",
+          "dependencies": [
+            "ek",
+            "gIm",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "K_Pst.mod",
+      "sha256": "76e2cdeb0507627af59b9d00184c6fc986031037ef99d7cc3309b7763f89e178",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "K_Pst",
+        "ions": [
+          {
+            "ion": "k",
+            "read": [
+              "ek"
+            ],
+            "write": [
+              "ik"
+            ]
+          }
+        ],
+        "currents": [
+          "ik"
+        ],
+        "range": [
+          "gK_Pst",
+          "gK_Pstbar",
+          "ik"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          },
+          {
+            "name": "h"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gK_Pstbar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "ek"
+          },
+          {
+            "name": "ik"
+          },
+          {
+            "name": "gK_Pst"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "hInf"
+          },
+          {
+            "name": "hTau"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 50,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 38,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 44,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 4,
+          "target": "h",
+          "expression": "hInf",
+          "dependencies": [
+            "hInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gK_Pst",
+          "expression": "gK_Pstbar*m*m*h",
+          "dependencies": [
+            "gK_Pstbar",
+            "h",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ik",
+          "expression": "gK_Pst*(v-ek)",
+          "dependencies": [
+            "ek",
+            "gK_Pst",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "h'",
+          "expression": "(hInf-h)/hTau",
+          "dependencies": [
+            "hInf",
+            "hTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "K_Tst.mod",
+      "sha256": "9c30d94c7bcb77518fc3c2da2fc01fcd82a6f0cac10ab8eb683f6fb9560871e9",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "K_Tst",
+        "ions": [
+          {
+            "ion": "k",
+            "read": [
+              "ek"
+            ],
+            "write": [
+              "ik"
+            ]
+          }
+        ],
+        "currents": [
+          "ik"
+        ],
+        "range": [
+          "gK_Tst",
+          "gK_Tstbar",
+          "ik"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          },
+          {
+            "name": "h"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gK_Tstbar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "ek"
+          },
+          {
+            "name": "ik"
+          },
+          {
+            "name": "gK_Tst"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "hInf"
+          },
+          {
+            "name": "hTau"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 49,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 37,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 43,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 4,
+          "target": "h",
+          "expression": "hInf",
+          "dependencies": [
+            "hInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gK_Tst",
+          "expression": "gK_Tstbar*(m^4)*h",
+          "dependencies": [
+            "gK_Tstbar",
+            "h",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ik",
+          "expression": "gK_Tst*(v-ek)",
+          "dependencies": [
+            "ek",
+            "gK_Tst",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "h'",
+          "expression": "(hInf-h)/hTau",
+          "dependencies": [
+            "hInf",
+            "hTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "Nap_Et2.mod",
+      "sha256": "6fde5f26bf79eb0dafa5f72be3db552b74c30d7bfdd760b156d2bcea6a1bca32",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "Nap_Et2",
+        "ions": [
+          {
+            "ion": "na",
+            "read": [
+              "ena"
+            ],
+            "write": [
+              "ina"
+            ]
+          }
+        ],
+        "currents": [
+          "ina"
+        ],
+        "range": [
+          "gNap_Et2",
+          "gNap_Et2bar",
+          "ina"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          },
+          {
+            "name": "h"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gNap_Et2bar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "ena"
+          },
+          {
+            "name": "ina"
+          },
+          {
+            "name": "gNap_Et2"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "mAlpha"
+          },
+          {
+            "name": "mBeta"
+          },
+          {
+            "name": "hInf"
+          },
+          {
+            "name": "hTau"
+          },
+          {
+            "name": "hAlpha"
+          },
+          {
+            "name": "hBeta"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 53,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 41,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 47,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 4,
+          "target": "h",
+          "expression": "hInf",
+          "dependencies": [
+            "hInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gNap_Et2",
+          "expression": "gNap_Et2bar*m*m*m*h",
+          "dependencies": [
+            "gNap_Et2bar",
+            "h",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ina",
+          "expression": "gNap_Et2*(v-ena)",
+          "dependencies": [
+            "ena",
+            "gNap_Et2",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "h'",
+          "expression": "(hInf-h)/hTau",
+          "dependencies": [
+            "hInf",
+            "hTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "NaTa_t.mod",
+      "sha256": "f1c9f83a6e08ab3d57956e40d193c921e4f495aa1a7df7802ebcc1b613536e55",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "NaTa_t",
+        "ions": [
+          {
+            "ion": "na",
+            "read": [
+              "ena"
+            ],
+            "write": [
+              "ina"
+            ]
+          }
+        ],
+        "currents": [
+          "ina"
+        ],
+        "range": [
+          "gNaTa_t",
+          "gNaTa_tbar",
+          "ina"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          },
+          {
+            "name": "h"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gNaTa_tbar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "ena"
+          },
+          {
+            "name": "ina"
+          },
+          {
+            "name": "gNaTa_t"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "mAlpha"
+          },
+          {
+            "name": "mBeta"
+          },
+          {
+            "name": "hInf"
+          },
+          {
+            "name": "hTau"
+          },
+          {
+            "name": "hAlpha"
+          },
+          {
+            "name": "hBeta"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 50,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 38,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 44,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 4,
+          "target": "h",
+          "expression": "hInf",
+          "dependencies": [
+            "hInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gNaTa_t",
+          "expression": "gNaTa_tbar*m*m*m*h",
+          "dependencies": [
+            "gNaTa_tbar",
+            "h",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ina",
+          "expression": "gNaTa_t*(v-ena)",
+          "dependencies": [
+            "ena",
+            "gNaTa_t",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "h'",
+          "expression": "(hInf-h)/hTau",
+          "dependencies": [
+            "hInf",
+            "hTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "NaTs2_t.mod",
+      "sha256": "f3908231a90c0d83cf37abb5063ccab4241c481af672bb4489494ef43b02f547",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "NaTs2_t",
+        "ions": [
+          {
+            "ion": "na",
+            "read": [
+              "ena"
+            ],
+            "write": [
+              "ina"
+            ]
+          }
+        ],
+        "currents": [
+          "ina"
+        ],
+        "range": [
+          "gNaTs2_t",
+          "gNaTs2_tbar",
+          "ina"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          },
+          {
+            "name": "h"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gNaTs2_tbar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "ena"
+          },
+          {
+            "name": "ina"
+          },
+          {
+            "name": "gNaTs2_t"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          },
+          {
+            "name": "mAlpha"
+          },
+          {
+            "name": "mBeta"
+          },
+          {
+            "name": "hInf"
+          },
+          {
+            "name": "hTau"
+          },
+          {
+            "name": "hAlpha"
+          },
+          {
+            "name": "hBeta"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 51,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 39,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 45,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 4,
+          "target": "h",
+          "expression": "hInf",
+          "dependencies": [
+            "hInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gNaTs2_t",
+          "expression": "gNaTs2_tbar*m*m*m*h",
+          "dependencies": [
+            "gNaTs2_tbar",
+            "h",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ina",
+          "expression": "gNaTs2_t*(v-ena)",
+          "dependencies": [
+            "ena",
+            "gNaTs2_t",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "h'",
+          "expression": "(hInf-h)/hTau",
+          "dependencies": [
+            "hInf",
+            "hTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "ProbAMPANMDA2.mod",
+      "sha256": "e1f45094bb8bcb8583aa3decbc4605d6a8c68b0ea3ece07ba278b342642ea20a",
+      "mechanism": {
+        "kind": "POINT_PROCESS",
+        "name": "ProbAMPANMDA2",
+        "ions": [],
+        "currents": [
+          "i_AMPA",
+          "i_NMDA"
+        ],
+        "range": [
+          "Dep",
+          "Fac",
+          "Use",
+          "e",
+          "g_AMPA",
+          "g_NMDA",
+          "gmax",
+          "i",
+          "i_AMPA",
+          "i_NMDA",
+          "tau_d_AMPA",
+          "tau_d_NMDA",
+          "tau_r_AMPA",
+          "tau_r_NMDA",
+          "u",
+          "u0",
+          "weight_NMDA"
+        ],
+        "global": [],
+        "pointers": [
+          "rng"
+        ]
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "A_AMPA"
+          },
+          {
+            "name": "B_AMPA"
+          },
+          {
+            "name": "A_NMDA"
+          },
+          {
+            "name": "B_NMDA"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "tau_r_AMPA",
+            "default": "0.2"
+          },
+          {
+            "name": "tau_d_AMPA",
+            "default": "1.7"
+          },
+          {
+            "name": "tau_r_NMDA",
+            "default": "0.29"
+          },
+          {
+            "name": "tau_d_NMDA",
+            "default": "43"
+          },
+          {
+            "name": "Use",
+            "default": "1.0"
+          },
+          {
+            "name": "Dep",
+            "default": "100"
+          },
+          {
+            "name": "Fac",
+            "default": "10"
+          },
+          {
+            "name": "e",
+            "default": "0"
+          },
+          {
+            "name": "mg",
+            "default": "1"
+          },
+          {
+            "name": "mggate"
+          },
+          {
+            "name": "gmax",
+            "default": ".001"
+          },
+          {
+            "name": "u0",
+            "default": "0"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "i"
+          },
+          {
+            "name": "i_AMPA"
+          },
+          {
+            "name": "i_NMDA"
+          },
+          {
+            "name": "g_AMPA"
+          },
+          {
+            "name": "g_NMDA"
+          },
+          {
+            "name": "factor_AMPA"
+          },
+          {
+            "name": "factor_NMDA"
+          },
+          {
+            "name": "rng"
+          },
+          {
+            "name": "weight_NMDA"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 68,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 89,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 100,
+          "present": true
+        },
+        "net_receive": {
+          "source_line": 108,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "erand",
+        "setRNG"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 5,
+          "target": "A_AMPA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 6,
+          "target": "B_AMPA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 8,
+          "target": "A_NMDA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 9,
+          "target": "B_NMDA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 11,
+          "target": "tp_AMPA",
+          "expression": "(tau_r_AMPA*tau_d_AMPA)/(tau_d_AMPA-tau_r_AMPA)*log(tau_d_AMPA/tau_r_AMPA)",
+          "dependencies": [
+            "tau_d_AMPA",
+            "tau_r_AMPA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 12,
+          "target": "tp_NMDA",
+          "expression": "(tau_r_NMDA*tau_d_NMDA)/(tau_d_NMDA-tau_r_NMDA)*log(tau_d_NMDA/tau_r_NMDA)",
+          "dependencies": [
+            "tau_d_NMDA",
+            "tau_r_NMDA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 14,
+          "target": "factor_AMPA",
+          "expression": "-exp(-tp_AMPA/tau_r_AMPA)+exp(-tp_AMPA/tau_d_AMPA)",
+          "dependencies": [
+            "tau_d_AMPA",
+            "tau_r_AMPA",
+            "tp_AMPA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 15,
+          "target": "factor_AMPA",
+          "expression": "1/factor_AMPA",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 17,
+          "target": "factor_NMDA",
+          "expression": "-exp(-tp_NMDA/tau_r_NMDA)+exp(-tp_NMDA/tau_d_NMDA)",
+          "dependencies": [
+            "tau_d_NMDA",
+            "tau_r_NMDA",
+            "tp_NMDA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 18,
+          "target": "factor_NMDA",
+          "expression": "1/factor_NMDA",
+          "dependencies": []
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "mggate",
+          "expression": "1 / (1 + exp(0.08  (/mV) * -(v)) * (mg / 3.57 (mM)))",
+          "dependencies": [
+            "mM",
+            "mV",
+            "mg",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 5,
+          "target": "g_AMPA",
+          "expression": "gmax*(B_AMPA-A_AMPA)",
+          "dependencies": [
+            "gmax"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 6,
+          "target": "g_NMDA",
+          "expression": "gmax*(B_NMDA-A_NMDA) * mggate",
+          "dependencies": [
+            "gmax",
+            "mggate"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 7,
+          "target": "i_AMPA",
+          "expression": "g_AMPA*(v-e)",
+          "dependencies": [
+            "e",
+            "g_AMPA",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 8,
+          "target": "i_NMDA",
+          "expression": "g_NMDA*(v-e)",
+          "dependencies": [
+            "e",
+            "g_NMDA",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 9,
+          "target": "i",
+          "expression": "i_AMPA + i_NMDA",
+          "dependencies": [
+            "i_AMPA",
+            "i_NMDA"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "A_AMPA'",
+          "expression": "-A_AMPA/tau_r_AMPA",
+          "dependencies": [
+            "tau_r_AMPA"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "B_AMPA'",
+          "expression": "-B_AMPA/tau_d_AMPA",
+          "dependencies": [
+            "tau_d_AMPA"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 5,
+          "target": "A_NMDA'",
+          "expression": "-A_NMDA/tau_r_NMDA",
+          "dependencies": [
+            "tau_r_NMDA"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 6,
+          "target": "B_NMDA'",
+          "expression": "-B_NMDA/tau_d_NMDA",
+          "dependencies": [
+            "tau_d_NMDA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 3,
+          "target": "weight_AMPA",
+          "expression": "weight",
+          "dependencies": [
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 4,
+          "target": "weight_NMDA",
+          "expression": "weight",
+          "dependencies": [
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 8,
+          "target": "Pv",
+          "expression": "1",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 9,
+          "target": "u",
+          "expression": "u0",
+          "dependencies": [
+            "u0"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 10,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 15,
+          "target": "u",
+          "expression": "u*exp(-(t - tsyn)/Fac)",
+          "dependencies": [
+            "Fac",
+            "t",
+            "tsyn"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 17,
+          "target": "u",
+          "expression": "Use",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 20,
+          "target": "u",
+          "expression": "u + Use*(1-u)",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 24,
+          "target": "Pv",
+          "expression": "1 - (1-Pv) * exp(-(t-tsyn)/Dep)",
+          "dependencies": [
+            "Dep",
+            "t",
+            "tsyn"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 26,
+          "target": "Pr",
+          "expression": "u * Pv",
+          "dependencies": [
+            "Pv",
+            "u"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 27,
+          "target": "Pv",
+          "expression": "Pv - u * Pv",
+          "dependencies": [
+            "u"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 30,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 34,
+          "target": "A_AMPA",
+          "expression": "A_AMPA + weight_AMPA*factor_AMPA",
+          "dependencies": [
+            "factor_AMPA",
+            "weight_AMPA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 35,
+          "target": "B_AMPA",
+          "expression": "B_AMPA + weight_AMPA*factor_AMPA",
+          "dependencies": [
+            "factor_AMPA",
+            "weight_AMPA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 36,
+          "target": "A_NMDA",
+          "expression": "A_NMDA + weight_NMDA*factor_NMDA",
+          "dependencies": [
+            "factor_NMDA",
+            "weight_NMDA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 37,
+          "target": "B_NMDA",
+          "expression": "B_NMDA + weight_NMDA*factor_NMDA",
+          "dependencies": [
+            "factor_NMDA",
+            "weight_NMDA"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "ProbAMPANMDA_3.mod",
+      "sha256": "866447904e2b7221d9fc80081ffa33733f863bdb87af03cceb41b4e4a7d31f09",
+      "mechanism": {
+        "kind": "POINT_PROCESS",
+        "name": "ProbAMPANMDA3",
+        "ions": [],
+        "currents": [
+          "i_AMPA",
+          "i_NMDA"
+        ],
+        "range": [
+          "Dep",
+          "Fac",
+          "Use",
+          "e",
+          "g_AMPA",
+          "g_NMDA",
+          "gmax",
+          "i",
+          "i_AMPA",
+          "i_NMDA",
+          "tau_d_AMPA",
+          "tau_d_NMDA",
+          "tau_r_AMPA",
+          "tau_r_NMDA",
+          "u",
+          "u0",
+          "weight_NMDA"
+        ],
+        "global": [],
+        "pointers": [
+          "rng"
+        ]
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "A_AMPA"
+          },
+          {
+            "name": "B_AMPA"
+          },
+          {
+            "name": "A_NMDA"
+          },
+          {
+            "name": "B_NMDA"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "tau_r_AMPA",
+            "default": "0.2"
+          },
+          {
+            "name": "tau_d_AMPA",
+            "default": "1.7"
+          },
+          {
+            "name": "tau_r_NMDA",
+            "default": "0.29"
+          },
+          {
+            "name": "tau_d_NMDA",
+            "default": "43"
+          },
+          {
+            "name": "Use",
+            "default": "1.0"
+          },
+          {
+            "name": "Dep",
+            "default": "100"
+          },
+          {
+            "name": "Fac",
+            "default": "10"
+          },
+          {
+            "name": "e",
+            "default": "0"
+          },
+          {
+            "name": "mg",
+            "default": "1"
+          },
+          {
+            "name": "mggate"
+          },
+          {
+            "name": "gmax",
+            "default": ".001"
+          },
+          {
+            "name": "u0",
+            "default": "0"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "i"
+          },
+          {
+            "name": "i_AMPA"
+          },
+          {
+            "name": "i_NMDA"
+          },
+          {
+            "name": "g_AMPA"
+          },
+          {
+            "name": "g_NMDA"
+          },
+          {
+            "name": "factor_AMPA"
+          },
+          {
+            "name": "factor_NMDA"
+          },
+          {
+            "name": "rng"
+          },
+          {
+            "name": "weight_NMDA"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 66,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 87,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 99,
+          "present": true
+        },
+        "net_receive": {
+          "source_line": 106,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "erand",
+        "setRNG"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 5,
+          "target": "A_AMPA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 6,
+          "target": "B_AMPA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 8,
+          "target": "A_NMDA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 9,
+          "target": "B_NMDA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 11,
+          "target": "tp_AMPA",
+          "expression": "(tau_r_AMPA*tau_d_AMPA)/(tau_d_AMPA-tau_r_AMPA)*log(tau_d_AMPA/tau_r_AMPA)",
+          "dependencies": [
+            "tau_d_AMPA",
+            "tau_r_AMPA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 12,
+          "target": "tp_NMDA",
+          "expression": "(tau_r_NMDA*tau_d_NMDA)/(tau_d_NMDA-tau_r_NMDA)*log(tau_d_NMDA/tau_r_NMDA)",
+          "dependencies": [
+            "tau_d_NMDA",
+            "tau_r_NMDA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 14,
+          "target": "factor_AMPA",
+          "expression": "-exp(-tp_AMPA/tau_r_AMPA)+exp(-tp_AMPA/tau_d_AMPA)",
+          "dependencies": [
+            "tau_d_AMPA",
+            "tau_r_AMPA",
+            "tp_AMPA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 15,
+          "target": "factor_AMPA",
+          "expression": "1/factor_AMPA",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 17,
+          "target": "factor_NMDA",
+          "expression": "-exp(-tp_NMDA/tau_r_NMDA)+exp(-tp_NMDA/tau_d_NMDA)",
+          "dependencies": [
+            "tau_d_NMDA",
+            "tau_r_NMDA",
+            "tp_NMDA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 18,
+          "target": "factor_NMDA",
+          "expression": "1/factor_NMDA",
+          "dependencies": []
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 5,
+          "target": "mggate",
+          "expression": "1 / (1 + exp(0.08  (/mV) * -(v)) * (mg / 3.57 (mM)))",
+          "dependencies": [
+            "mM",
+            "mV",
+            "mg",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 6,
+          "target": "g_AMPA",
+          "expression": "gmax*(B_AMPA-A_AMPA)",
+          "dependencies": [
+            "gmax"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 7,
+          "target": "g_NMDA",
+          "expression": "gmax*(B_NMDA-A_NMDA) * mggate",
+          "dependencies": [
+            "gmax",
+            "mggate"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 8,
+          "target": "i_AMPA",
+          "expression": "g_AMPA*(v-e)",
+          "dependencies": [
+            "e",
+            "g_AMPA",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 9,
+          "target": "i_NMDA",
+          "expression": "g_NMDA*(v-e)",
+          "dependencies": [
+            "e",
+            "g_NMDA",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 10,
+          "target": "i",
+          "expression": "i_AMPA + i_NMDA",
+          "dependencies": [
+            "i_AMPA",
+            "i_NMDA"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 2,
+          "target": "A_AMPA'",
+          "expression": "-A_AMPA/tau_r_AMPA",
+          "dependencies": [
+            "tau_r_AMPA"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "B_AMPA'",
+          "expression": "-B_AMPA/tau_d_AMPA",
+          "dependencies": [
+            "tau_d_AMPA"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "A_NMDA'",
+          "expression": "-A_NMDA/tau_r_NMDA",
+          "dependencies": [
+            "tau_r_NMDA"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 5,
+          "target": "B_NMDA'",
+          "expression": "-B_NMDA/tau_d_NMDA",
+          "dependencies": [
+            "tau_d_NMDA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 3,
+          "target": "weight_AMPA",
+          "expression": "weight",
+          "dependencies": [
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 4,
+          "target": "weight_NMDA",
+          "expression": "weight",
+          "dependencies": [
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 8,
+          "target": "Pv",
+          "expression": "1",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 9,
+          "target": "u",
+          "expression": "u0",
+          "dependencies": [
+            "u0"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 10,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 15,
+          "target": "u",
+          "expression": "u*exp(-(t - tsyn)/Fac)",
+          "dependencies": [
+            "Fac",
+            "t",
+            "tsyn"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 17,
+          "target": "u",
+          "expression": "Use",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 20,
+          "target": "u",
+          "expression": "u + Use*(1-u)",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 24,
+          "target": "Pv",
+          "expression": "1 - (1-Pv) * exp(-(t-tsyn)/Dep)",
+          "dependencies": [
+            "Dep",
+            "t",
+            "tsyn"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 26,
+          "target": "Pr",
+          "expression": "u * Pv",
+          "dependencies": [
+            "Pv",
+            "u"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 27,
+          "target": "Pv",
+          "expression": "Pv - u * Pv",
+          "dependencies": [
+            "u"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 30,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 34,
+          "target": "A_AMPA",
+          "expression": "A_AMPA + weight_AMPA*factor_AMPA",
+          "dependencies": [
+            "factor_AMPA",
+            "weight_AMPA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 35,
+          "target": "B_AMPA",
+          "expression": "B_AMPA + weight_AMPA*factor_AMPA",
+          "dependencies": [
+            "factor_AMPA",
+            "weight_AMPA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 36,
+          "target": "A_NMDA",
+          "expression": "A_NMDA + weight_NMDA*factor_NMDA",
+          "dependencies": [
+            "factor_NMDA",
+            "weight_NMDA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 37,
+          "target": "B_NMDA",
+          "expression": "B_NMDA + weight_NMDA*factor_NMDA",
+          "dependencies": [
+            "factor_NMDA",
+            "weight_NMDA"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "ProbAMPANMDA_EMS.mod",
+      "sha256": "4ae93e00567c696a94b25ff06ae2e1e7113aef557567d06d9aecb208db4fb791",
+      "mechanism": {
+        "kind": "POINT_PROCESS",
+        "name": "ProbAMPANMDA_EMS",
+        "ions": [],
+        "currents": [
+          "i"
+        ],
+        "range": [
+          "A_AMPA_step",
+          "A_NMDA_step",
+          "B_AMPA_step",
+          "B_NMDA_step",
+          "Dep",
+          "Fac",
+          "NMDA_ratio",
+          "Rstate",
+          "Use",
+          "e",
+          "g",
+          "g_AMPA",
+          "g_NMDA",
+          "i",
+          "i_AMPA",
+          "i_NMDA",
+          "mg",
+          "synapseID",
+          "tau_d_AMPA",
+          "tau_d_NMDA",
+          "tau_r_AMPA",
+          "tau_r_NMDA",
+          "tsyn_fac",
+          "u",
+          "u0",
+          "verboseLevel"
+        ],
+        "global": [],
+        "pointers": [
+          "rng"
+        ]
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "A_AMPA"
+          },
+          {
+            "name": "B_AMPA"
+          },
+          {
+            "name": "A_NMDA"
+          },
+          {
+            "name": "B_NMDA"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "tau_r_AMPA",
+            "default": "0.2"
+          },
+          {
+            "name": "tau_d_AMPA",
+            "default": "1.7"
+          },
+          {
+            "name": "tau_r_NMDA",
+            "default": "0.29"
+          },
+          {
+            "name": "tau_d_NMDA",
+            "default": "43"
+          },
+          {
+            "name": "Use",
+            "default": "1.0"
+          },
+          {
+            "name": "Dep",
+            "default": "100"
+          },
+          {
+            "name": "Fac",
+            "default": "10"
+          },
+          {
+            "name": "e",
+            "default": "0"
+          },
+          {
+            "name": "mg",
+            "default": "1"
+          },
+          {
+            "name": "mggate"
+          },
+          {
+            "name": "gmax",
+            "default": ".001"
+          },
+          {
+            "name": "u0",
+            "default": "0"
+          },
+          {
+            "name": "synapseID",
+            "default": "0"
+          },
+          {
+            "name": "verboseLevel",
+            "default": "0"
+          },
+          {
+            "name": "NMDA_ratio",
+            "default": "0.71"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "i"
+          },
+          {
+            "name": "i_AMPA"
+          },
+          {
+            "name": "i_NMDA"
+          },
+          {
+            "name": "g_AMPA"
+          },
+          {
+            "name": "g_NMDA"
+          },
+          {
+            "name": "g"
+          },
+          {
+            "name": "factor_AMPA"
+          },
+          {
+            "name": "factor_NMDA"
+          },
+          {
+            "name": "A_AMPA_step"
+          },
+          {
+            "name": "B_AMPA_step"
+          },
+          {
+            "name": "A_NMDA_step"
+          },
+          {
+            "name": "B_NMDA_step"
+          },
+          {
+            "name": "rng"
+          },
+          {
+            "name": "Rstate"
+          },
+          {
+            "name": "tsyn_fac"
+          },
+          {
+            "name": "u"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": null
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 91,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 120,
+          "present": true
+        },
+        "net_receive": {
+          "source_line": 139,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "setRNG",
+        "state",
+        "toggleVerbose",
+        "urand"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 5,
+          "target": "Rstate",
+          "expression": "1",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 6,
+          "target": "tsyn_fac",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 7,
+          "target": "u",
+          "expression": "u0",
+          "dependencies": [
+            "u0"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 9,
+          "target": "A_AMPA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 10,
+          "target": "B_AMPA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 12,
+          "target": "A_NMDA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 13,
+          "target": "B_NMDA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 15,
+          "target": "tp_AMPA",
+          "expression": "(tau_r_AMPA*tau_d_AMPA)/(tau_d_AMPA-tau_r_AMPA)*log(tau_d_AMPA/tau_r_AMPA)",
+          "dependencies": [
+            "tau_d_AMPA",
+            "tau_r_AMPA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 16,
+          "target": "tp_NMDA",
+          "expression": "(tau_r_NMDA*tau_d_NMDA)/(tau_d_NMDA-tau_r_NMDA)*log(tau_d_NMDA/tau_r_NMDA)",
+          "dependencies": [
+            "tau_d_NMDA",
+            "tau_r_NMDA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 18,
+          "target": "factor_AMPA",
+          "expression": "-exp(-tp_AMPA/tau_r_AMPA)+exp(-tp_AMPA/tau_d_AMPA)",
+          "dependencies": [
+            "tau_d_AMPA",
+            "tau_r_AMPA",
+            "tp_AMPA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 19,
+          "target": "factor_AMPA",
+          "expression": "1/factor_AMPA",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 21,
+          "target": "factor_NMDA",
+          "expression": "-exp(-tp_NMDA/tau_r_NMDA)+exp(-tp_NMDA/tau_d_NMDA)",
+          "dependencies": [
+            "tau_d_NMDA",
+            "tau_r_NMDA",
+            "tp_NMDA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 22,
+          "target": "factor_NMDA",
+          "expression": "1/factor_NMDA",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 24,
+          "target": "A_AMPA_step",
+          "expression": "exp(dt*(( - 1.0 ) / tau_r_AMPA))",
+          "dependencies": [
+            "dt",
+            "tau_r_AMPA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 25,
+          "target": "B_AMPA_step",
+          "expression": "exp(dt*(( - 1.0 ) / tau_d_AMPA))",
+          "dependencies": [
+            "dt",
+            "tau_d_AMPA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 26,
+          "target": "A_NMDA_step",
+          "expression": "exp(dt*(( - 1.0 ) / tau_r_NMDA))",
+          "dependencies": [
+            "dt",
+            "tau_r_NMDA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 27,
+          "target": "B_NMDA_step",
+          "expression": "exp(dt*(( - 1.0 ) / tau_d_NMDA))",
+          "dependencies": [
+            "dt",
+            "tau_d_NMDA"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "mggate",
+          "expression": "1 / (1 + exp(0.08 (/mV) * -(v)) * (mg / 3.57 (mM)))",
+          "dependencies": [
+            "mM",
+            "mV",
+            "mg",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 5,
+          "target": "g_AMPA",
+          "expression": "gmax*(B_AMPA-A_AMPA)",
+          "dependencies": [
+            "gmax"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 6,
+          "target": "g_NMDA",
+          "expression": "gmax*(B_NMDA-A_NMDA) * mggate",
+          "dependencies": [
+            "gmax",
+            "mggate"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 7,
+          "target": "g",
+          "expression": "g_AMPA + g_NMDA",
+          "dependencies": [
+            "g_AMPA",
+            "g_NMDA"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 8,
+          "target": "i_AMPA",
+          "expression": "g_AMPA*(v-e)",
+          "dependencies": [
+            "e",
+            "g_AMPA",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 9,
+          "target": "i_NMDA",
+          "expression": "g_NMDA*(v-e)",
+          "dependencies": [
+            "e",
+            "g_NMDA",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 10,
+          "target": "i",
+          "expression": "i_AMPA + i_NMDA",
+          "dependencies": [
+            "i_AMPA",
+            "i_NMDA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 3,
+          "target": "weight_AMPA",
+          "expression": "weight",
+          "dependencies": [
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 4,
+          "target": "weight_NMDA",
+          "expression": "weight * NMDA_ratio",
+          "dependencies": [
+            "NMDA_ratio",
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 10,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 22,
+          "target": "u",
+          "expression": "u*exp(-(t - tsyn_fac)/Fac)",
+          "dependencies": [
+            "Fac",
+            "t",
+            "tsyn_fac"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 24,
+          "target": "u",
+          "expression": "Use",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 27,
+          "target": "u",
+          "expression": "u + Use*(1-u)",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 32,
+          "target": "tsyn_fac",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 38,
+          "target": "Psurv",
+          "expression": "exp(-(t-tsyn)/Dep)",
+          "dependencies": [
+            "Dep",
+            "t",
+            "tsyn"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 39,
+          "target": "result",
+          "expression": "urand()",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 41,
+          "target": "Rstate",
+          "expression": "1",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 50,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 58,
+          "target": "result",
+          "expression": "urand()",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 61,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 62,
+          "target": "Rstate",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 63,
+          "target": "A_AMPA",
+          "expression": "A_AMPA + weight_AMPA*factor_AMPA",
+          "dependencies": [
+            "factor_AMPA",
+            "weight_AMPA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 64,
+          "target": "B_AMPA",
+          "expression": "B_AMPA + weight_AMPA*factor_AMPA",
+          "dependencies": [
+            "factor_AMPA",
+            "weight_AMPA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 65,
+          "target": "A_NMDA",
+          "expression": "A_NMDA + weight_NMDA*factor_NMDA",
+          "dependencies": [
+            "factor_NMDA",
+            "weight_NMDA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 66,
+          "target": "B_NMDA",
+          "expression": "B_NMDA + weight_NMDA*factor_NMDA",
+          "dependencies": [
+            "factor_NMDA",
+            "weight_NMDA"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "ProbGABAAB_EMS.mod",
+      "sha256": "1ef5bb31c56728e5c81e8ef9f87a68878aa3d6bdcffe5d67ce0e815064673942",
+      "mechanism": {
+        "kind": "POINT_PROCESS",
+        "name": "ProbGABAAB_EMS",
+        "ions": [],
+        "currents": [
+          "i"
+        ],
+        "range": [
+          "A_GABAA_step",
+          "A_GABAB_step",
+          "B_GABAA_step",
+          "B_GABAB_step",
+          "Dep",
+          "Fac",
+          "GABAB_ratio",
+          "Rstate",
+          "Use",
+          "e_GABAA",
+          "e_GABAB",
+          "g",
+          "g_GABAA",
+          "g_GABAB",
+          "i",
+          "i_GABAA",
+          "i_GABAB",
+          "synapseID",
+          "tau_d_GABAA",
+          "tau_d_GABAB",
+          "tau_r_GABAA",
+          "tau_r_GABAB",
+          "tsyn_fac",
+          "u",
+          "u0",
+          "verboseLevel"
+        ],
+        "global": [],
+        "pointers": [
+          "rng"
+        ]
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "A_GABAA"
+          },
+          {
+            "name": "B_GABAA"
+          },
+          {
+            "name": "A_GABAB"
+          },
+          {
+            "name": "B_GABAB"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "tau_r_GABAA",
+            "default": "0.2"
+          },
+          {
+            "name": "tau_d_GABAA",
+            "default": "8"
+          },
+          {
+            "name": "tau_r_GABAB",
+            "default": "3.5"
+          },
+          {
+            "name": "tau_d_GABAB",
+            "default": "260.9"
+          },
+          {
+            "name": "Use",
+            "default": "1.0"
+          },
+          {
+            "name": "Dep",
+            "default": "100"
+          },
+          {
+            "name": "Fac",
+            "default": "10"
+          },
+          {
+            "name": "e_GABAA",
+            "default": "-80"
+          },
+          {
+            "name": "e_GABAB",
+            "default": "-97"
+          },
+          {
+            "name": "gmax",
+            "default": ".001"
+          },
+          {
+            "name": "u0",
+            "default": "0"
+          },
+          {
+            "name": "synapseID",
+            "default": "0"
+          },
+          {
+            "name": "verboseLevel",
+            "default": "0"
+          },
+          {
+            "name": "GABAB_ratio",
+            "default": "0"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "i"
+          },
+          {
+            "name": "i_GABAA"
+          },
+          {
+            "name": "i_GABAB"
+          },
+          {
+            "name": "g_GABAA"
+          },
+          {
+            "name": "g_GABAB"
+          },
+          {
+            "name": "A_GABAA_step"
+          },
+          {
+            "name": "B_GABAA_step"
+          },
+          {
+            "name": "A_GABAB_step"
+          },
+          {
+            "name": "B_GABAB_step"
+          },
+          {
+            "name": "g"
+          },
+          {
+            "name": "factor_GABAA"
+          },
+          {
+            "name": "factor_GABAB"
+          },
+          {
+            "name": "rng"
+          },
+          {
+            "name": "Rstate"
+          },
+          {
+            "name": "tsyn_fac"
+          },
+          {
+            "name": "u"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": null
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 87,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 116,
+          "present": true
+        },
+        "net_receive": {
+          "source_line": 134,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "setRNG",
+        "state",
+        "toggleVerbose",
+        "urand"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 5,
+          "target": "Rstate",
+          "expression": "1",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 6,
+          "target": "tsyn_fac",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 7,
+          "target": "u",
+          "expression": "u0",
+          "dependencies": [
+            "u0"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 9,
+          "target": "A_GABAA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 10,
+          "target": "B_GABAA",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 12,
+          "target": "A_GABAB",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 13,
+          "target": "B_GABAB",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 15,
+          "target": "tp_GABAA",
+          "expression": "(tau_r_GABAA*tau_d_GABAA)/(tau_d_GABAA-tau_r_GABAA)*log(tau_d_GABAA/tau_r_GABAA)",
+          "dependencies": [
+            "tau_d_GABAA",
+            "tau_r_GABAA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 16,
+          "target": "tp_GABAB",
+          "expression": "(tau_r_GABAB*tau_d_GABAB)/(tau_d_GABAB-tau_r_GABAB)*log(tau_d_GABAB/tau_r_GABAB)",
+          "dependencies": [
+            "tau_d_GABAB",
+            "tau_r_GABAB"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 18,
+          "target": "factor_GABAA",
+          "expression": "-exp(-tp_GABAA/tau_r_GABAA)+exp(-tp_GABAA/tau_d_GABAA)",
+          "dependencies": [
+            "tau_d_GABAA",
+            "tau_r_GABAA",
+            "tp_GABAA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 19,
+          "target": "factor_GABAA",
+          "expression": "1/factor_GABAA",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 21,
+          "target": "factor_GABAB",
+          "expression": "-exp(-tp_GABAB/tau_r_GABAB)+exp(-tp_GABAB/tau_d_GABAB)",
+          "dependencies": [
+            "tau_d_GABAB",
+            "tau_r_GABAB",
+            "tp_GABAB"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 22,
+          "target": "factor_GABAB",
+          "expression": "1/factor_GABAB",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 24,
+          "target": "A_GABAA_step",
+          "expression": "exp(dt*(( - 1.0 ) / tau_r_GABAA))",
+          "dependencies": [
+            "dt",
+            "tau_r_GABAA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 25,
+          "target": "B_GABAA_step",
+          "expression": "exp(dt*(( - 1.0 ) / tau_d_GABAA))",
+          "dependencies": [
+            "dt",
+            "tau_d_GABAA"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 26,
+          "target": "A_GABAB_step",
+          "expression": "exp(dt*(( - 1.0 ) / tau_r_GABAB))",
+          "dependencies": [
+            "dt",
+            "tau_r_GABAB"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 27,
+          "target": "B_GABAB_step",
+          "expression": "exp(dt*(( - 1.0 ) / tau_d_GABAB))",
+          "dependencies": [
+            "dt",
+            "tau_d_GABAB"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "g_GABAA",
+          "expression": "gmax*(B_GABAA-A_GABAA)",
+          "dependencies": [
+            "gmax"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 5,
+          "target": "g_GABAB",
+          "expression": "gmax*(B_GABAB-A_GABAB)",
+          "dependencies": [
+            "gmax"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 6,
+          "target": "g",
+          "expression": "g_GABAA + g_GABAB",
+          "dependencies": [
+            "g_GABAA",
+            "g_GABAB"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 7,
+          "target": "i_GABAA",
+          "expression": "g_GABAA*(v-e_GABAA)",
+          "dependencies": [
+            "e_GABAA",
+            "g_GABAA",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 8,
+          "target": "i_GABAB",
+          "expression": "g_GABAB*(v-e_GABAB)",
+          "dependencies": [
+            "e_GABAB",
+            "g_GABAB",
+            "v"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 9,
+          "target": "i",
+          "expression": "i_GABAA + i_GABAB",
+          "dependencies": [
+            "i_GABAA",
+            "i_GABAB"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 3,
+          "target": "weight_GABAA",
+          "expression": "weight",
+          "dependencies": [
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 4,
+          "target": "weight_GABAB",
+          "expression": "weight*GABAB_ratio",
+          "dependencies": [
+            "GABAB_ratio",
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 11,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 23,
+          "target": "u",
+          "expression": "u*exp(-(t - tsyn_fac)/Fac)",
+          "dependencies": [
+            "Fac",
+            "t",
+            "tsyn_fac"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 25,
+          "target": "u",
+          "expression": "Use",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 28,
+          "target": "u",
+          "expression": "u + Use*(1-u)",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 33,
+          "target": "tsyn_fac",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 38,
+          "target": "Psurv",
+          "expression": "exp(-(t-tsyn)/Dep)",
+          "dependencies": [
+            "Dep",
+            "t",
+            "tsyn"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 39,
+          "target": "result",
+          "expression": "urand()",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 41,
+          "target": "Rstate",
+          "expression": "1",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 50,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 58,
+          "target": "result",
+          "expression": "urand()",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 61,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 62,
+          "target": "Rstate",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 64,
+          "target": "A_GABAA",
+          "expression": "A_GABAA + weight_GABAA*factor_GABAA",
+          "dependencies": [
+            "factor_GABAA",
+            "weight_GABAA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 65,
+          "target": "B_GABAA",
+          "expression": "B_GABAA + weight_GABAA*factor_GABAA",
+          "dependencies": [
+            "factor_GABAA",
+            "weight_GABAA"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 66,
+          "target": "A_GABAB",
+          "expression": "A_GABAB + weight_GABAB*factor_GABAB",
+          "dependencies": [
+            "factor_GABAB",
+            "weight_GABAB"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 67,
+          "target": "B_GABAB",
+          "expression": "B_GABAB + weight_GABAB*factor_GABAB",
+          "dependencies": [
+            "factor_GABAB",
+            "weight_GABAB"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "ProbUDFsyn2.mod",
+      "sha256": "60a0ab09ea4d25f51f4bd8d188d8f7dc2da822812f701df12113db182e3f439d",
+      "mechanism": {
+        "kind": "POINT_PROCESS",
+        "name": "ProbUDFsyn2",
+        "ions": [],
+        "currents": [
+          "i"
+        ],
+        "range": [
+          "Dep",
+          "Fac",
+          "Use",
+          "e",
+          "g",
+          "gmax",
+          "i",
+          "tau_d",
+          "tau_r",
+          "u",
+          "u0"
+        ],
+        "global": [],
+        "pointers": [
+          "rng"
+        ]
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "A"
+          },
+          {
+            "name": "B"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "tau_r",
+            "default": "0.2"
+          },
+          {
+            "name": "tau_d",
+            "default": "1.7"
+          },
+          {
+            "name": "Use",
+            "default": "1.0"
+          },
+          {
+            "name": "Dep",
+            "default": "100"
+          },
+          {
+            "name": "Fac",
+            "default": "10"
+          },
+          {
+            "name": "e",
+            "default": "0"
+          },
+          {
+            "name": "gmax",
+            "default": ".001"
+          },
+          {
+            "name": "u0",
+            "default": "0"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "i"
+          },
+          {
+            "name": "g"
+          },
+          {
+            "name": "factor"
+          },
+          {
+            "name": "rng"
+          },
+          {
+            "name": "weight_NMDA"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "state",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 57,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 72,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 79,
+          "present": true
+        },
+        "net_receive": {
+          "source_line": 85,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "erand",
+        "setRNG"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 5,
+          "target": "A",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 6,
+          "target": "B",
+          "expression": "0",
+          "dependencies": []
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 9,
+          "target": "tp",
+          "expression": "(tau_r*tau_d)/(tau_d-tau_r)*log(tau_d/tau_r)",
+          "dependencies": [
+            "tau_d",
+            "tau_r"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 11,
+          "target": "factor",
+          "expression": "-exp(-tp/tau_r)+exp(-tp/tau_d)",
+          "dependencies": [
+            "tau_d",
+            "tau_r",
+            "tp"
+          ]
+        },
+        {
+          "block": "INITIAL",
+          "line_in_block": 12,
+          "target": "factor",
+          "expression": "1/factor",
+          "dependencies": []
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "g",
+          "expression": "gmax*(B-A)",
+          "dependencies": [
+            "gmax"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 5,
+          "target": "i",
+          "expression": "g*(v-e)",
+          "dependencies": [
+            "e",
+            "g",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "A'",
+          "expression": "-A/tau_r",
+          "dependencies": [
+            "tau_r"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 4,
+          "target": "B'",
+          "expression": "-B/tau_d",
+          "dependencies": [
+            "tau_d"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 4,
+          "target": "Pv",
+          "expression": "1",
+          "dependencies": []
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 5,
+          "target": "u",
+          "expression": "u0",
+          "dependencies": [
+            "u0"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 6,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 11,
+          "target": "u",
+          "expression": "u*exp(-(t - tsyn)/Fac)",
+          "dependencies": [
+            "Fac",
+            "t",
+            "tsyn"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 13,
+          "target": "u",
+          "expression": "Use",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 16,
+          "target": "u",
+          "expression": "u + Use*(1-u)",
+          "dependencies": [
+            "Use"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 20,
+          "target": "Pv",
+          "expression": "1 - (1-Pv) * exp(-(t-tsyn)/Dep)",
+          "dependencies": [
+            "Dep",
+            "t",
+            "tsyn"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 22,
+          "target": "Pr",
+          "expression": "u * Pv",
+          "dependencies": [
+            "Pv",
+            "u"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 23,
+          "target": "Pv",
+          "expression": "Pv - u * Pv",
+          "dependencies": [
+            "u"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 26,
+          "target": "tsyn",
+          "expression": "t",
+          "dependencies": [
+            "t"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 30,
+          "target": "A",
+          "expression": "A + weight*factor",
+          "dependencies": [
+            "factor",
+            "weight"
+          ]
+        },
+        {
+          "block": "NET_RECEIVE",
+          "line_in_block": 31,
+          "target": "B",
+          "expression": "B + weight*factor",
+          "dependencies": [
+            "factor",
+            "weight"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "SK_E2.mod",
+      "sha256": "01b5b62baeb5fa76a0e8c313adccef386bf0e8475721b885fb181ea44dbf9c1c",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "SK_E2",
+        "ions": [
+          {
+            "ion": "k",
+            "read": [
+              "ek"
+            ],
+            "write": [
+              "ik"
+            ]
+          },
+          {
+            "ion": "ca",
+            "read": [
+              "cai"
+            ],
+            "write": []
+          }
+        ],
+        "currents": [
+          "ik"
+        ],
+        "range": [
+          "gSK_E2",
+          "gSK_E2bar",
+          "ik"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "z"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "gSK_E2bar",
+            "default": ".000001"
+          },
+          {
+            "name": "zTau",
+            "default": "1"
+          },
+          {
+            "name": "ek"
+          },
+          {
+            "name": "cai"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "zInf"
+          },
+          {
+            "name": "ik"
+          },
+          {
+            "name": "gSK_E2"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 52,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 34,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 40,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "z",
+          "expression": "zInf",
+          "dependencies": [
+            "zInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gSK_E2",
+          "expression": "gSK_E2bar * z",
+          "dependencies": [
+            "gSK_E2bar",
+            "z"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ik",
+          "expression": "gSK_E2 * (v - ek)",
+          "dependencies": [
+            "ek",
+            "gSK_E2",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "z'",
+          "expression": "(zInf - z) / zTau",
+          "dependencies": [
+            "zInf",
+            "zTau"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "SKv3_1.mod",
+      "sha256": "e66b82b5c00f197b660f5e827651403e0d621d3fca8ff7641eee9bf3cbfa1b18",
+      "mechanism": {
+        "kind": "SUFFIX",
+        "name": "SKv3_1",
+        "ions": [
+          {
+            "ion": "k",
+            "read": [
+              "ek"
+            ],
+            "write": [
+              "ik"
+            ]
+          }
+        ],
+        "currents": [
+          "ik"
+        ],
+        "range": [
+          "gSKv3_1",
+          "gSKv3_1bar",
+          "ik"
+        ],
+        "global": [],
+        "pointers": []
+      },
+      "declarations": {
+        "state": [
+          {
+            "name": "m"
+          }
+        ],
+        "parameter": [
+          {
+            "name": "gSKv3_1bar",
+            "default": "0.00001"
+          }
+        ],
+        "assigned": [
+          {
+            "name": "v"
+          },
+          {
+            "name": "ek"
+          },
+          {
+            "name": "ik"
+          },
+          {
+            "name": "gSKv3_1"
+          },
+          {
+            "name": "mInf"
+          },
+          {
+            "name": "mTau"
+          }
+        ]
+      },
+      "integration": {
+        "solve_statements": [
+          {
+            "target": "states",
+            "method": "cnexp"
+          }
+        ]
+      },
+      "executable_blocks": {
+        "initial": {
+          "source_line": 43,
+          "present": true
+        },
+        "breakpoint": {
+          "source_line": 32,
+          "present": true
+        },
+        "derivative": {
+          "source_line": 38,
+          "present": true
+        }
+      },
+      "procedures_and_functions": [
+        "rates"
+      ],
+      "equations": [
+        {
+          "block": "INITIAL",
+          "line_in_block": 3,
+          "target": "m",
+          "expression": "mInf",
+          "dependencies": [
+            "mInf"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 3,
+          "target": "gSKv3_1",
+          "expression": "gSKv3_1bar*m",
+          "dependencies": [
+            "gSKv3_1bar",
+            "m"
+          ]
+        },
+        {
+          "block": "BREAKPOINT",
+          "line_in_block": 4,
+          "target": "ik",
+          "expression": "gSKv3_1*(v-ek)",
+          "dependencies": [
+            "ek",
+            "gSKv3_1",
+            "v"
+          ]
+        },
+        {
+          "block": "DERIVATIVE",
+          "line_in_block": 3,
+          "target": "m'",
+          "expression": "(mInf-m)/mTau",
+          "dependencies": [
+            "mInf",
+            "mTau"
+          ]
+        }
+      ]
+    }
+  ]
+}
