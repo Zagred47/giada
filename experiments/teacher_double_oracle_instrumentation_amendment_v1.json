@@ -1,0 +1,32 @@
+{
+  "schema_version": "giada-double-oracle-instrumentation-amendment-v1",
+  "task": "0.4",
+  "status": "instrumentation_amendment_before_scientific_result",
+  "trigger": {
+    "environment": "Kaggle Linux, Python 3.12, installed NEURON/NMODL runtime",
+    "failure": "compiled mechanism does not expose states_Ca_HVA",
+    "interpretation": "The preregistered private DERIVATIVE block is not a public HOC API in this runtime; no biological comparison was executed and no acceptance metric was observed."
+  },
+  "unchanged_contract": {
+    "formula_oracle": "sequential interpretation of PROCEDURE rates plus exact exponential update",
+    "neuron_mechanism": "authentic compiled Ca_HVA.mod",
+    "grid": "unchanged, 7360 cases",
+    "precision": "float64",
+    "absolute_tolerance": 1e-10,
+    "relative_tolerance": 1e-10,
+    "failure_count_required": 0
+  },
+  "replacement_instrumentation": {
+    "method": "one authentic fixed NEURON step on a single electrically silent section",
+    "controls": [
+      "insert only Ca_HVA",
+      "set gCa_HVAbar to zero so the mechanism contributes no membrane current",
+      "initialize and then reset membrane voltage to the requested held value",
+      "set the tested gate state after initialization",
+      "advance exactly one h.fadvance step with h.dt equal to the tested interval"
+    ],
+    "independence": "The NEURON path executes the compiled DERIVATIVE states/cnexp runtime and never calls the Python formula oracle.",
+    "voltage_note": "With zero conductance and no other membrane mechanism there is no electrical voltage dynamics. At exactly -27 mV, the authentic MOD procedure itself deliberately changes v by +0.0001 mV; this is part of the teacher semantics and is already represented in the preregistered grid."
+  },
+  "scientific_scope": "Instrumentation-only correction. It does not change hypotheses, cases, tolerance, acceptance rule or failure policy."
+}

@@ -144,7 +144,14 @@ class ExtractedGateFormula:
 
 
 class NeuronIsolatedGateOracle:
-    """Authentic compiled NMODL state update, without membrane integration."""
+    """Authentic compiled NMODL state update on an electrically silent section.
+
+    Modern NEURON/NMODL versions do not guarantee that a ``DERIVATIVE`` block
+    is exported as a public HOC procedure.  Advancing one fixed step is the
+    supported runtime path: with the channel conductance set to zero and no
+    other membrane mechanisms, voltage has no electrical source and remains
+    fixed (apart from the mechanism's documented ``-27 mV`` perturbation).
+    """
 
     def __init__(self, mod_directory: str | Path, suffix: str = "Ca_HVA") -> None:
         try:
@@ -167,19 +174,37 @@ class NeuronIsolatedGateOracle:
         self.section.nseg = 1
         self.section.insert(suffix)
         self.segment = self.section(0.5)
-        self._state_procedure = getattr(h, f"states_{suffix}", None)
-        if self._state_procedure is None:
-            raise OracleUnavailable(f"compiled mechanism does not expose states_{suffix}")
+        self.h.secondorder = 0
+        self.maximum_absolute_voltage_change_mv = 0.0
+
+    def _set_range(self, name: str, value: float) -> None:
+        mechanism = getattr(self.segment, self.suffix, None)
+        if mechanism is not None and hasattr(mechanism, name):
+            setattr(mechanism, name, float(value))
+            return
+        setattr(self.segment, f"{name}_{self.suffix}", float(value))
+
+    def _get_range(self, name: str) -> float:
+        mechanism = getattr(self.segment, self.suffix, None)
+        if mechanism is not None and hasattr(mechanism, name):
+            return float(getattr(mechanism, name))
+        return float(getattr(self.segment, f"{name}_{self.suffix}"))
 
     def step(self, gate: str, state: float, voltage_mv: float, dt_ms: float) -> float:
         if gate not in {"m", "h"}:
             raise ValueError("gate must be m or h")
         self.h.dt = float(dt_ms)
+        self._set_range("gCa_HVAbar", 0.0)
         self.h.finitialize(float(voltage_mv))
         self.segment.v = float(voltage_mv)
-        setattr(self.segment, f"{gate}_{self.suffix}", float(state))
-        self._state_procedure(sec=self.section)
-        return float(getattr(self.segment, f"{gate}_{self.suffix}"))
+        self._set_range("gCa_HVAbar", 0.0)
+        self._set_range(gate, float(state))
+        self.h.fadvance()
+        self.maximum_absolute_voltage_change_mv = max(
+            self.maximum_absolute_voltage_change_mv,
+            abs(float(self.segment.v) - float(voltage_mv)),
+        )
+        return self._get_range(gate)
 
 
 def compile_nmodl(mod_file: str | Path, build_directory: str | Path) -> Path:
@@ -254,8 +279,12 @@ def run_double_oracle(
             "assignment_count": len(formula.assignments),
         },
         "neuron_oracle": {
-            "kind": "compiled NMODL DERIVATIVE states invoked by NEURON",
-            "membrane_integrated": False,
+            "kind": "compiled NMODL DERIVATIVE states advanced by one authentic fixed NEURON step",
+            "voltage_control": "single electrically silent section; gCa_HVAbar=0; no other membrane mechanism",
+            "membrane_voltage_has_electrical_dynamics": False,
+            "maximum_absolute_voltage_change_mv": float(
+                getattr(neuron_oracle, "maximum_absolute_voltage_change_mv", 0.0)
+            ),
             "runtime_version": str(getattr(neuron_oracle.h, "nrnversion")()),
         },
         "grid": {
@@ -282,7 +311,7 @@ def write_double_oracle_report(report: dict[str, Any], json_path: str | Path, ma
         f"- Failures: **{report['failure_count']}**",
         f"- Maximum absolute error: **{report['maximum_absolute_error']:.3e}**", "",
         "## Independence contract", "",
-        "The formula oracle interprets assignments extracted from `Ca_HVA.mod`. The NEURON oracle invokes the compiled NMODL `DERIVATIVE states` procedure directly. It does not reuse the Python formula and it does not integrate membrane voltage.", "",
+        "The formula oracle interprets assignments extracted from `Ca_HVA.mod`. The NEURON oracle advances the authentic compiled `DERIVATIVE states` block through one supported fixed NEURON step on an electrically silent section (`gCa_HVAbar=0`, no other membrane mechanisms). It does not reuse the Python formula. This replaces the preregistered direct HOC procedure call, which is not exported by the Kaggle NEURON/NMODL runtime.", "",
         "## Acceptance", "",
         f"Every case must satisfy `abs(error) <= {report['tolerance']['atol']:.1e} + {report['tolerance']['rtol']:.1e} * abs(reference)`.", "",
     ]
