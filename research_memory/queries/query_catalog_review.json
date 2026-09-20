@@ -1,0 +1,337 @@
+[
+  {
+    "id": "Q01",
+    "title": "Scheda strutturale del componente",
+    "kind": "Esatta sui collegamenti registrati",
+    "params": [
+      "component_id"
+    ],
+    "note": "Mostra una riga per oggetto. Non inventa stati o equazioni non registrati; fonti, evidenze e test si consultano con Q08/Q19/Q23.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n)\nSELECT 'componente' AS sezione, i._record_id AS id, i.\"Nome\" AS nome,\n       i.\"Configurazione\" AS dettaglio\nFROM instances i WHERE i._record_id=:component_id\nUNION ALL\nSELECT 'porta',p._record_id,p.\"Nome\",\n       json_object('direzione',p.\"Direzione\",'shape',p.\"Shape\",\n                   'unita',p.\"Unità\",'tempo',p.\"Semantica temporale\")\nFROM ports p JOIN one l ON l.source_table='ports'\n  AND l.source_id=p._record_id AND l.role='Componente'\nWHERE l.target_id=:component_id\nUNION ALL\nSELECT 'equazione',e._record_id,e.\"Nome\",e.\"Espressione LaTeX\"\nFROM equations e WHERE EXISTS (\n  SELECT 1 FROM one b JOIN one be ON be.source_table='bindings'\n    AND be.source_id=b.source_id AND be.role='Equazione'\n  WHERE b.source_table='bindings' AND b.role='Componente'\n    AND b.target_id=:component_id AND be.target_id=e._record_id\n)\nUNION ALL\nSELECT 'parametrizzazione',p._record_id,p.\"Nome\",\n       json_object('vincoli',p.\"Vincoli\",'trasformazioni',p.\"Trasformazioni\")\nFROM parameters p WHERE EXISTS (\n  SELECT 1 FROM v_links l WHERE l.source_table='parameters'\n    AND l.source_id=p._record_id AND l.role='Componenti associati'\n    AND l.target_id=:component_id\n)\nORDER BY sezione,id;"
+  },
+  {
+    "id": "Q02",
+    "title": "Decomposizione ricorsiva del modello",
+    "kind": "Esatta, con limite di profondità",
+    "params": [
+      "model_id",
+      "component_id",
+      "max_depth"
+    ],
+    "note": "Conserva percorsi distinti se il grafo ha parti condivise. Evita cicli; un percorso registrato non prova una dipendenza causale.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nim AS (\n  SELECT source_id AS component_id, target_id AS model_id\n  FROM one WHERE source_table='instances' AND role='Modello'\n),\nparts AS (\n  SELECT p.source_id AS composition_id, m.target_id AS model_id,\n         p.target_id AS parent_id, c.target_id AS child_id\n  FROM one p JOIN one c ON c.source_table='composition'\n    AND c.source_id=p.source_id AND c.role='Parte'\n  JOIN one m ON m.source_table='composition'\n    AND m.source_id=p.source_id AND m.role='Modello'\n  JOIN im pi ON pi.component_id=p.target_id AND pi.model_id=m.target_id\n  JOIN im ci ON ci.component_id=c.target_id AND ci.model_id=m.target_id\n  WHERE p.source_table='composition' AND p.role='Contenitore'\n)\n,\ntree(node_id,depth,path) AS (\n  SELECT :component_id,0,'|'||:component_id||'|'\n  WHERE EXISTS (SELECT 1 FROM im\n    WHERE component_id=:component_id AND model_id=:model_id)\n  UNION ALL\n  SELECT p.child_id,t.depth+1,t.path||p.child_id||'|'\n  FROM tree t JOIN parts p ON p.parent_id=t.node_id AND p.model_id=:model_id\n  WHERE t.depth<:max_depth AND instr(t.path,'|'||p.child_id||'|')=0\n)\nSELECT t.depth,i._record_id,i.\"Nome\",i.\"Identificatore locale\",t.path,\n       CASE WHEN t.depth=:max_depth AND EXISTS (\n         SELECT 1 FROM parts p WHERE p.parent_id=t.node_id AND p.model_id=:model_id\n       ) THEN 1 ELSE 0 END AS possibile_troncamento\nFROM tree t JOIN instances i ON i._record_id=t.node_id\nORDER BY t.path;"
+  },
+  {
+    "id": "Q03",
+    "title": "Ingressi, uscite e dipendenze dirette",
+    "kind": "Esatta per il grafo dichiarato",
+    "params": [
+      "model_id",
+      "component_id"
+    ],
+    "note": "Legge accoppiamenti dichiarati, non inferisce dipendenze dalla sola correlazione tra variabili.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nim AS (\n  SELECT source_id AS component_id, target_id AS model_id\n  FROM one WHERE source_table='instances' AND role='Modello'\n),\npc AS (\n  SELECT source_id AS port_id, target_id AS component_id\n  FROM one WHERE source_table='ports' AND role='Componente'\n),\nwires AS (\n  SELECT a.source_id AS connection_id, m.target_id AS model_id,\n         a.target_id AS from_port, b.target_id AS to_port,\n         pa.component_id AS from_component, pb.component_id AS to_component\n  FROM one a JOIN one b ON b.source_table='connections'\n    AND b.source_id=a.source_id AND b.role='Porta destinazione'\n  JOIN one m ON m.source_table='connections'\n    AND m.source_id=a.source_id AND m.role='Modello'\n  JOIN pc pa ON pa.port_id=a.target_id JOIN pc pb ON pb.port_id=b.target_id\n  JOIN im ia ON ia.component_id=pa.component_id AND ia.model_id=m.target_id\n  JOIN im ib ON ib.component_id=pb.component_id AND ib.model_id=m.target_id\n  WHERE a.source_table='connections' AND a.role='Porta origine'\n)\nSELECT w.connection_id,c.\"Tipo\",c.\"Ritardo\",c.\"Unità ritardo\",\n       a.\"Nome\" AS origine,b.\"Nome\" AS destinazione,\n       pa.\"Nome\" AS porta_origine,pb.\"Nome\" AS porta_destinazione,\n       pa.\"Informazione causalmente disponibile\" AS contratto_input\nFROM wires w JOIN connections c ON c._record_id=w.connection_id\nJOIN instances a ON a._record_id=w.from_component\nJOIN instances b ON b._record_id=w.to_component\nJOIN ports pa ON pa._record_id=w.from_port\nJOIN ports pb ON pb._record_id=w.to_port\nWHERE w.model_id=:model_id\n  AND :component_id IN (w.from_component,w.to_component)\nORDER BY origine,destinazione;"
+  },
+  {
+    "id": "Q04",
+    "title": "Percorsi di informazione tra due componenti",
+    "kind": "Topologica, non prova causale",
+    "params": [
+      "model_id",
+      "from_component",
+      "to_component",
+      "max_depth"
+    ],
+    "note": "Enumera percorsi semplici: non espande nel tempo le ricorrenze. Per il calcio, scegliere componenti collegati alle grandezze appropriate tramite porte/grandezze.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nim AS (\n  SELECT source_id AS component_id, target_id AS model_id\n  FROM one WHERE source_table='instances' AND role='Modello'\n),\npc AS (\n  SELECT source_id AS port_id, target_id AS component_id\n  FROM one WHERE source_table='ports' AND role='Componente'\n),\nwires AS (\n  SELECT a.source_id AS connection_id, m.target_id AS model_id,\n         a.target_id AS from_port, b.target_id AS to_port,\n         pa.component_id AS from_component, pb.component_id AS to_component\n  FROM one a JOIN one b ON b.source_table='connections'\n    AND b.source_id=a.source_id AND b.role='Porta destinazione'\n  JOIN one m ON m.source_table='connections'\n    AND m.source_id=a.source_id AND m.role='Modello'\n  JOIN pc pa ON pa.port_id=a.target_id JOIN pc pb ON pb.port_id=b.target_id\n  JOIN im ia ON ia.component_id=pa.component_id AND ia.model_id=m.target_id\n  JOIN im ib ON ib.component_id=pb.component_id AND ib.model_id=m.target_id\n  WHERE a.source_table='connections' AND a.role='Porta origine'\n)\n,\npaths(node_id,depth,path,connections_path) AS (\n  SELECT :from_component,0,'|'||:from_component||'|',''\n  UNION ALL\n  SELECT w.to_component,p.depth+1,p.path||w.to_component||'|',\n         p.connections_path||'/'||w.connection_id\n  FROM paths p JOIN wires w ON w.from_component=p.node_id AND w.model_id=:model_id\n  WHERE p.depth<:max_depth AND instr(p.path,'|'||w.to_component||'|')=0\n)\nSELECT depth,path,connections_path FROM paths\nWHERE node_id=:to_component AND depth>0 ORDER BY depth,path;"
+  },
+  {
+    "id": "Q05",
+    "title": "Differenze tra componenti di due versioni",
+    "kind": "Esatta solo con identificatori locali stabili",
+    "params": [
+      "model_a",
+      "model_b"
+    ],
+    "note": "Confronto testuale di metadati, non equivalenza matematica. ID mancanti/duplicati richiedono Q34. Q06 aggiunge l'inventario di equazioni e connessioni.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nim AS (\n  SELECT source_id AS component_id, target_id AS model_id\n  FROM one WHERE source_table='instances' AND role='Modello'\n)\n,\ncomponents AS (\n  SELECT im.model_id,i.\"Identificatore locale\" AS local_id,\n         MIN(i._record_id) AS id,MIN(i.\"Nome\") AS nome,\n         MIN(i.\"Configurazione\") AS configurazione,MIN(i.\"Ruolo\") AS ruolo,\n         MIN(ty.target_id) AS tipo_id\n  FROM im JOIN instances i ON i._record_id=im.component_id\n  LEFT JOIN one ty ON ty.source_table='instances' AND ty.source_id=i._record_id\n    AND ty.role='Tipo componente'\n  WHERE im.model_id IN (:model_a,:model_b)\n    AND NULLIF(i.\"Identificatore locale\",'') IS NOT NULL\n  GROUP BY im.model_id,i.\"Identificatore locale\" HAVING COUNT(*)=1\n), keys AS (\n  SELECT local_id FROM components WHERE model_id=:model_a\n  UNION SELECT local_id FROM components WHERE model_id=:model_b\n)\nSELECT k.local_id,a.id AS id_a,b.id AS id_b,\n       CASE WHEN a.id IS NULL THEN 'aggiunto'\n            WHEN b.id IS NULL THEN 'rimosso'\n            ELSE 'metadati modificati' END AS differenza,\n       a.configurazione AS configurazione_a,b.configurazione AS configurazione_b,\n       a.ruolo AS ruolo_a,b.ruolo AS ruolo_b,a.tipo_id AS tipo_a,b.tipo_id AS tipo_b\nFROM keys k\nLEFT JOIN components a ON a.local_id=k.local_id AND a.model_id=:model_a\nLEFT JOIN components b ON b.local_id=k.local_id AND b.model_id=:model_b\nWHERE a.id IS NULL OR b.id IS NULL OR a.nome IS NOT b.nome\n   OR a.configurazione IS NOT b.configurazione OR a.ruolo IS NOT b.ruolo\n   OR a.tipo_id IS NOT b.tipo_id\nORDER BY k.local_id;"
+  },
+  {
+    "id": "Q06",
+    "title": "Inventario matematico e connessioni per versione",
+    "kind": "Inventario per confronto umano",
+    "params": [
+      "model_a",
+      "model_b"
+    ],
+    "note": "Non dichiara uguali equazioni solo perché i nomi coincidono. La corrispondenza cross-version delle porte va registrata o verificata.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nim AS (\n  SELECT source_id AS component_id, target_id AS model_id\n  FROM one WHERE source_table='instances' AND role='Modello'\n),\npc AS (\n  SELECT source_id AS port_id, target_id AS component_id\n  FROM one WHERE source_table='ports' AND role='Componente'\n),\nwires AS (\n  SELECT a.source_id AS connection_id, m.target_id AS model_id,\n         a.target_id AS from_port, b.target_id AS to_port,\n         pa.component_id AS from_component, pb.component_id AS to_component\n  FROM one a JOIN one b ON b.source_table='connections'\n    AND b.source_id=a.source_id AND b.role='Porta destinazione'\n  JOIN one m ON m.source_table='connections'\n    AND m.source_id=a.source_id AND m.role='Modello'\n  JOIN pc pa ON pa.port_id=a.target_id JOIN pc pb ON pb.port_id=b.target_id\n  JOIN im ia ON ia.component_id=pa.component_id AND ia.model_id=m.target_id\n  JOIN im ib ON ib.component_id=pb.component_id AND ib.model_id=m.target_id\n  WHERE a.source_table='connections' AND a.role='Porta origine'\n)\nSELECT im.model_id,'equazione' AS tipo,i.\"Identificatore locale\" AS componente,\n       e._record_id AS oggetto_id,e.\"Nome\",e.\"Espressione LaTeX\" AS contenuto\nFROM im JOIN instances i ON i._record_id=im.component_id\nJOIN one b ON b.source_table='bindings' AND b.role='Componente'\n  AND b.target_id=i._record_id\nJOIN one be ON be.source_table='bindings' AND be.source_id=b.source_id\n  AND be.role='Equazione'\nJOIN equations e ON e._record_id=be.target_id\nWHERE im.model_id IN (:model_a,:model_b)\nUNION ALL\nSELECT w.model_id,'connessione',i.\"Identificatore locale\",c._record_id,c.\"Nome\",\n       json_object('origine',w.from_port,'destinazione',w.to_port,\n                   'tipo',c.\"Tipo\",'trasformazione',c.\"Trasformazione\")\nFROM wires w JOIN connections c ON c._record_id=w.connection_id\nJOIN instances i ON i._record_id=w.from_component\nWHERE w.model_id IN (:model_a,:model_b)\nORDER BY model_id,tipo,componente,oggetto_id;"
+  },
+  {
+    "id": "Q07",
+    "title": "Corrispondenze teacher-surrogate",
+    "kind": "Esatta sui mapping dichiarati",
+    "params": [
+      "teacher_model"
+    ],
+    "note": "Una corrispondenza registrata non equivale a una sostituzione validata.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n)\nSELECT s._record_id,s.\"Nome\",s.\"Mappatura stati e output\",\n       s.\"Informazione mantenuta\",s.\"Informazione omessa\",s.\"Condizioni di equivalenza\",\n       (SELECT json_group_array(target_id) FROM v_links\n        WHERE source_table='substitutions' AND source_id=s._record_id\n          AND role='Componenti originali') AS originali,\n       (SELECT json_group_array(target_id) FROM v_links\n        WHERE source_table='substitutions' AND source_id=s._record_id\n          AND role='Componenti sostitutivi') AS sostitutivi\nFROM substitutions s JOIN one m ON m.source_table='substitutions'\n  AND m.source_id=s._record_id AND m.role='Modello originale'\nWHERE m.target_id=:teacher_model ORDER BY s._record_id;"
+  },
+  {
+    "id": "Q08",
+    "title": "Catena di evidenze e provenienza di una ipotesi",
+    "kind": "Esatta sui collegamenti",
+    "params": [
+      "claim_id"
+    ],
+    "note": "Esito esplicito, non voto dedotto dal nome della tabella. Il campo storico 'Risultati a sostegno' contiene anche risultati usati per contraddire: conta Esito.",
+    "full_sql": "SELECT e._record_id AS valutazione_id,e.\"Esito\",e.\"Argomentazione\",\n       e.\"Limiti e spiegazioni alternative\",e.\"Data valutazione\",\n       (SELECT json_group_array(target_id) FROM v_links\n        WHERE source_table='evidence' AND source_id=e._record_id\n          AND role='Risultati a sostegno') AS risultati,\n       (SELECT json_group_array(target_id) FROM v_links\n        WHERE source_table='evidence' AND source_id=e._record_id\n          AND role='Passaggi fonte') AS passaggi,\n       (SELECT json_group_array(target_id) FROM v_links\n        WHERE source_table='evidence' AND source_id=e._record_id\n          AND role='Domini di validità') AS domini\nFROM evidence e WHERE EXISTS (\n  SELECT 1 FROM v_links l WHERE l.source_table='evidence'\n    AND l.source_id=e._record_id AND l.role='Affermazione valutata'\n    AND l.target_id=:claim_id\n) ORDER BY e.\"Data valutazione\",e._record_id;"
+  },
+  {
+    "id": "Q09",
+    "title": "Ipotesi con evidenze contrastanti",
+    "kind": "Shortlist da disambiguare per dominio",
+    "params": [],
+    "note": "Conteggia valutazioni, non repliche indipendenti. Contrasti tra domini diversi non sono automaticamente contraddizioni.",
+    "full_sql": "SELECT c._record_id,c.\"Nome\",\n       COUNT(DISTINCT CASE WHEN e.\"Esito\"='Sostiene' THEN e._record_id END) AS sostiene,\n       COUNT(DISTINCT CASE WHEN e.\"Esito\"='Contraddice' THEN e._record_id END) AS contraddice\nFROM claims c JOIN v_links l ON l.source_table='evidence'\n  AND l.role='Affermazione valutata' AND l.target_id=c._record_id\nJOIN evidence e ON e._record_id=l.source_id\nGROUP BY c._record_id,c.\"Nome\"\nHAVING COUNT(DISTINCT CASE WHEN e.\"Esito\"='Sostiene' THEN e._record_id END)>0\n   AND COUNT(DISTINCT CASE WHEN e.\"Esito\"='Contraddice' THEN e._record_id END)>0;"
+  },
+  {
+    "id": "Q10",
+    "title": "Scelte che dipendono da assunzioni senza supporto registrato",
+    "kind": "Lacuna documentale",
+    "params": [
+      "model_id"
+    ],
+    "note": "Non dice 'falsa' né 'basata soltanto su assunzioni': altre giustificazioni possono esistere. Dice esattamente che manca supporto registrato per quella premessa.",
+    "full_sql": "SELECT DISTINCT ch._record_id AS scelta_id,ch.\"Nome\" AS scelta,\n       a._record_id AS assunzione_id,a.\"Premessa\"\nFROM choices ch JOIN v_links m ON m.source_table='choices'\n  AND m.source_id=ch._record_id AND m.role='Modello' AND m.target_id=:model_id\nJOIN v_links ca ON ca.source_table='choices' AND ca.source_id=ch._record_id\n  AND ca.role='Assunzioni'\nJOIN assumptions a ON a._record_id=ca.target_id\nWHERE NOT EXISTS (\n  SELECT 1 FROM evidence e JOIN v_links el\n    ON el.source_table='evidence' AND el.source_id=e._record_id\n    AND el.role='Assunzione valutata' AND el.target_id=a._record_id\n  WHERE e.\"Esito\"='Sostiene'\n);"
+  },
+  {
+    "id": "Q11",
+    "title": "Affermazioni senza valutazioni delle evidenze",
+    "kind": "Lacuna documentale",
+    "params": [],
+    "note": "Assenza nel DB, non assenza nella letteratura.",
+    "full_sql": "SELECT c._record_id,c.\"Nome\",c.\"Tipo\",c.\"Stato\",c.\"Enunciato\"\nFROM claims c WHERE NOT EXISTS (\n  SELECT 1 FROM v_links l WHERE l.source_table='evidence'\n    AND l.role='Affermazione valutata' AND l.target_id=c._record_id\n) ORDER BY c.\"Tipo\",c.\"Nome\";"
+  },
+  {
+    "id": "Q12",
+    "title": "Domini dichiarati contro domini delle evidenze",
+    "kind": "Audit di copertura, non prova di trasferimento",
+    "params": [
+      "claim_id"
+    ],
+    "note": "Identità dei record dominio, non inclusione semantica automatica tra condizioni testuali.",
+    "full_sql": "SELECT d._record_id,d.\"Nome\",d.\"Condizioni\",d.\"Esclusioni\",d.\"Stato\",\n       EXISTS(SELECT 1 FROM v_links l WHERE l.source_table='claims'\n         AND l.source_id=:claim_id AND l.role='Domini di validità'\n         AND l.target_id=d._record_id) AS dichiarato_per_ipotesi,\n       (SELECT COUNT(DISTINCT e._record_id) FROM evidence e\n        JOIN v_links ec ON ec.source_table='evidence' AND ec.source_id=e._record_id\n          AND ec.role='Affermazione valutata' AND ec.target_id=:claim_id\n        JOIN v_links ed ON ed.source_table='evidence' AND ed.source_id=e._record_id\n          AND ed.role='Domini di validità' AND ed.target_id=d._record_id\n        WHERE e.\"Esito\"='Sostiene') AS valutazioni_favorevoli\nFROM validity d WHERE EXISTS (\n  SELECT 1 FROM v_links l WHERE l.source_table='claims'\n    AND l.source_id=:claim_id AND l.role='Domini di validità' AND l.target_id=d._record_id\n) OR EXISTS (\n  SELECT 1 FROM v_links ec JOIN v_links ed ON ed.source_table='evidence'\n    AND ed.source_id=ec.source_id AND ed.role='Domini di validità'\n  WHERE ec.source_table='evidence' AND ec.role='Affermazione valutata'\n    AND ec.target_id=:claim_id AND ed.target_id=d._record_id\n) ORDER BY d._record_id;"
+  },
+  {
+    "id": "Q13",
+    "title": "Origine documentata di una ipotesi",
+    "kind": "Provenienza, non certificazione",
+    "params": [
+      "claim_id"
+    ],
+    "note": "Una fonte di tipo Paper non è automaticamente una prova. La classificazione come derivazione o proposta si consulta anche in claims.Tipo ed evidence.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n)\nSELECT 'passaggio citato' AS relazione,s._record_id AS oggetto_id,\n       s.\"Nome\",s.\"Testo originale\" AS contenuto,f.\"Tipo\" AS tipo_fonte,f.\"URL\"\nFROM segments s JOIN v_links l ON l.source_table='claims'\n  AND l.source_id=:claim_id AND l.role='Passaggi fonte' AND l.target_id=s._record_id\nLEFT JOIN one sf ON sf.source_table='segments' AND sf.source_id=s._record_id\n  AND sf.role='Fonte'\nLEFT JOIN sources f ON f._record_id=sf.target_id\nUNION ALL\nSELECT 'analogia generatrice',a._record_id,a.\"Nome\",a.\"Corrispondenza\",NULL,NULL\nFROM analogies a WHERE EXISTS (\n  SELECT 1 FROM v_links l WHERE l.source_table='analogies'\n    AND l.source_id=a._record_id AND l.role='Ipotesi generate' AND l.target_id=:claim_id\n);"
+  },
+  {
+    "id": "Q14",
+    "title": "Decisioni collegate a ipotesi con controevidenza",
+    "kind": "Candidati alla revisione",
+    "params": [],
+    "note": "Non chiama 'successiva' una valutazione senza date ISO affidabili. Non distingue automaticamente dipendenza necessaria da semplice associazione: è una shortlist.",
+    "full_sql": "WITH RECURSIVE\ndecision_claims AS (\n  SELECT DISTINCT d.source_id AS decision_id,ec.target_id AS claim_id\n  FROM v_links d JOIN v_links ec ON ec.source_table='evidence'\n    AND ec.source_id=d.target_id AND ec.role='Affermazione valutata'\n  WHERE d.source_table='decisions' AND d.role='Valutazioni delle evidenze'\n  UNION\n  SELECT DISTINCT d.source_id,ci.target_id\n  FROM v_links d JOIN v_links ci ON ci.source_table='candidates'\n    AND ci.source_id=d.target_id AND ci.role='Ipotesi'\n  WHERE d.source_table='decisions' AND d.role='Candidati'\n)\nSELECT DISTINCT d._record_id,d.\"Nome\",d.\"Data\",d.\"Esito\",\n       c._record_id AS claim_id,c.\"Nome\" AS ipotesi,\n       e._record_id AS controevidenza,e.\"Data valutazione\"\nFROM decision_claims dc JOIN decisions d ON d._record_id=dc.decision_id\nJOIN claims c ON c._record_id=dc.claim_id\nJOIN v_links ec ON ec.source_table='evidence' AND ec.role='Affermazione valutata'\n  AND ec.target_id=c._record_id\nJOIN evidence e ON e._record_id=ec.source_id\nWHERE e.\"Esito\"='Contraddice'\nORDER BY d._record_id,c._record_id;"
+  },
+  {
+    "id": "Q15",
+    "title": "Confronti allineati per specifica e blocco",
+    "kind": "Candidati con filtri conservativi",
+    "params": [
+      "evaluation_id"
+    ],
+    "note": "Stessa specifica, protocollo, blocco, seed, budget/unità, numerosità, sottogruppo e insieme di split. Richiede checkpoint con budget esplicito. Nessun controllo fallito ≠ tutti i controlli necessari superati. Hardware, stop rules e deviazioni vanno ancora esaminati.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nra AS (\n  SELECT source_id AS run_id, target_id AS arm_id\n  FROM one WHERE source_table='runs' AND role='Braccio'\n),\nap AS (\n  SELECT source_id AS arm_id, target_id AS protocol_id\n  FROM one WHERE source_table='arms' AND role='Protocollo'\n),\nmeasurement AS (\n  SELECT o._record_id AS observation_id, r._record_id AS run_id,\n         ra.arm_id, ap.protocol_id, ev.target_id AS evaluation_id,\n         cp.target_id AS checkpoint_id, ck.\"Budget consumato\" AS budget,\n         ck.\"Unità budget\" AS budget_unit,\n         o.\"Strato o sottogruppo\" AS stratum,\n         o.\"Valore\" AS value, o.\"Numerosità\" AS sample_count,\n         rb.target_id AS block_id, r.\"Seed\" AS seed\n  FROM observations o\n  JOIN one ev ON ev.source_table='observations'\n    AND ev.source_id=o._record_id AND ev.role='Specifica di valutazione'\n  JOIN one rr ON rr.source_table='observations'\n    AND rr.source_id=o._record_id AND rr.role='Run'\n  JOIN runs r ON r._record_id=rr.target_id\n  JOIN ra ON ra.run_id=r._record_id JOIN ap ON ap.arm_id=ra.arm_id\n  JOIN one evp ON evp.source_table='evaluations'\n    AND evp.source_id=ev.target_id AND evp.role='Protocollo'\n    AND evp.target_id=ap.protocol_id\n  LEFT JOIN one cp ON cp.source_table='observations'\n    AND cp.source_id=o._record_id AND cp.role='Checkpoint'\n  LEFT JOIN checkpoints ck ON ck._record_id=cp.target_id\n  LEFT JOIN one cpr ON cpr.source_table='checkpoints'\n    AND cpr.source_id=ck._record_id AND cpr.role='Run'\n  LEFT JOIN one rb ON rb.source_table='runs'\n    AND rb.source_id=r._record_id AND rb.role='Blocco'\n  WHERE o.\"Valore\" IS NOT NULL\n    AND (cp.target_id IS NULL OR cpr.target_id=r._record_id)\n),\npairs AS (\n  SELECT a.observation_id AS observation_a, b.observation_id AS observation_b,\n         a.run_id AS run_a, b.run_id AS run_b,\n         a.arm_id AS arm_a, b.arm_id AS arm_b,\n         a.protocol_id, a.evaluation_id, a.block_id,\n         a.budget, a.budget_unit, a.stratum, a.sample_count,\n         a.value AS value_a, b.value AS value_b\n  FROM measurement a JOIN measurement b\n    ON a.run_id < b.run_id AND a.arm_id <> b.arm_id\n    AND a.protocol_id=b.protocol_id AND a.evaluation_id=b.evaluation_id\n    AND a.block_id=b.block_id AND a.block_id IS NOT NULL\n    AND a.seed=b.seed AND a.seed IS NOT NULL\n    AND a.budget=b.budget AND a.budget_unit=b.budget_unit\n    AND a.budget IS NOT NULL AND NULLIF(a.budget_unit,'') IS NOT NULL\n    AND a.stratum IS b.stratum AND a.sample_count=b.sample_count\n  JOIN runs ar ON ar._record_id=a.run_id AND ar.\"Stato\"='Completata'\n  JOIN runs br ON br._record_id=b.run_id AND br.\"Stato\"='Completata'\n  WHERE EXISTS (\n    SELECT 1 FROM v_links x WHERE x.source_table='runs'\n      AND x.source_id=a.run_id AND x.role='Partizioni effettive'\n  )\n  AND NOT EXISTS (\n    SELECT target_id FROM v_links WHERE source_table='runs'\n      AND source_id=a.run_id AND role='Partizioni effettive'\n    EXCEPT\n    SELECT target_id FROM v_links WHERE source_table='runs'\n      AND source_id=b.run_id AND role='Partizioni effettive'\n  )\n  AND NOT EXISTS (\n    SELECT target_id FROM v_links WHERE source_table='runs'\n      AND source_id=b.run_id AND role='Partizioni effettive'\n    EXCEPT\n    SELECT target_id FROM v_links WHERE source_table='runs'\n      AND source_id=a.run_id AND role='Partizioni effettive'\n  )\n  AND NOT EXISTS (\n    SELECT 1 FROM quality q JOIN v_links ql\n      ON ql.source_table='quality' AND ql.source_id=q._record_id\n      AND ql.role='Run'\n    WHERE ql.target_id IN (a.run_id,b.run_id) AND q.\"Esito\"='Fallito'\n  )\n)\nSELECT p.*,b.\"Hash stream\",b.\"Regola di appaiamento\",\n       a.\"Validità tecnica\" AS validita_a,r.\"Validità tecnica\" AS validita_b\nFROM pairs p JOIN blocks b ON b._record_id=p.block_id\nJOIN runs a ON a._record_id=p.run_a JOIN runs r ON r._record_id=p.run_b\nWHERE p.evaluation_id=:evaluation_id\nORDER BY p.block_id,p.budget,p.run_a,p.run_b;"
+  },
+  {
+    "id": "Q16",
+    "title": "Differenza appaiata cambiando un fattore",
+    "kind": "Contrasto osservato, non causalità automatica",
+    "params": [
+      "evaluation_id",
+      "factor_id",
+      "contrast_id"
+    ],
+    "note": "Non media run, checkpoint o osservazioni duplicate. Il segno è B−A: per una loss negativa è meglio, per F1 positiva è meglio. Variabili non registrate come fattori non risultano automaticamente controllate.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nra AS (\n  SELECT source_id AS run_id, target_id AS arm_id\n  FROM one WHERE source_table='runs' AND role='Braccio'\n),\nap AS (\n  SELECT source_id AS arm_id, target_id AS protocol_id\n  FROM one WHERE source_table='arms' AND role='Protocollo'\n),\nmeasurement AS (\n  SELECT o._record_id AS observation_id, r._record_id AS run_id,\n         ra.arm_id, ap.protocol_id, ev.target_id AS evaluation_id,\n         cp.target_id AS checkpoint_id, ck.\"Budget consumato\" AS budget,\n         ck.\"Unità budget\" AS budget_unit,\n         o.\"Strato o sottogruppo\" AS stratum,\n         o.\"Valore\" AS value, o.\"Numerosità\" AS sample_count,\n         rb.target_id AS block_id, r.\"Seed\" AS seed\n  FROM observations o\n  JOIN one ev ON ev.source_table='observations'\n    AND ev.source_id=o._record_id AND ev.role='Specifica di valutazione'\n  JOIN one rr ON rr.source_table='observations'\n    AND rr.source_id=o._record_id AND rr.role='Run'\n  JOIN runs r ON r._record_id=rr.target_id\n  JOIN ra ON ra.run_id=r._record_id JOIN ap ON ap.arm_id=ra.arm_id\n  JOIN one evp ON evp.source_table='evaluations'\n    AND evp.source_id=ev.target_id AND evp.role='Protocollo'\n    AND evp.target_id=ap.protocol_id\n  LEFT JOIN one cp ON cp.source_table='observations'\n    AND cp.source_id=o._record_id AND cp.role='Checkpoint'\n  LEFT JOIN checkpoints ck ON ck._record_id=cp.target_id\n  LEFT JOIN one cpr ON cpr.source_table='checkpoints'\n    AND cpr.source_id=ck._record_id AND cpr.role='Run'\n  LEFT JOIN one rb ON rb.source_table='runs'\n    AND rb.source_id=r._record_id AND rb.role='Blocco'\n  WHERE o.\"Valore\" IS NOT NULL\n    AND (cp.target_id IS NULL OR cpr.target_id=r._record_id)\n),\npairs AS (\n  SELECT a.observation_id AS observation_a, b.observation_id AS observation_b,\n         a.run_id AS run_a, b.run_id AS run_b,\n         a.arm_id AS arm_a, b.arm_id AS arm_b,\n         a.protocol_id, a.evaluation_id, a.block_id,\n         a.budget, a.budget_unit, a.stratum, a.sample_count,\n         a.value AS value_a, b.value AS value_b\n  FROM measurement a JOIN measurement b\n    ON a.run_id < b.run_id AND a.arm_id <> b.arm_id\n    AND a.protocol_id=b.protocol_id AND a.evaluation_id=b.evaluation_id\n    AND a.block_id=b.block_id AND a.block_id IS NOT NULL\n    AND a.seed=b.seed AND a.seed IS NOT NULL\n    AND a.budget=b.budget AND a.budget_unit=b.budget_unit\n    AND a.budget IS NOT NULL AND NULLIF(a.budget_unit,'') IS NOT NULL\n    AND a.stratum IS b.stratum AND a.sample_count=b.sample_count\n  JOIN runs ar ON ar._record_id=a.run_id AND ar.\"Stato\"='Completata'\n  JOIN runs br ON br._record_id=b.run_id AND br.\"Stato\"='Completata'\n  WHERE EXISTS (\n    SELECT 1 FROM v_links x WHERE x.source_table='runs'\n      AND x.source_id=a.run_id AND x.role='Partizioni effettive'\n  )\n  AND NOT EXISTS (\n    SELECT target_id FROM v_links WHERE source_table='runs'\n      AND source_id=a.run_id AND role='Partizioni effettive'\n    EXCEPT\n    SELECT target_id FROM v_links WHERE source_table='runs'\n      AND source_id=b.run_id AND role='Partizioni effettive'\n  )\n  AND NOT EXISTS (\n    SELECT target_id FROM v_links WHERE source_table='runs'\n      AND source_id=b.run_id AND role='Partizioni effettive'\n    EXCEPT\n    SELECT target_id FROM v_links WHERE source_table='runs'\n      AND source_id=a.run_id AND role='Partizioni effettive'\n  )\n  AND NOT EXISTS (\n    SELECT 1 FROM quality q JOIN v_links ql\n      ON ql.source_table='quality' AND ql.source_id=q._record_id\n      AND ql.role='Run'\n    WHERE ql.target_id IN (a.run_id,b.run_id) AND q.\"Esito\"='Fallito'\n  )\n),\naf AS (\n  SELECT a.target_id AS arm_id, f.target_id AS factor_id,\n         l.target_id AS level_id\n  FROM one a JOIN one l ON l.source_table='assignments'\n    AND l.source_id=a.source_id AND l.role='Livello'\n  JOIN one f ON f.source_table='factorlevels'\n    AND f.source_id=l.target_id AND f.role='Fattore'\n  WHERE a.source_table='assignments' AND a.role='Braccio'\n)\nSELECT p.block_id,p.budget,p.stratum,p.run_a,p.run_b,\n       la.\"Valore\" AS livello_a,lb.\"Valore\" AS livello_b,\n       p.value_a,p.value_b,p.value_b-p.value_a AS differenza_b_meno_a\nFROM pairs p JOIN af a ON a.arm_id=p.arm_a AND a.factor_id=:factor_id\nJOIN af b ON b.arm_id=p.arm_b AND b.factor_id=:factor_id\nJOIN factorlevels la ON la._record_id=a.level_id\nJOIN factorlevels lb ON lb._record_id=b.level_id\nWHERE p.evaluation_id=:evaluation_id AND a.level_id<>b.level_id\n  AND (SELECT COUNT(*) FROM af x WHERE x.arm_id=a.arm_id AND x.factor_id=:factor_id)=1\n  AND (SELECT COUNT(*) FROM af x WHERE x.arm_id=b.arm_id AND x.factor_id=:factor_id)=1\n  AND EXISTS (SELECT 1 FROM v_links l WHERE l.source_table='contrasts'\n    AND l.source_id=:contrast_id AND l.role='Bracci' AND l.target_id=p.arm_a)\n  AND EXISTS (SELECT 1 FROM v_links l WHERE l.source_table='contrasts'\n    AND l.source_id=:contrast_id AND l.role='Bracci' AND l.target_id=p.arm_b)\n  AND NOT EXISTS (\n    SELECT factor_id,level_id FROM af WHERE arm_id=p.arm_a AND factor_id<>:factor_id\n    EXCEPT SELECT factor_id,level_id FROM af WHERE arm_id=p.arm_b AND factor_id<>:factor_id\n  )\n  AND NOT EXISTS (\n    SELECT factor_id,level_id FROM af WHERE arm_id=p.arm_b AND factor_id<>:factor_id\n    EXCEPT SELECT factor_id,level_id FROM af WHERE arm_id=p.arm_a AND factor_id<>:factor_id\n  )\nORDER BY p.block_id,p.budget;"
+  },
+  {
+    "id": "Q17",
+    "title": "Interazione fattoriale 2×2",
+    "kind": "Contrasto descrittivo per blocco completo",
+    "params": [
+      "evaluation_id",
+      "factor_a",
+      "factor_b",
+      "level_a0",
+      "level_a1",
+      "level_b0",
+      "level_b1"
+    ],
+    "note": "Calcola y11−y10−y01+y00; non p-value né significatività. Parametri livelli/fattori devono essere distinti e coerenti. Blocchi incompleti o celle duplicate non producono stime. Non è ancora una prova del meccanismo.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nra AS (\n  SELECT source_id AS run_id, target_id AS arm_id\n  FROM one WHERE source_table='runs' AND role='Braccio'\n),\nap AS (\n  SELECT source_id AS arm_id, target_id AS protocol_id\n  FROM one WHERE source_table='arms' AND role='Protocollo'\n),\nmeasurement AS (\n  SELECT o._record_id AS observation_id, r._record_id AS run_id,\n         ra.arm_id, ap.protocol_id, ev.target_id AS evaluation_id,\n         cp.target_id AS checkpoint_id, ck.\"Budget consumato\" AS budget,\n         ck.\"Unità budget\" AS budget_unit,\n         o.\"Strato o sottogruppo\" AS stratum,\n         o.\"Valore\" AS value, o.\"Numerosità\" AS sample_count,\n         rb.target_id AS block_id, r.\"Seed\" AS seed\n  FROM observations o\n  JOIN one ev ON ev.source_table='observations'\n    AND ev.source_id=o._record_id AND ev.role='Specifica di valutazione'\n  JOIN one rr ON rr.source_table='observations'\n    AND rr.source_id=o._record_id AND rr.role='Run'\n  JOIN runs r ON r._record_id=rr.target_id\n  JOIN ra ON ra.run_id=r._record_id JOIN ap ON ap.arm_id=ra.arm_id\n  JOIN one evp ON evp.source_table='evaluations'\n    AND evp.source_id=ev.target_id AND evp.role='Protocollo'\n    AND evp.target_id=ap.protocol_id\n  LEFT JOIN one cp ON cp.source_table='observations'\n    AND cp.source_id=o._record_id AND cp.role='Checkpoint'\n  LEFT JOIN checkpoints ck ON ck._record_id=cp.target_id\n  LEFT JOIN one cpr ON cpr.source_table='checkpoints'\n    AND cpr.source_id=ck._record_id AND cpr.role='Run'\n  LEFT JOIN one rb ON rb.source_table='runs'\n    AND rb.source_id=r._record_id AND rb.role='Blocco'\n  WHERE o.\"Valore\" IS NOT NULL\n    AND (cp.target_id IS NULL OR cpr.target_id=r._record_id)\n),\naf AS (\n  SELECT a.target_id AS arm_id, f.target_id AS factor_id,\n         l.target_id AS level_id\n  FROM one a JOIN one l ON l.source_table='assignments'\n    AND l.source_id=a.source_id AND l.role='Livello'\n  JOIN one f ON f.source_table='factorlevels'\n    AND f.source_id=l.target_id AND f.role='Fattore'\n  WHERE a.source_table='assignments' AND a.role='Braccio'\n)\n,\ncells AS (\n  SELECT m.*,a.level_id AS a_level,b.level_id AS b_level,\n    (SELECT json_group_array(json_array(factor_id,level_id)) FROM (\n      SELECT factor_id,level_id FROM af x WHERE x.arm_id=m.arm_id\n        AND factor_id NOT IN (:factor_a,:factor_b) ORDER BY factor_id,level_id\n    )) AS other_factors,\n    (SELECT json_group_array(target_id) FROM (\n      SELECT target_id FROM v_links WHERE source_table='runs'\n        AND source_id=m.run_id AND role='Partizioni effettive' ORDER BY target_id\n    )) AS partitions_used\n  FROM measurement m\n  JOIN af a ON a.arm_id=m.arm_id AND a.factor_id=:factor_a\n  JOIN af b ON b.arm_id=m.arm_id AND b.factor_id=:factor_b\n  JOIN runs r ON r._record_id=m.run_id AND r.\"Stato\"='Completata'\n  WHERE m.evaluation_id=:evaluation_id AND m.block_id IS NOT NULL\n    AND m.budget IS NOT NULL AND NULLIF(m.budget_unit,'') IS NOT NULL\n    AND a.level_id IN (:level_a0,:level_a1)\n    AND b.level_id IN (:level_b0,:level_b1)\n    AND NOT EXISTS (\n      SELECT 1 FROM quality q JOIN v_links ql ON ql.source_table='quality'\n        AND ql.source_id=q._record_id AND ql.role='Run'\n      WHERE ql.target_id=m.run_id AND q.\"Esito\"='Fallito'\n    )\n), unique_cells AS (\n  SELECT block_id,protocol_id,evaluation_id,budget,budget_unit,stratum,\n         seed,sample_count,other_factors,partitions_used,a_level,b_level,\n         MIN(value) AS value\n  FROM cells WHERE partitions_used<>'[]' AND sample_count IS NOT NULL\n  GROUP BY block_id,protocol_id,evaluation_id,budget,budget_unit,stratum,\n           seed,sample_count,other_factors,partitions_used,a_level,b_level\n  HAVING COUNT(*)=1\n)\nSELECT block_id,budget,budget_unit,stratum,seed,other_factors,partitions_used,\n       SUM(CASE WHEN a_level=:level_a1 AND b_level=:level_b1 THEN value\n                WHEN a_level=:level_a0 AND b_level=:level_b0 THEN value\n                ELSE -value END) AS interazione\nFROM unique_cells\nGROUP BY block_id,protocol_id,evaluation_id,budget,budget_unit,stratum,\n         seed,sample_count,other_factors,partitions_used\nHAVING COUNT(*)=4;"
+  },
+  {
+    "id": "Q18",
+    "title": "Curve di apprendimento a budget crescente",
+    "kind": "Esatta per osservazioni registrate",
+    "params": [
+      "evaluation_id"
+    ],
+    "note": "Una curva per run e sottogruppo, nessuna media tra checkpoint. I budget in unità diverse rimangono separati.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nra AS (\n  SELECT source_id AS run_id, target_id AS arm_id\n  FROM one WHERE source_table='runs' AND role='Braccio'\n),\nap AS (\n  SELECT source_id AS arm_id, target_id AS protocol_id\n  FROM one WHERE source_table='arms' AND role='Protocollo'\n),\nmeasurement AS (\n  SELECT o._record_id AS observation_id, r._record_id AS run_id,\n         ra.arm_id, ap.protocol_id, ev.target_id AS evaluation_id,\n         cp.target_id AS checkpoint_id, ck.\"Budget consumato\" AS budget,\n         ck.\"Unità budget\" AS budget_unit,\n         o.\"Strato o sottogruppo\" AS stratum,\n         o.\"Valore\" AS value, o.\"Numerosità\" AS sample_count,\n         rb.target_id AS block_id, r.\"Seed\" AS seed\n  FROM observations o\n  JOIN one ev ON ev.source_table='observations'\n    AND ev.source_id=o._record_id AND ev.role='Specifica di valutazione'\n  JOIN one rr ON rr.source_table='observations'\n    AND rr.source_id=o._record_id AND rr.role='Run'\n  JOIN runs r ON r._record_id=rr.target_id\n  JOIN ra ON ra.run_id=r._record_id JOIN ap ON ap.arm_id=ra.arm_id\n  JOIN one evp ON evp.source_table='evaluations'\n    AND evp.source_id=ev.target_id AND evp.role='Protocollo'\n    AND evp.target_id=ap.protocol_id\n  LEFT JOIN one cp ON cp.source_table='observations'\n    AND cp.source_id=o._record_id AND cp.role='Checkpoint'\n  LEFT JOIN checkpoints ck ON ck._record_id=cp.target_id\n  LEFT JOIN one cpr ON cpr.source_table='checkpoints'\n    AND cpr.source_id=ck._record_id AND cpr.role='Run'\n  LEFT JOIN one rb ON rb.source_table='runs'\n    AND rb.source_id=r._record_id AND rb.role='Blocco'\n  WHERE o.\"Valore\" IS NOT NULL\n    AND (cp.target_id IS NULL OR cpr.target_id=r._record_id)\n)\nSELECT run_id,arm_id,block_id,seed,checkpoint_id,budget,budget_unit,stratum,\n       value,sample_count\nFROM measurement WHERE evaluation_id=:evaluation_id\nORDER BY run_id,budget,stratum,observation_id;"
+  },
+  {
+    "id": "Q19",
+    "title": "Test isolati e di ricomposizione di una sostituzione",
+    "kind": "Copertura esplicita e risultati da leggere",
+    "params": [
+      "substitution_id"
+    ],
+    "note": "Lo schema attuale non ha un booleano strutturato 'isolato superato/ricomposto fallito'. Questa query mostra modalità e risultati; l'esito richiede giudizio esplicito o una futura regola formalizzata.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nep AS (\n  SELECT source_id AS protocol_id, target_id AS experiment_id\n  FROM one WHERE source_table='protocols' AND role='Esperimento'\n),\nsubtests AS (\n  SELECT DISTINCT s.source_id AS substitution_id,\n         e.target_id AS experiment_id, ep.protocol_id\n  FROM v_links s JOIN v_links e\n    ON e.source_table='substitutions' AND e.source_id=s.source_id\n    AND e.role='Esperimenti di verifica'\n  JOIN ep ON ep.experiment_id=e.target_id\n  WHERE s.source_table='substitutions'\n)\nSELECT DISTINCT p._record_id AS protocollo_id,p.\"Modalità\",\n       e._record_id AS esperimento_id,e.\"Nome\",e.\"Stato\",\n       (SELECT json_group_array(f._record_id) FROM findings f\n        WHERE EXISTS (SELECT 1 FROM v_links l WHERE l.source_table='findings'\n          AND l.source_id=f._record_id AND l.role='Esperimenti'\n          AND l.target_id=e._record_id)) AS risultati\nFROM subtests s JOIN protocols p ON p._record_id=s.protocol_id\nJOIN experiments e ON e._record_id=s.experiment_id\nWHERE s.substitution_id=:substitution_id ORDER BY p.\"Modalità\",p._record_id;"
+  },
+  {
+    "id": "Q20",
+    "title": "Predizioni preregistrate e misure corrispondenti",
+    "kind": "Affiancamento, non verdetto automatico",
+    "params": [
+      "experiment_id"
+    ],
+    "note": "La soglia è testo: SQL non interpreta frasi come 'nettamente migliore'. Le date testuali non certificano una preregistrazione; il relativo artefatto/hash va verificato.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nep AS (\n  SELECT source_id AS protocol_id, target_id AS experiment_id\n  FROM one WHERE source_table='protocols' AND role='Esperimento'\n)\nSELECT DISTINCT p._record_id AS predizione_id,p.\"Risultato atteso\",\n       p.\"Soglia o intervallo\",p.\"Registrata il\",pr.\"Registrato il\",\n       o._record_id AS osservazione_id,o.\"Valore\",o.\"Numerosità\",\n       o.\"Strato o sottogruppo\",ev.\"Orizzonte e finestre\"\nFROM ep JOIN protocols pr ON pr._record_id=ep.protocol_id\nJOIN v_links pp ON pp.source_table='protocols' AND pp.source_id=pr._record_id\n  AND pp.role='Predizioni'\nJOIN predictions p ON p._record_id=pp.target_id AND p.\"Origine\"='Preregistrata'\nLEFT JOIN one pe ON pe.source_table='predictions' AND pe.source_id=p._record_id\n  AND pe.role='Specifica di valutazione'\nLEFT JOIN evaluations ev ON ev._record_id=pe.target_id\nLEFT JOIN one oe ON oe.source_table='observations'\n  AND oe.role='Specifica di valutazione' AND oe.target_id=ev._record_id\nLEFT JOIN observations o ON o._record_id=oe.source_id\nWHERE ep.experiment_id=:experiment_id ORDER BY p._record_id,o._record_id;"
+  },
+  {
+    "id": "Q21",
+    "title": "Riclassificazione degli esperimenti secondo oggetti diversi",
+    "kind": "Lente basata sulle ipotesi collegate",
+    "params": [
+      "axis"
+    ],
+    "note": "Una lente parametrica per componente, equazione, parametrizzazione, ricetta, meccanismo, modello o dominio. È pertinenza dichiarata, non prova che l'oggetto sia stato manipolato.",
+    "full_sql": "SELECT DISTINCT e._record_id AS experiment_id,e.\"Nome\" AS esperimento,\n       c._record_id AS claim_id,c.\"Nome\" AS ipotesi,\n       ob.target_table AS asse,ob.target_id AS oggetto_id,r.name AS oggetto\nFROM experiments e JOIN v_links ec ON ec.source_table='experiments'\n  AND ec.source_id=e._record_id AND ec.role='Ipotesi'\nJOIN claims c ON c._record_id=ec.target_id\nJOIN v_links ob ON ob.source_table='claims' AND ob.source_id=c._record_id\n  AND ob.target_table=:axis\nJOIN v_records r ON r.table_key=ob.target_table AND r.record_id=ob.target_id\nWHERE :axis IN ('instances','equations','parameters','recipes','mechanisms','models','validity')\nORDER BY oggetto,esperimento;"
+  },
+  {
+    "id": "Q22",
+    "title": "Ricerca trasversale per informazione, regime o failure mode",
+    "kind": "Ricerca lessicale, non classificazione automatica",
+    "params": [
+      "needle"
+    ],
+    "note": "Esempi di needle: 'calcio', 'storia temporale', 'plateau', 'ottimizzazione'. lower SQLite standard non offre case-folding Unicode completo. Una menzione non equivale a un'etichetta validata.",
+    "full_sql": "SELECT 'protocols' AS table_key,_record_id,\"Nome\",\n       \"Modalità\" AS tipo,\"Procedura\" AS testo\nFROM protocols WHERE instr(lower(COALESCE(\"Procedura\",'')),lower(:needle))>0\nUNION ALL\nSELECT 'models',_record_id,\"Nome\",\"Ruolo\",\"Contratto di input e output\"\nFROM models WHERE instr(lower(COALESCE(\"Contratto di input e output\",'')),lower(:needle))>0\nUNION ALL\nSELECT 'observations',_record_id,\"Nome\",'sottogruppo',\"Strato o sottogruppo\"\nFROM observations WHERE instr(lower(COALESCE(\"Strato o sottogruppo\",'')),lower(:needle))>0\nUNION ALL\nSELECT 'anomalies',_record_id,\"Nome\",\"Stato\",\"Possibili cause\"\nFROM anomalies WHERE instr(lower(COALESCE(\"Possibili cause\",'')),lower(:needle))>0;"
+  },
+  {
+    "id": "Q23",
+    "title": "Componenti senza esperimenti associati nel catalogo",
+    "kind": "Lacuna di collegamento",
+    "params": [
+      "model_id"
+    ],
+    "note": "Non significa mai testati. Include associazioni dirette tramite sostituzione e indirette tramite ipotesi; manca ancora un contratto universale esperimento→componente testato.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nim AS (\n  SELECT source_id AS component_id, target_id AS model_id\n  FROM one WHERE source_table='instances' AND role='Modello'\n),\nscope AS (\n  SELECT component_id FROM im WHERE model_id=:model_id\n),\ncomponent_experiments AS (\n  -- Associazione esplicita via sostituzione; non prova di esecuzione.\n  SELECT DISTINCT c.target_id AS component_id, e.target_id AS experiment_id\n  FROM v_links c JOIN v_links e ON e.source_table='substitutions'\n    AND e.source_id=c.source_id AND e.role='Esperimenti di verifica'\n  WHERE c.source_table='substitutions'\n    AND c.role IN ('Componenti originali','Componenti sostitutivi')\n  UNION\n  -- Associazione indiretta tramite ipotesi sul componente.\n  SELECT DISTINCT c.target_id, e.source_id\n  FROM v_links c JOIN v_links e ON e.source_table='experiments'\n    AND e.role='Ipotesi' AND e.target_id=c.source_id\n  WHERE c.source_table='claims' AND c.role='Componenti oggetto'\n)\nSELECT i._record_id,i.\"Nome\",i.\"Identificatore locale\"\nFROM scope s JOIN instances i ON i._record_id=s.component_id\nWHERE NOT EXISTS (SELECT 1 FROM component_experiments ce\n  WHERE ce.component_id=i._record_id)\nORDER BY i.\"Nome\";"
+  },
+  {
+    "id": "Q24",
+    "title": "Componenti con test isolato associato ma nessuna ricomposizione",
+    "kind": "Shortlist, senza inferire successo",
+    "params": [
+      "model_id"
+    ],
+    "note": "La presenza del protocollo non prova che sia stato eseguito né superato. Una query 'validato isolatamente ma non ricomposto' richiede anche una regola esplicita di successo.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nim AS (\n  SELECT source_id AS component_id, target_id AS model_id\n  FROM one WHERE source_table='instances' AND role='Modello'\n),\nscope AS (\n  SELECT component_id FROM im WHERE model_id=:model_id\n),\ncomponent_experiments AS (\n  -- Associazione esplicita via sostituzione; non prova di esecuzione.\n  SELECT DISTINCT c.target_id AS component_id, e.target_id AS experiment_id\n  FROM v_links c JOIN v_links e ON e.source_table='substitutions'\n    AND e.source_id=c.source_id AND e.role='Esperimenti di verifica'\n  WHERE c.source_table='substitutions'\n    AND c.role IN ('Componenti originali','Componenti sostitutivi')\n  UNION\n  -- Associazione indiretta tramite ipotesi sul componente.\n  SELECT DISTINCT c.target_id, e.source_id\n  FROM v_links c JOIN v_links e ON e.source_table='experiments'\n    AND e.role='Ipotesi' AND e.target_id=c.source_id\n  WHERE c.source_table='claims' AND c.role='Componenti oggetto'\n),\nep AS (\n  SELECT source_id AS protocol_id, target_id AS experiment_id\n  FROM one WHERE source_table='protocols' AND role='Esperimento'\n)\nSELECT i._record_id,i.\"Nome\"\nFROM scope s JOIN instances i ON i._record_id=s.component_id\nWHERE EXISTS (\n  SELECT 1 FROM component_experiments ce JOIN ep ON ep.experiment_id=ce.experiment_id\n  JOIN protocols p ON p._record_id=ep.protocol_id\n  WHERE ce.component_id=i._record_id AND p.\"Modalità\"='Componente isolato'\n) AND NOT EXISTS (\n  SELECT 1 FROM component_experiments ce JOIN ep ON ep.experiment_id=ce.experiment_id\n  JOIN protocols p ON p._record_id=ep.protocol_id\n  WHERE ce.component_id=i._record_id AND p.\"Modalità\" IN ('Ricomposizione','Sistema completo')\n);"
+  },
+  {
+    "id": "Q25",
+    "title": "Protocolli senza controlli registrati",
+    "kind": "Audit del disegno",
+    "params": [
+      "experiment_id"
+    ],
+    "note": "Non stabilisce quale controllo sia necessario e non considera un oracle equivalente a un controllo negativo. Per requisiti specifici serve registrare controllo richiesto→ipotesi.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n),\nep AS (\n  SELECT source_id AS protocol_id, target_id AS experiment_id\n  FROM one WHERE source_table='protocols' AND role='Esperimento'\n)\nSELECT p._record_id,p.\"Nome\",p.\"Modalità\"\nFROM protocols p JOIN ep ON ep.protocol_id=p._record_id\nWHERE ep.experiment_id=:experiment_id AND NOT EXISTS (\n  SELECT 1 FROM v_links l JOIN arms a ON a._record_id=l.source_id\n  WHERE l.source_table='arms' AND l.role='Protocollo' AND l.target_id=p._record_id\n    AND a.\"Ruolo\" IN ('Baseline','Controllo negativo','Oracle diagnostico','Ablazione')\n);"
+  },
+  {
+    "id": "Q26",
+    "title": "Copertura dei sottogruppi attesi nelle misure",
+    "kind": "Esatta solo per etichette concordate",
+    "params": [
+      "evaluation_id",
+      "expected_strata_json"
+    ],
+    "note": "Esempio JSON ['riposo','subthreshold','spike','plateau'] con virgolette JSON doppie. Sono etichette da concordare, non dati già presenti. Conta misure, non episodi indipendenti.",
+    "full_sql": "SELECT j.value AS sottogruppo_atteso,\n       COUNT(DISTINCT o._record_id) AS misure_registrate,\n       COUNT(DISTINCT CASE WHEN o.\"Valore\" IS NOT NULL THEN o._record_id END) AS misure_numeriche\nFROM json_each(:expected_strata_json) j\nLEFT JOIN observations o ON o.\"Strato o sottogruppo\"=j.value\n AND EXISTS (\n   SELECT 1 FROM v_links l WHERE l.source_table='observations'\n     AND l.source_id=o._record_id AND l.role='Specifica di valutazione'\n     AND l.target_id=:evaluation_id\n )\nGROUP BY j.value ORDER BY j.value;"
+  },
+  {
+    "id": "Q27",
+    "title": "Risultati positivi privi di una conferma collegata",
+    "kind": "Lacuna di conferma registrata",
+    "params": [],
+    "note": "Un record di conferma presente non prova che la conferma sia completata o riuscita. Anche questo esito va formalizzato se vogliamo il filtro 'confermato con successo'.",
+    "full_sql": "SELECT f._record_id,f.\"Nome\",f.\"Risultato\",f.\"Limitazioni\"\nFROM findings f WHERE f.\"Esito\"='Positivo' AND NOT EXISTS (\n  SELECT 1 FROM v_links l JOIN confirmations c ON c._record_id=l.source_id\n  WHERE l.source_table='confirmations' AND l.role='Risultati da confermare'\n    AND l.target_id=f._record_id AND c.\"Tipo\"='Conferma indipendente'\n) ORDER BY f._record_id;"
+  },
+  {
+    "id": "Q28",
+    "title": "Ipotesi alternative ancora aperte e relative predizioni",
+    "kind": "Shortlist di spiegazioni non risolte",
+    "params": [],
+    "note": "Non dimostra compatibilità con tutti i dati. Servono predizioni strutturate e valutazioni di ciascun esito per eliminare automaticamente alternative.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n)\nSELECT r._record_id AS relazione_id,a._record_id AS ipotesi_a,a.\"Enunciato\" AS enunciato_a,\n       b._record_id AS ipotesi_b,b.\"Enunciato\" AS enunciato_b,\n       (SELECT json_group_array(source_id) FROM v_links WHERE source_table='predictions'\n        AND role='Ipotesi' AND target_id=a._record_id) AS predizioni_a,\n       (SELECT json_group_array(source_id) FROM v_links WHERE source_table='predictions'\n        AND role='Ipotesi' AND target_id=b._record_id) AS predizioni_b\nFROM claimrels r\nJOIN one x ON x.source_table='claimrels' AND x.source_id=r._record_id AND x.role='Enunciato origine'\nJOIN one y ON y.source_table='claimrels' AND y.source_id=r._record_id AND y.role='Enunciato destinazione'\nJOIN claims a ON a._record_id=x.target_id JOIN claims b ON b._record_id=y.target_id\nWHERE r.\"Tipo\"='Alternativa'\n  AND a.\"Stato\" IN ('Aperta','Indeterminata')\n  AND b.\"Stato\" IN ('Aperta','Indeterminata');"
+  },
+  {
+    "id": "Q29",
+    "title": "Esperimenti candidati allo stesso notebook",
+    "kind": "Compatibilità preliminare",
+    "params": [],
+    "note": "Stesso programma/playground non garantisce stessi dati, assenza di leakage o indipendenza. Confermare partizioni, generatori, budget e dipendenze; non autorizza esecuzione parallela automatica.",
+    "full_sql": "SELECT DISTINCT a._record_id AS esperimento_a,a.\"Nome\" AS nome_a,\n       b._record_id AS esperimento_b,b.\"Nome\" AS nome_b,\n       p.target_id AS playground_condiviso\nFROM experiments a JOIN v_links p ON p.source_table='experiments'\n  AND p.source_id=a._record_id AND p.role='Playground'\nJOIN v_links q ON q.source_table='experiments' AND q.role='Playground'\n  AND q.target_id=p.target_id AND q.source_id>a._record_id\nJOIN experiments b ON b._record_id=q.source_id\nWHERE a.\"Stato\" IN ('Progettato','Preregistrato')\n  AND b.\"Stato\" IN ('Progettato','Preregistrato')\n  AND EXISTS (\n    SELECT 1 FROM v_links x JOIN v_links y ON y.source_table='experiments'\n      AND y.source_id=b._record_id AND y.role='Programma' AND y.target_id=x.target_id\n    WHERE x.source_table='experiments' AND x.source_id=a._record_id AND x.role='Programma'\n  );"
+  },
+  {
+    "id": "Q30",
+    "title": "Capacità con molte dipendenze a valle",
+    "kind": "Priorità strutturale candidata",
+    "params": [],
+    "note": "Conta dipendenze dichiarate dirette. Tenere distinto ipotizzato/verificato esaminando i record capdeps; non è utilità scientifica o necessità dimostrata.",
+    "full_sql": "WITH RECURSIVE\none AS (\n  SELECT source_table, source_id, role, target_table,\n         MIN(target_id) AS target_id\n  FROM v_links\n  GROUP BY source_table, source_id, role, target_table\n  HAVING COUNT(*) = 1\n)\nSELECT c._record_id,c.\"Nome\",\n       COUNT(DISTINCT d.target_id) AS capacita_dipendenti\nFROM capabilities c JOIN one p ON p.source_table='capdeps'\n  AND p.role='Prerequisito' AND p.target_id=c._record_id\nJOIN one d ON d.source_table='capdeps' AND d.source_id=p.source_id\n  AND d.role='Capacità dipendente'\nJOIN capdeps rel ON rel._record_id=p.source_id\nWHERE rel.\"Tipo\" IN ('Prerequisito ipotizzato','Prerequisito verificato')\nGROUP BY c._record_id,c.\"Nome\" ORDER BY capacita_dipendenti DESC;"
+  },
+  {
+    "id": "Q31",
+    "title": "Esperimenti che interrogano più ipotesi aperte",
+    "kind": "Shortlist informativa non probabilistica",
+    "params": [],
+    "note": "Numero di ipotesi collegate ≠ numero di ipotesi distinguibili e ≠ guadagno informativo atteso. Servono contrasti discriminanti e, per una misura probabilistica, prior e likelihood.",
+    "full_sql": "SELECT e._record_id,e.\"Nome\",e.\"Obiettivo informativo\",\n       COUNT(DISTINCT c._record_id) AS ipotesi_aperte_collegate\nFROM experiments e JOIN v_links l ON l.source_table='experiments'\n  AND l.source_id=e._record_id AND l.role='Ipotesi'\nJOIN claims c ON c._record_id=l.target_id\nWHERE e.\"Stato\" IN ('Progettato','Preregistrato')\n  AND c.\"Stato\" IN ('Aperta','Indeterminata')\nGROUP BY e._record_id,e.\"Nome\",e.\"Obiettivo informativo\"\nORDER BY ipotesi_aperte_collegate DESC,e._record_id;"
+  },
+  {
+    "id": "Q32",
+    "title": "Azioni pronte senza prerequisiti operativi incompleti",
+    "kind": "Filtro di workflow",
+    "params": [],
+    "note": "Non interpreta i criteri testuali di avvio. 'Pronta' deve essere assegnato consapevolmente.",
+    "full_sql": "SELECT a._record_id,a.\"Nome\",a.\"Criteri di avvio\",a.\"Risultato atteso\"\nFROM actions a WHERE a.\"Stato\"='Pronta' AND NOT EXISTS (\n  SELECT 1 FROM v_links l JOIN actions p ON p._record_id=l.target_id\n  WHERE l.source_table='actions' AND l.source_id=a._record_id\n    AND l.role='Dipende da' AND COALESCE(p.\"Stato\",'')<>'Conclusa'\n) ORDER BY a._record_id;"
+  },
+  {
+    "id": "Q33",
+    "title": "Sincronizzazione e identità dei record",
+    "kind": "Controllo tecnico",
+    "params": [],
+    "note": "Zero righe indica nessuna intenzione pendente registrata, non garantisce che Airtable non sia stato modificato manualmente dopo l'ultimo import.",
+    "full_sql": "SELECT operation_id,table_key,stable_code,record_id,status\nFROM _outbox WHERE status='pending' ORDER BY table_key,stable_code;"
+  },
+  {
+    "id": "Q34",
+    "title": "Ambiguità che rendono inaffidabili le query",
+    "kind": "Controllo di qualità strutturale",
+    "params": [],
+    "note": "Le query che usano la CTE one escludono relazioni ambigue anziché scegliere arbitrariamente un estremo. Questa query le rende visibili; obbligatorietà e cicli richiedono ulteriori controlli.",
+    "full_sql": "SELECT 'cardinalita_singola' AS problema,l.source_table AS tabella,\n       l.source_id AS record_id,r.field_name AS campo,COUNT(*) AS n\nFROM v_links l JOIN _mirror_relations r ON r.field_id=l.field_id\nWHERE r.intended_single=1\nGROUP BY l.source_table,l.source_id,r.field_name HAVING COUNT(*)>1\nUNION ALL\nSELECT 'codice_duplicato',table_key,NULL,stable_code,COUNT(*)\nFROM v_records WHERE NULLIF(stable_code,'') IS NOT NULL\nGROUP BY table_key,stable_code HAVING COUNT(*)>1\nUNION ALL\nSELECT 'id_locale_duplicato','instances',m.target_id,i.\"Identificatore locale\",COUNT(*)\nFROM instances i JOIN v_links m ON m.source_table='instances'\n  AND m.source_id=i._record_id AND m.role='Modello'\nWHERE NULLIF(i.\"Identificatore locale\",'') IS NOT NULL\nGROUP BY m.target_id,i.\"Identificatore locale\" HAVING COUNT(*)>1\nUNION ALL\nSELECT 'id_locale_mancante','instances',_record_id,'Identificatore locale',1\nFROM instances WHERE NULLIF(\"Identificatore locale\",'') IS NULL;"
+  }
+]

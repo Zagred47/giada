@@ -45,6 +45,19 @@ I contratti originali, gli ID effettivi e le configurazioni dei campi sono in `s
 - `v_evidence_chains`: affermazione → valutazione → risultato scientifico.
 - `queries/`: pattern SQL riutilizzabili, senza cambiare classificazioni sorgenti.
 
+Il [catalogo commentato Q01–Q34](queries/QUERY_REVIEW.md) è il punto di ingresso
+per utenti e agenti: descrive domande, parametri, SQL e limiti interpretativi.
+Sono disponibili anche il [SQL completo](queries/query_catalog_review.sql) e il
+[catalogo JSON](queries/query_catalog_review.json). Sono template da consultare,
+non nuove viste installate. Per le query parametrizzate seguire il binding
+`sqlite3` documentato nel catalogo: il comando CLI `query` non accetta parametri.
+
+Validazione dello schema e dei casi sintetici, senza modificare il database persistente:
+
+```powershell
+python research_memory/queries/validate_review_catalog.py
+```
+
 Il comando `query` è in sola lettura, limita risultati e lavoro computazionale, e rifiuta ATTACH, PRAGMA e DML. Usare le query per cambiare lente, non per trasformare automaticamente un'associazione in evidenza causale.
 
 ## Scrittura obbligatoria su entrambi

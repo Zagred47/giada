@@ -4,6 +4,11 @@ La base `Scientific Modeling & Experimentation Lab` (`app9dZ7ghujkFJIo5`) ha un
 mirror SQLite versionato in `research_memory/data/research_memory.sqlite`.
 Leggere `research_memory/README.md` prima di modificarne schema o record.
 
+Per i pattern di interrogazione consultare `research_memory/queries/QUERY_REVIEW.md`:
+contiene 34 query commentate, parametri e limiti interpretativi. SQL e catalogo
+JSON eseguibile sono nella stessa cartella. Le associazioni estratte non sono
+automaticamente prove causali; seguire le istruzioni di binding dei parametri.
+
 ## Doppia scrittura obbligatoria
 
 Quando l'utente autorizza la creazione o modifica di record scientifici, scrivere
