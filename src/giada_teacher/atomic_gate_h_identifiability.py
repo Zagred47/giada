@@ -157,6 +157,35 @@ def _predicted_horizon(details, state, dt, horizon):
     return inf + (state - inf) * (-horizon * dt / tau).exp()
 
 
+def _physical_tau_decision(metrics, rollout, rates, winner: str, fresh_names) -> dict[str, Any]:
+    """Aggregate the preregistered fresh gates using the canonical metric names."""
+
+    names = tuple(fresh_names)
+    winner_macro = float(np.mean([metrics[winner][name]["rmse"] for name in names]))
+    roll1000 = float(np.mean([rollout[winner][name]["1000"] for name in names]))
+    inf = float(np.mean([rates[winner][name]["inf_rmse"] for name in names]))
+    tau = float(np.mean([rates[winner][name]["log_tau_rmse"] for name in names]))
+    occupancy_violations = int(sum(
+        metrics[winner][name]["occupancy_violation_count"] for name in names
+    ))
+    finite = bool(np.isfinite([winner_macro, roll1000, inf, tau]).all())
+    repaired = bool(
+        finite and occupancy_violations == 0 and winner_macro <= 1e-3
+        and roll1000 <= 5e-3 and inf <= 1e-2 and tau <= 1e-1
+    )
+    return {
+        "winner": winner,
+        "winner_fresh_macro_rmse": winner_macro,
+        "winner_rollout_1000_rmse": roll1000,
+        "winner_inf_rmse": inf,
+        "winner_log_tau_rmse": tau,
+        "winner_occupancy_violations": occupancy_violations,
+        "winner_metrics_finite": finite,
+        "physical_tau_repaired": repaired,
+        "task3_authorized": repaired,
+    }
+
+
 def _score(model, rows, formula, horizons, torch, device) -> tuple[float, dict[str, Any]]:
     model.eval(); reports = {}
     with torch.inference_mode():
@@ -277,18 +306,9 @@ def evaluate_gate_h_identifiability(bundle, output_dir, task2_root, config: Gate
         dz_roll.append(detail)
     metrics["frozen_task2_direct_z"]={n:{k:float(np.mean([s[n][k] for s in dz_metrics])) for k in dz_metrics[0][n]} for n in bundle["fresh"]}
     rollout["frozen_task2_direct_z"]={n:{h:float(np.mean([s[n][h] for s in dz_roll])) for h in map(str,config.rollout_horizons)} for n in bundle["fresh"]}
-    winner=freeze["winner"]; macro=lambda family:float(np.mean([metrics[family][n]["rmse"] for n in bundle["fresh"]]))
-    roll1000=float(np.mean([rollout[winner][n]["1000"] for n in bundle["fresh"]])); inf=float(np.mean([rates[winner][n]["inf_rmse"] for n in bundle["fresh"]])); tau=float(np.mean([rates[winner][n]["log_tau_rmse"] for n in bundle["fresh"]]))
-    winner_macro=macro(winner)
-    occupancy_violations=int(sum(metrics[winner][name]["occupancy_violations"] for name in bundle["fresh"]))
-    finite=bool(np.isfinite([winner_macro,roll1000,inf,tau]).all())
-    decision={"winner":winner,"winner_fresh_macro_rmse":winner_macro,"winner_rollout_1000_rmse":roll1000,
-              "winner_inf_rmse":inf,"winner_log_tau_rmse":tau,
-              "winner_occupancy_violations":occupancy_violations,"winner_metrics_finite":finite,
-              "physical_tau_repaired":finite and occupancy_violations==0 and winner_macro<=1e-3 and roll1000<=5e-3 and inf<=1e-2 and tau<=1e-1,
-              "task3_authorized":False}
-    decision["task3_authorized"]=decision["physical_tau_repaired"]
-    report={"schema_version":"giada-task2b-final-v1","valid":finite,"selection_used_fresh":False,
+    winner=freeze["winner"]
+    decision=_physical_tau_decision(metrics,rollout,rates,winner,bundle["fresh"])
+    report={"schema_version":"giada-task2b-final-v1","valid":decision["winner_metrics_finite"],"selection_used_fresh":False,
             "metrics":metrics,"rollout":rollout,"rates":rates,"decision":decision}
     (output_dir/"final_report.json").write_text(json.dumps(report,indent=2)); (output_dir/"registered_decision.json").write_text(json.dumps(decision,indent=2))
     (output_dir/"fresh_confirmation_opened.json").write_text(json.dumps({"freeze_sha256":claimed,"final_report_sha256":_file_sha256(output_dir/"final_report.json"),"opened_once":True},indent=2))

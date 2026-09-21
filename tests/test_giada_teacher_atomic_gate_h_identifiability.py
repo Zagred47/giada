@@ -3,6 +3,7 @@ import unittest
 
 from src.giada_teacher.atomic_gate_h_identifiability import (
     GateHIdentifiabilityConfig,
+    _physical_tau_decision,
     prepare_gate_h_identifiability,
 )
 from src.giada_teacher.double_oracle import ExtractedGateFormula
@@ -24,3 +25,16 @@ class GateHIdentifiabilityTests(unittest.TestCase):
         self.assertFalse(bundle["contract"]["fresh_used_for_selection"])
         self.assertTrue(all(count > 0 for count in bundle["contract"]["fresh_counts"].values()))
 
+    def test_registered_decision_uses_canonical_occupancy_metric(self) -> None:
+        metrics = {"rate_supervision": {
+            "fresh": {"rmse": 1e-4, "occupancy_violation_count": 0}
+        }}
+        rollout = {"rate_supervision": {"fresh": {"1000": 1e-3}}}
+        rates = {"rate_supervision": {
+            "fresh": {"inf_rmse": 1e-3, "log_tau_rmse": 1e-2}
+        }}
+        decision = _physical_tau_decision(
+            metrics, rollout, rates, "rate_supervision", ("fresh",)
+        )
+        self.assertTrue(decision["physical_tau_repaired"])
+        self.assertEqual(decision["winner_occupancy_violations"], 0)
