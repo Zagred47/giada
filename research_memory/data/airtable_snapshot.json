@@ -1888,7 +1888,10 @@
           ],
           "fld6T3N6yemVml04C": [],
           "fldAH67e9psRNS6ym": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
-          "fldByihGBJcbOynhM": [],
+          "fldByihGBJcbOynhM": [
+            "rec8c6102b9e618d7",
+            "recad5107191f9b03"
+          ],
           "fldCeLjZXpGED4yv1": "Positivo",
           "fldMuvZsGvQ2lJDib": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694.",
           "fldTkqGHCtsGhE6dR": [],
@@ -2107,7 +2110,10 @@
           ],
           "fld6c39TA0qX8gmL9": "Rivedere se il modello con V variabile o m+h accoppiato amplifica gli errori; non usare il fresh Task 2b per sostituire retrospettivamente rate_supervision con multi-horizon; conservare il debito OOD-voltage del gate m.",
           "fldKMdJcN5OyfXPBg": "decision-task2b-authorize-task3-physical-tau-v1",
-          "fldPWPhrQIqadQafc": [],
+          "fldPWPhrQIqadQafc": [
+            "rec8c6102b9e618d7",
+            "recad5107191f9b03"
+          ],
           "fldU0fysH3Vsyd5uc": "Il vincitore rate_supervision è selezionato solo sul development e supera fresh macro, rollout1000, h_inf, log(tau_h), finitezza e dominio fisico. Multi-horizon replica la riparazione come controllo ortogonale e il physical-tau supera il direct-z congelato.",
           "fldUSmiF5JjK64uS5": [],
           "fldYm1YuTbDyecT3y": [],
@@ -2178,6 +2184,46 @@
       }
     ],
     "tblFFe4wg9JwpefAn": [
+      {
+        "id": "rec8c6102b9e618d7",
+        "createdTime": "2026-09-21T16:16:42Z",
+        "cellValuesByFieldId": {
+          "fld4O1beno3odFKvI": "Lezione trasferibile ricavata dalla Task 2b sul gate h di Ca_HVA.",
+          "fld8HA1BGl990GAVS": [
+            "rec1ced41bf0f6068"
+          ],
+          "fldA6VxnHn3pchKBe": [
+            "rec3c1f30836a262b"
+          ],
+          "fldIDYmf8bUihcJqM": "lesson-one-step-fit-vs-dynamic-identifiability-v1",
+          "fldZsfT23fGdO1DaJ": "Una loss sul solo endpoint può essere minimizzata da parametri dinamici interni errati che si compensano nel singolo passo. Un basso errore su S_t+1 non prova quindi che il modello abbia identificato il campo dinamico corretto. Servono probe delle variabili causali interne e/o vincoli multi-orizzonte, oltre al rollout ricorsivo.",
+          "fldlrDUqy9XFwhwtd": "Particolarmente rilevante quando più parametri latenti contribuiscono allo stesso endpoint, come h_inf e tau_h nell'update esponenziale. Usare confronti appaiati e selezione development prima di aprire il fresh.",
+          "fldtC2hGrW8U5VGOb": [],
+          "flduABc689z61ZI9l": "Il risultato è dimostrato qui per Ca_HVA.h isolato a V costante; il principio è generale ma la sua entità deve essere misurata nuovamente nei sistemi accoppiati.",
+          "fldxH6rfwM7DbYUAv": [],
+          "fldyA7uijRS7Y622e": "Accuratezza one-step e identificazione dinamica sono proprietà distinte"
+        }
+      },
+      {
+        "id": "recad5107191f9b03",
+        "createdTime": "2026-09-21T16:16:43Z",
+        "cellValuesByFieldId": {
+          "fld4O1beno3odFKvI": "Regola progettuale emersa dalla matrice 2x2 della Task 2b.",
+          "fld8HA1BGl990GAVS": [
+            "rec1ced41bf0f6068"
+          ],
+          "fldA6VxnHn3pchKBe": [
+            "rec3c1f30836a262b"
+          ],
+          "fldIDYmf8bUihcJqM": "lesson-causal-rate-supervision-identifies-physical-cell-v1",
+          "fldZsfT23fGdO1DaJ": "Quando il teacher espone quantità fisiche semanticamente corrette, una loss ausiliaria su tali quantità può eliminare soluzioni endpoint-equivalenti ma dinamicamente errate. Per h, supervisionare h_inf e log(tau_h) ha riparato il rollout senza aumentare capacità. Una loss multi-orizzonte ha confermato indipendentemente la diagnosi. Combinare tutte le loss non è automaticamente migliore: i gradienti possono essere ridondanti o conflittuali.",
+          "fldlrDUqy9XFwhwtd": "Le variabili supervisionate devono essere causali, disponibili senza informazione futura e coerenti con il contratto deployment. Pesi e criteri di selezione devono essere preregistrati; il fresh non deve scegliere fra obiettivi.",
+          "fldtC2hGrW8U5VGOb": [],
+          "flduABc689z61ZI9l": "Non implica che ogni stato interno del teacher debba essere supervisionato né che rate supervision sia sempre preferibile. Nel sistema embedded disponibilità, costo e osservabilità delle variabili devono essere rivalutati.",
+          "fldxH6rfwM7DbYUAv": [],
+          "fldyA7uijRS7Y622e": "Supervisionare quantità fisiche causali può rendere identificabile l'obiettivo"
+        }
+      },
       {
         "id": "recmwN3BKfkDWJlm0",
         "createdTime": "2026-09-20T16:07:07Z",
