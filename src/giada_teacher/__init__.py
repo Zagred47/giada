@@ -41,6 +41,13 @@ from .atomic_gate_diagnosis import (
     run_gate_m_diagnosis,
     evaluate_gate_m_diagnosis,
 )
+from .atomic_gate_h_identifiability import (
+    GateHIdentifiabilityConfig,
+    prepare_gate_h_identifiability,
+    run_gate_h_identifiability,
+    evaluate_gate_h_identifiability,
+    verified_task2_artifact_root,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -60,4 +67,7 @@ __all__ = [
     "evaluate_frozen_atomic_gate",
     "GateMDiagnosisConfig", "prepare_gate_m_diagnosis",
     "run_gate_m_diagnosis", "evaluate_gate_m_diagnosis",
+    "GateHIdentifiabilityConfig", "prepare_gate_h_identifiability",
+    "run_gate_h_identifiability", "evaluate_gate_h_identifiability",
+    "verified_task2_artifact_root",
 ]

@@ -272,6 +272,36 @@
         }
       },
       {
+        "id": "recf92957e6f3fe5c",
+        "createdTime": "2026-09-21T13:11:54Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Report",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [
+            "rec0a8e538df29d79"
+          ],
+          "fldFio32ffmk14gMY": [],
+          "fldJ42OE1ARQhyh59": "experiments/teacher_gate_h_identifiability_preregistration_v1.json",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "d912b11647985ab377502077d9dd09b36ea32929da6d3388122cb790aa45771c",
+          "fldw98aVU9j6cBJYh": "GIADA Task 2b h-identifiability preregistration",
+          "fldwLVADFDuK4I0rk": "Preregistrazione della matrice 2x2 rate supervision per loss multi-orizzonte.",
+          "fldwnMJjQrllvC78Z": "artifact-task2b-h-identifiability-preregistration-v1",
+          "fldy0kiTp7BG4j68p": [],
+          "fldybOB1VowNUBprP": null
+        }
+      },
+      {
         "id": "recfc1cc11b855ade",
         "createdTime": "2026-09-20T21:32:31Z",
         "cellValuesByFieldId": {
@@ -359,7 +389,8 @@
             "reclkqGbcD23aIje6",
             "recaf7205c07b14ca",
             "rec9f2c7ab4ff11ac",
-            "rec2667fe3f4c2302"
+            "rec2667fe3f4c2302",
+            "rec626e81a6bfb2e3"
           ],
           "fldqDjoomZWzOnWhx": [
             "recufF8ZewDV2H030",
@@ -444,7 +475,8 @@
           "fldRJmEWvdtbr0xoC": "question-cahva-h-held-voltage-learnability-v1",
           "fldTzYqwWHaHk7eE7": "La mappa causale (V_t, h_t, dt) -> h_t+1 sotto voltage clamp costante e apprendibile con accuratezza, stabilita e costo compatibili con GIADA?",
           "fldj261pBSznFUjUC": [
-            "rec2667fe3f4c2302"
+            "rec2667fe3f4c2302",
+            "rec626e81a6bfb2e3"
           ],
           "fldu0VJMDCla5XqQv": "Parzialmente risolta",
           "fldvER0OXNvszn36s": "Learnability atomica del gate h di Ca_HVA"
@@ -595,6 +627,50 @@
           "fldwnvVrfGEy0ephV": [],
           "fldxSHSKYTFeHnKO6": "Una rete che apprende h_inf(V) e tau_h(V)>0, combinata con l'update esponenziale analitico, raggiunge il gate preregistrato held-voltage e rimane stabile per 1000 passi."
         }
+      },
+      {
+        "id": "rec91943db26378db",
+        "createdTime": "2026-09-21T13:11:53Z",
+        "cellValuesByFieldId": {
+          "fld0cyrU7z3lgnGri": [],
+          "fld1yxxCdQIKUTr3o": [],
+          "fld21P7Z38jhllXCw": [],
+          "fldBg7fdVTV3QRYYR": [],
+          "fldC0zRVGDcrxDXx3": [],
+          "fldCQ7s6vqBkAEj7o": [],
+          "fldD3WgtsOkJFiQ0f": "La loss multi-orizzonte identifica le rate lente di h",
+          "fldGKzruZ7lMxuhv9": "Aperta",
+          "fldGMQygrEEp67LYU": [
+            "rec626e81a6bfb2e3"
+          ],
+          "fldGrnR6YpOu4IX7p": [],
+          "fldM9yryBylmVsAFh": [],
+          "fldMttnkdNKUfLftx": [],
+          "fldNKdCWed8GtMJWA": [],
+          "fldO5B11MJ6B3bN8Z": [],
+          "fldSpqkLWRRVAcGyT": "La supervisione endpoint one-step e insufficiente per separare h_inf e tau_h; rate supervision e/o loss 1/10/100 passi devono ridurre l'errore delle rate e stabilizzare il rollout.",
+          "fldTw6RHc13ABlCQ5": "hypothesis-task2b-h-multihorizon-identifiability-v1",
+          "fldUBxb2IBwluW0o4": [],
+          "fldVs7bwqXfD6wloz": [],
+          "fldWgPcGUQzrCfwIV": [],
+          "fldWmQYnlPnpnDCwv": "Ipotesi",
+          "fldZZflNzBIslfoxC": [],
+          "fldbHCj8nUi9FfPr0": [],
+          "fldeIU5gljlLtLjk1": [],
+          "fldgYqyJBiFHOFL5Q": "Nessuno dei tre interventi supera endpoint-only e soddisfa congiuntamente RMSE, rate e rollout preregistrati.",
+          "fldggFgq9bSRfRIf1": [],
+          "fldhblz9QaL5xZMzj": [],
+          "fldjIzyz2FzkrntCk": [],
+          "fldl4vkmr7todcrIa": [],
+          "fldn09q7Ys4pNG46z": [],
+          "fldnstZ0ARy2ZeMxz": "Gate h Ca_HVA held-voltage soltanto.",
+          "fldrs9hp5BJaiJJ9w": [],
+          "fldtFqPHjNQsCaDvJ": [],
+          "fldtIv7JUzBTeny1j": [],
+          "fldwKvlUhBaZDx4AK": [],
+          "fldwnvVrfGEy0ephV": [],
+          "fldxSHSKYTFeHnKO6": "Almeno un intervento identificante porta physical-tau sotto le soglie fresh di endpoint, rate e rollout senza violazioni fisiche."
+        }
       }
     ],
     "tbldSkzQA9g3QX7Om": [
@@ -683,7 +759,8 @@
           "fldKj5rBFNexDFr52": [],
           "fldMBlzYKK4XYTEzx": "Non dimostra sufficienza con V variabile o endogeno, interazione m+h, corrente completa o validita embedded.",
           "fldMmfKWfwVwjaqXG": [
-            "rec2667fe3f4c2302"
+            "rec2667fe3f4c2302",
+            "rec626e81a6bfb2e3"
           ],
           "fldNPg13AzuhuZ1qI": "Interpolazione ed extrapolazione separate su voltaggio, stato e dt; cinetica lenta; rollout held-voltage fino a 1000 passi; scaling law fino a 50000 aggiornamenti.",
           "fldYC5Da8e4SZGuRn": [
@@ -778,6 +855,41 @@
           "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Esperimento concluso con artefatto valido. h e fortemente apprendibile tramite direct-z; physical-tau supera one-step ma fallisce il rollout a 1000 passi per insufficiente identificazione delle rate interne.",
           "fldyeCfji17c7BfPP": "Verificare il trasferimento del bias physical-tau da m a h, confrontarlo con direct MLP e direct-z, localizzare l'errore per strato e distinguere insufficienza del budget da rappresentazione."
+        }
+      },
+      {
+        "id": "rec626e81a6bfb2e3",
+        "createdTime": "2026-09-21T13:13:42Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [
+            "rec75b0f39293bb56"
+          ],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 2b — Ca_HVA h rate-identifiability repair",
+          "fldPhw8x9yy2vwnOw": [
+            "rec0wPKrtqWymCBjr"
+          ],
+          "fldRvsDInLSxaBLba": [
+            "recb66d3646711a55"
+          ],
+          "fldSP4v83vEXowe7r": [
+            "rec91943db26378db"
+          ],
+          "fldSQ2XAuUjvNYCvY": "experiment-task2b-cahva-h-rate-identifiability-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec0a8e538df29d79"
+          ],
+          "fldSdolNHsOdN294o": "Confermativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [
+            "recd4311a9c83bfa1"
+          ],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Matrice 2x2 appaiata su rate supervision e loss multi-orizzonte, con direct-z Task 2 congelato.",
+          "fldyeCfji17c7BfPP": "Stabilire se il fallimento rollout physical-tau e causato dall'obiettivo endpoint debolmente identificante e scegliere la rappresentazione prima della Task 3."
         }
       },
       {
@@ -884,6 +996,41 @@
       }
     ],
     "tblnM133884C8blBb": [
+      {
+        "id": "rec0a8e538df29d79",
+        "createdTime": "2026-09-21T13:13:42Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-21",
+          "fld43sXbznp3IMZYL": "Task 2b h rate-identifiability protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo congelato della matrice 2x2 identificante.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Vincitore physical-tau: fresh macro <=1e-3, rollout 1000 <=5e-3, h_inf <=0.01, log(tau_h) <=0.1, zero violazioni.",
+          "fldNtSPrXFVAEpq2B": "Hash Task 2 errato, overlap fresh, accesso fresh prima del freeze, NaN/Inf o mismatch invalidano il run.",
+          "fldODG8tJ39IE4DeM": "protocol-task2b-h-rate-identifiability-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "1.0.0",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Componente isolato",
+          "fldY1kvKgn1aBhiVp": "d912b11647985ab377502077d9dd09b36ea32929da6d3388122cb790aa45771c",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [
+            "recf92957e6f3fe5c"
+          ],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Quattro obiettivi physical-tau appaiati; seed 17/29/43; checkpoint fino a 50k; selezione development multi-orizzonte; direct-z Task 2 congelato; conferma fresh disgiunta aperta una volta.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rec626e81a6bfb2e3"
+          ]
+        }
+      },
       {
         "id": "rec0ad166f8b4d2d2",
         "createdTime": "2026-09-20T22:09:04Z",
@@ -2149,20 +2296,22 @@
         "id": "recd4311a9c83bfa1",
         "createdTime": "2026-09-21T12:53:35Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Proposta",
+          "fld0tHGV6BV3tjAqn": "Pronta",
           "fld8zz84auBO3DIGQ": [
             "rec5aa65d459886f7"
           ],
           "fldFPSQrhxnfHL9n7": "action-task-2b-cahva-h-rate-identifiability-v1",
-          "fldI2FlCVIjw2HQwC": [],
+          "fldI2FlCVIjw2HQwC": [
+            "rec626e81a6bfb2e3"
+          ],
           "fldL6j0RgbU09Usnb": "Task 2 valida; direct-z positivo; physical-tau one-step positivo ma rollout negativo; contrasto causale e soglie da preregistrare senza riaprire il sealed test Task 2.",
           "fldMeQ3of9b3RZvPb": "Task 2b — Identificabilita delle rate del gate h",
-          "fldQT49hS3JSMm8FP": "Confrontare physical-tau endpoint-only, supervisione rate e loss multi-horizon su stream appaiati, con direct-z congelato come controllo positivo.",
+          "fldQT49hS3JSMm8FP": "Eseguire la matrice Task 2b 2x2 su supervisione dei rate e loss multi-orizzonte, con controllo direct-z Task 2 congelato e conferma fresh disgiunta.",
           "fldazVEmaizg09aw8": [],
           "fldgrmwbCk1T9fq46": [
             "rec75b0f39293bb56"
           ],
-          "fldilkZX7GrkdJNu2": "Stabilire se il fallimento physical-tau e risolvibile identificando h_inf e tau_h, e decidere tra physical-tau riparato e direct-z prima della Task 3.",
+          "fldilkZX7GrkdJNu2": "Determinare causalmente se l'obiettivo endpoint rende non identificabili h_inf e tau_h; autorizzare Task 3 solo se il physical-tau riparato supera tutti i gate fresh preregistrati.",
           "fldkCr0yLshDXWuxz": [
             "rec85a3eca336bbfe"
           ],

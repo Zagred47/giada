@@ -1,0 +1,42 @@
+{
+  "schema_version": "giada-task2b-preregistration-v1",
+  "task": "2b",
+  "name": "Ca_HVA h-gate rate-identifiability repair",
+  "prior_result": "Task 2: direct-z passed one-step and rollout; physical-tau passed one-step but failed 1000-step rollout",
+  "factorial": {
+    "rate_supervision": [false, true],
+    "multi_horizon_loss": [false, true],
+    "objectives": ["endpoint_only", "rate_supervision", "multi_horizon", "rate_plus_multi_horizon"]
+  },
+  "common_training": {
+    "seeds": [17, 29, 43],
+    "learning_rate": 0.003,
+    "hidden_width": 16,
+    "batch_size": 1024,
+    "checkpoints": [0, 1000, 3000, 10000, 30000, 50000],
+    "training_horizons": [1, 10, 100],
+    "selection_score": "mean development RMSE across strata and horizons 1, 10, 100"
+  },
+  "control": {
+    "model": "Task 2 frozen direct-z ensemble",
+    "retraining": false,
+    "selection_role": "positive control only"
+  },
+  "fresh_confirmation": {
+    "disjoint_from_all_task2_rows": true,
+    "used_for_selection": false,
+    "opened_once_after_freeze": true
+  },
+  "registered_gate": {
+    "fresh_macro_rmse_max": 0.001,
+    "rollout_1000_rmse_max": 0.005,
+    "h_inf_rmse_max": 0.01,
+    "log_tau_h_rmse_max": 0.1,
+    "occupancy_violations_max": 0
+  },
+  "decision": {
+    "positive": "Authorize Task 3 with repaired physical-tau if all registered gates pass.",
+    "negative": "Do not tune on fresh confirmation; make an explicit architecture decision between direct-z and a different identifiable physical parameterization.",
+    "forbidden": "Task 2 sealed rows and Task 2b fresh rows may not select objectives or checkpoints."
+  }
+}
