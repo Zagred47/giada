@@ -1,0 +1,35 @@
+{
+  "schema_version": "giada-task3-result-summary-v1",
+  "task": "3",
+  "artifact": {
+    "name": "giada_joint_m_h_cell.zip",
+    "size_bytes": 38839,
+    "sha256": "35daa2215ae3ec03f68b57b228c35a1d5a43ef7b75be06f7d062c680c684ad38",
+    "valid": true,
+    "freeze_verified": true,
+    "checkpoint_verified": true,
+    "final_report_verified": true,
+    "fresh_used_for_selection": false
+  },
+  "development_selection": {
+    "independent_score": 0.06948605085723956,
+    "shared_compact_score": 0.41690509053009034,
+    "shared_matched_score": 0.26503556159800373,
+    "winner": "independent",
+    "best_shared": "shared_matched",
+    "shared_within_ten_percent": false
+  },
+  "fresh": {
+    "independent": {"m_rmse": 0.002277170144931426, "h_rmse": 9.832576223143743e-06, "open_rmse": 0.0009331809966999482, "rollout1000_m_rmse": 0.0004790359859974139, "rollout1000_h_rmse": 0.001845119232917254},
+    "shared_matched": {"m_rmse": 0.0027910015271571877, "h_rmse": 2.7166366745522925e-05, "open_rmse": 0.0016647580107175223, "rollout1000_m_rmse": 0.0008185929283276712, "rollout1000_h_rmse": 0.004725069765598275}
+  },
+  "diagnosis": {
+    "joint_composition_learnable": true,
+    "parameter_capacity_explanation_supported": false,
+    "shared_optimization_or_interference_supported": true,
+    "evidence": "shared_matched has 694 parameters versus 676 independent, continues improving at 50k and is highly seed-sensitive; seed 17 beats its independent counterpart on m development RMSE",
+    "m_ood_voltage_debt_persists": true
+  },
+  "decision": {"task3_passed": false, "task4_authorized": false, "next_step": "Task 3b targeted shared-trunk optimization/interference diagnosis"},
+  "scope": "Ca_HVA m+h under held voltage only"
+}
