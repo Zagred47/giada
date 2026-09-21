@@ -59,6 +59,12 @@ from .joint_gate_optimization_diagnosis import (
     augment_joint_gate_rate_targets,
     run_joint_gate_optimization_diagnosis,
 )
+from .joint_gate_symmetric_confirmation import (
+    JointGateSymmetricConfirmationConfig,
+    prepare_joint_gate_symmetric_confirmation,
+    train_vectorized_symmetric_joint_gate,
+    evaluate_frozen_symmetric_joint_gate,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -85,4 +91,6 @@ __all__ = [
     "run_joint_gate_playground", "evaluate_joint_gate_playground",
     "JointGateOptimizationDiagnosisConfig", "augment_joint_gate_rate_targets",
     "run_joint_gate_optimization_diagnosis",
+    "JointGateSymmetricConfirmationConfig", "prepare_joint_gate_symmetric_confirmation",
+    "train_vectorized_symmetric_joint_gate", "evaluate_frozen_symmetric_joint_gate",
 ]

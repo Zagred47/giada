@@ -126,6 +126,11 @@ x_{t+1}=x_\infty(V_t)+[x_t-x_\infty(V_t)]e^{-\Delta t/\tau_x(V_t)}.
   asimmetrica dei rate, conflitto dei gradienti, warm-start e budget. La fase è
   development-only e non autorizza da sola la Task 4.
 
+- **Task 3c — Conferma della riparazione simmetrica** → Congelare il trunk
+  condiviso physical-τ con supervisione simmetrica dei quattro rate, addestrare
+  i seed come ensemble GPU vettorializzato e aprire una nuova conferma fresh
+  disgiunta soltanto dopo il superamento del gate development.
+
 - **Task 4 — Matrice di primitive appaiate** → Confrontare nello stesso run:
   formula originale, lookup table, interpolazione, Chebyshev/polinomio, MLP
   diretto, GRU, cella physical-\(\tau\) e cella direct-\(z\).

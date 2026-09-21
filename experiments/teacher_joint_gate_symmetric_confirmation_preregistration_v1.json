@@ -1,0 +1,47 @@
+{
+  "schema_version": "giada-task3c-preregistration-v1",
+  "task": "3c",
+  "name": "Ca_HVA symmetric-rate shared m+h confirmation",
+  "registered_repair": {
+    "architecture": "Task 3 shared_matched width-23 physical-tau cell",
+    "objective": "endpoint m+h MSE plus symmetric 0.1 inf MSE and 0.01 log-tau MSE for both gates",
+    "excluded_interventions": ["PCGrad", "rate-only warm-start"],
+    "budget_steps": 50000
+  },
+  "replication": {
+    "seeds": [17, 29, 43],
+    "learning_rate": 0.003,
+    "batch_size": 1024,
+    "fixed_checkpoint": 50000,
+    "no_checkpoint_selection": true
+  },
+  "gpu_execution": {
+    "vectorized_seed_axis": true,
+    "independent_parameters": true,
+    "independent_adam_moments": true,
+    "independent_minibatch_streams": true,
+    "independent_gradient_clipping": true,
+    "torch_compile_requested_with_safe_fallback": true,
+    "sequential_vectorized_equivalence_atol": 1e-5
+  },
+  "development_gate": {
+    "mean_score_max": 0.15,
+    "maximum_seed_score_max": 0.20
+  },
+  "fresh_confirmation": {
+    "new_disjoint_tuples": true,
+    "opened_once_after_freeze": true,
+    "used_for_selection": false
+  },
+  "registered_fresh_gate": {
+    "fresh_m_rmse_max": 0.0025,
+    "fresh_h_rmse_max": 0.001,
+    "fresh_open_probability_rmse_max": 0.0025,
+    "rollout_1000_m_rmse_max": 0.0025,
+    "rollout_1000_h_rmse_max": 0.005,
+    "occupancy_violations_max": 0
+  },
+  "positive_decision": "Authorize Task 4 if every registered development and fresh gate passes.",
+  "negative_decision": "Keep Task 4 blocked and localize the failed stratum without tuning on fresh.",
+  "forbidden_claims": ["varying-voltage success", "full ionic-current success", "embedded-neuron success"]
+}
