@@ -1,0 +1,62 @@
+{
+  "schema_version": "giada-task2-result-summary-v1",
+  "task": "2",
+  "artifact": {
+    "name": "giada_gate_h_atomic_playground.zip",
+    "size_bytes": 35089,
+    "sha256": "e8ef3c46f0c1b02e529e627df21eab9d2e4bad7ceebdad26ba14d0ad742a699b",
+    "valid": true,
+    "freeze_hash_verified": true,
+    "checkpoint_hash_verified": true,
+    "final_report_hash_verified": true,
+    "sealed_test_opened_once": true,
+    "selection_used_sealed_test": false
+  },
+  "selected_checkpoints": {
+    "direct_mlp": 50000,
+    "physical_tau": 50000,
+    "direct_z": 50000
+  },
+  "aggregate_sealed_rmse": {
+    "direct_mlp": 0.003152576805595788,
+    "physical_tau": 0.0003197638449348612,
+    "direct_z": 0.0000690130491668715,
+    "linear_rate_lut": 0.0001830064405447238,
+    "persistence_control": 0.0021462390958790108,
+    "formula_oracle": 0.0
+  },
+  "rollout_rmse": {
+    "direct_mlp": {"10": 0.010886962767934391, "100": 0.04637189344659539, "1000": 0.14126816815133672},
+    "physical_tau": {"10": 0.0030538342579270327, "100": 0.019683403008601028, "1000": 0.021291998942851064},
+    "direct_z": {"10": 0.000638883353268363, "100": 0.003111165155040845, "1000": 0.0017334206762757}
+  },
+  "physical_tau_localization": {
+    "ood_voltage_rmse": 0.0003377637911867202,
+    "ood_dt_rmse": 0.00013907870891803433,
+    "factorial_stress_rmse": 0.0020377399987182294,
+    "factorial_stress_h_inf_rmse": 0.027395712883526286,
+    "factorial_stress_log_tau_rmse": 0.5437925971603441,
+    "interpretation": "Low one-step endpoint error is compatible with poorly identified h_inf and tau_h; the cancellation does not survive long recursive horizons."
+  },
+  "direct_z_localization": {
+    "ood_voltage_rmse": 0.00008155342786497404,
+    "ood_dt_rmse": 0.000019012209975351786,
+    "factorial_stress_rmse": 0.0004899559086830187,
+    "occupancy_violations": 0
+  },
+  "budget_gain_10000_to_50000": {
+    "direct_mlp": 0.6064483863290703,
+    "physical_tau": 0.8845617154413897,
+    "direct_z": 0.9665206964396202
+  },
+  "registered_decision": {
+    "any_learned_pass": true,
+    "physical_tau_one_step_pass": true,
+    "physical_tau_rollout_pass": false,
+    "task2_scientific_gate_passed": false,
+    "engineering_continuation_gate_passed": false
+  },
+  "scientific_conclusion": "The held-voltage h primitive is strongly learnable and direct-z is both accurate and recursively stable. The preregistered physical-tau transfer hypothesis fails specifically at long rollout: endpoint-only training does not identify h_inf and tau_h well enough for slow h dynamics.",
+  "next_step": "Run a targeted Task 2b identifiability intervention on physical-tau using multi-horizon and/or rate-identifying supervision, with direct-z frozen as the positive control, before authorizing the joint m+h cell.",
+  "claim_scope": "Ca_HVA h under held voltage only; no varying-voltage, joint m+h, full-channel or embedded-neuron claim."
+}
