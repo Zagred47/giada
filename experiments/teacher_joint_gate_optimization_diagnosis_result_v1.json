@@ -1,0 +1,51 @@
+{
+  "schema_version": "giada-task3b-result-summary-v1",
+  "source_artifact": {
+    "name": "giada_joint_m_h_optimization_diagnosis.zip",
+    "sha256": "c1bd981d80075cc7d561a204be695e78e1bf5dfcdbef62408b92ca5b1bbdb2b8",
+    "final_report_sha256": "29f716ddc7744eb7a19ff471565de523fd7753c3758b4a66c18387376ea67e42",
+    "checkpoint_sha256": "85b67995241c40aef5b0ee5a41bf4c56eb1c39c327fe82e54781097a8d91eedc",
+    "code_revision": "1a8fcaa9618ecf10d9a80b8741ac8e5fb075d2f7"
+  },
+  "validity": {
+    "report_valid": true,
+    "fresh_accessed": false,
+    "task4_authorized": false,
+    "registered_rules_applied_without_change": true
+  },
+  "scores": {
+    "baseline_50000": 0.26503556159800373,
+    "baseline_100000": 0.09776587530420439,
+    "symmetric_rates_50000": 0.10216514105883048,
+    "pcgrad_50000": 0.484541354007304,
+    "symmetric_rates_pcgrad_50000": 0.3848764801991508,
+    "rate_pretrain_50000": 0.19900408708609454
+  },
+  "causal_effect_fractions": {
+    "symmetric_rate_supervision": 0.6145228948038646,
+    "extended_budget": 0.631121670183671,
+    "pcgrad": -0.8282126031911093,
+    "interaction": -0.45216920279897166,
+    "rate_pretraining_vs_symmetric": -0.94786680685441
+  },
+  "seed_stability": {
+    "baseline_50000_scores": [0.05636044376322034, 0.21084657695589396, 0.5278996640748969],
+    "baseline_50000_population_sd": 0.19628150467367536,
+    "baseline_100000_scores": [0.08070953031662408, 0.13258264338945966, 0.08000545220652944],
+    "baseline_100000_population_sd": 0.024620850735682227,
+    "symmetric_rates_50000_scores": [0.10054564046258443, 0.11300366583321994, 0.09294611688068707],
+    "symmetric_rates_50000_population_sd": 0.00826814788336316
+  },
+  "interpretation": {
+    "registered_diagnosis": "OBJECTIVE_INFORMATION_IMBALANCE",
+    "supported_causes": ["symmetric_rate_supervision", "extended_budget"],
+    "primary_repair": "symmetric m/h rate supervision",
+    "qualification": "The endpoint-only m objective is not asymptotically unlearnable: the original baseline reaches a comparable mean by 100k. Symmetric rate supervision mainly accelerates and stabilizes optimization, reaching the same regime at half the budget with substantially lower seed variance.",
+    "gradient_conflict": "Negative gradient cosine is common, but PCGrad worsens performance; raw gradient conflict is therefore not the actionable cause under this optimizer.",
+    "warm_start": "The registered rate-only warm-start is inferior to symmetric joint training and is not retained."
+  },
+  "decision": {
+    "task4_authorized": false,
+    "next_step": "Task 3c: preregister symmetric rate supervision as the minimal repair, freeze on development, then use a new disjoint fresh confirmation once."
+  }
+}
