@@ -186,6 +186,34 @@
         }
       },
       {
+        "id": "rece2909509d07cff",
+        "createdTime": "2026-09-21T10:56:38Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Report",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [],
+          "fldFio32ffmk14gMY": [],
+          "fldJ42OE1ARQhyh59": "giada_gate_m_data_budget_capacity_diagnosis.zip",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "3ed551398b0ce5d12ef44ad3509ae2e64871305358a3cdfd745a90319d723c8f",
+          "fldw98aVU9j6cBJYh": "Task 1b — Artefatto diagnosi gate m",
+          "fldwLVADFDuK4I0rk": "Artefatto Kaggle verificato della diagnosi fattoriale di densita, capacita, obiettivo e budget per il gate m held-voltage di Ca_HVA.",
+          "fldwnMJjQrllvC78Z": "artifact-task1b-m-gate-diagnosis-result-v1",
+          "fldy0kiTp7BG4j68p": [],
+          "fldybOB1VowNUBprP": 197611
+        }
+      },
+      {
         "id": "recfc1cc11b855ade",
         "createdTime": "2026-09-20T21:32:31Z",
         "cellValuesByFieldId": {
@@ -254,7 +282,9 @@
           "fldMninWdJB8jp8F8": [],
           "fldS0VBr6uQgQORCz": "Teacher Hay completo; canali ionici, concentrazioni, sinapsi, accoppiamento assiale e dinamica di membrana. Sviluppo iniziale su GPU; porting hardware differito.",
           "fldUMvhIuq00fEPKD": "Attivo",
-          "fldVO1d8pr348rS4u": [],
+          "fldVO1d8pr348rS4u": [
+            "reccc037effd3bf65"
+          ],
           "fldVYxRIjMxK7QdMj": [
             "rec0Kt3O4phdWPAl6",
             "recexQ08Q8qnqA1ms",
@@ -566,7 +596,9 @@
         "createdTime": "2026-09-20T22:59:41Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "recf00b2e0bd0899a"
+          ],
           "fld8UsWD6AGXcs8LB": [
             "rec0f45db7422a950"
           ],
@@ -589,8 +621,8 @@
           "fldnTFjWQUe3eEcDr": [
             "rec9de0c9b682728c"
           ],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
-          "fldutU2o1AMhw929L": "Matrice fattoriale physical-tau successiva al NO-GO preregistrato della Task 1.",
+          "fldqsatkPNXzdeeO1": "Concluso",
+          "fldutU2o1AMhw929L": "Matrice fattoriale physical-tau conclusa con artefatto valido. Diagnosi: budget-limited; nessun effetto principale robusto di densita, width o loss ausiliaria. Gate scientifico non superato, gate ingegneristico superato.",
           "fldyeCfji17c7BfPP": "Distinguere insufficienza dei dati, capacità, identificabilità dell'obiettivo e budget; applicare una nuova conferma disgiunta e due decisioni separate, scientifica e ingegneristica."
         }
       },
@@ -1456,6 +1488,31 @@
         }
       },
       {
+        "id": "recf00b2e0bd0899a",
+        "createdTime": "2026-09-21T10:56:38Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "La matrice fattoriale preregistrata isola il budget di ottimizzazione come causa robusta del limite residuo. Densita dei dati, width e supervisione ausiliaria dei rate non superano la soglia causale del 20% come effetti principali.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task1b-budget-limited-engineering-go-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "Il vincitore selezionato solo sul development, base-w16-endpoint_only a 50000 step, ottiene fresh macro RMSE 0.0022578625, zero violazioni e rollout RMSE 0.0003801586 a 1000 passi. In-support RMSE 0.0002378306 e OOD-dt 0.0001411297; il residuo e concentrato OOD-voltage (0.0063946271), soprattutto nell'extrapolazione di tau. Gate scientifico 1e-3 non superato; gate ingegneristico 2.5e-3 superato.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Una variante non selezionata ha RMSE fresh 0.0018670684 ma non puo sostituire il vincitore senza cherry-picking. Gli effetti dei fattori mostrano interazioni, pur senza effetti principali robusti. Resta da misurare quanto l'errore OOD-voltage venga amplificato nel sistema accoppiato.",
+          "fldYAbc64NIZGKzWO": [
+            "rec9f2c7ab4ff11ac"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo gate m di Ca_HVA sotto voltage clamp costante. Nessuna conclusione su traiettorie V variabili, gate h, canale completo o neurone multicompartimentale.",
+          "fldhoJJ1jrMBcOUrl": "Task 1b — Gate m limitato dal budget, non da dati o capacita",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": [
+            "reccc037effd3bf65"
+          ]
+        }
+      },
+      {
         "id": "recmCifGJydkiCkUL",
         "createdTime": "2026-09-20T15:45:57Z",
         "cellValuesByFieldId": {
@@ -1507,7 +1564,32 @@
     ],
     "tblJkcldtIOfvXXK7": [],
     "tbluy3NijRSDVUuBG": [],
-    "tblkgQPbxD9mR3xsn": [],
+    "tblkgQPbxD9mR3xsn": [
+      {
+        "id": "reccc037effd3bf65",
+        "createdTime": "2026-09-21T10:56:38Z",
+        "cellValuesByFieldId": {
+          "fld5n2FeRMRNzIZTl": [
+            "rec0wPKrtqWymCBjr"
+          ],
+          "fld6c39TA0qX8gmL9": "Rivedere la decisione se il dominio operativo richiede extrapolazione oltre il supporto di tensione, se il coupled path amplifica materialmente l'errore di tau_m, o prima di una rivendicazione scientifica sul canale completo. Non reinterpretare il gate ingegneristico come superamento della soglia scientifica.",
+          "fldKMdJcN5OyfXPBg": "decision-task1b-proceed-to-h-with-m-accuracy-debt-v1",
+          "fldPWPhrQIqadQafc": [],
+          "fldU0fysH3Vsyd5uc": "Il candidato m legittimamente selezionato supera il gate ingegneristico preregistrato, e stabile per 1000 passi e risolve in-support e OOD-dt con margine. Bloccare l'intera decomposizione sul solo OOD-voltage di tau_m ridurrebbe il guadagno informativo; il debito resta esplicito e verificabile.",
+          "fldUSmiF5JjK64uS5": [],
+          "fldYm1YuTbDyecT3y": [],
+          "fldZCyabVIEfvk4Dk": "Continuare",
+          "fldeE0mamtVWsmGhH": [],
+          "fldhFipvsrVYbv5aa": "2026-09-21",
+          "fldpPpy9MTdwYYfvG": [
+            "recf00b2e0bd0899a"
+          ],
+          "flduKvZ5tp3l0ciE8": "Procedere al gate h mantenendo il debito OOD-voltage di m",
+          "fldyMOckgkXfrxIFp": [],
+          "fldylCdEP8jwOCbl4": "Decisione distinta dal gate scientifico: autorizzare la successiva task atomica sul gate h senza dichiarare risolto il requisito 1e-3 di m."
+        }
+      }
+    ],
     "tblFFe4wg9JwpefAn": [
       {
         "id": "recmwN3BKfkDWJlm0",
@@ -1680,7 +1762,7 @@
         "id": "rec9de0c9b682728c",
         "createdTime": "2026-09-20T23:01:34Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld0tHGV6BV3tjAqn": "Conclusa",
           "fld8zz84auBO3DIGQ": [
             "rec9d29b3d0ca18b8"
           ],
@@ -1690,12 +1772,12 @@
           ],
           "fldL6j0RgbU09Usnb": "Task 1 conclusa con artefatto valido; physical-tau stabile ma RMSE one-step sopra soglia; preregistrazione Task 1b congelata.",
           "fldMeQ3of9b3RZvPb": "Task 1b — Delucidare il limite residuo del gate m",
-          "fldQT49hS3JSMm8FP": "Eseguire la diagnosi fattoriale prima di decidere se raffinare m o procedere parallelamente a h.",
+          "fldQT49hS3JSMm8FP": "Diagnosi fattoriale completata e verificata: il limite residuo e attribuito al budget di ottimizzazione; l'errore rimasto e localizzato soprattutto nell'extrapolazione OOD-voltage di tau_m.",
           "fldazVEmaizg09aw8": [],
           "fldgrmwbCk1T9fq46": [
             "rec0f45db7422a950"
           ],
-          "fldilkZX7GrkdJNu2": "Attribuzione quantitativa a dati, capacità, obiettivo o budget; nuova conferma disgiunta; decisione scientifica e decisione ingegneristica separate.",
+          "fldilkZX7GrkdJNu2": "Ottenuto: attribuzione quantitativa, nuova conferma disgiunta e decisioni separate. Gate scientifico 1e-3 non superato; gate ingegneristico 2.5e-3 superato; autorizzato il passaggio atomico al gate h con debito m esplicito.",
           "fldkCr0yLshDXWuxz": [],
           "fldlLL729Jw86riOj": [],
           "fldyiTgFzV1vvmM5o": [
