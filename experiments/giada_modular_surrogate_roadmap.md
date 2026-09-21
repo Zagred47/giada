@@ -121,6 +121,11 @@ x_{t+1}=x_\infty(V_t)+[x_t-x_\infty(V_t)]e^{-\Delta t/\tau_x(V_t)}.
 - **Task 3 — Cella congiunta `m+h`** → Condividere la rappresentazione di
   \(V\), mantenendo stati e output distinti e interpretabili.
 
+- **Task 3b — Diagnosi dell’ottimizzazione condivisa** → Dopo il NO-GO
+  circoscritto della Task 3, distinguere con una matrice appaiata supervisione
+  asimmetrica dei rate, conflitto dei gradienti, warm-start e budget. La fase è
+  development-only e non autorizza da sola la Task 4.
+
 - **Task 4 — Matrice di primitive appaiate** → Confrontare nello stesso run:
   formula originale, lookup table, interpolazione, Chebyshev/polinomio, MLP
   diretto, GRU, cella physical-\(\tau\) e cella direct-\(z\).

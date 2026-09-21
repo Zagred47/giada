@@ -54,6 +54,11 @@ from .joint_gate_cell_playground import (
     run_joint_gate_playground,
     evaluate_joint_gate_playground,
 )
+from .joint_gate_optimization_diagnosis import (
+    JointGateOptimizationDiagnosisConfig,
+    augment_joint_gate_rate_targets,
+    run_joint_gate_optimization_diagnosis,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -78,4 +83,6 @@ __all__ = [
     "verified_task2_artifact_root",
     "JointGateCellConfig", "prepare_joint_gate_dataset",
     "run_joint_gate_playground", "evaluate_joint_gate_playground",
+    "JointGateOptimizationDiagnosisConfig", "augment_joint_gate_rate_targets",
+    "run_joint_gate_optimization_diagnosis",
 ]

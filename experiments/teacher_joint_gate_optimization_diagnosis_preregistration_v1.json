@@ -1,0 +1,41 @@
+{
+  "schema_version": "giada-task3b-preregistration-v1",
+  "task": "3b",
+  "name": "Ca_HVA shared m+h optimization diagnosis",
+  "question": "Why did the parameter-matched shared trunk fail the registered Task 3 development gate despite adequate capacity?",
+  "scope": "development-only causal diagnosis under held voltage; no fresh confirmation",
+  "fixed_controls": {
+    "architecture": "Task 3 shared_matched width-23 physical-tau cell",
+    "seeds": [17, 29, 43],
+    "learning_rate": 0.003,
+    "batch_size": 1024,
+    "paired_minibatch_streams": true,
+    "development_metric": "Task 3 normalized worst-gate score"
+  },
+  "arms": {
+    "baseline_extended": "original asymmetric Task 3 loss; continue same trajectory to 100k",
+    "symmetric_rates": "add exact m_inf and log(tau_m) supervision, matching h rate weights",
+    "pcgrad": "original loss with symmetric PCGrad on shared-trunk m/h gradients",
+    "symmetric_rates_pcgrad": "2x2 interaction arm",
+    "rate_pretrain": "5k paired m/h rate-only warm-start, then symmetric joint objective through 50k"
+  },
+  "orthogonal_hypotheses": {
+    "objective_information_imbalance": "symmetric_rates improves score by at least 20% versus baseline at 50k",
+    "gradient_interference": "PCGrad improves by at least 20% and baseline early conflict fraction is at least 0.25",
+    "interaction": "combined arm improves by at least 20% when neither main effect does",
+    "initialization_path": "rate_pretrain improves by at least 20% versus symmetric_rates",
+    "training_budget": "baseline at 100k improves by at least 20% versus baseline at 50k"
+  },
+  "checkpoints": [0, 1000, 3000, 10000, 30000, 50000],
+  "extended_baseline_checkpoint": 100000,
+  "selection_policy": "diagnostic attribution only; no arm is promoted using Task 3 fresh results",
+  "fresh_accessed": false,
+  "task4_authorized": false,
+  "next_decision": "preregister one minimal repair and a new disjoint confirmation only after Task 3b localizes a cause",
+  "forbidden_claims": [
+    "Task 4 authorization",
+    "varying-voltage success",
+    "full ionic-current success",
+    "retroactive selection on Task 3 fresh"
+  ]
+}
