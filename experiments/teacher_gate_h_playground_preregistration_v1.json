@@ -1,0 +1,65 @@
+{
+  "schema_version": "giada-task2-preregistration-v1",
+  "task": "2",
+  "name": "Ca_HVA h-gate held-voltage learnability playground",
+  "scope": "Atomic held-voltage inactivation-gate dynamics only",
+  "causal_map": "(V_t, h_t, dt) -> h_t+1",
+  "teacher": {
+    "commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "mechanism": "Ca_HVA",
+    "gate": "h",
+    "target_dtype": "float64",
+    "accepted_by_double_oracle": true
+  },
+  "learned_arms": {
+    "direct_mlp": "Unstructured capacity control predicting h_t+1 directly",
+    "physical_tau": "Predict h_inf(V) and positive tau_h(V), then apply the exponential solver",
+    "direct_z": "Predict bounded h_inf(V) and z(V,dt), then apply a convex update"
+  },
+  "reference_arms": {
+    "formula_oracle": "Exact extracted teacher formula",
+    "linear_rate_lut": "Linear interpolation of h_inf and log(tau_h) sampled only on fit voltages",
+    "persistence_control": "h_t+1 = h_t"
+  },
+  "task1b_informed_budget": {
+    "learning_rate": 0.003,
+    "learning_rate_grid_repeated": false,
+    "reason": "Task 1 and Task 1b selected 0.003 and localized the dominant residual limitation to optimization budget rather than a robust capacity or objective main effect.",
+    "checkpoints": [0, 1000, 3000, 10000, 30000, 50000],
+    "mini_scaling_law": true
+  },
+  "fairness": {
+    "common_contract": "giada-common-gpu-baseline-v1",
+    "paired_minibatches": true,
+    "same_seeds_learning_rate_and_checkpoints": true,
+    "seeds": [17, 29, 43],
+    "seed_policy": "checkpoint selected by mean development score across all three seeds; no seed selection",
+    "selection_role": "development only",
+    "sealed_test_opened_after_freeze": true,
+    "privileged_rates_used_for_training": false,
+    "m_gate_results_used_to_select_h_checkpoint": false
+  },
+  "registered_primary_gate": {
+    "any_learned_aggregate_sealed_rmse_max": 0.001,
+    "physical_tau_aggregate_sealed_rmse_max": 0.001,
+    "physical_tau_1000_step_rollout_rmse_max": 0.005,
+    "structured_arm_occupancy_violations_max": 0,
+    "finite_metrics_required": true
+  },
+  "registered_engineering_continuation_gate": {
+    "physical_tau_aggregate_sealed_rmse_max": 0.0025,
+    "physical_tau_1000_step_rollout_rmse_max": 0.005,
+    "structured_arm_occupancy_violations_max": 0,
+    "meaning": "A joint m+h experiment may start while h accuracy remains explicit refinement debt; this is not a pass of the scientific gate."
+  },
+  "registered_diagnostics": {
+    "budget_limited": "The selected family improves by at least 20% from 10000 to its selected later checkpoint without a development reversal before selection.",
+    "structured_bias_supported": "Physical-tau beats direct_mlp and direct_z on aggregate sealed RMSE without violating [0,1].",
+    "stratum_localization": "Report in-support, OOD-voltage and OOD-dt separately, including h_inf and log(tau_h) errors."
+  },
+  "interpretation": {
+    "positive": "The held-voltage h-gate primitive is atomically learnable under the registered budget.",
+    "negative": "Failure remains localized to the h primitive and must be diagnosed before a joint m+h cell.",
+    "forbidden_claim": "No result from this task establishes sufficiency under a varying or endogenous voltage path, and an engineering continuation pass is not a scientific-gate pass."
+  }
+}

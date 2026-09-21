@@ -8,7 +8,7 @@ import os
 import platform
 import random
 import statistics
-from typing import Any, Callable
+from typing import Any, Callable, Iterator
 
 
 def paired_index_stream(length: int, batch_size: int, steps: int, seed: int) -> dict[str, Any]:
@@ -42,6 +42,31 @@ def paired_index_stream(length: int, batch_size: int, steps: int, seed: int) -> 
         "sha256": hashlib.sha256(encoded).hexdigest(),
         "batches": batches,
     }
+
+
+def paired_index_generator(length: int, batch_size: int, seed: int) -> Iterator[list[int]]:
+    """Yield the same paired batches as ``paired_index_stream`` in O(length) memory."""
+
+    if min(length, batch_size) <= 0:
+        raise ValueError("length and batch_size must be positive")
+    rng = random.Random(int(seed))
+    permutation: list[int] = []
+    cursor = 0
+    while True:
+        if cursor >= len(permutation):
+            permutation = list(range(length))
+            rng.shuffle(permutation)
+            cursor = 0
+        take = min(batch_size, len(permutation) - cursor)
+        batch = permutation[cursor : cursor + take]
+        cursor += take
+        if take < batch_size:
+            permutation = list(range(length))
+            rng.shuffle(permutation)
+            remainder = batch_size - take
+            batch.extend(permutation[:remainder])
+            cursor = remainder
+        yield batch
 
 
 def configure_torch_runtime(seed: int):

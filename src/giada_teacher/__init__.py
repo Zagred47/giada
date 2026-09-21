@@ -23,6 +23,7 @@ from .gpu_baseline_contract import (
 )
 from .gpu_baseline_runtime import (
     paired_index_stream,
+    paired_index_generator,
     configure_torch_runtime,
     environment_manifest,
     benchmark_cuda,
@@ -51,7 +52,8 @@ __all__ = [
     "render_atomic_domain_splits_markdown",
     "build_gpu_baseline_contract", "validate_gpu_baseline_contract",
     "render_gpu_baseline_markdown",
-    "paired_index_stream", "configure_torch_runtime", "environment_manifest",
+    "paired_index_stream", "paired_index_generator",
+    "configure_torch_runtime", "environment_manifest",
     "benchmark_cuda",
     "AtomicGateTaskConfig", "materialize_atomic_gate_dataset",
     "build_atomic_gate_models", "train_and_select_atomic_gate",

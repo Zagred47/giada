@@ -18,6 +18,7 @@ from .gpu_baseline_runtime import (
     benchmark_cuda,
     configure_torch_runtime,
     environment_manifest,
+    paired_index_generator,
     paired_index_stream,
 )
 
@@ -35,8 +36,8 @@ class AtomicGateTaskConfig:
     rollout_steps: tuple[int, ...] = (10, 100, 1000)
 
     def validate(self) -> None:
-        if self.gate != "m":
-            raise ValueError("Task 1 is restricted to the Ca_HVA m gate")
+        if self.gate not in {"m", "h"}:
+            raise ValueError("atomic Ca_HVA tasks are restricted to the m and h gates")
         if self.checkpoints[0] != 0 or tuple(sorted(set(self.checkpoints))) != self.checkpoints:
             raise ValueError("checkpoints must be sorted, unique and start at zero")
         if min(self.seeds) < 0 or min(self.learning_rates) <= 0:
@@ -179,21 +180,31 @@ def build_atomic_gate_models(hidden_width: int = 16, torch_module=None):
     return {name: constructor() for name, constructor in _models(torch_module, hidden_width).items()}
 
 
-def _metrics(prediction: np.ndarray, target: np.ndarray) -> dict[str, Any]:
+def _metrics(
+    prediction: np.ndarray, target: np.ndarray, *, conductance_power: int = 2
+) -> dict[str, Any]:
     error = np.asarray(prediction, dtype=np.float64) - np.asarray(target, dtype=np.float64)
     finite = bool(np.isfinite(prediction).all())
     violations = int(np.count_nonzero((prediction < 0.0) | (prediction > 1.0)))
-    return {
+    result = {
         "rmse": float(np.sqrt(np.mean(error * error))),
         "mae": float(np.mean(np.abs(error))),
         "maximum_absolute_error": float(np.max(np.abs(error))),
-        "conductance_factor_m2_rmse": float(np.sqrt(np.mean((prediction**2 - target**2) ** 2))),
+        "conductance_factor_rmse": float(np.sqrt(np.mean(
+            (prediction**conductance_power - target**conductance_power) ** 2
+        ))),
+        "conductance_power": int(conductance_power),
         "finite": finite,
         "occupancy_violation_count": violations,
     }
+    if conductance_power == 2:
+        result["conductance_factor_m2_rmse"] = result["conductance_factor_rmse"]
+    return result
 
 
-def _evaluate_model(model, rows: Iterable[tuple[str, dict[str, Any]]], torch, device):
+def _evaluate_model(
+    model, rows: Iterable[tuple[str, dict[str, Any]]], torch, device, *, gate: str = "m"
+):
     model.eval()
     report = {}
     with torch.inference_mode():
@@ -201,7 +212,9 @@ def _evaluate_model(model, rows: Iterable[tuple[str, dict[str, Any]]], torch, de
             inputs = torch.as_tensor(row["inputs"], dtype=torch.float32, device=device)
             prediction, details = model(inputs, diagnostics=True)
             prediction_np = prediction.detach().cpu().double().numpy()
-            metrics = _metrics(prediction_np, row["targets"])
+            metrics = _metrics(
+                prediction_np, row["targets"], conductance_power=2 if gate == "m" else 1
+            )
             if "inf" in details:
                 metrics["privileged_inf_rmse"] = float(np.sqrt(np.mean(
                     (details["inf"].detach().cpu().double().numpy() - row["privileged_inf"]) ** 2
@@ -253,7 +266,10 @@ def _rollout_metrics(model, rows, formula, gate, horizons, torch, device):
                         formula.step(gate, float(x), float(v), float(delta * step))
                         for v, x, delta in row["inputs"]
                     ])
-                    result[str(step)].append(_metrics(state.cpu().double().numpy(), target)["rmse"])
+                    result[str(step)].append(_metrics(
+                        state.cpu().double().numpy(), target,
+                        conductance_power=2 if gate == "m" else 1,
+                    )["rmse"])
     return {horizon: float(np.mean(values)) for horizon, values in result.items()}
 
 
@@ -276,11 +292,25 @@ def train_and_select_atomic_gate(
     development = [(name, row) for name, row in dataset["strata"].items() if row["role"] == "development"]
     # This is the firewall: no sealed row is iterated, tensorized or scored in this function.
     max_steps = config.checkpoints[-1]
-    stream_by_seed = {
-        seed: paired_index_stream(len(fit["inputs"]), config.batch_size, max_steps, seed + 100000)
-        for seed in config.seeds
-    }
-    stream_hashes = {str(seed): row["sha256"] for seed, row in stream_by_seed.items()}
+    if config.gate == "m":
+        stream_by_seed = {
+            seed: paired_index_stream(
+                len(fit["inputs"]), config.batch_size, max_steps, seed + 100000
+            )
+            for seed in config.seeds
+        }
+        stream_hashes = {str(seed): row["sha256"] for seed, row in stream_by_seed.items()}
+    else:
+        stream_by_seed = {}
+        stream_hashes = {}
+        for seed in config.seeds:
+            spec = {
+                "length": len(fit["inputs"]),
+                "batch_size": config.batch_size,
+                "seed": seed + 100000,
+                "algorithm": "python-random-shuffle-epoch-v1",
+            }
+            stream_hashes[str(seed)] = hashlib.sha256(_canonical_json(spec)).hexdigest()
     model_types = _models(torch, config.hidden_width)
     runs, snapshots = [], {}
     total_runs = len(model_types) * len(config.seeds) * len(config.learning_rates)
@@ -290,8 +320,14 @@ def train_and_select_atomic_gate(
     fit_targets = torch.as_tensor(fit["targets"], dtype=torch.float32, device=device)
     for family, constructor in model_types.items():
         for seed in config.seeds:
-            batches = stream_by_seed[seed]["batches"]
             for learning_rate in config.learning_rates:
+                batches = (
+                    stream_by_seed[seed]["batches"]
+                    if config.gate == "m"
+                    else paired_index_generator(
+                        len(fit["inputs"]), config.batch_size, seed + 100000
+                    )
+                )
                 configure_torch_runtime(seed)
                 model = constructor().to(device)
                 optimizer = torch.optim.AdamW(
@@ -300,7 +336,9 @@ def train_and_select_atomic_gate(
                 checkpoint_rows = []
                 for step in range(max_steps + 1):
                     if step in config.checkpoints:
-                        development_metrics = _evaluate_model(model, development, torch, device)
+                        development_metrics = _evaluate_model(
+                            model, development, torch, device, gate=config.gate
+                        )
                         key = f"{family}-seed{seed}-lr{learning_rate:g}-step{step}"
                         snapshots[key] = _state_dict_cpu(model, torch)
                         checkpoint_rows.append({
@@ -311,7 +349,8 @@ def train_and_select_atomic_gate(
                         })
                     if step == max_steps:
                         break
-                    indices = torch.as_tensor(batches[step], dtype=torch.long, device=device)
+                    batch = batches[step] if config.gate == "m" else next(batches)
+                    indices = torch.as_tensor(batch, dtype=torch.long, device=device)
                     optimizer.zero_grad(set_to_none=True)
                     prediction = model(fit_inputs.index_select(0, indices))
                     loss = torch.mean((prediction - fit_targets.index_select(0, indices)) ** 2)
@@ -327,7 +366,8 @@ def train_and_select_atomic_gate(
                 elapsed = time.perf_counter() - started
                 eta = elapsed / completed * (total_runs - completed)
                 print(
-                    f"[GIADA Task 1] {completed}/{total_runs} ({100*completed/total_runs:.1f}%) "
+                    f"[GIADA Task {'1' if config.gate == 'm' else '2'}] "
+                    f"{completed}/{total_runs} ({100*completed/total_runs:.1f}%) "
                     f"ETA {eta/60:.1f} min {family} seed={seed} lr={learning_rate:g}"
                 )
     selections = {}
@@ -365,7 +405,7 @@ def train_and_select_atomic_gate(
         for family, selection in selections.items()
     }, checkpoint_path)
     freeze = {
-        "schema_version": "giada-task1-selection-freeze-v1",
+        "schema_version": f"giada-task{'1' if config.gate == 'm' else '2'}-selection-freeze-v1",
         "gate": config.gate,
         "config": asdict(config),
         "teacher_source_sha256": dataset["teacher_source_sha256"],
@@ -377,7 +417,8 @@ def train_and_select_atomic_gate(
     freeze["freeze_sha256"] = _sha256(freeze)
     (output_dir / "selection_freeze.json").write_text(json.dumps(freeze, indent=2), encoding="utf-8")
     training_report = {
-        "schema_version": "giada-task1-training-v1", "valid": True,
+        "schema_version": f"giada-task{'1' if config.gate == 'm' else '2'}-training-v1",
+        "valid": True,
         "device": str(device), "environment": environment_manifest(torch), "runs": runs,
         "selection_freeze_sha256": freeze["freeze_sha256"], "sealed_test_accessed": False,
     }
@@ -417,7 +458,9 @@ def evaluate_frozen_atomic_gate(
         for seed in config.seeds:
             model = constructors[family]().to(device)
             model.load_state_dict(checkpoints[family][str(seed)])
-            family_seed_metrics[str(seed)] = _evaluate_model(model, sealed, torch, device)
+            family_seed_metrics[str(seed)] = _evaluate_model(
+                model, sealed, torch, device, gate=config.gate
+            )
             family_seed_rollouts[str(seed)] = _rollout_metrics(
                 model, sealed, formula, config.gate, config.rollout_steps, torch, device
             )
@@ -441,13 +484,21 @@ def evaluate_frozen_atomic_gate(
     analytic = {}
     persistence = {}
     for name, row in sealed:
-        analytic[name] = _metrics(row["targets"], row["targets"])
-        persistence[name] = _metrics(row["inputs"][:, 1], row["targets"])
+        conductance_power = 2 if config.gate == "m" else 1
+        analytic[name] = _metrics(
+            row["targets"], row["targets"], conductance_power=conductance_power
+        )
+        persistence[name] = _metrics(
+            row["inputs"][:, 1], row["targets"], conductance_power=conductance_power
+        )
     lut = _training_support_lut(dataset["strata"]["train"])
     results["formula_oracle"] = analytic
     results["persistence_control"] = persistence
     results["linear_rate_lut"] = {
-        name: _metrics(lut(row["inputs"]), row["targets"]) for name, row in sealed
+        name: _metrics(
+            lut(row["inputs"]), row["targets"],
+            conductance_power=2 if config.gate == "m" else 1,
+        ) for name, row in sealed
     }
     aggregate = {
         family: float(np.mean([row["rmse"] for row in metrics.values()]))
@@ -475,7 +526,7 @@ def evaluate_frozen_atomic_gate(
                     family_rows["compiled"][str(batch_size)] = benchmark_cuda(lambda: compiled(sample))
             latency["families"][family] = family_rows
     report = {
-        "schema_version": "giada-task1-final-v1",
+        "schema_version": f"giada-task{'1' if config.gate == 'm' else '2'}-final-v1",
         "valid": all(row["finite"] for family in results.values() for row in family.values()),
         "gate": config.gate, "selection_freeze_sha256": claimed_hash,
         "sealed_strata": [name for name, _ in sealed], "metrics": results,
@@ -484,7 +535,10 @@ def evaluate_frozen_atomic_gate(
         "constant_voltage_rollout_rmse": rollout,
         "gpu_latency": latency,
         "selection_used_sealed_test": False,
-        "claim_scope": "Ca_HVA m under held voltage only; no coupled-voltage or embedded-neuron claim",
+        "claim_scope": (
+            f"Ca_HVA {config.gate} under held voltage only; "
+            "no coupled-voltage or embedded-neuron claim"
+        ),
     }
     (output_dir / "final_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
     (output_dir / "sealed_test_opened.json").write_text(json.dumps({

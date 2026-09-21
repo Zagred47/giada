@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from src.giada_teacher import (
     build_gpu_baseline_contract,
+    paired_index_generator,
     paired_index_stream,
     validate_gpu_baseline_contract,
 )
@@ -43,3 +44,9 @@ def test_paired_minibatch_stream_is_replayable_and_seeded() -> None:
     assert first["sha256"] != different["sha256"]
     assert len(first["batches"]) == 20
     assert all(len(batch) == 1024 for batch in first["batches"])
+
+
+def test_compact_generator_replays_the_materialized_stream_exactly() -> None:
+    materialized = paired_index_stream(101, 32, 20, 100017)["batches"]
+    compact = paired_index_generator(101, 32, 100017)
+    assert [next(compact) for _ in range(20)] == materialized

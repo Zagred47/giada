@@ -40,6 +40,21 @@ class AtomicGatePlaygroundTests(unittest.TestCase):
             self.assertTrue(bool(torch.all(prediction >= 0.0)))
             self.assertTrue(bool(torch.all(prediction <= 1.0)))
 
-    def test_task1_config_rejects_wrong_gate(self) -> None:
+    def test_atomic_config_accepts_h_and_rejects_unknown_gate(self) -> None:
+        AtomicGateTaskConfig(gate="h").validate()
         with self.assertRaisesRegex(ValueError, "restricted"):
-            AtomicGateTaskConfig(gate="h").validate()
+            AtomicGateTaskConfig(gate="n").validate()
+
+    def test_task2_h_dataset_matches_teacher_and_uses_h_rates(self) -> None:
+        formula = ExtractedGateFormula.from_mod(TEACHER_MOD)
+        dataset = materialize_atomic_gate_dataset(formula, gate="h")
+        self.assertEqual(dataset["gate"], "h")
+        row = dataset["strata"]["train"]
+        self.assertEqual(row["inputs"].shape, (4048, 3))
+        voltage, state, dt = row["inputs"][37]
+        self.assertAlmostEqual(
+            row["targets"][37], formula.step("h", state, voltage, dt), places=14
+        )
+        self.assertAlmostEqual(
+            row["privileged_inf"][37], formula.rates(voltage)["h_inf"], places=14
+        )
