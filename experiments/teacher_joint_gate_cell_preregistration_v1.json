@@ -1,0 +1,38 @@
+{
+  "schema_version": "giada-task3-preregistration-v1",
+  "task": "3",
+  "name": "Ca_HVA joint m+h physical-tau cell",
+  "prerequisites": {
+    "task1b": "engineering continuation gate passed; m OOD-voltage debt retained",
+    "task2b": "physical-tau h repaired and Task 3 authorized"
+  },
+  "causal_scope": "held voltage only",
+  "families": {
+    "independent": "two private width-16 voltage trunks",
+    "shared_compact": "one shared width-16 voltage trunk with four distinct heads",
+    "shared_matched": "one shared width-23 voltage trunk approximately parameter-matched to independent"
+  },
+  "outputs": ["m_inf", "tau_m", "h_inf", "tau_h"],
+  "analytic_updates": ["m_t+1", "h_t+1"],
+  "derived_diagnostic": "m_t+1^2 * h_t+1; not yet the full ionic current",
+  "training": {
+    "seeds": [17, 29, 43],
+    "learning_rate": 0.003,
+    "batch_size": 1024,
+    "checkpoints": [0, 1000, 3000, 10000, 30000, 50000],
+    "m_objective": "endpoint MSE",
+    "h_objective": "endpoint MSE + 0.1 h_inf MSE + 0.01 log(tau_h) MSE"
+  },
+  "selection": "development only; best shared arm is promoted only if within 10% of independent normalized worst-gate score",
+  "fresh_confirmation": "new disjoint joint tuples, opened once after freeze",
+  "registered_gate": {
+    "fresh_m_rmse_max": 0.0025,
+    "fresh_h_rmse_max": 0.001,
+    "fresh_open_probability_rmse_max": 0.0025,
+    "rollout_1000_m_rmse_max": 0.0025,
+    "rollout_1000_h_rmse_max": 0.005,
+    "occupancy_violations_max": 0,
+    "shared_within_independent_score_fraction": 1.10
+  },
+  "forbidden_claims": ["varying-voltage success", "full Ca current success", "embedded-neuron success"]
+}

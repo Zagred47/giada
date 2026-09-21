@@ -48,6 +48,12 @@ from .atomic_gate_h_identifiability import (
     evaluate_gate_h_identifiability,
     verified_task2_artifact_root,
 )
+from .joint_gate_cell_playground import (
+    JointGateCellConfig,
+    prepare_joint_gate_dataset,
+    run_joint_gate_playground,
+    evaluate_joint_gate_playground,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -70,4 +76,6 @@ __all__ = [
     "GateHIdentifiabilityConfig", "prepare_gate_h_identifiability",
     "run_gate_h_identifiability", "evaluate_gate_h_identifiability",
     "verified_task2_artifact_root",
+    "JointGateCellConfig", "prepare_joint_gate_dataset",
+    "run_joint_gate_playground", "evaluate_joint_gate_playground",
 ]
