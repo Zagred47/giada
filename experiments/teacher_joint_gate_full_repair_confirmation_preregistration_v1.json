@@ -1,0 +1,46 @@
+{
+  "schema_version": "giada-task3e-preregistration-v1",
+  "task": "3e",
+  "name": "Exact frozen full-repair confirmation",
+  "candidate": {
+    "source": "Task 3d immutable development artifact",
+    "family": "full_repair",
+    "topology": "shared",
+    "width": 23,
+    "step": 50000,
+    "seeds": [17, 29, 43],
+    "retraining_performed": false
+  },
+  "source_hashes": {
+    "archive_sha256": "4733cc943abb668291cb05bc581f1e47809be7bdb099fae14676486f509c9edf",
+    "final_report_sha256": "4519c485e0dc5ea37b24de6e823d48d0b4b703ea91cefa3f73cf3a22192b4827",
+    "checkpoint_sha256": "d5d10a4b57bc0c5c07a2afd7b7f9d2ac3d31bd6ae69f040ca419d9ac1e64ac1f"
+  },
+  "freeze": {
+    "development_reproduction_atol": 1e-10,
+    "sealed_opened_only_after_hash_and_development_verification": true,
+    "sealed_used_for_selection": false
+  },
+  "sealed_strata": {
+    "central": 4096,
+    "voltage_tail": 2048,
+    "long_horizon": 2048
+  },
+  "registered_gates": {
+    "sealed_mean_score_max": 1.0,
+    "sealed_max_seed_score_max": 1.0,
+    "m_inf_rmse_max": 0.01,
+    "h_inf_rmse_max": 0.01,
+    "log_tau_rmse_max": 0.15,
+    "maximum_monotonic_reversal": 0.001,
+    "occupancy_violations_max": 0
+  },
+  "positive_decision": "Authorize Task 4 only if every registered gate passes.",
+  "negative_decision": "Keep Task 4 blocked and localize the failing sealed stratum without tuning on it.",
+  "forbidden": [
+    "reuse of Task 3c fresh",
+    "selection on Task 3e sealed outcomes",
+    "retraining after sealed opening",
+    "claims about varying-voltage coupling or complete ionic current"
+  ]
+}

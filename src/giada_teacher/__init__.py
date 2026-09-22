@@ -72,6 +72,12 @@ from .joint_gate_generalization_diagnosis import (
     prepare_joint_gate_generalization_diagnosis,
     run_joint_gate_generalization_diagnosis,
 )
+from .joint_gate_full_repair_confirmation import (
+    JointGateFullRepairConfirmationConfig,
+    verified_task3d_root,
+    freeze_full_repair_from_task3d,
+    evaluate_frozen_full_repair,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -104,4 +110,6 @@ __all__ = [
     "JointGateGeneralizationDiagnosisConfig",
     "prepare_joint_gate_generalization_diagnosis",
     "run_joint_gate_generalization_diagnosis",
+    "JointGateFullRepairConfirmationConfig", "verified_task3d_root",
+    "freeze_full_repair_from_task3d", "evaluate_frozen_full_repair",
 ]
