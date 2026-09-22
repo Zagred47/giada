@@ -1,0 +1,38 @@
+{
+  "schema_version": "giada-task3e-reviewed-result-v1",
+  "task": "Task 3e — frozen full-repair sealed confirmation",
+  "review_date": "2026-09-22",
+  "source_archive": "giada_joint_m_h_full_repair_confirmation.zip",
+  "source_archive_sha256": "e10521f15fa2b543b4ccb543967f08d3fd3795542616d619a0672d08cdea17cd",
+  "source_final_report_sha256": "639dcd2cbc1302b493cf017bb2f41f082c5e7a352caacd95666e5c61fa2aab79",
+  "source_code_revision": "ec14d48de8f601a75c65fb68253e8f4949911783",
+  "valid": true,
+  "methodological_contract": {
+    "source_verified": true,
+    "retraining_performed": false,
+    "selection_used_sealed": false,
+    "development_reproduction_max_error": 0.0,
+    "sealed_opened_once_after_freeze": true,
+    "overlap_with_task3d": 0,
+    "sealed_example_count": 8192
+  },
+  "decision": {
+    "sealed_mean_score": 0.39808166280024526,
+    "sealed_max_seed_score": 0.5678302877146536,
+    "maximum_m_inf_rmse": 0.000940954747561188,
+    "maximum_h_inf_rmse": 0.0013061689586269072,
+    "maximum_log_tau_rmse": 0.012756880334839314,
+    "maximum_monotonic_reversal": 0.0,
+    "occupancy_violations": 0,
+    "task3e_passed": true,
+    "task4_authorized": true
+  },
+  "per_seed_score": {
+    "17": 0.34871503863944875,
+    "29": 0.2776996620466334,
+    "43": 0.5678302877146536
+  },
+  "interpretation": "The development-selected full-repair shared m+h candidate generalizes to a new sealed set without retraining or sealed selection. Expanded voltage support plus the conditional monotonic shape prior is therefore confirmed for the held-voltage Ca_HVA domain.",
+  "scope_limit": "Held-voltage isolated Ca_HVA m+h only; no claim yet about time-varying voltage paths, full ionic current, embedded compartments, or complete neurons.",
+  "next_step": "Task 4 — paired primitive matrix under the now-validated held-voltage contract."
+}
