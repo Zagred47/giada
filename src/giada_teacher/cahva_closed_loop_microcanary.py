@@ -84,7 +84,7 @@ def _teacher_episode(mechanism_root, config, initial_voltage, gbar_multiplier, p
         clamp = h.IClamp(segment)
         clamp.delay, clamp.dur, clamp.amp = start, end - start, amp
         clamps.append(clamp)
-    h.cvode_active(0)
+    h.CVode().active(0)
     h.secondorder = 0
     h.dt = config.dt_ms
     h.steps_per_ms = round(1 / config.dt_ms)
@@ -214,7 +214,13 @@ def run_closed_loop_microcanary(formula, task5_source, mechanism_root, output_di
     config = config or ClosedLoopCaHVAConfig()
     config.validate()
     output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=False)
+    if output_dir.exists():
+        if not output_dir.is_dir() or any(
+            child.name != ".verified_task5" for child in output_dir.iterdir()
+        ):
+            raise FileExistsError(f"Output già presente e non vuoto: {output_dir}")
+    else:
+        output_dir.mkdir(parents=True)
     root = verified_task5_root(task5_source, output_dir / ".verified_task5")
     from neuron import load_mechanisms
     load_mechanisms(str(mechanism_root))
