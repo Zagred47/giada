@@ -85,6 +85,13 @@ from .primitive_matrix_playground import (
     train_and_freeze_primitive_matrix,
     evaluate_frozen_primitive_matrix,
 )
+from .primitive_scaling import (
+    PrimitiveScalingConfig,
+    verified_task4_root,
+    prepare_scaling_data,
+    train_and_freeze_scaling,
+    evaluate_frozen_scaling,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -121,4 +128,6 @@ __all__ = [
     "freeze_full_repair_from_task3d", "evaluate_frozen_full_repair",
     "PrimitiveMatrixConfig", "verified_task3e_root", "prepare_primitive_matrix",
     "train_and_freeze_primitive_matrix", "evaluate_frozen_primitive_matrix",
+    "PrimitiveScalingConfig", "verified_task4_root", "prepare_scaling_data",
+    "train_and_freeze_scaling", "evaluate_frozen_scaling",
 ]

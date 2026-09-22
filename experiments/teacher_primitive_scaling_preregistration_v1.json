@@ -1,0 +1,31 @@
+{
+  "schema_version": "giada-task5-preregistration-v1",
+  "task": "5",
+  "name": "Paired physical-tau capacity and numerical resolution scaling",
+  "authorization": "Exact Task 4 report must be verified by SHA-256.",
+  "domain": "Isolated Ca_HVA m+h under held voltage",
+  "hypotheses": {
+    "physical_capacity": "At fixed budget, increasing width from 16 to 23 or 32 materially reduces development stress if capacity is limiting.",
+    "physical_budget": "At fixed width, improvement from 50k to 75k determines whether the learned rate approximation is still optimization limited.",
+    "lut_resolution": "Linear LUT error decreases as voltage grid resolution grows; score and memory cost identify the useful knee.",
+    "polynomial_degree": "Chebyshev degree and transformed rates alter the approximation error, especially for m.",
+    "gpu_pareto": "Physical-tau and LUT are timed on the same GPU at identical batch sizes."
+  },
+  "physical_widths": [16, 23, 32],
+  "training_seeds": [17, 29, 43],
+  "checkpoints": [0, 1000, 3000, 10000, 30000, 50000, 75000],
+  "lut_points": [33, 65, 129, 257, 513],
+  "chebyshev_degrees": [8, 16, 24],
+  "gpu_benchmark_batch_sizes": [1024, 65536],
+  "frozen_selection": "The checkpoint for each width, preferred physical width and numerical resolution within each family are selected by development worst-stratum score before sealed evaluation; checkpoint ties break to earlier budget.",
+  "data_policy": {
+    "fit_and_development": "The same deterministic Task 4 fit/development generator and split are reused for paired comparison.",
+    "task4_sealed_read": false,
+    "new_task5_sealed_count": 8192,
+    "sealed_opened_once_after_freeze": true,
+    "sealed_used_for_selection": false
+  },
+  "metrics": ["m RMSE", "h RMSE", "m^2h RMSE", "worst-stratum score", "per-seed dispersion", "parameters", "LUT bytes", "GPU latency", "GPU rows per second"],
+  "decision": "Report scaling curves and the width/LUT resolution selected on development. Sealed evaluates frozen physical models and numerical grids once. Do not infer coupled-voltage validity.",
+  "task6_policy": "The Task 5 result chooses candidates for the registered domain stress of Task 6."
+}
