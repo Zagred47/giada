@@ -222,7 +222,9 @@ def run_closed_loop_microcanary(formula, task5_source, mechanism_root, output_di
         output_dir.mkdir(parents=True)
     root = verified_task5_root(task5_source, output_dir / ".verified_task5")
     from neuron import load_mechanisms
+    print("[GIADA Task 7] loading compiled NEURON mechanisms", flush=True)
     load_mechanisms(str(mechanism_root))
+    print("[GIADA Task 7] loading frozen GPU candidates", flush=True)
     torch = configure_torch_runtime(17)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     torch, model, table = _frozen_candidates(root, formula, device)
@@ -234,7 +236,9 @@ def run_closed_loop_microcanary(formula, task5_source, mechanism_root, output_di
         ((v, g, p) for v in config.initial_voltage_mv
          for g in config.gbar_multipliers for p in config.protocol_names), start=1
     ):
+        print(f"[GIADA Task 7] episode {index}/{total}: NEURON teacher", flush=True)
         teacher, area = _teacher_episode(mechanism_root, config, initial, multiplier, protocol)
+        print(f"[GIADA Task 7] episode {index}/{total}: formula and GPU candidates", flush=True)
         formula_rollout = _formula_closed_loop(formula, teacher, area, config, multiplier, protocol)
         lut_rollout, physical_rollouts = _candidate_closed_loop(
             torch, model, table, teacher, area, config, multiplier, protocol, device)
