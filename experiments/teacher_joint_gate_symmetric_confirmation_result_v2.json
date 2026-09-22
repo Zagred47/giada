@@ -1,0 +1,55 @@
+{
+  "schema_version": "giada-task3c-result-v2",
+  "artifact": "giada_joint_m_h_symmetric_confirmation_v2.zip",
+  "artifact_sha256": "ce62136ff6b6407f86e22146ecad8a7f2bb5e3b509147c49cce457431a2ad5f5",
+  "code_revision": "e4cf8df671e8e0beac5510e53646643c552a02ff",
+  "valid": true,
+  "source_verified": true,
+  "retraining_performed": false,
+  "selection_used_fresh": false,
+  "checkpoint_origin": "immutable_task3b_symmetric_rates_step50000",
+  "development_reproduction_max_error": 0.0,
+  "hashes": {
+    "task3b_report_sha256": "29f716ddc7744eb7a19ff471565de523fd7753c3758b4a66c18387376ea67e42",
+    "task3b_checkpoint_sha256": "85b67995241c40aef5b0ee5a41bf4c56eb1c39c327fe82e54781097a8d91eedc",
+    "task3c_checkpoint_sha256": "21a0e94df1109c7377741ead2d6ec6fed714babe9ed1344c673ea3363d9c2d01",
+    "final_report_sha256": "b8ac3d3fc267e5d0458585dd8baf252a55c17535e8589f7962dbb6ae2834d972"
+  },
+  "development": {
+    "mean_score": 0.1021651410588305,
+    "maximum_seed_score": 0.11300366583321994,
+    "gate_passed": true
+  },
+  "fresh": {
+    "tuple_count": 2000,
+    "overlap_with_task3_or_development": 0,
+    "m_rmse": 0.009892100465455881,
+    "h_rmse": 0.000060347006185670015,
+    "open_probability_rmse": 0.008649595800708159
+  },
+  "rollout_1000": {
+    "m_rmse": 0.00044576150619922005,
+    "h_rmse": 0.009667492460252735,
+    "open_probability_rmse": 0.003600661011670628
+  },
+  "occupancy_violations": 0,
+  "registered_limits": {
+    "fresh_m_rmse_max": 0.0025,
+    "fresh_h_rmse_max": 0.001,
+    "fresh_open_probability_rmse_max": 0.0025,
+    "rollout_1000_m_rmse_max": 0.0025,
+    "rollout_1000_h_rmse_max": 0.005
+  },
+  "decision": {
+    "task3c_passed": false,
+    "task4_authorized": false,
+    "failed_registered_metrics": [
+      "fresh_m_rmse",
+      "fresh_open_probability_rmse",
+      "rollout_1000_h_rmse"
+    ],
+    "localization": "The exact frozen Task 3b model is accurate in support and under OOD-dt, but extrapolation to the fresh OOD-voltage stratum is seed-sensitive and the h gate accumulates excessive error over 1000 steps.",
+    "next_step": "Do not tune on the opened fresh set. Use development-only voltage-support and h-rate diagnostics, then preregister a new repair and a new sealed confirmation set."
+  },
+  "scope": "Joint Ca_HVA m+h gate dynamics under voltage clamp. This result does not test varying-voltage coupling, complete ionic current, or embedded-neuron behavior."
+}
