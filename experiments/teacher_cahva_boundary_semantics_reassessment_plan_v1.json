@@ -1,0 +1,26 @@
+{
+  "schema_version": "giada-task7c-boundary-semantics-plan-v1",
+  "task": "7c",
+  "study_type": "post-hoc forensic reassessment, not independent confirmation",
+  "trigger": "Task 7b saved formula gates at n+1 match teacher gates at n, whereas teacher gate boundaries update using V_(n+1). The saved teacher ica at n+1 equals the old-state current at n.",
+  "immutable_sources": {
+    "task7b_final_report_sha256": "17a91aaaee8652c86a48e670f22ff1ae2a98bc30fd98ee250941948878d66a71",
+    "task7b_trajectories_sha256": "89583fdded8cceca5f7ae7fd6140a5074801b55db5080fed097db843c5474f86",
+    "task5_checkpoint": "same frozen width-32 physical-tau, seeds 17/29/43, and LUT-513 as Task 7b"
+  },
+  "corrected_order": [
+    "V_(n+1) = semiimplicit_voltage(V_n, m_n, h_n, U_n)",
+    "ica_(n+1) recorded by teacher = gbar*m_n^2*h_n*(V_n-E_Ca)",
+    "(m,h)_(n+1) = gate_primitive(V_(n+1),m_n,h_n,dt)"
+  ],
+  "checks": {
+    "episode_count": 24,
+    "corrected_formula_voltage_max_abs_mv": 1e-8,
+    "corrected_formula_gate_max_rmse": 1e-8,
+    "corrected_formula_current_max_abs_ma_cm2": 1e-10,
+    "old_formula_one_step_gate_lag_max_abs": 1e-8,
+    "candidate_outputs_finite": true
+  },
+  "comparison": "Recompute all 24 saved trajectories for exact formula, frozen LUT and all frozen physical-tau seeds. Report same-time boundary voltage, m, h and sampled current errors; no seed, protocol or model selection.",
+  "prohibited_claims": ["new teacher data", "fresh independent confirmation", "full 642-segment validity", "learned voltage updater validity"]
+}

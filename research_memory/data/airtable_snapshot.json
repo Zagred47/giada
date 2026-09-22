@@ -2786,6 +2786,31 @@
         }
       },
       {
+        "id": "rec21d2946e21ed2c",
+        "createdTime": "2026-09-22T21:12:09Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 7c — rianalisi forense dei boundary state Ca_HVA",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-task7c-cahva-boundary-semantics-reassessment-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec7c3d18cf6c26bf"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Ricalcolo di formula, LUT e physical-tau congelati con l'ordine V-gate-corrente campionato osservato nel teacher; riusa le 24 tracce della Task 7b.",
+          "fldyeCfji17c7BfPP": "Stabilire le metriche autentiche di stato al bordo e separare l'errore dei candidati dal disallineamento temporale della Task 7b."
+        }
+      },
+      {
         "id": "rec2667fe3f4c2302",
         "createdTime": "2026-09-21T11:54:21Z",
         "cellValuesByFieldId": {
@@ -2899,7 +2924,9 @@
         "createdTime": "2026-09-22T20:54:43Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec323066ae01be24"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Task 7b — Ca_HVA attivo nel circuito chiuso a un compartimento",
@@ -2914,7 +2941,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Confronto causale tra NEURON, formula, LUT e physical-tau congelati con ladder depolarizzante e controllo gbar=0.",
           "fldyeCfji17c7BfPP": "Verificare se i candidati si distinguono quando Ca_HVA genera corrente e causa una differenza V misurabile, mantenendo valido il controllo solver."
         }
@@ -3491,6 +3518,41 @@
         }
       },
       {
+        "id": "rec7c3d18cf6c26bf",
+        "createdTime": "2026-09-22T21:12:36Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-22",
+          "fld43sXbznp3IMZYL": "Task 7c Ca_HVA boundary-state forensic protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Piano di rianalisi post hoc delle stesse 24 traiettorie Task 7b; non è fresh confirmation.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Formula corretta: max abs V <=1e-8 mV, RMSE gate <=1e-8, max abs ica <=1e-10 mA/cm2. Identità di lag originale <=1e-8; output candidati finiti. Nessuna selezione di modello/seed e nessuna nuova traiettoria teacher.",
+          "fldNtSPrXFVAEpq2B": "Hash Task 7b o Task 5 errato, forma episodi incoerente, CUDA assente o valori non finiti invalidano il run. Se la formula corretta non riproduce NEURON, non interpretare le metriche dei candidati.",
+          "fldODG8tJ39IE4DeM": "protocol-task7c-cahva-boundary-semantics-reassessment-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "b20898ff51e9639ec780479d38d8c89c9f68d829e45cf1af1aaba227b1adb0cd",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare hash report e tracce 7b; ricalcolare V_(n+1) da gate_n e input_n; registrare ica_(n+1) dal vecchio stato; ricalcolare gate_(n+1) usando V_(n+1). Confrontare formula, LUT-513 e physical-tau congelato seed 17/29/43 su tutti i 24 episodi.",
+          "fldpfUH2P3mpRu2B6": [
+            "rec7e06b96bae5ac6"
+          ],
+          "fldzYHRSjC0ov4BKb": [
+            "rec21d2946e21ed2c"
+          ]
+        }
+      },
+      {
         "id": "rec7e06b96bae5ac6",
         "createdTime": "2026-09-22T20:55:01Z",
         "cellValuesByFieldId": {
@@ -3509,7 +3571,9 @@
           "fldODG8tJ39IE4DeM": "protocol-task7b-active-cahva-closed-loop-v1",
           "fldSW3jbYrJFUwfJy": [],
           "fldTRHy1C66ZPwHP6": "v1",
-          "fldXGaaTvJNgqSF4P": [],
+          "fldXGaaTvJNgqSF4P": [
+            "rec7c3d18cf6c26bf"
+          ],
           "fldXNrWQrGlph6l1g": "Ricomposizione",
           "fldY1kvKgn1aBhiVp": "fe77ce596554080fad31927691e83bf4000a3fe56c5e5550ef30a45ee229282e",
           "fldbFUHleydt1N0tS": [],
@@ -4714,6 +4778,29 @@
           "fldw7I3GqPu0PuSLu": [
             "rec0dc93bf87bc109"
           ]
+        }
+      },
+      {
+        "id": "rec323066ae01be24",
+        "createdTime": "2026-09-22T21:12:09Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Risultato del microcanary Ca_HVA attivo e diagnosi forense post hoc della semantica dei bordi temporali.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task7b-active-channel-boundary-lag-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "24 episodi completi, 6/8 coppie canoniche superano il gate di esposizione, controllo gbar=0 pulito. Formula V worst RMSE 1.941e-12 mV. La metrica gate same-time originale arriva a 0.002579, ma gate_formula[n+1] coincide con gate_teacher[n]. Il teacher usa gate_n per V_(n+1), V_(n+1) per gate_(n+1), e registra ica_(n+1) dal vecchio stato. Con l'ordine corretto la formula riproduce tutti i 24 episodi con worst max abs V 2.82e-12 mV, m 1.24e-13, h 2.66e-15, ica 2.78e-16 mA/cm2.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Il ranking LUT/physical-tau del report 7b è riferito al rollout con gate sfasati e va ricalcolato. La diagnosi dell'ordine è verificata sulle tracce già aperte, quindi non costituisce una conferma fresh.",
+          "fldYAbc64NIZGKzWO": [
+            "rec7041006aab87d6"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Un compartimento Ca_HVA+pas, E_Ca fisso; nessuna conclusione sul teacher Hay completo. ZIP SHA-256 be673bf2bc065f8f6b5c88bbc36713de943dd6283166c57de7b5f1d642e79ae7.",
+          "fldhoJJ1jrMBcOUrl": "Task 7b — canale esposto, stato dei gate sfasato di un sottopasso",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
         }
       },
       {

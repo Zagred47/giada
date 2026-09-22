@@ -1,0 +1,24 @@
+{
+  "schema_version": "giada-task7b-result-summary-v1",
+  "source_zip_sha256": "be673bf2bc065f8f6b5c88bbc36713de943dd6283166c57de7b5f1d642e79ae7",
+  "source_code_revision": "51c2130554bab97f3567b9279b2064c87536a905",
+  "episode_count": 24,
+  "reported_valid": true,
+  "active_pair_count": 6,
+  "active_pair_target": 4,
+  "zero_control_valid": true,
+  "formula_worst_voltage_rmse_mv": 1.94104299123439e-12,
+  "reported_same_time_formula_gate_rmse": 0.00257873200837064,
+  "forensic_boundary_finding": {
+    "teacher_voltage_step_uses": "boundary gates at n",
+    "teacher_gate_step_uses": "new voltage at n+1",
+    "teacher_sampled_ica_at_n_plus_1_uses": "gates and voltage at n",
+    "original_formula_gate_at_n_plus_1_matches_teacher_gate_at_n": true,
+    "corrected_formula_all_24_worst_max_abs_voltage_mv": 2.81863421e-12,
+    "corrected_formula_all_24_worst_max_abs_m": 1.23567823e-13,
+    "corrected_formula_all_24_worst_max_abs_h": 2.66453526e-15,
+    "corrected_formula_all_24_worst_max_abs_ica_ma_cm2": 2.78206277e-16
+  },
+  "interpretation": "The channel was activated and the voltage solver was calibrated, but the original candidate gate/current metrics compare different temporal substates. The reported valid flag does not validate full boundary-state reproduction. Recalculate all frozen arms in Task 7c without new teacher trajectories.",
+  "fresh_confirmation_claimed": false
+}

@@ -1,0 +1,14 @@
+{
+  "Nome": "Task 7c Ca_HVA boundary-state forensic protocol v1",
+  "Codice stabile": "protocol-task7c-cahva-boundary-semantics-reassessment-v1",
+  "Descrizione": "Piano di rianalisi post hoc delle stesse 24 traiettorie Task 7b; non è fresh confirmation.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "Verificare hash report e tracce 7b; ricalcolare V_(n+1) da gate_n e input_n; registrare ica_(n+1) dal vecchio stato; ricalcolare gate_(n+1) usando V_(n+1). Confrontare formula, LUT-513 e physical-tau congelato seed 17/29/43 su tutti i 24 episodi.",
+  "Criteri di successo": "Formula corretta: max abs V <=1e-8 mV, RMSE gate <=1e-8, max abs ica <=1e-10 mA/cm2. Identità di lag originale <=1e-8; output candidati finiti. Nessuna selezione di modello/seed e nessuna nuova traiettoria teacher.",
+  "Regole di arresto": "Hash Task 7b o Task 5 errato, forma episodi incoerente, CUDA assente o valori non finiti invalidano il run. Se la formula corretta non riproduce NEURON, non interpretare le metriche dei candidati.",
+  "Registrato il": "2026-09-22",
+  "Hash preregistrazione": "b20898ff51e9639ec780479d38d8c89c9f68d829e45cf1af1aaba227b1adb0cd",
+  "Esperimento": ["rec21d2946e21ed2c"],
+  "Versione precedente": ["rec7e06b96bae5ac6"]
+}

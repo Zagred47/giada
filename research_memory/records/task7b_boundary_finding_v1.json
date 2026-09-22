@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 7b — canale esposto, stato dei gate sfasato di un sottopasso",
+  "Codice stabile": "finding-task7b-active-channel-boundary-lag-v1",
+  "Descrizione": "Risultato del microcanary Ca_HVA attivo e diagnosi forense post hoc della semantica dei bordi temporali.",
+  "Risultato": "24 episodi completi, 6/8 coppie canoniche superano il gate di esposizione, controllo gbar=0 pulito. Formula V worst RMSE 1.941e-12 mV. La metrica gate same-time originale arriva a 0.002579, ma gate_formula[n+1] coincide con gate_teacher[n]. Il teacher usa gate_n per V_(n+1), V_(n+1) per gate_(n+1), e registra ica_(n+1) dal vecchio stato. Con l'ordine corretto la formula riproduce tutti i 24 episodi con worst max abs V 2.82e-12 mV, m 1.24e-13, h 2.66e-15, ica 2.78e-16 mA/cm2.",
+  "Incertezza": "Il ranking LUT/physical-tau del report 7b è riferito al rollout con gate sfasati e va ricalcolato. La diagnosi dell'ordine è verificata sulle tracce già aperte, quindi non costituisce una conferma fresh.",
+  "Limitazioni": "Un compartimento Ca_HVA+pas, E_Ca fisso; nessuna conclusione sul teacher Hay completo. ZIP SHA-256 be673bf2bc065f8f6b5c88bbc36713de943dd6283166c57de7b5f1d642e79ae7.",
+  "Esito": "Misto",
+  "Esperimenti": ["rec7041006aab87d6"]
+}
