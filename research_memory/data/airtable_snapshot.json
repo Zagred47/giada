@@ -584,6 +584,34 @@
         }
       },
       {
+        "id": "recc3f63ad44433de",
+        "createdTime": "2026-09-22T18:22:20Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Report",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [],
+          "fldFio32ffmk14gMY": [],
+          "fldJ42OE1ARQhyh59": "experiments/teacher_primitive_matrix_result_v1.json",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "527cc09aaffae83d75dfa70133f24eb7b8ce9dfd2314f1a48c184771c235c58d",
+          "fldw98aVU9j6cBJYh": "GIADA Task 4 paired primitive matrix result",
+          "fldwLVADFDuK4I0rk": "Artefatto verificato e review versionata della matrice appaiata.",
+          "fldwnMJjQrllvC78Z": "artifact-task4-paired-primitive-matrix-result-v1",
+          "fldy0kiTp7BG4j68p": [],
+          "fldybOB1VowNUBprP": 2339
+        }
+      },
+      {
         "id": "reccdadef709e0243",
         "createdTime": "2026-09-21T11:53:42Z",
         "cellValuesByFieldId": {
@@ -816,7 +844,8 @@
             "rec1189cf4618ba72",
             "rec0dc93bf87bc109",
             "rec9aef00b8accfe0",
-            "recafef591005f8b1"
+            "recafef591005f8b1",
+            "rec2f2660ec054741"
           ],
           "fldVYxRIjMxK7QdMj": [
             "rec0Kt3O4phdWPAl6",
@@ -1037,7 +1066,7 @@
           "fldj261pBSznFUjUC": [
             "rec9de844dc73f136"
           ],
-          "fldu0VJMDCla5XqQv": "In studio",
+          "fldu0VJMDCla5XqQv": "Parzialmente risolta",
           "fldvER0OXNvszn36s": "Quale primitiva rappresenta meglio la dinamica Ca_HVA m+h held-voltage?"
         }
       },
@@ -1621,14 +1650,16 @@
         "cellValuesByFieldId": {
           "fld0cyrU7z3lgnGri": [],
           "fld1yxxCdQIKUTr3o": [],
-          "fld21P7Z38jhllXCw": [],
+          "fld21P7Z38jhllXCw": [
+            "rec58dd7499d78e19"
+          ],
           "fldBg7fdVTV3QRYYR": [
             "rec9bb274a0ab11e5"
           ],
           "fldC0zRVGDcrxDXx3": [],
           "fldCQ7s6vqBkAEj7o": [],
           "fldD3WgtsOkJFiQ0f": "La struttura physical-tau conserva un vantaggio Pareto nel dominio held-voltage",
-          "fldGKzruZ7lMxuhv9": "Aperta",
+          "fldGKzruZ7lMxuhv9": "Indeterminata",
           "fldGMQygrEEp67LYU": [
             "rec9de844dc73f136"
           ],
@@ -1652,7 +1683,7 @@
           "fldjIzyz2FzkrntCk": [],
           "fldl4vkmr7todcrIa": [],
           "fldn09q7Ys4pNG46z": [],
-          "fldnstZ0ARy2ZeMxz": "Held-voltage isolato; il vantaggio può cambiare con voltage path variabile o hardware diverso.",
+          "fldnstZ0ARy2ZeMxz": "Physical-tau è il miglior learned, ma la LUT lineare è 13,6× più accurata; costo misurato su dispositivi diversi e dominio held-voltage soltanto.",
           "fldrs9hp5BJaiJJ9w": [],
           "fldtFqPHjNQsCaDvJ": [],
           "fldtIv7JUzBTeny1j": [],
@@ -1788,6 +1819,28 @@
           "fldzPthPEKWp0B8dE": [
             "recc43b5d2ea5fde7"
           ]
+        }
+      },
+      {
+        "id": "rec58dd7499d78e19",
+        "createdTime": "2026-09-22T18:23:05Z",
+        "cellValuesByFieldId": {
+          "fld2JkJoQIfeVxSvI": "Task 4 sostiene physical-tau contro le reti generiche ma non contro la LUT lineare",
+          "fld4PXyhEdodSkhIX": "2026-09-22",
+          "fld595PSHoc6S4ZRt": [],
+          "fld8tbfA0sBUMtuOK": [],
+          "fld9WZIqaXXD0lFQ7": "Latenza numerica misurata su CPU e learned su GPU; manca stress dt/path e scaling di capacità/risoluzione. Non è ancora definito il Pareto globale.",
+          "fldRaOy3jJUWmQsxK": [],
+          "fldS1gt42h6ElFDc4": "Indeterminata",
+          "fldW8YCcSzGz0A99i": "evidence-task4-physical-structure-vs-numerical-baseline-v1",
+          "fldbUCpuMqzfvv1po": [],
+          "fldh83wNHNpikBOoX": "Confronto sealed appaiato di otto primitive.",
+          "fldrn0P4pep6pTLSH": "Physical-tau score 0,4041 con 694 parametri, contro direct-z 1,7035, GRU 4,1891 e MLP 5,8421; zero violazioni. Tuttavia LUT lineare ottiene 0,02963, circa 13,6× migliore in accuratezza.",
+          "fldyCjfwA4HhVDOhL": [],
+          "fldzDr7IhMwkcELwG": [
+            "recc57e618543ffbb"
+          ],
+          "fldzPthPEKWp0B8dE": []
         }
       },
       {
@@ -2351,7 +2404,9 @@
         "createdTime": "2026-09-22T17:52:48Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec1fb83c1fb73e9d"
+          ],
           "fld8UsWD6AGXcs8LB": [
             "rec9bb274a0ab11e5"
           ],
@@ -2374,7 +2429,7 @@
           "fldnTFjWQUe3eEcDr": [
             "recbb9ae2d70f973b"
           ],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Otto primitive confrontate su dati, split, seed e metriche allineati; quattro famiglie neurali × tre seed in parallelo GPU.",
           "fldyeCfji17c7BfPP": "Separare vantaggi di struttura, ricorrenza generica, approssimazione numerica e budget, producendo contemporaneamente la prima mini scaling law."
         }
@@ -3716,6 +3771,29 @@
         }
       },
       {
+        "id": "rec1fb83c1fb73e9d",
+        "createdTime": "2026-09-22T18:23:06Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "La struttura meccanicistica è decisiva fra i learned, ma una baseline numerica locale è ancora più precisa.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task4-physical-tau-best-learned-lut-best-nonoracle-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "Ranking: formula ~0, LUT linear 0,02963, physical-tau 0,40410, nearest 1,1163, Chebyshev 1,3830, direct-z 1,7035, GRU 4,1891, MLP 5,8421. Physical-tau continua a migliorare fino a 50k.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Confronto di throughput cross-device non valido; capacità physical-tau e risoluzione LUT non scalate; sealed consumato una volta.",
+          "fldYAbc64NIZGKzWO": [
+            "rec9de844dc73f136"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Held-voltage Ca_HVA m+h; nessun percorso V variabile o compartimento accoppiato.",
+          "fldhoJJ1jrMBcOUrl": "Task 4 — physical-tau domina le reti, LUT lineare domina l'accuratezza",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "rec2e018c6c854ad7",
         "createdTime": "2026-09-22T10:18:53Z",
         "cellValuesByFieldId": {
@@ -4125,6 +4203,28 @@
             "recbf44a07e4a1438"
           ],
           "fldylCdEP8jwOCbl4": "Mantenere trunk shared_matched e solver physical-tau; aggiungere m_inf/log(tau_m) con gli stessi pesi di h. Non usare PCGrad o warm-start. Task 4 resta non autorizzata; eseguire freeze development e nuova conferma disgiunta."
+        }
+      },
+      {
+        "id": "rec2f2660ec054741",
+        "createdTime": "2026-09-22T18:23:06Z",
+        "cellValuesByFieldId": {
+          "fld5n2FeRMRNzIZTl": [
+            "rec0wPKrtqWymCBjr"
+          ],
+          "fld6c39TA0qX8gmL9": "Rivedere se scaling mostra saturazione physical-tau precoce, se LUT perde il vantaggio a diversa risoluzione/precisione o se Task 6 falsifica l'interpolazione.",
+          "fldKMdJcN5OyfXPBg": "decision-task4-run-targeted-scaling-before-task6-v1",
+          "fldPWPhrQIqadQafc": [],
+          "fldU0fysH3Vsyd5uc": "Physical-tau è il miglior learned e non è saturo a 50k; LUT lineare è 13,6× più accurata. Serve separare capacità, budget, risoluzione e costo sullo stesso dispositivo prima del dominio stress.",
+          "fldUSmiF5JjK64uS5": [],
+          "fldYm1YuTbDyecT3y": [],
+          "fldZCyabVIEfvk4Dk": "Continuare",
+          "fldeE0mamtVWsmGhH": [],
+          "fldhFipvsrVYbv5aa": "2026-09-22",
+          "fldpPpy9MTdwYYfvG": [],
+          "flduKvZ5tp3l0ciE8": "Eseguire scaling multifattoriale prima dello stress Task 6",
+          "fldyMOckgkXfrxIFp": [],
+          "fldylCdEP8jwOCbl4": "Mantenere physical-tau e LUT lineare come candidati principali; non dedicare ulteriore budget a MLP/GRU nella forma corrente."
         }
       },
       {
@@ -4734,7 +4834,7 @@
         "id": "recbb9ae2d70f973b",
         "createdTime": "2026-09-22T17:53:42Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld0tHGV6BV3tjAqn": "Conclusa",
           "fld8zz84auBO3DIGQ": [
             "rec345365538030db"
           ],
@@ -4749,7 +4849,7 @@
           "fldgrmwbCk1T9fq46": [
             "rec9bb274a0ab11e5"
           ],
-          "fldilkZX7GrkdJNu2": "Ranking sealed delle otto primitive, curve budget-accuratezza e diagnosi del vantaggio strutturale physical-tau.",
+          "fldilkZX7GrkdJNu2": "Completato: physical-tau miglior learned; LUT lineare miglior non-oracle; curve budget acquisite; Task 6 autorizzata.",
           "fldkCr0yLshDXWuxz": [],
           "fldlLL729Jw86riOj": [],
           "fldyiTgFzV1vvmM5o": [

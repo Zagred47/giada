@@ -1,0 +1,57 @@
+{
+  "schema_version": "giada-task4-reviewed-result-v1",
+  "task": "Task 4 — paired primitive matrix",
+  "review_date": "2026-09-22",
+  "source_archive": "giada_paired_primitive_matrix.zip",
+  "source_archive_sha256": "47b75fcf71bfde8ed492c249ed18d6473b48d60de4b8ca0a98c5b6efb9813096",
+  "source_final_report_sha256": "d45dd919b98b98c8afa89e48ed29f01c9d1a8c1af9ba430cd9d6e8434f5bb896",
+  "source_training_report_sha256": "fab59e1ea3a2ad66ef9e199d99eee991b4365ef855925c1658972ec99c17daab",
+  "source_code_revision": "12d86b8c496be7b30a6cd720dbe70539c4296c37",
+  "valid": true,
+  "methodological_contract": {
+    "selection_used_sealed": false,
+    "task3e_sealed_accessed": false,
+    "new_sealed_count": 8192,
+    "sealed_overlap": 0,
+    "family_and_seed_gpu_parallelism": true
+  },
+  "sealed_ranking": [
+    ["formula", 5.253411279025404e-14],
+    ["lut_linear", 0.02962802395227818],
+    ["physical_tau", 0.4040956995760607],
+    ["lut_nearest", 1.1162867230125784],
+    ["chebyshev", 1.3829824464227114],
+    ["direct_z", 1.7035103714583535],
+    ["gru", 4.189057032784294],
+    ["direct_mlp", 5.842068465184052]
+  ],
+  "physical_tau": {
+    "best_learned": true,
+    "sealed_mean_score": 0.4040956995760607,
+    "sealed_max_seed_score": 0.6757267857202857,
+    "parameter_count": 694,
+    "development_score_by_budget": {
+      "0": 258.5429281377754,
+      "1000": 22.871165855177708,
+      "3000": 17.338466464271562,
+      "10000": 3.9248251029955257,
+      "30000": 1.4116299924695135,
+      "50000": 0.40449902838470947
+    },
+    "large_batch_three_seed_gpu_rows_per_second": 125435961.54971856
+  },
+  "lut_linear": {
+    "best_non_oracle": true,
+    "sealed_score": 0.02962802395227818,
+    "accuracy_ratio_vs_physical_tau": 13.63898129484693,
+    "large_batch_cpu_rows_per_second": 8244788.080184696
+  },
+  "decision": {
+    "physical_tau_hypothesis_supported_among_learned_models": true,
+    "physical_tau_global_pareto_claim_not_yet_supported": true,
+    "reason": "linear interpolation is materially more accurate, while latency was measured on a different device and cannot establish dominance",
+    "task5_status": "budget scaling curve acquired; capacity and numerical-resolution axes remain",
+    "task6_authorized": true
+  },
+  "scope_limit": "Held-voltage isolated Ca_HVA m+h; no time-varying voltage-path claim."
+}
