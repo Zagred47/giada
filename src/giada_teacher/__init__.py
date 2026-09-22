@@ -78,6 +78,13 @@ from .joint_gate_full_repair_confirmation import (
     freeze_full_repair_from_task3d,
     evaluate_frozen_full_repair,
 )
+from .primitive_matrix_playground import (
+    PrimitiveMatrixConfig,
+    verified_task3e_root,
+    prepare_primitive_matrix,
+    train_and_freeze_primitive_matrix,
+    evaluate_frozen_primitive_matrix,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -112,4 +119,6 @@ __all__ = [
     "run_joint_gate_generalization_diagnosis",
     "JointGateFullRepairConfirmationConfig", "verified_task3d_root",
     "freeze_full_repair_from_task3d", "evaluate_frozen_full_repair",
+    "PrimitiveMatrixConfig", "verified_task3e_root", "prepare_primitive_matrix",
+    "train_and_freeze_primitive_matrix", "evaluate_frozen_primitive_matrix",
 ]

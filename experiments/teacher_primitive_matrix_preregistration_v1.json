@@ -1,0 +1,62 @@
+{
+  "schema_version": "giada-task4-preregistration-v1",
+  "task": "4",
+  "name": "Paired primitive matrix for Ca_HVA m+h",
+  "authorization": "Exact Task 3e artifact must report task4_authorized=true.",
+  "domain": "Isolated Ca_HVA m+h under held voltage",
+  "forbidden_inputs": [
+    "Task 3e sealed tuples or outcomes",
+    "any future Task 4 sealed tuples before checkpoint freeze"
+  ],
+  "families": {
+    "numerical": ["formula", "lut_nearest", "lut_linear", "chebyshev"],
+    "learned": ["direct_mlp", "gru", "physical_tau", "direct_z"]
+  },
+  "paired_contract": {
+    "same_fit_and_development_tuples": true,
+    "same_learned_minibatches_across_families": true,
+    "seeds": [17, 29, 43],
+    "family_and_seed_gpu_parallelism": true,
+    "selection_metric": "mean worst-stratum normalized development score",
+    "tie_break": "earliest checkpoint then lower parameter count"
+  },
+  "training": {
+    "maximum_steps": 50000,
+    "checkpoints": [0, 1000, 3000, 10000, 30000, 50000],
+    "batch_size_per_seed": 768,
+    "optimizer": "AdamW",
+    "learning_rate": 0.003,
+    "physical_tau_auxiliary_supervision": ["m_inf", "h_inf", "log_tau_m", "log_tau_h", "monotonic_shape"],
+    "other_learned_objective": ["m_endpoint", "h_endpoint", "open_probability"]
+  },
+  "numerical_contract": {
+    "lut_points": 257,
+    "interpolation": "linear",
+    "chebyshev_degree": 16,
+    "formula_role": "accuracy oracle, not a learned candidate"
+  },
+  "development_strata": ["central", "voltage_tail", "long_horizon"],
+  "sealed_policy": {
+    "new_independent_set": true,
+    "opened_once_after_all_learned_checkpoints_are_frozen": true,
+    "not_used_for_selection": true,
+    "counts": {"central": 4096, "voltage_tail": 2048, "long_horizon": 2048}
+  },
+  "metrics": [
+    "m RMSE", "h RMSE", "m^2h RMSE", "worst-stratum normalized score",
+    "occupancy violations", "parameter count", "checkpoint scaling curve",
+    "device-stratified latency and throughput"
+  ],
+  "interpretation_rules": {
+    "formula": "oracle lower bound only",
+    "lut_or_chebyshev_best": "prefer numerical primitive unless learned family has a material implementation advantage",
+    "direct_mlp_or_gru_best": "physical structure is not required for held-voltage endpoint accuracy",
+    "physical_tau_within_10_percent": "retain physical-tau as the mechanistic default",
+    "direct_z_best_only_at_fixed_dt": "defer decision until Task 6 dt stress",
+    "all_learned_fail": "do not scale; revisit objective/support before Task 6"
+  },
+  "scope": "Task 4 ranks primitives in held voltage. It does not establish sufficiency for time-varying voltage paths.",
+  "latency_policy": "Learned three-seed ensembles are benchmarked on GPU and numerical primitives on CPU; cross-device latency is reported but never used as a direct winner criterion.",
+  "task5_integration": "Checkpoint curves provide the first mini scaling law without duplicate training.",
+  "task6_authorization": "A valid finite matrix with frozen sealed evaluation authorizes Task 6 stress testing; it does not select using sealed outcomes."
+}
