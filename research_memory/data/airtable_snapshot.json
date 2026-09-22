@@ -318,6 +318,36 @@
         }
       },
       {
+        "id": "rec7c7419cf664d92",
+        "createdTime": "2026-09-22T20:16:25Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Report",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [
+            "recf40b13f104acb5"
+          ],
+          "fldFio32ffmk14gMY": [],
+          "fldJ42OE1ARQhyh59": "experiments/teacher_cahva_closed_loop_microcanary_preregistration_v1.json",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "712226073a6870d14caeab56812ccbccec627b8bb7a3f8790e43cda165943354",
+          "fldw98aVU9j6cBJYh": "GIADA Task 7 Ca_HVA closed-loop microcanary preregistration",
+          "fldwLVADFDuK4I0rk": "Contratto del teacher single-compartment, bracci congelati e gate di calibrazione del solver.",
+          "fldwnMJjQrllvC78Z": "artifact-task7-cahva-closed-loop-preregistration-v1",
+          "fldy0kiTp7BG4j68p": [],
+          "fldybOB1VowNUBprP": 2554
+        }
+      },
+      {
         "id": "rec7f9f82a803ef58",
         "createdTime": "2026-09-22T14:19:33Z",
         "cellValuesByFieldId": {
@@ -1317,7 +1347,9 @@
         "id": "rece52d1acf5f9310",
         "createdTime": "2026-09-22T20:01:43Z",
         "cellValuesByFieldId": {
-          "fldAn8rI4IDtMAtO1": [],
+          "fldAn8rI4IDtMAtO1": [
+            "rec6a01c200029958"
+          ],
           "fldEM4SsCTKdq0ZXA": [
             "recc2c0f50cb7b04a"
           ],
@@ -1325,7 +1357,9 @@
           "fldGK9NOiPojtVDt5": [],
           "fldRJmEWvdtbr0xoC": "question-hybrid-cahva-predicted-voltage-v1",
           "fldTzYqwWHaHk7eE7": "Una LUT dei gate validata sotto path noto conserva il vantaggio quando il path V è generato dal modello e ricoupled con corrente e membrana?",
-          "fldj261pBSznFUjUC": [],
+          "fldj261pBSznFUjUC": [
+            "recc6b4629ac0ff82"
+          ],
           "fldu0VJMDCla5XqQv": "Aperta",
           "fldvER0OXNvszn36s": "La cella ibrida Ca_HVA resta accurata con voltaggio predetto causalmente?"
         }
@@ -1783,6 +1817,54 @@
         }
       },
       {
+        "id": "rec90931b623c5191",
+        "createdTime": "2026-09-22T20:08:12Z",
+        "cellValuesByFieldId": {
+          "fld0cyrU7z3lgnGri": [
+            "recaaca3a3aa4a440"
+          ],
+          "fld1yxxCdQIKUTr3o": [],
+          "fld21P7Z38jhllXCw": [],
+          "fldBg7fdVTV3QRYYR": [],
+          "fldC0zRVGDcrxDXx3": [],
+          "fldCQ7s6vqBkAEj7o": [],
+          "fldD3WgtsOkJFiQ0f": "Il readout Ca_HVA è aritmeticamente economico",
+          "fldGKzruZ7lMxuhv9": "Supportata nel dominio",
+          "fldGMQygrEEp67LYU": [],
+          "fldGrnR6YpOu4IX7p": [],
+          "fldM9yryBylmVsAFh": [],
+          "fldMttnkdNKUfLftx": [],
+          "fldNKdCWed8GtMJWA": [],
+          "fldO5B11MJ6B3bN8Z": [
+            "reca32b3d68ccd764"
+          ],
+          "fldSpqkLWRRVAcGyT": "Analisi del BREAKPOINT del Ca_HVA.mod canonico, commit teacher 074c4666300a8ad246601dab179a97a6942f0f29.",
+          "fldTw6RHc13ABlCQ5": "claim-cahva-analytic-current-low-arithmetic-cost-v1",
+          "fldUBxb2IBwluW0o4": [],
+          "fldVs7bwqXfD6wloz": [],
+          "fldWgPcGUQzrCfwIV": [],
+          "fldWmQYnlPnpnDCwv": "Proprietà matematica",
+          "fldZZflNzBIslfoxC": [],
+          "fldbHCj8nUi9FfPr0": [],
+          "fldeIU5gljlLtLjk1": [],
+          "fldgYqyJBiFHOFL5Q": "Il codice teacher canonico usa un readout differente o richiede ulteriore lavoro sostanziale non attribuito ai rates, a eca o al runtime.",
+          "fldggFgq9bSRfRIf1": [],
+          "fldhblz9QaL5xZMzj": [],
+          "fldjIzyz2FzkrntCk": [],
+          "fldl4vkmr7todcrIa": [],
+          "fldn09q7Ys4pNG46z": [],
+          "fldnstZ0ARy2ZeMxz": "Il conteggio aritmetico non è un benchmark di latenza end-to-end. Lanci kernel separati, accessi memoria e aggiornamento dinamico di eca possono dominare; serve profiling sul target hardware.",
+          "fldrs9hp5BJaiJJ9w": [
+            "rec45ab4e6a5bd32f"
+          ],
+          "fldtFqPHjNQsCaDvJ": [],
+          "fldtIv7JUzBTeny1j": [],
+          "fldwKvlUhBaZDx4AK": [],
+          "fldwnvVrfGEy0ephV": [],
+          "fldxSHSKYTFeHnKO6": "Il readout g=gbar*m*m*h; ica=g*(v-eca) contiene circa quattro moltiplicazioni e una sottrazione per segmento, senza exp o divisioni. È distinto dai rates/aggiornamento gate e dalla produzione di eca, che il meccanismo legge dall'ione calcio."
+        }
+      },
+      {
         "id": "rec91943db26378db",
         "createdTime": "2026-09-21T13:11:53Z",
         "cellValuesByFieldId": {
@@ -1892,7 +1974,9 @@
           "fldCQ7s6vqBkAEj7o": [],
           "fldD3WgtsOkJFiQ0f": "Ibrido LUT gate + corrente analitica può ridurre il carico appreso",
           "fldGKzruZ7lMxuhv9": "Aperta",
-          "fldGMQygrEEp67LYU": [],
+          "fldGMQygrEEp67LYU": [
+            "recc6b4629ac0ff82"
+          ],
           "fldGrnR6YpOu4IX7p": [],
           "fldM9yryBylmVsAFh": [],
           "fldMttnkdNKUfLftx": [],
@@ -2355,7 +2439,7 @@
         "createdTime": "2026-09-22T20:02:33Z",
         "cellValuesByFieldId": {
           "fld2SmQPqyxaRM7KG": "choice-hybrid-cahva-lut-current-learned-voltage-v1",
-          "fld9Ppy142PAxO6xR": "Ridurre il numero di funzioni da apprendere e isolare l'errore di coupling; da verificare sensibilità al V predetto, stabilità ricorsiva ed eventi in confronto a controlli appaiati.",
+          "fld9Ppy142PAxO6xR": "La rete o la LUT si concentra sulle primitive onerose; la corrente Ca_HVA resta analitica e idealmente fusa nel sottopasso GPU. Verificare il costo end-to-end, incluso E_Ca dinamico, prima di promuovere la scelta.",
           "fldAgp66jCZ6IGpwm": [
             "rec17bde17619bbb3"
           ],
@@ -2374,7 +2458,7 @@
           "flde0mWwfsDwQNDvb": [
             "recc2c0f50cb7b04a"
           ],
-          "fldjWbq9AtWxO7T87": "Task 5: LUT più accurata della rete per m+h isolati. Task 6: LUT resta accurata con path esogeno noto; V_t da solo è insufficiente anche per la formula esatta.",
+          "fldjWbq9AtWxO7T87": "Task 5–6: la LUT è più accurata per i gate Ca_HVA isolati; il path V_t-only è insufficiente. Nel Ca_HVA.mod canonico, dopo SOLVE states, g=gbar*m*m*h e ica=g*(v-eca) richiedono circa quattro moltiplicazioni e una sottrazione, senza esponenziali. Conservare questo readout economico e sostituire/accelerare selettivamente soltanto le parti misurate come costose (rates, gate update, eventuale E_Ca dinamico, coupling). Non presumere che una rete per la corrente sia più veloce; profilare latenza, accessi memoria e fusione kernel.",
           "fldxk1VitsCScYKVS": "Scelta progettuale candidata: gate Ca_HVA via LUT, corrente analitica, updater V appreso e sottopassi causali."
         }
       }
@@ -2394,7 +2478,8 @@
           "fldJyxfv8WeSQiMY8": [],
           "fldP9IDuLFinS5GI7": [],
           "fldUnVWK8dZMRrnQN": [
-            "recc2c0f50cb7b04a"
+            "recc2c0f50cb7b04a",
+            "rec90931b623c5191"
           ],
           "fldVHC7WiZYT6RaQS": [],
           "fldZqoOXvnbkcxC4w": [],
@@ -2498,7 +2583,8 @@
         "cellValuesByFieldId": {
           "fld4EXvzweDDu8yvn": [],
           "fld7JNRWlTmKRaBQ8": [
-            "recc2c0f50cb7b04a"
+            "recc2c0f50cb7b04a",
+            "rec90931b623c5191"
           ],
           "fld8JBLe47rB3ex8t": [
             "rec4728d5b581287c"
@@ -2535,7 +2621,8 @@
           "fld6Ta57mQKm5X00j": [],
           "fld7S12JQZJiCq4M8": "v1",
           "fldGXY2AArAUFqiGg": [
-            "recc2c0f50cb7b04a"
+            "recc2c0f50cb7b04a",
+            "rec90931b623c5191"
           ],
           "fldGXli17gS3i717Q": [],
           "fldHRFlqbm3OJ28sg": [],
@@ -3055,6 +3142,37 @@
           "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Esperimento appaiato e preregistrato sul gate m sotto voltage clamp costante.",
           "fldyeCfji17c7BfPP": "Separare capacità generica, bias fisico e parametrizzazione direct-z; misurare accuratezza one-step, rollout, OOD e costo GPU senza contaminare il test sigillato."
+        }
+      },
+      {
+        "id": "recc6b4629ac0ff82",
+        "createdTime": "2026-09-22T20:16:23Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [
+            "rece52d1acf5f9310"
+          ],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 7 — Ca_HVA closed-loop single-compartment microcanary",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fldSQ2XAuUjvNYCvY": "experiment-task7-cahva-closed-loop-microcanary-v1",
+          "fldSVM6BIAoevpYQC": [
+            "recf40b13f104acb5"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [
+            "rec6a01c200029958"
+          ],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Teacher NEURON autentico un compartimento Ca_HVA+pas contro formula/LUT/physical-tau congelati nel circuito V-gate-corrente-V causale.",
+          "fldyeCfji17c7BfPP": "Verificare se il vantaggio della LUT Task 5–6 sopravvive usando V endogeno del proprio solver e localizzare il mismatch rispetto al teacher."
         }
       },
       {
@@ -3627,6 +3745,41 @@
           "fldmDbF0PWDV8gesU": "Usare gli split Task 0.5. Per ogni braccio appreso eseguire seed 17/29/43, stessi stream minibatch, batch 1024, float32 senza AMP, AdamW, identica griglia LR e checkpoint. Selezionare solo su development. Congelare candidato e normalizzazione prima di aprire sealed test. Misurare eager e compiled separatamente con CUDA events sincronizzati.",
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": []
+        }
+      },
+      {
+        "id": "recf40b13f104acb5",
+        "createdTime": "2026-09-22T20:16:49Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-22",
+          "fld43sXbznp3IMZYL": "Task 7 Ca_HVA closed-loop single-compartment protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Microcanary di ricomposizione causale con gate di calibrazione del solver.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Formula+solver <=0.25 mV RMSE V e <=0.005 RMSE gate in tutti gli episodi; metriche finite, nessun teacher V futuro, nessun retraining. Il successo non promuove il modello a 642 segmenti.",
+          "fldNtSPrXFVAEpq2B": "Hash Task 5 errato, assenza meccanismo NEURON o CUDA, valori non finiti o mismatch E_Ca invalidano il run. Se fallisce la calibrazione solver, salvare comunque il report senza attribuzione al gate.",
+          "fldODG8tJ39IE4DeM": "protocol-task7-cahva-closed-loop-microcanary-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "712226073a6870d14caeab56812ccbccec627b8bb7a3f8790e43cda165943354",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [
+            "rec7c7419cf664d92"
+          ],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare ZIP Task 5; compilare Ca_HVA canonico; simulare 12 traiettorie NEURON Ca_HVA+pas; per ogni braccio congelato aggiornare gate da V proprio, calcolare corrente analitica e avanzare V con lo stesso solver; riportare formula baseline e LUT/physical per episodio.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "recc6b4629ac0ff82"
+          ]
         }
       },
       {
@@ -5473,6 +5626,29 @@
           "fldlLL729Jw86riOj": [
             "rec9d29b3d0ca18b8"
           ],
+          "fldyiTgFzV1vvmM5o": []
+        }
+      },
+      {
+        "id": "rec6a01c200029958",
+        "createdTime": "2026-09-22T20:16:26Z",
+        "cellValuesByFieldId": {
+          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld8zz84auBO3DIGQ": [],
+          "fldFPSQrhxnfHL9n7": "action-task7-run-cahva-closed-loop-microcanary-v1",
+          "fldI2FlCVIjw2HQwC": [
+            "recc6b4629ac0ff82"
+          ],
+          "fldL6j0RgbU09Usnb": "Task 5/6 verificate, candidati congelati, teacher Ca_HVA canonico disponibile.",
+          "fldMeQ3of9b3RZvPb": "Eseguire Task 7 — Ca_HVA closed-loop microcanary",
+          "fldQT49hS3JSMm8FP": "Eseguire notebook 07 su Kaggle con lo ZIP Task 5 esatto e restituire report e traiettorie.",
+          "fldazVEmaizg09aw8": [],
+          "fldgrmwbCk1T9fq46": [
+            "rece52d1acf5f9310"
+          ],
+          "fldilkZX7GrkdJNu2": "Calibrazione formula+solver contro NEURON, confronto appaiato LUT/physical-tau in loop causale e artefatto diagnostico anche in caso di gate non superato.",
+          "fldkCr0yLshDXWuxz": [],
+          "fldlLL729Jw86riOj": [],
           "fldyiTgFzV1vvmM5o": []
         }
       },

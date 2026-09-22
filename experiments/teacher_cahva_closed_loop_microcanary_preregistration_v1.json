@@ -1,0 +1,43 @@
+{
+  "schema_version": "giada-task7-cahva-closed-loop-preregistration-v1",
+  "task": "7",
+  "name": "Single-compartment Ca_HVA causal closed-loop microcanary",
+  "scope": "Authentic NEURON one-compartment Ca_HVA + passive leak teacher, compared with frozen Task 5 gate primitives coupled to an explicit voltage solver. No 642-segment claim and no learned voltage network.",
+  "source": {
+    "task5_archive_sha256": "ec6e691fe8a3c7fa30ec70db967f508f358f05b6bbaec58f3b7bcf0efed383f3",
+    "frozen_physical_width": 32,
+    "physical_seeds": [17, 29, 43],
+    "frozen_lut_points": 513,
+    "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29"
+  },
+  "model": {
+    "compartment_length_um": 10,
+    "compartment_diameter_um": 10,
+    "cm_uf_cm2": 1,
+    "g_pas_s_cm2": 0.0001,
+    "e_pas_mv": -76,
+    "fixed_e_ca_mv": 120,
+    "canonical_gbar_s_cm2": 0.00001,
+    "dt_ms": 0.025,
+    "duration_ms": 20,
+    "initial_voltage_mv": [-76, -62],
+    "gbar_multipliers": [1, 4],
+    "protocols": ["rest", "single_pulse", "paired_pulse"],
+    "episode_count": 12
+  },
+  "arms": [
+    "authentic NEURON teacher with Ca_HVA + pas",
+    "extracted exact Ca_HVA gate formula + same semi-implicit voltage solver",
+    "frozen linear LUT-513 gate + same voltage solver",
+    "frozen physical-tau width32 gate, all three seeds + same voltage solver"
+  ],
+  "causal_contract": "Every surrogate arm updates gates from its own V_k, computes analytic Ca_HVA current, and advances its own V_(k+1). No teacher V after initial state is used in its rollout.",
+  "primary_metrics": ["voltage RMSE mV", "voltage max absolute error mV", "m RMSE", "h RMSE", "Ca_HVA current density RMSE mA/cm2", "endpoint V error mV", "occupancy violations"],
+  "solver_calibration_gate": {
+    "formula_worst_voltage_rmse_mv": 0.25,
+    "formula_worst_gate_rmse": 0.005,
+    "policy": "If the extracted-formula closed-loop arm fails this comparison to NEURON, candidate-vs-NEURON errors are not interpreted as gate representation effects. Save and return the forensic report rather than silently promoting a candidate."
+  },
+  "selection_policy": "No candidate retraining, seed selection or threshold tuning. Canonical 1x and deliberately stressed 4x gbar are reported separately. This is a diagnostic microcanary, not a sealed full-neuron test.",
+  "limitations": "The voltage solver is explicit in structure but not learned; dynamic E_Ca, calcium concentrations, other ion channels, synapses, axial tree and full teacher morphology are excluded. GPU timings are not a primary endpoint."
+}
