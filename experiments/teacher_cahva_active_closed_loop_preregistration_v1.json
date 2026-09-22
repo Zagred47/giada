@@ -1,0 +1,35 @@
+{
+  "schema_version": "giada-task7b-active-closed-loop-preregistration-v1",
+  "task": "7b",
+  "question": "Do frozen Ca_HVA gate primitives remain accurate in a causal voltage-gate-current loop when the authentic channel measurably affects voltage?",
+  "parent_result": "giada-task7-microcanary-v1; solver calibrated, but channel current was effectively silent",
+  "teacher": "same authentic compiled Ca_HVA.mod, one 10 x 10 um compartment, pas, fixed E_Ca=120 mV, dt=0.025 ms",
+  "input": {
+    "initial_voltage_mv": [-76, -62],
+    "gbar_multipliers": [0, 1, 4],
+    "canonical_gbar_s_cm2": 0.00001,
+    "duration_ms": 20,
+    "protocols": {
+      "active_low": [[2, 14, 0.015]],
+      "active_medium": [[2, 14, 0.025]],
+      "active_high": [[2, 14, 0.04]],
+      "active_paired": [[2, 8, 0.025], [10, 16, 0.025]]
+    },
+    "episode_count": 24,
+    "pulse_tuple_fields": ["onset_ms", "offset_ms", "amplitude_nA"]
+  },
+  "arms": ["NEURON", "extracted exact formula", "frozen LUT-513", "frozen physical-tau width32 seeds 17, 29, 43"],
+  "negative_control": "gbar=0; matched current injection but no Ca_HVA feedback",
+  "exposure_gate": {
+    "minimum_active_canonical_pairs": 4,
+    "canonical_peak_abs_ica_ma_cm2": 0.00001,
+    "canonical_vs_zero_max_voltage_difference_mv": 0.05,
+    "policy": "A pair must satisfy both thresholds; report all eight initial-voltage/protocol pairs, never select a dose using candidate errors."
+  },
+  "solver_gate": {
+    "formula_worst_voltage_rmse_mv": 0.25,
+    "formula_worst_gate_rmse": 0.005
+  },
+  "selection": "No retraining, no model/seed selection, no threshold adjustment; all arms share teacher initial state and external current schedule, then use their own causal voltage.",
+  "limits": "Single compartment only; E_Ca held fixed; no synapses, axial currents, other channels, calcium dynamics or trained voltage network. The 4x conductance is a diagnostic stress, not canonical biology."
+}

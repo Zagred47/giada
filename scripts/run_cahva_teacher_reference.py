@@ -1,4 +1,4 @@
-"""Generate Task 7 NEURON reference traces without importing or using CUDA."""
+"""Generate Task 7/7b NEURON reference traces without using CUDA."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPOSITORY_ROOT))
 
 from src.giada_teacher.cahva_closed_loop_microcanary import (  # noqa: E402
+    ActiveClosedLoopCaHVAConfig,
     ClosedLoopCaHVAConfig,
     _teacher_episode,
 )
@@ -21,10 +22,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mechanism-root", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument("--design", choices=("task7", "task7b"), default="task7")
     args = parser.parse_args()
     from neuron import load_mechanisms
 
-    config = ClosedLoopCaHVAConfig()
+    config = ActiveClosedLoopCaHVAConfig() if args.design == "task7b" else ClosedLoopCaHVAConfig()
     config.validate()
     if not load_mechanisms(str(args.mechanism_root)):
         raise RuntimeError("Compiled Ca_HVA mechanism could not be loaded")

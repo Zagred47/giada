@@ -50,6 +50,23 @@ class ClosedLoopCaHVAConfig:
             raise ValueError("Task 7 design differs from preregistration")
 
 
+@dataclass(frozen=True)
+class ActiveClosedLoopCaHVAConfig(ClosedLoopCaHVAConfig):
+    """Task 7b: fixed current ladder plus a zero-Ca_HVA causal control."""
+
+    gbar_multipliers: tuple[float, ...] = (0., 1., 4.)
+    protocol_names: tuple[str, ...] = (
+        "active_low", "active_medium", "active_high", "active_paired"
+    )
+    minimum_active_pair_count: int = 4
+    current_exposure_threshold_ma_cm2: float = 1e-5
+    voltage_channel_effect_threshold_mv: float = 0.05
+
+    def validate(self):
+        if asdict(self) != asdict(ActiveClosedLoopCaHVAConfig()):
+            raise ValueError("Task 7b design differs from preregistration")
+
+
 def _pulses(name):
     if name == "rest":
         return ()
@@ -57,6 +74,14 @@ def _pulses(name):
         return ((4., 12., .003),)
     if name == "paired_pulse":
         return ((3., 7., .003), (11., 15., .003))
+    if name == "active_low":
+        return ((2., 14., .015),)
+    if name == "active_medium":
+        return ((2., 14., .025),)
+    if name == "active_high":
+        return ((2., 14., .04),)
+    if name == "active_paired":
+        return ((2., 8., .025), (10., 16., .025))
     raise ValueError(name)
 
 
@@ -224,8 +249,10 @@ def run_closed_loop_microcanary(formula, task5_source, mechanism_root, output_di
     else:
         output_dir.mkdir(parents=True)
     root = verified_task5_root(task5_source, output_dir / ".verified_task5")
-    if asdict(config) != asdict(ClosedLoopCaHVAConfig()):
-        raise ValueError("Task 7 subprocess reference requires the registered fixed configuration")
+    design = "task7b" if isinstance(config, ActiveClosedLoopCaHVAConfig) else "task7"
+    expected = ActiveClosedLoopCaHVAConfig() if design == "task7b" else ClosedLoopCaHVAConfig()
+    if asdict(config) != asdict(expected):
+        raise ValueError("Subprocess reference requires a registered fixed configuration")
     print("[GIADA Task 7] generating NEURON reference in an isolated process", flush=True)
     with tempfile.TemporaryDirectory(prefix="giada_task7_teacher_") as temporary:
         reference_path = Path(temporary) / "teacher_reference.npz"
@@ -234,6 +261,7 @@ def run_closed_loop_microcanary(formula, task5_source, mechanism_root, output_di
             str(Path(__file__).resolve().parents[2] / "scripts" / "run_cahva_teacher_reference.py"),
             "--mechanism-root", str(mechanism_root),
             "--output", str(reference_path),
+            "--design", design,
         ]
         completed = subprocess.run(command, check=False)
         if completed.returncode:
@@ -295,6 +323,67 @@ def run_closed_loop_microcanary(formula, task5_source, mechanism_root, output_di
               "full_642_segment_teacher_tested": False,
               "trained_voltage_network_tested": False,
               "interpretation_policy": "Candidate errors against NEURON are interpretable only if formula arm calibrates the fixed-step membrane solver; compare candidate excess over formula before attribution."}
+    if design == "task7b":
+        active_pairs = {}
+        zero_control_current_max = 0.0
+        for initial in config.initial_voltage_mv:
+            for protocol in config.protocol_names:
+                prefix = f"v{initial:g}"
+                control = trace_store[f"{prefix}-g0-{protocol}_teacher"]
+                canonical = trace_store[f"{prefix}-g1-{protocol}_teacher"]
+                stressed = trace_store[f"{prefix}-g4-{protocol}_teacher"]
+                zero_control_current_max = max(
+                    zero_control_current_max, float(np.max(np.abs(control[:, 4])))
+                )
+                current = float(np.max(np.abs(canonical[:, 4])))
+                effect = float(np.max(np.abs(canonical[:, 1] - control[:, 1])))
+                stressed_effect = float(np.max(np.abs(stressed[:, 1] - control[:, 1])))
+                active_pairs[f"{prefix}-{protocol}"] = {
+                    "canonical_peak_abs_ica_ma_cm2": current,
+                    "canonical_vs_zero_max_voltage_difference_mv": effect,
+                    "fourfold_vs_zero_max_voltage_difference_mv": stressed_effect,
+                    "passes_exposure": bool(current >= config.current_exposure_threshold_ma_cm2
+                                            and effect >= config.voltage_channel_effect_threshold_mv),
+                }
+        active_count = sum(row["passes_exposure"] for row in active_pairs.values())
+        exposure_valid = active_count >= config.minimum_active_pair_count
+        voltage_separation = 0.0
+        gate_separation = 0.0
+        for key in episodes:
+            if "-g0-" in key:
+                continue
+            lut = trace_store[f"{key}_lut"]
+            for seed in (17, 29, 43):
+                candidate = trace_store[f"{key}_physical_{seed}"]
+                voltage_separation = max(
+                    voltage_separation, float(np.max(np.abs(lut[:, 1] - candidate[:, 1])))
+                )
+                gate_separation = max(
+                    gate_separation,
+                    float(np.max(np.abs(lut[:, 2:4] - candidate[:, 2:4]))),
+                )
+        occupancy_violations = sum(
+            row["formula"]["occupancy_violations"]
+            + row["lut"]["occupancy_violations"]
+            + sum(metric["occupancy_violations"] for metric in row["physical"].values())
+            for row in episodes.values()
+        )
+        report.update({
+            "schema_version": "giada-task7b-active-microcanary-v1",
+            "active_exposure_valid": exposure_valid,
+            "active_pair_count": active_count,
+            "active_pair_target": config.minimum_active_pair_count,
+            "causal_channel_exposure": active_pairs,
+            "zero_control_peak_abs_ica_ma_cm2": zero_control_current_max,
+            "zero_control_valid": zero_control_current_max == 0.0,
+            "candidate_occupancy_violations": occupancy_violations,
+            "max_lut_vs_physical_voltage_difference_mv": voltage_separation,
+            "max_lut_vs_physical_gate_difference": gate_separation,
+            "valid": bool(report["valid"] and exposure_valid
+                          and zero_control_current_max == 0.0
+                          and occupancy_violations == 0),
+            "interpretation_policy": "Compare frozen gate arms only when exact formula calibrates NEURON and the canonical Ca_HVA current measurably changes voltage against the zero-gbar control. All ladder doses are reported without cherry-picking.",
+        })
     np.savez_compressed(output_dir / "trajectories.npz", **trace_store)
     (output_dir / "final_report.json").write_text(json.dumps(report, indent=2))
     return report

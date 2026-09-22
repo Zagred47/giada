@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 7 — solver calibrato, ma Ca_HVA non esposto dagli stimoli",
+  "Codice stabile": "finding-task7-cahva-solver-calibrated-channel-silent-v1",
+  "Descrizione": "Risultato dello ZIP Task 7 a un compartimento; distingue riuscita tecnica del circuito da insufficiente attivazione del canale.",
+  "Risultato": "12/12 episodi completi; worst formula voltage RMSE 9.8047e-13 mV e worst gate RMSE 5.7369e-6. Max |ica| teacher circa 7.65e-10 mA/cm2 e max differenza V tra 1x e 4x circa 1.16e-6 mV. LUT e physical-tau hanno gate differenti ma identiche tracce V salvate in float32.",
+  "Incertezza": "Il solver è calibrato nella regione testata, ma l'identità del voltaggio fra candidati è non informativa quando il canale è quasi spento. Nessuna inferenza sulla superiorità in regime Ca_HVA attivo.",
+  "Limitazioni": "Solo Ca_HVA+pas in un compartimento, E_Ca fisso; non testati 642 segmenti, calcio dinamico, sinapsi, accoppiamento assiale o updater V appreso. ZIP SHA-256 90e7521de52ac9e7af28130701ef2bafde154097add76d1e71c5af715ef2d2d5; revisione 204a6fb.",
+  "Esito": "Misto",
+  "Esperimenti": ["recc6b4629ac0ff82"]
+}

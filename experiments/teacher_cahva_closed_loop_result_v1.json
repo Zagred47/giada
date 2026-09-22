@@ -1,0 +1,17 @@
+{
+  "schema_version": "giada-task7-result-summary-v1",
+  "source_zip_sha256": "90e7521de52ac9e7af28130701ef2bafde154097add76d1e71c5af715ef2d2d5",
+  "source_report_schema_version": "giada-task7-microcanary-v1",
+  "source_code_revision": "204a6fb",
+  "episode_count": 12,
+  "report_valid": true,
+  "reference_solver_calibrated": true,
+  "formula_worst_voltage_rmse_mv": 9.80466847586109e-13,
+  "formula_worst_gate_rmse": 5.736916154823142e-6,
+  "maximum_teacher_abs_ica_ma_cm2": 7.6519e-10,
+  "maximum_teacher_1x_vs_4x_voltage_difference_mv": 1.1607e-6,
+  "lut_vs_physical_voltage_traces_exactly_equal_in_saved_float32_rollout": true,
+  "interpretation": "Numerical solver and authentic single-compartment causal loop are validated, but tested protocols leave Ca_HVA effectively silent. Equal candidate voltage trajectories are not evidence of equivalent active-channel dynamics.",
+  "next_experiment": "giada-task7b-active-closed-loop-preregistration-v1",
+  "scope_limit": "No 642-segment teacher, calcium dynamics, synapses, axial coupling or learned voltage network."
+}

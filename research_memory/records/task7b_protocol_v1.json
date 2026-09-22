@@ -1,0 +1,14 @@
+{
+  "Nome": "Task 7b Ca_HVA active closed-loop protocol v1",
+  "Codice stabile": "protocol-task7b-active-cahva-closed-loop-v1",
+  "Descrizione": "Ladder di stimoli depolarizzanti e controllo causale a conduttanza zero, senza selezione post hoc degli stimoli.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "24 episodi NEURON Ca_HVA+pas: due V iniziali, quattro schedule .015/.025/.04 nA e paired .025 nA, gbar 0x/1x/4x. Formula, LUT-513 e physical-tau seed 17/29/43 congelati usano ciascuno il proprio V dopo t=0. Teacher NEURON e candidati GPU girano in processi separati.",
+  "Criteri di successo": "Formula worst V RMSE <=0.25 mV e gate RMSE <=0.005; almeno quattro delle otto coppie canoniche hanno max |ica| >=1e-5 mA/cm2 e max |V_1x-V_0x| >=0.05 mV; nessun NaN/Inf o violazione di occupazione.",
+  "Regole di arresto": "Hash Task 5 errato, meccanismo NEURON o CUDA assenti, abort nativo o mismatch E_Ca invalidano il run. Se solver o esposizione falliscono, salvare il report ma non interpretare il ranking dei candidati.",
+  "Registrato il": "2026-09-22",
+  "Hash preregistrazione": "fe77ce596554080fad31927691e83bf4000a3fe56c5e5550ef30a45ee229282e",
+  "Esperimento": ["rec7041006aab87d6"],
+  "Versione precedente": ["recf40b13f104acb5"]
+}

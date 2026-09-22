@@ -2895,6 +2895,31 @@
         }
       },
       {
+        "id": "rec7041006aab87d6",
+        "createdTime": "2026-09-22T20:54:43Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 7b — Ca_HVA attivo nel circuito chiuso a un compartimento",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-task7b-active-cahva-closed-loop-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec7e06b96bae5ac6"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Confronto causale tra NEURON, formula, LUT e physical-tau congelati con ladder depolarizzante e controllo gbar=0.",
+          "fldyeCfji17c7BfPP": "Verificare se i candidati si distinguono quando Ca_HVA genera corrente e causa una differenza V misurabile, mantenendo valido il controllo solver."
+        }
+      },
+      {
         "id": "rec70e22d05c799f7",
         "createdTime": "2026-09-22T12:19:04Z",
         "cellValuesByFieldId": {
@@ -3149,7 +3174,9 @@
         "createdTime": "2026-09-22T20:16:23Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec2675e571f01ab7"
+          ],
           "fld8UsWD6AGXcs8LB": [
             "rece52d1acf5f9310"
           ],
@@ -3170,7 +3197,7 @@
           "fldnTFjWQUe3eEcDr": [
             "rec6a01c200029958"
           ],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Teacher NEURON autentico un compartimento Ca_HVA+pas contro formula/LUT/physical-tau congelati nel circuito V-gate-corrente-V causale.",
           "fldyeCfji17c7BfPP": "Verificare se il vantaggio della LUT Task 5–6 sopravvive usando V endogeno del proprio solver e localizzare il mismatch rispetto al teacher."
         }
@@ -3460,6 +3487,41 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec037f42c0cc19a1"
+          ]
+        }
+      },
+      {
+        "id": "rec7e06b96bae5ac6",
+        "createdTime": "2026-09-22T20:55:01Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-22",
+          "fld43sXbznp3IMZYL": "Task 7b Ca_HVA active closed-loop protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Ladder di stimoli depolarizzanti e controllo causale a conduttanza zero, senza selezione post hoc degli stimoli.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Formula worst V RMSE <=0.25 mV e gate RMSE <=0.005; almeno quattro delle otto coppie canoniche hanno max |ica| >=1e-5 mA/cm2 e max |V_1x-V_0x| >=0.05 mV; nessun NaN/Inf o violazione di occupazione.",
+          "fldNtSPrXFVAEpq2B": "Hash Task 5 errato, meccanismo NEURON o CUDA assenti, abort nativo o mismatch E_Ca invalidano il run. Se solver o esposizione falliscono, salvare il report ma non interpretare il ranking dei candidati.",
+          "fldODG8tJ39IE4DeM": "protocol-task7b-active-cahva-closed-loop-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "fe77ce596554080fad31927691e83bf4000a3fe56c5e5550ef30a45ee229282e",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "24 episodi NEURON Ca_HVA+pas: due V iniziali, quattro schedule .015/.025/.04 nA e paired .025 nA, gbar 0x/1x/4x. Formula, LUT-513 e physical-tau seed 17/29/43 congelati usano ciascuno il proprio V dopo t=0. Teacher NEURON e candidati GPU girano in processi separati.",
+          "fldpfUH2P3mpRu2B6": [
+            "recf40b13f104acb5"
+          ],
+          "fldzYHRSjC0ov4BKb": [
+            "rec7041006aab87d6"
           ]
         }
       },
@@ -3766,7 +3828,9 @@
           "fldODG8tJ39IE4DeM": "protocol-task7-cahva-closed-loop-microcanary-v1",
           "fldSW3jbYrJFUwfJy": [],
           "fldTRHy1C66ZPwHP6": "v1",
-          "fldXGaaTvJNgqSF4P": [],
+          "fldXGaaTvJNgqSF4P": [
+            "rec7e06b96bae5ac6"
+          ],
           "fldXNrWQrGlph6l1g": "Ricomposizione",
           "fldY1kvKgn1aBhiVp": "712226073a6870d14caeab56812ccbccec627b8bb7a3f8790e43cda165943354",
           "fldbFUHleydt1N0tS": [],
@@ -4596,6 +4660,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Held-voltage Ca_HVA m+h; nessun percorso V variabile o compartimento accoppiato.",
           "fldhoJJ1jrMBcOUrl": "Task 4 — physical-tau domina le reti, LUT lineare domina l'accuratezza",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "rec2675e571f01ab7",
+        "createdTime": "2026-09-22T20:54:42Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Risultato dello ZIP Task 7 a un compartimento; distingue riuscita tecnica del circuito da insufficiente attivazione del canale.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task7-cahva-solver-calibrated-channel-silent-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "12/12 episodi completi; worst formula voltage RMSE 9.8047e-13 mV e worst gate RMSE 5.7369e-6. Max |ica| teacher circa 7.65e-10 mA/cm2 e max differenza V tra 1x e 4x circa 1.16e-6 mV. LUT e physical-tau hanno gate differenti ma identiche tracce V salvate in float32.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Il solver è calibrato nella regione testata, ma l'identità del voltaggio fra candidati è non informativa quando il canale è quasi spento. Nessuna inferenza sulla superiorità in regime Ca_HVA attivo.",
+          "fldYAbc64NIZGKzWO": [
+            "recc6b4629ac0ff82"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo Ca_HVA+pas in un compartimento, E_Ca fisso; non testati 642 segmenti, calcio dinamico, sinapsi, accoppiamento assiale o updater V appreso. ZIP SHA-256 90e7521de52ac9e7af28130701ef2bafde154097add76d1e71c5af715ef2d2d5; revisione 204a6fb.",
+          "fldhoJJ1jrMBcOUrl": "Task 7 — solver calibrato, ma Ca_HVA non esposto dagli stimoli",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }
