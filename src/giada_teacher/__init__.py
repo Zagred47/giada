@@ -92,6 +92,13 @@ from .primitive_scaling import (
     train_and_freeze_scaling,
     evaluate_frozen_scaling,
 )
+from .voltage_path_stress import (
+    VoltagePathStressConfig,
+    verified_task5_root,
+    make_paths,
+    formula_targets,
+    run_voltage_path_stress,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -130,4 +137,6 @@ __all__ = [
     "train_and_freeze_primitive_matrix", "evaluate_frozen_primitive_matrix",
     "PrimitiveScalingConfig", "verified_task4_root", "prepare_scaling_data",
     "train_and_freeze_scaling", "evaluate_frozen_scaling",
+    "VoltagePathStressConfig", "verified_task5_root", "make_paths",
+    "formula_targets", "run_voltage_path_stress",
 ]

@@ -1,0 +1,35 @@
+{
+  "schema_version": "giada-task5-reviewed-result-v1",
+  "task": "5",
+  "source_archive": "giada_primitive_scaling_laws.zip",
+  "source_archive_sha256": "ec6e691fe8a3c7fa30ec70db967f508f358f05b6bbaec58f3b7bcf0efed383f3",
+  "source_final_report_sha256": "027c06ded49a9c83daeadf2c8a5bc3bb00884991df6e9b387a1b5b120f5536f5",
+  "source_code_revision": "f7be482f81c0a062d6ee4aa7dbc4c4781efb6f0f",
+  "valid": true,
+  "contract": {
+    "freeze_hash_valid": true,
+    "checkpoint_hash_valid": true,
+    "final_report_hash_valid": true,
+    "selection_used_sealed": false,
+    "task4_sealed_accessed": false,
+    "new_sealed_count": 8192,
+    "sealed_overlap": 0
+  },
+  "development_selection": {
+    "physical_width": 32,
+    "physical_checkpoint": 75000,
+    "linear_lut": "lut_linear_513",
+    "nearest_lut": "lut_nearest_513",
+    "chebyshev": "chebyshev_24"
+  },
+  "sealed_scores_normalized_not_mv": {
+    "physical_width_16": 0.52814147232704,
+    "physical_width_23": 0.5338457474614814,
+    "physical_width_32": 0.4614167982508643,
+    "lut_linear_257": 0.031896540640639015,
+    "lut_linear_513": 0.007629845445106268,
+    "chebyshev_24": 0.38644373572875085
+  },
+  "interpretation": "In held-voltage isolated Ca_HVA m+h, linear LUT resolution improves monotonically and 513 points substantially outperform the tested learned physical-tau widths. Extra learned capacity or steps do not improve reliably across seeds. This does not establish validity under varying voltage or in the coupled neuron.",
+  "next_experiment": "Frozen-candidate domain and known-voltage-path stress before any coupled-neuron substitution."
+}

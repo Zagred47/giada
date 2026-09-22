@@ -1,0 +1,40 @@
+{
+  "schema_version": "giada-task6-preregistration-v1",
+  "task": "6",
+  "name": "Frozen primitive domain and known-voltage-path stress",
+  "scope": "Isolated Ca_HVA m+h under exogenous 1 ms varying-voltage clamp. No endogenous membrane coupling or candidate retraining.",
+  "source": {
+    "task5_archive_sha256": "ec6e691fe8a3c7fa30ec70db967f508f358f05b6bbaec58f3b7bcf0efed383f3",
+    "task5_final_report_sha256": "027c06ded49a9c83daeadf2c8a5bc3bb00884991df6e9b387a1b5b120f5536f5",
+    "frozen_physical_width": 32,
+    "physical_seeds": [17, 29, 43],
+    "frozen_linear_lut_points": 513
+  },
+  "design": {
+    "families": ["step_up", "step_down", "ramp", "biphasic", "near_singularity", "voltage_extremes"],
+    "independent_initial_gate_occupancies": true,
+    "voltage_range_mv": [-120, 60],
+    "segments_per_ms": 8,
+    "development_cases_per_family": 256,
+    "sealed_cases_per_family": 512,
+    "development_seed": 86031,
+    "sealed_seed": 86032,
+    "authentic_neuron_pilot_cases_per_family": 24,
+    "authentic_oracle_tolerance": 1e-9
+  },
+  "arms": [
+    "exact formula using V_t only for 1 ms",
+    "frozen physical-tau width 32 using V_t only",
+    "frozen LUT linear 513 using V_t only",
+    "frozen physical-tau width 32 updated along known V path",
+    "frozen LUT linear 513 updated along known V path"
+  ],
+  "primary_metrics": ["m RMSE", "h RMSE", "m^2h RMSE", "normalized worst-component score by family", "occupancy violations", "seed dispersion"],
+  "contrasts": {
+    "path_information": "Compare each candidate's known-path and V_t-only arms; exact-formula V_t-only quantifies irreducible information loss under held-start approximation.",
+    "representation": "Compare frozen physical-tau and LUT within the same path information regime.",
+    "domain": "Report each family separately; near-singularity and voltage-extreme failure cannot be concealed by aggregate averages."
+  },
+  "selection_policy": "No model selection or retraining. Freeze candidates and development report before generating the independent sealed schedules. Sealed outcomes are descriptive only.",
+  "interpretation_limit": "The known future voltage schedule is legitimate for exogenous clamp diagnostics but is not an available input to a closed-loop membrane model. Passing does not authorize a claim of coupled-neuron validity."
+}
