@@ -87,7 +87,6 @@ def _teacher_episode(mechanism_root, config, initial_voltage, gbar_multiplier, p
     h.CVode().active(0)
     h.secondorder = 0
     h.dt = config.dt_ms
-    h.steps_per_ms = round(1 / config.dt_ms)
     h.finitialize(initial_voltage)
     segment.eca = config.e_ca_mv
     count = int(round(config.duration_ms / config.dt_ms))
