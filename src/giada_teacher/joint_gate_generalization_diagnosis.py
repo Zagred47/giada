@@ -333,7 +333,6 @@ def run_joint_gate_generalization_diagnosis(bundle, output_dir, config=None, *, 
     baseline = summaries["baseline_current"]["score"]
     if not np.isfinite([row["score"] for row in summaries.values()]).all() or baseline <= 0:
         raise RuntimeError("Task 3d produced non-finite or invalid development scores")
-    effects = {arm: float((baseline - row["score"]) / baseline) for arm, row in summaries.items() if arm != "baseline_current"}
     independent_rows = independent_checkpoints[-1]["candidates"]
     summaries["full_repair_independent"] = {
         key: float(np.mean([r[key] for r in independent_rows]))
@@ -346,14 +345,18 @@ def run_joint_gate_generalization_diagnosis(bundle, output_dir, config=None, *, 
         for key in ("score", "central_score", "tail_score", "long_horizon_score")
     }
     summaries["full_repair_wide"]["seed_scores"] = {r["candidate"].split("=")[-1]: r["score"] for r in wide_rows}
+    improvement = lambda control, intervention: float(
+        (summaries[control]["score"] - summaries[intervention]["score"]) / summaries[control]["score"]
+    )
     axes = {
-        "more_same_support": effects["same_support_dense"],
-        "balanced_sampling": effects["balanced_support"],
-        "expanded_voltage_support": effects["expanded_support"],
-        "temporal_horizon": effects["multihorizon"],
-        "shape_prior": effects["shape_constrained"],
-        "support_horizon_interaction": effects["expanded_multihorizon"],
-        "full_repair": effects["full_repair"],
+        "more_same_support": improvement("baseline_current", "same_support_dense"),
+        "balanced_sampling": improvement("same_support_dense", "balanced_support"),
+        "expanded_voltage_support": improvement("balanced_support", "expanded_support"),
+        "temporal_horizon": improvement("balanced_support", "multihorizon"),
+        "shape_prior": improvement("balanced_support", "shape_constrained"),
+        "support_horizon_interaction": improvement("expanded_support", "expanded_multihorizon"),
+        "shape_given_expanded_multihorizon": improvement("expanded_multihorizon", "full_repair"),
+        "full_repair": improvement("baseline_current", "full_repair"),
         "independent_topology_over_full_repair_shared": float((summaries["full_repair"]["score"] - summaries["full_repair_independent"]["score"]) / summaries["full_repair"]["score"]),
         "capacity_wide_over_full_repair_shared": float((summaries["full_repair"]["score"] - summaries["full_repair_wide"]["score"]) / summaries["full_repair"]["score"]),
     }

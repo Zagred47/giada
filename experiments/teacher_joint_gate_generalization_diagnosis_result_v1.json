@@ -1,0 +1,66 @@
+{
+  "schema_version": "giada-task3d-reviewed-result-v1",
+  "artifact": "giada_joint_m_h_generalization_diagnosis.zip",
+  "artifact_sha256": "4733cc943abb668291cb05bc581f1e47809be7bdb099fae14676486f509c9edf",
+  "code_revision": "fa31c33682159b8939e722eae980c1a0a52738fc",
+  "valid": true,
+  "fresh_task3c_accessed": false,
+  "task4_authorized": false,
+  "hashes": {
+    "final_report_sha256": "4519c485e0dc5ea37b24de6e823d48d0b4b703ea91cefa3f73cf3a22192b4827",
+    "development_checkpoints_sha256": "d5d10a4b57bc0c5c07a2afd7b7f9d2ac3d31bd6ae69f040ca419d9ac1e64ac1f"
+  },
+  "execution": {
+    "candidate_count": 30,
+    "shared_elapsed_seconds": 1485.866046199,
+    "independent_elapsed_seconds": 665.9140515560002,
+    "wide_elapsed_seconds": 599.2441712469999,
+    "total_elapsed_minutes": 45.850403,
+    "candidate_steps_per_second": 545.2514603021516
+  },
+  "registered_contrast_correction": {
+    "reason": "The generated artifact computed several displayed causal percentages against baseline_current instead of each preregistered local control. Raw checkpoints and summaries are valid; contrasts below are recomputed from those immutable values.",
+    "more_same_support": -0.11187846720227931,
+    "balanced_sampling": 0.5083284702056329,
+    "expanded_voltage_support": 0.8863377301349664,
+    "temporal_horizon": -0.2840269929050748,
+    "shape_prior": -0.805996793316736,
+    "support_horizon_interaction": -0.3773800294101954,
+    "shape_given_expanded_multihorizon": 0.7546661510436234,
+    "full_repair": 0.9790036409982847,
+    "independent_topology_over_full_repair_shared": 0.014028593674892762,
+    "capacity_wide_over_full_repair_shared": -0.661192335065197
+  },
+  "supported_at_20_percent": {
+    "balanced_sampling": true,
+    "expanded_voltage_support": true,
+    "shape_given_expanded_multihorizon": true,
+    "full_repair": true,
+    "more_same_support": false,
+    "temporal_horizon_alone": false,
+    "shape_prior_alone": false,
+    "support_horizon_interaction": false,
+    "independent_topology_at_50k": false,
+    "wide_capacity_at_50k": false
+  },
+  "scores_at_50000": {
+    "baseline_current": 19.96872769465897,
+    "same_support_dense": 22.20279834111712,
+    "balanced_support": 10.916383459050522,
+    "expanded_support": 1.2407608151017684,
+    "multihorizon": 14.017229657541554,
+    "shape_constrained": 19.714910231958186,
+    "expanded_multihorizon": 1.7089797403273905,
+    "full_repair": 0.419270575484552,
+    "full_repair_independent": 0.41338879894124075,
+    "full_repair_wide": 0.6964890663133119
+  },
+  "full_repair_seed_scores": {"17": 0.33231506201192557, "29": 0.3119780530491459, "43": 0.6135186113925845},
+  "budget_finding": "The full shared repair continues improving to 50k, whereas expanded-only, independent and wide controls reach lower mean scores at 30k and then regress. Budget is an interaction and selection issue, not evidence for uniformly insufficient training.",
+  "decision": {
+    "diagnosis": "VOLTAGE_SUPPORT_AND_CONDITIONAL_SHAPE_PRIOR",
+    "minimal_confirmation_candidate": "full_repair shared width 23 at 50000 steps",
+    "rationale": "All three seeds pass the development stress score below 1.0. Independent topology improves only 1.4% at the fixed 50k comparison and width 46 worsens 66.1%, so neither added topology nor capacity is justified for confirmation.",
+    "next_step": "Preregister an exact full-repair replication and evaluate it on a newly generated sealed set containing central, voltage-tail and long-horizon strata. Do not reuse Task 3c fresh."
+  }
+}
