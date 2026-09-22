@@ -64,6 +64,8 @@ from .joint_gate_symmetric_confirmation import (
     prepare_joint_gate_symmetric_confirmation,
     train_vectorized_symmetric_joint_gate,
     evaluate_frozen_symmetric_joint_gate,
+    verified_task3b_diagnosis_root,
+    freeze_task3c_from_task3b,
 )
 
 __all__ = [
@@ -93,4 +95,5 @@ __all__ = [
     "run_joint_gate_optimization_diagnosis",
     "JointGateSymmetricConfirmationConfig", "prepare_joint_gate_symmetric_confirmation",
     "train_vectorized_symmetric_joint_gate", "evaluate_frozen_symmetric_joint_gate",
+    "verified_task3b_diagnosis_root", "freeze_task3c_from_task3b",
 ]

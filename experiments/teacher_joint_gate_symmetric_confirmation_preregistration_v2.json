@@ -1,0 +1,38 @@
+{
+  "schema_version": "giada-task3c-preregistration-v2",
+  "task": "3c",
+  "name": "Exact frozen Task 3b symmetric checkpoint confirmation",
+  "reason_for_revision": "The v1 vectorized retraining was one-step equivalent but followed a different 50k optimization trajectory and failed the development gate; fresh remained unopened.",
+  "model_selection_source": "Task 3b development-only causal diagnosis",
+  "checkpoint_source": {
+    "artifact": "giada_joint_m_h_optimization_diagnosis.zip",
+    "artifact_sha256": "c1bd981d80075cc7d561a204be695e78e1bf5dfcdbef62408b92ca5b1bbdb2b8",
+    "final_report_sha256": "29f716ddc7744eb7a19ff471565de523fd7753c3758b4a66c18387376ea67e42",
+    "checkpoint_sha256": "85b67995241c40aef5b0ee5a41bf4c56eb1c39c327fe82e54781097a8d91eedc",
+    "family": "symmetric_rates",
+    "seeds": [17, 29, 43],
+    "step": 50000
+  },
+  "retraining_performed": false,
+  "development_reproduction_atol": 1e-10,
+  "development_gate": {
+    "mean_score_max": 0.15,
+    "maximum_seed_score_max": 0.20
+  },
+  "fresh_confirmation": {
+    "same_new_disjoint_task3c_tuples_as_v1": true,
+    "opened_once_after_checkpoint_verification": true,
+    "used_for_selection": false
+  },
+  "registered_fresh_gate": {
+    "fresh_m_rmse_max": 0.0025,
+    "fresh_h_rmse_max": 0.001,
+    "fresh_open_probability_rmse_max": 0.0025,
+    "rollout_1000_m_rmse_max": 0.0025,
+    "rollout_1000_h_rmse_max": 0.005,
+    "occupancy_violations_max": 0
+  },
+  "positive_decision": "Authorize Task 4 if every gate passes.",
+  "negative_decision": "Keep Task 4 blocked and localize the failed fresh stratum without tuning on it.",
+  "forbidden_claims": ["varying-voltage success", "full ionic-current success", "embedded-neuron success"]
+}

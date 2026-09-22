@@ -1,0 +1,17 @@
+{
+  "schema_version": "giada-task3c-v1-blocked-result-v1",
+  "artifact_sha256": "485415bbca284b89631a3b717ea216d86ded201f46857094b8ab6e04286a4588",
+  "code_revision": "e62a673ac2729a25d2f965e9d9c4e0067ab85dcf",
+  "valid_training_report": true,
+  "fresh_accessed": false,
+  "development_gate_passed": false,
+  "development_mean_score": 0.1591880654657519,
+  "development_max_seed_score": 0.3006902442161062,
+  "per_seed_scores": {"17": 0.06891534472581037, "29": 0.3006902442161062, "43": 0.10795860745533913},
+  "vectorized_elapsed_seconds": 256.574340976,
+  "vectorized_model_steps_per_second": 584.625880473492,
+  "one_step_equivalence_parameter_error": 1.4901161193847656e-8,
+  "torch_compile_enabled": true,
+  "interpretation": "One-step numerical equivalence is insufficient to establish optimization-trajectory equivalence over 50k updates.",
+  "decision": "Do not open fresh; replace retraining with exact reuse of the frozen Task 3b symmetric checkpoints."
+}

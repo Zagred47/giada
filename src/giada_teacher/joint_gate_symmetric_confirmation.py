@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
 import time
+import zipfile
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
@@ -24,6 +26,11 @@ from .joint_gate_cell_playground import (
     prepare_joint_gate_dataset,
 )
 from .joint_gate_optimization_diagnosis import augment_joint_gate_rate_targets
+
+
+EXPECTED_TASK3B_ARCHIVE_SHA256 = "c1bd981d80075cc7d561a204be695e78e1bf5dfcdbef62408b92ca5b1bbdb2b8"
+EXPECTED_TASK3B_REPORT_SHA256 = "29f716ddc7744eb7a19ff471565de523fd7753c3758b4a66c18387376ea67e42"
+EXPECTED_TASK3B_CHECKPOINT_SHA256 = "85b67995241c40aef5b0ee5a41bf4c56eb1c39c327fe82e54781097a8d91eedc"
 
 
 @dataclass(frozen=True)
@@ -97,6 +104,100 @@ def prepare_joint_gate_symmetric_confirmation(formula) -> dict[str, Any]:
         "fresh_used_for_training_or_freeze": False,
     }
     return base
+
+
+def verified_task3b_diagnosis_root(source, cache_dir):
+    """Verify and materialize the immutable Task 3b checkpoint source."""
+    source = Path(source); cache_dir = Path(cache_dir)
+    if source.is_file():
+        if _file_sha(source) != EXPECTED_TASK3B_ARCHIVE_SHA256:
+            raise RuntimeError("Task 3b diagnosis archive SHA-256 mismatch")
+        if cache_dir.exists(): shutil.rmtree(cache_dir)
+        cache_dir.mkdir(parents=True)
+        with zipfile.ZipFile(source) as archive:
+            root = cache_dir.resolve()
+            for member in archive.infolist():
+                target = (cache_dir / member.filename).resolve()
+                if root not in target.parents and target != root:
+                    raise RuntimeError("unsafe Task 3b archive member")
+            archive.extractall(cache_dir)
+        search_root = cache_dir
+    elif source.is_dir():
+        search_root = source
+    else:
+        raise FileNotFoundError(source)
+    matches = [
+        path.parent for path in search_root.rglob("final_report.json")
+        if (path.parent / "diagnostic_checkpoints.pt").is_file()
+    ]
+    if len(matches) != 1:
+        raise RuntimeError(f"expected one Task 3b artifact root, found {len(matches)}")
+    root = matches[0]
+    report_path = root / "final_report.json"; checkpoint_path = root / "diagnostic_checkpoints.pt"
+    if _file_sha(report_path) != EXPECTED_TASK3B_REPORT_SHA256:
+        raise RuntimeError("Task 3b final report SHA-256 mismatch")
+    if _file_sha(checkpoint_path) != EXPECTED_TASK3B_CHECKPOINT_SHA256:
+        raise RuntimeError("Task 3b checkpoint SHA-256 mismatch")
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    if report.get("schema_version") != "giada-task3b-optimization-diagnosis-v1" or report.get("fresh_accessed"):
+        raise RuntimeError("invalid or fresh-contaminated Task 3b artifact")
+    return root, report
+
+
+def freeze_task3c_from_task3b(bundle, output_dir, task3b_source, config=None, *, code_revision="unknown"):
+    """Freeze the already-trained Task 3b symmetric checkpoints without retraining."""
+    config = config or JointGateSymmetricConfirmationConfig(); config.validate()
+    output_dir = Path(output_dir); output_dir.mkdir(parents=True, exist_ok=False)
+    root, source_report = verified_task3b_diagnosis_root(
+        task3b_source, output_dir.parent / ".task3b_verified_cache"
+    )
+    torch = configure_torch_runtime(config.seeds[0]); device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    all_states = torch.load(root / "diagnostic_checkpoints.pt", map_location=device, weights_only=True)
+    selected = {}; expected_scores = {}
+    for seed in config.seeds:
+        key = f"symmetric_rates-seed{seed}-step50000"
+        if key not in all_states: raise RuntimeError(f"missing frozen Task 3b checkpoint: {key}")
+        selected[str(seed)] = all_states[key]
+        run = next(row for row in source_report["runs"] if row["arm"] == "symmetric_rates" and row["seed"] == seed)
+        expected_scores[str(seed)] = next(row["score"] for row in run["checkpoints"] if row["step"] == 50000)
+    constructor = _constructors(torch, JointGateCellConfig(matched_width=config.width))["shared_matched"]
+    per_seed = {}; score_errors = []
+    for seed in config.seeds:
+        model = constructor().to(device); model.load_state_dict(selected[str(seed)])
+        metrics = _evaluate(model, bundle["development"].items(), torch, device)
+        score = _development_score(metrics); score_errors.append(abs(score - expected_scores[str(seed)]))
+        per_seed[str(seed)] = {"score": score, "metrics": metrics}
+    mean_score = float(np.mean([row["score"] for row in per_seed.values()]))
+    max_seed_score = float(np.max([row["score"] for row in per_seed.values()]))
+    reproduction_error = float(max(score_errors))
+    if reproduction_error > 1e-10:
+        raise RuntimeError(f"Task 3b development score reproduction failed: {reproduction_error}")
+    checkpoint_path = output_dir / "frozen_vectorized_checkpoint.pt"
+    torch.save({"per_seed_state": selected}, checkpoint_path)
+    development = {"step": 50000, "mean_score": mean_score, "max_seed_score": max_seed_score, "per_seed": per_seed}
+    gate = bool(mean_score <= config.development_mean_score_max and max_seed_score <= config.development_max_seed_score_max)
+    freeze = {
+        "schema_version": "giada-task3c-freeze-v2", "code_revision": str(code_revision),
+        "config": asdict(config), "data_contract": bundle["confirmation_contract"],
+        "checkpoint_origin": "immutable_task3b_symmetric_rates_step50000",
+        "task3b_report_sha256": EXPECTED_TASK3B_REPORT_SHA256,
+        "task3b_checkpoint_sha256": EXPECTED_TASK3B_CHECKPOINT_SHA256,
+        "retraining_performed": False, "development_reproduction_max_error": reproduction_error,
+        "fixed_checkpoint_step": 50000, "development": development,
+        "development_gate_passed": gate, "checkpoint_sha256": _file_sha(checkpoint_path),
+        "fresh_accessed": False,
+    }
+    freeze["freeze_sha256"] = _sha(freeze)
+    (output_dir / "selection_freeze.json").write_text(json.dumps(freeze, indent=2), encoding="utf-8")
+    report = {
+        "schema_version": "giada-task3c-checkpoint-freeze-v2", "valid": gate,
+        "code_revision": str(code_revision), "environment": environment_manifest(torch),
+        "retraining_performed": False, "source_verified": True,
+        "development": development, "development_gate_passed": gate,
+        "fresh_accessed": False, "freeze_sha256": freeze["freeze_sha256"],
+    }
+    (output_dir / "checkpoint_freeze_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    return report
 
 
 def _single_states(torch, config):
