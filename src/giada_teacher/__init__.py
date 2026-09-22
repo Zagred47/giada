@@ -99,6 +99,12 @@ from .voltage_path_stress import (
     formula_targets,
     run_voltage_path_stress,
 )
+from .continuous_voltage_paths import (
+    ContinuousPathConfig,
+    make_continuous_paths,
+    formula_path_targets,
+    run_continuous_path_stress,
+)
 from .cahva_closed_loop_microcanary import (
     ClosedLoopCaHVAConfig,
     ActiveClosedLoopCaHVAConfig,
@@ -144,5 +150,6 @@ __all__ = [
     "train_and_freeze_scaling", "evaluate_frozen_scaling",
     "VoltagePathStressConfig", "verified_task5_root", "make_paths",
     "formula_targets", "run_voltage_path_stress",
+    "ContinuousPathConfig", "make_continuous_paths", "formula_path_targets", "run_continuous_path_stress",
     "ClosedLoopCaHVAConfig", "ActiveClosedLoopCaHVAConfig", "run_closed_loop_microcanary",
 ]

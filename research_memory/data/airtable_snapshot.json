@@ -2790,7 +2790,9 @@
         "createdTime": "2026-09-22T21:12:09Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec20a9b4db5840a8"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Task 7c — rianalisi forense dei boundary state Ca_HVA",
@@ -2805,7 +2807,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Ricalcolo di formula, LUT e physical-tau congelati con l'ordine V-gate-corrente campionato osservato nel teacher; riusa le 24 tracce della Task 7b.",
           "fldyeCfji17c7BfPP": "Stabilire le metriche autentiche di stato al bordo e separare l'errore dei candidati dal disallineamento temporale della Task 7b."
         }
@@ -3230,6 +3232,31 @@
         }
       },
       {
+        "id": "rece90c21487020a8",
+        "createdTime": "2026-09-22T21:29:10Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 8 — Ca_HVA su rampe veloci e chirp continui",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-task8-cahva-continuous-path-stress-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec63238c24c17e24"
+          ],
+          "fldSdolNHsOdN294o": "Confermativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Confronto appaiato, senza riaddestramento, di formula, LUT-513 e physical-tau width-32 su quattro famiglie di path esogeni a 40 sottopassi, con viste start-only/coarse/fine.",
+          "fldyeCfji17c7BfPP": "Separare errore per informazione temporale insufficiente da errore di rappresentazione quando cresce la velocità del voltaggio; evitare di duplicare la rampa a otto campioni della Task 6."
+        }
+      },
+      {
         "id": "receaabd7582adb17",
         "createdTime": "2026-09-22T19:36:27Z",
         "cellValuesByFieldId": {
@@ -3441,6 +3468,39 @@
           ],
           "fldzYHRSjC0ov4BKb": [
             "rec037f42c0cc19a1"
+          ]
+        }
+      },
+      {
+        "id": "rec63238c24c17e24",
+        "createdTime": "2026-09-22T21:29:48Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-22",
+          "fld43sXbznp3IMZYL": "Task 8 Ca_HVA continuous voltage path protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Rampe lente/rapide e chirp bassi/alti su Ca_HVA con path imposto, 40 sottopassi da 0.025 ms.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Pilot NEURON/formula max gate error <=1e-9; nessun overlap tra development e sealed; output finiti e zero violazioni d'occupazione. Riportare metriche per famiglia senza selezionare candidato o seed usando il sealed.",
+          "fldNtSPrXFVAEpq2B": "Hash Task 5 errato, CUDA assente, mismatch del pilot o valori non finiti invalidano il run. Un successo su path esogeno non autorizza claim sul neurone completo o su V futuro endogeno.",
+          "fldODG8tJ39IE4DeM": "protocol-task8-cahva-continuous-path-stress-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "e3660a59ee7232bf69f8cd511e26f3fa2d96e1b88ef52bfc996f9fe6899b7a1f",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Confrontare formula esatta su path fine con formula start-only/coarse e con LUT-513 e physical-tau seed 17/29/43 congelati in tre viste informative; pilot NEURON autentico su 12 casi per famiglia; development 128 e sealed 256 casi indipendenti per famiglia.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rece90c21487020a8"
           ]
         }
       },
@@ -4724,6 +4784,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Held-voltage Ca_HVA m+h; nessun percorso V variabile o compartimento accoppiato.",
           "fldhoJJ1jrMBcOUrl": "Task 4 — physical-tau domina le reti, LUT lineare domina l'accuratezza",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "rec20a9b4db5840a8",
+        "createdTime": "2026-09-22T21:29:10Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Rianalisi forense delle 24 tracce Task 7b con stato e corrente allineati temporalmente.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task7c-cahva-corrected-boundary-lut-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Formula corretta: max abs V 2.8186e-12 mV, max gate RMSE 6.8877e-14, max abs ica 2.6758e-16 mA/cm2. A gbar 1x, LUT-513 V RMSE medio 0.000269 mV contro physical-tau seed 17/29/43: 0.001376/0.001500/0.000739 mV. A gbar 4x: LUT 0.000332 contro 0.005090/0.005648/0.002752 mV. Nessun seed selezionato post hoc.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "La classifica e il riallineamento derivano dalle stesse tracce aperte Task 7b; non sono una conferma indipendente. Il vantaggio locale LUT non implica validità del neurone completo.",
+          "fldYAbc64NIZGKzWO": [
+            "rec21d2946e21ed2c"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Ca_HVA+pas in un compartimento, E_Ca fisso; senza calcio dinamico, sinapsi, accoppiamento assiale o updater V appreso. ZIP SHA-256 f9cc32a6894718d73b10ec95417aad1b53a28d6f4ef3bb97559b4c22cd81160f.",
+          "fldhoJJ1jrMBcOUrl": "Task 7c — boundary Ca_HVA corretto e LUT congelata competitiva",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }

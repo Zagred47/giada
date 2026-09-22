@@ -1,0 +1,19 @@
+{
+  "schema_version": "giada-task7c-result-summary-v1",
+  "source_zip_sha256": "f9cc32a6894718d73b10ec95417aad1b53a28d6f4ef3bb97559b4c22cd81160f",
+  "source_schema_version": "giada-task7c-boundary-semantics-v1",
+  "valid": true,
+  "episode_count": 24,
+  "teacher_regenerated": false,
+  "model_retrained": false,
+  "fresh_test_claimed": false,
+  "corrected_formula_voltage_max_abs_mv": 2.81863421491835e-12,
+  "corrected_formula_gate_max_rmse": 6.88769236262315e-14,
+  "corrected_formula_current_max_abs_ma_cm2": 2.67581096169422e-16,
+  "mean_voltage_rmse_mv_by_gbar": {
+    "g0": {"lut": 0.00032107313874724894, "physical_seed17": 0.00032107313874724894, "physical_seed29": 0.00032107313874724894, "physical_seed43": 0.00032107313874724894},
+    "g1": {"lut": 0.000269466279168477, "physical_seed17": 0.001376315670562665, "physical_seed29": 0.0014996972739484441, "physical_seed43": 0.0007387252110179635},
+    "g4": {"lut": 0.00033205623216843916, "physical_seed17": 0.0050896734556474385, "physical_seed29": 0.00564836815216305, "physical_seed43": 0.0027524729952424463}
+  },
+  "interpretation": "Correct temporal boundary ordering reproduces the saved authentic NEURON teacher. Frozen LUT-513 is more accurate on mean closed-loop voltage error than each frozen physical-tau seed at gbar 1x and 4x. This is a post-hoc reassessment on already-open one-compartment traces, not fresh confirmation or 642-segment validity."
+}

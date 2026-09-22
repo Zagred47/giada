@@ -1,0 +1,13 @@
+{
+  "Nome": "Task 8 Ca_HVA continuous voltage path protocol v1",
+  "Codice stabile": "protocol-task8-cahva-continuous-path-stress-v1",
+  "Descrizione": "Rampe lente/rapide e chirp bassi/alti su Ca_HVA con path imposto, 40 sottopassi da 0.025 ms.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "Confrontare formula esatta su path fine con formula start-only/coarse e con LUT-513 e physical-tau seed 17/29/43 congelati in tre viste informative; pilot NEURON autentico su 12 casi per famiglia; development 128 e sealed 256 casi indipendenti per famiglia.",
+  "Criteri di successo": "Pilot NEURON/formula max gate error <=1e-9; nessun overlap tra development e sealed; output finiti e zero violazioni d'occupazione. Riportare metriche per famiglia senza selezionare candidato o seed usando il sealed.",
+  "Regole di arresto": "Hash Task 5 errato, CUDA assente, mismatch del pilot o valori non finiti invalidano il run. Un successo su path esogeno non autorizza claim sul neurone completo o su V futuro endogeno.",
+  "Registrato il": "2026-09-22",
+  "Hash preregistrazione": "e3660a59ee7232bf69f8cd511e26f3fa2d96e1b88ef52bfc996f9fe6899b7a1f",
+  "Esperimento": ["rece90c21487020a8"]
+}

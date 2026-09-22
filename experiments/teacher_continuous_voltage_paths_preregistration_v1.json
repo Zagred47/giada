@@ -1,0 +1,35 @@
+{
+  "schema_version": "giada-task8-continuous-path-preregistration-v1",
+  "task": "8",
+  "question": "How do path speed, chirp frequency and path sampling resolution affect Ca_HVA gate prediction with frozen primitives?",
+  "nonredundancy": "Task 6 already tested an eight-sample ramp. Task 8 uses forty 0.025 ms substeps, independently varied ramp speed and chirp frequency, plus paired start-only/coarse/fine path information controls.",
+  "source": {
+    "teacher": "canonical compiled Ca_HVA.mod, NEURON isolated-gate oracle",
+    "frozen_task5_archive_sha256": "ec6e691fe8a3c7fa30ec70db967f508f358f05b6bbaec58f3b7bcf0efed383f3",
+    "frozen_candidates": ["linear LUT-513", "physical-tau width-32 seeds 17, 29, 43"],
+    "task7c_boundary_semantics_zip_sha256": "f9cc32a6894718d73b10ec95417aad1b53a28d6f4ef3bb97559b4c22cd81160f"
+  },
+  "design": {
+    "families": ["slow_ramp", "fast_ramp", "low_chirp", "high_chirp"],
+    "time_step_ms": 0.025,
+    "fine_steps_per_ms": 40,
+    "coarse_steps_per_ms": 8,
+    "development_cases_per_family": 128,
+    "sealed_cases_per_family": 256,
+    "development_seed": 88031,
+    "sealed_seed": 88032,
+    "authentic_neuron_pilot_cases_per_family": 12,
+    "initial_gate_occupancies_independent_of_equilibrium": true,
+    "voltage_range_mv": [-120, 60]
+  },
+  "arms": ["exact formula with V_start only", "exact formula with coarse path", "exact formula with full fine path as target", "LUT-513 with V_start only", "LUT-513 with coarse path", "LUT-513 with full fine path", "physical-tau each seed with V_start only", "physical-tau each seed with coarse path", "physical-tau each seed with full fine path"],
+  "contrasts": {
+    "path_information": "Exact formula start-only and coarse-path errors against exact fine-path target isolate missing temporal information.",
+    "representation": "LUT and each physical-tau seed are compared only within the same path view.",
+    "speed_frequency": "Report the four families separately; do not conceal high-frequency failure in an aggregate."
+  },
+  "primary_metrics": ["m RMSE", "h RMSE", "m²h RMSE", "normalized worst-component score", "occupancy violations", "between-seed dispersion"],
+  "preflight": "Authentic NEURON pilot must match extracted formula within 1e-9 gate occupancy; no pilot failure can be interpreted as candidate error.",
+  "freeze_policy": "No candidate retraining or selection. Save development report and freeze before generating sealed paths; sealed outcomes are descriptive and cannot alter arms, thresholds or seed choice.",
+  "interpretation_limit": "Exogenous future voltage path is an oracle input for diagnostics, not an available input to an endogenous closed-loop predictor. No 642-segment, dynamic-calcium or learned-voltage-updater claim."
+}
