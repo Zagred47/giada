@@ -1314,6 +1314,23 @@
         }
       },
       {
+        "id": "rece52d1acf5f9310",
+        "createdTime": "2026-09-22T20:01:43Z",
+        "cellValuesByFieldId": {
+          "fldAn8rI4IDtMAtO1": [],
+          "fldEM4SsCTKdq0ZXA": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fldF6LDGDaySPXohO": "Passare dal voltage clamp esogeno della Task 6 al feedback endogeno voltaggio-gate-corrente senza usare il futuro teacher come input.",
+          "fldGK9NOiPojtVDt5": [],
+          "fldRJmEWvdtbr0xoC": "question-hybrid-cahva-predicted-voltage-v1",
+          "fldTzYqwWHaHk7eE7": "Una LUT dei gate validata sotto path noto conserva il vantaggio quando il path V è generato dal modello e ricoupled con corrente e membrana?",
+          "fldj261pBSznFUjUC": [],
+          "fldu0VJMDCla5XqQv": "Aperta",
+          "fldvER0OXNvszn36s": "La cella ibrida Ca_HVA resta accurata con voltaggio predetto causalmente?"
+        }
+      },
+      {
         "id": "recexQ08Q8qnqA1ms",
         "createdTime": "2026-09-20T13:59:09Z",
         "cellValuesByFieldId": {
@@ -1860,6 +1877,62 @@
         }
       },
       {
+        "id": "recc2c0f50cb7b04a",
+        "createdTime": "2026-09-22T20:01:54Z",
+        "cellValuesByFieldId": {
+          "fld0cyrU7z3lgnGri": [
+            "recaaca3a3aa4a440"
+          ],
+          "fld1yxxCdQIKUTr3o": [],
+          "fld21P7Z38jhllXCw": [],
+          "fldBg7fdVTV3QRYYR": [
+            "rece52d1acf5f9310"
+          ],
+          "fldC0zRVGDcrxDXx3": [],
+          "fldCQ7s6vqBkAEj7o": [],
+          "fldD3WgtsOkJFiQ0f": "Ibrido LUT gate + corrente analitica può ridurre il carico appreso",
+          "fldGKzruZ7lMxuhv9": "Aperta",
+          "fldGMQygrEEp67LYU": [],
+          "fldGrnR6YpOu4IX7p": [],
+          "fldM9yryBylmVsAFh": [],
+          "fldMttnkdNKUfLftx": [],
+          "fldNKdCWed8GtMJWA": [],
+          "fldO5B11MJ6B3bN8Z": [
+            "rec8cd8ab0ad93100",
+            "rec27072c598592e1",
+            "reca32b3d68ccd764"
+          ],
+          "fldSpqkLWRRVAcGyT": "Ipotesi progettuale guidata dalle Task 5–6, non conclusione di validità embedded.",
+          "fldTw6RHc13ABlCQ5": "hypothesis-hybrid-cahva-causal-loop-v1",
+          "fldUBxb2IBwluW0o4": [],
+          "fldVs7bwqXfD6wloz": [],
+          "fldWgPcGUQzrCfwIV": [],
+          "fldWmQYnlPnpnDCwv": "Ipotesi",
+          "fldZZflNzBIslfoxC": [],
+          "fldbHCj8nUi9FfPr0": [],
+          "fldeIU5gljlLtLjk1": [],
+          "fldgYqyJBiFHOFL5Q": "Nel confronto a stesso stato/input/budget, il loop ibrido mostra deriva, eventi o corrente peggiori di un controllo appreso o di una baseline fisica; oppure l'errore di V amplifica il gate fino a perdere il vantaggio atomico della LUT.",
+          "fldggFgq9bSRfRIf1": [
+            "rec1a91ca6b38e170"
+          ],
+          "fldhblz9QaL5xZMzj": [],
+          "fldjIzyz2FzkrntCk": [],
+          "fldl4vkmr7todcrIa": [],
+          "fldn09q7Ys4pNG46z": [],
+          "fldnstZ0ARy2ZeMxz": "Task 5–6 supportano la LUT solo per gate isolati e path esogeno noto. Nessuna prova ancora per V endogeno, neurone multicompartimentale o vantaggio computazionale complessivo.",
+          "fldrs9hp5BJaiJJ9w": [
+            "rec45ab4e6a5bd32f"
+          ],
+          "fldtFqPHjNQsCaDvJ": [],
+          "fldtIv7JUzBTeny1j": [],
+          "fldwKvlUhBaZDx4AK": [],
+          "fldwnvVrfGEy0ephV": [
+            "rec4728d5b581287c"
+          ],
+          "fldxSHSKYTFeHnKO6": "Congelando la LUT Ca_HVA e calcolando analiticamente la corrente, l'updater appreso deve modellare meno funzioni del surrogate end-to-end e può mantenere accuratezza nel loop causale se l'errore del V predetto resta controllato."
+        }
+      },
+      {
         "id": "recc57e618543ffbb",
         "createdTime": "2026-09-22T17:51:47Z",
         "cellValuesByFieldId": {
@@ -1982,7 +2055,26 @@
     ],
     "tbltzi3MX24XkNVGK": [],
     "tblPsHQ90EiUXddxH": [],
-    "tblUNT1bCX0obKuqZ": [],
+    "tblUNT1bCX0obKuqZ": [
+      {
+        "id": "rec1a91ca6b38e170",
+        "createdTime": "2026-09-22T20:01:53Z",
+        "cellValuesByFieldId": {
+          "fldBPVzL71G7QMCjW": "Schema causale dell'architettura ibrida proposta, con distinzione esogeno/endogeno.",
+          "fldC8wNkssbZPMc5Y": "Loop causale V-gate-corrente-V",
+          "fldDJOCzFGL2iadrK": "Ablare V teacher-forced vs V predetto; LUT vs gate appreso a V identico; corrente analitica vs oracle; variare numero di sottopassi e perturbare V controllatamente.",
+          "fldDSHSrJPfwTP0mk": [],
+          "fldESpbTsQPkMof63": "V_k e input U_k → update m/h_k via LUT; (V_k,m_k,h_k) → I_CaHVA,k analitica; correnti e coupling assiale → updater V_(k+1); ripetere su sottopassi. Il percorso futuro V del teacher è escluso dagli input endogeni.",
+          "fldEXqg7hjXzoOo3H": "causal-hybrid-voltage-gate-current-loop-v1",
+          "fldV7yTWYrJXqducp": [],
+          "fldZtguiKgtvZh4dj": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fldrYpCeCPKFEcjLT": "Confronti appaiati a stato iniziale/input identici, teacher replay, controlli oracle con V teacher solo diagnostici, valutazione sealed non usata per selezione.",
+          "fldzISAHOWEcAPxat": "Errore di V predetto, discretizzazione/ordine del solver, correnti mancanti, altri gate, E_Ca variabile, coupling assiale, mismatch fra clamp esogeno e circuito chiuso."
+        }
+      }
+    ],
     "tblWWhDt7RqQb4ru1": [
       {
         "id": "rec0fc253dab978d7",
@@ -2237,16 +2329,227 @@
         }
       }
     ],
-    "tblZnvzYZ9Vva5Qch": [],
-    "tblfKT71DdPEcWyBx": [],
+    "tblZnvzYZ9Vva5Qch": [
+      {
+        "id": "rec17bde17619bbb3",
+        "createdTime": "2026-09-22T20:01:45Z",
+        "cellValuesByFieldId": {
+          "fld2AY7MBCj726k0e": "Separare primitive locali, current readout analitico e update del voltaggio; chiudere causalmente il loop V→gate→corrente→V a sottopassi; usare LUT solo dove la validazione atomica supporta; niente voltage path futuro del teacher nell'inferenza endogena.",
+          "fld4FDMrQztZTKRdH": [
+            "rec4728d5b581287c"
+          ],
+          "fld6wTgUr0iGuvkSU": [],
+          "fldL6QuvnDzLMm3EF": [
+            "rec45ab4e6a5bd32f"
+          ],
+          "fldODx06VLm5A1UDZ": "Assegnare funzioni numeriche note a moduli espliciti e concentrare l'apprendimento sui residui/dinamiche ancora non risolti.",
+          "fldTJcnFmgDRfVMqu": "Approccio progettuale, non architettura validata nel neurone completo; restano errore ricorsivo, corrente Ca_HVA, interazioni con altri meccanismi, topologia e costo GPU.",
+          "fldidEvTnqPguIljn": "GIADA — decomposizione ibrida del neurone",
+          "fldzmR14rFwUCoZXc": "approach-giada-hybrid-neuron-decomposition-v1"
+        }
+      }
+    ],
+    "tblfKT71DdPEcWyBx": [
+      {
+        "id": "rec4728d5b581287c",
+        "createdTime": "2026-09-22T20:02:33Z",
+        "cellValuesByFieldId": {
+          "fld2SmQPqyxaRM7KG": "choice-hybrid-cahva-lut-current-learned-voltage-v1",
+          "fld9Ppy142PAxO6xR": "Ridurre il numero di funzioni da apprendere e isolare l'errore di coupling; da verificare sensibilità al V predetto, stabilità ricorsiva ed eventi in confronto a controlli appaiati.",
+          "fldAgp66jCZ6IGpwm": [
+            "rec17bde17619bbb3"
+          ],
+          "fldDr5nkGahIUUDEY": "Trattamento ibrido del sottosistema Ca_HVA",
+          "fldFsmacAMnmoydPH": [
+            "rec45ab4e6a5bd32f"
+          ],
+          "fldGvABCmZs8su9fJ": "Ibrido",
+          "fldPIjhoiiMDFd6qu": [
+            "rec8cd8ab0ad93100",
+            "rec27072c598592e1",
+            "reca32b3d68ccd764"
+          ],
+          "fldaIlQAiqieIvK0d": [],
+          "fldcYxZPJRgfPwdC0": [],
+          "flde0mWwfsDwQNDvb": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fldjWbq9AtWxO7T87": "Task 5: LUT più accurata della rete per m+h isolati. Task 6: LUT resta accurata con path esogeno noto; V_t da solo è insufficiente anche per la formula esatta.",
+          "fldxk1VitsCScYKVS": "Scelta progettuale candidata: gate Ca_HVA via LUT, corrente analitica, updater V appreso e sottopassi causali."
+        }
+      }
+    ],
     "tblJGbHAauApAQfz5": [],
     "tblPZyMkaJKzHEZIQ": [],
-    "tblhqNMkBAnia7Wxz": [],
+    "tblhqNMkBAnia7Wxz": [
+      {
+        "id": "rec45ab4e6a5bd32f",
+        "createdTime": "2026-09-22T20:01:47Z",
+        "cellValuesByFieldId": {
+          "fld11m5vgUlLuStaN": "Input: stato corrente e forcing causale U del sottopasso. Output: V e gate successivi, corrente Ca_HVA analitica. Ordine numerico e altri meccanismi da specificare prima del run.",
+          "fld5P4eFv0PFaDDsa": [
+            "rec17bde17619bbb3"
+          ],
+          "fldFJKXCedWPjMxtt": [],
+          "fldJyxfv8WeSQiMY8": [],
+          "fldP9IDuLFinS5GI7": [],
+          "fldUnVWK8dZMRrnQN": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fldVHC7WiZYT6RaQS": [],
+          "fldZqoOXvnbkcxC4w": [],
+          "fldZunWyYSSSxt3bQ": "proposal-v1",
+          "fldbJeAzmBDNozNdG": "model-giada-hybrid-cahva-microcoupling-candidate-v1",
+          "flddoVOJAzO8zmx5O": [],
+          "fldghQDWG0RDuTKSG": [],
+          "fldhcVmZzM9x634uf": [],
+          "fldi5tpQHDmY9xREA": "GIADA hybrid Ca_HVA voltage-gate microcoupling candidate",
+          "fldkfLPKoXTeWnQ5p": [],
+          "fldlZvaKO0mN7oQLa": [
+            "rec4728d5b581287c"
+          ],
+          "fldmBzUPsKweITuWu": "Stato ai sottopassi: V, m, h e gli altri stati necessari a correnti/input; nessun endpoint di voltaggio teacher come stato disponibile in inferenza.",
+          "fldnehgDOviZhvIa8": "Candidato architetturale non ancora addestrato/validato: updater appreso del voltaggio, LUT Ca_HVA per m/h e corrente analitica, iterati causalmente.",
+          "fldpWyAwqj0pABpRo": [],
+          "fldqLarOmIADPGv6g": "Surrogate",
+          "fldqkGGfZlsb9ubyA": [],
+          "fldtl1cw9puUi3gAn": [],
+          "fldvVK49kyUoxlDCW": [],
+          "fldvx65vAXMhqrjiT": [],
+          "fldw0BvzpqMf5Etsf": [],
+          "fldxL6cE2rBicvDST": [],
+          "fldxhTeudqE1zR4e5": [],
+          "fldzWAarzeSJBpBC3": [],
+          "fldznv6PUlZSdVfdT": [
+            "rec8cd8ab0ad93100",
+            "rec27072c598592e1",
+            "reca32b3d68ccd764"
+          ]
+        }
+      }
+    ],
     "tblCd3KAgubx4cwry": [],
-    "tbl3YlCMWI9DiCpah": [],
+    "tbl3YlCMWI9DiCpah": [
+      {
+        "id": "rec27072c598592e1",
+        "createdTime": "2026-09-22T20:01:50Z",
+        "cellValuesByFieldId": {
+          "fld4EXvzweDDu8yvn": [],
+          "fld7JNRWlTmKRaBQ8": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fld8JBLe47rB3ex8t": [
+            "rec4728d5b581287c"
+          ],
+          "fldFy11SG7YjNmrBq": "Componente numerico fissato proposto per il loop accoppiato",
+          "fldI7XReuHtq8ARER": [],
+          "fldNF7mvKzc07U9pu": [],
+          "fldNjkI2C5yaKqBd4": "Griglia Task 5 a 513 punti; non usare la traiettoria futura teacher nell'inferenza; verificare sensibilità all'errore del V predetto.",
+          "fldSCDUCWYrJlPOSn": [],
+          "fldXIQhySq4RGE9XD": [],
+          "fldd8mDyxoPDqZMX1": [],
+          "flddY1KYKDZQ7iCvy": [],
+          "flde5wkBJn3JA70jV": [],
+          "fldeCmCydoL99hxiH": "cahva_gate_lut",
+          "fldenfgTZ8GsGcC6Y": "LUT lineare a 513 punti, validata nel voltage clamp isolato; aggiornamento esponenziale dei gate al sottopasso con il V causale disponibile.",
+          "fldgoTl7dDloCNjcv": [],
+          "fldmzY3Xg1I876OEF": "LUT Ca_HVA m+h su voltaggio corrente predetto",
+          "fldoDsmFTTps3v4qz": "component-hybrid-cahva-gate-lut-v1",
+          "fldsUCISAxfxlXdCN": [],
+          "fldyeiHUiixKU7lks": [
+            "rec45ab4e6a5bd32f"
+          ]
+        }
+      },
+      {
+        "id": "rec8cd8ab0ad93100",
+        "createdTime": "2026-09-22T20:01:48Z",
+        "cellValuesByFieldId": {
+          "fld4EXvzweDDu8yvn": [],
+          "fld7JNRWlTmKRaBQ8": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fld8JBLe47rB3ex8t": [
+            "rec4728d5b581287c"
+          ],
+          "fldFy11SG7YjNmrBq": "Componente appreso proposto, non ancora validato",
+          "fldI7XReuHtq8ARER": [],
+          "fldNF7mvKzc07U9pu": [],
+          "fldNjkI2C5yaKqBd4": "Architettura, stabilità e coupling assiale da determinare con esperimenti; non presumere che una MLP basti.",
+          "fldSCDUCWYrJlPOSn": [],
+          "fldXIQhySq4RGE9XD": [],
+          "fldd8mDyxoPDqZMX1": [],
+          "flddY1KYKDZQ7iCvy": [],
+          "flde5wkBJn3JA70jV": [],
+          "fldeCmCydoL99hxiH": "voltage_updater",
+          "fldenfgTZ8GsGcC6Y": "Modulo proposto per predire V del sottopasso usando stato corrente, input, correnti e coupling; non riceve V futuro teacher.",
+          "fldgoTl7dDloCNjcv": [],
+          "fldmzY3Xg1I876OEF": "Updater appreso del voltaggio causale",
+          "fldoDsmFTTps3v4qz": "component-hybrid-causal-voltage-updater-v1",
+          "fldsUCISAxfxlXdCN": [],
+          "fldyeiHUiixKU7lks": [
+            "rec45ab4e6a5bd32f"
+          ]
+        }
+      },
+      {
+        "id": "reca32b3d68ccd764",
+        "createdTime": "2026-09-22T20:01:51Z",
+        "cellValuesByFieldId": {
+          "fld4EXvzweDDu8yvn": [],
+          "fld7JNRWlTmKRaBQ8": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fld8JBLe47rB3ex8t": [
+            "rec4728d5b581287c"
+          ],
+          "fldFy11SG7YjNmrBq": "Componente fisico esplicito proposto",
+          "fldI7XReuHtq8ARER": [],
+          "fldNF7mvKzc07U9pu": [],
+          "fldNjkI2C5yaKqBd4": "Parametri gbar ed E_Ca autentici; testare ordine pre/post update e variazione di E_Ca prima della sostituzione embedded.",
+          "fldSCDUCWYrJlPOSn": [],
+          "fldXIQhySq4RGE9XD": [],
+          "fldd8mDyxoPDqZMX1": [],
+          "flddY1KYKDZQ7iCvy": [],
+          "flde5wkBJn3JA70jV": [],
+          "fldeCmCydoL99hxiH": "cahva_current",
+          "fldenfgTZ8GsGcC6Y": "Readout proposto dalla legge I_CaHVA=gbar*m²*h*(V-E_Ca), con allineamento temporale da verificare rispetto al MOD.",
+          "fldgoTl7dDloCNjcv": [],
+          "fldmzY3Xg1I876OEF": "Corrente Ca_HVA analitica",
+          "fldoDsmFTTps3v4qz": "component-hybrid-cahva-analytic-current-v1",
+          "fldsUCISAxfxlXdCN": [],
+          "fldyeiHUiixKU7lks": [
+            "rec45ab4e6a5bd32f"
+          ]
+        }
+      }
+    ],
     "tblyvPG9WvHzpcROT": [],
     "tblT64nQkp5xAG4RE": [],
-    "tbluC5Bp65CJ74Md3": [],
+    "tbluC5Bp65CJ74Md3": [
+      {
+        "id": "recaaca3a3aa4a440",
+        "createdTime": "2026-09-22T20:03:18Z",
+        "cellValuesByFieldId": {
+          "fld5FWRKlrC1sZzbC": [],
+          "fld6Ta57mQKm5X00j": [],
+          "fld7S12JQZJiCq4M8": "v1",
+          "fldGXY2AArAUFqiGg": [
+            "recc2c0f50cb7b04a"
+          ],
+          "fldGXli17gS3i717Q": [],
+          "fldHRFlqbm3OJ28sg": [],
+          "fldLMYWw24mTWzwqp": "Equazione",
+          "fldNMLwj8LMxzCZCt": "Legge di corrente del meccanismo Ca_HVA da conservare esplicitamente nel candidato ibrido; l'allineamento temporale del readout resta da verificare.",
+          "fldTDm5Uk5ZHva5pP": "I_{\\mathrm{CaHVA}} = \\bar g_{\\mathrm{CaHVA}} m^2 h (V-E_{\\mathrm{Ca}})",
+          "fldWcJnl6iIbs7zz1": [],
+          "fldckejZJw2Lvv3iP": "equation-hybrid-cahva-analytic-current-v1",
+          "fldnhhYVDFVt57FUG": [],
+          "fldzBW1qFizoxwzrz": "Readout analitico della corrente Ca_HVA",
+          "fldzqyQ5PcpfkBEXw": "m,h occupazioni dei gate; gbar e potenziale di inversione dal meccanismo teacher. Segno della corrente secondo la convenzione NMODL; pre/post sottopasso da confermare con oracle embedded."
+        }
+      }
+    ],
     "tblH7k6WfL49Z09uw": [],
     "tblkT9LEnU1Qw2pnX": [],
     "tblG3VLGi6pnZoI0p": [],
