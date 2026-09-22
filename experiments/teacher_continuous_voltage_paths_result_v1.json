@@ -1,0 +1,21 @@
+{
+  "schema_version": "giada-task8-result-summary-v1",
+  "source_zip_sha256": "728cd58f5d19f1fecb3014df9ac0ed76efd17556434e5e74a1d570894fdf7f18",
+  "source_code_revision": "a932f735cf21f6cda624511ae04a48d967769b42",
+  "reported_valid": true,
+  "freeze_and_report_hashes_verified": true,
+  "authentic_neuron_pilot_cases": 48,
+  "pilot_maximum_gate_error": 1.5543122344752192e-15,
+  "sealed_case_count": 1024,
+  "sealed_overlap_count": 0,
+  "candidate_retrained": false,
+  "selection_used_sealed": false,
+  "scores_are_normalized_not_millivolts": true,
+  "sealed_normalized_scores": {
+    "slow_ramp": {"formula_start_only": 45.709624778, "formula_coarse_path": 4.478992904, "lut_fine_path": 0.003107479},
+    "fast_ramp": {"formula_start_only": 48.912314779, "formula_coarse_path": 4.502091091, "lut_fine_path": 0.003573780},
+    "low_chirp": {"formula_start_only": 56.198694852, "formula_coarse_path": 3.361210343, "lut_fine_path": 0.003209996},
+    "high_chirp": {"formula_start_only": 63.039774230, "formula_coarse_path": 20.389475405, "lut_fine_path": 0.003359157}
+  },
+  "interpretation": "Missing temporal voltage-path information dominates the sparse-view errors, particularly high chirp. Given the full prescribed exogenous path, frozen LUT-513 is highly accurate and beats each frozen physical-tau seed. This does not establish an available causal input for endogenous closed-loop rollout."
+}

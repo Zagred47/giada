@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 8 — informazione temporale domina lo stress Ca_HVA",
+  "Codice stabile": "finding-task8-continuous-path-information-bottleneck-v1",
+  "Descrizione": "Rampe e chirp esogeni, confronto appaiato fra viste V_t, 8 e 40 campioni con formula, LUT e tre seed physical-tau congelati.",
+  "Risultato": "Pilot autentico NEURON 48 casi, max gate error 1.55e-15; 1.024 casi sealed senza overlap. Su high chirp score normalizzato formula V_t-only 63.04, formula 8 campioni 20.39, LUT 40 campioni 0.00336. LUT 40 campioni score 0.00311-0.00357 sulle quattro famiglie e supera ciascun seed physical-tau. Score non in mV, nessuna violazione d'occupazione.",
+  "Incertezza": "La perdita d'informazione temporale domina i bracci con path scarso; il path futuro è noto solo perché imposto. Non sappiamo ancora come produrlo causalmente nel modello endogeno.",
+  "Limitazioni": "Ca_HVA isolato su 1 ms; non misura il teacher completo o il rollout autoregressivo. ZIP SHA-256 728cd58f5d19f1fecb3014df9ac0ed76efd17556434e5e74a1d570894fdf7f18.",
+  "Esito": "Positivo",
+  "Esperimenti": ["rece90c21487020a8"]
+}

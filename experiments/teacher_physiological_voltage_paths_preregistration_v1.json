@@ -1,0 +1,36 @@
+{
+  "schema_version": "giada-task9-physiological-path-preregistration-v1",
+  "task": "9",
+  "question": "Do frozen Ca_HVA gate primitives retain accuracy on voltage paths actually visited by the full 642-segment teacher?",
+  "source": {
+    "dataset": "canonical targeted diagnostic v1.1 base, 29,240 transitions",
+    "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "transition_store_sha256": "3fef415544a82b55801461e3cec069ed292faca0075f1f9f431e9dce8f5ea6d8",
+    "split": "train only",
+    "frozen_task5_archive_sha256": "ec6e691fe8a3c7fa30ec70db967f508f358f05b6bbaec58f3b7bcf0efed383f3",
+    "candidates": ["exact Ca_HVA formula", "linear LUT-513", "physical-tau width-32 seeds 17, 29, 43"]
+  },
+  "design": {
+    "sites": {"soma": 0, "hot_zone": 387, "tuft_1": 460, "tuft_2": 469},
+    "regimes": ["quiet", "rising", "spike", "falling"],
+    "regime_rules": {"spike": "max V >=0 and min V <-20", "rising": "endpoint-start >=5 mV after spike check", "falling": "start-endpoint >=5 mV after rising check", "quiet": "range <2 mV after prior checks", "mixed": "excluded with count reported"},
+    "candidate_pool_limit": 4000,
+    "maximum_per_site_regime": 24,
+    "sample_seed": 89031,
+    "microtrace_grid": "41 voltage samples at 0.025 ms from 0 to 1 ms",
+    "fine_update": "40 right-boundary samples V[1:41] at dt=0.025 ms, following Task 7c boundary semantics",
+    "coarse_update": "8 right-boundary samples V[5],V[10],...,V[40] at dt=0.125 ms",
+    "start_only_update": "V[0] for 1 ms"
+  },
+  "evaluation": {
+    "primary": "candidate gate and m^2h errors versus exact formula composed on recorded fine path",
+    "teacher_floor": "exact-formula fine-path endpoint versus stored authentic teacher m,h endpoint",
+    "teacher_floor_limit": 0.005,
+    "teacher_floor_rule": "If max(m RMSE,h RMSE)>0.005 in any nonempty site/regime group, report candidate-vs-teacher values as non-interpretable; candidate-vs-formula remains a numerical approximation diagnostic.",
+    "support_rule": "Any unfilled site/regime quota is reported as a support shortfall; no replacement, retrospective threshold change or extrapolated claim.",
+    "secondary": "candidate endpoint versus teacher, conditioned on calibrated teacher floor",
+    "no_selection_or_retraining": true,
+    "test_splits_sealed": true
+  },
+  "limitations": "The path is recorded from the future full-teacher trajectory and is legitimate only for this teacher-forced diagnostic. It cannot be passed to an autonomous closed-loop predictor. The source microtrace is float32 and CVode integrates between samples, so formula-vs-teacher disagreement is a measured reference floor rather than silently attributed to candidates."
+}

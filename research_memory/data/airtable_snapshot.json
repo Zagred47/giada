@@ -2850,6 +2850,31 @@
         }
       },
       {
+        "id": "rec32fd9b801afb0e",
+        "createdTime": "2026-09-22T22:40:14Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 9 — gate Ca_HVA su percorsi fisiologici Hay",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-task9-cahva-physiological-paths-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec83a70c2ffc5c05"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Diagnosi teacher-forced su percorsi da microtracce autentiche del dataset targeted v1.1; siti soma/hotzone/tuft e regimi quiet/rising/spike/falling.",
+          "fldyeCfji17c7BfPP": "Verificare se i risultati su path sintetici si trasferiscono ai path visitati dal teacher completo e misurare separatamente il floor CVode/microtraccia."
+        }
+      },
+      {
         "id": "rec60f7aae22fd1e1",
         "createdTime": "2026-09-22T18:37:20Z",
         "cellValuesByFieldId": {
@@ -3236,7 +3261,9 @@
         "createdTime": "2026-09-22T21:29:10Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "recf39392d6eb4349"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Task 8 — Ca_HVA su rampe veloci e chirp continui",
@@ -3251,7 +3278,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Confronto appaiato, senza riaddestramento, di formula, LUT-513 e physical-tau width-32 su quattro famiglie di path esogeni a 40 sottopassi, con viste start-only/coarse/fine.",
           "fldyeCfji17c7BfPP": "Separare errore per informazione temporale insufficiente da errore di rappresentazione quando cresce la velocità del voltaggio; evitare di duplicare la rampa a otto campioni della Task 6."
         }
@@ -3646,6 +3673,39 @@
           ],
           "fldzYHRSjC0ov4BKb": [
             "rec7041006aab87d6"
+          ]
+        }
+      },
+      {
+        "id": "rec83a70c2ffc5c05",
+        "createdTime": "2026-09-22T22:40:33Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-23",
+          "fld43sXbznp3IMZYL": "Task 9 Ca_HVA physiological path protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Percorsi fisiologici da microtracce del teacher Hay completo; formula, LUT e seed physical-tau congelati in viste start-only, otto e quaranta sottopassi.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Source hash e mapping Ca_HVA esatti, boundary voltage coerenti entro 1e-4 mV, nessun NaN/Inf, supporto per sito/regime esplicito. Se floor formula-vs-teacher max RMSE m/h >0.005 in qualunque gruppo non vuoto, nessuna attribuzione degli errori candidato-vs-teacher al candidato.",
+          "fldNtSPrXFVAEpq2B": "Hash sorgente, teacher commit, schema, time grid o boundary incoerenti invalidano il run. Non aprire test, non scegliere seed, non riaddestrare. Nessun claim endogeno o 642-segment rollout.",
+          "fldODG8tJ39IE4DeM": "protocol-task9-cahva-physiological-paths-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "c4cee00748c03812cac8fcb613c3d0faff8a5d29e082de9556f3c7f4db302eef",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare SHA-256 del dataset targeted v1.1 base e teacher commit; leggere soltanto split train; campionare deterministicamente fino a 4000 transizioni e 24 esempi per sito/regime; confrontare gate e m²h a 1 ms con formula fine e teacher endpoint separatamente.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rec32fd9b801afb0e"
           ]
         }
       },
@@ -5177,6 +5237,29 @@
           "fldw7I3GqPu0PuSLu": [
             "reccc037effd3bf65"
           ]
+        }
+      },
+      {
+        "id": "recf39392d6eb4349",
+        "createdTime": "2026-09-22T22:40:14Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Rampe e chirp esogeni, confronto appaiato fra viste V_t, 8 e 40 campioni con formula, LUT e tre seed physical-tau congelati.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task8-continuous-path-information-bottleneck-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Pilot autentico NEURON 48 casi, max gate error 1.55e-15; 1.024 casi sealed senza overlap. Su high chirp score normalizzato formula V_t-only 63.04, formula 8 campioni 20.39, LUT 40 campioni 0.00336. LUT 40 campioni score 0.00311-0.00357 sulle quattro famiglie e supera ciascun seed physical-tau. Score non in mV, nessuna violazione d'occupazione.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "La perdita d'informazione temporale domina i bracci con path scarso; il path futuro è noto solo perché imposto. Non sappiamo ancora come produrlo causalmente nel modello endogeno.",
+          "fldYAbc64NIZGKzWO": [
+            "rece90c21487020a8"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Ca_HVA isolato su 1 ms; non misura il teacher completo o il rollout autoregressivo. ZIP SHA-256 728cd58f5d19f1fecb3014df9ac0ed76efd17556434e5e74a1d570894fdf7f18.",
+          "fldhoJJ1jrMBcOUrl": "Task 8 — informazione temporale domina lo stress Ca_HVA",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
         }
       },
       {

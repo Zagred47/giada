@@ -1,0 +1,13 @@
+{
+  "Nome": "Task 9 Ca_HVA physiological path protocol v1",
+  "Codice stabile": "protocol-task9-cahva-physiological-paths-v1",
+  "Descrizione": "Percorsi fisiologici da microtracce del teacher Hay completo; formula, LUT e seed physical-tau congelati in viste start-only, otto e quaranta sottopassi.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "Verificare SHA-256 del dataset targeted v1.1 base e teacher commit; leggere soltanto split train; campionare deterministicamente fino a 4000 transizioni e 24 esempi per sito/regime; confrontare gate e m²h a 1 ms con formula fine e teacher endpoint separatamente.",
+  "Criteri di successo": "Source hash e mapping Ca_HVA esatti, boundary voltage coerenti entro 1e-4 mV, nessun NaN/Inf, supporto per sito/regime esplicito. Se floor formula-vs-teacher max RMSE m/h >0.005 in qualunque gruppo non vuoto, nessuna attribuzione degli errori candidato-vs-teacher al candidato.",
+  "Regole di arresto": "Hash sorgente, teacher commit, schema, time grid o boundary incoerenti invalidano il run. Non aprire test, non scegliere seed, non riaddestrare. Nessun claim endogeno o 642-segment rollout.",
+  "Registrato il": "2026-09-23",
+  "Hash preregistrazione": "c4cee00748c03812cac8fcb613c3d0faff8a5d29e082de9556f3c7f4db302eef",
+  "Esperimento": ["rec32fd9b801afb0e"]
+}
