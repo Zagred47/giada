@@ -10,6 +10,9 @@ from __future__ import annotations
 
 import json
 import math
+import subprocess
+import sys
+import tempfile
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -221,9 +224,25 @@ def run_closed_loop_microcanary(formula, task5_source, mechanism_root, output_di
     else:
         output_dir.mkdir(parents=True)
     root = verified_task5_root(task5_source, output_dir / ".verified_task5")
-    from neuron import load_mechanisms
-    print("[GIADA Task 7] loading compiled NEURON mechanisms", flush=True)
-    load_mechanisms(str(mechanism_root))
+    if asdict(config) != asdict(ClosedLoopCaHVAConfig()):
+        raise ValueError("Task 7 subprocess reference requires the registered fixed configuration")
+    print("[GIADA Task 7] generating NEURON reference in an isolated process", flush=True)
+    with tempfile.TemporaryDirectory(prefix="giada_task7_teacher_") as temporary:
+        reference_path = Path(temporary) / "teacher_reference.npz"
+        command = [
+            sys.executable, "-u",
+            str(Path(__file__).resolve().parents[2] / "scripts" / "run_cahva_teacher_reference.py"),
+            "--mechanism-root", str(mechanism_root),
+            "--output", str(reference_path),
+        ]
+        completed = subprocess.run(command, check=False)
+        if completed.returncode:
+            raise RuntimeError(
+                f"NEURON reference subprocess failed (exit={completed.returncode}); "
+                "no candidate metric was computed"
+            )
+        with np.load(reference_path) as archive:
+            teacher_reference = {name: archive[name].copy() for name in archive.files}
     print("[GIADA Task 7] loading frozen GPU candidates", flush=True)
     torch = configure_torch_runtime(17)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -236,13 +255,14 @@ def run_closed_loop_microcanary(formula, task5_source, mechanism_root, output_di
         ((v, g, p) for v in config.initial_voltage_mv
          for g in config.gbar_multipliers for p in config.protocol_names), start=1
     ):
-        print(f"[GIADA Task 7] episode {index}/{total}: NEURON teacher", flush=True)
-        teacher, area = _teacher_episode(mechanism_root, config, initial, multiplier, protocol)
-        print(f"[GIADA Task 7] episode {index}/{total}: formula and GPU candidates", flush=True)
+        key = f"v{initial:g}-g{multiplier:g}-{protocol}"
+        teacher = teacher_reference[f"{key}_rows"]
+        area = float(teacher_reference[f"{key}_area"])
+        print(f"[GIADA Task 7] episode {index}/{total}: formula", flush=True)
         formula_rollout = _formula_closed_loop(formula, teacher, area, config, multiplier, protocol)
+        print(f"[GIADA Task 7] episode {index}/{total}: frozen GPU candidates", flush=True)
         lut_rollout, physical_rollouts = _candidate_closed_loop(
             torch, model, table, teacher, area, config, multiplier, protocol, device)
-        key = f"v{initial:g}-g{multiplier:g}-{protocol}"
         trace_store[f"{key}_teacher"] = teacher
         trace_store[f"{key}_formula"] = formula_rollout
         trace_store[f"{key}_lut"] = lut_rollout
