@@ -179,7 +179,9 @@
           "fldFio32ffmk14gMY": [],
           "fldJ42OE1ARQhyh59": "experiments/teacher_voltage_path_stress_preregistration_v1.json",
           "fldKAWAFzxAGxBXtZ": [],
-          "fldLBLpfZ9iTm3iVn": [],
+          "fldLBLpfZ9iTm3iVn": [
+            "reca17c9afc21407d"
+          ],
           "fldM865VwAuTwSeyu": [],
           "fldWuMKQAeTpYtqUA": null,
           "fldmWDLbrTfgIENdj": "v1",
@@ -525,6 +527,36 @@
           "fldwnMJjQrllvC78Z": "artifact-giada-teacher-mechanism-inventory-v1",
           "fldy0kiTp7BG4j68p": [],
           "fldybOB1VowNUBprP": 100219
+        }
+      },
+      {
+        "id": "reca17c9afc21407d",
+        "createdTime": "2026-09-22T19:49:26Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Report",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [],
+          "fldFio32ffmk14gMY": [
+            "rec447257b19fba17"
+          ],
+          "fldJ42OE1ARQhyh59": "experiments/teacher_voltage_path_stress_result_v1.json",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "5925670e0b4821bdaf6228c2b860d835105cd3fa33b5d3dfe6e472efdd1d56d5",
+          "fldw98aVU9j6cBJYh": "GIADA Task 6 reviewed voltage-path stress result",
+          "fldwLVADFDuK4I0rk": "Sintesi verificata dello ZIP Task 6, contrasto V_t-only vs path noto e limiti inferenziali.",
+          "fldwnMJjQrllvC78Z": "artifact-task6-voltage-path-stress-result-v1",
+          "fldy0kiTp7BG4j68p": [],
+          "fldybOB1VowNUBprP": 2034
         }
       },
       {
@@ -2727,7 +2759,9 @@
         "createdTime": "2026-09-22T19:36:27Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "recc7d2add653faa8"
+          ],
           "fld8UsWD6AGXcs8LB": [
             "rec791278b668c0b9"
           ],
@@ -2746,7 +2780,7 @@
           "fldnTFjWQUe3eEcDr": [
             "rec6ae6b4e48d3642"
           ],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Candidati Task 5 congelati, sei famiglie di path esogeni, controllo NEURON e sviluppo/test sigillato disgiunti.",
           "fldyeCfji17c7BfPP": "Separare perdita informativa dell'approssimazione V_t costante da errore del gate appreso/numerico sotto percorso noto; localizzare regime di fallimento."
         }
@@ -4362,6 +4396,29 @@
         }
       },
       {
+        "id": "recc7d2add653faa8",
+        "createdTime": "2026-09-22T19:49:24Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Contrasto preregistrato fra V_t costante e path esogeno noto su Ca_HVA m+h isolato.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task6-voltage-path-information-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Pilot formula/NEURON: 144 casi, massimo errore 4.44e-16. Sealed 3072 disgiunto, nessuna selezione. Score normalized worst-family: formula esatta con solo V_t 355.320659; LUT513 con solo V_t 355.320617; LUT513 con path noto 0.011063; physical-tau con path noto per seed 17/29/43 0.709203/0.454212/0.478819. LUT con path noto zero violazioni d'occupazione.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "La differenza enorme fra bracci V_t-only e path-known mostra insufficienza del contratto V_t-only per questi stimoli, ma il path è esogeno noto. La dispersione learned fra seed permane; non si seleziona un seed usando il sealed.",
+          "fldYAbc64NIZGKzWO": [
+            "receaabd7582adb17"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Nessun feedback voltaggio-gate endogeno, corrente embedded, calcio dinamico, coupling assiale o sostituzione nel teacher completo. Gli score sono normalizzati, non mV.",
+          "fldhoJJ1jrMBcOUrl": "Task 6 — il percorso di voltaggio, non V_t, è necessario per il gate",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "rece7777faa5f7f49",
         "createdTime": "2026-09-22T19:35:45Z",
         "cellValuesByFieldId": {
@@ -5120,7 +5177,7 @@
         "id": "rec6ae6b4e48d3642",
         "createdTime": "2026-09-22T19:36:29Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld0tHGV6BV3tjAqn": "Conclusa",
           "fld8zz84auBO3DIGQ": [],
           "fldFPSQrhxnfHL9n7": "action-task6-run-voltage-path-stress-v1",
           "fldI2FlCVIjw2HQwC": [
@@ -5133,7 +5190,7 @@
           "fldgrmwbCk1T9fq46": [
             "rec791278b668c0b9"
           ],
-          "fldilkZX7GrkdJNu2": "Score per famiglia e per braccio, pilot NEURON valido, distinzione fra insufficienza di V_t e approssimazione della primitiva.",
+          "fldilkZX7GrkdJNu2": "Eseguita su Kaggle: pilot NEURON 144 casi valido, sealed 3072 casi, risultato verificato in experiments/teacher_voltage_path_stress_result_v1.json.",
           "fldkCr0yLshDXWuxz": [],
           "fldlLL729Jw86riOj": [],
           "fldyiTgFzV1vvmM5o": []

@@ -1,0 +1,37 @@
+{
+  "schema_version": "giada-task6-reviewed-result-v1",
+  "task": "6",
+  "source_archive": "giada_voltage_path_stress.zip",
+  "source_archive_sha256": "a4795710d8ddf49c678bcef62e8a84e77dfb1ca47531cbcfc2e7bf03553a851e",
+  "source_final_report_sha256": "396df5abdbc2018d3ddefa670e15d66a3fc2ecc7135d86d3e80fe1cb7aa3dd82",
+  "source_code_revision": "86653b32ca7e0286964a0536e208a9018e12b7da",
+  "contract": {
+    "valid": true,
+    "freeze_hash_valid": true,
+    "final_report_hash_valid": true,
+    "authentic_neuron_pilot_cases": 144,
+    "maximum_neuron_formula_gate_error": 4.440892098500626e-16,
+    "sealed_count": 3072,
+    "sealed_overlap": 0,
+    "selection_used_sealed": false,
+    "endogenous_membrane_coupling_tested": false
+  },
+  "sealed_worst_family_normalized_scores_not_mv": {
+    "exact_formula_start_voltage_only": 355.3206591934962,
+    "lut_513_start_voltage_only": 355.32061717060924,
+    "lut_513_known_path": 0.011063008480544803,
+    "physical_tau_known_path_seed17": 0.7092025897299229,
+    "physical_tau_known_path_seed29": 0.45421199435302234,
+    "physical_tau_known_path_seed43": 0.4788186756325032
+  },
+  "known_path_lut_family_scores": {
+    "step_up": 0.004500685795050752,
+    "step_down": 0.003421491749143502,
+    "ramp": 0.0037127541838847897,
+    "biphasic": 0.0028808240919297717,
+    "near_singularity": 0.011063008480544803,
+    "voltage_extremes": 0.000418361357999891
+  },
+  "interpretation": "A start-voltage-only 1 ms update is causally insufficient for strongly varying voltage: even the exact formula fails by orders of magnitude. With the complete exogenous path, the frozen LUT remains accurate across all registered families and beats the frozen physical-tau network. No retraining or sealed-based selection occurred.",
+  "limits": "The future path was externally imposed and known; it is not an admissible future input for an endogenous closed-loop neuron. The pilot verifies isolated NEURON gate composition but not current, axial coupling, calcium feedback or membrane replacement."
+}
