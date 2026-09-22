@@ -67,6 +67,11 @@ from .joint_gate_symmetric_confirmation import (
     verified_task3b_diagnosis_root,
     freeze_task3c_from_task3b,
 )
+from .joint_gate_generalization_diagnosis import (
+    JointGateGeneralizationDiagnosisConfig,
+    prepare_joint_gate_generalization_diagnosis,
+    run_joint_gate_generalization_diagnosis,
+)
 
 __all__ = [
     "build_inventory", "parse_mod_file", "write_inventory",
@@ -96,4 +101,7 @@ __all__ = [
     "JointGateSymmetricConfirmationConfig", "prepare_joint_gate_symmetric_confirmation",
     "train_vectorized_symmetric_joint_gate", "evaluate_frozen_symmetric_joint_gate",
     "verified_task3b_diagnosis_root", "freeze_task3c_from_task3b",
+    "JointGateGeneralizationDiagnosisConfig",
+    "prepare_joint_gate_generalization_diagnosis",
+    "run_joint_gate_generalization_diagnosis",
 ]

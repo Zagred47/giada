@@ -1,0 +1,74 @@
+{
+  "schema_version": "giada-task3d-preregistration-v1",
+  "task": "3d",
+  "name": "Joint m+h generalization causal matrix",
+  "motivation": "Task 3c reproduced the frozen Task 3b candidate exactly but falsified full fresh generalization, with failure concentrated in OOD voltage and long-horizon h.",
+  "selection_domain": "new development-only synthetic tuples generated from the extracted Ca_HVA teacher formula",
+  "forbidden_inputs": [
+    "Task 3c fresh tuples",
+    "Task 3c fresh outcomes",
+    "any future sealed confirmation set"
+  ],
+  "causal_axes": {
+    "support_density": ["baseline_current", "same_support_dense"],
+    "support_balance": ["same_support_dense", "balanced_support"],
+    "voltage_extent": ["balanced_support", "expanded_support"],
+    "temporal_identifiability": ["balanced_support", "multihorizon"],
+    "shape_prior": ["balanced_support", "shape_constrained"],
+    "support_horizon_interaction": ["expanded_support", "expanded_multihorizon"],
+    "combined_repair": ["baseline_current", "full_repair"],
+    "topology": ["full_repair", "full_repair_independent"],
+    "capacity": ["full_repair", "full_repair_wide"],
+    "budget": [0, 1000, 3000, 10000, 30000, 50000]
+  },
+  "shared_arms": [
+    "baseline_current",
+    "same_support_dense",
+    "balanced_support",
+    "expanded_support",
+    "multihorizon",
+    "shape_constrained",
+    "expanded_multihorizon",
+    "full_repair"
+  ],
+  "seeds": [17, 29, 43],
+  "training": {
+    "shared_candidates_in_one_gpu_tensor": 24,
+    "independent_candidates_in_one_gpu_tensor": 3,
+    "wide_candidates_in_one_gpu_tensor": 3,
+    "batch_size_per_candidate": 768,
+    "maximum_steps": 50000,
+    "shared_width": 23,
+    "wide_shared_width": 46,
+    "independent_private_width": 16,
+    "rate_inf_weight": 0.1,
+    "rate_log_tau_weight": 0.01,
+    "shape_weight": 0.02,
+    "optimizer": "AdamW",
+    "learning_rate": 0.003
+  },
+  "efficiency": {
+    "held_voltage_multihorizon_method": "analytic effective-dt targets rather than explicit recurrent unrolling",
+    "paired_streams": true,
+    "torch_compile_requested": true,
+    "progress_is_compact": true,
+    "large_arrays_are_never_printed": true
+  },
+  "development_stress": [
+    "central interpolation",
+    "voltage tails from -132.5 to -102.5 mV and 42.5 to 72.5 mV",
+    "held-voltage horizons of 10, 50 and 100 ms"
+  ],
+  "causal_support_threshold": "at least 20% reduction of aggregate development stress score",
+  "decision_rules": {
+    "same_support_only": "quantity or optimization scaling contributes",
+    "balanced_or_expanded_support": "support placement is causal",
+    "multihorizon": "temporal identifiability is causal",
+    "shape_constrained": "missing structural priors are causal",
+    "independent_topology": "shared representation interference remains causal",
+    "wide_capacity": "representational capacity remains causal",
+    "no_arm_improves": "reformulate the rate representation before further scaling"
+  },
+  "fresh_policy": "No confirmation is performed in Task 3d. A supported minimal repair must be preregistered and tested on a newly sealed independent set.",
+  "task4_authorized": false
+}
