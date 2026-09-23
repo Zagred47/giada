@@ -1,0 +1,30 @@
+{
+  "task": "GIADA Task 10",
+  "title": "paired full-state internal-step granularity screen",
+  "teacher_source": "Task 9 frozen unique train transitions from targeted v1.1 base; original native SaveState and U_realized",
+  "fine_teacher_grid_ms": 0.125,
+  "state": "all canonical state categories including 642 segment voltages",
+  "external_report_interval_ms": 1.0,
+  "internal_substeps_per_ms": [1, 2, 4, 8],
+  "causal_input": "U_realized ordered tokens retain exact event offset, synapse ID, segment, released quantity/sign; maximum 64 events per 0.125 ms bin, plus exact somatic-current timing fields",
+  "matched_model": "same 96-hidden full-state residual MLP, parameters, causal U_realized schedule, optimizer, seeds and checkpoint steps",
+  "seeds": [17, 29],
+  "checkpoint_steps": [100, 300, 600],
+  "grouping": "trajectory-disjoint deterministic hash partitions 60/20/20 within original train only",
+  "preflight": {"full_state_endpoint_atol": 1e-5, "stored_micro_voltage_atol_mv": 1e-5, "rng_atol": 1e-5, "maximum_realized_events_per_0_125_ms_bin": 64, "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29"},
+  "selection": "freeze each candidate by development 1 ms endpoint normalized loss, then open trajectory-held-out diagnostic partition",
+  "evaluation": ["1 ms full-state and voltage error", "8 ms autoregressive voltage RMSE", "boundary-only soma spike proxy F1", "GPU time per simulated ms", "nonfinite predictions", "voltage range violations outside [-120,80] mV"],
+  "decision": {
+    "minimum_rollout_windows": 8,
+    "minimum_positive_boundary_spike_proxy_windows": 2,
+    "maximum_voltage_range_violations": 0,
+    "maximum_nonfinite_predictions": 0,
+    "best_candidate_must_improve_persistence_eight_ms_rmse_fraction": 0.2,
+    "best_candidate_minimum_spike_proxy_f1": 0.5,
+    "eligible_rmse_within_best_fraction": 0.1,
+    "eligible_spike_proxy_f1_within_best": 0.05,
+    "selection_rule": "fewest internal substeps meeting all registered gates; otherwise inconclusive"
+  },
+  "interpretation_limit": "This screens one small flat full-state model family. It cannot prove 1 ms mathematically impossible or select a final biological architecture. The external 1 ms interface can remain when internal composition is used.",
+  "sealed_original_dataset_test_opened": false
+}

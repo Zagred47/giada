@@ -3038,6 +3038,31 @@
         }
       },
       {
+        "id": "rec7fe32d94d0c9e7",
+        "createdTime": "2026-09-23T13:29:53Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 10 — granularità temporale interna full-state",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-task10-temporal-granularity-matrix-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec78a04316c440e9"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Matrice appaiata su stati canonici completi del teacher: 1, 2, 4 e 8 aggiornamenti interni per millisecondo, due seed e budget progressivi nello stesso notebook.",
+          "fldyeCfji17c7BfPP": "Trovare il minimo numero di aggiornamenti interni utile al modello full-state a parità di interfaccia esterna 1 ms, distinguendo limiti di learnability, rollout e costo da insufficienza della risoluzione."
+        }
+      },
+      {
         "id": "rec832c6ac0536645",
         "createdTime": "2026-09-21T19:47:25Z",
         "cellValuesByFieldId": {
@@ -3690,6 +3715,39 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec037f42c0cc19a1"
+          ]
+        }
+      },
+      {
+        "id": "rec78a04316c440e9",
+        "createdTime": "2026-09-23T13:31:15Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-23",
+          "fld43sXbznp3IMZYL": "Task 10 paired full-state temporal granularity protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Risoluzione interna del modello testata con quattro bracci accoppiati sul medesimo orizzonte esterno di 1 ms e supporto autentico completo.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Replay di stato, voltaggi microcampionati originali e RNG entro 1e-5. Almeno 8 finestre rollout e 2 positive proxy; il braccio migliore riduce RMSE 8 ms almeno 20% rispetto a persistenza e F1 proxy >=0.5. Nessun non-finito o voltaggio fuori [-120,80] mV. Scegliere il minimo numero di sottopassi entro 10% dell'RMSE migliore e 0.05 di F1.",
+          "fldNtSPrXFVAEpq2B": "Mismatch teacher o dati non finiti bloccano l'interpretazione. Se i candidati non superano persistenza e proxy biologico, esito inconclusivo, non prova che 1 ms sia impossibile. Nessuno split test originale viene aperto.",
+          "fldODG8tJ39IE4DeM": "protocol-task10-temporal-granularity-matrix-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "a49b8083553510bb62acd1aea5140248c6b265cd410c61848251460df3d9781f",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare dataset targeted v1.1 e Task 9 per hash; selezionare ID unici della Task 9; riprodurre SaveState/RNG e acquisire tutte le categorie canoniche ogni 0.125 ms. Conservare per U_realized token ordinati con offset continuo, identità sinaptica, segmento, quantità e segno (massimo 64 eventi per contenitore 0.125 ms). Suddividere traiettorie train per hash in train/development/test diagnostico. Addestrare lo stesso MLP full-state a 1/2/4/8 sottopassi per ms, seed 17/29, checkpoint 100/300/600. Congelare su development, poi misurare 1 ms, rollout 8 ms, proxy spike ai confini e costo GPU.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rec7fe32d94d0c9e7"
           ]
         }
       },
