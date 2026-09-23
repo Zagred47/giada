@@ -1,0 +1,10 @@
+{
+  "Nome": "TG-01 — sottopassi interni non risolutivi nel canary full-state",
+  "Codice stabile": "finding-tg01-internal-substeps-inconclusive-v1",
+  "Descrizione": "Matrice 1/2/4/8 aggiornamenti interni per ms con lo stesso orizzonte esterno, due seed e replay NEURON autentico.",
+  "Risultato": "Acquisizione valida su 195 transizioni (115 train, 51 development, 29 test diagnostico); stato/RNG finali esatti, errore micro-V massimo 3.81468e-6 mV. Il braccio 1 aggiornamento/ms ha il minor RMSE one-step 2.54–2.71 mV e rollout 8 ms 16.55–16.57 mV contro persistenza 21.30 mV, ma F1 proxy spike 0 e 9–33 violazioni di voltaggio. I bracci 2/4/8 peggiorano il rollout e tutti falliscono i gate. Decisione registrata: INCONCLUSIVE_INSUFFICIENT_LEARNABILITY_OR_SUPPORT.",
+  "Incertezza": "Non dimostra che 1 ms sia sufficiente né insufficiente. Aumentare i sottopassi di questo canary non risolve il closed loop. Separare informazione d'ingresso, ottimizzazione e capacità prima di ripetere la matrice.",
+  "Limitazioni": "Solo 115 transizioni train per 5,304,770 parametri/modello; 28 finestre rollout, 3 positive proxy somatico; finestre non necessariamente indipendenti. Test diagnostico ricavato dallo split train originale, non sealed esterno. ZIP SHA-256 f38a7513a675b49d817c80dcdab10480c6fca24ca1188c4d349abab5c7caa68d; revisione 06decb8.",
+  "Esito": "Misto",
+  "Esperimenti": ["rec7fe32d94d0c9e7"]
+}

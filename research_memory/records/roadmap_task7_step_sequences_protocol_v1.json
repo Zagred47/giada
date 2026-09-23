@@ -1,0 +1,13 @@
+{
+  "Nome": "Roadmap Task 7 paired voltage-step sequence protocol v1",
+  "Codice stabile": "protocol-roadmap-task7-voltage-step-sequences-v1",
+  "Descrizione": "Completamento confermativo e non ridondante della Task 7 originale, distinto dalla serie storica 07 closed-loop.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "Riusare formula Ca_HVA e Task 5 verificata per hash. Quattro famiglie appaiate: salita precoce/tardiva, impulso precoce/tardivo, impulso breve/lungo e ordine alto/basso invertito. Otto intervalli piecewise-constant per 1 ms, due profili per coppia con V iniziale/finale e m/h iniziali identici. 256 development e 512 sealed per famiglia, seed distinti. Pilot NEURON su 24 percorsi/famiglia, valutazione frozen di formula, LUT-513 e physical-tau width-32 seed 17/29/43 con V iniziale o path noto. Freeze prima del sealed, overlap zero.",
+  "Criteri di successo": "Pilot formula-NEURON errore gate <=1e-9; valori finiti e split disgiunti. LUT path-aware score normalizzato <=0.02 in ogni famiglia; almeno una famiglia con differenza massima teacher entro coppia >=0.001 in m o h. Riportare separatamente m, h, m²h e occupancy.",
+  "Regole di arresto": "Hash Task 5 errato o pilot NEURON fallito bloccano l'interpretazione. Nessun retraining o selezione su sealed. Se il contrasto within-pair è troppo debole, esito inconclusivo. Path futuro esogeno non è input lecito per neurone autonomo.",
+  "Registrato il": "2026-09-23",
+  "Hash preregistrazione": "baaed780d6d50661aa70f7d70bf6d5b7a1eb37dbc6cd6bb1da9a802c4cdb749a",
+  "Esperimento": ["rec038eb6b3dc0347"]
+}

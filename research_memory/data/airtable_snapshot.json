@@ -2786,6 +2786,31 @@
         }
       },
       {
+        "id": "rec038eb6b3dc0347",
+        "createdTime": "2026-09-23T17:50:52Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Roadmap Task 7 — sequenze esogene di voltage step",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-roadmap-task7-voltage-step-sequences-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec1c03e90ec1c0a3"
+          ],
+          "fldSdolNHsOdN294o": "Confermativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Completamento mirato della Task 7 originale. Contrasti appaiati di storia del voltaggio con estremi e gate iniziali identici; distinto dai notebook storici 07/07b/07c sul closed-loop.",
+          "fldyeCfji17c7BfPP": "Isolare l'effetto di tempo, durata e ordine degli step su m/h/m²h di Ca_HVA e verificare il vantaggio del percorso esogeno noto rispetto al solo V iniziale, riusando i candidati congelati della Task 5."
+        }
+      },
+      {
         "id": "rec1d630861d2d626",
         "createdTime": "2026-09-23T11:11:40Z",
         "cellValuesByFieldId": {
@@ -3042,7 +3067,9 @@
         "createdTime": "2026-09-23T13:29:53Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "recdd60cf1dbb3f28"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "TG-01 — granularità temporale interna full-state (alias storico Task 10)",
@@ -3057,7 +3084,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Studio supplementare fuori roadmap, originariamente etichettato per errore Task 10. Matrice appaiata su stati canonici completi del teacher: 1, 2, 4 e 8 aggiornamenti interni per millisecondo, due seed e budget progressivi nello stesso notebook. Non assolve il test di sufficienza dell'ingresso della Task 10 originale.",
           "fldyeCfji17c7BfPP": "Trovare il minimo numero di aggiornamenti interni utile al modello full-state a parità di interfaccia esterna 1 ms, distinguendo limiti di learnability, rollout e costo da insufficienza della risoluzione."
         }
@@ -3538,6 +3565,39 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec832c6ac0536645"
+          ]
+        }
+      },
+      {
+        "id": "rec1c03e90ec1c0a3",
+        "createdTime": "2026-09-23T17:53:43Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-23",
+          "fld43sXbznp3IMZYL": "Roadmap Task 7 paired voltage-step sequence protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Completamento confermativo e non ridondante della Task 7 originale, distinto dalla serie storica 07 closed-loop.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Pilot formula-NEURON errore gate <=1e-9; valori finiti e split disgiunti. LUT path-aware score normalizzato <=0.02 in ogni famiglia; almeno una famiglia con differenza massima teacher entro coppia >=0.001 in m o h. Riportare separatamente m, h, m²h e occupancy.",
+          "fldNtSPrXFVAEpq2B": "Hash Task 5 errato o pilot NEURON fallito bloccano l'interpretazione. Nessun retraining o selezione su sealed. Se il contrasto within-pair è troppo debole, esito inconclusivo. Path futuro esogeno non è input lecito per neurone autonomo.",
+          "fldODG8tJ39IE4DeM": "protocol-roadmap-task7-voltage-step-sequences-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "baaed780d6d50661aa70f7d70bf6d5b7a1eb37dbc6cd6bb1da9a802c4cdb749a",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Riusare formula Ca_HVA e Task 5 verificata per hash. Quattro famiglie appaiate: salita precoce/tardiva, impulso precoce/tardivo, impulso breve/lungo e ordine alto/basso invertito. Otto intervalli piecewise-constant per 1 ms, due profili per coppia con V iniziale/finale e m/h iniziali identici. 256 development e 512 sealed per famiglia, seed distinti. Pilot NEURON su 24 percorsi/famiglia, valutazione frozen di formula, LUT-513 e physical-tau width-32 seed 17/29/43 con V iniziale o path noto. Freeze prima del sealed, overlap zero.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rec038eb6b3dc0347"
           ]
         }
       },
@@ -5413,6 +5473,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Nessun feedback voltaggio-gate endogeno, corrente embedded, calcio dinamico, coupling assiale o sostituzione nel teacher completo. Gli score sono normalizzati, non mV.",
           "fldhoJJ1jrMBcOUrl": "Task 6 — il percorso di voltaggio, non V_t, è necessario per il gate",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "recdd60cf1dbb3f28",
+        "createdTime": "2026-09-23T17:50:51Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Matrice 1/2/4/8 aggiornamenti interni per ms con lo stesso orizzonte esterno, due seed e replay NEURON autentico.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-tg01-internal-substeps-inconclusive-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "Acquisizione valida su 195 transizioni (115 train, 51 development, 29 test diagnostico); stato/RNG finali esatti, errore micro-V massimo 3.81468e-6 mV. Il braccio 1 aggiornamento/ms ha il minor RMSE one-step 2.54–2.71 mV e rollout 8 ms 16.55–16.57 mV contro persistenza 21.30 mV, ma F1 proxy spike 0 e 9–33 violazioni di voltaggio. I bracci 2/4/8 peggiorano il rollout e tutti falliscono i gate. Decisione registrata: INCONCLUSIVE_INSUFFICIENT_LEARNABILITY_OR_SUPPORT.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Non dimostra che 1 ms sia sufficiente né insufficiente. Aumentare i sottopassi di questo canary non risolve il closed loop. Separare informazione d'ingresso, ottimizzazione e capacità prima di ripetere la matrice.",
+          "fldYAbc64NIZGKzWO": [
+            "rec7fe32d94d0c9e7"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo 115 transizioni train per 5,304,770 parametri/modello; 28 finestre rollout, 3 positive proxy somatico; finestre non necessariamente indipendenti. Test diagnostico ricavato dallo split train originale, non sealed esterno. ZIP SHA-256 f38a7513a675b49d817c80dcdab10480c6fca24ca1188c4d349abab5c7caa68d; revisione 06decb8.",
+          "fldhoJJ1jrMBcOUrl": "TG-01 — sottopassi interni non risolutivi nel canary full-state",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }
