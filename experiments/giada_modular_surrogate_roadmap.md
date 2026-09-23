@@ -173,10 +173,9 @@ L'update precedente è esatto soltanto quando \(V\) è costante. Nel neurone
 accoppiato il gate dipende dall'intero percorso \(V(s)\) nell'intervallo.
 
 - **Task 7 — Sequenze di voltage step** → Percorsi piecewise-constant noti.
-  **Da verificare come task della roadmap**: i notebook storici `07`, `07b`,
-  `07c` riguardano invece il microcanary Ca-HVA closed-loop e la semantica dei
-  confini. Il loro numero non costituisce evidenza di completamento di questa
-  Task 7.
+  **Conclusa nel dominio esogeno** con `07r_roadmap_voltage_step_sequences.ipynb`:
+  contrasti temporali appaiati e gate superati. I notebook storici `07`, `07b`,
+  `07c` restano studi differenti su Ca-HVA closed-loop e semantica dei confini.
 
 - **Task 8 — Rampe e chirp** → Percorsi continui con velocità differenti.
 
@@ -185,8 +184,10 @@ accoppiato il gate dipende dall'intero percorso \(V(s)\) nell'intervallo.
 
 - **Task 10 — Test di sufficienza dell'ingresso** → Confrontare solo \(V_t\),
   \((V_t,V_{t+1})\), statistiche intra-ms, pochi campioni del path e substep.
-  **Da eseguire**: lo studio supplementare `TG-01` sulla granularità interna,
-  etichettato inizialmente Task 10, non testa questa matrice di informazione.
+  **Conclusa nel perimetro diagnostico**: 350 path già aperti, matrice 8×5;
+  prima vista campionata testata al gate: 21 campioni oracle a 40 passi.
+  Non è un limite universale né un contratto causale online validato.
+  Lo studio supplementare `TG-01` resta distinto da questa Task 10.
 
 - **Task 11 — Operatore path-aware** → Introdurlo soltanto se \(V_t\) risulta
   causalmente insufficiente.

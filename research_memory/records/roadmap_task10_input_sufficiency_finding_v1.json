@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 10 — risoluzione del path e quadratura separate, contratto causale ancora aperto",
+  "Codice stabile": "finding-roadmap-task10-cahva-input-sufficiency-v1",
+  "Descrizione": "350 path train Task 9 già aperti, otto viste per cinque granularità. Nessun training, nuovo teacher o sealed test. ZIP SHA256 cb415191a9b2230b0224d2d7c9b20028493490688cca33e091a353dafac45b99.",
+  "Risultato": "Report valido; full41/40 riproduce Task9b con errore massimo zero. A 40 passi, RMSE m addizionale globale: start .221102; mean .037271; endpoints .124358; endpoints+mean .012448; five .011245; nine .001526; twentyone .000164. Twentyone è la prima vista campionata testata a superare RMSE <=.001 per m/h/m²h in ogni sito/regime. Floor full41 vs teacher: m .0002145852, h .00000122824, m²h .0001165483. Errori adimensionali, non mV.",
+  "Incertezza": "Esito riferito ai decoder/interpolazioni testati, non a ogni possibile mappa appresa a 1 ms. Non prova che 21 campioni oppure 40 passi siano necessari in generale. Uno stato completo e ingressi causali potrebbero consentire una mappa appresa senza osservare il futuro V.",
+  "Limitazioni": "Tutte le viste tranne start_only contengono futuro teacher e sono solo oracle diagnostici. Nessuna validazione closed-loop, neurone completo, accelerazione GPU o conferma indipendente. Task10 diagnostica conclusa; contratto operativo causale Gate B ancora aperto. Non confondere con TG-01.",
+  "Esito": "Misto",
+  "Esperimenti": ["rec0450b2ded7fc0c"]
+}

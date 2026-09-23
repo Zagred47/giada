@@ -116,6 +116,10 @@ from .physiological_path_floor import (
     run_physiological_path_floor,
 )
 from .dense_teacher_path_replay import select_replay_rows, evaluate_dense_replay
+from .roadmap_causal_operator import (
+    CausalOperatorConfig, verify_native_anchor, generate_role, train_matrix,
+    evaluate_frozen,
+)
 from .cahva_closed_loop_microcanary import (
     ClosedLoopCaHVAConfig,
     ActiveClosedLoopCaHVAConfig,
@@ -165,5 +169,7 @@ __all__ = [
     "PhysiologicalPathConfig", "classify_regime", "formula_rollouts", "run_physiological_path_diagnostic",
     "integrate_recorded_path", "run_physiological_path_floor",
     "select_replay_rows", "evaluate_dense_replay",
+    "CausalOperatorConfig", "verify_native_anchor", "generate_role",
+    "train_matrix", "evaluate_frozen",
     "ClosedLoopCaHVAConfig", "ActiveClosedLoopCaHVAConfig", "run_closed_loop_microcanary",
 ]

@@ -1,0 +1,13 @@
+{
+  "Nome": "Roadmap Task 11 Ca-HVA causal operator protocol v1",
+  "Codice stabile": "protocol-roadmap-task11-cahva-causal-operator-v1",
+  "Descrizione": "Protocollo 11a/11b versionato; dettaglio integrale in experiments/teacher_roadmap_task11_causal_operator_preregistration_v1.md.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "Validare formula e solver contro 24 episodi autentici Task7b con hash verificati; generare 192 train seed11011, 48 development seed11029 e, dopo freeze, 48 sealed seed11059, con schedule di corrente noto a quarti di ms. Confrontare sequenziale 1/2/4/8/40 stadi e predictor-corrector midpoint 1/2/4/8, adattivo 2/8, path oracle e appreso, coefficienti integrati oracle e appresi, braccio con correnti future pianificate mascherate. GPU 3 seed, 400 step, checkpoint 50/100/200/400, scelta solo development; valutare one-step e rollout 16ms.",
+  "Criteri di successo": "Native anchor V/gate max <=1e-8 e coefficiente oracle A/B identico all'endpoint. Reportare metriche per braccio e regime e limitazioni dei test evento quando manca supporto. Nessuna promozione a full neuron o speedup GPU da misure CPU.",
+  "Regole di arresto": "Hash Task7b non coincidente, errore native anchor, stati non finiti, violazione della separazione fra ruoli, checkpoint o freeze non verificabili invalidano il run. Se training non convince, congelare comunque e documentare il fallimento senza modificare soglie dopo aver visto sealed.",
+  "Registrato il": "2026-09-24",
+  "Hash preregistrazione": "176ae608cc14fb88ca0094bb2a978878fe20b7d89c6c95a1ec37639d34e92fed",
+  "Esperimento": ["rec9dcdde9bbc60d5"]
+}
