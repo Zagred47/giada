@@ -2790,7 +2790,9 @@
         "createdTime": "2026-09-23T17:50:52Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "reccfcfd8077941f8"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Roadmap Task 7 — sequenze esogene di voltage step",
@@ -2805,7 +2807,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Completamento mirato della Task 7 originale. Contrasti appaiati di storia del voltaggio con estremi e gate iniziali identici; distinto dai notebook storici 07/07b/07c sul closed-loop.",
           "fldyeCfji17c7BfPP": "Isolare l'effetto di tempo, durata e ordine degli step su m/h/m²h di Ca_HVA e verificare il vantaggio del percorso esogeno noto rispetto al solo V iniziale, riusando i candidati congelati della Task 5."
         }
@@ -5473,6 +5475,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Nessun feedback voltaggio-gate endogeno, corrente embedded, calcio dinamico, coupling assiale o sostituzione nel teacher completo. Gli score sono normalizzati, non mV.",
           "fldhoJJ1jrMBcOUrl": "Task 6 — il percorso di voltaggio, non V_t, è necessario per il gate",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "reccfcfd8077941f8",
+        "createdTime": "2026-09-23T20:10:36Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Contrasti appaiati di sequenze voltage-clamp Ca-HVA con V iniziale/finale e m/h iniziali identici, ma tempo, durata o ordine degli step differenti.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task7-voltage-step-history-matters-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Run valido e gate preregistrato superato. Pilot NEURON su 96 casi, errore gate massimo 4.440892e-16; overlap development/sealed zero; candidati congelati. Nel sealed, differenza mediana massima entro coppia dei gate: salita precoce/tardiva 0.281137, impulso precoce/tardivo 0.043606, impulso breve/lungo 0.189349, ordine invertito 0.003346. Formula con solo V iniziale score normalizzato 149.87/72.65/86.78/83.09; LUT-513 con path esogeno completo 0.00510/0.00301/0.00333/0.00317, zero violazioni d'occupazione. Physical-tau congelata è meno accurata della LUT in tutte le famiglie e seed.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Il contrasto dimostra che V iniziale/finale e gate iniziali non determinano da soli il gate finale quando il voltaggio intra-ms varia. Non identifica ancora quale rappresentazione causale minima o quale solver accoppiato sia sufficiente nel neurone autonomo.",
+          "fldYAbc64NIZGKzWO": [
+            "rec038eb6b3dc0347"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Voltaggio futuro noto perché imposto dal clamp: non è input lecito in un rollout endogeno. Solo Ca-HVA isolato, otto intervalli piecewise-constant per ms; nessuna validazione del neurone completo, sinapsi o coupling assiale. ZIP SHA-256 1704f9460bfd9a6bebdaafd643b3a8cd9e4b6731f9516a6fa5da02b461cff201; revisione 3f0a17839c07d95a2230c9e88e04dd4d6c24356b.",
+          "fldhoJJ1jrMBcOUrl": "Roadmap Task 7 — la storia degli step Ca-HVA conta oltre agli estremi",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }

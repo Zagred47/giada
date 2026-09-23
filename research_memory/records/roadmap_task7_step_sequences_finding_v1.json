@@ -1,0 +1,10 @@
+{
+  "Nome": "Roadmap Task 7 — la storia degli step Ca-HVA conta oltre agli estremi",
+  "Codice stabile": "finding-roadmap-task7-voltage-step-history-matters-v1",
+  "Descrizione": "Contrasti appaiati di sequenze voltage-clamp Ca-HVA con V iniziale/finale e m/h iniziali identici, ma tempo, durata o ordine degli step differenti.",
+  "Risultato": "Run valido e gate preregistrato superato. Pilot NEURON su 96 casi, errore gate massimo 4.440892e-16; overlap development/sealed zero; candidati congelati. Nel sealed, differenza mediana massima entro coppia dei gate: salita precoce/tardiva 0.281137, impulso precoce/tardivo 0.043606, impulso breve/lungo 0.189349, ordine invertito 0.003346. Formula con solo V iniziale score normalizzato 149.87/72.65/86.78/83.09; LUT-513 con path esogeno completo 0.00510/0.00301/0.00333/0.00317, zero violazioni d'occupazione. Physical-tau congelata è meno accurata della LUT in tutte le famiglie e seed.",
+  "Incertezza": "Il contrasto dimostra che V iniziale/finale e gate iniziali non determinano da soli il gate finale quando il voltaggio intra-ms varia. Non identifica ancora quale rappresentazione causale minima o quale solver accoppiato sia sufficiente nel neurone autonomo.",
+  "Limitazioni": "Voltaggio futuro noto perché imposto dal clamp: non è input lecito in un rollout endogeno. Solo Ca-HVA isolato, otto intervalli piecewise-constant per ms; nessuna validazione del neurone completo, sinapsi o coupling assiale. ZIP SHA-256 1704f9460bfd9a6bebdaafd643b3a8cd9e4b6731f9516a6fa5da02b461cff201; revisione 3f0a17839c07d95a2230c9e88e04dd4d6c24356b.",
+  "Esito": "Positivo",
+  "Esperimenti": ["rec038eb6b3dc0347"]
+}
