@@ -1,0 +1,15 @@
+{
+  "schema_version": "giada-task9-result-summary-v1",
+  "source_zip_sha256": "6c28d4a1b0019a309a3ec65a4f62eae232f014b2bbb1b7680b82b1b16823ac44",
+  "source_code_revision": "c35c8255d3edf0c20ab56fb79257f9ee31038b5c",
+  "reported_valid": true,
+  "canonical_transition_store_sha256": "3fef415544a82b55801461e3cec069ed292faca0075f1f9f431e9dce8f5ea6d8",
+  "source_split_train_only": true,
+  "selected_paths": 350,
+  "unique_trajectories": 115,
+  "global_teacher_formula_floor_m_rmse": 0.003682322373049468,
+  "teacher_formula_floor_calibrated_all_groups": false,
+  "spike_group_m_rmse_by_site": {"0": 0.007499, "387": 0.008834, "460": 0.006877, "469": 0.008548},
+  "spike_support_counts_by_site": {"0": 24, "387": 14, "460": 9, "469": 15},
+  "interpretation": "Frozen LUT-513 tracks the exact formula composed on recorded 40-sample paths very closely. The exact formula itself differs from authentic CVode teacher endpoint gates beyond the preregistered 0.005 m threshold in all spike groups; candidate-vs-teacher spike errors are not attributable to candidate representation. Task 9b interrogates this opened reference floor without a fresh test claim."
+}

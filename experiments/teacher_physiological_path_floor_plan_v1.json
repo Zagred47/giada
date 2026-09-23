@@ -1,0 +1,24 @@
+{
+  "schema_version": "giada-task9b-path-floor-plan-v1",
+  "task": "9b",
+  "study_type": "post-hoc forensic reassessment, not independent confirmation",
+  "question": "Is the Task 9 spike gate reference floor consistent with the 0.025 ms voltage sampling approximation?",
+  "immutable_sources": {
+    "task9_zip_sha256": "6c28d4a1b0019a309a3ec65a4f62eae232f014b2bbb1b7680b82b1b16823ac44",
+    "task9_final_report_sha256": "1743e55859ddda524872b512ae0645534d0f7af9f83b3a1aa40c96483e7d8363",
+    "task9_selected_paths_sha256": "ba1a731194fdd52f74f97099bc024c92c4dbd996d3d64bacde0b11dbb533efd2",
+    "teacher_transition_store_sha256": "3fef415544a82b55801461e3cec069ed292faca0075f1f9f431e9dce8f5ea6d8"
+  },
+  "methods": {
+    "right": "40 steps of 0.025 ms at V_(n+1), exact Task 9 reproduction",
+    "right_refined_5": "five constant-V substeps per recorded interval; negative control for substep count",
+    "left": "40 steps at V_n",
+    "midpoint": "40 steps at (V_n+V_(n+1))/2",
+    "linear_5": "five midpoint samples of piecewise-linear voltage in each 0.025 ms interval",
+    "linear_20": "twenty midpoint samples of piecewise-linear voltage in each interval"
+  },
+  "analysis": "Same 350 already-selected Task 9 paths, same initial and teacher endpoint states, train split only. Report m,h,m²h RMSE and signed/absolute error for every existing site/regime group; no candidate model retraining or selection.",
+  "preflight": "Reproduce Task 9 global right-endpoint m,h,m²h RMSE within 1e-10; right_refined_5 equals right within 1e-10. Otherwise stop before interpretation.",
+  "predeclared_interpolation_gate": "All four spike groups: linear_20 m RMSE <=50% of right RMSE, max(m,h RMSE)<=0.005, and max gate difference linear_5-vs-linear_20<=0.001.",
+  "interpretation_limit": "If the gate passes, results are consistent with sampling loss, not proof of the true unobserved intra-sample voltage path. If it fails, the floor remains unresolved and a small denser authentic teacher capture is required. No LUT or full-model claim from this forensic run."
+}

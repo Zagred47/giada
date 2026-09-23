@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 9 — LUT vicina alla formula, reference floor spike non calibrato",
+  "Codice stabile": "finding-task9-physiological-path-spike-reference-floor-v1",
+  "Descrizione": "Sui percorsi fisiologici train del teacher completo, distingue errore candidato-formula dall'errore formula-teacher dovuto a un riferimento campionato/CVode non ancora calibrato negli spike.",
+  "Risultato": "350 percorsi da 115 traiettorie train, HDF5 SHA-256 3fef4155... verificato. LUT-513 fine m RMSE vs formula circa 1e-6-2.3e-5. Allo spike somatico formula start-only m RMSE 0.649 e coarse 0.028 vs formula fine. Formula fine vs teacher spike m RMSE 0.0075/0.0088/0.0069/0.0085 ai segmenti 0/387/460/469, oltre soglia 0.005.",
+  "Incertezza": "La causa del reference floor è ancora da distinguere: percorso intra-campione non osservato, semantica di integrazione CVode o altra differenza. Non attribuire l'errore candidato-teacher spike al candidato.",
+  "Limitazioni": "Solo 40 campioni V per ms; supporto spike dendritico 14/9/15; nessun test sealed o rollout autonomo. ZIP SHA-256 6c28d4a1b0019a309a3ec65a4f62eae232f014b2bbb1b7680b82b1b16823ac44.",
+  "Esito": "Misto",
+  "Esperimenti": ["rec32fd9b801afb0e"]
+}

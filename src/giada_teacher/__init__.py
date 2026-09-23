@@ -111,6 +111,10 @@ from .physiological_voltage_paths import (
     formula_rollouts,
     run_physiological_path_diagnostic,
 )
+from .physiological_path_floor import (
+    integrate_recorded_path,
+    run_physiological_path_floor,
+)
 from .cahva_closed_loop_microcanary import (
     ClosedLoopCaHVAConfig,
     ActiveClosedLoopCaHVAConfig,
@@ -158,5 +162,6 @@ __all__ = [
     "formula_targets", "run_voltage_path_stress",
     "ContinuousPathConfig", "make_continuous_paths", "formula_path_targets", "run_continuous_path_stress",
     "PhysiologicalPathConfig", "classify_regime", "formula_rollouts", "run_physiological_path_diagnostic",
+    "integrate_recorded_path", "run_physiological_path_floor",
     "ClosedLoopCaHVAConfig", "ActiveClosedLoopCaHVAConfig", "run_closed_loop_microcanary",
 ]

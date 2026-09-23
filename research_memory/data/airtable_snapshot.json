@@ -2854,7 +2854,9 @@
         "createdTime": "2026-09-22T22:40:14Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec61f6cd20c5ecc5"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Task 9 — gate Ca_HVA su percorsi fisiologici Hay",
@@ -2869,7 +2871,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Diagnosi teacher-forced su percorsi da microtracce autentiche del dataset targeted v1.1; siti soma/hotzone/tuft e regimi quiet/rising/spike/falling.",
           "fldyeCfji17c7BfPP": "Verificare se i risultati su path sintetici si trasferiscono ai path visitati dal teacher completo e misurare separatamente il floor CVode/microtraccia."
         }
@@ -3257,6 +3259,31 @@
         }
       },
       {
+        "id": "recda607140f48c6f",
+        "createdTime": "2026-09-23T09:27:40Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 9b — forensic del reference floor fisiologico",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-task9b-physiological-path-floor-forensic-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec2c7e559aa4df3e"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Sei integrazioni preregistrate della formula Ca_HVA sugli stessi 350 percorsi Task 9, per testare la sensibilità al campionamento dei voltaggi durante gli spike.",
+          "fldyeCfji17c7BfPP": "Distinguere se l'errore formula-teacher è coerente con l'approssimazione del path a 0.025 ms; decidere se serve cattura autentica più fitta."
+        }
+      },
+      {
         "id": "rece90c21487020a8",
         "createdTime": "2026-09-22T21:29:10Z",
         "cellValuesByFieldId": {
@@ -3457,6 +3484,39 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec832c6ac0536645"
+          ]
+        }
+      },
+      {
+        "id": "rec2c7e559aa4df3e",
+        "createdTime": "2026-09-23T09:28:02Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-23",
+          "fld43sXbznp3IMZYL": "Task 9b physiological path floor forensic protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Rianalisi forense dei 350 percorsi train Task 9, senza nuova simulazione teacher o selezione di modelli.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Riproduzione del floor Task 9 e invarianza right_refined_5 entro 1e-10. Gate diagnostico: in ciascun gruppo spike linear_20 riduce RMSE di m almeno del 50%, porta max RMSE m/h <=0.005 e converge linear_5-vs-linear_20 entro 0.001.",
+          "fldNtSPrXFVAEpq2B": "Hash, split train, mapping, boundary, support o riproduzione del floor incoerenti invalidano il run. Un miglioramento è compatibile con perdita da campionamento ma non dimostra il path intra-campione autentico; se non migliora, richiedere piccola cattura teacher più fitta.",
+          "fldODG8tJ39IE4DeM": "protocol-task9b-physiological-path-floor-forensic-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "21a7c8087c658f2a3462670026ca1ce922fc6ad81997cfb21043a6f2a6d60ab9",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare SHA-256 ZIP Task 9, report e selected_paths; riprodurre il floor right-endpoint, confrontare right_refined_5, left, midpoint, linear_5 e linear_20 con gli stessi gate iniziali e finali autentici per ogni sito/regime.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "recda607140f48c6f"
           ]
         }
       },
@@ -5034,6 +5094,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Solo gate m sotto V costante. Nessuna conclusione su voltage path variabile, neurone accoppiato o sostituzione embedded. Il NO-GO riguarda candidati e budget registrati, non l'intera famiglia physical-tau.",
           "fldhoJJ1jrMBcOUrl": "Task 1 — Physical-tau stabile ma sotto soglia one-step",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "rec61f6cd20c5ecc5",
+        "createdTime": "2026-09-23T09:27:39Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Sui percorsi fisiologici train del teacher completo, distingue errore candidato-formula dall'errore formula-teacher dovuto a un riferimento campionato/CVode non ancora calibrato negli spike.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task9-physiological-path-spike-reference-floor-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "350 percorsi da 115 traiettorie train, HDF5 SHA-256 3fef4155... verificato. LUT-513 fine m RMSE vs formula circa 1e-6-2.3e-5. Allo spike somatico formula start-only m RMSE 0.649 e coarse 0.028 vs formula fine. Formula fine vs teacher spike m RMSE 0.0075/0.0088/0.0069/0.0085 ai segmenti 0/387/460/469, oltre soglia 0.005.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "La causa del reference floor è ancora da distinguere: percorso intra-campione non osservato, semantica di integrazione CVode o altra differenza. Non attribuire l'errore candidato-teacher spike al candidato.",
+          "fldYAbc64NIZGKzWO": [
+            "rec32fd9b801afb0e"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo 40 campioni V per ms; supporto spike dendritico 14/9/15; nessun test sealed o rollout autonomo. ZIP SHA-256 6c28d4a1b0019a309a3ec65a4f62eae232f014b2bbb1b7680b82b1b16823ac44.",
+          "fldhoJJ1jrMBcOUrl": "Task 9 — LUT vicina alla formula, reference floor spike non calibrato",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }
