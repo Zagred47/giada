@@ -10,7 +10,7 @@ completamento di una task. Verificare sempre domanda, protocollo e gate.
 | Task 7: sequenze di voltage step esogene | Task 6 copre step singoli e bifasici; `07r_roadmap_voltage_step_sequences.ipynb` copre i contrasti temporali mancanti. I notebook storici 07/07b/07c riguardano Ca-HVA closed-loop. | **Conclusa nel dominio esogeno preregistrato**: ZIP 07r verificato, pilot NEURON e gate superati. Non attribuire i risultati closed-loop a questa voce. |
 | Task 8: rampe e chirp | Notebook 08 | Tema allineato. |
 | Task 9: percorsi fisiologici teacher-forced | Notebook 09, approfondimenti 09b/09c | Tema allineato. |
-| Task 10: sufficienza dell'ingresso | Nessuno studio dedicato alla matrice completa degli ingressi | **Aperta.** TG-01 non la sostituisce. |
+| Task 10: sufficienza dell'ingresso | `10_roadmap_input_sufficiency.ipynb`: otto viste del path Ca-HVA × cinque granularità d'integrazione sui percorsi Task 9. | **Preregistrata, non ancora eseguita.** TG-01 non la sostituisce; tutte le viste con futuro teacher sono oracle diagnostici. |
 | TG-01: sottopassi interni full-state | Notebook con nome file storico `10_temporal_granularity_decision_matrix.ipynb` | Studio supplementare fuori roadmap; nessuna promozione implicita a Task 10. |
 | Task 11 e successive | Nessun risultato attribuito da questo registro | Da seguire secondo i gate della roadmap. |
 

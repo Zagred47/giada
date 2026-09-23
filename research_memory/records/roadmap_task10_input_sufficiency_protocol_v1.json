@@ -1,0 +1,13 @@
+{
+  "Nome": "Roadmap Task 10 Ca-HVA input sufficiency protocol v1",
+  "Codice stabile": "protocol-roadmap-task10-cahva-input-sufficiency-v1",
+  "Descrizione": "Matrice di informazione temporale × granularità numerica per l'update isolato m/h su path fisiologici già aperti.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "Verificare per SHA-256 Task 9 e dataset targeted base. Riusare 350 percorsi train Task 9, senza training o nuovo teacher. Otto viste V: start_only causale; media, estremi, estremi+media, 5, 9, 21 e 41 campioni come oracle con futuro. Integrare formula Ca-HVA per 1/2/4/8/40 sottopassi; il braccio full41/40 deve riprodurre Task 9b midpoint entro 1e-12. Riportare per sito/regime RMSE m/h/m²h contro full41/40 e teacher, separando il floor full-path vs teacher.",
+  "Criteri di successo": "Supporto train 350 path integro; riproduzione midpoint <=1e-12; valori finiti. Gate esplorativo per la vista campionata minima: a 40 sottopassi, RMSE addizionale m/h/m²h <=0.001 contro full41/40 in ciascun gruppo sito/regime. Le viste statistiche sono controlli non ordinati con quelle campionate.",
+  "Regole di arresto": "Hash o provenienza non coincidenti, supporto non train, output non finito o mancata riproduzione del midpoint invalidano il run. Nessuna vista con futuro teacher è input causale nel neurone autonomo; nessuna pretesa fresh o di validità closed-loop.",
+  "Registrato il": "2026-09-23",
+  "Hash preregistrazione": "8b30ed2eed9ac4996c14fb3ad7b126907dfb2ace7adaaeb155488f0d27124e4d",
+  "Esperimento": ["rec0450b2ded7fc0c"]
+}

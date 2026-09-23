@@ -2813,6 +2813,31 @@
         }
       },
       {
+        "id": "rec0450b2ded7fc0c",
+        "createdTime": "2026-09-23T20:26:07Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Roadmap Task 10 — sufficienza degli ingressi per gate Ca-HVA",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-roadmap-task10-cahva-input-sufficiency-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec9142ea13e4540e"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Matrice appaiata di otto viste del percorso V intra-ms e cinque granularità di integrazione sui 350 percorsi Task 9 già aperti; distinta da TG-01.",
+          "fldyeCfji17c7BfPP": "Determinare quale informazione temporale sul voltaggio è sufficiente per l'update dei gate m/h isolati e separare insufficienza dell'ingresso da errore di quadratura, qualificando tutte le viste con futuro teacher come oracle non causali per il rollout autonomo."
+        }
+      },
+      {
         "id": "rec1d630861d2d626",
         "createdTime": "2026-09-23T11:11:40Z",
         "cellValuesByFieldId": {
@@ -3915,6 +3940,39 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec32fd9b801afb0e"
+          ]
+        }
+      },
+      {
+        "id": "rec9142ea13e4540e",
+        "createdTime": "2026-09-23T20:26:50Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-23",
+          "fld43sXbznp3IMZYL": "Roadmap Task 10 Ca-HVA input sufficiency protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Matrice di informazione temporale × granularità numerica per l'update isolato m/h su path fisiologici già aperti.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Supporto train 350 path integro; riproduzione midpoint <=1e-12; valori finiti. Gate esplorativo per la vista campionata minima: a 40 sottopassi, RMSE addizionale m/h/m²h <=0.001 contro full41/40 in ciascun gruppo sito/regime. Le viste statistiche sono controlli non ordinati con quelle campionate.",
+          "fldNtSPrXFVAEpq2B": "Hash o provenienza non coincidenti, supporto non train, output non finito o mancata riproduzione del midpoint invalidano il run. Nessuna vista con futuro teacher è input causale nel neurone autonomo; nessuna pretesa fresh o di validità closed-loop.",
+          "fldODG8tJ39IE4DeM": "protocol-roadmap-task10-cahva-input-sufficiency-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "8b30ed2eed9ac4996c14fb3ad7b126907dfb2ace7adaaeb155488f0d27124e4d",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare per SHA-256 Task 9 e dataset targeted base. Riusare 350 percorsi train Task 9, senza training o nuovo teacher. Otto viste V: start_only causale; media, estremi, estremi+media, 5, 9, 21 e 41 campioni come oracle con futuro. Integrare formula Ca-HVA per 1/2/4/8/40 sottopassi; il braccio full41/40 deve riprodurre Task 9b midpoint entro 1e-12. Riportare per sito/regime RMSE m/h/m²h contro full41/40 e teacher, separando il floor full-path vs teacher.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rec0450b2ded7fc0c"
           ]
         }
       },
