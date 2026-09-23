@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 9c — replay denso autentico calibra il floor Ca_HVA selezionato",
+  "Codice stabile": "finding-task9c-dense-teacher-voltage-floor-v1",
+  "Descrizione": "Replay NEURON a tre risoluzioni temporali su 12 transizioni train congelate dalla Task 9.",
+  "Risultato": "Run valido, replay a 40 punti max 3.8125e-6 mV; stato finale completo e RNG coincidono esattamente. Formula su voltaggio autentico 0.001 ms: RMSE m globale 0.000134906, contro 0.000151628 con midpoint 40 punti e 0.000145998 con interpolazione dei 40 punti. Convergenza 0.005-vs-0.001 max 1.998e-6; gate preregistrato superato in tutti gli otto gruppi sito/regime.",
+  "Incertezza": "Rimane un piccolo floor formula-teacher, non spiegato completamente dal campionamento. Il forte guadagno della Task 9b deriva soprattutto dalla quadratura temporale rispetto alla regola dell'estremo destro; l'ulteriore densificazione autentica dà un miglioramento modesto.",
+  "Limitazioni": "Solo 12 transizioni train già aperte, due spike e un quiet per sito; nessun test indipendente, training o rollout autonomo. ZIP SHA-256 32f7472d0a41a24c8f6a6d8666b8feed6dc5f1dc4f8017bfb0602d4dad0e1bd4.",
+  "Esito": "Positivo",
+  "Esperimenti": ["rec1d630861d2d626"]
+}

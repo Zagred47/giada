@@ -1,0 +1,20 @@
+{
+  "task": "GIADA Task 9c",
+  "artifact_zip_sha256": "32f7472d0a41a24c8f6a6d8666b8feed6dc5f1dc4f8017bfb0602d4dad0e1bd4",
+  "code_revision": "395f61b23a05dec5b00537bddf3f7064753b489c",
+  "source_h5_sha256": "3fef415544a82b55801461e3cec069ed292faca0075f1f9f431e9dce8f5ea6d8",
+  "valid": true,
+  "path_count": 12,
+  "max_stored_40_point_voltage_replay_error_mv": 3.812481239151566e-6,
+  "max_endpoint_state_error": 0.0,
+  "max_rng_sequence_error": 0.0,
+  "dense_0_005_vs_0_001_max_gate_difference": 1.998146657911093e-6,
+  "dense_teacher_formula_floor_calibrated": true,
+  "global_m_rmse": {
+    "midpoint_0_025_ms": 0.00015162823904581665,
+    "linear_interpolation_40_samples": 0.00014599814784203096,
+    "authentic_voltage_0_005_ms": 0.00013523772514354004,
+    "authentic_voltage_0_001_ms": 0.0001349059960961997
+  },
+  "interpretation": "The 12 authentic train replays pass the registered floor gate. Temporal treatment of voltage explains much of the original right-endpoint error, but a small residual formula/teacher difference remains. The dense observations are not an independent test and do not validate autonomous voltage prediction or model rollout."
+}

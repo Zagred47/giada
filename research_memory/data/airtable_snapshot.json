@@ -2790,7 +2790,9 @@
         "createdTime": "2026-09-23T11:11:40Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "recfadcf5b78afd0c"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Task 9c — replay NEURON denso dei percorsi fisiologici",
@@ -2805,7 +2807,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Dodici transizioni train Task 9 già congelate; replay autentico dagli snapshot NEURON a 0.025, 0.005 e 0.001 ms.",
           "fldyeCfji17c7BfPP": "Verificare se il floor formula-teacher è dovuto al campionamento del voltaggio anziché a una differenza di dinamica, previa riproduzione dello stato/RNG e dei 40 campioni originali."
         }
@@ -5424,6 +5426,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Ca_HVA isolato su 1 ms; non misura il teacher completo o il rollout autoregressivo. ZIP SHA-256 728cd58f5d19f1fecb3014df9ac0ed76efd17556434e5e74a1d570894fdf7f18.",
           "fldhoJJ1jrMBcOUrl": "Task 8 — informazione temporale domina lo stress Ca_HVA",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "recfadcf5b78afd0c",
+        "createdTime": "2026-09-23T12:10:48Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Replay NEURON a tre risoluzioni temporali su 12 transizioni train congelate dalla Task 9.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task9c-dense-teacher-voltage-floor-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Run valido, replay a 40 punti max 3.8125e-6 mV; stato finale completo e RNG coincidono esattamente. Formula su voltaggio autentico 0.001 ms: RMSE m globale 0.000134906, contro 0.000151628 con midpoint 40 punti e 0.000145998 con interpolazione dei 40 punti. Convergenza 0.005-vs-0.001 max 1.998e-6; gate preregistrato superato in tutti gli otto gruppi sito/regime.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Rimane un piccolo floor formula-teacher, non spiegato completamente dal campionamento. Il forte guadagno della Task 9b deriva soprattutto dalla quadratura temporale rispetto alla regola dell'estremo destro; l'ulteriore densificazione autentica dà un miglioramento modesto.",
+          "fldYAbc64NIZGKzWO": [
+            "rec1d630861d2d626"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo 12 transizioni train già aperte, due spike e un quiet per sito; nessun test indipendente, training o rollout autonomo. ZIP SHA-256 32f7472d0a41a24c8f6a6d8666b8feed6dc5f1dc4f8017bfb0602d4dad0e1bd4.",
+          "fldhoJJ1jrMBcOUrl": "Task 9c — replay denso autentico calibra il floor Ca_HVA selezionato",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }
