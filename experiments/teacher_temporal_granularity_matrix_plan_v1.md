@@ -1,4 +1,7 @@
-# ⏱️ GIADA Task 10 — granularità temporale, stesso run
+# ⏱️ GIADA TG-01 — granularità temporale, stesso run
+
+Studio supplementare fuori dalla numerazione della roadmap. Non equivale alla
+Task 10 originale (test di sufficienza dell'ingresso), che resta da eseguire.
 
 La domanda operativa non è se dobbiamo *mostrare* uno stato ogni `0,125 ms`:
 un core può restituire (S_{t+1\,ms}) dopo 1, 2, 4 oppure 8 aggiornamenti

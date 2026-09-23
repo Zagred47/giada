@@ -1,4 +1,4 @@
-"""Task 10: paired full-state canary for the number of internal updates per ms.
+"""TG-01: paired full-state canary for the number of internal updates per ms.
 
 This is a bounded learnability screen, not a proof that any temporal resolution
 is intrinsically sufficient for every possible surrogate architecture.
@@ -70,7 +70,7 @@ def realized_schedule(rows, synapse_to_segment):
         elif row["kind"] == "somatic_current":
             current_count += 1
             if current_count > 1:
-                raise RuntimeError("Task 10 requires at most one somatic current action per ms")
+                raise RuntimeError("TG-01 requires at most one somatic current action per ms")
             duration = float(row["duration_ms"])
             amplitude = float(row["amplitude_na"])
             for i in range(8):
@@ -97,12 +97,12 @@ def _replay_dense(session, handle, index, prefix_indices, categories):
     prefix = [i for i in prefix_indices[trajectory_id]
               if checkpoint <= int(handle["metadata/step_index"][i]) <= step]
     if not prefix or int(handle["metadata/step_index"][prefix[0]]) != checkpoint:
-        raise RuntimeError("Task 10 missing native checkpoint prefix")
+        raise RuntimeError("TG-01 missing native checkpoint prefix")
     root = Path(session.dataset_root).resolve()
     ref = _decode(handle["metadata/native_snapshot_ref"][index])
     snapshot = (root / ref).resolve()
     if not snapshot.is_relative_to(root) or not snapshot.is_file():
-        raise RuntimeError("Task 10 snapshot missing or outside dataset root")
+        raise RuntimeError("TG-01 snapshot missing or outside dataset root")
     seed = int(handle["metadata/seed"][index])
     session._restore_native_snapshot(snapshot, handle["rng_state/t"][prefix[0], :], seed)
     trajectory = ProtocolTrajectory(trajectory_id, _decode(handle["metadata/category"][index]),
@@ -145,7 +145,7 @@ def acquire_full_state_matrix(dataset_root, task9_source, teacher_repo, elm_repo
     prior, selected = load_verified_task9(task9_source)
     source = verify_source(dataset_root, progress=progress)
     if source["h5_sha256"] != prior["source"]["h5_sha256"]:
-        raise RuntimeError("Task 10 source differs from frozen Task 9")
+        raise RuntimeError("TG-01 source differs from frozen Task 9")
     chosen = select_rows(selected)
     session = TargetedDiagnosticDatasetSession(
         elm_repo, teacher_repo, output_dir=output_dir.parent / ".task10_teacher_runtime",
@@ -170,7 +170,7 @@ def acquire_full_state_matrix(dataset_root, task9_source, teacher_repo, elm_repo
         for ordinal, row in enumerate(chosen, 1):
             index = int(row["transition_index"])
             if _decode(handle["metadata/split"][index]) != "train":
-                raise RuntimeError("Task 10 opened non-train source")
+                raise RuntimeError("TG-01 opened non-train source")
             states, state_errors, rng_error = _replay_dense(
                 session, handle, index, prefix_indices, categories)
             original_start = np.concatenate([handle[f"states/{name}/t"][index, :]
@@ -201,10 +201,10 @@ def acquire_full_state_matrix(dataset_root, task9_source, teacher_repo, elm_repo
             if ordinal % 10 == 0 or ordinal == len(chosen):
                 elapsed = time.monotonic() - acquisition_start
                 eta = elapsed / ordinal * (len(chosen) - ordinal) / 60
-                print(f"[GIADA Task 10][teacher] {ordinal}/{len(chosen)} "
+                print(f"[GIADA TG-01][teacher] {ordinal}/{len(chosen)} "
                       f"({ordinal/len(chosen):.1%}) ETA {eta:.1f} min", flush=True)
     if not all(roles.count(role) >= 12 for role in ("train", "development", "test")):
-        raise RuntimeError("Task 10 lacks grouped train/development/test support")
+        raise RuntimeError("TG-01 lacks grouped train/development/test support")
     np.savez_compressed(output_dir / "training_support.npz", states=np.stack(paths),
                         inputs=np.stack(inputs), transition_ids=np.asarray(ids),
                         roles=np.asarray(roles))
@@ -318,14 +318,14 @@ def train_paired_granularity_models(dataset_root, output_dir, *, code_revision="
     import torch
 
     if not torch.cuda.is_available():
-        raise RuntimeError("Task 10 matched full-state canary requires a CUDA GPU")
+        raise RuntimeError("TG-01 matched full-state canary requires a CUDA GPU")
     output_dir = Path(output_dir)
     acquisition = json.loads((output_dir / "acquisition_report.json").read_text())
     if not acquisition["valid"]:
-        raise RuntimeError("Task 10 acquisition did not pass authentic replay")
+        raise RuntimeError("TG-01 acquisition did not pass authentic replay")
     support = output_dir / "training_support.npz"
     if hashlib.sha256(support.read_bytes()).hexdigest() != acquisition["support_sha256"]:
-        raise RuntimeError("Task 10 training support fingerprint mismatch")
+        raise RuntimeError("TG-01 training support fingerprint mismatch")
     with np.load(support) as data:
         states = np.asarray(data["states"], dtype=np.float32)
         schedules = np.asarray(data["inputs"], dtype=np.float32)
@@ -335,7 +335,7 @@ def train_paired_granularity_models(dataset_root, output_dir, *, code_revision="
     dev_ids = np.flatnonzero(roles == "development")
     test_ids = np.flatnonzero(roles == "test")
     if states.ndim != 3 or states.shape[1] != 9 or schedules.shape != (len(states), 8, FEATURE_WIDTH):
-        raise RuntimeError("Task 10 fine-grid support shape mismatch")
+        raise RuntimeError("TG-01 fine-grid support shape mismatch")
     mean_np = states[train_ids].reshape(-1, states.shape[-1]).mean(axis=0)
     scale_np = states[train_ids].reshape(-1, states.shape[-1]).std(axis=0)
     scale_np = np.maximum(scale_np, 1e-3)
@@ -367,7 +367,7 @@ def train_paired_granularity_models(dataset_root, output_dir, *, code_revision="
             optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=1e-5)
             count = sum(parameter.numel() for parameter in model.parameters())
             if parameter_count is not None and count != parameter_count:
-                raise RuntimeError("Task 10 candidate parameter counts differ")
+                raise RuntimeError("TG-01 candidate parameter counts differ")
             parameter_count = count
             best = (float("inf"), None, None)
             for step in range(1, CHECKPOINTS[-1] + 1):
@@ -386,7 +386,7 @@ def train_paired_granularity_models(dataset_root, output_dir, *, code_revision="
                 loss = (weights * torch.nn.functional.smooth_l1_loss(
                     delta, torch.zeros_like(delta), reduction="none")).mean()
                 if not torch.isfinite(loss):
-                    raise RuntimeError(f"Task 10 nonfinite training loss: n={n}, seed={seed}, step={step}")
+                    raise RuntimeError(f"TG-01 nonfinite training loss: n={n}, seed={seed}, step={step}")
                 optimizer.zero_grad(set_to_none=True)
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -396,7 +396,7 @@ def train_paired_granularity_models(dataset_root, output_dir, *, code_revision="
                     histories.append({"substeps_per_ms": n, "seed": seed, "optimizer_step": step,
                                       "train_batch_loss": float(loss.item()),
                                       "development_weighted_normalized_mse": score})
-                    print(f"[GIADA Task 10][GPU] n={n} seed={seed} step={step}/{CHECKPOINTS[-1]} "
+                    print(f"[GIADA TG-01][GPU] n={n} seed={seed} step={step}/{CHECKPOINTS[-1]} "
                           f"dev={score:.5g} ETA~{(time.monotonic()-start_clock)/len(histories)*(24-len(histories))/60:.1f} min",
                           flush=True)
                     if score < best[0]:
