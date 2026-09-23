@@ -1,0 +1,13 @@
+{
+  "Nome": "Task 9c dense physiological teacher replay protocol v1",
+  "Codice stabile": "protocol-task9c-dense-physiological-teacher-replay-v1",
+  "Descrizione": "Replay autentico NEURON di 12 transizioni train Task 9, senza nuovi protocolli, training o test sigillato.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "Per ciascun sito 0/387/460/469 scegliere i due spike e un quiet con ID di transizione minore nell'indice Task 9. Ripristinare SaveState/RNG originali e riprodurre prefisso e transizione con osservazioni ogni 0.025, 0.005, 0.001 ms; integrare formula Ca_HVA con midpoint ed eseguire confronto con interpolazione Task 9b.",
+  "Criteri di successo": "Preflight obbligatorio: errore massimo microtraccia a 40 punti, ogni categoria dello stato finale e sequenza RNG <=1e-5. Gate diagnostico: convergenza gate 0.005-vs-0.001 <=0.001 e RMSE m/h formula densa vs teacher finale <=0.005 in ogni sito/regime.",
+  "Regole di arresto": "Qualsiasi replay 40 punti o stato/RNG non riprodotto blocca l'attribuzione. Un floor denso non calibrato lascia irrisolta la causa. Esito limitato ai 12 train già aperti, senza claim di test indipendente o rollout autonomo.",
+  "Registrato il": "2026-09-23",
+  "Hash preregistrazione": "31bfee19f31944bce6098d54667c139f6ed1b8b6a777fa77ff2b35cce522a0cc",
+  "Esperimento": ["rec1d630861d2d626"]
+}

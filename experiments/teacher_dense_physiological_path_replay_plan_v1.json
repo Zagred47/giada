@@ -1,0 +1,26 @@
+{
+  "task": "GIADA Task 9c",
+  "study_type": "authentic_teacher_snapshot_replay_sampling_forensic",
+  "source": "Task 9 selected train paths from targeted v1.1 base; Task 9b result is motivation, not a selection input",
+  "selection": "For each segment 0,387,460,469 select the two smallest transition IDs labeled spike and one smallest labeled quiet from the already frozen Task 9 index",
+  "path_count": 12,
+  "sample_intervals_ms": [0.025, 0.005, 0.001],
+  "preflight": {
+    "stored_40_point_voltage_max_error_mv": 1e-5,
+    "every_category_endpoint_max_error": 1e-5,
+    "rng_sequence_max_error": 1e-5
+  },
+  "diagnostic_gate": {
+    "dense_005_vs_001_max_gate_difference": 0.001,
+    "dense_001_m_h_rmse_per_site_regime": 0.005
+  },
+  "interpretation": "A passing replay permits attribution of the 40-sample floor to time sampling on these 12 train cases only. A failed replay blocks attribution; a failed dense formula gate means residual mismatch remains unresolved.",
+  "constraints": {
+    "new_trajectories": false,
+    "model_training": false,
+    "model_selection": false,
+    "sealed_test_access": false,
+    "teacher_mechanism_changes": false,
+    "gpu_required": false
+  }
+}

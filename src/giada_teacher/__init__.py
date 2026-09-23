@@ -115,6 +115,7 @@ from .physiological_path_floor import (
     integrate_recorded_path,
     run_physiological_path_floor,
 )
+from .dense_teacher_path_replay import select_replay_rows, evaluate_dense_replay
 from .cahva_closed_loop_microcanary import (
     ClosedLoopCaHVAConfig,
     ActiveClosedLoopCaHVAConfig,
@@ -163,5 +164,6 @@ __all__ = [
     "ContinuousPathConfig", "make_continuous_paths", "formula_path_targets", "run_continuous_path_stress",
     "PhysiologicalPathConfig", "classify_regime", "formula_rollouts", "run_physiological_path_diagnostic",
     "integrate_recorded_path", "run_physiological_path_floor",
+    "select_replay_rows", "evaluate_dense_replay",
     "ClosedLoopCaHVAConfig", "ActiveClosedLoopCaHVAConfig", "run_closed_loop_microcanary",
 ]

@@ -2786,6 +2786,31 @@
         }
       },
       {
+        "id": "rec1d630861d2d626",
+        "createdTime": "2026-09-23T11:11:40Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Task 9c — replay NEURON denso dei percorsi fisiologici",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-task9c-dense-physiological-teacher-replay-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec9d93794eee9a1a"
+          ],
+          "fldSdolNHsOdN294o": "Confermativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Dodici transizioni train Task 9 già congelate; replay autentico dagli snapshot NEURON a 0.025, 0.005 e 0.001 ms.",
+          "fldyeCfji17c7BfPP": "Verificare se il floor formula-teacher è dovuto al campionamento del voltaggio anziché a una differenza di dinamica, previa riproduzione dello stato/RNG e dei 40 campioni originali."
+        }
+      },
+      {
         "id": "rec21d2946e21ed2c",
         "createdTime": "2026-09-22T21:12:09Z",
         "cellValuesByFieldId": {
@@ -3263,7 +3288,9 @@
         "createdTime": "2026-09-23T09:27:40Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "reca2232696ad1585"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Task 9b — forensic del reference floor fisiologico",
@@ -3278,7 +3305,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Sei integrazioni preregistrate della formula Ca_HVA sugli stessi 350 percorsi Task 9, per testare la sensibilità al campionamento dei voltaggi durante gli spike.",
           "fldyeCfji17c7BfPP": "Distinguere se l'errore formula-teacher è coerente con l'approssimazione del path a 0.025 ms; decidere se serve cattura autentica più fitta."
         }
@@ -3839,6 +3866,39 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec9f2c7ab4ff11ac"
+          ]
+        }
+      },
+      {
+        "id": "rec9d93794eee9a1a",
+        "createdTime": "2026-09-23T11:16:51Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-23",
+          "fld43sXbznp3IMZYL": "Task 9c dense physiological teacher replay protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Replay autentico NEURON di 12 transizioni train Task 9, senza nuovi protocolli, training o test sigillato.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Preflight obbligatorio: errore massimo microtraccia a 40 punti, ogni categoria dello stato finale e sequenza RNG <=1e-5. Gate diagnostico: convergenza gate 0.005-vs-0.001 <=0.001 e RMSE m/h formula densa vs teacher finale <=0.005 in ogni sito/regime.",
+          "fldNtSPrXFVAEpq2B": "Qualsiasi replay 40 punti o stato/RNG non riprodotto blocca l'attribuzione. Un floor denso non calibrato lascia irrisolta la causa. Esito limitato ai 12 train già aperti, senza claim di test indipendente o rollout autonomo.",
+          "fldODG8tJ39IE4DeM": "protocol-task9c-dense-physiological-teacher-replay-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "31bfee19f31944bce6098d54667c139f6ed1b8b6a777fa77ff2b35cce522a0cc",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Per ciascun sito 0/387/460/469 scegliere i due spike e un quiet con ID di transizione minore nell'indice Task 9. Ripristinare SaveState/RNG originali e riprodurre prefisso e transizione con osservazioni ogni 0.025, 0.005, 0.001 ms; integrare formula Ca_HVA con midpoint ed eseguire confronto con interpolazione Task 9b.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rec1d630861d2d626"
           ]
         }
       },
@@ -5215,6 +5275,29 @@
           "fldw7I3GqPu0PuSLu": [
             "rec9aef00b8accfe0"
           ]
+        }
+      },
+      {
+        "id": "reca2232696ad1585",
+        "createdTime": "2026-09-23T11:11:40Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Controlli appaiati della formula Ca_HVA sui 350 percorsi train già aperti nella Task 9.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-task9b-physiological-path-floor-interpolation-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Run valido. Floor Task 9 riprodotto esattamente; controllo cinque sottopassi a V costante invariato entro 3.22e-15. RMSE m globale 0.003682 destro vs 0.0002065 lineare20. Nei quattro gruppi spike riduzione 97–98%, 100% dei percorsi migliorati; gate preregistrato superato.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Compatibile con perdita da campionamento temporale, ma il path intra-campione autentico non è osservato. Serve replay NEURON più fitto; non attribuire il floor residuo alla LUT o rete.",
+          "fldYAbc64NIZGKzWO": [
+            "recda607140f48c6f"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Stessi 350 percorsi train Task 9, nessuna nuova simulazione o validazione indipendente. ZIP SHA-256 bec67549d8f772d7885df1332214f29e0b5c02cf4ba5db091edda058fc7d8f86.",
+          "fldhoJJ1jrMBcOUrl": "Task 9b — reference floor coerente con sottocampionamento temporale",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
         }
       },
       {
