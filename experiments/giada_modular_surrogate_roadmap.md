@@ -191,6 +191,12 @@ accoppiato il gate dipende dall'intero percorso \(V(s)\) nell'intervallo.
 
 - **Task 11 — Operatore path-aware** → Introdurlo soltanto se \(V_t\) risulta
   causalmente insufficiente.
+  **Eseguita nel sistema minimo Ca-HVA+pas** con
+  `11_roadmap_causal_operator.ipynb`: contrasto sugli ingressi pianificati,
+  integratori accoppiati, path compatto, coefficienti integrati e sforzo
+  adattivo. Esito scopiato in
+  `teacher_roadmap_task11_causal_operator_result_v1.md`; nessuna prova sul
+  teacher multicompartimentale o sugli spike.
 
 ### ✅ Gate B — Contratto temporale minimo
 

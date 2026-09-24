@@ -12,7 +12,7 @@ completamento di una task. Verificare sempre domanda, protocollo e gate.
 | Task 9: percorsi fisiologici teacher-forced | Notebook 09, approfondimenti 09b/09c | Tema allineato. |
 | Task 10: sufficienza dell'ingresso | `10_roadmap_input_sufficiency.ipynb`: otto viste del path Ca-HVA × cinque granularità d'integrazione sui percorsi Task 9. | **Conclusa nel perimetro diagnostico.** Prima vista campionata testata al gate: 21 campioni oracle/40 passi; non minimo universale. Contratto causale operativo ancora aperto. TG-01 non la sostituisce. |
 | TG-01: sottopassi interni full-state | Notebook con nome file storico `10_temporal_granularity_decision_matrix.ipynb` | Studio supplementare fuori roadmap; nessuna promozione implicita a Task 10. |
-| Task 11: operatore path-aware causale | `11_roadmap_causal_operator.ipynb`, fasi 11a/11b nello stesso run. | Protocollo e implementazione preparati; esito sperimentale ancora da acquisire. Ca-HVA+pas a un compartimento, senza pretesa di validità multicompartimentale. |
+| Task 11: operatore path-aware causale | `11_roadmap_causal_operator.ipynb`, fasi 11a/11b nello stesso run. | **Conclusa nel playground Ca-HVA+pas a un compartimento**: ancora NEURON e integrità superate; path causale a quattro nodi appreso, effetto integrato oracle esatto ma appreso meno accurato. Nessuna prova sugli spike o sul teacher multicompartimentale. |
 
 I nomi di file e i codici stabili SQLite precedenti restano alias storici per
 non rompere hash, collegamenti o provenienza. Le etichette visibili e questo

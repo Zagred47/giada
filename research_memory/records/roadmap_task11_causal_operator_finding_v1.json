@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 11 — path compatto apprende, coefficienti integrati restano difficili",
+  "Codice stabile": "finding-roadmap-task11-cahva-causal-operator-v1",
+  "Descrizione": "Run valido GIADA Task11 Ca-HVA+pas, revisione c2ffeb54133ccfce284518561b83e59a05f6dee9. ZIP SHA256 f64f6339ebe4a7927fdf050c6fbc4db6f812b3e1382a4d17609ed255adcdec52. 192/48/48 episodi disgiunti, 3 seed GPU, sealed dopo freeze; ancoraggio NEURON 24 episodi.",
+  "Risultato": "H0: stesso input ridotto con impulso ritardato diverso produce almeno 6.12 mV di differenza; full/reduced RMSE V one-step 0.1005/3.3024 mV e ricorsivo 16ms 0.4719/6.6958 mV. H1: a 8 stadi, sequenziale V/m RMSE 0.0200mV/0.000661, predictor-corrector 0.0201mV/0.000229. H2: path oracle 4 nodi m RMSE 0.000178; path appreso V/m one-step 0.0967mV/0.000327 e ricorsivo 0.3694mV/0.005894. H3: A/B oracle esatto, ma effetto appreso m RMSE 0.01997 one-step e 0.06945 ricorsivo. H4: adattivo usa 8 stadi nel 48.6%, V/m RMSE 0.03658mV/0.001144 e tempo CPU superiore agli 8 stadi fissi.",
+  "Incertezza": "Le curve development migliorano ancora a 400 step: il limite di budget per i coefficienti integrati non è escluso. L'oracle A/B prova comprimibilità su path noto, non apprendibilità causale efficiente. Il path appreso usa 40 update analitici dei gate. Non confrontare i tempi CPU di questa matrice con latenza GPU reale.",
+  "Limitazioni": "Un compartimento Ca-HVA+pas, ECa fisso e corrente pianificata; nessun calcio dinamico, altri canali, sinapsi o coupling assiale. Teacher sealed senza attraversamenti 0mV: nessuna F1 evento e nessuna validazione spike. Nessuna generalizzazione dimostrata al teacher 642 segmenti. Sealed non usato per selezione; nessun V futuro teacher come input modello.",
+  "Esito": "Misto",
+  "Esperimenti": ["rec9dcdde9bbc60d5"]
+}
