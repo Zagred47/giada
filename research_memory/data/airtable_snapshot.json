@@ -3705,6 +3705,56 @@
         }
       },
       {
+        "id": "recf041c0f6f08859",
+        "createdTime": "2026-09-24T13:06:47Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Roadmap Task 12 — corrente Ca-HVA analitica dai gate predetti",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-roadmap-task12-cahva-current-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec37a3902adb7bbf"
+          ],
+          "fldSdolNHsOdN294o": "Confermativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Task 12 nel notebook condiviso 12_13: modelli Task 11 congelati, 48 episodi indipendenti seed12059 Ca-HVA+pas, corrente I=gbar*m²*h*(V-E_Ca) calcolata senza apprendere un layer di corrente.",
+          "fldyeCfji17c7BfPP": "Quantificare l'errore della corrente e attribuirlo separatamente ai gate predetti o al voltaggio predetto, senza confondere l'endpoint analitico con ica nativa temporalmente sfasata."
+        }
+      },
+      {
+        "id": "recffb0c79397944e",
+        "createdTime": "2026-09-24T13:06:47Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Roadmap Task 13 — semantica temporale della corrente Ca-HVA",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-roadmap-task13-cahva-timing-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec2ac75f480d4f07"
+          ],
+          "fldSdolNHsOdN294o": "Confermativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Task 13 nello stesso notebook della Task 12, con report distinto. Confronto pre/post su 24 tracce NEURON autentiche Task 7b a dt=0.025ms, escludendo gbar=0 dall'identificazione.",
+          "fldyeCfji17c7BfPP": "Stabilire quale stato V,m,h determina ica campionata; distinguere conduttanza inferita da conduttanza realmente misurata e circoscrivere la conclusione al fixed-step Ca-HVA+pas."
+        }
+      },
+      {
         "id": "reclkqGbcD23aIje6",
         "createdTime": "2026-09-20T16:09:31Z",
         "cellValuesByFieldId": {
@@ -3884,6 +3934,39 @@
         }
       },
       {
+        "id": "rec2ac75f480d4f07",
+        "createdTime": "2026-09-24T13:07:29Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-24",
+          "fld43sXbznp3IMZYL": "Roadmap Task 13 native current timing protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo integrale in experiments/teacher_roadmap_task12_13_current_contract_preregistration_v1.md; stesso notebook della Task 12, report indipendente.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Pre-all vince sulle finestre attive ed errore assoluto massimo globale <1e-10 mA/cm²; reportare tutti i quattro contrasti e il limite di dominio.",
+          "fldNtSPrXFVAEpq2B": "Hash native non valido, nessun episodio gbar>0, vincitore diverso o errore superiore alla soglia fermano l'interpretazione causale preregistrata.",
+          "fldODG8tJ39IE4DeM": "protocol-roadmap-task13-cahva-timing-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Componente isolato",
+          "fldY1kvKgn1aBhiVp": "25856ac23498b4447b532c6791c3b98c6e82fbf94215420c0309e8b1e75bf090",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare hash Task7b. Su episodi native fixed-step 0.025ms con gbar>0 confrontare I campionata con formule pre-all, post-all e due ibridi; ripetere su finestre a corrente attiva. Inferire G=I/(Vpre-Eca) dove driving force >1mV, segnalando che G non era misurata direttamente.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "recffb0c79397944e"
+          ]
+        }
+      },
+      {
         "id": "rec2c7e559aa4df3e",
         "createdTime": "2026-09-23T09:28:02Z",
         "cellValuesByFieldId": {
@@ -3946,6 +4029,39 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec9dcdde9bbc60d5"
+          ]
+        }
+      },
+      {
+        "id": "rec37a3902adb7bbf",
+        "createdTime": "2026-09-24T13:07:28Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-24",
+          "fld43sXbznp3IMZYL": "Roadmap Task 12 analytical current protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo integrale in experiments/teacher_roadmap_task12_13_current_contract_preregistration_v1.md; notebook condiviso con Task 13 ma report e gate indipendenti.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Integrità verificata, predizioni finite, report RMSE e MAE mA/cm², nessuna scelta sui nuovi episodi. Nessuna pretesa di accuratezza sul neurone completo.",
+          "fldNtSPrXFVAEpq2B": "Fallimento hash/freeze, checkpoint alterato, stato non finito o selezione basata sul ruolo indipendente invalidano la Task 12.",
+          "fldODG8tJ39IE4DeM": "protocol-roadmap-task12-cahva-current-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Ricomposizione",
+          "fldY1kvKgn1aBhiVp": "25856ac23498b4447b532c6791c3b98c6e82fbf94215420c0309e8b1e75bf090",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare freeze e nove checkpoint Task11. Valutare senza retraining path_full/effect_full su 48 episodi seed12059. I=gbar*m²*h*(V-120mV); scomporre errori gate/voltaggio con ibridi oracle diagnostici. Reportare all e top quartile nonzero di |Iteacher|.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "recf041c0f6f08859"
           ]
         }
       },
@@ -6693,6 +6809,25 @@
           "fldyiTgFzV1vvmM5o": [
             "rec0wPKrtqWymCBjr"
           ]
+        }
+      },
+      {
+        "id": "rec666a6644b2da30",
+        "createdTime": "2026-09-24T13:06:47Z",
+        "cellValuesByFieldId": {
+          "fld0tHGV6BV3tjAqn": "Rinviata",
+          "fld8zz84auBO3DIGQ": [],
+          "fldFPSQrhxnfHL9n7": "action-supplement-11c-integrated-effect-learnability-v1",
+          "fldI2FlCVIjw2HQwC": [],
+          "fldL6j0RgbU09Usnb": "Dopo interpretazione delle Task 12/13, solo se il limite del braccio a effetto integrato resta scientificamente rilevante per la scelta architetturale.",
+          "fldMeQ3of9b3RZvPb": "Supplemento 11c — learnability dell'effetto integrato Ca-HVA",
+          "fldQT49hS3JSMm8FP": "Approfondimento futuro separato dalle Task 12/13: parametrizzazione A/B o A/q, identificabilità per regime, mini-scaling di dati e budget, confronto appaiato col path e misura reale GPU. Motivazione: Task 11 ha A/B oracle esatto ma effetto appreso meno accurato; curve development ancora in miglioramento a 400 step.",
+          "fldazVEmaizg09aw8": [],
+          "fldgrmwbCk1T9fq46": [],
+          "fldilkZX7GrkdJNu2": "Discriminare insufficienza di dati/budget, parametro mal identificato e rappresentazione inadatta senza contaminare le conclusioni delle Task 12/13.",
+          "fldkCr0yLshDXWuxz": [],
+          "fldlLL729Jw86riOj": [],
+          "fldyiTgFzV1vvmM5o": []
         }
       },
       {

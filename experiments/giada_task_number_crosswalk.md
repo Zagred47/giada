@@ -13,6 +13,9 @@ completamento di una task. Verificare sempre domanda, protocollo e gate.
 | Task 10: sufficienza dell'ingresso | `10_roadmap_input_sufficiency.ipynb`: otto viste del path Ca-HVA × cinque granularità d'integrazione sui percorsi Task 9. | **Conclusa nel perimetro diagnostico.** Prima vista campionata testata al gate: 21 campioni oracle/40 passi; non minimo universale. Contratto causale operativo ancora aperto. TG-01 non la sostituisce. |
 | TG-01: sottopassi interni full-state | Notebook con nome file storico `10_temporal_granularity_decision_matrix.ipynb` | Studio supplementare fuori roadmap; nessuna promozione implicita a Task 10. |
 | Task 11: operatore path-aware causale | `11_roadmap_causal_operator.ipynb`, fasi 11a/11b nello stesso run. | **Conclusa nel playground Ca-HVA+pas a un compartimento**: ancora NEURON e integrità superate; path causale a quattro nodi appreso, effetto integrato oracle esatto ma appreso meno accurato. Nessuna prova sugli spike o sul teacher multicompartimentale. |
+| Task 12: corrente analitica | Prima fase di `12_13_roadmap_current_and_timing.ipynb`. | **Preregistrata, non ancora eseguita su Kaggle**: corrente dai gate predetti congelati Task 11, con errori gate/V separati. |
+| Task 13: allineamento temporale | Seconda fase dello stesso notebook, report distinto. | **Preregistrata, non ancora eseguita su Kaggle**: confronto della corrente nativa Task 7b con stato pre/post. La verifica locale del codice non sostituisce il report sperimentale Kaggle. |
+| Supplemento 11c | Nessun notebook nel run 12/13. | **Rinviato**: learnability e costo GPU dell'effetto integrato, non parte dei risultati Task 12 o 13. |
 
 I nomi di file e i codici stabili SQLite precedenti restano alias storici per
 non rompere hash, collegamenti o provenienza. Le etichette visibili e questo
