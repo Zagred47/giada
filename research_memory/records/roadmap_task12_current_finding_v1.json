@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 12 — corrente Ca-HVA analitica sensibile al gate m",
+  "Codice stabile": "finding-roadmap-task12-cahva-current-v1",
+  "Descrizione": "Artefatto Task12/13 SHA256 61a262345b4f70d353ef0f5087bedde15970d72c0c55bd909493b3599c209cd9; revisione 48116b1e3edc4c0360413585abb21f9ae236aaa1; 48 episodi indipendenti seed12059, 768 finestre, checkpoint Task11 congelati.",
+  "Risultato": "Corrente analitica path_full RMSE 1.288694e-6 mA/cm2; effect_full 6.153402e-5 (47.75x). Voltaggio RMSE simile 0.13809/0.13843 mV; gate m RMSE 0.0006845/0.03510. Quartile di corrente attiva: 2.577283e-6/1.230597e-4 mA/cm2. Gli ibridi gate-only/voltage-only attribuiscono la divergenza soprattutto ai gate.",
+  "Incertezza": "Non è una stima del limite ottimale di effect_full: budget dati/training e parametrizzazione restano aperti nel supplemento 11c. La corrente è calcolata alla frontiera usando stati allo stesso istante, non confrontata ingenuamente con ica nativa sfasata.",
+  "Limitazioni": "One-step sul riferimento Ca-HVA+pas a un compartimento, E_Ca fisso 120mV. Nessuna prova su rollout, altri meccanismi, calcio dinamico, neurone completo o velocità GPU.",
+  "Esito": "Misto",
+  "Esperimenti": ["recf041c0f6f08859"]
+}

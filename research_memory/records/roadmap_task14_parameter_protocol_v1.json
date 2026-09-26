@@ -1,0 +1,13 @@
+{
+  "Nome": "Roadmap Task 14 Ca-HVA parameter variation protocol v1",
+  "Codice stabile": "protocol-roadmap-task14-cahva-parameter-variation-v1",
+  "Descrizione": "Protocollo integrale in experiments/teacher_roadmap_task14_parameter_variation_preregistration_v1.md; notebook 14_roadmap_parameter_variation.ipynb.",
+  "Versione": "v1",
+  "Modalità": "Componente isolato",
+  "Procedura": "Congelare checkpoint Task11 verificati; verificare artifact Task12/13. Generare 48 episodi seed14059 appaiati. Baseline, gbar x0.5/x1.5, ECa100/140, m0+0.1, h0-0.1, meccanismo off visibile e off nascosto. Confrontare path_full/effect_full one-step, corrente analitica, rollout16ms e delta appaiati V/I. Nessun training o selezione.",
+  "Criteri di successo": "Validità tecnica: baseline reference <=1e-11, twin controfattuali one-step ECa100/140 da identico stato con tensore input identico e target diverso, metriche finite. Le traiettorie ECa complete non hanno input identici oltre il primo passo. Gate prestazionali distinti per gbar_half, initial_m_plus, initial_h_minus, mechanism_off_visible: V/m RMSE <=2x baseline e I RMSE <=3x baseline. Altri contrasti sono descrittivi/controlli negativi.",
+  "Regole di arresto": "Hash prerequisiti errati, identità baseline fallita, violazione dell'uguaglianza input ECa o output non finiti invalidano il run. Il fallimento dei gate prestazionali è un risultato, non un errore del protocollo.",
+  "Registrato il": "2026-09-26",
+  "Hash preregistrazione": "98e809bbdfd0af3e75ba1e2fa02d5874e3d9de004667e4fa99d447bec221c028",
+  "Esperimento": ["rec72ac02d855a89d"]
+}

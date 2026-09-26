@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 13 — corrente NEURON campionata usa V/m/h pre-step",
+  "Codice stabile": "finding-roadmap-task13-cahva-timing-v1",
+  "Descrizione": "Artefatto Task12/13 SHA256 61a262345b4f70d353ef0f5087bedde15970d72c0c55bd909493b3599c209cd9; revisione 48116b1e3edc4c0360413585abb21f9ae236aaa1; 16 episodi native gbar>0 Task7b, 12800 campioni fixed-step 0.025ms.",
+  "Risultato": "Ica(t+dt) coincide con gbar*m(t)^2*h(t)*(V(t)-E_Ca): errore assoluto massimo 1.30e-18 mA/cm2. Ipotesi all-post RMSE 4.14e-6 globale e 3.20e-6 nel quartile attivo. Gate/voltaggio salvati in riga t+dt sono post-step. Conduttanza pre-step coerente, ma inferita da I/(V_pre-E_Ca), non registrata direttamente.",
+  "Incertezza": "Identità robusta nelle tracce autentiche campionate, non prova del timing di ogni altro meccanismo/solver.",
+  "Limitazioni": "Solo Ca-HVA+pas fixed-step Task7b; non CVode, teacher 642 segmenti o interfaccia esterna 1ms.",
+  "Esito": "Positivo",
+  "Esperimenti": ["recffb0c79397944e"]
+}
