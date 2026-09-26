@@ -1,0 +1,13 @@
+{
+  "Nome": "Roadmap Task 15 current architecture comparison protocol v1",
+  "Codice stabile": "protocol-roadmap-task15-cahva-current-architecture-v1",
+  "Descrizione": "Protocollo integrale in experiments/teacher_roadmap_task15_current_architecture_comparison_preregistration_v1.md; notebook 15_roadmap_current_architecture_comparison.ipynb.",
+  "Versione": "v1",
+  "Modalità": "Componente isolato",
+  "Procedura": "Verificare hash Task14. Generare train192 seed15011 e development48 seed15029; addestrare A gate+V appresi/formula, B corrente diretta, C corrente diretta con target ausiliari, ciascuno 3 seed e 400 step con minibatch appaiati. Selezionare solo su development corrente allo step400. Dopo freeze aprire sealed48 seed15059 e controfattuali appaiati48 seed15159. Valutare I one-step, delta-I, V/gate e rollout ove definiti, mini scaling laws e probe gate analitico separato.",
+  "Criteri di successo": "Vantaggio B su A: I RMSE sealed totale <=0.8x A e RMSE attivo <=A. Beneficio C su B: I RMSE totale <=0.9x B e mediana delta-I appaiata <=B. Finitezza, freeze integro e input identici sono gate tecnici; fallimento prestazionale e risultato, non motivo per cambiare soglie.",
+  "Regole di arresto": "Fermare per prerequisito Task14 errato, freeze/checkpoint corrotti, output non finito, input divergenti o scarto parametrico >6%. Il test sealed non deve scegliere i pesi. Non dichiarare rollout per il braccio di sola corrente né promozione a Gate C.",
+  "Registrato il": "2026-09-26",
+  "Hash preregistrazione": "05caeac7d37d0439c316b3d1cd268533b6f4137b6adad4d19e27db7e6467776e",
+  "Esperimento": ["recba5e744edb0b2d"]
+}

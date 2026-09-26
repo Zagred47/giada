@@ -3616,6 +3616,31 @@
         }
       },
       {
+        "id": "recba5e744edb0b2d",
+        "createdTime": "2026-09-26T18:17:18Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Roadmap Task 15 — decomposizione contro corrente diretta Ca-HVA",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-roadmap-task15-cahva-current-architecture-v1",
+          "fldSVM6BIAoevpYQC": [
+            "recf9d2eaec89cbdb"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Tre MLP fresche, input causali identici e budget appaiato: V+gate appresi con corrente analitica, corrente diretta, corrente diretta con target ausiliari V/gate. Playground Ca-HVA+pas a un compartimento; prerequisito Task14 verificato, nessun risultato Kaggle ancora disponibile.",
+          "fldyeCfji17c7BfPP": "Separare learnability della decomposizione e della corrente diretta, verificare utilità della supervisione ausiliaria e fedeltà dei delta-I/V controfattuali senza confondere il successo one-step con rollout o Gate C."
+        }
+      },
+      {
         "id": "recc6b4629ac0ff82",
         "createdTime": "2026-09-22T20:16:23Z",
         "cellValuesByFieldId": {
@@ -4866,6 +4891,39 @@
           "fldmDbF0PWDV8gesU": "Generare esclusivamente i 13 strati dichiarati nell'artefatto. Fit solo sullo strato train; sviluppo solo sugli strati development; aprire i sealed_test una sola volta dopo il congelamento del candidato. Non trasformare righe atomiche in conferma embedded.",
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": []
+        }
+      },
+      {
+        "id": "recf9d2eaec89cbdb",
+        "createdTime": "2026-09-26T18:17:35Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-26",
+          "fld43sXbznp3IMZYL": "Roadmap Task 15 current architecture comparison protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo integrale in experiments/teacher_roadmap_task15_current_architecture_comparison_preregistration_v1.md; notebook 15_roadmap_current_architecture_comparison.ipynb.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Vantaggio B su A: I RMSE sealed totale <=0.8x A e RMSE attivo <=A. Beneficio C su B: I RMSE totale <=0.9x B e mediana delta-I appaiata <=B. Finitezza, freeze integro e input identici sono gate tecnici; fallimento prestazionale e risultato, non motivo per cambiare soglie.",
+          "fldNtSPrXFVAEpq2B": "Fermare per prerequisito Task14 errato, freeze/checkpoint corrotti, output non finito, input divergenti o scarto parametrico >6%. Il test sealed non deve scegliere i pesi. Non dichiarare rollout per il braccio di sola corrente né promozione a Gate C.",
+          "fldODG8tJ39IE4DeM": "protocol-roadmap-task15-cahva-current-architecture-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Componente isolato",
+          "fldY1kvKgn1aBhiVp": "05caeac7d37d0439c316b3d1cd268533b6f4137b6adad4d19e27db7e6467776e",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare hash Task14. Generare train192 seed15011 e development48 seed15029; addestrare A gate+V appresi/formula, B corrente diretta, C corrente diretta con target ausiliari, ciascuno 3 seed e 400 step con minibatch appaiati. Selezionare solo su development corrente allo step400. Dopo freeze aprire sealed48 seed15059 e controfattuali appaiati48 seed15159. Valutare I one-step, delta-I, V/gate e rollout ove definiti, mini scaling laws e probe gate analitico separato.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "recba5e744edb0b2d"
+          ]
         }
       }
     ],
@@ -7084,7 +7142,7 @@
         "id": "rec8a518924b83e42",
         "createdTime": "2026-09-26T18:02:10Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Proposta",
+          "fld0tHGV6BV3tjAqn": "Pronta",
           "fld8zz84auBO3DIGQ": [],
           "fldFPSQrhxnfHL9n7": "action-roadmap-task15-current-decomposition-comparison-v1",
           "fldI2FlCVIjw2HQwC": [],
