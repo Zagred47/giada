@@ -1,0 +1,13 @@
+{
+  "Nome": "Roadmap Task 16 embedded frozen protocol v1",
+  "Codice stabile": "protocol-roadmap-task16-cahva-embedded-frozen-v1",
+  "Descrizione": "Protocollo integrale in experiments/teacher_roadmap_task16_embedded_frozen_confirmation_preregistration_v1.md; notebook 16_roadmap_embedded_frozen_confirmation.ipynb.",
+  "Versione": "v1",
+  "Modalità": "Sistema completo",
+  "Procedura": "Verificare HDF5 teacher, freeze Task5 e scelta Task15c. Campionare deterministic_test seed16017, siti 0/387/460/469, quiet/rising/spike/falling, massimo8 e minimo4 per gruppo. Riprodurre una volta ogni transizione unica dallo snapshot nativo con CVode/sinapsi/RNG. LUT513 shadow viene aggiornata in CPU a ogni campione live 0.025ms sui midpoint V; preflight di equivalenza con gpu_lut_predict Task5 entro 5e-7. Nessuna alterazione del teacher. Confrontare gate e corrente CaHVA analitica contro gate nativi e formula midpoint.",
+  "Criteri di successo": "Tutti i 16 gruppi >=4, replay stato/RNG/V/gate entro 1e-5, floor formula m/h per gruppo <=0.005, LUT m/h per gruppo <=0.005 senza violazioni di occupanza, corrente shadow path RMSE per gruppo <=0.0001 mA/cm2.",
+  "Regole di arresto": "Fonte o prerequisiti non esatti, snapshot mancanti, supporto insufficiente o mismatch di replay producono NO-GO diagnostico. Non attribuire errore del replay alla LUT, non modificare soglie post hoc e non dichiarare Task17/Gate C completati.",
+  "Registrato il": "2026-09-26",
+  "Hash preregistrazione": "a671c49bc6e52b4467386e3b74077db047472dcd896dec8e7565f27a48ab94b5",
+  "Esperimento": ["rec3655cd16bc32f0"]
+}

@@ -1925,7 +1925,8 @@ class DiagnosticDatasetSession:
         return report
 
     def _replay_hdf5_transition(
-        self, handle: Any, index: int, *, include_arrays: bool = False
+        self, handle: Any, index: int, *, include_arrays: bool = False,
+        trajectory_index_map: Optional[Mapping[str, Sequence[int]]] = None,
     ) -> Dict[str, Any]:
         decode = lambda value: value.decode() if isinstance(value, bytes) else str(value)
         trajectory_id = decode(handle["metadata/trajectory_id"][index])
@@ -1936,11 +1937,16 @@ class DiagnosticDatasetSession:
         snapshot = self.output_dir / decode(
             handle["metadata/native_snapshot_ref"][index]
         )
+        candidate_indices = (
+            trajectory_index_map.get(trajectory_id, ())
+            if trajectory_index_map is not None
+            else range(int(handle.attrs["transition_count"]))
+        )
         trajectory_indices = [
             row_index
-            for row_index in range(int(handle.attrs["transition_count"]))
-            if decode(handle["metadata/trajectory_id"][row_index])
-            == trajectory_id
+            for row_index in candidate_indices
+            if (trajectory_index_map is not None or
+                decode(handle["metadata/trajectory_id"][row_index]) == trajectory_id)
             and checkpoint_step
             <= int(handle["metadata/step_index"][row_index])
             <= target_step
