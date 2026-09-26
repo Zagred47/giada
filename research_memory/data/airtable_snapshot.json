@@ -3182,7 +3182,9 @@
         "createdTime": "2026-09-26T19:33:32Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec4214db0a524af4"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Supplemento Task 15c — ponte d'interfaccia embedded Ca-HVA",
@@ -3199,7 +3201,7 @@
           "fldnTFjWQUe3eEcDr": [
             "rec1a3b7f06ff26bc"
           ],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Confronto congelato formula/LUT/physical_tau su percorsi V autentici del teacher multicompartimentale, solo split validation; tre viste di disponibilità temporale. Non valuta la MLP Task15b con correnti locali inventate e non è la Task16 originale.",
           "fldyeCfji17c7BfPP": "Verificare supporto e floor formula-teacher per una futura conferma embedded, distinguendo input causale al sottopasso da path teacher-forced e selezionando eventualmente un candidato gate congelato con interfaccia valida."
         }
@@ -5968,6 +5970,29 @@
         }
       },
       {
+        "id": "rec4214db0a524af4",
+        "createdTime": "2026-09-26T19:51:36Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "ZIP SHA256 8a0aa1f85dbc1d62e639f3fcf1db4e0e4ecd28e6e5abfccc1a17cfead140a25a; report SHA256 ffde98ea986cc6dc293688b0e9335efb6af60639fe95281440df17523c4b2fc9; codice fb8a55cdb038628af6dd35cac9b576dfb4b3ff99. Report e indice dei path validation verificati.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task15c-interface-bridge-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "248 path da 144 transizioni e 45 traiettorie; 16/16 gruppi con >=8 path; peggior floor midpoint formula-teacher 0.00026183 contro limite 0.005. Macro score midpoint LUT513 0.00013356, physical_tau seed43 0.00021748, seed29 0.00028056, seed17 0.00035771. LUT513 selezionata per Task16 teacher-forced. Nessuna violazione di occupanza o retraining.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Il floor left formula-teacher m globale 0.00357153 e molto superiore al midpoint 0.00015542; quindi il buon risultato midpoint dipende dall'informazione V teacher-forced del sottopasso. I 248 path non sono repliche indipendenti, provenendo da 45 traiettorie.",
+          "fldYAbc64NIZGKzWO": [
+            "rec58615eb7cb8fe3"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo gate Ca_HVA e split validation del teacher, non corrente o rollout del neurone. Il checkpoint MLP Task15b non e stato valutato embedded: richiede quattro correnti locali pianificate non disponibili come ingressi equivalenti. Task16, Task17 e Gate C restano separati.",
+          "fldhoJJ1jrMBcOUrl": "Task 15c — floor teacher-forced calibrato e LUT513 selezionata",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "rec45a1e6b5db876f",
         "createdTime": "2026-09-21T12:52:21Z",
         "cellValuesByFieldId": {
@@ -7104,7 +7129,7 @@
         "id": "rec1a3b7f06ff26bc",
         "createdTime": "2026-09-26T19:33:52Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld0tHGV6BV3tjAqn": "Conclusa",
           "fld8zz84auBO3DIGQ": [],
           "fldFPSQrhxnfHL9n7": "action-roadmap-task15c-cahva-interface-bridge-v1",
           "fldI2FlCVIjw2HQwC": [

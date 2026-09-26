@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 15c — floor teacher-forced calibrato e LUT513 selezionata",
+  "Codice stabile": "finding-roadmap-task15c-interface-bridge-v1",
+  "Descrizione": "ZIP SHA256 8a0aa1f85dbc1d62e639f3fcf1db4e0e4ecd28e6e5abfccc1a17cfead140a25a; report SHA256 ffde98ea986cc6dc293688b0e9335efb6af60639fe95281440df17523c4b2fc9; codice fb8a55cdb038628af6dd35cac9b576dfb4b3ff99. Report e indice dei path validation verificati.",
+  "Risultato": "248 path da 144 transizioni e 45 traiettorie; 16/16 gruppi con >=8 path; peggior floor midpoint formula-teacher 0.00026183 contro limite 0.005. Macro score midpoint LUT513 0.00013356, physical_tau seed43 0.00021748, seed29 0.00028056, seed17 0.00035771. LUT513 selezionata per Task16 teacher-forced. Nessuna violazione di occupanza o retraining.",
+  "Incertezza": "Il floor left formula-teacher m globale 0.00357153 e molto superiore al midpoint 0.00015542; quindi il buon risultato midpoint dipende dall'informazione V teacher-forced del sottopasso. I 248 path non sono repliche indipendenti, provenendo da 45 traiettorie.",
+  "Limitazioni": "Solo gate Ca_HVA e split validation del teacher, non corrente o rollout del neurone. Il checkpoint MLP Task15b non e stato valutato embedded: richiede quattro correnti locali pianificate non disponibili come ingressi equivalenti. Task16, Task17 e Gate C restano separati.",
+  "Esito": "Positivo",
+  "Esperimenti": ["rec58615eb7cb8fe3"]
+}
