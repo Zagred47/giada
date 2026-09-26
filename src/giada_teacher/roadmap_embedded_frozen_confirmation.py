@@ -215,6 +215,9 @@ class _ShadowReplaySession(TargetedDiagnosticDatasetSession):
         self.shadow_capture = False
         self.shadow_samples = []
 
+    def _prepare_calibration_source(self):
+        raise RuntimeError("Task 16 replays immutable dataset snapshots; calibration loading is not permitted")
+
     def _run_transition(self, transition_id, trajectory, step_index, actions, snapshot_path):
         self.shadow_capture = int(transition_id) == self.shadow_target_index
         if self.shadow_capture:
@@ -286,8 +289,14 @@ def run_frozen_embedded_confirmation(formula, elm_repo, teacher_repo, dataset_ro
     replay_root = output_dir / "native_replay_workspace"
     replay_root.mkdir()
     staged = stage_snapshots(dataset_source, rows, source, replay_root)
-    session = _ShadowReplaySession(elm_repo, teacher_repo, output_dir=replay_root,
-                                   site_ids=config.site_ids, lut_table=table)
+    # The v1 session stores both constructor paths, but snapshot replay never
+    # prepares the 01b contract. Do not require an unrelated Kaggle input.
+    session = _ShadowReplaySession(
+        elm_repo, teacher_repo,
+        calibration_source=Path(dataset_source),
+        dataset_config_path=Path(elm_repo) / "configs/hayflow/targeted_transition_dataset_v1_1.yml",
+        output_dir=replay_root, site_ids=config.site_ids, lut_table=table,
+    )
     session.prepare_teacher()
     stored_schema = json.loads((Path(source["root"]) / "state_schema.json").read_text(encoding="utf-8"))
     for category in session.state_variables:

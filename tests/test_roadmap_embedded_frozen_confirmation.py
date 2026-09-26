@@ -8,11 +8,27 @@ from pathlib import Path
 import numpy as np
 
 from src.giada_teacher.roadmap_embedded_frozen_confirmation import (
-    FrozenEmbeddedConfig, _lut_step, _lut_table, stage_snapshots, verified_15c,
+    FrozenEmbeddedConfig, _ShadowReplaySession, _lut_step, _lut_table,
+    stage_snapshots, verified_15c,
 )
 
 
 class FrozenEmbeddedConfirmationTests(unittest.TestCase):
+    def test_replay_session_constructs_without_calibration_artifact(self):
+        repository = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            session = _ShadowReplaySession(
+                repository, root,
+                calibration_source=root / "base_dataset",
+                dataset_config_path=repository / "configs/hayflow/targeted_transition_dataset_v1_1.yml",
+                output_dir=root / "replay", site_ids=(1,),
+                lut_table=np.zeros((2, 4), dtype=np.float32),
+            )
+            self.assertEqual(session.shadow_site_ids, (1,))
+            with self.assertRaisesRegex(RuntimeError, "calibration loading is not permitted"):
+                session._prepare_calibration_source()
+
     def test_online_lut_is_bounded_and_uses_midpoint_step(self):
         class ConstantFormula:
             def rates(self, voltage):
