@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 14 — robustezza assoluta Ca-HVA sotto perturbazioni appaiate",
+  "Codice stabile": "finding-roadmap-task14-absolute-robustness-v1",
+  "Descrizione": "ZIP SHA256 94408bc2234d1634ee0e1456950d4256c212f3413405446b89a89fb51e307353; revisione 3372465ff37dd8e10b4eaed5f12e73f92dc0f036. 9 condizioni, 48 episodi seed14059, modelli Task11 congelati; valid=true, identità reference baseline max=0.",
+  "Risultato": "Tutti i gate preregistrati gbar_half, initial_m_plus, initial_h_minus e mechanism_off_visible passano. path_full baseline V/m/I one-step RMSE 0.0960mV/0.000298/3.98e-7mA/cm2, V ricorsivo16ms 0.4024mV. V one-step gbar_half 0.1069, gbar×1.5 0.1051, m0+0.1 0.1150, h0−0.1 0.1063, off visibile 0.1354mV. effect_full baseline V 0.1047mV ma m 0.01882 e I 2.52e-5mA/cm2.",
+  "Incertezza": "Gate relativi alla baseline provano stabilità dell'RMSE, non fedeltà degli effetti differenziali. Corrente zero con maschera visibile segue dalla formula con gbar efficace zero, non è un successo appreso. gbar×1.5 può essere fuori dal supporto train ed è descrittivo.",
+  "Limitazioni": "Solo Ca-HVA+pas a un compartimento con riferimento sintetico; nessuna prova del teacher 642 segmenti, calcio dinamico, CVode o Gate C.",
+  "Esito": "Positivo",
+  "Esperimenti": ["rec72ac02d855a89d"]
+}

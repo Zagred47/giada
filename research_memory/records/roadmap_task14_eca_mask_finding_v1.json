@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 14 — ECa assente dall'input e maschera nascosta",
+  "Codice stabile": "finding-roadmap-task14-eca-mask-information-v1",
+  "Descrizione": "Stesso ZIP Task14 SHA256 94408bc2234d1634ee0e1456950d4256c212f3413405446b89a89fb51e307353. Twin one-step ECa100/140 da identico stato, e controllo off nascosto.",
+  "Risultato": "Twin one-step con input identici hanno endpoint teacher V diversi di 0.01466mV RMS; lower bound sul peggior ramo per predittore deterministico 0.00733mV. Questo è piccolo contro RMSE V baseline 0.0960mV, dunque limite informativo reale ma non causa dominante dimostrata. Nel controllo off nascosto la corrente teacher è zero, mentre path_full con gbar nominale produce RMSE I 5.77e-5mA/cm2: il front-end deve esporre presenza/conduttanza efficace.",
+  "Incertezza": "Le traiettorie complete ECa divergono nello stato e dunque negli input dopo il primo passo; solo i twin one-step costituiscono prova a input identico. La maschera nascosta è un controllo negativo intenzionale, non fallimento di apprendimento.",
+  "Limitazioni": "ECa e maschera testati in riferimento sintetico Ca-HVA+pas; non stimano da soli l'impatto in un neurone multicompartimentale.",
+  "Esito": "Misto",
+  "Esperimenti": ["rec72ac02d855a89d"]
+}

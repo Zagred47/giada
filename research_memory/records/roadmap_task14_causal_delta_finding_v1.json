@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 14 — errore delle risposte differenziali agli interventi",
+  "Codice stabile": "finding-roadmap-task14-causal-delta-fidelity-v1",
+  "Descrizione": "Stesso ZIP Task14 SHA256 94408bc2234d1634ee0e1456950d4256c212f3413405446b89a89fb51e307353. Contrasti appaiati sullo stesso seed/schedule fra ciascuna perturbazione e baseline.",
+  "Risultato": "path_full delta-V teacher/errore del delta RMS: gbar_half 0.0951/0.0483mV (51%); m0+0.1 0.0621/0.0515mV (83%); h0−0.1 0.0370/0.0332mV (90%); off visibile 0.1814/0.0991mV (55%). Il modello conserva accuratezza assoluta ma riproduce con precisione limitata alcune differenze causali piccole.",
+  "Incertezza": "I rapporti errore/ampiezza sono descrittivi, non percentuali di effetto appreso né gate retroattivi. La metrica RMS non misura segno, calibrazione o distribuzione episodio-per-episodio del delta. Le risposte piccole possono essere mascherate dall'errore baseline.",
+  "Limitazioni": "Perturbazioni nel playground Ca-HVA+pas, non prova sul meccanismo embedded nel neurone completo. Il risultato non identifica ancora se la causa principale sia rappresentazione, loss, supporto o budget.",
+  "Esito": "Misto",
+  "Esperimenti": ["rec72ac02d855a89d"]
+}

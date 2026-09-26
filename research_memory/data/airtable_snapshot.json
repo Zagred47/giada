@@ -3316,7 +3316,11 @@
         "createdTime": "2026-09-26T16:31:54Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec65abfa24c75e72",
+            "recf0dd0c0a6697a3",
+            "rec258f4fdd9650b8"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Roadmap Task 14 — variazione causale dei parametri Ca-HVA",
@@ -3331,7 +3335,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Matrice appaiata in un notebook: 48 episodi seed14059, 16ms, variazioni di gbar, E_Ca, m/h iniziali e maschera del meccanismo. Checkpoint Task11 congelati, risultati Task12/13 prerequisito verificato, nessun training. Un compartimento Ca-HVA+pas.",
           "fldyeCfji17c7BfPP": "Separare robustezza ai parametri osservati, extrapolazione di gbar, insufficienza informativa per E_Ca assente dall'input e controllo negativo della maschera nascosta. Misurare stato, corrente analitica, rollout e risposta differenziale appaiata."
         }
@@ -5661,6 +5665,29 @@
         }
       },
       {
+        "id": "rec258f4fdd9650b8",
+        "createdTime": "2026-09-26T18:02:09Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Stesso ZIP Task14 SHA256 94408bc2234d1634ee0e1456950d4256c212f3413405446b89a89fb51e307353. Twin one-step ECa100/140 da identico stato, e controllo off nascosto.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task14-eca-mask-information-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "Twin one-step con input identici hanno endpoint teacher V diversi di 0.01466mV RMS; lower bound sul peggior ramo per predittore deterministico 0.00733mV. Questo è piccolo contro RMSE V baseline 0.0960mV, dunque limite informativo reale ma non causa dominante dimostrata. Nel controllo off nascosto la corrente teacher è zero, mentre path_full con gbar nominale produce RMSE I 5.77e-5mA/cm2: il front-end deve esporre presenza/conduttanza efficace.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Le traiettorie complete ECa divergono nello stato e dunque negli input dopo il primo passo; solo i twin one-step costituiscono prova a input identico. La maschera nascosta è un controllo negativo intenzionale, non fallimento di apprendimento.",
+          "fldYAbc64NIZGKzWO": [
+            "rec72ac02d855a89d"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "ECa e maschera testati in riferimento sintetico Ca-HVA+pas; non stimano da soli l'impatto in un neurone multicompartimentale.",
+          "fldhoJJ1jrMBcOUrl": "Task 14 — ECa assente dall'input e maschera nascosta",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "rec2675e571f01ab7",
         "createdTime": "2026-09-22T20:54:42Z",
         "cellValuesByFieldId": {
@@ -5869,6 +5896,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Solo 40 campioni V per ms; supporto spike dendritico 14/9/15; nessun test sealed o rollout autonomo. ZIP SHA-256 6c28d4a1b0019a309a3ec65a4f62eae232f014b2bbb1b7680b82b1b16823ac44.",
           "fldhoJJ1jrMBcOUrl": "Task 9 — LUT vicina alla formula, reference floor spike non calibrato",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "rec65abfa24c75e72",
+        "createdTime": "2026-09-26T18:02:08Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "ZIP SHA256 94408bc2234d1634ee0e1456950d4256c212f3413405446b89a89fb51e307353; revisione 3372465ff37dd8e10b4eaed5f12e73f92dc0f036. 9 condizioni, 48 episodi seed14059, modelli Task11 congelati; valid=true, identità reference baseline max=0.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task14-absolute-robustness-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Tutti i gate preregistrati gbar_half, initial_m_plus, initial_h_minus e mechanism_off_visible passano. path_full baseline V/m/I one-step RMSE 0.0960mV/0.000298/3.98e-7mA/cm2, V ricorsivo16ms 0.4024mV. V one-step gbar_half 0.1069, gbar×1.5 0.1051, m0+0.1 0.1150, h0−0.1 0.1063, off visibile 0.1354mV. effect_full baseline V 0.1047mV ma m 0.01882 e I 2.52e-5mA/cm2.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Gate relativi alla baseline provano stabilità dell'RMSE, non fedeltà degli effetti differenziali. Corrente zero con maschera visibile segue dalla formula con gbar efficace zero, non è un successo appreso. gbar×1.5 può essere fuori dal supporto train ed è descrittivo.",
+          "fldYAbc64NIZGKzWO": [
+            "rec72ac02d855a89d"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo Ca-HVA+pas a un compartimento con riferimento sintetico; nessuna prova del teacher 642 segmenti, calcio dinamico, CVode o Gate C.",
+          "fldhoJJ1jrMBcOUrl": "Task 14 — robustezza assoluta Ca-HVA sotto perturbazioni appaiate",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }
@@ -6187,6 +6237,29 @@
           "fldw7I3GqPu0PuSLu": [
             "reccc037effd3bf65"
           ]
+        }
+      },
+      {
+        "id": "recf0dd0c0a6697a3",
+        "createdTime": "2026-09-26T18:02:08Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Stesso ZIP Task14 SHA256 94408bc2234d1634ee0e1456950d4256c212f3413405446b89a89fb51e307353. Contrasti appaiati sullo stesso seed/schedule fra ciascuna perturbazione e baseline.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task14-causal-delta-fidelity-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "path_full delta-V teacher/errore del delta RMS: gbar_half 0.0951/0.0483mV (51%); m0+0.1 0.0621/0.0515mV (83%); h0−0.1 0.0370/0.0332mV (90%); off visibile 0.1814/0.0991mV (55%). Il modello conserva accuratezza assoluta ma riproduce con precisione limitata alcune differenze causali piccole.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "I rapporti errore/ampiezza sono descrittivi, non percentuali di effetto appreso né gate retroattivi. La metrica RMS non misura segno, calibrazione o distribuzione episodio-per-episodio del delta. Le risposte piccole possono essere mascherate dall'errore baseline.",
+          "fldYAbc64NIZGKzWO": [
+            "rec72ac02d855a89d"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Perturbazioni nel playground Ca-HVA+pas, non prova sul meccanismo embedded nel neurone completo. Il risultato non identifica ancora se la causa principale sia rappresentazione, loss, supporto o budget.",
+          "fldhoJJ1jrMBcOUrl": "Task 14 — errore delle risposte differenziali agli interventi",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
         }
       },
       {
@@ -7002,6 +7075,25 @@
             "rec791278b668c0b9"
           ],
           "fldilkZX7GrkdJNu2": "Eseguita su Kaggle: pilot NEURON 144 casi valido, sealed 3072 casi, risultato verificato in experiments/teacher_voltage_path_stress_result_v1.json.",
+          "fldkCr0yLshDXWuxz": [],
+          "fldlLL729Jw86riOj": [],
+          "fldyiTgFzV1vvmM5o": []
+        }
+      },
+      {
+        "id": "rec8a518924b83e42",
+        "createdTime": "2026-09-26T18:02:10Z",
+        "cellValuesByFieldId": {
+          "fld0tHGV6BV3tjAqn": "Proposta",
+          "fld8zz84auBO3DIGQ": [],
+          "fldFPSQrhxnfHL9n7": "action-roadmap-task15-current-decomposition-comparison-v1",
+          "fldI2FlCVIjw2HQwC": [],
+          "fldL6j0RgbU09Usnb": "Preregistrare ingressi identici o differenze dichiarate, ruoli disgiunti e gate separati per corrente one-step, risposta ai parametri e dinamica closed-loop; mantenere 11c come supplemento distinto.",
+          "fldMeQ3of9b3RZvPb": "Preparare Task 15 — decomposizione contro corrente end-to-end",
+          "fldQT49hS3JSMm8FP": "Prossima voce originale della roadmap dopo Task14. Confrontare a parità di input causali, dati, seed e budget: gate predetti più formula analitica, rete diretta per la corrente, rete con target ausiliari. Includere RMSE di V/gate/I, errori su delta di corrente e voltaggio appaiati dalle perturbazioni Task14, costo effettivo e controllo della presenza/ECa. Non promuovere un vantaggio di corrente one-step a fedeltà del rollout o a Gate C.",
+          "fldazVEmaizg09aw8": [],
+          "fldgrmwbCk1T9fq46": [],
+          "fldilkZX7GrkdJNu2": "Stabilire se apprendere direttamente la corrente offre un beneficio reale rispetto alla decomposizione fisica, e se target ausiliari migliorano la learnability senza compromettere causalità e risposta agli interventi.",
           "fldkCr0yLshDXWuxz": [],
           "fldlLL729Jw86riOj": [],
           "fldyiTgFzV1vvmM5o": []
