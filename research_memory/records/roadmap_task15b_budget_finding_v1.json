@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 15b — il budget aggiuntivo migliora i gate appresi",
+  "Codice stabile": "finding-roadmap-task15b-gate-budget-v1",
+  "Descrizione": "ZIP SHA256 dd1fdb1e6d33eab179baa6c3711b76dd55d11279e93cec85bd55c3b3cc35152d; report SHA256 a20c6536a5f852fe9ba3ae323d00b717d1d4c371e5433519567aa36f364dba97; codice 4262849a7fd7c321734eacef61f8d03b89817f5d. Freeze e 24 checkpoint validi; sealed con seed nuovi.",
+  "Risultato": "Baseline 400->800 step nella stessa traiettoria: m RMSE sealed 0.02708->0.01988 (-26.6%), h 0.01476->0.01187, I RMSE 2.50e-5->2.17e-5 mA/cm2, V rollout16ms 0.761->0.560mV. Il criterio preregistrato H1 budget passa. M development migliora a 800 in tutti i tre seed baseline.",
+  "Incertezza": "Passaggio del gate con margine piccolo sulla soglia del 25%; due checkpoint non stabiliscono saturazione, legge di scaling o eliminazione dell'intero gap. Sealed Task15b non e appaiato numericamente al vecchio sealed Task15.",
+  "Limitazioni": "Playground sintetico Ca-HVA+pas a un compartimento; nessuna conferma embedded o promozione Gate C.",
+  "Esito": "Positivo",
+  "Esperimenti": ["rec940659594826de"]
+}

@@ -3482,7 +3482,10 @@
         "createdTime": "2026-09-26T18:45:43Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec9c4aa439097539",
+            "rec4db830dc2960aa"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Supplemento Task 15b — collo di bottiglia dei gate Ca-HVA",
@@ -3497,7 +3500,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Matrice 2x2 appaiata sulla stessa MLP e sugli stessi input: peso loss gate 4/16, loss corrente analitica 0/1; checkpoint 400/800 nella stessa traiettoria. Seed nuovi rispetto alla Task15; prerequisito Task15 SHA verificato. Un solo notebook Kaggle, non Task16 embedded.",
           "fldyeCfji17c7BfPP": "Discriminare se il gap dei gate appresi della Task15 derivi soprattutto da budget di ottimizzazione, ponderazione della loss, gradiente sulla corrente fisica o loro interazione, preservando corrente, rollout e delta causali."
         }
@@ -5976,6 +5979,29 @@
         }
       },
       {
+        "id": "rec4db830dc2960aa",
+        "createdTime": "2026-09-26T19:02:40Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Stesso report Task15b SHA256 a20c6536a5f852fe9ba3ae323d00b717d1d4c371e5433519567aa36f364dba97; matrice 2x2 appaiata peso gate 4/16 e corrente 0/1 a 800 step.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task15b-current-gate-tradeoff-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "Contro baseline800 m=0.01988, I=2.17e-5 mA/cm2, V rollout=0.560mV: gate_weighted m=0.01877 ma V rollout=0.794; current_supervised m=0.03211, I=1.67e-5, V rollout=2.238; joint m=0.02424, I=1.48e-5, V rollout=2.126. Mediana errore delta-I: 1.35e-5 baseline, 1.18e-5 gate_weighted, 6.15e-6 current_supervised, 5.64e-6 joint. Tutti i gate compositi di riparazione sono falsi.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "La corrente scalare potrebbe essere non identificante per m/h/V separati, ma questa e un'ipotesi, non prova causale. Testati soltanto peso gate 4/16 e corrente 0/1 con questo budget, supporto e inizializzazioni. La migliore corrente non implica gate o voltaggio migliori.",
+          "fldYAbc64NIZGKzWO": [
+            "rec940659594826de"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Nessuna sostituzione del canale nel teacher reale, calcio dinamico, CVode o neurone multicompartimentale. Il probe analitico m RMSE 0.000581 usa equazioni teacher, non un candidato appreso.",
+          "fldhoJJ1jrMBcOUrl": "Task 15b — loss corrente migliora I ma sacrifica gate e rollout",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "rec521ce0fe38bae5",
         "createdTime": "2026-09-20T21:46:55Z",
         "cellValuesByFieldId": {
@@ -6128,6 +6154,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "L'uguaglianza del budget non implica uguaglianza di capacità o costo. Analitici e modelli appresi devono condividere righe e metriche, ma non un budget di ottimizzazione fittizio.",
           "fldhoJJ1jrMBcOUrl": "Il confronto GPU richiede stream appaiati e firewall di selezione",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "rec9c4aa439097539",
+        "createdTime": "2026-09-26T19:02:40Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "ZIP SHA256 dd1fdb1e6d33eab179baa6c3711b76dd55d11279e93cec85bd55c3b3cc35152d; report SHA256 a20c6536a5f852fe9ba3ae323d00b717d1d4c371e5433519567aa36f364dba97; codice 4262849a7fd7c321734eacef61f8d03b89817f5d. Freeze e 24 checkpoint validi; sealed con seed nuovi.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task15b-gate-budget-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Baseline 400->800 step nella stessa traiettoria: m RMSE sealed 0.02708->0.01988 (-26.6%), h 0.01476->0.01187, I RMSE 2.50e-5->2.17e-5 mA/cm2, V rollout16ms 0.761->0.560mV. Il criterio preregistrato H1 budget passa. M development migliora a 800 in tutti i tre seed baseline.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Passaggio del gate con margine piccolo sulla soglia del 25%; due checkpoint non stabiliscono saturazione, legge di scaling o eliminazione dell'intero gap. Sealed Task15b non e appaiato numericamente al vecchio sealed Task15.",
+          "fldYAbc64NIZGKzWO": [
+            "rec940659594826de"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Playground sintetico Ca-HVA+pas a un compartimento; nessuna conferma embedded o promozione Gate C.",
+          "fldhoJJ1jrMBcOUrl": "Task 15b — il budget aggiuntivo migliora i gate appresi",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }
@@ -7326,7 +7375,7 @@
         "id": "reca8608a9be8ef4f",
         "createdTime": "2026-09-26T18:46:08Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld0tHGV6BV3tjAqn": "Conclusa",
           "fld8zz84auBO3DIGQ": [],
           "fldFPSQrhxnfHL9n7": "action-roadmap-task15b-cahva-gate-bottleneck-v1",
           "fldI2FlCVIjw2HQwC": [],

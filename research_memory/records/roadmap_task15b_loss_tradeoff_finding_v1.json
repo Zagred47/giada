@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 15b — loss corrente migliora I ma sacrifica gate e rollout",
+  "Codice stabile": "finding-roadmap-task15b-current-gate-tradeoff-v1",
+  "Descrizione": "Stesso report Task15b SHA256 a20c6536a5f852fe9ba3ae323d00b717d1d4c371e5433519567aa36f364dba97; matrice 2x2 appaiata peso gate 4/16 e corrente 0/1 a 800 step.",
+  "Risultato": "Contro baseline800 m=0.01988, I=2.17e-5 mA/cm2, V rollout=0.560mV: gate_weighted m=0.01877 ma V rollout=0.794; current_supervised m=0.03211, I=1.67e-5, V rollout=2.238; joint m=0.02424, I=1.48e-5, V rollout=2.126. Mediana errore delta-I: 1.35e-5 baseline, 1.18e-5 gate_weighted, 6.15e-6 current_supervised, 5.64e-6 joint. Tutti i gate compositi di riparazione sono falsi.",
+  "Incertezza": "La corrente scalare potrebbe essere non identificante per m/h/V separati, ma questa e un'ipotesi, non prova causale. Testati soltanto peso gate 4/16 e corrente 0/1 con questo budget, supporto e inizializzazioni. La migliore corrente non implica gate o voltaggio migliori.",
+  "Limitazioni": "Nessuna sostituzione del canale nel teacher reale, calcio dinamico, CVode o neurone multicompartimentale. Il probe analitico m RMSE 0.000581 usa equazioni teacher, non un candidato appreso.",
+  "Esito": "Misto",
+  "Esperimenti": ["rec940659594826de"]
+}
