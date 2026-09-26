@@ -3620,7 +3620,10 @@
         "createdTime": "2026-09-26T18:17:18Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec4d1307e6e7b57e",
+            "recf72632d5b26e48"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Roadmap Task 15 — decomposizione contro corrente diretta Ca-HVA",
@@ -3635,7 +3638,7 @@
           "fldeWX6CTdDXCBwxA": [],
           "fldkFqQftYUGy2siC": [],
           "fldnTFjWQUe3eEcDr": [],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "Tre MLP fresche, input causali identici e budget appaiato: V+gate appresi con corrente analitica, corrente diretta, corrente diretta con target ausiliari V/gate. Playground Ca-HVA+pas a un compartimento; prerequisito Task14 verificato, nessun risultato Kaggle ancora disponibile.",
           "fldyeCfji17c7BfPP": "Separare learnability della decomposizione e della corrente diretta, verificare utilità della supervisione ausiliaria e fedeltà dei delta-I/V controfattuali senza confondere il successo one-step con rollout o Gate C."
         }
@@ -5869,6 +5872,29 @@
         }
       },
       {
+        "id": "rec4d1307e6e7b57e",
+        "createdTime": "2026-09-26T18:35:56Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "ZIP SHA256 86eae6b99dec2653db7a95a833bbc3412916c763baff25a958306bfa18205aa4; report SHA256 6c4144caf95785576bdc9a786eeecd43e4da7151147999287d7a65614f3c7bc3; codice c4a91c79f853225840fe548e1a4aab170539dab3. Freeze e 9 checkpoint verificati; selezione solo development.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task15-decomposition-beats-direct-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Sealed I RMSE mA/cm2: gate+V appresi/formula 5.44e-5, corrente diretta 1.32e-4, corrente diretta+ausiliari 1.33e-4. V one-step A=0.329mV, ricorsivo16ms=0.854mV; B non dispone di stato/rollout; C V ricorsivo=3.743mV. Criteri preregistrati direct_advantage=false e auxiliary_improves_direct=false.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Input, dati e budget sono allineati ma loss e prior fisico differiscono; non isolare causalmente il solo layer. A sul sealed e peggiore che sul development. Maschera off zero in A e garantita dalla formula, non appresa. Un solo sealed split non quantifica robustezza generale.",
+          "fldYAbc64NIZGKzWO": [
+            "recba5e744edb0b2d"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Playground Ca-HVA+pas a un compartimento, non teacher multicompartimentale o Gate C. L'errore di corrente non basta a validare gate, delta causali o rollout biologico.",
+          "fldhoJJ1jrMBcOUrl": "Task 15 — prior fisico supera corrente diretta nel playground",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "rec4d669b18fa8fab",
         "createdTime": "2026-09-22T09:50:51Z",
         "cellValuesByFieldId": {
@@ -6339,6 +6365,29 @@
           "fldb5iUtfy1H6reyF": [],
           "fldbpwerh1Ibdisrk": "Ca_HVA isolato su 1 ms; non misura il teacher completo o il rollout autoregressivo. ZIP SHA-256 728cd58f5d19f1fecb3014df9ac0ed76efd17556434e5e74a1d570894fdf7f18.",
           "fldhoJJ1jrMBcOUrl": "Task 8 — informazione temporale domina lo stress Ca_HVA",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
+        "id": "recf72632d5b26e48",
+        "createdTime": "2026-09-26T18:35:56Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Stesso report Task15 SHA256 6c4144caf95785576bdc9a786eeecd43e4da7151147999287d7a65614f3c7bc3; confronto interno fra gate appresi e integrazione analitica diagnostica su V predetto.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task15-gate-delta-limit-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "Nel braccio A, RMSE m/h appresi 0.0330/0.0146; probe con integrazione analitica 0.00127/5.35e-6. Mediana RMSE delta-I A=2.37e-5 mA/cm2; A migliore in 6/7 interventi ma per m0+0.1 l'errore delta-I 6.47e-6 e vicino al delta teacher RMS 7.61e-6. Corrente off A=0 per vincolo analitico. Nessuna promozione a Gate C.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Il probe usa le formule note del teacher e non e un quarto candidato addestrato. Delta-I RMSE non determina segno o calibrazione di ogni episodio. Il confronto non identifica da solo se il limite dei gate dipenda da budget, loss, rappresentazione o dati.",
+          "fldYAbc64NIZGKzWO": [
+            "recba5e744edb0b2d"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo riferimento sintetico a un compartimento; nessuna conferma embedded. Task16 e una verifica distinta, da non scambiare con il risultato qui osservato.",
+          "fldhoJJ1jrMBcOUrl": "Task 15 — gate appresi e delta causali restano il limite",
           "flduQBGqeIrhFjoew": [],
           "fldw7I3GqPu0PuSLu": []
         }
@@ -7142,7 +7191,7 @@
         "id": "rec8a518924b83e42",
         "createdTime": "2026-09-26T18:02:10Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld0tHGV6BV3tjAqn": "Conclusa",
           "fld8zz84auBO3DIGQ": [],
           "fldFPSQrhxnfHL9n7": "action-roadmap-task15-current-decomposition-comparison-v1",
           "fldI2FlCVIjw2HQwC": [],

@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 15 — prior fisico supera corrente diretta nel playground",
+  "Codice stabile": "finding-roadmap-task15-decomposition-beats-direct-v1",
+  "Descrizione": "ZIP SHA256 86eae6b99dec2653db7a95a833bbc3412916c763baff25a958306bfa18205aa4; report SHA256 6c4144caf95785576bdc9a786eeecd43e4da7151147999287d7a65614f3c7bc3; codice c4a91c79f853225840fe548e1a4aab170539dab3. Freeze e 9 checkpoint verificati; selezione solo development.",
+  "Risultato": "Sealed I RMSE mA/cm2: gate+V appresi/formula 5.44e-5, corrente diretta 1.32e-4, corrente diretta+ausiliari 1.33e-4. V one-step A=0.329mV, ricorsivo16ms=0.854mV; B non dispone di stato/rollout; C V ricorsivo=3.743mV. Criteri preregistrati direct_advantage=false e auxiliary_improves_direct=false.",
+  "Incertezza": "Input, dati e budget sono allineati ma loss e prior fisico differiscono; non isolare causalmente il solo layer. A sul sealed e peggiore che sul development. Maschera off zero in A e garantita dalla formula, non appresa. Un solo sealed split non quantifica robustezza generale.",
+  "Limitazioni": "Playground Ca-HVA+pas a un compartimento, non teacher multicompartimentale o Gate C. L'errore di corrente non basta a validare gate, delta causali o rollout biologico.",
+  "Esito": "Positivo",
+  "Esperimenti": ["recba5e744edb0b2d"]
+}
