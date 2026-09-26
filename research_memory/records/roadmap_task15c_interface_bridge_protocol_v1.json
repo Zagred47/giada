@@ -1,0 +1,13 @@
+{
+  "Nome": "Supplemento Task 15c interface bridge protocol v1",
+  "Codice stabile": "protocol-roadmap-task15c-cahva-interface-bridge-v1",
+  "Descrizione": "Protocollo integrale in experiments/teacher_roadmap_task15c_embedded_interface_bridge_preregistration_v1.md; notebook 15c_roadmap_embedded_interface_bridge.ipynb.",
+  "Versione": "v1",
+  "Modalità": "Ricomposizione",
+  "Procedura": "Verificare hash Task15b, Task5 e HDF5 teacher. Campionare solo validation: siti 0/387/460/469, regimi quiet/rising/spike/falling, massimo16 e minimo8 path per gruppo, seed15471. Confrontare formula, LUT513 e physical_tau seed17/29/43 congelati su viste V left/midpoint/right. Salvare RMSE m/h/m²h, violazioni occupanza e floor formula-teacher per gruppo.",
+  "Criteri di successo": "Solo se tutti i 16 gruppi hanno almeno 8 path e ciascun RMSE m/h formula-teacher midpoint <=0.005, selezionare per Task16 il candidato col minimo della media sui gruppi di max(RMSE_m,RMSE_h) midpoint. Nessuna promozione della MLP 15b o di Gate C.",
+  "Regole di arresto": "Mismatch di hash/schema/griglia o lettura di split non validation invalida il run. Floor non calibrato o supporto insufficiente producono NO-GO diagnostico senza modificare soglie. I test del teacher restano sigillati fino al protocollo Task16.",
+  "Registrato il": "2026-09-26",
+  "Hash preregistrazione": "d8b4edba406b6aca4f18eb0e15b2600aec490666b05a7f2e951a19ee4c071c1",
+  "Esperimento": ["rec58615eb7cb8fe3"]
+}
