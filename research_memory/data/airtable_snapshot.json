@@ -3478,6 +3478,31 @@
         }
       },
       {
+        "id": "rec940659594826de",
+        "createdTime": "2026-09-26T18:45:43Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Supplemento Task 15b — collo di bottiglia dei gate Ca-HVA",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-roadmap-task15b-cahva-gate-bottleneck-v1",
+          "fldSVM6BIAoevpYQC": [
+            "reccb1f86338b2abc"
+          ],
+          "fldSdolNHsOdN294o": "Esplorativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Matrice 2x2 appaiata sulla stessa MLP e sugli stessi input: peso loss gate 4/16, loss corrente analitica 0/1; checkpoint 400/800 nella stessa traiettoria. Seed nuovi rispetto alla Task15; prerequisito Task15 SHA verificato. Un solo notebook Kaggle, non Task16 embedded.",
+          "fldyeCfji17c7BfPP": "Discriminare se il gap dei gate appresi della Task15 derivi soprattutto da budget di ottimizzazione, ponderazione della loss, gradiente sulla corrente fisica o loro interazione, preservando corrente, rollout e delta causali."
+        }
+      },
+      {
         "id": "rec9dcdde9bbc60d5",
         "createdTime": "2026-09-23T22:11:25Z",
         "cellValuesByFieldId": {
@@ -4652,6 +4677,39 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec9de844dc73f136"
+          ]
+        }
+      },
+      {
+        "id": "reccb1f86338b2abc",
+        "createdTime": "2026-09-26T18:46:08Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-26",
+          "fld43sXbznp3IMZYL": "Supplemento Task 15b gate bottleneck protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo integrale in experiments/teacher_roadmap_task15b_gate_bottleneck_preregistration_v1.md; notebook 15b_roadmap_gate_bottleneck_confirmation.ipynb.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Budget: baseline step800 m RMSE sealed <=0.75x step400 e corrente <=1.10x. Intervento loss: m RMSE sealed <=0.5x baseline800, I one-step e V rollout <=1.10x baseline, rollout finito e mediana delta-I appaiato <=baseline. Riportare anche i contrasti continui e l'interazione fattoriale.",
+          "fldNtSPrXFVAEpq2B": "Hash Task15/freeze/checkpoint errati, input non finiti o impossibilità di garantire ruoli e minibatch appaiati invalidano il run. Fallimento di un gate prestazionale resta un risultato. Il sealed non determina selezione e non si promuove a Task16/Gate C.",
+          "fldODG8tJ39IE4DeM": "protocol-roadmap-task15b-cahva-gate-bottleneck-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Componente isolato",
+          "fldY1kvKgn1aBhiVp": "71a432922f3208f9c34229322dd39939e4e3bcc15c55c1ed17c53d4564733618",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Verificare report Task15 originale. Train192 seed15211, development48 seed15229, 4 bracci 2x2 e seed17/29/43 con stessa MLP, inizializzazione e minibatch. Checkpoint 400/800. Selezione seed solo per m RMSE development step800. Freeze hash, poi sealed48 seed15259 e controfattuali appaiati48 seed15359. Misurare gate, V, corrente, rollout16ms, delta-I/V e probe analitico non selezionabile.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rec940659594826de"
           ]
         }
       },
@@ -7262,6 +7320,25 @@
           "fldyiTgFzV1vvmM5o": [
             "rec0wPKrtqWymCBjr"
           ]
+        }
+      },
+      {
+        "id": "reca8608a9be8ef4f",
+        "createdTime": "2026-09-26T18:46:08Z",
+        "cellValuesByFieldId": {
+          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld8zz84auBO3DIGQ": [],
+          "fldFPSQrhxnfHL9n7": "action-roadmap-task15b-cahva-gate-bottleneck-v1",
+          "fldI2FlCVIjw2HQwC": [],
+          "fldL6j0RgbU09Usnb": "Report Task15 originale verificato per SHA256; CUDA disponibile; revisione notebook, librerie e protocollo allineate nello stesso commit.",
+          "fldMeQ3of9b3RZvPb": "Eseguire supplemento Task 15b sui gate Ca-HVA",
+          "fldQT49hS3JSMm8FP": "Eseguire il notebook 15b_roadmap_gate_bottleneck_confirmation.ipynb su GPU Kaggle usando come unico input l'artefatto originale giada_roadmap_task15_current_architecture_comparison.zip. Scaricare il risultato con la cella Blob/base64 e analizzare criteri preregistrati senza modificarli.",
+          "fldazVEmaizg09aw8": [],
+          "fldgrmwbCk1T9fq46": [],
+          "fldilkZX7GrkdJNu2": "Distinguere il contributo di budget, peso loss gate e gradiente corrente alla precisione dei gate, controllando fedeltà della corrente e dei controfattuali prima della Task16 embedded.",
+          "fldkCr0yLshDXWuxz": [],
+          "fldlLL729Jw86riOj": [],
+          "fldyiTgFzV1vvmM5o": []
         }
       },
       {
