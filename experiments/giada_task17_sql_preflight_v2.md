@@ -12,9 +12,13 @@ Le 34 query del catalogo `research_memory/queries/query_catalog_review.json`
 superano la verifica sintattica e i controlli sintetici con
 `python -m research_memory.queries.validate_review_catalog`. Sono state
 rieseguite sul DB reale le 19 istanze mirate in
-`python -m research_memory.queries.run_task17_preflight`; altre query globali
-e le sette lenti Q21 sono state conteggiate con parametri espliciti. Non
-interpretiamo i test sintetici come copertura dei dati reali.
+`python -m research_memory.queries.run_task17_preflight`. Inoltre tutte e 34
+le query sono state eseguite sul mirror reale, con parametri espliciti, tramite
+`python -m research_memory.queries.run_task17_full_catalog`; le sette varianti
+di asse Q21 sono state conteggiate separatamente. Le query senza una possibile
+istanza GIADA (es. una sostituzione già registrata) ricevono un ID sentinella
+inesistente e zero righe, dichiarato nel runner. Non interpretiamo zero righe
+come esito scientifico negativo.
 
 ## Pattern scientifici che orientano la Task 17
 
