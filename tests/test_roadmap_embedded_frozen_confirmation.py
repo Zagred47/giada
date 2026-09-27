@@ -86,6 +86,9 @@ class FrozenEmbeddedConfirmationTests(unittest.TestCase):
                 ast.parse("".join(cell["source"]))
         for token in ("shutil.make_archive", "base64.b64encode", "Javascript", "new Blob", "l.click()"):
             self.assertIn(token, code)
+        for token in ("neuron==8.2.7", "nrnivmodl", "subprocess.run([nrnivmodl,'mods']"):
+            self.assertIn(token, code)
+        self.assertLess(code.index("neuron==8.2.7"), code.index("run_frozen_embedded_confirmation("))
         self.assertIn("for name in ('final_report.json','selected_test_paths.json')", code)
 
 
