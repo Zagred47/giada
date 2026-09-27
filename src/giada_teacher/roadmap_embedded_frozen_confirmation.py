@@ -218,6 +218,27 @@ class _ShadowReplaySession(TargetedDiagnosticDatasetSession):
     def _prepare_calibration_source(self):
         raise RuntimeError("Task 16 replays immutable dataset snapshots; calibration loading is not permitted")
 
+    def restore_recorded_probe_contract(self, stored_schema):
+        # prepare_teacher() supplies the seven audit probes. Dataset v1 adds
+        # these two canonical dendritic sites during prepare_v1_contract().
+        # Restore instrumentation only; never rebuild protocols or select a model.
+        representatives = dict(self.audit.representatives)
+        representatives.update(tuft_cluster_center=460, tuft_alternate_cluster_center=469)
+        order = stored_schema["probe_order"]
+        if len(order) != len(set(order)) or set(order) != set(representatives):
+            raise RuntimeError("Task 16 recorded probe names differ from canonical v1 probes")
+        self.audit.representatives = {name: representatives[name] for name in order}
+        self._build_state_schema()
+        for category in self.state_variables:
+            if (self.state_schema["categories"][category]["variable_ids"]
+                    != stored_schema["categories"][category]["variable_ids"]):
+                raise RuntimeError(f"Task 16 live teacher state order differs from stored {category}")
+        for field in ("microtrace_variable_ids", "protocol_microtrace_observable_ids",
+                      "all_segment_voltage_order", "probe_order"):
+            if self.state_schema[field] != stored_schema[field]:
+                raise RuntimeError(f"Task 16 recorded sampling contract differs: {field}")
+        return dict(self.audit.representatives)
+
     def _run_transition(self, transition_id, trajectory, step_index, actions, snapshot_path):
         self.shadow_capture = int(transition_id) == self.shadow_target_index
         if self.shadow_capture:
@@ -262,6 +283,22 @@ def _group_metrics(prediction, target, rows, config):
     return result
 
 
+def verify_recorded_probe_columns(handle, indices, representatives, stored_schema):
+    """Check the frozen site mapping against the same stored voltage samples."""
+    order = stored_schema["all_segment_voltage_order"]
+    columns = [order.index(site) for site in representatives.values()]
+    probes = handle["microtraces/probe_voltage"]
+    voltages = handle["microtraces/all_segment_voltage"]
+    if probes.shape[1:] != (41, len(columns)) or voltages.shape[1:] != (41, len(order)):
+        raise RuntimeError("Task 16 recorded probe/all-segment dimensions differ from schema")
+    for index in sorted(set(indices)):
+        expected = np.asarray(voltages[index])[:, columns]
+        if not np.array_equal(np.asarray(probes[index]), expected):
+            raise RuntimeError(f"Task 16 recorded probe-to-segment mapping mismatch at row {index}")
+    return {"valid": True, "representatives": representatives,
+            "probe_count": len(columns), "checked_transition_count": len(set(indices))}
+
+
 def run_frozen_embedded_confirmation(formula, elm_repo, teacher_repo, dataset_root,
                                      dataset_source, task5_source, task15c_source,
                                      output_dir, config=FrozenEmbeddedConfig(),
@@ -299,15 +336,17 @@ def run_frozen_embedded_confirmation(formula, elm_repo, teacher_repo, dataset_ro
     )
     session.prepare_teacher()
     stored_schema = json.loads((Path(source["root"]) / "state_schema.json").read_text(encoding="utf-8"))
-    for category in session.state_variables:
-        if (session.state_schema["categories"][category]["variable_ids"]
-                != stored_schema["categories"][category]["variable_ids"]):
-            raise RuntimeError(f"Task 16 live teacher state order differs from stored {category}")
+    representatives = session.restore_recorded_probe_contract(stored_schema)
     recorded = []
     started = time.perf_counter()
     # Replaying every selected target from its own immutable native checkpoint
     # keeps the teacher's adaptive CVode, synapses and RNG path authentic.
     with h5py.File(source["h5_path"], "r") as handle:
+        probe_contract = verify_recorded_probe_columns(
+            handle, [row["transition_index"] for row in rows], representatives, stored_schema)
+        (output_dir / "replay_contract.json").write_text(
+            json.dumps(probe_contract, indent=2), encoding="utf-8")
+        print(f"[GIADA Task 16] contratto replay verificato: {len(representatives)} sonde", flush=True)
         by_index = {}
         for row in rows:
             by_index.setdefault(row["transition_index"], []).append(row)
@@ -403,6 +442,7 @@ def run_frozen_embedded_confirmation(formula, elm_repo, teacher_repo, dataset_ro
                   item["replay"]["max_rng_sequence_error"] for item in recorded),
               "native_replay_valid": replay_valid, "formula_floor_by_group": floor,
               "online_lut_gpu_equivalence": equivalence,
+              "replay_probe_contract": probe_contract,
               "candidate_endpoint_by_group": groups,
               "candidate_current_path_rmse_by_group_ma_cm2": current_group_rmse,
               "formula_current_path_rmse_ma_cm2": float(np.sqrt(np.mean((control_current-native_current)**2))),

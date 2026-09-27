@@ -3,17 +3,60 @@ import json
 import tempfile
 import unittest
 import zipfile
+from types import SimpleNamespace
+from unittest.mock import Mock
 from pathlib import Path
 
 import numpy as np
 
 from src.giada_teacher.roadmap_embedded_frozen_confirmation import (
     FrozenEmbeddedConfig, _ShadowReplaySession, _lut_step, _lut_table,
-    stage_snapshots, verified_15c,
+    stage_snapshots, verified_15c, verify_recorded_probe_columns,
 )
 
 
 class FrozenEmbeddedConfirmationTests(unittest.TestCase):
+    def test_restores_nine_probes_and_checks_recorded_column_identity(self):
+        original = {"soma": 0, "ais": 1, "basal": 2, "trunk": 3,
+                    "nexus": 4, "hot_zone": 387, "tuft": 459}
+        order = [*original, "tuft_alternate_cluster_center", "tuft_cluster_center"]
+        schema = {"probe_order": order, "categories": {},
+                  "microtrace_variable_ids": [], "protocol_microtrace_observable_ids": [],
+                  "all_segment_voltage_order": list(range(642))}
+        session = object.__new__(_ShadowReplaySession)
+        session.audit = SimpleNamespace(representatives=original)
+        session.state_variables = {}
+        session.state_schema = schema.copy()
+        session._build_state_schema = Mock()
+        representatives = session.restore_recorded_probe_contract(schema)
+        self.assertEqual(list(representatives), order)
+        self.assertEqual(list(representatives.values())[-2:], [469, 460])
+        session._build_state_schema.assert_called_once()
+        voltages = np.arange(2 * 41 * 642, dtype=np.float32).reshape(2, 41, 642)
+        handle = {"microtraces/all_segment_voltage": voltages,
+                  "microtraces/probe_voltage": voltages[:, :, list(representatives.values())].copy()}
+        self.assertTrue(verify_recorded_probe_columns(handle, [0, 1], representatives, schema)["valid"])
+        handle["microtraces/probe_voltage"][1, 0, -1] += 1
+        with self.assertRaisesRegex(RuntimeError, "mapping mismatch"):
+            verify_recorded_probe_columns(handle, [0, 1], representatives, schema)
+        handle["microtraces/probe_voltage"] = handle["microtraces/probe_voltage"][:, :, :7]
+        with self.assertRaisesRegex(RuntimeError, "dimensions"):
+            verify_recorded_probe_columns(handle, [0], representatives, schema)
+
+    def test_replay_rejects_unknown_probe_names_and_changed_sampling_schema(self):
+        session = object.__new__(_ShadowReplaySession)
+        session.audit = SimpleNamespace(representatives={"soma": 0})
+        with self.assertRaisesRegex(RuntimeError, "probe names"):
+            session.restore_recorded_probe_contract({"probe_order": ["unknown"]})
+        session.state_variables = {}
+        session.state_schema = {"microtrace_variable_ids": ["changed"]}
+        session._build_state_schema = Mock()
+        with self.assertRaisesRegex(RuntimeError, "microtrace_variable_ids"):
+            session.restore_recorded_probe_contract({
+                "probe_order": ["soma", "tuft_cluster_center", "tuft_alternate_cluster_center"],
+                "microtrace_variable_ids": ["original"],
+            })
+
     def test_replay_session_constructs_without_calibration_artifact(self):
         repository = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory() as directory:
@@ -89,7 +132,7 @@ class FrozenEmbeddedConfirmationTests(unittest.TestCase):
         for token in ("neuron==8.2.7", "nrnivmodl", "subprocess.run([nrnivmodl,'mods']"):
             self.assertIn(token, code)
         self.assertIn("neuron.__version__.split('+',1)[0]=='8.2.7'", code)
-        self.assertLess(code.index("neuron==8.2.7"), code.index("run_frozen_embedded_confirmation("))
+        self.assertLess(code.index("neuron==8.2.7"), code.index("scripts/run_roadmap_task16.py"))
         self.assertIn("for name in ('final_report.json','selected_test_paths.json')", code)
 
 
