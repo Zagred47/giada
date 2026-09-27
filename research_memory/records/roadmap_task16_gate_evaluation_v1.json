@@ -1,0 +1,13 @@
+{
+  "Nome": "Task 16 — gate m/h, 16 gruppi sito-regime",
+  "Codice stabile": "evaluation-roadmap-task16-gate-group-maximum-v1",
+  "Descrizione": "Trascrizione retrospettiva della valutazione preregistrata e del risultato conservato nel report Task16. Il massimo riassuntivo non sostituisce i valori dei singoli gruppi nello ZIP, SHA-256 aa56c81ed23be532becaeb00a2bb51d20e9e0a6f5206be4f4d0309d3b982fb8d.",
+  "Versione": "1",
+  "Target": "Endpoint m e h della LUT513 shadow congelata rispetto al teacher nativo",
+  "Popolazione e regioni": "deterministic_test; 4 siti x 4 regimi = 16 gruppi; 79 transizioni distinte e 37 traiettorie",
+  "Orizzonte e finestre": "Endpoint di 1 ms; input V midpoint teacher-forced",
+  "Aggregazione e pesi": "RMSE per gruppo e per gate; massimo fra tutti i 16 gruppi e i due gate, equivalente al criterio che ognuno sia <=0.005. Le 128 osservazioni sito-transizione non sono indipendenti.",
+  "Gestione classi assenti": "Non applicabile: regressione continua dei gate.",
+  "Ruolo": "Primaria",
+  "Protocollo": ["rec31343e8a3c54a7"]
+}

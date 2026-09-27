@@ -1,0 +1,9 @@
+{
+  "Nome": "RMSE endpoint del gate Ca_HVA",
+  "Codice stabile": "metric-roadmap-task16-cahva-gate-endpoint-rmse-v1",
+  "Descrizione": "Errore quadratico medio alla radice per un gate m o h, rispetto al replay teacher nativo; non è una metrica di rollout causale.",
+  "Famiglia": "Regressione",
+  "Formula": "sqrt(mean((gate_LUT - gate_teacher)^2))",
+  "Unità": "occupanza del gate (adimensionale)",
+  "Direzione": "Minimizzare"
+}

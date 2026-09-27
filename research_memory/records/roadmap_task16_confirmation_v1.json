@@ -1,0 +1,11 @@
+{
+  "Nome": "Task 16 — conferma indipendente della LUT scelta in Task15c",
+  "Codice stabile": "confirmation-roadmap-task16-frozen-lut-from-task15c-v1",
+  "Descrizione": "Trascrizione retrospettiva del confronto registrato prima del run: Task15c ha selezionato LUT513 su validation; Task16 l'ha valutata congelata su deterministic_test. ZIP Task16 SHA-256 aa56c81ed23be532becaeb00a2bb51d20e9e0a6f5206be4f4d0309d3b982fb8d.",
+  "Tipo": "Conferma indipendente",
+  "Indipendenza": "Split deterministic_test non usato nella selezione Task15c; 79 transizioni e 37 traiettorie, 128 osservazioni sito-transizione correlate.",
+  "Condizioni nuove": "Replay nativo NEURON completo a 642 segmenti; LUT shadow su V midpoint teacher-forced; corrente Ca_HVA analitica misurata sul path.",
+  "Esito": "Positivo entro lo scope embedded shadow teacher-forced; nessuna sostituzione causale o Gate C.",
+  "Risultati da confermare": ["rec4214db0a524af4"],
+  "Esperimenti di verifica": ["rec3655cd16bc32f0"]
+}
