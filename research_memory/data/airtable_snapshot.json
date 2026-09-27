@@ -4602,6 +4602,26 @@
     "tbltzi3MX24XkNVGK": [],
     "tblPsHQ90EiUXddxH": [
       {
+        "id": "rec044c58d73f4368",
+        "createdTime": "2026-09-27T22:23:20Z",
+        "cellValuesByFieldId": {
+          "fld9HzzWRkgSyJ1LQ": "2026-09-28",
+          "fldCUWRJhFWPo0mT2": [
+            "rec72823a8118d77e"
+          ],
+          "fldETwxwSHAAF43I5": [],
+          "fldF62AtIpAKC63mV": [],
+          "fldGZclfgI81G8EhK": "Replay nativo deterministico e clone-formula quasi identico al teacher originale in tutti i siti/episodi.",
+          "fldJSkVuXMOgGFkN8": "Task 17a — controllo formula e replay devono passare",
+          "fldVVUvkyh8pExiI4": [],
+          "fldWila5hCJWUzknW": "prediction-roadmap-task17a-formula-control-v1",
+          "fldbPV0JdHR1dTzO9": "Predizione del protocollo preregistrato il 2026-09-28, hash 9eff15aef204d1175e2c61776d72c2e1d2b7903424bf4fa28163e561ea0a8cc6.",
+          "fldcjkpdRsKyY2zM3": "Preregistrata",
+          "fldjeAYjMVW5nI5e7": [],
+          "fldpoW81HouiwkwvJ": "native repeat max V <=1e-5 mV; formula V RMSE <=0.05 mV; max m/h <=0.002"
+        }
+      },
+      {
         "id": "rec07d83ee63eb305",
         "createdTime": "2026-09-27T20:14:44Z",
         "cellValuesByFieldId": {
@@ -5081,6 +5101,26 @@
           "fldcjkpdRsKyY2zM3": "Preregistrata",
           "fldjeAYjMVW5nI5e7": [],
           "fldpoW81HouiwkwvJ": "Gate scientifico: fresh RMSE <=1e-3, rollout1000 <=5e-3, zero violazioni. Gate ingegneristico: fresh RMSE <=2.5e-3 con gli stessi vincoli, senza dichiarare superato il gate scientifico."
+        }
+      },
+      {
+        "id": "recacd9be5696800f",
+        "createdTime": "2026-09-27T22:23:22Z",
+        "cellValuesByFieldId": {
+          "fld9HzzWRkgSyJ1LQ": "2026-09-28",
+          "fldCUWRJhFWPo0mT2": [
+            "rec72823a8118d77e"
+          ],
+          "fldETwxwSHAAF43I5": [],
+          "fldF62AtIpAKC63mV": [],
+          "fldGZclfgI81G8EhK": "Dopo controllo formula valido, la LUT mantiene V/gate e l'effetto causale appaiato della perturbazione gbar nel teacher completo.",
+          "fldJSkVuXMOgGFkN8": "Task 17a — fedeltà causale della LUT513",
+          "fldVVUvkyh8pExiI4": [],
+          "fldWila5hCJWUzknW": "prediction-roadmap-task17a-lut-causal-fidelity-v1",
+          "fldbPV0JdHR1dTzO9": "Predizione del protocollo preregistrato il 2026-09-28, hash 9eff15aef204d1175e2c61776d72c2e1d2b7903424bf4fa28163e561ea0a8cc6.",
+          "fldcjkpdRsKyY2zM3": "Preregistrata",
+          "fldjeAYjMVW5nI5e7": [],
+          "fldpoW81HouiwkwvJ": "TABLE rate <=2e-5; LUT V RMSE <=2 mV; max m/h <=0.01; errore relativo effetto gbar <=20% quando effetto nativo >=0.05 mV"
         }
       },
       {
@@ -6657,6 +6697,33 @@
         }
       },
       {
+        "id": "recbe364a1facd791",
+        "createdTime": "2026-09-27T22:22:03Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "Roadmap Task 17a — microcanary di sostituzione causale Ca-HVA",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [],
+          "fldSQ2XAuUjvNYCvY": "experiment-roadmap-task17a-cahva-causal-replacement-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec72823a8118d77e"
+          ],
+          "fldSdolNHsOdN294o": "Confermativo",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [
+            "rec5c92b8a0dabb39"
+          ],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Prima fase della Task 17 originale: sostituzione autentica del meccanismo Ca_HVA nel teacher NEURON 642 segmenti, con bracci nativo, copia-formula e LUT513 congelata da 15c. Fonte: experiments/teacher_roadmap_task17_causal_replacement_preregistration_v1.md. Nessun risultato osservato al momento della registrazione.",
+          "fldyeCfji17c7BfPP": "Distinguere errore d'interfaccia/solver dall'errore LUT in feedback causale e misurare anche la sensibilità appaiata a gbar, senza promuovere prematuramente Gate C."
+        }
+      },
+      {
         "id": "recc6b4629ac0ff82",
         "createdTime": "2026-09-22T20:16:23Z",
         "cellValuesByFieldId": {
@@ -7874,6 +7941,46 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec037f42c0cc19a1"
+          ]
+        }
+      },
+      {
+        "id": "rec72823a8118d77e",
+        "createdTime": "2026-09-27T22:21:23Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": "2026-09-28",
+          "fld43sXbznp3IMZYL": "Roadmap Task 17a causal Ca-HVA replacement protocol v1",
+          "fld4Nd64evBcLZmBW": [],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [
+            "rec044c58d73f4368",
+            "recacd9be5696800f"
+          ],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo integrale in experiments/teacher_roadmap_task17_causal_replacement_preregistration_v1.md; notebook 17_roadmap_causal_cahva_replacement.ipynb. Preregistrato prima di qualsiasi esecuzione Kaggle.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Microcanary: repeat nativo max V <=1e-5 mV; formula RMSE V <=0.05 mV e max m/h <=0.002; TABLE rate <=2e-5; LUT RMSE V <=2 mV e max m/h <=0.01; errore relativo effetto gbar <=20% quando effetto nativo >=0.05 mV.",
+          "fldNtSPrXFVAEpq2B": "Se fonte 15c, clone formula, tabella, replay, struttura, pesi NetCon, occupanza o valori finiti falliscono, fermarsi. Non ritoccare soglie post hoc. Anche un PASS mantiene Gate C non autorizzato: mancano conferma sigillata ampia, eventi/spike e regimi completi.",
+          "fldODG8tJ39IE4DeM": "protocol-roadmap-task17a-cahva-causal-replacement-v1",
+          "fldSW3jbYrJFUwfJy": [
+            "reccaee6d22bbf8b8",
+            "recc15e0d984c6ec1",
+            "recb0b91db6611232"
+          ],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Sistema completo",
+          "fldY1kvKgn1aBhiVp": "9eff15aef204d1175e2c61776d72c2e1d2b7903424bf4fa28163e561ea0a8cc6",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Tre bracci nativo/copia-formula/LUT513, nuovo seed indipendente 170017/170029/170043, protocolli quiete/NMDA tuft/calcio hot-zone, perturbazioni gbar x0.5/x1/x1.5, CVode e rilascio sinaptico autentico, 0.025 ms, siti 0/387/460/469. Equivalenza TABLE e replay/formula sono preflight obbligatori. Nessun V futuro o stato teacher entra nella sostituzione.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "recbe364a1facd791"
           ]
         }
       },
@@ -11421,6 +11528,27 @@
         }
       },
       {
+        "id": "recb0b91db6611232",
+        "createdTime": "2026-09-27T22:23:19Z",
+        "cellValuesByFieldId": {
+          "fld06y1JyhGdBKbsb": [],
+          "fld6BYhcvs1E5t5au": [],
+          "fldEocdLK87f8S217": "Trattamento",
+          "fldHxJlFOjDM6PY7b": "Sostituzione NMODL integrata con rate TABLE lineare 513 nodi congelati da Task15c/16, nessun voltaggio futuro o stato teacher in ingresso; resto della dinamica e corrente analitica invariati.",
+          "fldKJ7mhg9LZyeZ6m": [
+            "rec72823a8118d77e"
+          ],
+          "fldMgabGclQSv615U": [],
+          "fldMyl5JIQceTrveh": [],
+          "fldOcNZY7vcRyX4sb": null,
+          "fldSw7iYhL7RM3VOk": [],
+          "fldZda4pHN0rhuziP": [],
+          "fldi6TVLcO5fFXEen": "arm-roadmap-task17a-frozen-lut513-v1",
+          "fldpcraSFXV8gqrLc": "Task 17a — LUT513 causale Ca-HVA",
+          "fldw9xZuubK7jnPu7": []
+        }
+      },
+      {
         "id": "recb3b840ea05c809",
         "createdTime": "2026-09-27T20:44:45Z",
         "cellValuesByFieldId": {
@@ -11501,6 +11629,27 @@
           "fldZda4pHN0rhuziP": [],
           "fldi6TVLcO5fFXEen": "arm-teacher-source-b3571a9b7c86f9a0-v1",
           "fldpcraSFXV8gqrLc": "lut_fine_path",
+          "fldw9xZuubK7jnPu7": []
+        }
+      },
+      {
+        "id": "recc15e0d984c6ec1",
+        "createdTime": "2026-09-27T22:23:18Z",
+        "cellValuesByFieldId": {
+          "fld06y1JyhGdBKbsb": [],
+          "fld6BYhcvs1E5t5au": [],
+          "fldEocdLK87f8S217": "Controllo negativo",
+          "fldHxJlFOjDM6PY7b": "Sostituzione NMODL integrata nel teacher con stessa formula nativa, USEION ca WRITE ica, stato m/h copiato e CVode re_init; controllo di interfaccia che deve passare prima della LUT.",
+          "fldKJ7mhg9LZyeZ6m": [
+            "rec72823a8118d77e"
+          ],
+          "fldMgabGclQSv615U": [],
+          "fldMyl5JIQceTrveh": [],
+          "fldOcNZY7vcRyX4sb": null,
+          "fldSw7iYhL7RM3VOk": [],
+          "fldZda4pHN0rhuziP": [],
+          "fldi6TVLcO5fFXEen": "arm-roadmap-task17a-formula-clone-v1",
+          "fldpcraSFXV8gqrLc": "Task 17a — clone della formula Ca-HVA",
           "fldw9xZuubK7jnPu7": []
         }
       },
@@ -11606,6 +11755,27 @@
           "fldZda4pHN0rhuziP": [],
           "fldi6TVLcO5fFXEen": "arm-teacher-source-f72efd35a19d179e-v1",
           "fldpcraSFXV8gqrLc": "lut_nearest",
+          "fldw9xZuubK7jnPu7": []
+        }
+      },
+      {
+        "id": "reccaee6d22bbf8b8",
+        "createdTime": "2026-09-27T22:23:17Z",
+        "cellValuesByFieldId": {
+          "fld06y1JyhGdBKbsb": [],
+          "fld6BYhcvs1E5t5au": [],
+          "fldEocdLK87f8S217": "Baseline",
+          "fldHxJlFOjDM6PY7b": "Teacher NEURON canonico, stesso seed e input della coppia, gbar Ca-HVA perturbato ai livelli preregistrati. Baseline causale autentica.",
+          "fldKJ7mhg9LZyeZ6m": [
+            "rec72823a8118d77e"
+          ],
+          "fldMgabGclQSv615U": [],
+          "fldMyl5JIQceTrveh": [],
+          "fldOcNZY7vcRyX4sb": null,
+          "fldSw7iYhL7RM3VOk": [],
+          "fldZda4pHN0rhuziP": [],
+          "fldi6TVLcO5fFXEen": "arm-roadmap-task17a-native-cahva-v1",
+          "fldpcraSFXV8gqrLc": "Task 17a — Ca-HVA nativo",
           "fldw9xZuubK7jnPu7": []
         }
       },
@@ -107947,6 +108117,27 @@
           "fldyiTgFzV1vvmM5o": [
             "rec0wPKrtqWymCBjr"
           ]
+        }
+      },
+      {
+        "id": "rec5c92b8a0dabb39",
+        "createdTime": "2026-09-27T22:21:24Z",
+        "cellValuesByFieldId": {
+          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld8zz84auBO3DIGQ": [],
+          "fldFPSQrhxnfHL9n7": "action-roadmap-task17a-cahva-causal-replacement-v1",
+          "fldI2FlCVIjw2HQwC": [
+            "recbe364a1facd791"
+          ],
+          "fldL6j0RgbU09Usnb": "Codice, notebook e preregistrazione della stessa revisione; teacher canonico commit 074c466; NEURON 8.2.7; artefatto Task15c verificato.",
+          "fldMeQ3of9b3RZvPb": "Eseguire Task 17a causal Ca-HVA microcanary",
+          "fldQT49hS3JSMm8FP": "Eseguire notebook 17_roadmap_causal_cahva_replacement.ipynb su Kaggle con artefatto Task15c. Scaricare ZIP diagnostico anche dopo un preflight NO-GO. Nessuna interpretazione del risultato prima del controllo formula.",
+          "fldazVEmaizg09aw8": [],
+          "fldgrmwbCk1T9fq46": [],
+          "fldilkZX7GrkdJNu2": "Microcanary causale interpretabile o diagnosi circoscritta; Gate C ancora sospeso.",
+          "fldkCr0yLshDXWuxz": [],
+          "fldlLL729Jw86riOj": [],
+          "fldyiTgFzV1vvmM5o": []
         }
       },
       {
