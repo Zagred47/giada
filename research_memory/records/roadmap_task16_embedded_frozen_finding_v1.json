@@ -1,0 +1,10 @@
+{
+  "Nome": "Task 16 — LUT513 Ca-HVA confermata embedded in shadow teacher-forced",
+  "Codice stabile": "finding-roadmap-task16-cahva-embedded-frozen-v1",
+  "Descrizione": "ZIP SHA-256 aa56c81ed23be532becaeb00a2bb51d20e9e0a6f5206be4f4d0309d3b982fb8d; report valid=true; revisione 634aa1c035994bbe13dfe2fa3c1e968bf3532959. Risultato dettagliato in experiments/teacher_roadmap_task16_embedded_frozen_confirmation_result_v1.md.",
+  "Risultato": "Test indipendente deterministic_test: 16/16 gruppi con 8 osservazioni; 128 coppie sito-transizione da 79 transizioni e 37 traiettorie. Replay nativo valido, errore V massimo 3.803e-6 mV e stato/RNG zero. Massimo RMSE gate LUT per gruppo 3.186e-4 (limite 0.005); massimo RMSE corrente Ca_HVA 1.861e-5 mA/cm2 (limite 1e-4). Formula floor, gate e corrente superano tutti i criteri preregistrati; zero violazioni di occupanza.",
+  "Incertezza": "Il candidato usa il midpoint V del teacher dopo ogni sottopasso; la validita' e' condizionata a questo percorso teacher-forced. Le osservazioni condividono transizioni e traiettorie.",
+  "Limitazioni": "Solo Ca_HVA in shadow; nessuna sostituzione del meccanismo, nessun rollout accoppiato di voltaggio/spike e nessuna autorizzazione Gate C. Task 17 resta necessaria.",
+  "Esito": "Positivo",
+  "Esperimenti": ["rec3655cd16bc32f0"]
+}

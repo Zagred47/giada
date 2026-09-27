@@ -3182,7 +3182,9 @@
         "createdTime": "2026-09-26T20:00:19Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec55beed6136049a"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Roadmap Task 16 — conferma embedded congelata Ca-HVA",
@@ -3199,7 +3201,7 @@
           "fldnTFjWQUe3eEcDr": [
             "recbae4a01682a19c"
           ],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldqsatkPNXzdeeO1": "Concluso",
           "fldutU2o1AMhw929L": "LUT513 Task5 selezionata nella Task15c, eseguita come shadow durante replay nativo del teacher 642 segmenti su deterministic_test. V midpoint teacher-forced; membrana, sinapsi e gate nativi non modificati.",
           "fldyeCfji17c7BfPP": "Verificare su test indipendente che gate e corrente analitica Ca-HVA del candidato congelato restino fedeli nel contesto multicompartimentale, separando mismatch del replay, floor d'interpolazione e errore della LUT."
         }
@@ -6168,6 +6170,29 @@
         }
       },
       {
+        "id": "rec55beed6136049a",
+        "createdTime": "2026-09-27T19:17:44Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "ZIP SHA-256 aa56c81ed23be532becaeb00a2bb51d20e9e0a6f5206be4f4d0309d3b982fb8d; report valid=true; revisione 634aa1c035994bbe13dfe2fa3c1e968bf3532959. Risultato dettagliato in experiments/teacher_roadmap_task16_embedded_frozen_confirmation_result_v1.md.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [],
+          "fldAH67e9psRNS6ym": "finding-roadmap-task16-cahva-embedded-frozen-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Positivo",
+          "fldMuvZsGvQ2lJDib": "Test indipendente deterministic_test: 16/16 gruppi con 8 osservazioni; 128 coppie sito-transizione da 79 transizioni e 37 traiettorie. Replay nativo valido, errore V massimo 3.803e-6 mV e stato/RNG zero. Massimo RMSE gate LUT per gruppo 3.186e-4 (limite 0.005); massimo RMSE corrente Ca_HVA 1.861e-5 mA/cm2 (limite 1e-4). Formula floor, gate e corrente superano tutti i criteri preregistrati; zero violazioni di occupanza.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Il candidato usa il midpoint V del teacher dopo ogni sottopasso; la validita' e' condizionata a questo percorso teacher-forced. Le osservazioni condividono transizioni e traiettorie.",
+          "fldYAbc64NIZGKzWO": [
+            "rec3655cd16bc32f0"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Solo Ca_HVA in shadow; nessuna sostituzione del meccanismo, nessun rollout accoppiato di voltaggio/spike e nessuna autorizzazione Gate C. Task 17 resta necessaria.",
+          "fldhoJJ1jrMBcOUrl": "Task 16 — LUT513 Ca-HVA confermata embedded in shadow teacher-forced",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "rec606c0e804d5947",
         "createdTime": "2026-09-20T22:38:43Z",
         "cellValuesByFieldId": {
@@ -7583,7 +7608,7 @@
         "id": "recbae4a01682a19c",
         "createdTime": "2026-09-26T20:00:49Z",
         "cellValuesByFieldId": {
-          "fld0tHGV6BV3tjAqn": "Pronta",
+          "fld0tHGV6BV3tjAqn": "Conclusa",
           "fld8zz84auBO3DIGQ": [],
           "fldFPSQrhxnfHL9n7": "action-roadmap-task16-cahva-embedded-frozen-v1",
           "fldI2FlCVIjw2HQwC": [
