@@ -88,6 +88,7 @@ class FrozenEmbeddedConfirmationTests(unittest.TestCase):
             self.assertIn(token, code)
         for token in ("neuron==8.2.7", "nrnivmodl", "subprocess.run([nrnivmodl,'mods']"):
             self.assertIn(token, code)
+        self.assertIn("neuron.__version__.split('+',1)[0]=='8.2.7'", code)
         self.assertLess(code.index("neuron==8.2.7"), code.index("run_frozen_embedded_confirmation("))
         self.assertIn("for name in ('final_report.json','selected_test_paths.json')", code)
 
