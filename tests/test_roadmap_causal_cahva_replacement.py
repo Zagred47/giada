@@ -3,11 +3,14 @@
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 
 from src.giada_teacher.roadmap_causal_cahva_replacement import (
-    CausalReplacementConfig, SITES, _explicit_lut_rates, _paired_effect, candidate_protocols,
+    CausalReplacementConfig, SITES, _canonical_gbar,
+    _canonical_synapse_weights, _changed_synapse_weights, _explicit_lut_rates,
+    _paired_effect, _restore_canonical_gbar, candidate_protocols,
     generate_candidate_mods,
 )
 
@@ -50,6 +53,34 @@ class Task17ContractTests(unittest.TestCase):
         result = _paired_effect(row(0), row(0.01), row(0), row(0), 0.05)
         self.assertFalse(result["0"]["effect_identifiable"])
         self.assertAlmostEqual(result["0"]["relative_error"], 0.2)
+
+    def test_synapse_records_are_positional_list(self):
+        records = [{"binding": SimpleNamespace(base_weight=0.7),
+                    "netcon": SimpleNamespace(weight=[0.7])}]
+        weights = _canonical_synapse_weights(records)
+        self.assertEqual(weights, (0.7,))
+        self.assertEqual(_changed_synapse_weights(records, weights), [])
+        records[0]["netcon"].weight[0] = 0.6
+        self.assertEqual(_changed_synapse_weights(records, weights), [0])
+
+    def test_gbar_is_reset_before_each_paired_arm(self):
+        segment = SimpleNamespace(x=0.5, gCa_HVAbar_Ca_HVA=0.002)
+        class Section:
+            def name(self):
+                return "soma[0]"
+
+            def __iter__(self):
+                return iter([segment])
+
+        section = Section()
+        hoc = SimpleNamespace(allsec=lambda: [section],
+                              ismembrane=lambda suffix, sec: suffix == "Ca_HVA",
+                              fcurrent=lambda: None)
+        session = SimpleNamespace(h=hoc, cvode=SimpleNamespace(re_init=lambda: None))
+        baseline = _canonical_gbar(session)
+        segment.gCa_HVAbar_Ca_HVA *= 0.5
+        _restore_canonical_gbar(session, baseline)
+        self.assertEqual(segment.gCa_HVAbar_Ca_HVA, 0.002)
 
 
 if __name__ == "__main__":

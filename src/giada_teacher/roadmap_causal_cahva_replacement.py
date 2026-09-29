@@ -171,6 +171,41 @@ def _present_sections(h, suffix):
     return [sec for sec in h.allsec() if bool(h.ismembrane(suffix, sec=sec))]
 
 
+def _canonical_gbar(session):
+    return {
+        (sec.name(), float(seg.x)): float(seg.gCa_HVAbar_Ca_HVA)
+        for sec in _present_sections(session.h, "Ca_HVA")
+        for seg in sec
+    }
+
+
+def _restore_canonical_gbar(session, canonical_gbar):
+    observed = set()
+    for sec in _present_sections(session.h, "Ca_HVA"):
+        for seg in sec:
+            key = (sec.name(), float(seg.x))
+            if key not in canonical_gbar:
+                raise RuntimeError(f"Task 17 unknown Ca_HVA compartment: {key}")
+            seg.gCa_HVAbar_Ca_HVA = canonical_gbar[key]
+            observed.add(key)
+    if observed != set(canonical_gbar):
+        raise RuntimeError("Task 17 Ca_HVA-bearing morphology changed")
+    session.cvode.re_init()
+    session.h.fcurrent()
+
+
+def _canonical_synapse_weights(records):
+    # TeacherAuditSession exposes a positional list whose index is synapse_id.
+    return tuple(float(record["binding"].base_weight) for record in records)
+
+
+def _changed_synapse_weights(records, canonical_weights):
+    if len(records) != len(canonical_weights):
+        raise RuntimeError("Task 17 synapse count changed")
+    return [index for index, record in enumerate(records)
+            if float(record["netcon"].weight[0]) != canonical_weights[index]]
+
+
 def verify_frozen_rate_table(h, frozen_table, config):
     """Check compiled NMODL interpolation against Task 16's frozen tensor."""
     section = h.Section(name="giada_task17_lut_table_probe")
@@ -178,7 +213,8 @@ def verify_frozen_rate_table(h, frozen_table, config):
         section.insert(SUFFIXES["lut"])
         segment = section(0.5)
         checks = []
-        for index in (0, 1, 64, 128, 255, 256, 263, 384, 511, 512):
+        for index in (0, 1, 0.5, 64, 128, 127.5, 255, 256, 263,
+                      263.5, 384, 511, 511.5, 512):
             voltage = config.source_grid_min_mv + index * (
                 config.source_grid_max_mv - config.source_grid_min_mv
             ) / config.source_grid_intervals
@@ -187,7 +223,10 @@ def verify_frozen_rate_table(h, frozen_table, config):
                 float(getattr(segment, _segment_field(SUFFIXES["lut"], name)))
                 for name in ("mInf", "hInf", "mTau", "hTau")
             ])
-            expected = frozen_table[index].astype(float)
+            low = min(int(np.floor(index)), 511)
+            fraction = index - low
+            expected = ((1.0 - fraction) * frozen_table[low].astype(float)
+                        + fraction * frozen_table[low + 1].astype(float))
             error = float(np.max(np.abs(observed - expected)))
             checks.append({"index": index, "voltage_mv": voltage,
                            "maximum_absolute_rate_error": error})
@@ -247,10 +286,15 @@ def _sample(session, suffix):
     return rows
 
 
-def _trial(session, calibrator, protocol, seed, multiplier, arm, config):
+def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
+           canonical_gbar):
     rng = json.loads(session.equilibrium_rng_path.read_text(encoding="utf-8"))
     session._restore_native_snapshot(session.equilibrium_snapshot_path,
                                      rng["sequences"], rng.get("random123_seed", session.seed))
+    # NEURON SaveState does not guarantee restoration of density parameters.
+    # Reset them explicitly before every paired arm to prevent multiplication
+    # from compounding across trials.
+    _restore_canonical_gbar(session, canonical_gbar)
     session._rekey_rngs(seed)
     session.active_random123_seed = int(seed)
     if protocol is None:
@@ -263,10 +307,7 @@ def _trial(session, calibrator, protocol, seed, multiplier, arm, config):
         actions = build_candidate_actions(protocol, selection.synapse_ids,
                                           duration_ms=config.duration_ms)
         label = protocol.candidate_id
-    canonical_weights = {
-        synapse_id: float(record["binding"].base_weight)
-        for synapse_id, record in session.audit.synapse_records.items()
-    }
+    canonical_weights = _canonical_synapse_weights(session.audit.synapse_records)
     suffix = "Ca_HVA" if arm == "native" else SUFFIXES[arm]
     transfer = None
     if arm != "native":
@@ -301,10 +342,8 @@ def _trial(session, calibrator, protocol, seed, multiplier, arm, config):
         if any(min(traces[str(site)][gate]) < -1e-7 or max(traces[str(site)][gate]) > 1 + 1e-7
                for site in SITES for gate in ("m", "h")):
             raise RuntimeError("Task 17 gate occupancy violation")
-        changed_weights = [
-            synapse_id for synapse_id, record in session.audit.synapse_records.items()
-            if float(record["netcon"].weight[0]) != canonical_weights[synapse_id]
-        ]
+        changed_weights = _changed_synapse_weights(
+            session.audit.synapse_records, canonical_weights)
         if changed_weights:
             raise RuntimeError(f"Task 17 changed canonical NetCon weights: {changed_weights[:5]}")
         return {"arm": arm, "protocol": label, "seed": seed,
@@ -381,22 +420,25 @@ def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
         raise RuntimeError("Task 17 teacher morphology is not 642 segments")
     session.run_burn_in()
     calibrator = DendriticProtocolCalibrator(session, output_dir=output_dir / "protocol_workspace")
+    canonical_gbar = _canonical_gbar(session)
+    if not canonical_gbar:
+        raise RuntimeError("Task 17 no native Ca_HVA conductances found")
     rows = []
     comparisons = []
     effect_rows = []
     protocols = candidate_protocols()
     # Preflight first: same seed, quiescent protocol, native twice and formula.
-    anchor = _trial(session, calibrator, None, config.seeds[0], 1.0, "native", config)
-    repeat = _trial(session, calibrator, None, config.seeds[0], 1.0, "native", config)
+    anchor = _trial(session, calibrator, None, config.seeds[0], 1.0, "native", config, canonical_gbar)
+    repeat = _trial(session, calibrator, None, config.seeds[0], 1.0, "native", config, canonical_gbar)
     repetition = _compare(anchor, repeat)
     if max(x["voltage_max_error_mv"] for x in repetition.values()) > config.repeated_native_voltage_atol_mv:
         raise RuntimeError("Task 17 native replay preflight failed")
-    formula_control = _trial(session, calibrator, None, config.seeds[0], 1.0, "formula", config)
+    formula_control = _trial(session, calibrator, None, config.seeds[0], 1.0, "formula", config, canonical_gbar)
     control = _compare(anchor, formula_control)
     if (max(x["voltage_rmse_mv"] for x in control.values()) > config.formula_voltage_rmse_limit_mv
             or max(max(x["m_max_error"], x["h_max_error"]) for x in control.values()) > config.formula_gate_max_error):
         raise RuntimeError("Task 17 formula clone preflight failed; LUT not evaluated")
-    restored_native = _trial(session, calibrator, None, config.seeds[0], 1.0, "native", config)
+    restored_native = _trial(session, calibrator, None, config.seeds[0], 1.0, "native", config, canonical_gbar)
     restoration = _compare(anchor, restored_native)
     if max(x["voltage_max_error_mv"] for x in restoration.values()) > config.repeated_native_voltage_atol_mv:
         raise RuntimeError("Task 17 native SaveState restoration after formula swap failed")
@@ -404,7 +446,7 @@ def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
         for seed in config.seeds:
             by_multiplier = {}
             for multiplier in config.gbar_multipliers:
-                arm_rows = {arm: _trial(session, calibrator, protocol, seed, multiplier, arm, config)
+                arm_rows = {arm: _trial(session, calibrator, protocol, seed, multiplier, arm, config, canonical_gbar)
                             for arm in ("native", "formula")}
                 formula_pair = _compare(arm_rows["native"], arm_rows["formula"])
                 if (max(x["voltage_rmse_mv"] for x in formula_pair.values())
@@ -414,7 +456,7 @@ def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
                     raise RuntimeError(
                         f"Task 17 formula clone control failed at {seed}/{multiplier}; LUT not interpreted"
                     )
-                arm_rows["lut"] = _trial(session, calibrator, protocol, seed, multiplier, "lut", config)
+                arm_rows["lut"] = _trial(session, calibrator, protocol, seed, multiplier, "lut", config, canonical_gbar)
                 by_multiplier[multiplier] = arm_rows
                 key = {"protocol": "quiescent" if protocol is None else protocol.candidate_id,
                        "seed": seed, "gbar_multiplier": multiplier}

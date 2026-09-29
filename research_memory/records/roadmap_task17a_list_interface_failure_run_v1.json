@@ -1,0 +1,9 @@
+{
+  "Nome": "Task 17a — secondo preflight interrotto prima dei trial",
+  "Codice stabile": "run-roadmap-task17a-synapse-list-interface-failure-v1",
+  "Descrizione": "Artefatto utente giada_roadmap_task17_causal_replacement_retry_5ce7c8e.zip SHA-256 4ed7f94a81a2085b8842c03d05a7c15e314bedf6068b4bbc0a4ebfed0618efe6. Revisione 5ce7c8e: compilazione NMODL riuscita, equivalenza ai dieci nodi testati max errore zero, poi AttributeError perché il driver usa .items() su audit.synapse_records, che è una lista. Nessun trial completo, nessuna inferenza sulla LUT. Fonte: experiments/teacher_roadmap_task17a_implementation_amendment_v1.md.",
+  "Stato": "Fallita",
+  "Hardware e ambiente": "Kaggle Linux; meccanismi espliciti compilati; teacher e burn-in avviati; stop Python prima del primo trial.",
+  "Configurazione effettiva": "Protocollo Task 17a preregistrato; arresto su contratto della lista sinaptica.",
+  "Validità tecnica": "Equivalenza nodale del rate preflight valida entro lo scope controllato; nessuna valutazione causale."
+}
