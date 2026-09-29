@@ -1,7 +1,7 @@
 {
   "Nome": "Task 17a — LUT513 causale Ca-HVA",
   "Codice stabile": "arm-roadmap-task17a-frozen-lut513-v1",
-  "Descrizione": "Sostituzione NMODL integrata con rate TABLE lineare 513 nodi congelati da Task15c/16, nessun voltaggio futuro o stato teacher in ingresso; resto della dinamica e corrente analitica invariati.",
+  "Descrizione": "Sostituzione NMODL integrata con interpolazione lineare esplicita sulle stesse rate float32 a 513 nodi congelate da Task15c/16; il TABLE intrinseco della prima revisione causava un crash del traduttore NMODL. Nessun voltaggio futuro o stato teacher in ingresso; resto della dinamica e corrente analitica invariati. Fonte: experiments/teacher_roadmap_task17a_implementation_amendment_v1.md.",
   "Ruolo": "Trattamento",
   "Protocollo": ["rec72823a8118d77e"]
 }

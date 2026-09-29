@@ -70,6 +70,56 @@ def candidate_protocols():
     )
 
 
+def _explicit_lut_rates(table):
+    """Render balanced, O(log 512) NMODL interpolation without TABLE translator.
+
+    Values are the exact float32 knots selected in Task 15c/used in Task 16.
+    The generated arithmetic is checked against that frozen tensor before
+    any full-teacher trial.  This is a compiler-workaround, not a new model.
+    """
+    values = np.asarray(table, dtype=np.float32)
+    if values.shape != (513, 4) or not np.isfinite(values).all():
+        raise ValueError("frozen LUT must contain 513 finite four-rate rows")
+    grid = np.linspace(-135.0, 75.0, 513)
+    names = ("mInf", "hInf", "mTau", "hTau")
+    lines = ["PROCEDURE rates() {", " LOCAL frac", " UNITSOFF"]
+
+    def literal(number):
+        return format(float(number), ".17g")
+
+    def emit_assignments(index, indentation):
+        for column, name in enumerate(names):
+            lines.append(f"{indentation}{name} = {literal(values[index, column])}")
+
+    def emit_interval(index, indentation):
+        left = grid[index]
+        lines.append(f"{indentation}frac = (v - {literal(left)}) * {literal(512 / 210)}")
+        for column, name in enumerate(names):
+            lower = literal(values[index, column])
+            upper = literal(values[index + 1, column])
+            lines.append(f"{indentation}{name} = {lower} + frac * ({upper} - {lower})")
+
+    def emit_tree(low, high, indentation):
+        if high - low == 1:
+            emit_interval(low, indentation)
+            return
+        middle = (low + high) // 2
+        lines.append(f"{indentation}if (v < {literal(grid[middle])}) {{")
+        emit_tree(low, middle, indentation + " ")
+        lines.append(f"{indentation}}} else {{")
+        emit_tree(middle, high, indentation + " ")
+        lines.append(f"{indentation}}}")
+
+    lines.append(f" if (v <= {literal(grid[0])}) {{")
+    emit_assignments(0, "  ")
+    lines.append(f" }} else if (v >= {literal(grid[-1])}) {{")
+    emit_assignments(512, "  ")
+    lines.append(" } else {")
+    emit_tree(0, 512, "  ")
+    lines.extend([" }", " UNITSON", "}"])
+    return "\n".join(lines) + "\n"
+
+
 def generate_candidate_mods(native_mod, destination):
     """Make separately compiled NMODL clones without touching the teacher repo."""
     native_mod, destination = Path(native_mod), Path(destination)
@@ -80,18 +130,20 @@ def generate_candidate_mods(native_mod, destination):
         raise ValueError("canonical ion/solver contract changed")
     if len(re.findall(r"PROCEDURE\s+rates\s*\(\s*\)\s*\{", source)) != 1:
         raise ValueError("canonical rates procedure changed")
+    from .double_oracle import ExtractedGateFormula
+
+    frozen_table = _lut_table(ExtractedGateFormula.from_mod(native_mod))
     destination.mkdir(parents=True, exist_ok=False)
     records = {}
     for arm, suffix in SUFFIXES.items():
         modified = re.sub(r"\bSUFFIX\s+Ca_HVA\b", f"SUFFIX {suffix}", source)
         if arm == "lut":
-            # NMODL TABLE interpolates the same four rate functions on the
-            # frozen 513-knot grid; the online solver remains cnexp/CVode.
-            modified = re.sub(
-                r"(PROCEDURE\s+rates\s*\(\s*\)\s*\{)",
-                r"\1\n TABLE mInf, hInf, mTau, hTau FROM -135 TO 75 WITH 512",
-                modified, count=1,
-            )
+            # NEURON 8.2.7 NMODL translator segfaults on TABLE here.  Emit a
+            # balanced decision tree over the *same* frozen knots instead.
+            match = re.search(r"PROCEDURE\s+rates\s*\(\s*\)\s*\{", modified)
+            if match is None or not modified.rstrip().endswith("}"):
+                raise ValueError("canonical rates tail changed")
+            modified = modified[:match.start()] + _explicit_lut_rates(frozen_table)
             modified = modified.replace(
                 "RANGE gCa_HVAbar, gCa_HVA, ica",
                 "RANGE gCa_HVAbar, gCa_HVA, ica, mInf, hInf, mTau, hTau",
@@ -105,7 +157,7 @@ def generate_candidate_mods(native_mod, destination):
 
 def compile_candidate_mods(mod_directory, nrnivmodl):
     mod_directory = Path(mod_directory)
-    command = [str(nrnivmodl), str(mod_directory)]
+    command = [str(nrnivmodl)]
     completed = subprocess.run(command, cwd=mod_directory, text=True,
                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     if completed.returncode:
@@ -120,7 +172,7 @@ def _present_sections(h, suffix):
 
 
 def verify_frozen_rate_table(h, frozen_table, config):
-    """Check the compiled NMODL TABLE against Task 16's frozen rate tensor."""
+    """Check compiled NMODL interpolation against Task 16's frozen tensor."""
     section = h.Section(name="giada_task17_lut_table_probe")
     try:
         section.insert(SUFFIXES["lut"])
@@ -141,7 +193,7 @@ def verify_frozen_rate_table(h, frozen_table, config):
                            "maximum_absolute_rate_error": error})
         maximum = max(row["maximum_absolute_rate_error"] for row in checks)
         if maximum > config.lut_rate_atol:
-            raise RuntimeError(f"Task 17 NMODL TABLE differs from frozen Task 16 LUT: {maximum}")
+            raise RuntimeError(f"Task 17 NMODL interpolation differs from frozen Task 16 LUT: {maximum}")
         return {"valid": True, "maximum_absolute_error": maximum,
                 "atol": config.lut_rate_atol, "checks": checks}
     finally:
@@ -316,7 +368,7 @@ def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
     compilation = compile_candidate_mods(output_dir / "candidate_mods", compiler)
     if not load_mechanisms(str(output_dir / "candidate_mods")):
         raise RuntimeError("compiled Task 17 mechanisms did not load")
-    # Probe the TABLE before building the 642-segment teacher or SaveState.
+    # Probe the compiled interpolation before building the teacher or SaveState.
     table_contract = verify_frozen_rate_table(h, frozen_table, config)
     (output_dir / "frozen_table_probe.json").write_text(
         json.dumps(table_contract, indent=2), encoding="utf-8")

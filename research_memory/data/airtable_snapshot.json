@@ -7958,7 +7958,7 @@
             "recacd9be5696800f"
           ],
           "fldCQHeCbAh9j3Qv7": [],
-          "fldEQ7XB9ZpGNTbd5": "Protocollo integrale in experiments/teacher_roadmap_task17_causal_replacement_preregistration_v1.md; notebook 17_roadmap_causal_cahva_replacement.ipynb. Preregistrato prima di qualsiasi esecuzione Kaggle.",
+          "fldEQ7XB9ZpGNTbd5": "Protocollo integrale in experiments/teacher_roadmap_task17_causal_replacement_preregistration_v1.md; notebook 17_roadmap_causal_cahva_replacement.ipynb. Dopo crash del traduttore NMODL sul costrutto TABLE, l'emendamento tecnico experiments/teacher_roadmap_task17a_implementation_amendment_v1.md sostituisce solo l'implementazione con interpolazione esplicita degli stessi nodi. Hash e soglie originali immutati.",
           "fldJ6IqzFnNeqIWQa": [],
           "fldJAYNsyYgGJdXhl": [],
           "fldNViv4mPeLTWwCS": "Microcanary: repeat nativo max V <=1e-5 mV; formula RMSE V <=0.05 mV e max m/h <=0.002; TABLE rate <=2e-5; LUT RMSE V <=2 mV e max m/h <=0.01; errore relativo effetto gbar <=20% quando effetto nativo >=0.05 mV.",
@@ -7977,7 +7977,7 @@
           "fldf08OxNnuiB8Kfn": [],
           "fldkkWQCILvNiCuvY": [],
           "fldkksHf3zhn6RrDN": [],
-          "fldmDbF0PWDV8gesU": "Tre bracci nativo/copia-formula/LUT513, nuovo seed indipendente 170017/170029/170043, protocolli quiete/NMDA tuft/calcio hot-zone, perturbazioni gbar x0.5/x1/x1.5, CVode e rilascio sinaptico autentico, 0.025 ms, siti 0/387/460/469. Equivalenza TABLE e replay/formula sono preflight obbligatori. Nessun V futuro o stato teacher entra nella sostituzione.",
+          "fldmDbF0PWDV8gesU": "Tre bracci nativo/copia-formula/LUT513, nuovo seed indipendente 170017/170029/170043, protocolli quiete/NMDA tuft/calcio hot-zone, perturbazioni gbar x0.5/x1/x1.5, CVode e rilascio sinaptico autentico, 0.025 ms, siti 0/387/460/469. Equivalenza numerica della LUT compilata e replay/formula sono preflight obbligatori. Nessun V futuro o stato teacher entra nella sostituzione. L'interpolazione NMODL esplicita sostituisce solo il TABLE del codice iniziale per eludere il crash del traduttore.",
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "recbe364a1facd791"
@@ -11534,7 +11534,7 @@
           "fld06y1JyhGdBKbsb": [],
           "fld6BYhcvs1E5t5au": [],
           "fldEocdLK87f8S217": "Trattamento",
-          "fldHxJlFOjDM6PY7b": "Sostituzione NMODL integrata con rate TABLE lineare 513 nodi congelati da Task15c/16, nessun voltaggio futuro o stato teacher in ingresso; resto della dinamica e corrente analitica invariati.",
+          "fldHxJlFOjDM6PY7b": "Sostituzione NMODL integrata con interpolazione lineare esplicita sulle stesse rate float32 a 513 nodi congelate da Task15c/16; il TABLE intrinseco della prima revisione causava un crash del traduttore NMODL. Nessun voltaggio futuro o stato teacher in ingresso; resto della dinamica e corrente analitica invariati. Fonte: experiments/teacher_roadmap_task17a_implementation_amendment_v1.md.",
           "fldKJ7mhg9LZyeZ6m": [
             "rec72823a8118d77e"
           ],
@@ -13081,6 +13081,36 @@
             "recaf10b7c8da2cb2",
             "rece882eb3b83ecfd"
           ]
+        }
+      },
+      {
+        "id": "rec396213ea76cd77",
+        "createdTime": "2026-09-29T09:59:47Z",
+        "cellValuesByFieldId": {
+          "fld0liFWUjFcrhrat": [],
+          "fld4R8XwQMz7g481Q": [],
+          "fld4fFUTnEilXd9t2": [],
+          "fld6Hz6eqI6olPf0m": "run-roadmap-task17a-nmodl-table-compile-failure-v1",
+          "fld87AYFrpWvw5KKz": "Revisione 4dd37ab, log Kaggle fornito dall'utente il 2026-09-29. nrnivmodl NEURON 8.2.7 traduce il clone formula ma va in segmentation fault traducendo il clone LUT con TABLE. Il teacher non è stato costruito e non sono stati eseguiti trial; nessun dato di accuratezza biologica è disponibile. Fonte versionata: experiments/teacher_roadmap_task17a_implementation_amendment_v1.md.",
+          "fldEG2dz830yNYHGk": "Fallita",
+          "fldEugpXcsTK5MRNV": [],
+          "fldH8BxHnUI8L5DGU": [],
+          "fldJIPPVhBHN1LNCM": "Kaggle Linux, NEURON 8.2.7, traduttore NMODL; nessuna simulazione del teacher eseguita.",
+          "fldJct5wFYrKWSZOg": [],
+          "fldMhX465YTTfDlHZ": null,
+          "fldMqpwgskr9iAPtc": null,
+          "fldNQXPTBYtKMuIq0": [],
+          "fldRW0TaoQM2T65IF": "NO-GO tecnico: segmentation fault del compilatore sul costrutto TABLE. Non è un risultato scientifico sulla LUT.",
+          "fldUk0uhWI0IdEREU": "Protocollo Task 17a preregistrato, ma arresto prima dei bracci sperimentali.",
+          "fldY70eVnmzHR7MZx": [],
+          "fldZ5He4nOs4VdNvi": [],
+          "fldeHMCMkOUKhaxpL": [],
+          "fldgUgjgZu24ukm2l": [],
+          "fldiqFJAS49e1GCUB": "Task 17a — primo preflight NMODL interrotto",
+          "fldoTxIHgcSHpzMHR": [],
+          "fldoWjG1NxlSfBNt0": null,
+          "fldrNX4Xl4WKFvYia": [],
+          "fldyRVPjo0mXHldZV": []
         }
       },
       {

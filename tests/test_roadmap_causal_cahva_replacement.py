@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 
 from src.giada_teacher.roadmap_causal_cahva_replacement import (
-    CausalReplacementConfig, SITES, _paired_effect, candidate_protocols,
+    CausalReplacementConfig, SITES, _explicit_lut_rates, _paired_effect, candidate_protocols,
     generate_candidate_mods,
 )
 
@@ -31,7 +31,17 @@ class Task17ContractTests(unittest.TestCase):
             self.assertIn("USEION ca READ eca WRITE ica", formula)
             self.assertIn("SOLVE states METHOD cnexp", formula)
             self.assertNotIn("TABLE mInf", formula)
-            self.assertIn("TABLE mInf, hInf, mTau, hTau FROM -135 TO 75 WITH 512", lut)
+            self.assertNotIn("TABLE mInf", lut)
+            self.assertIn("LOCAL frac", lut)
+            self.assertIn("if (v < -30)", lut)
+            self.assertIn("RANGE gCa_HVAbar, gCa_HVA, ica, mInf, hInf, mTau, hTau", lut)
+
+    def test_explicit_interpolator_has_every_frozen_interval(self):
+        rates = np.column_stack([np.linspace(0, 1, 513)] * 4).astype(np.float32)
+        rendered = _explicit_lut_rates(rates)
+        self.assertEqual(rendered.count("frac ="), 512)
+        self.assertEqual(rendered.count("mInf ="), 514)
+        self.assertNotIn("TABLE", rendered)
 
     def test_paired_effect_keeps_weak_effect_unidentifiable(self):
         def row(value):
