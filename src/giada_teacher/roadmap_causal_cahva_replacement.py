@@ -23,6 +23,7 @@ from src.hayflow_teacher.dendritic_calibration import (
 from src.hayflow_teacher.diagnostic_dataset_v1_1 import TargetedDiagnosticDatasetSession
 
 from .roadmap_embedded_frozen_confirmation import _lut_table, verified_15c
+from .native_process import native_phase
 
 
 SUFFIXES = {"formula": "GIADA_CaHVA_formula", "lut": "GIADA_CaHVA_lut"}
@@ -179,14 +180,14 @@ def _canonical_gbar(session):
     }
 
 
-def _restore_canonical_gbar(session, canonical_gbar):
+def _restore_canonical_gbar(session, canonical_gbar, suffix="Ca_HVA"):
     observed = set()
-    for sec in _present_sections(session.h, "Ca_HVA"):
+    for sec in _present_sections(session.h, suffix):
         for seg in sec:
             key = (sec.name(), float(seg.x))
             if key not in canonical_gbar:
                 raise RuntimeError(f"Task 17 unknown Ca_HVA compartment: {key}")
-            seg.gCa_HVAbar_Ca_HVA = canonical_gbar[key]
+            setattr(seg, _segment_field(suffix, "gCa_HVAbar"), canonical_gbar[key])
             observed.add(key)
     if observed != set(canonical_gbar):
         raise RuntimeError("Task 17 Ca_HVA-bearing morphology changed")
@@ -288,13 +289,18 @@ def _sample(session, suffix):
 
 def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
            canonical_gbar):
+    suffix = "Ca_HVA" if arm == "native" else SUFFIXES[arm]
+    if session.task17_snapshot_suffix != suffix:
+        raise RuntimeError("Refusing SaveState restore across a mechanism change")
+    native_phase("trial_restore", arm=arm, seed=seed, multiplier=multiplier,
+                 protocol="quiescent" if protocol is None else protocol.candidate_id)
     rng = json.loads(session.equilibrium_rng_path.read_text(encoding="utf-8"))
     session._restore_native_snapshot(session.equilibrium_snapshot_path,
                                      rng["sequences"], rng.get("random123_seed", session.seed))
     # NEURON SaveState does not guarantee restoration of density parameters.
     # Reset them explicitly before every paired arm to prevent multiplication
     # from compounding across trials.
-    _restore_canonical_gbar(session, canonical_gbar)
+    _restore_canonical_gbar(session, canonical_gbar, suffix)
     session._rekey_rngs(seed)
     session.active_random123_seed = int(seed)
     if protocol is None:
@@ -308,50 +314,75 @@ def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
                                           duration_ms=config.duration_ms)
         label = protocol.candidate_id
     canonical_weights = _canonical_synapse_weights(session.audit.synapse_records)
-    suffix = "Ca_HVA" if arm == "native" else SUFFIXES[arm]
-    transfer = None
-    if arm != "native":
-        transfer = swap_cahva(session, "Ca_HVA", suffix)
-    try:
-        # Perturbation is applied equally to every Ca_HVA-bearing compartment.
-        for sec in _present_sections(session.h, suffix):
-            for seg in sec:
-                name = _segment_field(suffix, "gCa_HVAbar")
-                setattr(seg, name, float(getattr(seg, name)) * multiplier)
-        session.cvode.re_init()
-        session.h.fcurrent()
-        initial = _sample(session, suffix)
-        traces = {str(site): {key: [value] for key, value in initial[str(site)].items()}
-                  for site in SITES}
-        for step in range(config.duration_ms):
-            start = float(session.h.t)
-            session._active_transition_id = int(seed * 1000 + step)
-            _, _, observations = session._drive_one_ms(
-                start, tuple(actions.get(step, ())), lambda: _sample(session, suffix),
-                sample_interval_ms=config.sample_interval_ms)
-            for observed in observations[1:]:
-                for site in SITES:
-                    for key, value in observed[str(site)].items():
-                        traces[str(site)][key].append(value)
-        expected = config.duration_ms * int(round(1 / config.sample_interval_ms)) + 1
-        if any(len(traces[str(site)]["v"]) != expected for site in SITES):
-            raise RuntimeError("Task 17 trace length mismatch")
-        if any(not np.isfinite(np.asarray(values, dtype=float)).all()
-               for site in traces.values() for values in site.values()):
-            raise RuntimeError("Task 17 NaN/Inf in causal rollout")
-        if any(min(traces[str(site)][gate]) < -1e-7 or max(traces[str(site)][gate]) > 1 + 1e-7
-               for site in SITES for gate in ("m", "h")):
-            raise RuntimeError("Task 17 gate occupancy violation")
-        changed_weights = _changed_synapse_weights(
-            session.audit.synapse_records, canonical_weights)
-        if changed_weights:
-            raise RuntimeError(f"Task 17 changed canonical NetCon weights: {changed_weights[:5]}")
-        return {"arm": arm, "protocol": label, "seed": seed,
-                "gbar_multiplier": multiplier, "transfer": transfer,
-                "samples": expected, "traces": traces}
-    finally:
-        if arm != "native":
-            swap_cahva(session, suffix, "Ca_HVA")
+    transfer = getattr(session, "task17_transfer", None)
+    # Perturbation is applied equally to every Ca_HVA-bearing compartment.
+    for sec in _present_sections(session.h, suffix):
+        for seg in sec:
+            name = _segment_field(suffix, "gCa_HVAbar")
+            setattr(seg, name, float(getattr(seg, name)) * multiplier)
+    session.cvode.re_init()
+    session.h.fcurrent()
+    initial = _sample(session, suffix)
+    traces = {str(site): {key: [value] for key, value in initial[str(site)].items()}
+              for site in SITES}
+    for step in range(config.duration_ms):
+        start = float(session.h.t)
+        session._active_transition_id = int(seed * 1000 + step)
+        _, _, observations = session._drive_one_ms(
+            start, tuple(actions.get(step, ())), lambda: _sample(session, suffix),
+            sample_interval_ms=config.sample_interval_ms)
+        for observed in observations[1:]:
+            for site in SITES:
+                for key, value in observed[str(site)].items():
+                    traces[str(site)][key].append(value)
+    expected = config.duration_ms * int(round(1 / config.sample_interval_ms)) + 1
+    if any(len(traces[str(site)]["v"]) != expected for site in SITES):
+        raise RuntimeError("Task 17 trace length mismatch")
+    if any(not np.isfinite(np.asarray(values, dtype=float)).all()
+           for site in traces.values() for values in site.values()):
+        raise RuntimeError("Task 17 NaN/Inf in causal rollout")
+    if any(min(traces[str(site)][gate]) < -1e-7 or max(traces[str(site)][gate]) > 1 + 1e-7
+           for site in SITES for gate in ("m", "h")):
+        raise RuntimeError("Task 17 gate occupancy violation")
+    changed_weights = _changed_synapse_weights(
+        session.audit.synapse_records, canonical_weights)
+    if changed_weights:
+        raise RuntimeError(f"Task 17 changed canonical NetCon weights: {changed_weights[:5]}")
+    return {"arm": arm, "protocol": label, "seed": seed,
+            "gbar_multiplier": multiplier, "transfer": transfer,
+            "samples": expected, "traces": traces}
+
+
+def _activate_arm(session, canonical_gbar, arm):
+    """Transfer equilibrium once, then save a NEW snapshot for this structure.
+
+    NEURON SaveState is tied to mechanism insertion order, not just suffixes.
+    Never restore a snapshot made before uninsert/insert, even after switching
+    back to the same named mechanism. All trials of one arm run contiguously.
+    """
+    source_suffix = session.task17_snapshot_suffix
+    target_suffix = "Ca_HVA" if arm == "native" else SUFFIXES[arm]
+    if source_suffix == target_suffix:
+        return
+    native_phase("arm_equilibrium_restore", source=source_suffix, target=target_suffix)
+    rng = json.loads(session.equilibrium_rng_path.read_text(encoding="utf-8"))
+    session._restore_native_snapshot(session.equilibrium_snapshot_path, rng["sequences"],
+                                     rng.get("random123_seed", session.seed))
+    _restore_canonical_gbar(session, canonical_gbar, source_suffix)
+    before = _sample(session, source_suffix)
+    native_phase("arm_mechanism_transfer", source=source_suffix, target=target_suffix)
+    session.task17_transfer = swap_cahva(session, source_suffix, target_suffix)
+    after = _sample(session, target_suffix)
+    if before != after:
+        raise RuntimeError("Mechanism transfer changed the equilibrium boundary")
+    # No path reuse: the former native snapshot is invalid after reinsertion.
+    generation = getattr(session, "task17_snapshot_generation", 0) + 1
+    path = session.snapshots_dir / f"task17_equilibrium_{generation}_{arm}.bin"
+    native_phase("arm_snapshot_write", arm=arm, generation=generation)
+    session._write_native_snapshot(path)
+    session.equilibrium_snapshot_path = path
+    session.task17_snapshot_suffix = target_suffix
+    session.task17_snapshot_generation = generation
 
 
 def _rmse(left, right):
@@ -389,6 +420,7 @@ def _paired_effect(native_low, native_high, candidate_low, candidate_high, floor
 def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
                            output_dir, config=CausalReplacementConfig(), *, code_revision="unknown"):
     config.validate()
+    native_phase("verify_input")
     verified_15c(task15c_source)
     output_dir = Path(output_dir)
     if output_dir.exists():
@@ -404,10 +436,12 @@ def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
     compiler = _shutil.which("nrnivmodl")
     if not compiler:
         raise RuntimeError("nrnivmodl unavailable")
+    native_phase("compile_candidates")
     compilation = compile_candidate_mods(output_dir / "candidate_mods", compiler)
     if not load_mechanisms(str(output_dir / "candidate_mods")):
         raise RuntimeError("compiled Task 17 mechanisms did not load")
     # Probe the compiled interpolation before building the teacher or SaveState.
+    native_phase("frozen_table_probe")
     table_contract = verify_frozen_rate_table(h, frozen_table, config)
     (output_dir / "frozen_table_probe.json").write_text(
         json.dumps(table_contract, indent=2), encoding="utf-8")
@@ -415,10 +449,13 @@ def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
         elm_repo, teacher_repo, calibration_source=Path(native_mod),
         dataset_config_path=Path(elm_repo) / "configs/hayflow/targeted_transition_dataset_v1_1.yml",
         output_dir=output_dir / "teacher_workspace")
+    native_phase("prepare_teacher")
     teacher = session.prepare_teacher()
     if teacher["segment_count"] != 642:
         raise RuntimeError("Task 17 teacher morphology is not 642 segments")
+    native_phase("burn_in")
     session.run_burn_in()
+    session.task17_snapshot_suffix = "Ca_HVA"
     calibrator = DendriticProtocolCalibrator(session, output_dir=output_dir / "protocol_workspace")
     canonical_gbar = _canonical_gbar(session)
     if not canonical_gbar:
@@ -433,30 +470,51 @@ def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
     repetition = _compare(anchor, repeat)
     if max(x["voltage_max_error_mv"] for x in repetition.values()) > config.repeated_native_voltage_atol_mv:
         raise RuntimeError("Task 17 native replay preflight failed")
+    # Complete one arm before changing mechanism structure. SaveState files
+    # may only be reused within that generation of the mechanism topology.
+    trial_cache = {}
+    def run_arm(arm):
+        _activate_arm(session, canonical_gbar, arm)
+        for protocol_index, protocol in enumerate(protocols):
+            for seed in config.seeds:
+                for multiplier in config.gbar_multipliers:
+                    row = _trial(session, calibrator, protocol, seed, multiplier,
+                                 arm, config, canonical_gbar)
+                    key = (protocol_index, seed, multiplier)
+                    if arm == "formula":
+                        metrics = _compare(trial_cache[("native", *key)], row)
+                        if (max(x["voltage_rmse_mv"] for x in metrics.values()) > config.formula_voltage_rmse_limit_mv
+                                or max(max(x["m_max_error"], x["h_max_error"]) for x in metrics.values()) > config.formula_gate_max_error):
+                            raise RuntimeError(f"Task 17 formula control failed at {key}; LUT not evaluated")
+                    trial_cache[(arm, *key)] = row
+                    # Persist each completed episode even if a later C call aborts.
+                    trial_dir = output_dir / "completed_trials"
+                    trial_dir.mkdir(exist_ok=True)
+                    (trial_dir / f"{arm}_{protocol_index}_{seed}_{multiplier}.json").write_text(
+                        json.dumps(row), encoding="utf-8")
+                    print(f"[GIADA Task 17] completed {arm} {len([k for k in trial_cache if k[0] == arm])}/27", flush=True)
+
+    run_arm("native")
+    _activate_arm(session, canonical_gbar, "formula")
     formula_control = _trial(session, calibrator, None, config.seeds[0], 1.0, "formula", config, canonical_gbar)
     control = _compare(anchor, formula_control)
     if (max(x["voltage_rmse_mv"] for x in control.values()) > config.formula_voltage_rmse_limit_mv
             or max(max(x["m_max_error"], x["h_max_error"]) for x in control.values()) > config.formula_gate_max_error):
         raise RuntimeError("Task 17 formula clone preflight failed; LUT not evaluated")
+    run_arm("formula")
+    _activate_arm(session, canonical_gbar, "native")
     restored_native = _trial(session, calibrator, None, config.seeds[0], 1.0, "native", config, canonical_gbar)
     restoration = _compare(anchor, restored_native)
     if max(x["voltage_max_error_mv"] for x in restoration.values()) > config.repeated_native_voltage_atol_mv:
         raise RuntimeError("Task 17 native SaveState restoration after formula swap failed")
-    for protocol in protocols:
+    run_arm("lut")
+    native_phase("aggregate_reports")
+    for protocol_index, protocol in enumerate(protocols):
         for seed in config.seeds:
             by_multiplier = {}
             for multiplier in config.gbar_multipliers:
-                arm_rows = {arm: _trial(session, calibrator, protocol, seed, multiplier, arm, config, canonical_gbar)
-                            for arm in ("native", "formula")}
-                formula_pair = _compare(arm_rows["native"], arm_rows["formula"])
-                if (max(x["voltage_rmse_mv"] for x in formula_pair.values())
-                        > config.formula_voltage_rmse_limit_mv
-                        or max(max(x["m_max_error"], x["h_max_error"])
-                               for x in formula_pair.values()) > config.formula_gate_max_error):
-                    raise RuntimeError(
-                        f"Task 17 formula clone control failed at {seed}/{multiplier}; LUT not interpreted"
-                    )
-                arm_rows["lut"] = _trial(session, calibrator, protocol, seed, multiplier, "lut", config, canonical_gbar)
+                arm_rows = {arm: trial_cache[(arm, protocol_index, seed, multiplier)]
+                            for arm in ("native", "formula", "lut")}
                 by_multiplier[multiplier] = arm_rows
                 key = {"protocol": "quiescent" if protocol is None else protocol.candidate_id,
                        "seed": seed, "gbar_multiplier": multiplier}
@@ -517,6 +575,8 @@ def run_causal_replacement(elm_repo, teacher_repo, native_mod, task15c_source,
               "candidate_mods": mods, "compilation": compilation,
               "native_repeat_preflight": repetition, "formula_clone_preflight": control,
               "native_after_swap_preflight": restoration,
+              "snapshot_policy": "fresh_equilibrium_snapshot_per_mechanism_generation",
+              "execution_order": ["native_matrix", "formula_matrix", "native_roundtrip", "lut_matrix"],
               "formula_control_valid": formula_valid, "lut_absolute_valid": lut_valid,
               "paired_effect_valid": effect_valid,
               "identifiable_effect_count": len(identifiable),

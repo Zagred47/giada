@@ -1,0 +1,273 @@
+{
+  "schema_version": "giada-task17-causal-replacement-v1",
+  "valid": true,
+  "gate_c_authorized": false,
+  "decision": "CAUSAL_MICROCANARY_NO_GO",
+  "reason": "full independent morphology/regime coverage and sealed validation still required for Gate C",
+  "code_revision": "114e4f70aed549707ae11066e5213229e341cc4b",
+  "native_mod_sha256": "db310c0746fc0f86e27101cd406feab92d75a1dddf2f2d7259480cd50e5de6df",
+  "selected_candidate": "lut_fine_path",
+  "source_table_knots": 513,
+  "frozen_table_equivalence": {
+    "valid": true,
+    "maximum_absolute_error": 0.0,
+    "atol": 2e-05,
+    "checks": [
+      {
+        "index": 0,
+        "voltage_mv": -135.0,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 1,
+        "voltage_mv": -134.58984375,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 0.5,
+        "voltage_mv": -134.794921875,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 64,
+        "voltage_mv": -108.75,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 128,
+        "voltage_mv": -82.5,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 127.5,
+        "voltage_mv": -82.705078125,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 255,
+        "voltage_mv": -30.41015625,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 256,
+        "voltage_mv": -30.0,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 263,
+        "voltage_mv": -27.12890625,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 263.5,
+        "voltage_mv": -26.923828125,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 384,
+        "voltage_mv": 22.5,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 511,
+        "voltage_mv": 74.58984375,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 511.5,
+        "voltage_mv": 74.794921875,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 512,
+        "voltage_mv": 75.0,
+        "maximum_absolute_rate_error": 0.0
+      }
+    ]
+  },
+  "new_independent_seeds": [
+    170017,
+    170029,
+    170043
+  ],
+  "teacher": {
+    "teacher_commit": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "teacher_hashes_match_audit": true,
+    "segment_count": 642,
+    "synapse_count": 1278,
+    "state_widths": {
+      "voltage": 642,
+      "mechanism_states": 4074,
+      "calcium_ions": 2280,
+      "synapse_states": 10224,
+      "currents_conductances": 9182
+    },
+    "microtrace_variable_count": 295,
+    "representatives": {
+      "soma": 0,
+      "ais": 640,
+      "basal": 37,
+      "trunk": 361,
+      "nexus": 437,
+      "hot_zone": 387,
+      "tuft": 460
+    },
+    "teacher_variant": "L5PC active dendrites, NMDA-labelled AMPA+NMDA, GABA_A"
+  },
+  "candidate_mods": {
+    "formula": {
+      "path": "/tmp/giada-task17-verified-final/candidate_mods/GIADA_CaHVA_formula.mod",
+      "sha256": "b8f678df761f2275fa7acf6cfa1fe26ddcc22f70a7de12a80955ab7ee2978cc4"
+    },
+    "lut": {
+      "path": "/tmp/giada-task17-verified-final/candidate_mods/GIADA_CaHVA_lut.mod",
+      "sha256": "b5ffba9935668ffa203dfa001cc2361adb97d78a8bb407fe086f3861681b870d"
+    }
+  },
+  "compilation": {
+    "command": [
+      "/tmp/giada-task17-native-venv/bin/nrnivmodl"
+    ],
+    "library": "/tmp/giada-task17-verified-final/candidate_mods/x86_64/libnrnmech.so"
+  },
+  "native_repeat_preflight": {
+    "0": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "387": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "460": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "469": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    }
+  },
+  "formula_clone_preflight": {
+    "0": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "387": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "460": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "469": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    }
+  },
+  "native_after_swap_preflight": {
+    "0": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "387": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "460": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "469": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    }
+  },
+  "snapshot_policy": "fresh_equilibrium_snapshot_per_mechanism_generation",
+  "execution_order": [
+    "native_matrix",
+    "formula_matrix",
+    "native_roundtrip",
+    "lut_matrix"
+  ],
+  "formula_control_valid": true,
+  "lut_absolute_valid": false,
+  "paired_effect_valid": true,
+  "identifiable_effect_count": 11,
+  "worst_formula_voltage_rmse_mv": 0.0,
+  "worst_formula_gate_error": 0.0,
+  "worst_lut_voltage_rmse_mv": 0.5933959189530174,
+  "worst_lut_gate_error": 0.01835138564840766,
+  "episode_count": 27,
+  "config": {
+    "seeds": [
+      170017,
+      170029,
+      170043
+    ],
+    "duration_ms": 40,
+    "gbar_multipliers": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "sample_interval_ms": 0.025,
+    "source_grid_min_mv": -135.0,
+    "source_grid_max_mv": 75.0,
+    "source_grid_intervals": 512,
+    "lut_rate_atol": 2e-05,
+    "repeated_native_voltage_atol_mv": 1e-05,
+    "formula_voltage_rmse_limit_mv": 0.05,
+    "formula_gate_max_error": 0.002,
+    "lut_voltage_rmse_limit_mv": 2.0,
+    "lut_gate_max_error": 0.01,
+    "paired_effect_relative_error_limit": 0.2,
+    "paired_effect_floor_mv": 0.05
+  },
+  "execution_provenance": {
+    "git_head": "114e4f70aed549707ae11066e5213229e341cc4b",
+    "source_sha256": {
+      "scripts/run_roadmap_task17.py": "6352a9679e2cb949137d363ff7ef651ec30791b1da136599c5967259f13d2dd1",
+      "src/giada_teacher/roadmap_causal_cahva_replacement.py": "c8a95bb372dd6a893afd25c0f7b3cde72acd739ec99820b2d260392f880a479d",
+      "src/giada_teacher/native_process.py": "9d85b452dab33d0174ef8ee4a3590d76db2684b66c87cbaea3a8640a0133040a"
+    },
+    "working_tree_dirty": true
+  }
+}

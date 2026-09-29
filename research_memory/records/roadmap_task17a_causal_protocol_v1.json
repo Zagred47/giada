@@ -2,7 +2,7 @@
   "Nome": "Roadmap Task 17a causal Ca-HVA replacement protocol v1",
   "Codice stabile": "protocol-roadmap-task17a-cahva-causal-replacement-v1",
   "Descrizione": "Protocollo integrale in experiments/teacher_roadmap_task17_causal_replacement_preregistration_v1.md; notebook 17_roadmap_causal_cahva_replacement.ipynb. Dopo crash del traduttore NMODL sul costrutto TABLE, l'emendamento tecnico experiments/teacher_roadmap_task17a_implementation_amendment_v1.md sostituisce solo l'implementazione con interpolazione esplicita degli stessi nodi. Hash e soglie originali immutati.",
-  "Versione": "v1",
+  "Versione": "v1 + emendamento tecnico SaveState 2026-09-29",
   "Modalità": "Sistema completo",
   "Procedura": "Tre bracci nativo/copia-formula/LUT513, nuovo seed indipendente 170017/170029/170043, protocolli quiete/NMDA tuft/calcio hot-zone, perturbazioni gbar x0.5/x1/x1.5, CVode e rilascio sinaptico autentico, 0.025 ms, siti 0/387/460/469. Equivalenza numerica della LUT compilata e replay/formula sono preflight obbligatori. Nessun V futuro o stato teacher entra nella sostituzione. L'interpolazione NMODL esplicita sostituisce solo il TABLE del codice iniziale per eludere il crash del traduttore.",
   "Criteri di successo": "Microcanary: repeat nativo max V <=1e-5 mV; formula RMSE V <=0.05 mV e max m/h <=0.002; TABLE rate <=2e-5; LUT RMSE V <=2 mV e max m/h <=0.01; errore relativo effetto gbar <=20% quando effetto nativo >=0.05 mV.",

@@ -963,6 +963,41 @@
         }
       },
       {
+        "id": "rec590e9eb0319cd8",
+        "createdTime": "2026-09-29T10:55:53Z",
+        "cellValuesByFieldId": {
+          "fld4JLfRlsryKM2UR": [],
+          "fld5CPJ02rTmLlE99": "Report",
+          "fld7CxbgCXwUM4NNt": [],
+          "fld7lhB5GaDi7GPGr": [],
+          "fldDimjpO3pqBmw4Y": [],
+          "fldFio32ffmk14gMY": [],
+          "fldJ42OE1ARQhyh59": "experiments/results/task17a_native_validation/final_report.json",
+          "fldKAWAFzxAGxBXtZ": [],
+          "fldLBLpfZ9iTm3iVn": [],
+          "fldM865VwAuTwSeyu": [],
+          "fldWuMKQAeTpYtqUA": null,
+          "fldmWDLbrTfgIENdj": "2026-09-29-v1",
+          "fldo5NXFqs2t9Qab8": [],
+          "fldqct09IUjoLdgF0": [
+            "receecafc3949ac0b"
+          ],
+          "fldtrsi68uQKVHs45": [],
+          "fldtz4d1xLAPiMl1B": [],
+          "flducpwJgNyg4cIlF": "99d9bd64d3b7b657242899195c2266d96674b9f62ddd46e567d762346c6b5666",
+          "fldw98aVU9j6cBJYh": "Task17a — report integrale validazione Linux locale",
+          "fldwLVADFDuK4I0rk": "Report generato, non ricostruito. Provenance: base HEAD 114e4f7, working tree modificato, SHA256 dei tre sorgenti eseguiti nel JSON. Metriche dettagliate e contrasti nella medesima cartella versionata.",
+          "fldwnMJjQrllvC78Z": "artifacts-task17a-native-repair-report-v1",
+          "fldy0kiTp7BG4j68p": [
+            "rec1b5122a8c4af37",
+            "reca9e47a5eda654b",
+            "rec307c605076625a",
+            "recc45216f60deb65"
+          ],
+          "fldybOB1VowNUBprP": 7304
+        }
+      },
+      {
         "id": "rec5b56712dddb69a",
         "createdTime": "2026-09-22T17:51:20Z",
         "cellValuesByFieldId": {
@@ -6701,7 +6736,9 @@
         "createdTime": "2026-09-27T22:22:03Z",
         "cellValuesByFieldId": {
           "fld2vorrpIpWaJBU9": [],
-          "fld75HWsQpTge8Cv6": [],
+          "fld75HWsQpTge8Cv6": [
+            "rec1e2e0c34998707"
+          ],
           "fld8UsWD6AGXcs8LB": [],
           "fldFHD3DQUZ4TThfH": [],
           "fldFzIJN2R3bt1Cll": "Roadmap Task 17a — microcanary di sostituzione causale Ca-HVA",
@@ -6718,8 +6755,8 @@
           "fldnTFjWQUe3eEcDr": [
             "rec5c92b8a0dabb39"
           ],
-          "fldqsatkPNXzdeeO1": "Preregistrato",
-          "fldutU2o1AMhw929L": "Prima fase della Task 17 originale: sostituzione autentica del meccanismo Ca_HVA nel teacher NEURON 642 segmenti, con bracci nativo, copia-formula e LUT513 congelata da 15c. Fonte: experiments/teacher_roadmap_task17_causal_replacement_preregistration_v1.md. Nessun risultato osservato al momento della registrazione.",
+          "fldqsatkPNXzdeeO1": "In corso",
+          "fldutU2o1AMhw929L": "Prima fase della Task 17 originale: sostituzione autentica Ca_HVA nel teacher 642 segmenti, bracci nativo/formula/LUT513 congelata. Preregistrazione immutata; emendamento tecnico in teacher_roadmap_task17a_implementation_amendment_v1.md. Dopo tre problemi tecnici Kaggle, matrice locale Linux completata: formula valida, LUT NO-GO per massimo errore gate 0.0183514 >0.01. Report in experiments/results/task17a_native_validation. Replica Kaggle ancora facoltativa/in attesa; Gate C non autorizzato.",
           "fldyeCfji17c7BfPP": "Distinguere errore d'interfaccia/solver dall'errore LUT in feedback causale e misurare anche la sensibilità appaiata a gbar, senza promuovere prematuramente Gate C."
         }
       },
@@ -7951,8 +7988,15 @@
           "fld0yPrg13a64ZdYv": [],
           "fld1aLwlMava44xpk": "2026-09-28",
           "fld43sXbznp3IMZYL": "Roadmap Task 17a causal Ca-HVA replacement protocol v1",
-          "fld4Nd64evBcLZmBW": [],
-          "fld6lHoGkY43YdOIc": [],
+          "fld4Nd64evBcLZmBW": [
+            "rec4552a2ec9d73e6"
+          ],
+          "fld6lHoGkY43YdOIc": [
+            "rec1773b079494452",
+            "rec64dc473b986db9",
+            "rec3172e9844285a9",
+            "recf6d22953d5d1f6"
+          ],
           "fldARMHwfjpewT4tD": [
             "rec044c58d73f4368",
             "recacd9be5696800f"
@@ -7969,7 +8013,7 @@
             "recc15e0d984c6ec1",
             "recb0b91db6611232"
           ],
-          "fldTRHy1C66ZPwHP6": "v1",
+          "fldTRHy1C66ZPwHP6": "v1 + emendamento tecnico SaveState 2026-09-29",
           "fldXGaaTvJNgqSF4P": [],
           "fldXNrWQrGlph6l1g": "Sistema completo",
           "fldY1kvKgn1aBhiVp": "9eff15aef204d1175e2c61776d72c2e1d2b7903424bf4fa28163e561ea0a8cc6",
@@ -12626,7 +12670,27 @@
         }
       }
     ],
-    "tblDINcdQ4YmLNlFm": [],
+    "tblDINcdQ4YmLNlFm": [
+      {
+        "id": "rec4552a2ec9d73e6",
+        "createdTime": "2026-09-29T10:55:52Z",
+        "cellValuesByFieldId": {
+          "fld2WJK5mUgkVigki": null,
+          "fldDACBun6GS7qBiI": "blocks-task17a-native-repair-matrix-v1",
+          "fldLbi81dP34ogqx4": "Task17a — matrice appaiata della validazione nativa locale",
+          "fldNdsmMz2Jtz574j": [
+            "rec72823a8118d77e"
+          ],
+          "fldO9yFI3fUDfvyWI": "170017,170029,170043",
+          "fldVRcFxf7uLLnOTP": [
+            "rec876aaac3283faf",
+            "receecafc3949ac0b"
+          ],
+          "fldf4FIay1S850M6r": "Stesso equilibrio, seed Random123, stimoli e gbar fra nativo/formula/LUT. Snapshot rigenerato dopo ogni cambio di struttura; bracci in blocchi contigui.",
+          "fldvWAOeSBcE5LXSr": "27 triplette, tre seed, tre protocolli, tre moltiplicatori gbar. Non 81 repliche indipendenti."
+        }
+      }
+    ],
     "tblFIJ1ALOog9qQnH": [
       {
         "id": "rec0a06d4fa3ae0b1",
@@ -13508,6 +13572,38 @@
           "fldyRVPjo0mXHldZV": [
             "rec7a525d78d584d3"
           ]
+        }
+      },
+      {
+        "id": "rec876aaac3283faf",
+        "createdTime": "2026-09-29T10:55:53Z",
+        "cellValuesByFieldId": {
+          "fld0liFWUjFcrhrat": [],
+          "fld4R8XwQMz7g481Q": [],
+          "fld4fFUTnEilXd9t2": [],
+          "fld6Hz6eqI6olPf0m": "runs-task17a-native-repair-kaggle-missing-report-v1",
+          "fld87AYFrpWvw5KKz": "Utente: nessun final_report/failure_report; la cella solleva FileNotFoundError. Exit nativo Kaggle non disponibile. Riproduzione locale separata della vecchia versione: SIGSEGV in SaveState.restore al ritorno nativo dopo formula.",
+          "fldEG2dz830yNYHGk": "Fallita",
+          "fldEugpXcsTK5MRNV": [],
+          "fldH8BxHnUI8L5DGU": [],
+          "fldJIPPVhBHN1LNCM": "Kaggle, revisione 114e4f7; traceback del solo lettore del report.",
+          "fldJct5wFYrKWSZOg": [],
+          "fldMhX465YTTfDlHZ": null,
+          "fldMqpwgskr9iAPtc": null,
+          "fldNQXPTBYtKMuIq0": [],
+          "fldRW0TaoQM2T65IF": "Non interpretabile scientificamente; non registrare come fallimento della LUT.",
+          "fldUk0uhWI0IdEREU": null,
+          "fldY70eVnmzHR7MZx": [],
+          "fldZ5He4nOs4VdNvi": [],
+          "fldeHMCMkOUKhaxpL": [
+            "rec4552a2ec9d73e6"
+          ],
+          "fldgUgjgZu24ukm2l": [],
+          "fldiqFJAS49e1GCUB": "Task17a 114e4f7 — report Kaggle assente",
+          "fldoTxIHgcSHpzMHR": [],
+          "fldoWjG1NxlSfBNt0": null,
+          "fldrNX4Xl4WKFvYia": [],
+          "fldyRVPjo0mXHldZV": []
         }
       },
       {
@@ -14968,6 +15064,45 @@
             "reca5ae58e057218b",
             "rece57a1a378feba9"
           ]
+        }
+      },
+      {
+        "id": "receecafc3949ac0b",
+        "createdTime": "2026-09-29T10:55:54Z",
+        "cellValuesByFieldId": {
+          "fld0liFWUjFcrhrat": [],
+          "fld4R8XwQMz7g481Q": [],
+          "fld4fFUTnEilXd9t2": [],
+          "fld6Hz6eqI6olPf0m": "runs-task17a-native-repair-local-full-matrix-v1",
+          "fld87AYFrpWvw5KKz": "Seconda esecuzione locale completa, inclusa nella suite di integrazione. La prima è una replica tecnica sugli stessi seed: non conta come nuova evidenza indipendente. Non è un run Kaggle.",
+          "fldEG2dz830yNYHGk": "Completata",
+          "fldEugpXcsTK5MRNV": [],
+          "fldH8BxHnUI8L5DGU": [],
+          "fldJIPPVhBHN1LNCM": "Ubuntu WSL, Python 3.12.3, pacchetto NEURON 8.2.7, CPU, teacher 074c4666300a8ad246601dab179a97a6942f0f29. Nessun benchmark GPU/speedup.",
+          "fldJct5wFYrKWSZOg": [],
+          "fldMhX465YTTfDlHZ": "170017,170029,170043",
+          "fldMqpwgskr9iAPtc": null,
+          "fldNQXPTBYtKMuIq0": [],
+          "fldRW0TaoQM2T65IF": "Exit 0; report valid=true; formula e replay/ritorno nativo validi. La suite passa 14 test, incluso SIGSEGV figlio. Decisione scientifica CAUSAL_MICROCANARY_NO_GO per massimo errore gate LUT >0.01.",
+          "fldUk0uhWI0IdEREU": "Matrice preregistrata invariata, 81 episodi + 4 preflight, 642 segmenti. Emendamento: snapshot fresco per generazione del meccanismo, supervisore separato; nessuna selezione o soglia modificata.",
+          "fldY70eVnmzHR7MZx": [
+            "rec1b5122a8c4af37",
+            "reca9e47a5eda654b",
+            "rec307c605076625a",
+            "recc45216f60deb65"
+          ],
+          "fldZ5He4nOs4VdNvi": [
+            "rec590e9eb0319cd8"
+          ],
+          "fldeHMCMkOUKhaxpL": [
+            "rec4552a2ec9d73e6"
+          ],
+          "fldgUgjgZu24ukm2l": [],
+          "fldiqFJAS49e1GCUB": "Task17a — matrice completa Linux dopo fix SaveState",
+          "fldoTxIHgcSHpzMHR": [],
+          "fldoWjG1NxlSfBNt0": null,
+          "fldrNX4Xl4WKFvYia": [],
+          "fldyRVPjo0mXHldZV": []
         }
       },
       {
@@ -17782,6 +17917,26 @@
           "fldsGPSioMOzCpTw9": [],
           "fldvhAY24qhSPAswA": [
             "rec4fcb4888709cb3"
+          ]
+        }
+      },
+      {
+        "id": "rec0e8d7ad72bb556",
+        "createdTime": "2026-09-29T10:55:58Z",
+        "cellValuesByFieldId": {
+          "fldKROwrwmhjbVX0B": "metrics-task17a-native-repair-formula-gate-v1",
+          "fldP5U8hP6kvKdIpg": null,
+          "fldPSEdFocPYKNjCv": "Massimo errore gate copia-formula",
+          "fldS8e8KltyEJebOm": null,
+          "fldVjEn0w67TCsRLd": "max_episode,site,t,gate abs(x_arm-x_native)",
+          "fldX9mOeEsZ99mtWi": "adimensionale",
+          "fldZ9kRgdhsAiVyae": "Regressione",
+          "fldbjopz7cQWq3tF8": [],
+          "fldjPEvabTveyUuiH": "Minimizzare",
+          "fldjaCQHafO4O8Tn8": null,
+          "fldsGPSioMOzCpTw9": [],
+          "fldvhAY24qhSPAswA": [
+            "rec64dc473b986db9"
           ]
         }
       },
@@ -25042,6 +25197,26 @@
           "fldsGPSioMOzCpTw9": [],
           "fldvhAY24qhSPAswA": [
             "reca887047785c2d1"
+          ]
+        }
+      },
+      {
+        "id": "rec719cd312ceb025",
+        "createdTime": "2026-09-29T10:55:55Z",
+        "cellValuesByFieldId": {
+          "fldKROwrwmhjbVX0B": "metrics-task17a-native-repair-formula-voltage-v1",
+          "fldP5U8hP6kvKdIpg": null,
+          "fldPSEdFocPYKNjCv": "Peggior RMSE V copia-formula",
+          "fldS8e8KltyEJebOm": null,
+          "fldVjEn0w67TCsRLd": "max_episode,site sqrt(mean_t((V_arm-V_native)^2))",
+          "fldX9mOeEsZ99mtWi": "mV",
+          "fldZ9kRgdhsAiVyae": "Regressione",
+          "fldbjopz7cQWq3tF8": [],
+          "fldjPEvabTveyUuiH": "Minimizzare",
+          "fldjaCQHafO4O8Tn8": null,
+          "fldsGPSioMOzCpTw9": [],
+          "fldvhAY24qhSPAswA": [
+            "rec1773b079494452"
           ]
         }
       },
@@ -33926,6 +34101,26 @@
         }
       },
       {
+        "id": "recdf7be74e0f1008",
+        "createdTime": "2026-09-29T10:56:06Z",
+        "cellValuesByFieldId": {
+          "fldKROwrwmhjbVX0B": "metrics-task17a-native-repair-lut-gate-v1",
+          "fldP5U8hP6kvKdIpg": null,
+          "fldPSEdFocPYKNjCv": "Massimo errore gate LUT",
+          "fldS8e8KltyEJebOm": null,
+          "fldVjEn0w67TCsRLd": "max_episode,site,t,gate abs(x_arm-x_native)",
+          "fldX9mOeEsZ99mtWi": "adimensionale",
+          "fldZ9kRgdhsAiVyae": "Regressione",
+          "fldbjopz7cQWq3tF8": [],
+          "fldjPEvabTveyUuiH": "Minimizzare",
+          "fldjaCQHafO4O8Tn8": null,
+          "fldsGPSioMOzCpTw9": [],
+          "fldvhAY24qhSPAswA": [
+            "recf6d22953d5d1f6"
+          ]
+        }
+      },
+      {
         "id": "recdf8c0c4987cabc",
         "createdTime": "2026-09-27T20:26:05Z",
         "cellValuesByFieldId": {
@@ -36042,6 +36237,26 @@
           "fldsGPSioMOzCpTw9": [],
           "fldvhAY24qhSPAswA": [
             "rec0657121e8dba9d"
+          ]
+        }
+      },
+      {
+        "id": "recf789d23aac4949",
+        "createdTime": "2026-09-29T10:56:03Z",
+        "cellValuesByFieldId": {
+          "fldKROwrwmhjbVX0B": "metrics-task17a-native-repair-lut-voltage-v1",
+          "fldP5U8hP6kvKdIpg": null,
+          "fldPSEdFocPYKNjCv": "Peggior RMSE V LUT",
+          "fldS8e8KltyEJebOm": null,
+          "fldVjEn0w67TCsRLd": "max_episode,site sqrt(mean_t((V_arm-V_native)^2))",
+          "fldX9mOeEsZ99mtWi": "mV",
+          "fldZ9kRgdhsAiVyae": "Regressione",
+          "fldbjopz7cQWq3tF8": [],
+          "fldjPEvabTveyUuiH": "Minimizzare",
+          "fldjaCQHafO4O8Tn8": null,
+          "fldsGPSioMOzCpTw9": [],
+          "fldvhAY24qhSPAswA": [
+            "rec3172e9844285a9"
           ]
         }
       },
@@ -39741,6 +39956,39 @@
           "fldsGRjbntHKx2NxU": [],
           "fldsPtyImM8QeV5Ad": [],
           "fldxvBFz4AVzYdIpW": "experiment-task9c-dense-physiological-teacher-replay-v1: metrics.linear_20.m_rmse"
+        }
+      },
+      {
+        "id": "rec1773b079494452",
+        "createdTime": "2026-09-29T10:55:56Z",
+        "cellValuesByFieldId": {
+          "fld2yB8sj1cDly0cj": [],
+          "fld5KSdKSps1sNZlC": "Braccio formula rispetto al nativo; sorgente worst_formula_voltage_rmse_mv",
+          "fldAlbluPsuHprMyr": "evaluations-task17a-native-repair-formula-voltage-v1",
+          "fldEaSIYHKLjK1Cmz": [
+            "rec72823a8118d77e"
+          ],
+          "fldFETOup6pjhtMfc": [
+            "rec1b5122a8c4af37"
+          ],
+          "fldHMIAtOdSCUD8kR": "Soglia preregistrata <= 0.05 mV; non modificata dopo il run.",
+          "fldI4vxRDTtE840MH": null,
+          "fldO2YZX0cy5pEf1J": "max_episode,site sqrt(mean_t((V_arm-V_native)^2))",
+          "fldPYezHk7eyaLWxh": null,
+          "fldQ4H7HTyRSXdkte": "v1",
+          "fldS3HEQ8WYaWSt3N": [],
+          "fldXIGJmePNcPHPGt": "Controllo",
+          "fldZR2iJ9IaeDlGDu": [],
+          "fldfpUD6Xq4JVfwny": "27 condizioni protocollo-seed-gbar, 4 siti 0/387/460/469; tre seed indipendenti, campioni temporalmente correlati.",
+          "fldiaFFgCKVBTStMJ": [],
+          "fldiaqxX94BO9QBrJ": "40 ms, campionamento 0.025 ms, 1601 punti per sito/episodio.",
+          "fldjJ9mXoTKg88hZm": [
+            "rec719cd312ceb025"
+          ],
+          "fldoq8uERtGSTrpEn": [],
+          "fldsGRjbntHKx2NxU": [],
+          "fldsPtyImM8QeV5Ad": [],
+          "fldxvBFz4AVzYdIpW": "Task17a — Peggior RMSE V copia-formula"
         }
       },
       {
@@ -43813,6 +44061,39 @@
           "fldsGRjbntHKx2NxU": [],
           "fldsPtyImM8QeV5Ad": [],
           "fldxvBFz4AVzYdIpW": "experiment-task6-voltage-path-stress-v1: sealed.metrics.physical_known_path.17.ramp.open_rmse"
+        }
+      },
+      {
+        "id": "rec3172e9844285a9",
+        "createdTime": "2026-09-29T10:56:04Z",
+        "cellValuesByFieldId": {
+          "fld2yB8sj1cDly0cj": [],
+          "fld5KSdKSps1sNZlC": "Braccio lut rispetto al nativo; sorgente worst_lut_voltage_rmse_mv",
+          "fldAlbluPsuHprMyr": "evaluations-task17a-native-repair-lut-voltage-v1",
+          "fldEaSIYHKLjK1Cmz": [
+            "rec72823a8118d77e"
+          ],
+          "fldFETOup6pjhtMfc": [
+            "rec307c605076625a"
+          ],
+          "fldHMIAtOdSCUD8kR": "Soglia preregistrata <= 2.0 mV; non modificata dopo il run.",
+          "fldI4vxRDTtE840MH": null,
+          "fldO2YZX0cy5pEf1J": "max_episode,site sqrt(mean_t((V_arm-V_native)^2))",
+          "fldPYezHk7eyaLWxh": null,
+          "fldQ4H7HTyRSXdkte": "v1",
+          "fldS3HEQ8WYaWSt3N": [],
+          "fldXIGJmePNcPHPGt": "Primaria",
+          "fldZR2iJ9IaeDlGDu": [],
+          "fldfpUD6Xq4JVfwny": "27 condizioni protocollo-seed-gbar, 4 siti 0/387/460/469; tre seed indipendenti, campioni temporalmente correlati.",
+          "fldiaFFgCKVBTStMJ": [],
+          "fldiaqxX94BO9QBrJ": "40 ms, campionamento 0.025 ms, 1601 punti per sito/episodio.",
+          "fldjJ9mXoTKg88hZm": [
+            "recf789d23aac4949"
+          ],
+          "fldoq8uERtGSTrpEn": [],
+          "fldsGRjbntHKx2NxU": [],
+          "fldsPtyImM8QeV5Ad": [],
+          "fldxvBFz4AVzYdIpW": "Task17a — Peggior RMSE V LUT"
         }
       },
       {
@@ -50590,6 +50871,39 @@
           "fldsGRjbntHKx2NxU": [],
           "fldsPtyImM8QeV5Ad": [],
           "fldxvBFz4AVzYdIpW": "experiment-task8-cahva-continuous-path-stress-v1: sealed.metrics.physical_start_only.17.fast_ramp.open_rmse"
+        }
+      },
+      {
+        "id": "rec64dc473b986db9",
+        "createdTime": "2026-09-29T10:56:01Z",
+        "cellValuesByFieldId": {
+          "fld2yB8sj1cDly0cj": [],
+          "fld5KSdKSps1sNZlC": "Braccio formula rispetto al nativo; sorgente worst_formula_gate_error",
+          "fldAlbluPsuHprMyr": "evaluations-task17a-native-repair-formula-gate-v1",
+          "fldEaSIYHKLjK1Cmz": [
+            "rec72823a8118d77e"
+          ],
+          "fldFETOup6pjhtMfc": [
+            "reca9e47a5eda654b"
+          ],
+          "fldHMIAtOdSCUD8kR": "Soglia preregistrata <= 0.002 adimensionale; non modificata dopo il run.",
+          "fldI4vxRDTtE840MH": null,
+          "fldO2YZX0cy5pEf1J": "max_episode,site,t,gate abs(x_arm-x_native)",
+          "fldPYezHk7eyaLWxh": null,
+          "fldQ4H7HTyRSXdkte": "v1",
+          "fldS3HEQ8WYaWSt3N": [],
+          "fldXIGJmePNcPHPGt": "Controllo",
+          "fldZR2iJ9IaeDlGDu": [],
+          "fldfpUD6Xq4JVfwny": "27 condizioni protocollo-seed-gbar, 4 siti 0/387/460/469; tre seed indipendenti, campioni temporalmente correlati.",
+          "fldiaFFgCKVBTStMJ": [],
+          "fldiaqxX94BO9QBrJ": "40 ms, campionamento 0.025 ms, 1601 punti per sito/episodio.",
+          "fldjJ9mXoTKg88hZm": [
+            "rec0e8d7ad72bb556"
+          ],
+          "fldoq8uERtGSTrpEn": [],
+          "fldsGRjbntHKx2NxU": [],
+          "fldsPtyImM8QeV5Ad": [],
+          "fldxvBFz4AVzYdIpW": "Task17a — Massimo errore gate copia-formula"
         }
       },
       {
@@ -69659,6 +69973,39 @@
         }
       },
       {
+        "id": "recf6d22953d5d1f6",
+        "createdTime": "2026-09-29T10:56:07Z",
+        "cellValuesByFieldId": {
+          "fld2yB8sj1cDly0cj": [],
+          "fld5KSdKSps1sNZlC": "Braccio lut rispetto al nativo; sorgente worst_lut_gate_error",
+          "fldAlbluPsuHprMyr": "evaluations-task17a-native-repair-lut-gate-v1",
+          "fldEaSIYHKLjK1Cmz": [
+            "rec72823a8118d77e"
+          ],
+          "fldFETOup6pjhtMfc": [
+            "recc45216f60deb65"
+          ],
+          "fldHMIAtOdSCUD8kR": "Soglia preregistrata <= 0.01 adimensionale; non modificata dopo il run.",
+          "fldI4vxRDTtE840MH": null,
+          "fldO2YZX0cy5pEf1J": "max_episode,site,t,gate abs(x_arm-x_native)",
+          "fldPYezHk7eyaLWxh": null,
+          "fldQ4H7HTyRSXdkte": "v1",
+          "fldS3HEQ8WYaWSt3N": [],
+          "fldXIGJmePNcPHPGt": "Primaria",
+          "fldZR2iJ9IaeDlGDu": [],
+          "fldfpUD6Xq4JVfwny": "27 condizioni protocollo-seed-gbar, 4 siti 0/387/460/469; tre seed indipendenti, campioni temporalmente correlati.",
+          "fldiaFFgCKVBTStMJ": [],
+          "fldiaqxX94BO9QBrJ": "40 ms, campionamento 0.025 ms, 1601 punti per sito/episodio.",
+          "fldjJ9mXoTKg88hZm": [
+            "recdf7be74e0f1008"
+          ],
+          "fldoq8uERtGSTrpEn": [],
+          "fldsGRjbntHKx2NxU": [],
+          "fldsPtyImM8QeV5Ad": [],
+          "fldxvBFz4AVzYdIpW": "Task17a — Massimo errore gate LUT"
+        }
+      },
+      {
         "id": "recf6ef83c8ecb1bc",
         "createdTime": "2026-09-27T20:17:41Z",
         "cellValuesByFieldId": {
@@ -74746,6 +75093,38 @@
         }
       },
       {
+        "id": "rec1b5122a8c4af37",
+        "createdTime": "2026-09-29T10:55:57Z",
+        "cellValuesByFieldId": {
+          "fld5efZeHP13tPZIE": null,
+          "fld8BQkwAk6ugX61X": [
+            "rec1e2e0c34998707"
+          ],
+          "fldEqYnOFpmAKNKAg": "Misura autentica da final_report.json/worst_formula_voltage_rmse_mv. Soglia 0.05; nessun intervallo di confidenza stimato.",
+          "fldF9hGiSx0WFq2N4": 27,
+          "fldFIAu0YuD5UimNv": [
+            "receecafc3949ac0b"
+          ],
+          "fldM4Q1XZniPW9zCM": "observations-task17a-native-repair-formula-voltage-v1",
+          "fldQkh4yUQXtLH5Bw": [
+            "rec590e9eb0319cd8"
+          ],
+          "fldRWdcxSHSEt0w9T": [],
+          "fldSp0iVWwnDBMaNE": [],
+          "fldSptYbHtZKDBoNs": [],
+          "fldVlV5S274iKXeLu": [],
+          "fldZm7knGyjHoTibw": 0.0,
+          "flddKSyBADtb3yTfs": "Task17a locale — Peggior RMSE V copia-formula",
+          "fldhmtBz9Tn666zYf": "formula; massimo su 27 condizioni e quattro siti",
+          "fldlqnCmRNip4EmxQ": null,
+          "fldvkpLJ033f1l55k": null,
+          "fldw5ukaVeipdb1Mm": [
+            "rec1773b079494452"
+          ],
+          "fldxDPJbvpnc2B6Hr": null
+        }
+      },
+      {
         "id": "rec1b7c229704edd5",
         "createdTime": "2026-09-27T20:19:20Z",
         "cellValuesByFieldId": {
@@ -77261,6 +77640,38 @@
           "fldvkpLJ033f1l55k": null,
           "fldw5ukaVeipdb1Mm": [
             "rec7c5212b1817fd4"
+          ],
+          "fldxDPJbvpnc2B6Hr": null
+        }
+      },
+      {
+        "id": "rec307c605076625a",
+        "createdTime": "2026-09-29T10:56:05Z",
+        "cellValuesByFieldId": {
+          "fld5efZeHP13tPZIE": null,
+          "fld8BQkwAk6ugX61X": [
+            "rec1e2e0c34998707"
+          ],
+          "fldEqYnOFpmAKNKAg": "Misura autentica da final_report.json/worst_lut_voltage_rmse_mv. Soglia 2.0; nessun intervallo di confidenza stimato.",
+          "fldF9hGiSx0WFq2N4": 27,
+          "fldFIAu0YuD5UimNv": [
+            "receecafc3949ac0b"
+          ],
+          "fldM4Q1XZniPW9zCM": "observations-task17a-native-repair-lut-voltage-v1",
+          "fldQkh4yUQXtLH5Bw": [
+            "rec590e9eb0319cd8"
+          ],
+          "fldRWdcxSHSEt0w9T": [],
+          "fldSp0iVWwnDBMaNE": [],
+          "fldSptYbHtZKDBoNs": [],
+          "fldVlV5S274iKXeLu": [],
+          "fldZm7knGyjHoTibw": 0.5933959189530174,
+          "flddKSyBADtb3yTfs": "Task17a locale — Peggior RMSE V LUT",
+          "fldhmtBz9Tn666zYf": "lut; massimo su 27 condizioni e quattro siti",
+          "fldlqnCmRNip4EmxQ": null,
+          "fldvkpLJ033f1l55k": null,
+          "fldw5ukaVeipdb1Mm": [
+            "rec3172e9844285a9"
           ],
           "fldxDPJbvpnc2B6Hr": null
         }
@@ -93378,6 +93789,38 @@
         }
       },
       {
+        "id": "reca9e47a5eda654b",
+        "createdTime": "2026-09-29T10:56:02Z",
+        "cellValuesByFieldId": {
+          "fld5efZeHP13tPZIE": null,
+          "fld8BQkwAk6ugX61X": [
+            "rec1e2e0c34998707"
+          ],
+          "fldEqYnOFpmAKNKAg": "Misura autentica da final_report.json/worst_formula_gate_error. Soglia 0.002; nessun intervallo di confidenza stimato.",
+          "fldF9hGiSx0WFq2N4": 27,
+          "fldFIAu0YuD5UimNv": [
+            "receecafc3949ac0b"
+          ],
+          "fldM4Q1XZniPW9zCM": "observations-task17a-native-repair-formula-gate-v1",
+          "fldQkh4yUQXtLH5Bw": [
+            "rec590e9eb0319cd8"
+          ],
+          "fldRWdcxSHSEt0w9T": [],
+          "fldSp0iVWwnDBMaNE": [],
+          "fldSptYbHtZKDBoNs": [],
+          "fldVlV5S274iKXeLu": [],
+          "fldZm7knGyjHoTibw": 0.0,
+          "flddKSyBADtb3yTfs": "Task17a locale — Massimo errore gate copia-formula",
+          "fldhmtBz9Tn666zYf": "formula; massimo su 27 condizioni e quattro siti",
+          "fldlqnCmRNip4EmxQ": null,
+          "fldvkpLJ033f1l55k": null,
+          "fldw5ukaVeipdb1Mm": [
+            "rec64dc473b986db9"
+          ],
+          "fldxDPJbvpnc2B6Hr": null
+        }
+      },
+      {
         "id": "reca9e7d5d2e23d33",
         "createdTime": "2026-09-27T20:29:01Z",
         "cellValuesByFieldId": {
@@ -97483,6 +97926,38 @@
           "fldvkpLJ033f1l55k": null,
           "fldw5ukaVeipdb1Mm": [
             "reca1039cb6610fb4"
+          ],
+          "fldxDPJbvpnc2B6Hr": null
+        }
+      },
+      {
+        "id": "recc45216f60deb65",
+        "createdTime": "2026-09-29T10:56:08Z",
+        "cellValuesByFieldId": {
+          "fld5efZeHP13tPZIE": null,
+          "fld8BQkwAk6ugX61X": [
+            "rec1e2e0c34998707"
+          ],
+          "fldEqYnOFpmAKNKAg": "Misura autentica da final_report.json/worst_lut_gate_error. Soglia 0.01; nessun intervallo di confidenza stimato.",
+          "fldF9hGiSx0WFq2N4": 27,
+          "fldFIAu0YuD5UimNv": [
+            "receecafc3949ac0b"
+          ],
+          "fldM4Q1XZniPW9zCM": "observations-task17a-native-repair-lut-gate-v1",
+          "fldQkh4yUQXtLH5Bw": [
+            "rec590e9eb0319cd8"
+          ],
+          "fldRWdcxSHSEt0w9T": [],
+          "fldSp0iVWwnDBMaNE": [],
+          "fldSptYbHtZKDBoNs": [],
+          "fldVlV5S274iKXeLu": [],
+          "fldZm7knGyjHoTibw": 0.01835138564840766,
+          "flddKSyBADtb3yTfs": "Task17a locale — Massimo errore gate LUT",
+          "fldhmtBz9Tn666zYf": "lut; massimo su 27 condizioni e quattro siti",
+          "fldlqnCmRNip4EmxQ": null,
+          "fldvkpLJ033f1l55k": null,
+          "fldw5ukaVeipdb1Mm": [
+            "recf6d22953d5d1f6"
           ],
           "fldxDPJbvpnc2B6Hr": null
         }
@@ -106585,6 +107060,34 @@
         }
       },
       {
+        "id": "rec1e2e0c34998707",
+        "createdTime": "2026-09-29T10:56:08Z",
+        "cellValuesByFieldId": {
+          "fld617j6OxMbAcouu": "Distinguere crash del vecchio driver, corretto, da esito scientifico negativo del criterio gate. Nessuna soglia o architettura adattata ai risultati osservati.",
+          "fld6RRXAezvkiy3Ah": [],
+          "fld6T3N6yemVml04C": [
+            "rec1b5122a8c4af37",
+            "reca9e47a5eda654b",
+            "rec307c605076625a",
+            "recc45216f60deb65"
+          ],
+          "fldAH67e9psRNS6ym": "findings-task17a-native-repair-scoped-outcome-v1",
+          "fldByihGBJcbOynhM": [],
+          "fldCeLjZXpGED4yv1": "Misto",
+          "fldMuvZsGvQ2lJDib": "Formula: errori V e gate massimi zero. LUT: peggior RMSE V 0.5933959189530174 mV <=2, massimo errore m/h 0.01835138564840766 >0.01. Contrasto gbar valido su 11 effetti identificabili. Gate C non autorizzato.",
+          "fldTkqGHCtsGhE6dR": [],
+          "fldUZXkcamhiuYbOm": "Tre seed e protocolli fissi; ripetere gli stessi seed non aumenta evidenza indipendente.",
+          "fldYAbc64NIZGKzWO": [
+            "recbe364a1facd791"
+          ],
+          "fldb5iUtfy1H6reyF": [],
+          "fldbpwerh1Ibdisrk": "Validazione CPU Linux locale, non ancora replica Kaggle; non prova copertura completa di regimi, eventi/spike o speedup. Il candidato non è promosso.",
+          "fldhoJJ1jrMBcOUrl": "Task17a locale: driver riparato, formula esatta, LUT NO-GO sui gate",
+          "flduQBGqeIrhFjoew": [],
+          "fldw7I3GqPu0PuSLu": []
+        }
+      },
+      {
         "id": "rec1fb83c1fb73e9d",
         "createdTime": "2026-09-22T18:23:06Z",
         "cellValuesByFieldId": {
@@ -108191,7 +108694,7 @@
           ],
           "fldL6j0RgbU09Usnb": "Codice, notebook e preregistrazione della stessa revisione; teacher canonico commit 074c466; NEURON 8.2.7; artefatto Task15c verificato.",
           "fldMeQ3of9b3RZvPb": "Eseguire Task 17a causal Ca-HVA microcanary",
-          "fldQT49hS3JSMm8FP": "Eseguire notebook 17_roadmap_causal_cahva_replacement.ipynb su Kaggle con artefatto Task15c. Scaricare ZIP diagnostico anche dopo un preflight NO-GO. Nessuna interpretazione del risultato prima del controllo formula.",
+          "fldQT49hS3JSMm8FP": "Fix verificato con due matrici complete CPU Linux e suite nativa (14 test). Risultato locale disponibile: formula passa, LUT NO-GO sui gate. Per replica Kaggle usare notebook aggiornato o entrambe le celle di 17a_recovery_existing_session.ipynb con Task15c; non occorre rilanciare solo per verificare il crash. Nessuna promozione Gate C.",
           "fldazVEmaizg09aw8": [],
           "fldgrmwbCk1T9fq46": [],
           "fldilkZX7GrkdJNu2": "Microcanary causale interpretabile o diagnosi circoscritta; Gate C ancora sospeso.",

@@ -2,6 +2,10 @@
 
 import tempfile
 import unittest
+import json
+import os
+import subprocess
+import sys
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -11,7 +15,7 @@ from src.giada_teacher.roadmap_causal_cahva_replacement import (
     CausalReplacementConfig, SITES, _canonical_gbar,
     _canonical_synapse_weights, _changed_synapse_weights, _explicit_lut_rates,
     _paired_effect, _restore_canonical_gbar, candidate_protocols,
-    generate_candidate_mods,
+    generate_candidate_mods, _trial,
 )
 
 
@@ -63,6 +67,11 @@ class Task17ContractTests(unittest.TestCase):
         records[0]["netcon"].weight[0] = 0.6
         self.assertEqual(_changed_synapse_weights(records, weights), [0])
 
+    def test_incompatible_snapshot_is_rejected_before_native_restore(self):
+        session = SimpleNamespace(task17_snapshot_suffix="Ca_HVA")
+        with self.assertRaisesRegex(RuntimeError, "across a mechanism change"):
+            _trial(session, None, None, 17, 1.0, "lut", CausalReplacementConfig(), {})
+
     def test_gbar_is_reset_before_each_paired_arm(self):
         segment = SimpleNamespace(x=0.5, gCa_HVAbar_Ca_HVA=0.002)
         class Section:
@@ -81,6 +90,33 @@ class Task17ContractTests(unittest.TestCase):
         segment.gCa_HVAbar_Ca_HVA *= 0.5
         _restore_canonical_gbar(session, baseline)
         self.assertEqual(segment.gCa_HVAbar_Ca_HVA, 0.002)
+
+
+@unittest.skipUnless(os.environ.get("GIADA_TASK17_NATIVE_TEST") == "1",
+                     "Opt-in: requires compiled pinned Linux teacher and verified Task15c input")
+class Task17NativeIntegrationTests(unittest.TestCase):
+    def test_complete_matrix_and_snapshot_roundtrip(self):
+        repo = Path(__file__).resolve().parents[1]
+        # Keep native artifacts for audit; no implicit deletion of successful evidence.
+        root = Path(os.environ["GIADA_TASK17_TEST_OUTPUT"])
+        command = [sys.executable, str(repo / "scripts/run_roadmap_task17.py"),
+                   "--repo", str(repo), "--teacher", os.environ["GIADA_NATIVE_TEACHER"],
+                   "--task15c", os.environ["GIADA_TASK15C_ARTIFACT"], "--output", str(root)]
+        completed = subprocess.run(command, check=False)
+        self.assertEqual(completed.returncode, 0)
+        report = json.loads((root / "final_report.json").read_text())
+        status = json.loads((root / "process_status.json").read_text())
+        self.assertEqual(status["returncode"], 0)
+        self.assertTrue(report["valid"])
+        self.assertTrue(report["formula_control_valid"])
+        self.assertFalse(report["gate_c_authorized"])
+        self.assertEqual(report["episode_count"], 27)
+        self.assertEqual(len(list((root / "completed_trials").glob("*.json"))), 81)
+        self.assertLessEqual(max(x["voltage_max_error_mv"] for x in
+                                 report["native_after_swap_preflight"].values()), 1e-5)
+        self.assertEqual(report["snapshot_policy"],
+                         "fresh_equilibrium_snapshot_per_mechanism_generation")
+        # Do not demand a LUT GO: integration success is not candidate promotion.
 
 
 if __name__ == "__main__":
