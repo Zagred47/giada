@@ -1,0 +1,382 @@
+{
+  "schema_version": "giada-roadmap-task17c-m-precision-solver-v1",
+  "valid": true,
+  "decision": "DIAGNOSTIC_ONLY",
+  "gate_c_authorized": false,
+  "task17a_result_preserved": "CAUSAL_MICROCANARY_NO_GO",
+  "code_revision": "3bb2754d631a6d0834dc3326f0066f515484c3fd",
+  "config": {
+    "conditions": [
+      [
+        170029,
+        1.0
+      ],
+      [
+        170083,
+        1.5
+      ],
+      [
+        170029,
+        0.5
+      ]
+    ],
+    "protocol_index": 1,
+    "duration_ms": 40,
+    "sample_interval_ms": 0.025,
+    "grid_min_mv": -135.0,
+    "grid_max_mv": 75.0,
+    "tight_atol": 1e-05,
+    "tight_rtol": 1e-06,
+    "stricter_atol": 1e-06,
+    "stricter_rtol": 1e-07,
+    "ultra_atol": 1e-07,
+    "ultra_rtol": 1e-08,
+    "repeat_voltage_max_atol_mv": 1e-05,
+    "formula_voltage_rmse_limit_mv": 0.05,
+    "formula_gate_max_error": 0.002
+  },
+  "teacher_segment_count": 642,
+  "solver_levels": {
+    "default": [
+      0.001,
+      0.0
+    ],
+    "tight": [
+      1e-05,
+      1e-06
+    ]
+  },
+  "native_repeat_preflight": {
+    "default": {
+      "0": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "387": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "460": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "469": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      }
+    },
+    "tight": {
+      "0": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "387": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "460": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "469": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      }
+    },
+    "stricter": {
+      "0": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "387": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "460": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "469": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      }
+    },
+    "ultra": {
+      "0": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "387": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "460": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      },
+      "469": {
+        "voltage_rmse_mv": 0.0,
+        "voltage_max_error_mv": 0.0,
+        "m_max_error": 0.0,
+        "h_max_error": 0.0,
+        "current_rmse_ma_cm2": 0.0
+      }
+    }
+  },
+  "native_only_extra_solver_levels": {
+    "stricter": [
+      1e-06,
+      1e-07
+    ],
+    "ultra": [
+      1e-07,
+      1e-08
+    ]
+  },
+  "frozen_table_probe": {
+    "valid": true,
+    "maximum_absolute_error": 0.0,
+    "atol": 2e-05,
+    "checks": [
+      {
+        "index": 0,
+        "voltage_mv": -135.0,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 1,
+        "voltage_mv": -134.58984375,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 0.5,
+        "voltage_mv": -134.794921875,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 64,
+        "voltage_mv": -108.75,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 128,
+        "voltage_mv": -82.5,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 127.5,
+        "voltage_mv": -82.705078125,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 255,
+        "voltage_mv": -30.41015625,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 256,
+        "voltage_mv": -30.0,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 263,
+        "voltage_mv": -27.12890625,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 263.5,
+        "voltage_mv": -26.923828125,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 384,
+        "voltage_mv": 22.5,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 511,
+        "voltage_mv": 74.58984375,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 511.5,
+        "voltage_mv": 74.794921875,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 512,
+        "voltage_mv": 75.0,
+        "maximum_absolute_rate_error": 0.0
+      }
+    ]
+  },
+  "compiled_m_table_probe": {
+    "m_pair_513_f32": 3.552713678800501e-15,
+    "m_pair_513_f64": 3.552713678800501e-15,
+    "m_pair_1025_f64": 3.552713678800501e-15,
+    "m_pair_2049_f64": 3.1086244689504383e-15
+  },
+  "static_m_rate_errors": {
+    "m_pair_513_f32": {
+      "m_inf": 0.00011540028050199824,
+      "m_tau_ms": 0.001590282183064673
+    },
+    "m_pair_513_f64": {
+      "m_inf": 0.00011540208174570799,
+      "m_tau_ms": 0.0015902863938475065
+    },
+    "m_pair_1025_f64": {
+      "m_inf": 2.8862706862559095e-05,
+      "m_tau_ms": 0.00039822399392264174
+    },
+    "m_pair_2049_f64": {
+      "m_inf": 7.62980445445649e-06,
+      "m_tau_ms": 9.955775135939149e-05
+    }
+  },
+  "candidate_mods": {
+    "formula": {
+      "path": "artifacts/giada_task17c_local_with_ladder/candidate_mods/GIADA_CaHVA_formula.mod",
+      "sha256": "b8f678df761f2275fa7acf6cfa1fe26ddcc22f70a7de12a80955ab7ee2978cc4"
+    },
+    "lut": {
+      "path": "artifacts/giada_task17c_local_with_ladder/candidate_mods/GIADA_CaHVA_lut.mod",
+      "sha256": "b5ffba9935668ffa203dfa001cc2361adb97d78a8bb407fe086f3861681b870d"
+    },
+    "m_pair_513_f32": {
+      "path": "artifacts/giada_task17c_local_with_ladder/candidate_mods/GIADA_CaHVA_17c_m_pair_513_f32.mod",
+      "sha256": "45e8db0f678fd2f570ca192915d0ce39be5a6660b01095c5f57e053d210d9204",
+      "knots": 513,
+      "table_precision": "float32",
+      "table_sha256": "058b3bed6e195e6c8c82d45df34875b41129fe7d5b1b67230b9c69a677f2d093"
+    },
+    "m_pair_513_f64": {
+      "path": "artifacts/giada_task17c_local_with_ladder/candidate_mods/GIADA_CaHVA_17c_m_pair_513_f64.mod",
+      "sha256": "08babc332efa39ce2c207bd9c662711f0f93d8bd31cc6f5329a5e8dac09ba2b2",
+      "knots": 513,
+      "table_precision": "float64",
+      "table_sha256": "b239275aad5cd95a369e41b3007c0973c0008352806da4957bca69d50006b415"
+    },
+    "m_pair_1025_f64": {
+      "path": "artifacts/giada_task17c_local_with_ladder/candidate_mods/GIADA_CaHVA_17c_m_pair_1025_f64.mod",
+      "sha256": "2e8f5852bcdc5648ac176ef79a063728aa307b1f29f898fc410436b0df5ebf73",
+      "knots": 1025,
+      "table_precision": "float64",
+      "table_sha256": "2614690f64e5cfd3ac61d071c5dcbe8443da4871d00535c47063d211867fa568"
+    },
+    "m_pair_2049_f64": {
+      "path": "artifacts/giada_task17c_local_with_ladder/candidate_mods/GIADA_CaHVA_17c_m_pair_2049_f64.mod",
+      "sha256": "9bc91fdeb076211bee0fe66b1842a063f29bb5cf1afc5c33596f55874dc2f6e4",
+      "knots": 2049,
+      "table_precision": "float64",
+      "table_sha256": "e15f712faccc68dafbc7d861a14e23262388b9715ae5b564c51c06f261251765"
+    }
+  },
+  "compilation": {
+    "command": [
+      "/tmp/giada-task17-native-venv/bin/nrnivmodl"
+    ],
+    "library": "artifacts/giada_task17c_local_with_ladder/candidate_mods/x86_64/libnrnmech.so"
+  },
+  "summary": {
+    "default": {
+      "formula": {
+        "maximum_gate_error": 0.0,
+        "maximum_voltage_rmse_mv": 0.0
+      },
+      "lut": {
+        "maximum_gate_error": 0.01835138564840766,
+        "maximum_voltage_rmse_mv": 0.5933959189530174
+      },
+      "m_pair_513_f32": {
+        "maximum_gate_error": 0.018381625143422564,
+        "maximum_voltage_rmse_mv": 0.5942711302101018
+      },
+      "m_pair_513_f64": {
+        "maximum_gate_error": 0.018380714164770273,
+        "maximum_voltage_rmse_mv": 0.5942449283549909
+      },
+      "m_pair_1025_f64": {
+        "maximum_gate_error": 0.00365728273675181,
+        "maximum_voltage_rmse_mv": 0.12656238723791927
+      },
+      "m_pair_2049_f64": {
+        "maximum_gate_error": 0.0017601503377796535,
+        "maximum_voltage_rmse_mv": 0.03812628865444462
+      }
+    },
+    "tight": {
+      "formula": {
+        "maximum_gate_error": 0.0,
+        "maximum_voltage_rmse_mv": 0.0
+      },
+      "lut": {
+        "maximum_gate_error": 0.010753525469072739,
+        "maximum_voltage_rmse_mv": 0.1559273103597062
+      },
+      "m_pair_513_f32": {
+        "maximum_gate_error": 0.010803982653119382,
+        "maximum_voltage_rmse_mv": 0.1562234784018879
+      },
+      "m_pair_513_f64": {
+        "maximum_gate_error": 0.010803639621879635,
+        "maximum_voltage_rmse_mv": 0.15621466326866873
+      },
+      "m_pair_1025_f64": {
+        "maximum_gate_error": 0.0027718433224591943,
+        "maximum_voltage_rmse_mv": 0.04043713093533122
+      },
+      "m_pair_2049_f64": {
+        "maximum_gate_error": 0.0006733764646800477,
+        "maximum_voltage_rmse_mv": 0.011269924231914424
+      }
+    }
+  },
+  "paired_condition_count": 3,
+  "warning": "Known stress conditions only; no candidate selected or Gate C promotion."
+}
