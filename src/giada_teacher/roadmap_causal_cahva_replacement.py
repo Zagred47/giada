@@ -288,8 +288,8 @@ def _sample(session, suffix):
 
 
 def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
-           canonical_gbar):
-    suffix = "Ca_HVA" if arm == "native" else SUFFIXES[arm]
+           canonical_gbar, suffixes=None):
+    suffix = "Ca_HVA" if arm == "native" else (suffixes or SUFFIXES)[arm]
     if session.task17_snapshot_suffix != suffix:
         raise RuntimeError("Refusing SaveState restore across a mechanism change")
     native_phase("trial_restore", arm=arm, seed=seed, multiplier=multiplier,
@@ -353,7 +353,7 @@ def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
             "samples": expected, "traces": traces}
 
 
-def _activate_arm(session, canonical_gbar, arm):
+def _activate_arm(session, canonical_gbar, arm, suffixes=None):
     """Transfer equilibrium once, then save a NEW snapshot for this structure.
 
     NEURON SaveState is tied to mechanism insertion order, not just suffixes.
@@ -361,7 +361,7 @@ def _activate_arm(session, canonical_gbar, arm):
     back to the same named mechanism. All trials of one arm run contiguously.
     """
     source_suffix = session.task17_snapshot_suffix
-    target_suffix = "Ca_HVA" if arm == "native" else SUFFIXES[arm]
+    target_suffix = "Ca_HVA" if arm == "native" else (suffixes or SUFFIXES)[arm]
     if source_suffix == target_suffix:
         return
     native_phase("arm_equilibrium_restore", source=source_suffix, target=target_suffix)

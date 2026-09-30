@@ -1,0 +1,212 @@
+{
+  "schema_version": "giada-roadmap-task17b-rate-attribution-v1",
+  "valid": true,
+  "decision": "DIAGNOSTIC_ONLY",
+  "gate_c_authorized": false,
+  "task17a_result_preserved": "CAUSAL_MICROCANARY_NO_GO",
+  "known_failure_seed_used_for_diagnosis": 170029,
+  "new_seeds_not_sealed_confirmation": [
+    170083,
+    170097
+  ],
+  "full_lut_worst_gate_error": 0.01835138564840766,
+  "single_rate_interventions": {
+    "m_inf_lut": [
+      "mInf"
+    ],
+    "m_tau_lut": [
+      "mTau"
+    ],
+    "m_pair_lut": [
+      "mInf",
+      "mTau"
+    ],
+    "h_inf_lut": [
+      "hInf"
+    ],
+    "h_tau_lut": [
+      "hTau"
+    ]
+  },
+  "hybrid_mods": {
+    "formula": {
+      "path": "artifacts/giada_task17b_local_final/candidate_mods/GIADA_CaHVA_formula.mod",
+      "sha256": "b8f678df761f2275fa7acf6cfa1fe26ddcc22f70a7de12a80955ab7ee2978cc4"
+    },
+    "lut": {
+      "path": "artifacts/giada_task17b_local_final/candidate_mods/GIADA_CaHVA_lut.mod",
+      "sha256": "b5ffba9935668ffa203dfa001cc2361adb97d78a8bb407fe086f3861681b870d"
+    },
+    "m_inf_lut": {
+      "path": "artifacts/giada_task17b_local_final/candidate_mods/GIADA_CaHVA_17b_m_inf_lut.mod",
+      "sha256": "17c39d717c59e118f0a7c1f67f8cf4e1a3a01c8a7800ae00ce478f2efc123ca6",
+      "only_replaced_rates": [
+        "mInf"
+      ]
+    },
+    "m_tau_lut": {
+      "path": "artifacts/giada_task17b_local_final/candidate_mods/GIADA_CaHVA_17b_m_tau_lut.mod",
+      "sha256": "9f53f8d188ade4ce9d444be7c978f6d5d4ff18e227dad7e7591ff60d98c73fe8",
+      "only_replaced_rates": [
+        "mTau"
+      ]
+    },
+    "m_pair_lut": {
+      "path": "artifacts/giada_task17b_local_final/candidate_mods/GIADA_CaHVA_17b_m_pair_lut.mod",
+      "sha256": "029a576b289d4df9230ea0b3eab12856218af62d12dfd3006c7b234bb54b29c3",
+      "only_replaced_rates": [
+        "mInf",
+        "mTau"
+      ]
+    },
+    "h_inf_lut": {
+      "path": "artifacts/giada_task17b_local_final/candidate_mods/GIADA_CaHVA_17b_h_inf_lut.mod",
+      "sha256": "3bad5d4b7372078f61ba67193fcac3f241c102c091a7bb99bccb1b5f9c9591ed",
+      "only_replaced_rates": [
+        "hInf"
+      ]
+    },
+    "h_tau_lut": {
+      "path": "artifacts/giada_task17b_local_final/candidate_mods/GIADA_CaHVA_17b_h_tau_lut.mod",
+      "sha256": "e8ea4244c6aebb840a1384d7eba1c91d218c7f4516a82b296bf3113fe9b8da92",
+      "only_replaced_rates": [
+        "hTau"
+      ]
+    }
+  },
+  "compilation": {
+    "command": [
+      "/tmp/giada-task17-native-venv/bin/nrnivmodl"
+    ],
+    "library": "artifacts/giada_task17b_local_final/candidate_mods/x86_64/libnrnmech.so"
+  },
+  "frozen_table_probe": {
+    "valid": true,
+    "maximum_absolute_error": 0.0,
+    "atol": 2e-05,
+    "checks": [
+      {
+        "index": 0,
+        "voltage_mv": -135.0,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 1,
+        "voltage_mv": -134.58984375,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 0.5,
+        "voltage_mv": -134.794921875,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 64,
+        "voltage_mv": -108.75,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 128,
+        "voltage_mv": -82.5,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 127.5,
+        "voltage_mv": -82.705078125,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 255,
+        "voltage_mv": -30.41015625,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 256,
+        "voltage_mv": -30.0,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 263,
+        "voltage_mv": -27.12890625,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 263.5,
+        "voltage_mv": -26.923828125,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 384,
+        "voltage_mv": 22.5,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 511,
+        "voltage_mv": 74.58984375,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 511.5,
+        "voltage_mv": 74.794921875,
+        "maximum_absolute_rate_error": 0.0
+      },
+      {
+        "index": 512,
+        "voltage_mv": 75.0,
+        "maximum_absolute_rate_error": 0.0
+      }
+    ]
+  },
+  "teacher_segment_count": 642,
+  "native_repeat_preflight": {
+    "0": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "387": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "460": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "469": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    }
+  },
+  "code_revision": "982ad58e627ed68ab236041e52377761ae6a0824",
+  "config": {
+    "seeds": [
+      170029,
+      170083,
+      170097
+    ],
+    "gbar_multipliers": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "protocol_index": 1,
+    "duration_ms": 40,
+    "sample_interval_ms": 0.025,
+    "formula_voltage_rmse_limit_mv": 0.05,
+    "formula_gate_max_error": 0.002,
+    "repeated_native_voltage_atol_mv": 1e-05,
+    "attribution_error_floor": 0.002
+  },
+  "warning": "Rate attribution only; no candidate selected or threshold changed. Gate C needs independent preregistered validation."
+}
