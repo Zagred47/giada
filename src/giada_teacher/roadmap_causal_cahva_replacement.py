@@ -288,7 +288,8 @@ def _sample(session, suffix):
 
 
 def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
-           canonical_gbar, suffixes=None):
+           canonical_gbar, suffixes=None, *, sample_fn=None,
+           capture_release=False):
     suffix = "Ca_HVA" if arm == "native" else (suffixes or SUFFIXES)[arm]
     if session.task17_snapshot_suffix != suffix:
         raise RuntimeError("Refusing SaveState restore across a mechanism change")
@@ -322,15 +323,21 @@ def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
             setattr(seg, name, float(getattr(seg, name)) * multiplier)
     session.cvode.re_init()
     session.h.fcurrent()
-    initial = _sample(session, suffix)
+    sample = sample_fn or _sample
+    initial = sample(session, suffix)
     traces = {str(site): {key: [value] for key, value in initial[str(site)].items()}
               for site in SITES}
+    release_rows = []
     for step in range(config.duration_ms):
         start = float(session.h.t)
         session._active_transition_id = int(seed * 1000 + step)
         _, _, observations = session._drive_one_ms(
-            start, tuple(actions.get(step, ())), lambda: _sample(session, suffix),
+            start, tuple(actions.get(step, ())), lambda: sample(session, suffix),
             sample_interval_ms=config.sample_interval_ms)
+        if capture_release:
+            release_rows.append({"step": step,
+                                 "outcomes": [item.to_dict() for item in session._last_release_outcomes],
+                                 "verification": session._last_release_verification})
         for observed in observations[1:]:
             for site in SITES:
                 for key, value in observed[str(site)].items():
@@ -350,7 +357,8 @@ def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
         raise RuntimeError(f"Task 17 changed canonical NetCon weights: {changed_weights[:5]}")
     return {"arm": arm, "protocol": label, "seed": seed,
             "gbar_multiplier": multiplier, "transfer": transfer,
-            "samples": expected, "traces": traces}
+            "samples": expected, "traces": traces,
+            **({"release_rows": release_rows} if capture_release else {})}
 
 
 def _activate_arm(session, canonical_gbar, arm, suffixes=None):
