@@ -4230,6 +4230,50 @@
         }
       },
       {
+        "id": "rec328fdc311fe64c",
+        "createdTime": "2026-09-30T18:50:10Z",
+        "cellValuesByFieldId": {
+          "fld0cyrU7z3lgnGri": [],
+          "fld1yxxCdQIKUTr3o": [],
+          "fld21P7Z38jhllXCw": [],
+          "fldBg7fdVTV3QRYYR": [],
+          "fldC0zRVGDcrxDXx3": [],
+          "fldCQ7s6vqBkAEj7o": [],
+          "fldD3WgtsOkJFiQ0f": "Task17d-b: formula e LUT a solver identico",
+          "fldGKzruZ7lMxuhv9": "Aperta",
+          "fldGMQygrEEp67LYU": [
+            "rec60a05c4e503354"
+          ],
+          "fldGrnR6YpOu4IX7p": [],
+          "fldM9yryBylmVsAFh": [],
+          "fldMttnkdNKUfLftx": [],
+          "fldNKdCWed8GtMJWA": [],
+          "fldO5B11MJ6B3bN8Z": [],
+          "fldSpqkLWRRVAcGyT": null,
+          "fldTw6RHc13ABlCQ5": "claims-giada-task17db-solver-release-matched-candidates-v1",
+          "fldUBxb2IBwluW0o4": [],
+          "fldVs7bwqXfD6wloz": [],
+          "fldWgPcGUQzrCfwIV": [],
+          "fldWmQYnlPnpnDCwv": "Ipotesi",
+          "fldZZflNzBIslfoxC": [],
+          "fldbHCj8nUi9FfPr0": [],
+          "fldeIU5gljlLtLjk1": [],
+          "fldgYqyJBiFHOFL5Q": "Clone formula oltre 0,05 mV RMSE o 0,002 errore gate, oppure policy non applicata come registrato.",
+          "fldggFgq9bSRfRIf1": [],
+          "fldhblz9QaL5xZMzj": [],
+          "fldjIzyz2FzkrntCk": [],
+          "fldl4vkmr7todcrIa": [],
+          "fldn09q7Ys4pNG46z": [],
+          "fldnstZ0ARy2ZeMxz": "Solo casi di sviluppo; confronto non selettivo e nessun Gate C.",
+          "fldrs9hp5BJaiJJ9w": [],
+          "fldtFqPHjNQsCaDvJ": [],
+          "fldtIv7JUzBTeny1j": [],
+          "fldwKvlUhBaZDx4AK": [],
+          "fldwnvVrfGEy0ephV": [],
+          "fldxSHSKYTFeHnKO6": "Con policy ultra identica, il clone formula passa il controllo e le due LUT possono essere confrontate col nativo senza confondere tolleranze solver differenti."
+        }
+      },
+      {
         "id": "rec3acad18690912a",
         "createdTime": "2026-09-21T16:42:55Z",
         "cellValuesByFieldId": {
@@ -4641,6 +4685,50 @@
           "fldwKvlUhBaZDx4AK": [],
           "fldwnvVrfGEy0ephV": [],
           "fldxSHSKYTFeHnKO6": "Aggiungere supervisione simmetrica m_inf e log(tau_m) migliora di almeno il 20% lo score development condiviso a 50k."
+        }
+      },
+      {
+        "id": "rec7fd322e061b0da",
+        "createdTime": "2026-09-30T18:50:08Z",
+        "cellValuesByFieldId": {
+          "fld0cyrU7z3lgnGri": [],
+          "fld1yxxCdQIKUTr3o": [],
+          "fld21P7Z38jhllXCw": [],
+          "fldBg7fdVTV3QRYYR": [],
+          "fldC0zRVGDcrxDXx3": [],
+          "fldCQ7s6vqBkAEj7o": [],
+          "fldD3WgtsOkJFiQ0f": "Task17d-b: l'hash completo può cambiare senza flip del rilascio",
+          "fldGKzruZ7lMxuhv9": "Aperta",
+          "fldGMQygrEEp67LYU": [
+            "rec60a05c4e503354"
+          ],
+          "fldGrnR6YpOu4IX7p": [],
+          "fldM9yryBylmVsAFh": [],
+          "fldMttnkdNKUfLftx": [],
+          "fldNKdCWed8GtMJWA": [],
+          "fldO5B11MJ6B3bN8Z": [],
+          "fldSpqkLWRRVAcGyT": null,
+          "fldTw6RHc13ABlCQ5": "claims-giada-task17db-solver-release-discrete-release-v1",
+          "fldUBxb2IBwluW0o4": [],
+          "fldVs7bwqXfD6wloz": [],
+          "fldWgPcGUQzrCfwIV": [],
+          "fldWmQYnlPnpnDCwv": "Ipotesi",
+          "fldZZflNzBIslfoxC": [],
+          "fldbHCj8nUi9FfPr0": [],
+          "fldeIU5gljlLtLjk1": [],
+          "fldgYqyJBiFHOFL5Q": "Almeno un evento cambia identità, draw Random123 o release_success fra policy a condizioni appaiate.",
+          "fldggFgq9bSRfRIf1": [],
+          "fldhblz9QaL5xZMzj": [],
+          "fldjIzyz2FzkrntCk": [],
+          "fldl4vkmr7todcrIa": [],
+          "fldn09q7Ys4pNG46z": [],
+          "fldnstZ0ARy2ZeMxz": "Anche decisioni identiche non garantiscono quantità rilasciata identica.",
+          "fldrs9hp5BJaiJJ9w": [],
+          "fldtFqPHjNQsCaDvJ": [],
+          "fldtIv7JUzBTeny1j": [],
+          "fldwKvlUhBaZDx4AK": [],
+          "fldwnvVrfGEy0ephV": [],
+          "fldxSHSKYTFeHnKO6": "Le decisioni discrete e i draw Random123 possono coincidere fra policy CVode anche quando stati/probabilità sinaptici continui differiscono."
         }
       },
       {
@@ -5289,6 +5377,50 @@
           "fldwKvlUhBaZDx4AK": [],
           "fldwnvVrfGEy0ephV": [],
           "fldxSHSKYTFeHnKO6": "Apprendere A,q in x1=A*x0+(1-A)*q da stato e ingressi causali potrebbe comprimere l'effetto di 1 ms senza ricostruire tutto il path; A,q vincolati in [0,1]."
+        }
+      },
+      {
+        "id": "recd94be726b13581",
+        "createdTime": "2026-09-30T18:50:10Z",
+        "cellValuesByFieldId": {
+          "fld0cyrU7z3lgnGri": [],
+          "fld1yxxCdQIKUTr3o": [],
+          "fld21P7Z38jhllXCw": [],
+          "fldBg7fdVTV3QRYYR": [],
+          "fldC0zRVGDcrxDXx3": [],
+          "fldCQ7s6vqBkAEj7o": [],
+          "fldD3WgtsOkJFiQ0f": "Task17d-b: riferimento ultra stabile sui casi noti",
+          "fldGKzruZ7lMxuhv9": "Aperta",
+          "fldGMQygrEEp67LYU": [
+            "rec60a05c4e503354"
+          ],
+          "fldGrnR6YpOu4IX7p": [],
+          "fldM9yryBylmVsAFh": [],
+          "fldMttnkdNKUfLftx": [],
+          "fldNKdCWed8GtMJWA": [],
+          "fldO5B11MJ6B3bN8Z": [],
+          "fldSpqkLWRRVAcGyT": null,
+          "fldTw6RHc13ABlCQ5": "claims-giada-task17db-solver-release-reference-stability-v1",
+          "fldUBxb2IBwluW0o4": [],
+          "fldVs7bwqXfD6wloz": [],
+          "fldWgPcGUQzrCfwIV": [],
+          "fldWmQYnlPnpnDCwv": "Ipotesi",
+          "fldZZflNzBIslfoxC": [],
+          "fldbHCj8nUi9FfPr0": [],
+          "fldeIU5gljlLtLjk1": [],
+          "fldgYqyJBiFHOFL5Q": "Almeno un caso/sito supera una delle due soglie preregistrate.",
+          "fldggFgq9bSRfRIf1": [],
+          "fldhblz9QaL5xZMzj": [],
+          "fldjIzyz2FzkrntCk": [],
+          "fldl4vkmr7todcrIa": [],
+          "fldn09q7Ys4pNG46z": [],
+          "fldnstZ0ARy2ZeMxz": "Stabilità empirica limitata ai casi noti, non convergenza matematica globale.",
+          "fldrs9hp5BJaiJJ9w": [],
+          "fldtFqPHjNQsCaDvJ": [],
+          "fldtIv7JUzBTeny1j": [],
+          "fldwKvlUhBaZDx4AK": [],
+          "fldwnvVrfGEy0ephV": [],
+          "fldxSHSKYTFeHnKO6": "Nativo ultra e super_ultra concordano entro 0,05 mV RMSE e 0,002 errore massimo gate ai quattro siti nei tre casi noti."
         }
       },
       {
@@ -6999,6 +7131,35 @@
         }
       },
       {
+        "id": "rec60a05c4e503354",
+        "createdTime": "2026-09-30T18:50:11Z",
+        "cellValuesByFieldId": {
+          "fld2vorrpIpWaJBU9": [],
+          "fld75HWsQpTge8Cv6": [],
+          "fld8UsWD6AGXcs8LB": [],
+          "fldFHD3DQUZ4TThfH": [],
+          "fldFzIJN2R3bt1Cll": "GIADA Task17d-b — conferma rilasci, solver e candidati",
+          "fldPhw8x9yy2vwnOw": [],
+          "fldRvsDInLSxaBLba": [],
+          "fldSP4v83vEXowe7r": [
+            "rec7fd322e061b0da",
+            "recd94be726b13581",
+            "rec328fdc311fe64c"
+          ],
+          "fldSQ2XAuUjvNYCvY": "experiments-giada-task17db-solver-release-matrix-v1",
+          "fldSVM6BIAoevpYQC": [
+            "rec1f7426378077e7"
+          ],
+          "fldSdolNHsOdN294o": "Forensic",
+          "fldeWX6CTdDXCBwxA": [],
+          "fldkFqQftYUGy2siC": [],
+          "fldnTFjWQUe3eEcDr": [],
+          "fldqsatkPNXzdeeO1": "Preregistrato",
+          "fldutU2o1AMhw929L": "Un notebook: quattro policy native, tre sostituzioni Ca_HVA alla stessa policy ultra, tre condizioni note.",
+          "fldyeCfji17c7BfPP": "Separare decisioni discrete di rilascio, stabilità del riferimento ultra e differenze formula/LUT a solver identico."
+        }
+      },
+      {
         "id": "rec60f7aae22fd1e1",
         "createdTime": "2026-09-22T18:37:20Z",
         "cellValuesByFieldId": {
@@ -8029,6 +8190,41 @@
           "fldpfUH2P3mpRu2B6": [],
           "fldzYHRSjC0ov4BKb": [
             "rec038eb6b3dc0347"
+          ]
+        }
+      },
+      {
+        "id": "rec1f7426378077e7",
+        "createdTime": "2026-09-30T18:50:12Z",
+        "cellValuesByFieldId": {
+          "fld0yPrg13a64ZdYv": [],
+          "fld1aLwlMava44xpk": null,
+          "fld43sXbznp3IMZYL": "Task17d-b — matrice rilascio e riferimento nativo",
+          "fld4Nd64evBcLZmBW": [
+            "rec4575777eb1a1d7"
+          ],
+          "fld6lHoGkY43YdOIc": [],
+          "fldARMHwfjpewT4tD": [],
+          "fldCQHeCbAh9j3Qv7": [],
+          "fldEQ7XB9ZpGNTbd5": "Protocollo fissato prima del nuovo run. I casi 17d sono già aperti e non formano test indipendente.",
+          "fldJ6IqzFnNeqIWQa": [],
+          "fldJAYNsyYgGJdXhl": [],
+          "fldNViv4mPeLTWwCS": "Controlli tecnici validi; stabilità e formula passano soltanto alle soglie fissate; Gate C sempre falso.",
+          "fldNtSPrXFVAEpq2B": "Stop su teacher, compilazione, solver, snapshot, verifica del rilascio o finitezza non validi.",
+          "fldODG8tJ39IE4DeM": "protocols-giada-task17db-solver-release-v1-v1",
+          "fldSW3jbYrJFUwfJy": [],
+          "fldTRHy1C66ZPwHP6": "v1",
+          "fldXGaaTvJNgqSF4P": [],
+          "fldXNrWQrGlph6l1g": "Sistema completo",
+          "fldY1kvKgn1aBhiVp": "2ca973cbc77a49283e3181f67389cb126c2d9ef29796e0fa2ea92de46fa55b52",
+          "fldbFUHleydt1N0tS": [],
+          "fldf08OxNnuiB8Kfn": [],
+          "fldkkWQCILvNiCuvY": [],
+          "fldkksHf3zhn6RrDN": [],
+          "fldmDbF0PWDV8gesU": "Teacher 642 segmenti; default/voltage_scaled/ultra/super_ultra nativi e formula/LUT513/m-LUT2049 sotto ultra; stessi tre casi Task17d; decisioni e grandezze continue del rilascio salvate separatamente.",
+          "fldpfUH2P3mpRu2B6": [],
+          "fldzYHRSjC0ov4BKb": [
+            "rec60a05c4e503354"
           ]
         }
       },
@@ -13634,6 +13830,22 @@
           ],
           "fldf4FIay1S850M6r": "Stesso equilibrio, seed Random123, stimoli e gbar fra nativo/formula/LUT. Snapshot rigenerato dopo ogni cambio di struttura; bracci in blocchi contigui.",
           "fldvWAOeSBcE5LXSr": "27 triplette, tre seed, tre protocolli, tre moltiplicatori gbar. Non 81 repliche indipendenti."
+        }
+      },
+      {
+        "id": "rec4575777eb1a1d7",
+        "createdTime": "2026-09-30T18:50:13Z",
+        "cellValuesByFieldId": {
+          "fld2WJK5mUgkVigki": null,
+          "fldDACBun6GS7qBiI": "blocks-giada-task17db-solver-release-paired-v1",
+          "fldLbi81dP34ogqx4": "Task17d-b — tre condizioni note appaiate",
+          "fldNdsmMz2Jtz574j": [
+            "rec1f7426378077e7"
+          ],
+          "fldO9yFI3fUDfvyWI": "170029,170083",
+          "fldVRcFxf7uLLnOTP": [],
+          "fldf4FIay1S850M6r": "Stesso snapshot, schedule, Random123 e gbar; snapshot aggiornato quando cambia la struttura del meccanismo.",
+          "fldvWAOeSBcE5LXSr": "Seed/gbar 170029/1.0, 170083/1.5, 170029/0.5; durata 60 ms."
         }
       },
       {
