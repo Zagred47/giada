@@ -107,7 +107,11 @@ def _set_policy(session, label, calcium_state, config):
     actual = {"atol": float(cvode.atol()), "rtol": float(cvode.rtol()),
               "calcium_scale": float(cvode.atolscale(calcium_state)),
               "voltage_scale": float(cvode.atolscale("v"))}
-    if any(not np.isclose(actual[k], v, rtol=1e-10, atol=1e-15)
+    # NEURON stores atolscale with float32 precision. A strict float64
+    # round-trip check rejects a correctly applied 1e-4 scale.
+    if any(not np.isclose(actual[k], v,
+                          rtol=1e-6 if k.endswith("scale") else 1e-10,
+                          atol=1e-15)
            for k, v in expected.items()):
         raise RuntimeError(f"Task 17d policy not applied: {label}: {actual} != {expected}")
     return actual
@@ -202,8 +206,11 @@ def run_task17d(elm_repo, teacher_repo, native_mod, output_dir,
     protocol = candidate_protocols()[config.protocol_index]
     policies = ("default", "tight", "ultra", "calcium_scaled", "voltage_scaled")
     cache, repeats, policy_audit, release_hashes, runtimes = {}, {}, {}, {}, {}
-    for policy in policies:
+    # Validate every CVode setting before the first expensive trajectory.
+    for policy in (*policies, "ultra_dense"):
         policy_audit[policy] = _set_policy(session, policy, calcium_state, config)
+    for policy in policies:
+        _set_policy(session, policy, calcium_state, config)
         for seed, multiplier in config.conditions:
             native_phase("task17d_native_trial", policy=policy, seed=seed, multiplier=multiplier)
             started = time.perf_counter()
@@ -226,7 +233,7 @@ def run_task17d(elm_repo, teacher_repo, native_mod, output_dir,
                     raise RuntimeError(f"Task 17d native repeat failed: {policy}")
                 repeats[policy] = metrics
     dense_config = replace(config, sample_interval_ms=config.dense_interval_ms)
-    policy_audit["ultra_dense"] = _set_policy(session, "ultra_dense", calcium_state, config)
+    _set_policy(session, "ultra_dense", calcium_state, config)
     for seed, multiplier in config.conditions[:2]:
         native_phase("task17d_dense_driver", seed=seed, multiplier=multiplier)
         started = time.perf_counter()

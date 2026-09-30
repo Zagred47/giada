@@ -28,7 +28,7 @@ class FakeCVode:
 
     def atolscale(self, name, value=None):
         if value is not None:
-            self.scales[name] = value
+            self.scales[name] = float(np.float32(value))
         return self.scales[name]
 
     def re_init(self):
@@ -42,15 +42,26 @@ class NativeSolverMechanismTests(unittest.TestCase):
         session = type("Session", (), {"cvode": FakeCVode()})()
         calcium = _select_calcium_state(["v", "cai_CaDynamics_E2", "m_Ca_HVA"])
         ca = _set_policy(session, "calcium_scaled", calcium, config)
-        self.assertEqual(ca["calcium_scale"], 1e-4)
+        self.assertTrue(np.isclose(ca["calcium_scale"], 1e-4, rtol=1e-6))
         self.assertEqual(ca["voltage_scale"], 1.0)
         voltage = _set_policy(session, "voltage_scaled", calcium, config)
         self.assertEqual(voltage["calcium_scale"], 1.0)
-        self.assertEqual(voltage["voltage_scale"], 1e-2)
+        self.assertTrue(np.isclose(voltage["voltage_scale"], 1e-2, rtol=1e-6))
         ultra = _set_policy(session, "ultra", calcium, config)
         self.assertEqual(ultra["calcium_scale"], 1.0)
         self.assertEqual(ultra["voltage_scale"], 1.0)
         self.assertEqual(ultra["atol"], 1e-7)
+
+    def test_policy_rejects_materially_wrong_scale(self):
+        class WrongScaleCVode(FakeCVode):
+            def atolscale(self, name, value=None):
+                if value is not None and name == "cai_CaDynamics_E2":
+                    value *= 2
+                return super().atolscale(name, value)
+
+        session = type("Session", (), {"cvode": WrongScaleCVode()})()
+        with self.assertRaisesRegex(RuntimeError, "policy not applied"):
+            _set_policy(session, "calcium_scaled", "cai_CaDynamics_E2", Task17dConfig())
 
     def test_timing_preserves_raw_voltage_and_reports_delay(self):
         a = np.array([-2.0, -1.0, 1.0, 2.0])
