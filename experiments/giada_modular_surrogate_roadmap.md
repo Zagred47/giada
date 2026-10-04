@@ -290,6 +290,50 @@ La domanda centrale è:
 > Questi filoni possono procedere nello stesso capitolo sperimentale quando
 > condividono infrastruttura, ma mantengono contratti e decisioni separati.
 
+### 🗂️ Registro operativo e dipendenze (riconciliazione 2026-10-04)
+
+Le task originali 1–49 conservano numero e significato. Questa sezione usa
+identificativi `IV-A1` … `IV-D3`, registrati come **azioni proposte**, non come
+esperimenti già preregistrati o conclusi. Il piano strutturato e i criteri di
+completamento sono in [giada_section_iv_plan.json](giada_section_iv_plan.json).
+Prima di ogni run si congelano domini, soglie numeriche, seed, budget e controlli.
+Il riuso di risultati precedenti richiede una verifica esplicita del contratto:
+per esempio, la Task20 su SK con calcio imposto non valida CaDynamics.
+
+| ID stabile | Esperimento da preparare | Prerequisito IV | Criterio di completamento |
+|---|---|---|---|
+| IV-A1 | RC, leak, capacità e convenzioni | — | Doppio oracle, unità, equilibrio e costante temporale |
+| IV-A2 | Correnti variabili e voltage update passivo | IV-A1 | Bilancio capacitivo, rollout, convergenza e interfaccia correnti |
+| IV-B1 | CaDynamics_E2 con corrente imposta | — | Concentrazione, decadimento, unità e risposta agli impulsi |
+| IV-B2 | CaDynamics → SK a V imposto | IV-B1 + SK validato | Attribuzione dell'errore e timing; feedback elettrico nella Task32 |
+| IV-C1 | AMPA/NMDA/GABA deterministiche | — | Stati, correnti, carica e timing eventi intra-ms |
+| IV-C2 | Plasticità breve e rilascio stocastico | IV-C1 | Stato/RNG, replay e distribuzioni di rilascio |
+| IV-C3 | Interfaccia sinaptica integrata | IV-C1, IV-C2 | Burst misti, rollout, ripristino e stato sufficiente |
+| IV-D1 | Due compartimenti passivi | IV-A2 | Bilancio assiale, transiente e confronto solver |
+| IV-D2 | Catene passive 4–8–16 | IV-D1 | Scaling dell'errore e costo per taglia |
+| IV-D3 | Biforcazione e albero passivo | IV-D2 | Bilancio ai nodi, rinumerazione e rollout |
+
+**Punti di ingresso obbligatori nelle sezioni successive:**
+
+- Task23–27: moduli ionici isolati validati e voltaggio imposto. La Task23 deve
+  includere un preflight isolato Ca_LVA: il flag della Task22 permette la
+  preparazione, non certifica Ca_LVA o il completamento della sezione IV.
+- Task28: dichiarare le concentrazioni come input se imposte; se sono generate
+  dal modello o il feedback calcio è attivo, richiedere IV-B1/B2.
+- Task29–30: IV-A2 prima della composizione ionico-passiva.
+- Task32: IV-B2 prima del feedback con dinamiche lente.
+- Task33: IV-C3 prima dell'integrazione sinaptica.
+- Task35: IV-A2, IV-B2 e IV-C3 per il compartimento locale completo dichiarato.
+- Task36: IV-D1; Task37–38: IV-D2; Task39–44: IV-D3.
+
+Questi sono prerequisiti aggiuntivi: restano necessari i gate ionici e le
+validazioni del sistema ricevente. IV-A1, IV-B1 e IV-C1 possono condividere un
+notebook; i passi successivi partono quando passa il proprio prerequisito.
+La Task23 può procedere in parallelo a questi filoni sotto V imposto.
+Ogni famiglia conserva il proprio esito; un successo non chiude le altre.
+Formule economiche e solver classici validati possono restare componenti finali;
+una rete è giustificata dal confronto accuratezza/costo.
+
 ## 🔋 A. Passivo e capacitivo
 
 - RC puro;
@@ -499,6 +543,11 @@ Ogni esperimento deve preregistrare:
 
 # 🚀 Sequenza principale aggiornata
 
+La sequenza seguente descrive livelli di composizione. Il livello 6 è un
+**insieme di filoni paralleli**, con ingressi obbligatori definiti nella
+sezione IV, e non una barriera globale prima del livello 7. I numeri di
+questo schema sono livelli descrittivi, non identificativi delle Task.
+
 ```text
 0. Inventario e contratto del teacher
 ↓
@@ -512,7 +561,7 @@ Ogni esperimento deve preregistrare:
 ↓
 5. Meccanismi rappresentativi di famiglie differenti
 ↓
-6. Spettri indipendenti: passivo / calcio / sinapsi / assiale
+6. Filoni IV-A/B/C/D paralleli, da chiudere ai rispettivi punti di integrazione
 ↓
 7. Composizione ionica sotto teacher-forced voltage
 ↓
