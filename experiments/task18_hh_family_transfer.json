@@ -1,0 +1,26 @@
+{
+  "schema_version": "giada-roadmap-task18-preregistration-v1",
+  "require_cuda": true,
+  "channels": ["Ca_HVA", "NaTa_t", "K_Pst"],
+  "seeds": [17, 29, 43],
+  "widths": [16, 32],
+  "checkpoints": [0, 1000, 5000, 15000],
+  "pool_size": 24000,
+  "batch_size": 1024,
+  "hypotheses": {
+    "transfer": "The same constrained two-gate update is learnable independently for all three canonical HH channels.",
+    "identifiability": "Rate supervision improves latent inf/tau fidelity compared with transition-only supervision on paired streams.",
+    "capacity_budget": "Checkpoint ladders and width16/32 distinguish insufficient optimization from insufficient capacity.",
+    "numerical_reference": "Linear LUT2049 provides an accurate in-support numerical reference, without an extrapolation or hardware-speed claim."
+  },
+  "limits": "No weight sharing (reserved for Task22); no full-neuron causal substitution of Na/K; no assumption that held V suffices for a varying 1ms voltage path.",
+  "learning_rate": 0.003,
+  "rate_inf_weight": 0.1,
+  "rate_log_tau_weight": 0.01,
+  "gates": {"gate_rmse": 0.001, "gate_max_error": 0.01, "inf_rmse": 0.002, "log_tau_rmse": 0.02, "open_rmse": 0.002, "occupancy_violations": 0},
+  "selection": "Per channel/objective/seed choose width/checkpoint using only development normalized gate+inf+logtau score. Freeze all checkpoint hashes before materializing fresh tuples. Task19 authorized only if all rate-supervised seeds pass in-support for all channels. Extrapolation is diagnostic, not silently pooled.",
+  "data_seeds": {"fit":180101,"development":180201,"minibatches":180301,"fresh": [180401,180402,180403]},
+  "native_oracle_tolerance": "scaled rate and gate errors<1e-7; zero-conductance voltage drift<1e-8mV; canonical fixed qt and singular perturbations retained",
+  "negative_control": "transition_only excludes direct rate labels from its training objective, but has identical numeric forward inputs and initialization",
+  "stage": "original roadmap Task18, ActIII; prerequisite Task17f GateC pass"
+}
