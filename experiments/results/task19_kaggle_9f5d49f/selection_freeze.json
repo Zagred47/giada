@@ -1,0 +1,178 @@
+{
+  "selection": {
+    "Ih/transition_only": {
+      "channel": "Ih",
+      "objective": "transition_only",
+      "width": 16,
+      "step": 30000,
+      "indices": [
+        0,
+        1,
+        2
+      ],
+      "score": 2.777076740425228
+    },
+    "Ih/rate_supervised": {
+      "channel": "Ih",
+      "objective": "rate_supervised",
+      "width": 32,
+      "step": 15000,
+      "indices": [
+        3,
+        4,
+        5
+      ],
+      "score": 1.325053654321344
+    },
+    "Im/transition_only": {
+      "channel": "Im",
+      "objective": "transition_only",
+      "width": 16,
+      "step": 30000,
+      "indices": [
+        6,
+        7,
+        8
+      ],
+      "score": 2.2877474801946778
+    },
+    "Im/rate_supervised": {
+      "channel": "Im",
+      "objective": "rate_supervised",
+      "width": 16,
+      "step": 15000,
+      "indices": [
+        9,
+        10,
+        11
+      ],
+      "score": 1.6981444410778728
+    }
+  },
+  "fresh_accessed": false,
+  "config": {
+    "schema_version": "giada-roadmap-task19-preregistration-v1",
+    "stage": "Task19 originale, Atto III: gate singolo",
+    "require_cuda": true,
+    "channels": [
+      "Ih",
+      "Im"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "widths": [
+      16,
+      32
+    ],
+    "objectives": [
+      "transition_only",
+      "rate_supervised"
+    ],
+    "checkpoints": [
+      0,
+      1000,
+      5000,
+      15000,
+      30000
+    ],
+    "pool_size": 24000,
+    "batch_size": 1024,
+    "learning_rate": 0.003,
+    "inf_weight": 0.1,
+    "log_tau_weight": 0.1,
+    "voltage_domain_mv": [
+      -135,
+      75
+    ],
+    "dt_values_ms": [
+      0.025,
+      0.1,
+      0.5,
+      1,
+      5,
+      25,
+      100
+    ],
+    "data_seeds": {
+      "fit": 190101,
+      "fit_regions": 190102,
+      "development": [
+        190201,
+        190202
+      ],
+      "minibatches": 190301,
+      "fresh": [
+        190401,
+        190402,
+        190403,
+        190404,
+        190405
+      ]
+    },
+    "fit_sampling": "50% uniform[-135,75],25%[-120,-95] Ih region,25%[-45,-25] Im region. Both channels/objectives receive identical tuples.",
+    "hypotheses": {
+      "single_gate_transfer": "The constrained one-state cell learns Ih and Im independently and passes all registered in-support gates in all three seeds.",
+      "rate_identifiability": "Rate supervision reduces inf/logtau error and long held-voltage rollout error relative to transition-only training on paired streams.",
+      "capacity_budget": "Two widths and checkpoints distinguish capacity from optimization; extra capacity or steps need not improve every metric monotonically.",
+      "state_rollout": "State-extrema probes and 1000 repeated 1ms held-voltage updates reveal errors hidden by average one-step metrics.",
+      "numerical_reference": "LUT513/2049 match authentic single-gate dynamics in support, providing an accuracy/compute reference."
+    },
+    "gates": {
+      "gate_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "open_rmse": 0.002,
+      "occupancy_violations": 0
+    },
+    "rollout_gates": {
+      "gate_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "occupancy_violations": 0
+    },
+    "rollout_horizons_steps": [
+      1,
+      10,
+      100,
+      1000
+    ],
+    "selection": "For each channel/objective choose one common width/checkpoint across3seeds by worst-seed worst-domain normalized sum of gateRMSE,gateMAX,infRMSE,logtauRMSE on development uniform/tail/state_extrema. Freeze all selections/hashes before fresh generation. Same selection rule for both objectives. Rollout does not select models.",
+    "promotion": "Task20 authorized only if selected rate-supervised models for both channels and all3seeds pass fresh in_support,negative_tail,state_extrema and every registered rollout horizon. Negative and positive voltage OOD are diagnostic; never pooled into promotion.",
+    "native_contract": "Canonical teacher074c466; Ih vshift=0,vhalf=-154.9,ehcn=-45; Im fixed qt=2.3^1.3,ek=-85 for diagnostic current. Exact Ih v==vhalf perturbs local rate voltage by+0.0001 in canonical MOD; observed section voltage remains clamped: preserve and report separately; no silent smoothing. RANGE-only instrumentation. Native rates/one-step errors<1e-7, unexpected section-voltage drift<1e-8mV.",
+    "architecture": "MLP1->width->width->2 with SiLU; inf=sigmoid, tau=exp(clamped logtau); xnext=(1-z)x+z*inf; z=-expm1(-dt/tau). Independent weights per channel/objective/seed; objectives have paired identical initialization. Physical current=gbar*x*(V-E),gbar=1e-5S/cm2.",
+    "limits": "Isolated constant voltage, fixed canonical temperature/shift; no varying voltage sufficiency, embedding, shared weights(Task22), or full-neuron speedup claimed. Open fraction equals x for both channels. OOD Ih singularity remains canonical diagnostic.",
+    "performance": "Eager CUDA forward timings at batch4096 for selected single-model seed17, Torch analytic formula and LUT2049. CUDA events,warmup10,100repeats,accuracy reported alongside; no NEURON or end-to-end speedup inference.",
+    "required_artifacts": [
+      "native_audit.json",
+      "run_contract.json",
+      "code_provenance.json",
+      "equivalence_preflight.json",
+      "development_ladder.json",
+      "paired_development_contrasts.json",
+      "selection_freeze.json",
+      "fresh_metrics.json",
+      "gpu_benchmark.json",
+      "final_report.json",
+      "checkpoint_*.pt",
+      "fit_development.npz",
+      "fresh.npz"
+    ]
+  },
+  "code_revision": "9f5d49fb34dfd077d8fc0ec5027e3af3c179900c",
+  "checkpoint_hashes": {
+    "checkpoint_w32_step15000.pt": "dfe957433aa57a09fb9d549d12a7223fc61588ec9313424323d68df907f1cdcc",
+    "checkpoint_w16_step0.pt": "e18ed893fc8a321a929e8f7816d4c0b7e701b7b5af6954a7bcdbbf9b854e57aa",
+    "checkpoint_w16_step30000.pt": "69a311a437ca6140d4fc7283eba4a219231856974a57a12e3d9776206bc438af",
+    "checkpoint_w32_step1000.pt": "81783cb3013162ca2784cd8c18d436ab2c736af67234e2e87b26a98dadcceca0",
+    "checkpoint_w16_step15000.pt": "a7f040c59eef9f683c0dde03c5a8344ab90cb6daee2603ae286afe4f043f0b5e",
+    "checkpoint_w32_step5000.pt": "d14feaac43fea1e42feb12e5c6f869e106b5b14db9f220af93bc11e9f660945f",
+    "checkpoint_w16_step5000.pt": "96eeec8de955ef2e5f6f575b057f6a9cdc4dd3fd4e514ab4bad019b4b1ff4c03",
+    "checkpoint_w32_step0.pt": "0859bc8f041bf43adc232a84d5ef7a7ae646b80518e4407aaf4e7d4b41b16302",
+    "checkpoint_w32_step30000.pt": "9f96205c7209a061dc4345c900cd1ed7a1b7c62572d9c0b7ced946df9ea5fe63",
+    "checkpoint_w16_step1000.pt": "f3a372fdc342efa8b76e2b81495673a3289e38b2e623bc1f9bd61b96d301b93e"
+  },
+  "freeze_sha256": "b6f977688ab99949711a4bb61b702a4b8a27a71b9f15cf985e589a0c55db3566"
+}

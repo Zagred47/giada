@@ -1,0 +1,37 @@
+{
+  "valid": true,
+  "rows": [
+    {
+      "channel": "Ih",
+      "rate_scaled_max_error": 8.033917602156705e-11,
+      "gate_max_error": 1.7675305663544805e-11,
+      "unexpected_voltage_drift_mv": 0.0
+    },
+    {
+      "channel": "Im",
+      "rate_scaled_max_error": 8.607499442624181e-19,
+      "gate_max_error": 2.220446049250313e-16,
+      "unexpected_voltage_drift_mv": 0.0
+    }
+  ],
+  "canonical_singular_voltage_mutation": [
+    {
+      "channel": "Ih",
+      "requested_voltage_mv": -154.9,
+      "observed_section_voltage_mv": -154.9,
+      "effective_rate_voltage_mv": -154.8999,
+      "canonical_rate_offset_mv": 0.0001
+    }
+  ],
+  "source_hashes": {
+    "Ih": {
+      "canonical_mod_sha256": "c8fce16998f0915f4ea4e7ee17db3143c28ca5b668d0446d81db052546a60d66",
+      "instrumented_mod_sha256": "3a53c3111e6d6365d97fcf04349e1132ee821f961336a18a275729ad74442a39"
+    },
+    "Im": {
+      "canonical_mod_sha256": "93074ca6f0480cddd130b5120205d4b06dc689c0dd03e1da84b096f5bc3b47cb",
+      "instrumented_mod_sha256": "cdf6294fc38d8d3da0a7770cfa155a983b9ed30e2e695e4e5a448f51c43eb336"
+    }
+  },
+  "contract": "Ih shift0; Im fixed canonical qt; zero conductance; original equations preserved."
+}

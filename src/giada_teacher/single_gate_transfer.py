@@ -267,7 +267,14 @@ def gpu_benchmark(torch, selected_models, values, output):
     return report
 
 
-def run(output, config, revision):
+def run(output, config, revision, backend=None):
+    # Explicit backend injection reuses only orchestration, not channel equations.
+    rates_fn = rates if backend is None else backend.rates
+    model_fn = model_factory if backend is None else backend.model_factory
+    evaluate_fn = evaluate if backend is None else backend.evaluate
+    rollout_fn = rollout if backend is None else backend.rollout
+    benchmark_fn = gpu_benchmark if backend is None else backend.gpu_benchmark
+    channels = CHANNELS if backend is None else backend.CHANNELS
     from .gpu_baseline_runtime import configure_torch_runtime, environment_manifest
     from .joint_gate_symmetric_confirmation import _clip_per_seed
     torch = configure_torch_runtime(17)
@@ -275,23 +282,24 @@ def run(output, config, revision):
     output = Path(output)
     if config['require_cuda']:
         assert device == 'cuda' and __import__('json').loads((output / 'native_audit.json').read_text())['valid']
-    fit = data(190101, config['pool_size'])
+    fit = data(190101, config['pool_size']) if backend is None else backend.fit(config)
     count = len(fit) // 4
     rng = np.random.default_rng(190102)
-    fit[:count, 0] = rng.uniform(-120, -95, count)
-    fit[count:2*count, 0] = rng.uniform(-45, -25, count)
-    development = dict(uniform=data(190201, 2048), negative_tail=data(190202, 2048, (-135, -115)), state_extrema=state_grid())
+    if backend is None:
+        fit[:count, 0] = rng.uniform(-120, -95, count)
+        fit[count:2*count, 0] = rng.uniform(-45, -25, count)
+    development = dict(uniform=data(190201, 2048), negative_tail=data(190202, 2048, (-135, -115)), state_extrema=state_grid()) if backend is None else backend.development()
     np.savez_compressed(output / 'fit_development.npz', fit=fit, **development)
-    descriptors = [(c, o, s) for c in CHANNELS for o in config['objectives'] for s in config['seeds']]
-    labels = [rates(c, fit[:, 0]) for c, _, _ in descriptors]
+    descriptors = [(c, o, s) for c in channels for o in config['objectives'] for s in config['seeds']]
+    labels = [rates_fn(c, fit[:, 0]) for c, _, _ in descriptors]
     ti, tt = np.stack([r[0] for r in labels]), np.stack([r[1] for r in labels])
     ty = update(fit[:, 1], ti, tt, fit[:, 2])
     x, ti, tt, ty = [torch.tensor(a, dtype=torch.float32, device=device) for a in (fit, ti, tt, ty)]
     active = torch.tensor([o == 'rate_supervised' for _, o, _ in descriptors], dtype=torch.float32, device=device)
-    models = {w: model_factory(torch, w, descriptors).to(device) for w in config['widths']}
+    models = {w: model_fn(torch, w, descriptors).to(device) for w in config['widths']}
     optimizers = {w: torch.optim.Adam(m.parameters(), lr=config['learning_rate']) for w, m in models.items()}
     probe = x[:32][None].expand(len(descriptors), -1, -1)
-    preflight = [equivalent(torch, m, w, descriptors, probe) for w, m in models.items()]
+    preflight = [(equivalent(torch, m, w, descriptors, probe) if backend is None else backend.equivalent(torch, m, w, descriptors, probe)) for w, m in models.items()]
     write(output / 'equivalence_preflight.json', dict(valid=all(r['valid'] for r in preflight), rows=preflight, independent_adam_and_clipping=True))
     assert all(r['valid'] for r in preflight), 'Task19 vectorization equivalence failed'
     ladder, best = [], {}
@@ -300,12 +308,12 @@ def run(output, config, revision):
     for step in range(config['checkpoints'][-1] + 1):
         if step in config['checkpoints']:
             for width, model in models.items():
-                metrics = {k: evaluate(model, a, descriptors, torch, device) for k, a in development.items()}
+                metrics = {k: evaluate_fn(model, a, descriptors, torch, device) for k, a in development.items()}
                 torch.save(model.state_dict(), output / f'checkpoint_w{width}_step{step}.pt')
                 for index, (channel, objective, seed) in enumerate(descriptors):
                     mm = {k: v[index] for k, v in metrics.items()}
                     ladder.append(dict(channel=channel, objective=objective, seed=seed, width=width, step=step, metrics=mm, score=score(mm, config['gates'])))
-                for channel in CHANNELS:
+                for channel in channels:
                     for objective in config['objectives']:
                         indices = [n for n, (c, o, _) in enumerate(descriptors) if (c, o) == (channel, objective)]
                         candidate = dict(channel=channel, objective=objective, width=width, step=step, indices=indices,
@@ -314,7 +322,8 @@ def run(output, config, revision):
                         if key not in best or candidate['score'] < best[key]['score']:
                             best[key] = candidate
             write(output / 'development_ladder.json', ladder)
-            print(f'[GIADA Task19] checkpoint{step}/{config["checkpoints"][-1]} elapsed={(time.monotonic()-start)/60:.1f}min', flush=True)
+            label = 'Task19' if backend is None else 'Task20'
+            print(f'[GIADA {label}] checkpoint{step}/{config["checkpoints"][-1]} elapsed={(time.monotonic()-start)/60:.1f}min', flush=True)
         if step == config['checkpoints'][-1]:
             break
         indices = torch.tensor(rng.integers(0, len(fit), config['batch_size']), device=device)
@@ -348,10 +357,14 @@ def run(output, config, revision):
                   checkpoint_hashes={p.name: sha(p) for p in output.glob('checkpoint_*.pt')})
     freeze['freeze_sha256'] = hashlib.sha256(__import__('json').dumps(freeze, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
     write(output / 'selection_freeze.json', freeze)
-    fresh = dict(in_support=data(190401, 4096), negative_tail=data(190404, 4096, (-135, -115)), state_extrema=state_grid(True),
-                 ood_negative=data(190402, 2048, (-155, -135)), ood_positive=data(190403, 2048, (75, 95)))
-    voltage = np.random.default_rng(190405).uniform(-135, 75, 128)
-    roll_inputs = np.c_[np.repeat(voltage, 2), np.tile([0., 1.], len(voltage)), np.ones(2*len(voltage))]
+    if backend is None:
+        fresh = dict(in_support=data(190401, 4096), negative_tail=data(190404, 4096, (-135, -115)), state_extrema=state_grid(True),
+                     ood_negative=data(190402, 2048, (-155, -135)), ood_positive=data(190403, 2048, (75, 95)))
+        voltage = np.random.default_rng(190405).uniform(-135, 75, 128)
+        roll_inputs = np.c_[np.repeat(voltage, 2), np.tile([0., 1.], len(voltage)), np.ones(2*len(voltage))]
+    else:
+        fresh = backend.fresh()
+        roll_inputs = backend.roll_inputs()
     np.savez_compressed(output / 'fresh.npz', **fresh, rollout=roll_inputs)
     results, cache, benchmark_models = [], {}, {}
     for key, selected in best.items():
@@ -361,8 +374,8 @@ def run(output, config, revision):
         model = models[width]
         model.load_state_dict(torch.load(cp, map_location=device, weights_only=True))
         if (width, step) not in cache:
-            cache[width, step] = ({d: evaluate(model, a, descriptors, torch, device) for d, a in fresh.items()},
-                                  rollout(model, descriptors, roll_inputs, config['rollout_horizons_steps'], torch, device))
+            cache[width, step] = ({d: evaluate_fn(model, a, descriptors, torch, device) for d, a in fresh.items()},
+                                  rollout_fn(model, descriptors, roll_inputs, config['rollout_horizons_steps'], torch, device))
         mm, roll = cache[width, step]
         for index in selected['indices']:
             channel, objective, seed = descriptors[index]
@@ -370,31 +383,33 @@ def run(output, config, revision):
             one_pass = all(passes(metrics[d], config['gates']) for d in ('in_support', 'negative_tail', 'state_extrema'))
             roll_pass = all(passes(v, config['rollout_gates']) for v in roll[index].values())
             results.append(dict(channel=channel, objective=objective, seed=seed, width=width, step=step,
-                parameter_count=width*width+5*width+2, dense_macs=width*width+3*width, metrics=metrics,
+                parameter_count=(width*width+5*width+2 if backend is None else backend.parameter_count(width)), dense_macs=(width*width+3*width if backend is None else width*width+2*width), metrics=metrics,
                 rollout=roll[index], one_step_passed=one_pass, rollout_passed=roll_pass, passed=one_pass and roll_pass))
             if objective == 'rate_supervised' and seed == config['seeds'][0]:
-                single = model_factory(torch, width, [(channel, objective, seed)]).to(device)
+                single = model_fn(torch, width, [(channel, objective, seed)]).to(device)
                 single.load_state_dict({k: v[index:index+1].clone() for k, v in model.state_dict().items()})
                 benchmark_models[channel] = single
     numerical = []
-    for channel in CHANNELS:
+    for channel in channels:
         for size in (513, 2049):
-            grid = np.linspace(-135, 75, size)
-            ii, tt = rates(channel, grid)
+            grid = np.linspace(-135, 75, size) if backend is None else np.linspace(-7, -2, size)
+            ii, tt = rates_fn(channel, grid)
             for domain in ('in_support', 'negative_tail', 'state_extrema'):
                 values = fresh[domain]
                 inf, tau = np.interp(values[:, 0], grid, ii), np.interp(values[:, 0], grid, tt)
-                m = measurements(values, update(values[:, 1], inf, tau, values[:, 2]), inf, tau, channel)
+                m = (measurements if backend is None else backend.measurements)(values, update(values[:, 1], inf, tau, values[:, 2]), inf, tau, channel)
                 numerical.append(dict(channel=channel, family=f'linear_lut_{size}_f64', domain=domain, metrics=m, passed=passes(m, config['gates'])))
     write(output / 'fresh_metrics.json', dict(learned=results, numerical=numerical))
-    benchmark = gpu_benchmark(torch, benchmark_models, fresh['in_support'], output)
+    benchmark = benchmark_fn(torch, benchmark_models, fresh['in_support'], output)
     if not benchmark['measured']:
         write(output / 'gpu_benchmark.json', benchmark)
-    supported = {c: all(r['passed'] for r in results if r['channel'] == c and r['objective'] == 'rate_supervised') for c in CHANNELS}
+    supported = {c: all(r['passed'] for r in results if r['channel'] == c and r['objective'] == 'rate_supervised') for c in channels}
     report = dict(schema_version='giada-roadmap-task19-v1', valid=True, single_gate_transfer_passed=all(supported.values()),
         per_channel_transfer=supported, task20_authorized=all(supported.values()), fresh_used_for_selection=False,
         selection=best, learned=results, numerical=numerical, environment=environment_manifest(torch),
         training_and_evaluation_seconds=time.monotonic()-start, scope=config['limits'], gpu_benchmark=benchmark,
         shared_weights=False, full_neuron_speedup_claimed=False)
+    if backend is not None:
+        report = backend.finalize(report, benchmark_models, torch, device, output, config)
     write(output / 'final_report.json', report)
     return report

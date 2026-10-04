@@ -1,0 +1,48 @@
+{
+  "measured": true,
+  "records": [
+    {
+      "channel": "Ih",
+      "family": "mlp",
+      "median_forward_ms": 0.5126761627197266,
+      "batch_size": 4096,
+      "gate_rmse": 0.00023997790678878715
+    },
+    {
+      "channel": "Ih",
+      "family": "formula_torch",
+      "median_forward_ms": 0.32590015411376955,
+      "batch_size": 4096,
+      "gate_rmse": 2.6453712076894406e-08
+    },
+    {
+      "channel": "Ih",
+      "family": "lut2049_torch",
+      "median_forward_ms": 0.3017318344116211,
+      "batch_size": 4096,
+      "gate_rmse": 1.340421365517212e-07
+    },
+    {
+      "channel": "Im",
+      "family": "mlp",
+      "median_forward_ms": 0.5082931137084961,
+      "batch_size": 4096,
+      "gate_rmse": 0.00047508873105312616
+    },
+    {
+      "channel": "Im",
+      "family": "formula_torch",
+      "median_forward_ms": 0.23906656265258788,
+      "batch_size": 4096,
+      "gate_rmse": 3.137817643405302e-08
+    },
+    {
+      "channel": "Im",
+      "family": "lut2049_torch",
+      "median_forward_ms": 0.2984281539916992,
+      "batch_size": 4096,
+      "gate_rmse": 8.287958865898257e-07
+    }
+  ],
+  "scope": "Eager CUDA resident batch4096; same gate/inf/tau outputs; no full-neuron or NEURON speedup claim."
+}

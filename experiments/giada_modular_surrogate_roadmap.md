@@ -251,12 +251,15 @@ Non si assume che una singola cella sia universale.
   embedded di Na/K restano fuori da questa promozione.
 
 - **Task 19 — Gate singolo** → `Ih`, `Im` o meccanismo equivalente.
-  **Preregistrata (2026-10-04)** in `task19_single_gate_transfer.json`:
-  Ih e Im insieme,24modelli indipendenti, rate supervision/capacità/budget,
-  LUT, stati estremi e rollout a V costante; `19_roadmap_single_gate_transfer.ipynb`.
+  **Conclusa nel contratto isolato**: Ih e Im rate-supervised superati3/3seed,
+  stati estremi e rollout1000 a V costante. MLP eager più lento di formule/LUT;
+  nessuna accelerazione o sostituzione embedded implicita.
 
 - **Task 20 — Dipendenza dal calcio** → `SK_E2`, separato dai gate puramente
   voltage-dependent.
+  **Preregistrata** in `task20_calcium_gate_transfer.json`: calcio log/lineare
+  e controllo soloV, due obiettivi/capacità/treseed, tau canonica1ms analitica,
+  calcio imposto. `20_roadmap_calcium_gate_transfer.ipynb`; non CaDynamics.
 
 - **Task 21 — Dinamica lenta** → Meccanismo con costante temporale molto più
   lunga.
