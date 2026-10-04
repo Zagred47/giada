@@ -410,6 +410,13 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   probe oracle inf/tau eFP32/FP64 non selezionabili. Braccio primario
   `decay_channel` fissato prima del test, soglie invariate; modelli condivisi
   precedenti congelati. `notebooks/24b_sodium_control_diagnosis.ipynb`.
+  **Task24b conclusa (bde23cc), GO del riferimento riparato**: sei bracci
+  passano3/3; decay_channel width16/60k usa1116parametri. Il conditioned
+  congelato420 passa e comprime; shared_heads1516 non riduce parametri.
+  LR annealing/budget/capacità migliorano i contrasti tardivi; clipping mai
+  attivo. L'errore del vecchio Nap_h è soprattutto nei rate, non risolto dal
+  solo solverFP64; held-aware e one-step selezionano gli stessi checkpoint.
+  28713 osservazioni collegate; `experiments/results/task24b_kaggle_bde23cc/`.
 
 - **Task 25 — Meccanismi eterogenei** → Combinare cinetiche differenti.
   **Conclusa (bdb75e6), GO primario**: indipendenti e calcio compresso passano
