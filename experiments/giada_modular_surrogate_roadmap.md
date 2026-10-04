@@ -257,12 +257,16 @@ Non si assume che una singola cella sia universale.
 
 - **Task 20 — Dipendenza dal calcio** → `SK_E2`, separato dai gate puramente
   voltage-dependent.
-  **Preregistrata** in `task20_calcium_gate_transfer.json`: calcio log/lineare
-  e controllo soloV, due obiettivi/capacità/treseed, tau canonica1ms analitica,
-  calcio imposto. `20_roadmap_calcium_gate_transfer.ipynb`; non CaDynamics.
+  **Conclusa nel contratto isolato**: calcio log/lineare superati3/3seed;
+  controllo soloV fallito. Gate e percorsi di calcio imposto confermati;
+  tau canonica1ms analitica. Non CaDynamics né speedup.
 
 - **Task 21 — Dinamica lenta** → Meccanismo con costante temporale molto più
   lunga.
+  **Preregistrata**: h isolato di Nap_Et2, tau circa350–2194ms; supporto
+  dt breve/multiscala × supervisione rate × capacità/budget.24modelli,
+  rollout1ms fino10s, floorfloat32 e persistence. Non intero canale Nap.
+  `task21_slow_gate_transfer.json`, `21_roadmap_slow_gate_transfer.ipynb`.
 
 - **Task 22 — Condivisione controllata** → Confrontare modelli distinti, trunk
   condiviso con head separate e modello condizionato dall'identità del

@@ -1,0 +1,124 @@
+{
+  "schema_version": "giada-roadmap-task21-preregistration-v1",
+  "stage": "Task21 originale, Atto III: dinamica lenta Nap_Et2 h",
+  "require_cuda": true,
+  "channels": [
+    "short_dt",
+    "multiscale_dt"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "widths": [
+    16,
+    32
+  ],
+  "objectives": [
+    "transition_only",
+    "rate_supervised"
+  ],
+  "checkpoints": [
+    0,
+    1000,
+    5000,
+    15000,
+    30000
+  ],
+  "pool_size": 24000,
+  "batch_size": 1024,
+  "learning_rate": 0.003,
+  "inf_weight": 0.1,
+  "log_tau_weight": 0.1,
+  "voltage_domain_mv": [
+    -135,
+    75
+  ],
+  "dt_values_ms": [
+    0.025,
+    0.1,
+    0.5,
+    1,
+    5,
+    25,
+    100,
+    500,
+    1000,
+    5000,
+    10000
+  ],
+  "data_seeds": {
+    "fit": 210101,
+    "fit_regions": 210102,
+    "development": [
+      210201,
+      210202
+    ],
+    "minibatches": 190301,
+    "fresh": [
+      210401,
+      210402,
+      210403,
+      210404,
+      210405
+    ]
+  },
+  "fit_sampling": "50% uniform[-135,75],50%[-75,-25]mV. Same V/state tuples, seed, initialization and minibatch indices; only registered training dt support differs.",
+  "hypotheses": {
+    "slow_gate_transfer": "The constrained slow h cell with multiscale duration support and rate supervision passes all registered gates in all3seeds.",
+    "duration_identifiability": "Longer training durations expose slow kinetics better than short-only transitions, holding V/state/initialization/minibatch streams fixed; paired development score reduction>=10% at30k supports practical benefit.",
+    "rate_identifiability": "Rate supervision improves hidden inf/logtau and long rollout over paired transition-only models; >=10% worst-development score reduction at30k supports benefit.",
+    "capacity_budget": "Paired width16/32 and checkpoints distinguish capacity/budget; >=10% score reduction supports practical benefit, monotonic improvement not assumed.",
+    "state_rollout": "Repeated1ms updates up to10000ms reveal errors masked at1ms. Compare persistence, formula float32 floor and learned macro update; report separately without fresh selection.",
+    "numerical_reference": "LUT513/2049 voltage-grid baselines measure approximation reference; not a timing benchmark."
+  },
+  "gates": {
+    "gate_rmse": 0.001,
+    "gate_max_error": 0.01,
+    "inf_rmse": 0.002,
+    "log_tau_rmse": 0.02,
+    "open_rmse": 0.002,
+    "occupancy_violations": 0
+  },
+  "rollout_gates": {
+    "gate_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "occupancy_violations": 0
+  },
+  "rollout_horizons_steps": [
+    1,
+    10,
+    100,
+    1000,
+    10000
+  ],
+  "selection": "Common width/checkpoint per duration-support/objective across3seeds by worst-seed worst-domain normalized sum gateRMSE,gateMAX,infRMSE,logtauRMSE. Development uses common multiscale dt for every arm. Freeze before fresh. No rollout selection.",
+  "promotion": "Task22 authorized only if multiscale_dt/rate_supervised all3seeds pass fresh in_support,negative_tail,state_extrema and all registered repeated1ms horizons through10000ms. Other arms diagnostic, not fallback candidates. OOD diagnostic only.",
+  "native_contract": "Canonical Nap_Et2 h; qt2.3^1.3; exact local voltage mutations -38,-17,-64.4 preserved, including preceding m-rate branch. Zero conductance. RANGE-only hInf/hTau instrumentation. Native rates/gate errors<1e-7, section drift<1e-8mV.",
+  "architecture": "MLP1->w->w->2 SiLU; hInf=sigmoid,tau=exp(clamped logtau); convex exponential gate update. Independent models. h only, no current claim.",
+  "limits": "Isolated slow h gate, held imposed voltage. Not entire Nap_Et2 m^3*h channel; no current, endogenous voltage, full-neuron, shared-weight or speedup claim. Short vs multiscale duration is intentional information intervention. Long labels exact only at held voltage; simulation rollout remains1ms.",
+  "performance": "Vectorized independent24models onCUDA; CPU double oracle separate native process. Float32 formula rollout floor, persistence and learned single macro update diagnostic; no speedup measurement.",
+  "required_artifacts": [
+    "native_audit.json",
+    "run_contract.json",
+    "code_provenance.json",
+    "equivalence_preflight.json",
+    "development_ladder.json",
+    "paired_development_contrasts.json",
+    "selection_freeze.json",
+    "fresh_metrics.json",
+    "gpu_benchmark.json",
+    "final_report.json",
+    "checkpoint_*.pt",
+    "fit_development.npz",
+    "fresh.npz",
+    "paired_duration_contrasts.json"
+  ],
+  "short_dt_values_ms": [
+    0.025,
+    0.1,
+    0.5,
+    1
+  ]
+}

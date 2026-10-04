@@ -1,0 +1,2125 @@
+{
+  "schema_version": "giada-roadmap-task20-v1",
+  "valid": true,
+  "single_gate_transfer_passed": true,
+  "per_channel_transfer": {
+    "calcium_log": true,
+    "calcium_linear": true,
+    "voltage_only": false
+  },
+  "fresh_used_for_selection": false,
+  "selection": {
+    "calcium_log/transition_only": {
+      "channel": "calcium_log",
+      "objective": "transition_only",
+      "width": 16,
+      "step": 15000,
+      "indices": [
+        0,
+        1,
+        2
+      ],
+      "score": 0.571305710350411
+    },
+    "calcium_log/rate_supervised": {
+      "channel": "calcium_log",
+      "objective": "rate_supervised",
+      "width": 16,
+      "step": 15000,
+      "indices": [
+        3,
+        4,
+        5
+      ],
+      "score": 0.5343662974286763
+    },
+    "calcium_linear/transition_only": {
+      "channel": "calcium_linear",
+      "objective": "transition_only",
+      "width": 32,
+      "step": 30000,
+      "indices": [
+        6,
+        7,
+        8
+      ],
+      "score": 0.20588528438380332
+    },
+    "calcium_linear/rate_supervised": {
+      "channel": "calcium_linear",
+      "objective": "rate_supervised",
+      "width": 32,
+      "step": 30000,
+      "indices": [
+        9,
+        10,
+        11
+      ],
+      "score": 0.2767125522145408
+    },
+    "voltage_only/transition_only": {
+      "channel": "voltage_only",
+      "objective": "transition_only",
+      "width": 16,
+      "step": 30000,
+      "indices": [
+        12,
+        13,
+        14
+      ],
+      "score": 593.3801851275227
+    },
+    "voltage_only/rate_supervised": {
+      "channel": "voltage_only",
+      "objective": "rate_supervised",
+      "width": 16,
+      "step": 30000,
+      "indices": [
+        15,
+        16,
+        17
+      ],
+      "score": 593.4113335354377
+    }
+  },
+  "learned": [
+    {
+      "channel": "calcium_log",
+      "objective": "transition_only",
+      "seed": 17,
+      "width": 16,
+      "step": 15000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0002433976878714568,
+          "gate_max_error": 0.00140531146951417,
+          "inf_rmse": 0.0003496550369221147,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.0002433976878714568,
+          "current_rmse_ma_cm2": 2.102442392155993e-08,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.9258291226706426e-08,
+          "gate_max_error": 1.1925453128909019e-07,
+          "inf_rmse": 2.087671620751816e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.9258291226706426e-08,
+          "current_rmse_ma_cm2": 1.5696645216196228e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.00024653410624202675,
+          "gate_max_error": 0.0014015076250394332,
+          "inf_rmse": 0.0003461571274480741,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.00024653410624202675,
+          "current_rmse_ma_cm2": 4.930682124840535e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.1485042882579636e-08,
+          "gate_max_error": 6.605877367338309e-08,
+          "inf_rmse": 2.4180313040926172e-15,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.1485042882579636e-08,
+          "current_rmse_ma_cm2": 8.804592368685763e-13,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 5.550396835219116e-07,
+          "gate_max_error": 2.835671119250094e-06,
+          "inf_rmse": 7.824095576373624e-07,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 5.550396835219116e-07,
+          "current_rmse_ma_cm2": 4.58780527287596e-11,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.00018506698368252883,
+          "gate_max_error": 0.0005685367247032502,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.00029275480562735795,
+          "gate_max_error": 0.0008993125568845239,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.0002927683806627604,
+          "gate_max_error": 0.000899366388806111,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.0002927683806627604,
+          "gate_max_error": 0.000899366388806111,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "objective": "transition_only",
+      "seed": 29,
+      "width": 16,
+      "step": 15000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.00018510889880957746,
+          "gate_max_error": 0.0010924466890881446,
+          "inf_rmse": 0.00026593989941595206,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.00018510889880957746,
+          "current_rmse_ma_cm2": 1.6064906702020836e-08,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 2.2598856040081162e-08,
+          "gate_max_error": 1.4579210875793385e-07,
+          "inf_rmse": 2.6450307554180415e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 2.2598856040081162e-08,
+          "current_rmse_ma_cm2": 1.8405460037608437e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0001877189409118615,
+          "gate_max_error": 0.0010913846582730757,
+          "inf_rmse": 0.000263574699552437,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.0001877189409118615,
+          "current_rmse_ma_cm2": 3.754378818237231e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.1485042882528672e-08,
+          "gate_max_error": 6.605877367338309e-08,
+          "inf_rmse": 3.863750531428642e-15,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.1485042882528672e-08,
+          "current_rmse_ma_cm2": 8.8045923686298e-13,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 2.3126502567342583e-07,
+          "gate_max_error": 1.2859503550899376e-06,
+          "inf_rmse": 3.2518434080598406e-07,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 2.3126502567342583e-07,
+          "current_rmse_ma_cm2": 1.902733357137128e-11,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.00014150497165585417,
+          "gate_max_error": 0.00045981785263293773,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.00022384453532991918,
+          "gate_max_error": 0.0007273939517959405,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.00022385392592471484,
+          "gate_max_error": 0.0007274367909514967,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.00022385392592471484,
+          "gate_max_error": 0.0007274367909514967,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "objective": "transition_only",
+      "seed": 43,
+      "width": 16,
+      "step": 15000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0002285943885959026,
+          "gate_max_error": 0.0013495811266491797,
+          "inf_rmse": 0.0003284371345998918,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.0002285943885959026,
+          "current_rmse_ma_cm2": 1.9804105931014497e-08,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.4400648058058684e-08,
+          "gate_max_error": 6.981332638118281e-08,
+          "inf_rmse": 1.1724413798682855e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.4400648058058684e-08,
+          "current_rmse_ma_cm2": 1.1831965234441493e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0002319921655641441,
+          "gate_max_error": 0.0013469097704251753,
+          "inf_rmse": 0.0003257388064323716,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.0002319921655641441,
+          "current_rmse_ma_cm2": 4.639843311282882e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.148504288266825e-08,
+          "gate_max_error": 6.605877367338309e-08,
+          "inf_rmse": 1.4643567337537228e-16,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.148504288266825e-08,
+          "current_rmse_ma_cm2": 8.804592368779785e-13,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 4.934379294883597e-07,
+          "gate_max_error": 2.580629469561835e-06,
+          "inf_rmse": 6.949947583823201e-07,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 4.934379294883597e-07,
+          "current_rmse_ma_cm2": 4.0610262289929324e-11,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.00017357872581736882,
+          "gate_max_error": 0.0005650200506615022,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.0002745814975316626,
+          "gate_max_error": 0.0008938101200088311,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.0002745951485429812,
+          "gate_max_error": 0.0008938529591643873,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.0002745951485429812,
+          "gate_max_error": 0.0008938529591643873,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "objective": "rate_supervised",
+      "seed": 17,
+      "width": 16,
+      "step": 15000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.00023187070156779636,
+          "gate_max_error": 0.0012598430083251566,
+          "inf_rmse": 0.0003330664380067248,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.00023187070156779636,
+          "current_rmse_ma_cm2": 1.9871014369443952e-08,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.9403005392746017e-08,
+          "gate_max_error": 1.2065522418409407e-07,
+          "inf_rmse": 2.1138354752996604e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.9403005392746017e-08,
+          "current_rmse_ma_cm2": 1.5810487546063718e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0002339928288698001,
+          "gate_max_error": 0.0012592310382938399,
+          "inf_rmse": 0.00032854775008585947,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.0002339928288698001,
+          "current_rmse_ma_cm2": 4.679856577396001e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.1485042882575608e-08,
+          "gate_max_error": 6.605877367338309e-08,
+          "inf_rmse": 2.519766774508142e-15,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.1485042882575608e-08,
+          "current_rmse_ma_cm2": 8.804592368681513e-13,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 5.550551019480452e-07,
+          "gate_max_error": 2.835671119250094e-06,
+          "inf_rmse": 7.824271072511997e-07,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 5.550551019480452e-07,
+          "current_rmse_ma_cm2": 4.5878580646396724e-11,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.0001767835904419643,
+          "gate_max_error": 0.000477421891443508,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.0002796505394455431,
+          "gate_max_error": 0.0007552070604428425,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.0002796648951270871,
+          "gate_max_error": 0.0007552414217264353,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.0002796648951270871,
+          "gate_max_error": 0.0007552414217264353,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "objective": "rate_supervised",
+      "seed": 29,
+      "width": 16,
+      "step": 15000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.00019235822340553718,
+          "gate_max_error": 0.0011705170007645371,
+          "inf_rmse": 0.0002763971821592044,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.00019235822340553718,
+          "current_rmse_ma_cm2": 1.6774679245986057e-08,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 2.276173662309291e-08,
+          "gate_max_error": 1.4726706757967938e-07,
+          "inf_rmse": 2.674048502045413e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 2.276173662309291e-08,
+          "current_rmse_ma_cm2": 1.853206819209991e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.00019559009116228615,
+          "gate_max_error": 0.001170480021890019,
+          "inf_rmse": 0.00027462644788493534,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.00019559009116228615,
+          "current_rmse_ma_cm2": 3.911801823245723e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.1485042882521805e-08,
+          "gate_max_error": 6.605877367338309e-08,
+          "inf_rmse": 4.04308528245574e-15,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.1485042882521805e-08,
+          "current_rmse_ma_cm2": 8.804592368622477e-13,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 2.335619194730004e-07,
+          "gate_max_error": 1.2859503550899376e-06,
+          "inf_rmse": 3.2789579114224785e-07,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 2.335619194730004e-07,
+          "current_rmse_ma_cm2": 1.9179719705451455e-11,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.00014719879143726923,
+          "gate_max_error": 0.0005150324062621614,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.0002328525480929846,
+          "gate_max_error": 0.0008147445587142754,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.00023286319549911804,
+          "gate_max_error": 0.0008147873978698317,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.00023286319549911804,
+          "gate_max_error": 0.0008147873978698317,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "objective": "rate_supervised",
+      "seed": 43,
+      "width": 16,
+      "step": 15000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0002141585398616275,
+          "gate_max_error": 0.0011741911337829203,
+          "inf_rmse": 0.0003077460119780105,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.0002141585398616275,
+          "current_rmse_ma_cm2": 1.8361572121771523e-08,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.4467694945502414e-08,
+          "gate_max_error": 7.064937228036022e-08,
+          "inf_rmse": 1.1873135014645568e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.4467694945502414e-08,
+          "current_rmse_ma_cm2": 1.189729152045951e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.00021632576978156156,
+          "gate_max_error": 0.0011732811405277266,
+          "inf_rmse": 0.00030374180107299543,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.00021632576978156156,
+          "current_rmse_ma_cm2": 4.3265153956312305e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.1485042882667992e-08,
+          "gate_max_error": 6.605877367338309e-08,
+          "inf_rmse": 1.5339973580216232e-16,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.1485042882667992e-08,
+          "current_rmse_ma_cm2": 8.804592368779505e-13,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 4.943138820342014e-07,
+          "gate_max_error": 2.580629469561835e-06,
+          "inf_rmse": 6.963408876640809e-07,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 4.943138820342014e-07,
+          "current_rmse_ma_cm2": 4.066530154024482e-11,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.00016260900992043177,
+          "gate_max_error": 0.0004343277332709006,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.0002572294160864709,
+          "gate_max_error": 0.0006870638671985126,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.0002572397016331352,
+          "gate_max_error": 0.0006870946862966715,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.0002572397016331352,
+          "gate_max_error": 0.0006870946862966715,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "objective": "transition_only",
+      "seed": 17,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1153,
+      "dense_macs": 1088,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 9.333058089840637e-05,
+          "gate_max_error": 0.0005223060804318003,
+          "inf_rmse": 0.0001342803658524916,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 9.333058089840637e-05,
+          "current_rmse_ma_cm2": 7.78834403775937e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 8.893196203495516e-06,
+          "gate_max_error": 1.8389334664509382e-05,
+          "inf_rmse": 1.2496710500763502e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 8.893196203495516e-06,
+          "current_rmse_ma_cm2": 7.187376013718351e-10,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 9.00484372429134e-05,
+          "gate_max_error": 0.000522236947203436,
+          "inf_rmse": 0.00012643681131034083,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 9.00484372429134e-05,
+          "current_rmse_ma_cm2": 1.8009687448582681e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 7.807403817970953e-06,
+          "gate_max_error": 1.1015534255321759e-05,
+          "inf_rmse": 1.0971521727378053e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 7.807403817970953e-06,
+          "current_rmse_ma_cm2": 6.424445583439433e-10,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 4.3201596488683604e-08,
+          "gate_max_error": 2.840693429373431e-07,
+          "inf_rmse": 5.698202255532419e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 4.3201596488683604e-08,
+          "current_rmse_ma_cm2": 3.4911419856850013e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.0001010842037532164,
+          "gate_max_error": 0.00032993463037644943,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.00015991001428548721,
+          "gate_max_error": 0.0005219290639967289,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.00015991225167280354,
+          "gate_max_error": 0.0005219567778425027,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.00015991225167280354,
+          "gate_max_error": 0.0005219567778425027,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "objective": "transition_only",
+      "seed": 29,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1153,
+      "dense_macs": 1088,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 9.45395293575232e-05,
+          "gate_max_error": 0.0003719264127966175,
+          "inf_rmse": 0.00013230983280057982,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 9.45395293575232e-05,
+          "current_rmse_ma_cm2": 7.908935866109491e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.2988225020191668e-05,
+          "gate_max_error": 2.639396488183805e-05,
+          "inf_rmse": 1.825337303185937e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.2988225020191668e-05,
+          "current_rmse_ma_cm2": 1.0497215567593252e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 9.186980474737976e-05,
+          "gate_max_error": 0.0003719481667948147,
+          "inf_rmse": 0.00012899328886286602,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 9.186980474737976e-05,
+          "current_rmse_ma_cm2": 1.8373960949475948e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.1484277225084747e-05,
+          "gate_max_error": 1.6200800018751686e-05,
+          "inf_rmse": 1.6139025213674995e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.1484277225084747e-05,
+          "current_rmse_ma_cm2": 9.44995836514715e-10,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 4.3201596488683604e-08,
+          "gate_max_error": 2.840693429373431e-07,
+          "inf_rmse": 5.698202255532419e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 4.3201596488683604e-08,
+          "current_rmse_ma_cm2": 3.4911419856850013e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 8.902814582604829e-05,
+          "gate_max_error": 0.00023513665764179903,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.00014083319836876167,
+          "gate_max_error": 0.000371944878976639,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.0001408397950643576,
+          "gate_max_error": 0.000371962027307652,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.0001408397950643576,
+          "gate_max_error": 0.000371962027307652,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "objective": "transition_only",
+      "seed": 43,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1153,
+      "dense_macs": 1088,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 6.744061816102717e-05,
+          "gate_max_error": 0.0003206179206399762,
+          "inf_rmse": 9.423536780874557e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 6.744061816102717e-05,
+          "current_rmse_ma_cm2": 5.839793181852126e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.546140909589105e-05,
+          "gate_max_error": 3.0018834232298407e-05,
+          "inf_rmse": 2.173337731266395e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.546140909589105e-05,
+          "current_rmse_ma_cm2": 1.2497472432684167e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 6.753361753816301e-05,
+          "gate_max_error": 0.0003199784676632955,
+          "inf_rmse": 9.482334913365487e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 6.753361753816301e-05,
+          "current_rmse_ma_cm2": 1.3506723507632602e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.3931039535657421e-05,
+          "gate_max_error": 1.964300645330797e-05,
+          "inf_rmse": 1.957839295034558e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.3931039535657421e-05,
+          "current_rmse_ma_cm2": 1.1463414798890813e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 4.3201596488683604e-08,
+          "gate_max_error": 2.840693429373431e-07,
+          "inf_rmse": 5.698202255532419e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 4.3201596488683604e-08,
+          "current_rmse_ma_cm2": 3.4911419856850013e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 6.765584704315276e-05,
+          "gate_max_error": 0.00020284112533161536,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.00010702538904083404,
+          "gate_max_error": 0.00032088538609931216,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.00010702992942630618,
+          "gate_max_error": 0.00032090407741791616,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.00010702992942630618,
+          "gate_max_error": 0.00032090407741791616,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "objective": "rate_supervised",
+      "seed": 17,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1153,
+      "dense_macs": 1088,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.00012682827365676242,
+          "gate_max_error": 0.0006470195395229528,
+          "inf_rmse": 0.0001807782773045594,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.00012682827365676242,
+          "current_rmse_ma_cm2": 1.0578671442312657e-08,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.0289252201595453e-05,
+          "gate_max_error": 2.12548559745231e-05,
+          "inf_rmse": 1.4458911237191526e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.0289252201595453e-05,
+          "current_rmse_ma_cm2": 8.315496954840372e-10,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0001233518535589021,
+          "gate_max_error": 0.0006468436257165422,
+          "inf_rmse": 0.00017319807323654292,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.0001233518535589021,
+          "current_rmse_ma_cm2": 2.4670370711780423e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 9.035285026494317e-06,
+          "gate_max_error": 1.2748279004782594e-05,
+          "inf_rmse": 1.2697335944452133e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 9.035285026494317e-06,
+          "current_rmse_ma_cm2": 7.434868676236457e-10,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 4.3201596488683604e-08,
+          "gate_max_error": 2.840693429373431e-07,
+          "inf_rmse": 5.698202255532419e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 4.3201596488683604e-08,
+          "current_rmse_ma_cm2": 3.4911419856850013e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.00013115755106109377,
+          "gate_max_error": 0.00040244081783702423,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.00020747834166658427,
+          "gate_max_error": 0.000636651734662097,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.00020748828706209225,
+          "gate_max_error": 0.0006366707909069014,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.00020748828706209225,
+          "gate_max_error": 0.0006366707909069014,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "objective": "rate_supervised",
+      "seed": 29,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1153,
+      "dense_macs": 1088,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.00010603266822740472,
+          "gate_max_error": 0.0005835869381744241,
+          "inf_rmse": 0.00014823539399072064,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.00010603266822740472,
+          "current_rmse_ma_cm2": 9.150495306016209e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.2895883463865354e-05,
+          "gate_max_error": 2.6233577310169797e-05,
+          "inf_rmse": 1.812341583159438e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.2895883463865354e-05,
+          "current_rmse_ma_cm2": 1.0422524774784006e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0001035846124398206,
+          "gate_max_error": 0.0005828226877618581,
+          "inf_rmse": 0.00014544230468867112,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.0001035846124398206,
+          "current_rmse_ma_cm2": 2.071692248796412e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.139780493239611e-05,
+          "gate_max_error": 1.607863850939895e-05,
+          "inf_rmse": 1.6017119836019633e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.139780493239611e-05,
+          "current_rmse_ma_cm2": 9.37891907449618e-10,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 4.3201596488683604e-08,
+          "gate_max_error": 2.840693429373431e-07,
+          "inf_rmse": 5.698202255532419e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 4.3201596488683604e-08,
+          "current_rmse_ma_cm2": 3.4911419856850013e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.00010891797431227694,
+          "gate_max_error": 0.00036701236485461863,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.00017229733147779543,
+          "gate_max_error": 0.0005805931198855085,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.00017230412341393223,
+          "gate_max_error": 0.0005806270340480424,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.00017230412341393223,
+          "gate_max_error": 0.0005806270340480424,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "objective": "rate_supervised",
+      "seed": 43,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1153,
+      "dense_macs": 1088,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 5.238973020132067e-05,
+          "gate_max_error": 0.00024278220732394543,
+          "inf_rmse": 7.387889182106814e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 5.238973020132067e-05,
+          "current_rmse_ma_cm2": 4.3576398369121575e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 1.5346578668148343e-05,
+          "gate_max_error": 2.9815292956020433e-05,
+          "inf_rmse": 2.1571893302703582e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.5346578668148343e-05,
+          "current_rmse_ma_cm2": 1.2404706649399605e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 5.1903416170322136e-05,
+          "gate_max_error": 0.00024273077210266623,
+          "inf_rmse": 7.287714869843672e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 5.1903416170322136e-05,
+          "current_rmse_ma_cm2": 1.0380683234064425e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 1.3824282854965004e-05,
+          "gate_max_error": 1.9492283172340755e-05,
+          "inf_rmse": 1.9428028816262582e-05,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 1.3824282854965004e-05,
+          "current_rmse_ma_cm2": 1.1375508430165576e-09,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 4.3201596488683604e-08,
+          "gate_max_error": 2.840693429373431e-07,
+          "inf_rmse": 5.698202255532419e-08,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 4.3201596488683604e-08,
+          "current_rmse_ma_cm2": 3.4911419856850013e-12,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 5.1951674555513705e-05,
+          "gate_max_error": 0.00015348968659062434,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 8.217974462635222e-05,
+          "gate_max_error": 0.0002427832321169937,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 8.218401497806323e-05,
+          "gate_max_error": 0.00024279430358538877,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 8.218401497806323e-05,
+          "gate_max_error": 0.00024279430358538877,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "voltage_only",
+      "objective": "transition_only",
+      "seed": 17,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.303106623410075,
+          "gate_max_error": 0.686951670699342,
+          "inf_rmse": 0.4288440837756576,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.303106623410075,
+          "current_rmse_ma_cm2": 2.504462234573351e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.2244516383748847,
+          "gate_max_error": 0.32730484003347804,
+          "inf_rmse": 0.315754023878078,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.2244516383748847,
+          "current_rmse_ma_cm2": 1.8171914132097596e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.304240943829769,
+          "gate_max_error": 0.6869295461336532,
+          "inf_rmse": 0.4271830362628827,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.304240943829769,
+          "current_rmse_ma_cm2": 6.08481887659538e-06,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.22457534643317917,
+          "gate_max_error": 0.327136635777879,
+          "inf_rmse": 0.3156874515757268,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.22457534643317917,
+          "current_rmse_ma_cm2": 1.8506239271124895e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.48524772099183233,
+          "gate_max_error": 0.6869525610238301,
+          "inf_rmse": 0.6842445170121675,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.48524772099183233,
+          "current_rmse_ma_cm2": 3.9204799322631555e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.2762498461622165,
+          "gate_max_error": 0.43422157324454835,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.437000981086889,
+          "gate_max_error": 0.6868972318293484,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.4370208219467574,
+          "gate_max_error": 0.6869284049942354,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.4370208219467574,
+          "gate_max_error": 0.6869284049942354,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "voltage_only",
+      "objective": "transition_only",
+      "seed": 29,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.30310010654701874,
+          "gate_max_error": 0.6868777416510912,
+          "inf_rmse": 0.4288346702012307,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.30310010654701874,
+          "current_rmse_ma_cm2": 2.5043025757228013e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.2243975619326849,
+          "gate_max_error": 0.32748404139799525,
+          "inf_rmse": 0.31567468151743977,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.2243975619326849,
+          "current_rmse_ma_cm2": 1.815666860181163e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.30424525300239963,
+          "gate_max_error": 0.686863265768663,
+          "inf_rmse": 0.4271890864914924,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.30424525300239963,
+          "current_rmse_ma_cm2": 6.084905060047991e-06,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.2245169028575056,
+          "gate_max_error": 0.32731014489882015,
+          "inf_rmse": 0.3156046911195298,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.2245169028575056,
+          "current_rmse_ma_cm2": 1.8489599510624828e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.4853020963043434,
+          "gate_max_error": 0.6868781500661242,
+          "inf_rmse": 0.6843228266222746,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.4853020963043434,
+          "current_rmse_ma_cm2": 3.922040052932643e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.27625062562837277,
+          "gate_max_error": 0.43417967117927125,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.43700221403926426,
+          "gate_max_error": 0.6868309514643581,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.43702205490009316,
+          "gate_max_error": 0.6868621246292451,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.43702205490009316,
+          "gate_max_error": 0.6868621246292451,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "voltage_only",
+      "objective": "transition_only",
+      "seed": 43,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.303113255433851,
+          "gate_max_error": 0.6869138042579156,
+          "inf_rmse": 0.42885011542370277,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.303113255433851,
+          "current_rmse_ma_cm2": 2.5045620743995344e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.22444426829071604,
+          "gate_max_error": 0.3263692557267611,
+          "inf_rmse": 0.3157558869399258,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.22444426829071604,
+          "current_rmse_ma_cm2": 1.8181271269468515e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.3042496620562484,
+          "gate_max_error": 0.6867955548921981,
+          "inf_rmse": 0.427195277830967,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.3042496620562484,
+          "current_rmse_ma_cm2": 6.084993241124968e-06,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.22458706403154266,
+          "gate_max_error": 0.3262247741197827,
+          "inf_rmse": 0.31569647766343645,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.22458706403154266,
+          "current_rmse_ma_cm2": 1.851957694868308e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.48524639759649163,
+          "gate_max_error": 0.6869186758303647,
+          "inf_rmse": 0.6842443630058762,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.48524639759649163,
+          "current_rmse_ma_cm2": 3.919458570055634e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.2762514282844367,
+          "gate_max_error": 0.4341368750443225,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.43700348397907063,
+          "gate_max_error": 0.6867632405878933,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.43702332484040973,
+          "gate_max_error": 0.6867944137527803,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.43702332484040973,
+          "gate_max_error": 0.6867944137527803,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "voltage_only",
+      "objective": "rate_supervised",
+      "seed": 17,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.30316558308896213,
+          "gate_max_error": 0.6860753930141766,
+          "inf_rmse": 0.42893659663962785,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.30316558308896213,
+          "current_rmse_ma_cm2": 2.5049806043799953e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.2251454819842726,
+          "gate_max_error": 0.3287656604699557,
+          "inf_rmse": 0.3167301942121396,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.2251454819842726,
+          "current_rmse_ma_cm2": 1.822635841023338e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.3042995814634424,
+          "gate_max_error": 0.6860369665781417,
+          "inf_rmse": 0.42726536893769906,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.3042995814634424,
+          "current_rmse_ma_cm2": 6.085991629268847e-06,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.2252648195615784,
+          "gate_max_error": 0.32859382033102535,
+          "inf_rmse": 0.3166586350780642,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.2252648195615784,
+          "current_rmse_ma_cm2": 1.8561837582162262e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.4845553940686809,
+          "gate_max_error": 0.6860768496840595,
+          "inf_rmse": 0.6832699125537988,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.4845553940686809,
+          "current_rmse_ma_cm2": 3.915039183887989e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.2762608749782914,
+          "gate_max_error": 0.4336573556771045,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.43701842784444056,
+          "gate_max_error": 0.6860046820761593,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.43703826929192086,
+          "gate_max_error": 0.6860358254387239,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.43703826929192086,
+          "gate_max_error": 0.6860358254387239,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "voltage_only",
+      "objective": "rate_supervised",
+      "seed": 29,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.30315989452096054,
+          "gate_max_error": 0.6859864628841718,
+          "inf_rmse": 0.42892740645301786,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.30315989452096054,
+          "current_rmse_ma_cm2": 2.5048386325964865e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.2250833237303608,
+          "gate_max_error": 0.3286559283189242,
+          "inf_rmse": 0.3166408601479824,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.2250833237303608,
+          "current_rmse_ma_cm2": 1.8212904792470562e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.3043049794633896,
+          "gate_max_error": 0.6859557850519576,
+          "inf_rmse": 0.4272729489448925,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.3043049794633896,
+          "current_rmse_ma_cm2": 6.0860995892677905e-06,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.22520193601208197,
+          "gate_max_error": 0.3284824788545849,
+          "inf_rmse": 0.31656838152501393,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.22520193601208197,
+          "current_rmse_ma_cm2": 1.8547370410384762e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.4846170333025011,
+          "gate_max_error": 0.6859871148913501,
+          "inf_rmse": 0.6833579200295063,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.4846170333025011,
+          "current_rmse_ma_cm2": 3.916412181056764e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.27626193527809434,
+          "gate_max_error": 0.4336060360779529,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.43702010511405587,
+          "gate_max_error": 0.6859235005499752,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.43703994656065914,
+          "gate_max_error": 0.6859546439125398,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.43703994656065914,
+          "gate_max_error": 0.6859546439125398,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "voltage_only",
+      "objective": "rate_supervised",
+      "seed": 43,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 321,
+      "dense_macs": 288,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.30316977417096674,
+          "gate_max_error": 0.686064497674511,
+          "inf_rmse": 0.4289384761408568,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.30316977417096674,
+          "current_rmse_ma_cm2": 2.505109422186613e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.2250949568776794,
+          "gate_max_error": 0.3274747728757327,
+          "inf_rmse": 0.3166699799345362,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.2250949568776794,
+          "current_rmse_ma_cm2": 1.823775265237708e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.30430355376860957,
+          "gate_max_error": 0.6859772129217544,
+          "inf_rmse": 0.42727094671616084,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.30430355376860957,
+          "current_rmse_ma_cm2": 6.086071075372191e-06,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.2252371390307447,
+          "gate_max_error": 0.3273236155485394,
+          "inf_rmse": 0.3166120330508158,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.2252371390307447,
+          "current_rmse_ma_cm2": 1.8576981949897035e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.4845987827464062,
+          "gate_max_error": 0.686065137317182,
+          "inf_rmse": 0.6833296359066034,
+          "log_tau_rmse": 0.0,
+          "open_rmse": 0.4845987827464062,
+          "current_rmse_ma_cm2": 3.913828111666469e-05,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.27626165465405894,
+          "gate_max_error": 0.4336195812334781,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "10": {
+          "gate_rmse": 0.4370196606258061,
+          "gate_max_error": 0.6859449472293283,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "100": {
+          "gate_rmse": 0.4370395020727077,
+          "gate_max_error": 0.6859761015846589,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "1000": {
+          "gate_rmse": 0.4370395020727077,
+          "gate_max_error": 0.6859761015846589,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    }
+  ],
+  "numerical": [
+    {
+      "channel": "calcium_log",
+      "family": "linear_lut_513_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 1.8863623034900657e-05,
+        "gate_max_error": 0.00013994771932990258,
+        "inf_rmse": 2.5748619438464597e-05,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.8863623034900657e-05,
+        "current_rmse_ma_cm2": 1.6618402749472627e-09,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "family": "linear_lut_513_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 1.7083569416489258e-12,
+        "gate_max_error": 2.0306323548360862e-11,
+        "inf_rmse": 2.352454274076415e-12,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.7083569416489258e-12,
+        "current_rmse_ma_cm2": 1.3732498244773707e-16,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "family": "linear_lut_513_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 1.8552666237383077e-05,
+        "gate_max_error": 0.00013947325672247768,
+        "inf_rmse": 2.604969665457983e-05,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.8552666237383077e-05,
+        "current_rmse_ma_cm2": 3.710533247476616e-10,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "family": "linear_lut_2049_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 1.1538969349726488e-06,
+        "gate_max_error": 8.755144029093387e-06,
+        "inf_rmse": 1.6034228908877598e-06,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.1538969349726488e-06,
+        "current_rmse_ma_cm2": 9.898252067390019e-11,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "family": "linear_lut_2049_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 1.0570847014934553e-13,
+        "gate_max_error": 1.17202210216642e-12,
+        "inf_rmse": 1.440178561043595e-13,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.0570847014934553e-13,
+        "current_rmse_ma_cm2": 8.802721074433369e-18,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_log",
+      "family": "linear_lut_2049_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 1.1614029578031698e-06,
+        "gate_max_error": 7.969725331569144e-06,
+        "inf_rmse": 1.6307195072353424e-06,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.1614029578031698e-06,
+        "current_rmse_ma_cm2": 2.3228059156063395e-11,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "family": "linear_lut_513_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 1.8863623034900657e-05,
+        "gate_max_error": 0.00013994771932990258,
+        "inf_rmse": 2.5748619438464597e-05,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.8863623034900657e-05,
+        "current_rmse_ma_cm2": 1.6618402749472627e-09,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "family": "linear_lut_513_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 1.7083569416489258e-12,
+        "gate_max_error": 2.0306323548360862e-11,
+        "inf_rmse": 2.352454274076415e-12,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.7083569416489258e-12,
+        "current_rmse_ma_cm2": 1.3732498244773707e-16,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "family": "linear_lut_513_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 1.8552666237383077e-05,
+        "gate_max_error": 0.00013947325672247768,
+        "inf_rmse": 2.604969665457983e-05,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.8552666237383077e-05,
+        "current_rmse_ma_cm2": 3.710533247476616e-10,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "family": "linear_lut_2049_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 1.1538969349726488e-06,
+        "gate_max_error": 8.755144029093387e-06,
+        "inf_rmse": 1.6034228908877598e-06,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.1538969349726488e-06,
+        "current_rmse_ma_cm2": 9.898252067390019e-11,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "family": "linear_lut_2049_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 1.0570847014934553e-13,
+        "gate_max_error": 1.17202210216642e-12,
+        "inf_rmse": 1.440178561043595e-13,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.0570847014934553e-13,
+        "current_rmse_ma_cm2": 8.802721074433369e-18,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "calcium_linear",
+      "family": "linear_lut_2049_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 1.1614029578031698e-06,
+        "gate_max_error": 7.969725331569144e-06,
+        "inf_rmse": 1.6307195072353424e-06,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.1614029578031698e-06,
+        "current_rmse_ma_cm2": 2.3228059156063395e-11,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "voltage_only",
+      "family": "linear_lut_513_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 1.8863623034900657e-05,
+        "gate_max_error": 0.00013994771932990258,
+        "inf_rmse": 2.5748619438464597e-05,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.8863623034900657e-05,
+        "current_rmse_ma_cm2": 1.6618402749472627e-09,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "voltage_only",
+      "family": "linear_lut_513_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 1.7083569416489258e-12,
+        "gate_max_error": 2.0306323548360862e-11,
+        "inf_rmse": 2.352454274076415e-12,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.7083569416489258e-12,
+        "current_rmse_ma_cm2": 1.3732498244773707e-16,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "voltage_only",
+      "family": "linear_lut_513_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 1.8552666237383077e-05,
+        "gate_max_error": 0.00013947325672247768,
+        "inf_rmse": 2.604969665457983e-05,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.8552666237383077e-05,
+        "current_rmse_ma_cm2": 3.710533247476616e-10,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "voltage_only",
+      "family": "linear_lut_2049_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 1.1538969349726488e-06,
+        "gate_max_error": 8.755144029093387e-06,
+        "inf_rmse": 1.6034228908877598e-06,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.1538969349726488e-06,
+        "current_rmse_ma_cm2": 9.898252067390019e-11,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "voltage_only",
+      "family": "linear_lut_2049_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 1.0570847014934553e-13,
+        "gate_max_error": 1.17202210216642e-12,
+        "inf_rmse": 1.440178561043595e-13,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.0570847014934553e-13,
+        "current_rmse_ma_cm2": 8.802721074433369e-18,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "voltage_only",
+      "family": "linear_lut_2049_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 1.1614029578031698e-06,
+        "gate_max_error": 7.969725331569144e-06,
+        "inf_rmse": 1.6307195072353424e-06,
+        "log_tau_rmse": 0.0,
+        "open_rmse": 1.1614029578031698e-06,
+        "current_rmse_ma_cm2": 2.3228059156063395e-11,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    }
+  ],
+  "environment": {
+    "python": "3.13.15",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "cublas_workspace_config": ":4096:8",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "cuda_available": true,
+    "gpu_name": "Tesla T4",
+    "gpu_count": 2
+  },
+  "training_and_evaluation_seconds": 216.12901604900003,
+  "scope": "Isolated SK_E2 with imposed calcium; primary cai1e-7...01mM. negative_tail is low calcium1e-7..1e-5mM, not voltage. OOD belowthreshold/above.01mM diagnostic. Heldcalcium and prescribed piecewiseconstant1ms calcium paths only; no subms calcium reconstruction, CaDynamics, closed-loop whole neuron, sharing(Task22), or speedup claim.",
+  "gpu_benchmark": {
+    "measured": false,
+    "reason": "Task20 isolates calcium input and kinetics; no speedup claim. Task19 eager MLP was slower than formula/LUT."
+  },
+  "shared_weights": false,
+  "full_neuron_speedup_claimed": false,
+  "calcium_gate_passed": true,
+  "task21_authorized": true,
+  "imposed_calcium_paths": [
+    {
+      "seed": 17,
+      "rows": [
+        {
+          "dwell_ms": 1,
+          "gate_rmse": 0.00022611568067707383,
+          "gate_max_error": 0.001110500685314486,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 5,
+          "gate_rmse": 0.00030428454067599214,
+          "gate_max_error": 0.0012557284319496542,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 25,
+          "gate_rmse": 0.000334543051957588,
+          "gate_max_error": 0.0012603955331766947,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 100,
+          "gate_rmse": 0.00033370387590359854,
+          "gate_max_error": 0.0012445512159071637,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      ]
+    },
+    {
+      "seed": 29,
+      "rows": [
+        {
+          "dwell_ms": 1,
+          "gate_rmse": 0.0001909672618248251,
+          "gate_max_error": 0.0010662740388911462,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 5,
+          "gate_rmse": 0.00025343133360548116,
+          "gate_max_error": 0.0011669828715499264,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 25,
+          "gate_rmse": 0.00027941236163279217,
+          "gate_max_error": 0.0011708947955640925,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 100,
+          "gate_rmse": 0.00027817077360760766,
+          "gate_max_error": 0.0011685552938185406,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      ]
+    },
+    {
+      "seed": 43,
+      "rows": [
+        {
+          "dwell_ms": 1,
+          "gate_rmse": 0.00020903793275517624,
+          "gate_max_error": 0.0010376638093989587,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 5,
+          "gate_rmse": 0.00028136245592204156,
+          "gate_max_error": 0.001170255371341744,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 25,
+          "gate_rmse": 0.00030918552509181195,
+          "gate_max_error": 0.001174684053989683,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        {
+          "dwell_ms": 100,
+          "gate_rmse": 0.0003080893434687219,
+          "gate_max_error": 0.0011607425135258254,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      ]
+    }
+  ],
+  "imposed_path_passed": true,
+  "calcium_units": "cai mM; stored input column0 log10(cai/mM); column3 voltage mV",
+  "domain_names": {
+    "negative_tail": "low calcium 1e-7..1e-5mM",
+    "ood_negative": "1e-9..1e-7mM canonical branch diagnostic",
+    "ood_positive": ".01...1mM diagnostic"
+  }
+}

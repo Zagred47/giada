@@ -1,0 +1,190 @@
+{
+  "selection": {
+    "calcium_log/transition_only": {
+      "channel": "calcium_log",
+      "objective": "transition_only",
+      "width": 16,
+      "step": 15000,
+      "indices": [
+        0,
+        1,
+        2
+      ],
+      "score": 0.571305710350411
+    },
+    "calcium_log/rate_supervised": {
+      "channel": "calcium_log",
+      "objective": "rate_supervised",
+      "width": 16,
+      "step": 15000,
+      "indices": [
+        3,
+        4,
+        5
+      ],
+      "score": 0.5343662974286763
+    },
+    "calcium_linear/transition_only": {
+      "channel": "calcium_linear",
+      "objective": "transition_only",
+      "width": 32,
+      "step": 30000,
+      "indices": [
+        6,
+        7,
+        8
+      ],
+      "score": 0.20588528438380332
+    },
+    "calcium_linear/rate_supervised": {
+      "channel": "calcium_linear",
+      "objective": "rate_supervised",
+      "width": 32,
+      "step": 30000,
+      "indices": [
+        9,
+        10,
+        11
+      ],
+      "score": 0.2767125522145408
+    },
+    "voltage_only/transition_only": {
+      "channel": "voltage_only",
+      "objective": "transition_only",
+      "width": 16,
+      "step": 30000,
+      "indices": [
+        12,
+        13,
+        14
+      ],
+      "score": 593.3801851275227
+    },
+    "voltage_only/rate_supervised": {
+      "channel": "voltage_only",
+      "objective": "rate_supervised",
+      "width": 16,
+      "step": 30000,
+      "indices": [
+        15,
+        16,
+        17
+      ],
+      "score": 593.4113335354377
+    }
+  },
+  "fresh_accessed": false,
+  "config": {
+    "schema_version": "giada-roadmap-task20-preregistration-v1",
+    "stage": "Task20 originale: SK_E2 dipendente dal calcio",
+    "require_cuda": true,
+    "channels": [
+      "calcium_log",
+      "calcium_linear",
+      "voltage_only"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "widths": [
+      16,
+      32
+    ],
+    "objectives": [
+      "transition_only",
+      "rate_supervised"
+    ],
+    "checkpoints": [
+      0,
+      1000,
+      5000,
+      15000,
+      30000
+    ],
+    "pool_size": 24000,
+    "batch_size": 1024,
+    "learning_rate": 0.003,
+    "inf_weight": 0.1,
+    "log_tau_weight": 0.1,
+    "data_seeds": {
+      "fit": 200101,
+      "fit_regions": 200102,
+      "development": [
+        200201,
+        200202
+      ],
+      "minibatches": 190301,
+      "fresh": [
+        200401,
+        200402,
+        200403,
+        200404,
+        200405
+      ],
+      "paths": 200501
+    },
+    "calcium_domain_mM": [
+      1e-07,
+      0.01
+    ],
+    "dt_values_ms": [
+      0.025,
+      0.1,
+      0.5,
+      1,
+      5,
+      25,
+      100
+    ],
+    "fit_sampling": "50% log-uniform cai[1e-7,.01]mM;50% log-uniform[1e-4,1e-3]mM; V independently uniform[-135,75]mV. Same tuples across36models.",
+    "hypotheses": {
+      "calcium_sufficiency": "Calcium-log cell passes all required fresh criteria in3/3seeds; voltage-only negative control cannot identify independent calcium.",
+      "input_encoding": "Log vs linear calcium isolate encoding, not information; identical trainable parameter counts and paired initialization within width/seed.",
+      "rate_supervision": "Supervising zInf can improve rate identification vs transition-only; zTau=1ms is fixed canonical, not learned.",
+      "capacity_budget": "Widths16/32 and saved budgets distinguish learnability/capacity without duplicated training trajectories.",
+      "imposed_calcium_path": "Frozen primary cell passes held-calcium rollout and four prescribed piecewise-constant calcium paths; this does not test endogenous calcium coupling."
+    },
+    "architecture": "Independent MLP1->w->w->1 SiLU sigmoid zInf; fixed canonical tau1ms; convex exponential update. Encodings(log10cai+4.5)/2.5, cai/.00043, or(V+30)/100. Parameters w^2+4w+1 =321/1153; no sharing across variants. Voltage-only cannot see cai. State and dt only enter physical solver.",
+    "gates": {
+      "gate_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "open_rmse": 0.002,
+      "occupancy_violations": 0
+    },
+    "rollout_gates": {
+      "gate_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "occupancy_violations": 0
+    },
+    "rollout_horizons_steps": [
+      1,
+      10,
+      100,
+      1000
+    ],
+    "selection": "One common width/checkpoint perencoding/objective by worstseed worstdevelopment normalized gateRMSE/MAX/infRMSE/logtauRMSE. Fresh and calcium paths opened only after checkpoint freeze. No selection from rollout.",
+    "promotion": "Task21 authorized iff calcium_log/rate_supervised selected3seeds pass uniform,low_calcium,state_extrema, every held-calcium horizon and all four imposedpath dwell lengths. Other encodings/objective are independent comparisons, not rescue choices. OOD excluded a priori.",
+    "native_contract": "Teacher074c466 SK_E2 unchanged except RANGE zInf,zTau instrumentation; ca<1e-7 adds1e-7 to local rateca, exactthreshold unchanged; tau1ms. Native rate/state error<1e-7, storedcai drift<1e-12mM. Current gbar*z*(V-ek),gbar1e-6S/cm2,ek-85mV kept analytic.",
+    "limits": "Isolated SK_E2 with imposed calcium; primary cai1e-7...01mM. negative_tail is low calcium1e-7..1e-5mM, not voltage. OOD belowthreshold/above.01mM diagnostic. Heldcalcium and prescribed piecewiseconstant1ms calcium paths only; no subms calcium reconstruction, CaDynamics, closed-loop whole neuron, sharing(Task22), or speedup claim.",
+    "paths": "64paired trajectories\u00d7states0/1\u00d71000steps dt1ms; loguniform imposedca with dwell1/5/25/100ms. Exact held-input update is teacher; no hidden substep pathway assumed.",
+    "lut_baselines": "513/2049 uniform logcalcium gridf64, same fresh tuples; no OOD extrapolation. Not trained models."
+  },
+  "code_revision": "f94993faf619493bdce2309a1467d18ca7bbbe34",
+  "checkpoint_hashes": {
+    "checkpoint_w16_step30000.pt": "d9970418244ae3fe5e39eb2dbb79048faba94631ceeba28952edf54aae1ffc4f",
+    "checkpoint_w16_step1000.pt": "3589b1b6f6041cfc07926cc6e0c41d1ddc0668fcc885e0446707c3261e84e39c",
+    "checkpoint_w32_step1000.pt": "4a9917875c2f53f04f2b443da15bd71e81edc6e79543c319987a4c6e45e48711",
+    "checkpoint_w32_step30000.pt": "619d3868fc2fb4fde933e25c06d38366ec166f02d40d8d7c4813016d01cc1946",
+    "checkpoint_w32_step15000.pt": "6b46bd2c8410578c53c7a3fc772dde3a193d19f6c4cb2cd1f811573436f1554b",
+    "checkpoint_w16_step5000.pt": "6dc7614d9efef1d0d1eeb5ad5a538a7ded27b733bd3068bdc2c6619257c61eb3",
+    "checkpoint_w32_step0.pt": "92d7d536e46c9c25c243b25cc7bee918e6b885d102b93bc6c288a7f56b468760",
+    "checkpoint_w16_step0.pt": "ae6276fa38bb93a39096ded4a5f90ee1c13fdd8b2f2b928f385bdf9131594ff2",
+    "checkpoint_w16_step15000.pt": "17adc3f3b65f9300b93bc1797f4406730e50d8ce23c7fb20b7522867ae17b6f9",
+    "checkpoint_w32_step5000.pt": "323fc390e8ea8b9603d1cb8e4db351e5a972a11b00195ceaa12ba71f74bc4f9e"
+  },
+  "freeze_sha256": "a9b57baf17c8d45da5ae37713759f1718aa30655ce89925f317b0b96b0401e62"
+}

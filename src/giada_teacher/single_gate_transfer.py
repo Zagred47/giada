@@ -294,6 +294,8 @@ def run(output, config, revision, backend=None):
     labels = [rates_fn(c, fit[:, 0]) for c, _, _ in descriptors]
     ti, tt = np.stack([r[0] for r in labels]), np.stack([r[1] for r in labels])
     ty = update(fit[:, 1], ti, tt, fit[:, 2])
+    if backend is not None and hasattr(backend, 'fit_targets'):
+        ty = backend.fit_targets(fit, descriptors, ti, tt)
     x, ti, tt, ty = [torch.tensor(a, dtype=torch.float32, device=device) for a in (fit, ti, tt, ty)]
     active = torch.tensor([o == 'rate_supervised' for _, o, _ in descriptors], dtype=torch.float32, device=device)
     models = {w: model_fn(torch, w, descriptors).to(device) for w in config['widths']}
@@ -322,12 +324,14 @@ def run(output, config, revision, backend=None):
                         if key not in best or candidate['score'] < best[key]['score']:
                             best[key] = candidate
             write(output / 'development_ladder.json', ladder)
-            label = 'Task19' if backend is None else 'Task20'
+            label = 'Task19' if backend is None else getattr(backend, 'TASK_LABEL', 'Task20')
             print(f'[GIADA {label}] checkpoint{step}/{config["checkpoints"][-1]} elapsed={(time.monotonic()-start)/60:.1f}min', flush=True)
         if step == config['checkpoints'][-1]:
             break
         indices = torch.tensor(rng.integers(0, len(fit), config['batch_size']), device=device)
         batch = x[indices][None].expand(len(descriptors), -1, -1)
+        if backend is not None and hasattr(backend, 'training_batch'):
+            batch = backend.training_batch(x, indices, descriptors)
         for width, model in models.items():
             optimizers[width].zero_grad(set_to_none=True)
             p, i, t = model(batch)
@@ -383,7 +387,7 @@ def run(output, config, revision, backend=None):
             one_pass = all(passes(metrics[d], config['gates']) for d in ('in_support', 'negative_tail', 'state_extrema'))
             roll_pass = all(passes(v, config['rollout_gates']) for v in roll[index].values())
             results.append(dict(channel=channel, objective=objective, seed=seed, width=width, step=step,
-                parameter_count=(width*width+5*width+2 if backend is None else backend.parameter_count(width)), dense_macs=(width*width+3*width if backend is None else width*width+2*width), metrics=metrics,
+                parameter_count=(width*width+5*width+2 if backend is None else backend.parameter_count(width)), dense_macs=(width*width+3*width if backend is None else backend.dense_macs(width) if hasattr(backend, 'dense_macs') else width*width+2*width), metrics=metrics,
                 rollout=roll[index], one_step_passed=one_pass, rollout_passed=roll_pass, passed=one_pass and roll_pass))
             if objective == 'rate_supervised' and seed == config['seeds'][0]:
                 single = model_fn(torch, width, [(channel, objective, seed)]).to(device)
@@ -393,6 +397,8 @@ def run(output, config, revision, backend=None):
     for channel in channels:
         for size in (513, 2049):
             grid = np.linspace(-135, 75, size) if backend is None else np.linspace(-7, -2, size)
+            if backend is not None and hasattr(backend, 'numerical_grid'):
+                grid = backend.numerical_grid(size)
             ii, tt = rates_fn(channel, grid)
             for domain in ('in_support', 'negative_tail', 'state_extrema'):
                 values = fresh[domain]
