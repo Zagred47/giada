@@ -326,11 +326,15 @@ class Mirror:
         table_id = self.contract.tables[key]["id"]
         records = snapshot["tables"][table_id]
 
-        by_code = []
-        for row in records:
-            normalized = self.contract.normalize(key, row.get("cellValuesByFieldId", {}))
-            if normalized[code_fid] == patch.get(code_fid):
-                by_code.append(row)
+        lookup = getattr(self, "_validated_batch_code_lookup", None)
+        if lookup is not None:
+            by_code = lookup(key, records, code_fid, patch.get(code_fid))
+        else:
+            by_code = []
+            for row in records:
+                normalized = self.contract.normalize(key, row.get("cellValuesByFieldId", {}))
+                if normalized[code_fid] == patch.get(code_fid):
+                    by_code.append(row)
         if record_id is not None:
             matches = [row for row in records if row["id"] == record_id]
             if len(matches) != 1:

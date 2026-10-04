@@ -11,6 +11,7 @@ class ValidatedBatchMirror(StagedMirror):
         super().__init__()
         self._original_normalize=self.contract.normalize
         self._normalized_rows={}
+        self._code_indices={}
         codes={k:self.field_id(k,'Codice stabile') for k in self.contract.tables}
         def normalize(table,values,*,partial=False):
             key=self.contract.key(table)
@@ -26,7 +27,34 @@ class ValidatedBatchMirror(StagedMirror):
             return result
         self.contract.normalize=normalize
 
+    def _validated_batch_code_lookup(self,key,records,field,code):
+        index=self._code_indices.get(key)
+        if index is None:
+            index={}
+            for row in records:
+                value=self.contract.normalize(key,row.get('cellValuesByFieldId',{}))[field]
+                index.setdefault(value,[]).append(row)
+            self._code_indices[key]=index
+        return index.get(code,[])
+
+    def local_upsert(self,table,values,record_id=None):
+        result=super().local_upsert(table,values,record_id)
+        key=self.contract.key(table)
+        index=self._code_indices[key]
+        fid=self.field_id(key,'Codice stabile')
+        code=self.contract.normalize(key,values,partial=True).get(fid)
+        if code is None:
+            rows=self.staged['tables'][self.contract.tables[key]['id']]
+            row=next(row for row in rows if row['id']==result['record_id'])
+            code=row['cellValuesByFieldId'][fid]
+        if code not in index:
+            rows=self.staged['tables'][self.contract.tables[key]['id']]
+            row=next(row for row in reversed(rows) if row['id']==result['record_id'])
+            index[code]=[row]
+        return result
+
     def commit_batch(self):
         self.contract.normalize=self._original_normalize
         self._normalized_rows.clear()
+        self._code_indices.clear()
         return super().commit_batch()

@@ -1,0 +1,119 @@
+{
+  "schema_version": "giada-roadmap-task22-preregistration-v1",
+  "stage": "Task22 originale: condivisione controllata",
+  "require_cuda": true,
+  "channels": [
+    "Ih",
+    "Im",
+    "Nap_h"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "widths": [
+    16,
+    32
+  ],
+  "objectives": [
+    "rate_supervised"
+  ],
+  "checkpoints": [
+    0,
+    1000,
+    5000,
+    15000,
+    30000
+  ],
+  "pool_size": 24000,
+  "batch_size": 1024,
+  "learning_rate": 0.003,
+  "inf_weight": 0.1,
+  "log_tau_weight": 0.1,
+  "voltage_domain_mv": [
+    -135,
+    75
+  ],
+  "dt_values_ms": [
+    0.025,
+    0.1,
+    0.5,
+    1,
+    5,
+    25,
+    100,
+    500,
+    1000,
+    5000,
+    10000
+  ],
+  "data_seeds": {
+    "fit": 220101,
+    "fit_regions": 220102,
+    "development": [
+      220201,
+      220202
+    ],
+    "minibatches": 220301,
+    "fresh": [
+      220401,
+      220402,
+      220403,
+      220404,
+      220405
+    ]
+  },
+  "fit_sampling": "50% uniform[-135,75],25%[-120,-95],25%[-75,-25]; common V,state,dt tuples for all3mechanisms/architectures/widths/seeds. Fixed multiscale durations.",
+  "hypotheses": {
+    "sharing_learnability": "At least one shared architecture passes all registered scalar-gate criteria with fewer parameters than the independently trained bundle.",
+    "identity_use": "Swapping mechanism identity/head routing increases in-support gateRMSE at least10fold in median over3seeds; confirms identity matters, not promotion criterion.",
+    "negative_transfer": "Sharing can degrade worst-mechanism accuracy even if average error improves. Report permechanism, not pooled success.",
+    "capacity_budget": "Width16/32 and checkpoints quantify capacity/optimization under sharing. >=10% worst-development score improvement at30k supports capacity benefit; no monotonicity assumed.",
+    "long_rollout": "All3mechanisms remain bounded and accurate through10000 repeated1ms updates; OOD voltage kept diagnostic only."
+  },
+  "gates": {
+    "gate_rmse": 0.001,
+    "gate_max_error": 0.01,
+    "inf_rmse": 0.002,
+    "log_tau_rmse": 0.02,
+    "occupancy_violations": 0
+  },
+  "rollout_gates": {
+    "gate_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "occupancy_violations": 0
+  },
+  "rollout_horizons_steps": [
+    1,
+    10,
+    100,
+    1000,
+    10000
+  ],
+  "selection": "One common width/checkpoint per architecture across3seeds and3mechanisms by worst-seed worst-mechanism worst-domain normalized gate/rate score on development. Freeze before fresh; no rollout selection.",
+  "promotion": "Sharing confirmed only if independent control passes3/3 and a shared family passes3/3 on every mechanism/domain/horizon with fewer selected parameters per three-gate bundle. No posthoc thresholds. Task23 preparation authorized if independent reference passes; scientific sharing decision separate.",
+  "native_contract": "Fresh subprocess native audits for canonical Ih,Im,Nap_Et2 h using RANGE-only diagnostics. Reuse verified double-oracle equations; fixed teacher074c466. No joint native interpreter libraries.",
+  "architecture": "Three scalar gates Ih/Im/Nap_h. Independent:3 separate1-w-w-2MLPs. Shared_heads:one1-w-wtrunk and3two-outputheads. Conditioned:4-w-w-2MLP with voltage+onehot mechanism id. State and dt enter only analytic convex exponential solver. Inf sigmoid,tau exp(clampedlogtau). Three independent seed bundles.",
+  "limits": "Isolated held-voltage gates, not entire Nap channel, current or coupled neuron. SK_E2 excluded to avoid calcium-input confounding. Known mechanism identity available through routing for separate/head models and onehot for conditioned. Widths are matched, parameter counts NOT equal; explicit parameter/accuracy tradeoff, not matched-parameter superiority claim.",
+  "performance": "18 three-gate systems:3families\u00d72widths\u00d73independentseeds. Seed bundles vectorized; Adam/clipping independent perseed. Each family uses equal mean loss across3mechanisms and same norm1 bundle clipping. No measured inference speedup.",
+  "required_artifacts": [
+    "native_audit.json",
+    "run_contract.json",
+    "code_provenance.json",
+    "equivalence_preflight.json",
+    "development_ladder.json",
+    "selection_freeze.json",
+    "fresh_metrics.json",
+    "final_report.json",
+    "checkpoint_*.pt",
+    "fit_development.npz",
+    "fresh.npz",
+    "paired_architecture_contrasts.json"
+  ],
+  "families": [
+    "independent",
+    "shared_heads",
+    "conditioned"
+  ]
+}

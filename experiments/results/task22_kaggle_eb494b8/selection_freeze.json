@@ -1,0 +1,179 @@
+{
+  "selection": {
+    "independent": {
+      "family": "independent",
+      "width": 32,
+      "step": 30000,
+      "score": 2.256580127259418,
+      "checkpoint": "checkpoint_independent_w32_step30000.pt"
+    },
+    "shared_heads": {
+      "family": "shared_heads",
+      "width": 32,
+      "step": 30000,
+      "score": 3.7442946402265687,
+      "checkpoint": "checkpoint_shared_heads_w32_step30000.pt"
+    },
+    "conditioned": {
+      "family": "conditioned",
+      "width": 32,
+      "step": 30000,
+      "score": 2.5203400889529037,
+      "checkpoint": "checkpoint_conditioned_w32_step30000.pt"
+    }
+  },
+  "fresh_accessed": false,
+  "config": {
+    "schema_version": "giada-roadmap-task22-preregistration-v1",
+    "stage": "Task22 originale: condivisione controllata",
+    "require_cuda": true,
+    "channels": [
+      "Ih",
+      "Im",
+      "Nap_h"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "widths": [
+      16,
+      32
+    ],
+    "objectives": [
+      "rate_supervised"
+    ],
+    "checkpoints": [
+      0,
+      1000,
+      5000,
+      15000,
+      30000
+    ],
+    "pool_size": 24000,
+    "batch_size": 1024,
+    "learning_rate": 0.003,
+    "inf_weight": 0.1,
+    "log_tau_weight": 0.1,
+    "voltage_domain_mv": [
+      -135,
+      75
+    ],
+    "dt_values_ms": [
+      0.025,
+      0.1,
+      0.5,
+      1,
+      5,
+      25,
+      100,
+      500,
+      1000,
+      5000,
+      10000
+    ],
+    "data_seeds": {
+      "fit": 220101,
+      "fit_regions": 220102,
+      "development": [
+        220201,
+        220202
+      ],
+      "minibatches": 220301,
+      "fresh": [
+        220401,
+        220402,
+        220403,
+        220404,
+        220405
+      ]
+    },
+    "fit_sampling": "50% uniform[-135,75],25%[-120,-95],25%[-75,-25]; common V,state,dt tuples for all3mechanisms/architectures/widths/seeds. Fixed multiscale durations.",
+    "hypotheses": {
+      "sharing_learnability": "At least one shared architecture passes all registered scalar-gate criteria with fewer parameters than the independently trained bundle.",
+      "identity_use": "Swapping mechanism identity/head routing increases in-support gateRMSE at least10fold in median over3seeds; confirms identity matters, not promotion criterion.",
+      "negative_transfer": "Sharing can degrade worst-mechanism accuracy even if average error improves. Report permechanism, not pooled success.",
+      "capacity_budget": "Width16/32 and checkpoints quantify capacity/optimization under sharing. >=10% worst-development score improvement at30k supports capacity benefit; no monotonicity assumed.",
+      "long_rollout": "All3mechanisms remain bounded and accurate through10000 repeated1ms updates; OOD voltage kept diagnostic only."
+    },
+    "gates": {
+      "gate_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "occupancy_violations": 0
+    },
+    "rollout_gates": {
+      "gate_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "occupancy_violations": 0
+    },
+    "rollout_horizons_steps": [
+      1,
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "selection": "One common width/checkpoint per architecture across3seeds and3mechanisms by worst-seed worst-mechanism worst-domain normalized gate/rate score on development. Freeze before fresh; no rollout selection.",
+    "promotion": "Sharing confirmed only if independent control passes3/3 and a shared family passes3/3 on every mechanism/domain/horizon with fewer selected parameters per three-gate bundle. No posthoc thresholds. Task23 preparation authorized if independent reference passes; scientific sharing decision separate.",
+    "native_contract": "Fresh subprocess native audits for canonical Ih,Im,Nap_Et2 h using RANGE-only diagnostics. Reuse verified double-oracle equations; fixed teacher074c466. No joint native interpreter libraries.",
+    "architecture": "Three scalar gates Ih/Im/Nap_h. Independent:3 separate1-w-w-2MLPs. Shared_heads:one1-w-wtrunk and3two-outputheads. Conditioned:4-w-w-2MLP with voltage+onehot mechanism id. State and dt enter only analytic convex exponential solver. Inf sigmoid,tau exp(clampedlogtau). Three independent seed bundles.",
+    "limits": "Isolated held-voltage gates, not entire Nap channel, current or coupled neuron. SK_E2 excluded to avoid calcium-input confounding. Known mechanism identity available through routing for separate/head models and onehot for conditioned. Widths are matched, parameter counts NOT equal; explicit parameter/accuracy tradeoff, not matched-parameter superiority claim.",
+    "performance": "18 three-gate systems:3families\u00d72widths\u00d73independentseeds. Seed bundles vectorized; Adam/clipping independent perseed. Each family uses equal mean loss across3mechanisms and same norm1 bundle clipping. No measured inference speedup.",
+    "required_artifacts": [
+      "native_audit.json",
+      "run_contract.json",
+      "code_provenance.json",
+      "equivalence_preflight.json",
+      "development_ladder.json",
+      "selection_freeze.json",
+      "fresh_metrics.json",
+      "final_report.json",
+      "checkpoint_*.pt",
+      "fit_development.npz",
+      "fresh.npz",
+      "paired_architecture_contrasts.json"
+    ],
+    "families": [
+      "independent",
+      "shared_heads",
+      "conditioned"
+    ]
+  },
+  "code_revision": "eb494b8224f4c3585711867301945f2ffae4aa1f",
+  "checkpoint_hashes": {
+    "checkpoint_conditioned_w32_step0.pt": "efaad2a5a0943cbfc17fcf1f4440529c4d15a5048c4f3006d4a9a842806f4d73",
+    "checkpoint_independent_w32_step30000.pt": "24b93d3330c87e5dd621c7bb14cf417880334e7dc895579e4d9f5d5af8895e0f",
+    "checkpoint_independent_w16_step0.pt": "cd954ff2f8227db44f90e1f56784f757ab66269870882b0fc172ae2673256d49",
+    "checkpoint_shared_heads_w16_step30000.pt": "2291da3574addf873f753761a5de2fc25b46aca2152e058bc36d9c186e59f49b",
+    "checkpoint_shared_heads_w16_step0.pt": "3db1fa0cf6b4f085a243d836b9c25a4ad524be9eb85417acfd726c1477ead5fd",
+    "checkpoint_shared_heads_w16_step5000.pt": "133c08938ee687fa7d004dbccfc1558531dd75edc6ff35c26c0a254b60b666ef",
+    "checkpoint_conditioned_w32_step15000.pt": "0a9fc72940aa3a3c5c4c84eb71a2445ded446884d2753e5190cb241a08fb00f6",
+    "checkpoint_conditioned_w32_step1000.pt": "484e05f2931cee6d2a347c4a8ba932af9ff06125763ce495daaf1bfffae45f7d",
+    "checkpoint_independent_w16_step30000.pt": "529536103d4db72970ecb831216c0ccd48ddb23778b3b3619f298e82c2abd352",
+    "checkpoint_shared_heads_w32_step5000.pt": "d391a2687c6820562776d1acafb21a401207a889774e20d04903f9ed1f3a3e29",
+    "checkpoint_conditioned_w16_step0.pt": "14f85f085af72d24c8d13fa076d52f485eebc5f6aed8ba972ba3ae6a450029ec",
+    "checkpoint_shared_heads_w32_step30000.pt": "34e2a6ec39627b5fa12534b481db0fa458d5a2f39fdf80cf168127944c749fcd",
+    "checkpoint_shared_heads_w32_step15000.pt": "7b651ddf7f9ce2065903fd6180c036dc89761a60c5cab0c3475904c88f2e42a1",
+    "checkpoint_independent_w16_step15000.pt": "f14ccdd0e754ba8769a48c3c2d309ce559161b4a57752d60afe47eb49d5a719f",
+    "checkpoint_independent_w16_step1000.pt": "1cf3b384e2239b650af21efc26c83a1c9b4898bfabc3644bd3b536e0769da048",
+    "checkpoint_conditioned_w32_step5000.pt": "72a3a9f1449fb35e0aa9db8c9e879cc623d6332a84c79bea9d504272d782e38e",
+    "checkpoint_conditioned_w16_step30000.pt": "d33e9c812e2b6afd7a150c2759b52d9128014ff4ec94b775aaa9f526c1a420dc",
+    "checkpoint_conditioned_w32_step30000.pt": "f6ad9352cadb384089f5d67e59bc727d199a8c9530d0985e78bcd2f9d07b64ce",
+    "checkpoint_shared_heads_w32_step0.pt": "23cf5019de3b5a1ecf3395cdb40a49714685fae1f7bf2976fed2ff140d95bbad",
+    "checkpoint_independent_w16_step5000.pt": "4f41033357b0113a380f0edbc25e0206258148e63882afa301b9d8a9a745b991",
+    "checkpoint_conditioned_w16_step5000.pt": "42d05b4efdf4e04ad91a9596f877f000b82658651eb20d5f8619b59310a5edb4",
+    "checkpoint_independent_w32_step1000.pt": "87f19412a4128ab457dca3f5d83a9a6ac282039c9d643748451866e2984c5b3d",
+    "checkpoint_shared_heads_w32_step1000.pt": "0bce207962c55f6fdece8e98061d4f49ef101036ef2d0461d136613b76fc7602",
+    "checkpoint_conditioned_w16_step15000.pt": "fa9e9dfb4bbc4b772ee320ff91461810446490a86150ed10bbe86183ab4603b2",
+    "checkpoint_conditioned_w16_step1000.pt": "502e3eb82c3804c789c1dc96ee22dba0ea86f187a1349481eeba39f74e1947e6",
+    "checkpoint_shared_heads_w16_step15000.pt": "587d763a7eff632bd82c9338f848d8ac0fd14d7cafb4f1a03276e9ceb8e8ff32",
+    "checkpoint_independent_w32_step0.pt": "6d66e6f481fd51356b2b133a4b01beab414d81328c4450ddfbc415a2c948803b",
+    "checkpoint_independent_w32_step5000.pt": "12ac367eb868f9591e4e5c7c76d2fbe5e715fd18865bfe93d9ff5fbfd467e5ed",
+    "checkpoint_shared_heads_w16_step1000.pt": "a27d5ea8e1081e1ebc2995e1a768326b4a0f1ed7dde00d377065a8e79a1323a6",
+    "checkpoint_independent_w32_step15000.pt": "72d88f3c70b6d85cbbb1d89c704b47cadf6962d40175aeb4e9c8825ef93656d2"
+  },
+  "freeze_sha256": "4e72537fac76038cf5a5084e2598df951069d4d70aff5b3f97a5f290439486a7"
+}

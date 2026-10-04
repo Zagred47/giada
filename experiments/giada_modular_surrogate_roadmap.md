@@ -380,6 +380,11 @@ Il solver classico è una baseline, non soltanto un teacher.
 La prima composizione viene valutata sotto voltaggio teacher-forced.
 
 - **Task 23 — Ca-HVA + Ca-LVA** → Prima coppia correlata.
+  Protocollo originale: `experiments/task23_calcium_pair_composition.json`;
+  notebook `notebooks/23_roadmap_calcium_pair_composition.ipynb`.
+  Audit isolato Ca-LVA obbligatorio, riferimento indipendente e due forme di
+  condivisione; gate e correnti individuali/sommate sotto V imposto. Nessuna
+  autorizzazione implicita a CaDynamics o voltaggio autonomo.
 
 - **Task 24 — Famiglia del sodio** → Ricerca di compute condiviso.
 

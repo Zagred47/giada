@@ -23,6 +23,9 @@ class ValidatedBatchTests(unittest.TestCase):
             copy=Path(directory)/'memory.sqlite';shutil.copyfile(m.path,copy);m.path=copy
             row=m.local_upsert('claims',{'Codice stabile':'claims-test-validated-batch','Nome':'batchtest','Tipo':'Ipotesi','Stato':'Aperta'})
             m.local_upsert('claims',{'Codice stabile':'claims-test-validated-batch','Nome':'changed'},record_id=row['record_id'])
+            m.local_upsert('claims',{'Nome':'changed again'},record_id=row['record_id'])
+            with self.assertRaises(ValueError):
+                m.local_upsert('claims',{'Nome':'missing stable code'})
             with self.assertRaises(ValueError):
                 m.local_upsert('evidence',{'Codice stabile':'evidence-test-invalid','Nome':'invalid','Esito':'not-a-choice'})
             m.commit_batch()
