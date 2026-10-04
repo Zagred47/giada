@@ -1,0 +1,21 @@
+{
+  "schema_version":"giada-task18b-preregistration-v1",
+  "require_cuda":true,
+  "seeds":[17,29,43],
+  "widths":[32,64],
+  "checkpoints":[0,15000,30000,60000],
+  "pool_size":24000,
+  "batch_size":1024,
+  "hypotheses":{
+    "tail_coverage":"Increasing coverage of [-135,-115]mV reduces the K_Pst edge error at equal tuple count and training budget.",
+    "tau_weight":"Increasing log_tau loss weight from0.01 to0.1 improves rate and transition fidelity without sacrificing inf or open probability.",
+    "capacity":"Width64 improves matched diagnostics beyond width32 at identical seed, data and optimization.",
+    "budget":"Extending the same trajectory from15k through30k to60k closes the remaining gap."
+  },
+  "data_seeds":{"fit_uniform":181101,"tail_replacement":181102,"development_uniform":181201,"development_tail":181202,"minibatches":181301,"fresh":[181401,181402,181403]},
+  "selection":"One common sampling/weight/width/checkpoint for all three seeds chosen by minimum worst-seed development score across uniform and negative-tail domains. Score=max_domain(gate_rmse/.001+gate_max/.01+inf_rmse/.002+log_tau_rmse/.02). Fresh outcomes inaccessible until freeze.",
+  "gates":{"gate_rmse":0.001,"gate_max_error":0.01,"inf_rmse":0.002,"log_tau_rmse":0.02,"open_rmse":0.002,"occupancy_violations":0},
+  "promotion":"All three frozen seeds must pass unchanged gates on both fresh in-support and fresh negative-tail strata. OOD diagnostic only. Retain prior Ca/Na bounded successes; no universal or embedded replacement claim.",
+  "limits":"24 independently parameterized models in two width ensembles; no weight sharing. Tail enrichment replaces25percent of voltages only; states/dt/index streams paired. All loss arms rate-supervised; inf weight0.1; Adam lr0.003 and independent clip1.0. Formula/LUT references unchanged.",
+  "prerequisite_archive_sha256":"1f6de2183e5d2a458de2efc77871427778ba3ed8ebc0da71e2f896593c4428ba"
+}
