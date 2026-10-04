@@ -1,0 +1,151 @@
+{
+  "schema_version": "giada-task18b-potassium-v1",
+  "valid": true,
+  "potassium_passed": false,
+  "task19_authorized": false,
+  "fresh_used_for_selection": false,
+  "selected": {
+    "width": 32,
+    "step": 60000,
+    "arm": "tail_enriched/tau0.1",
+    "indices": [
+      9,
+      10,
+      11
+    ],
+    "max_seed_score": 2.6766311543033194
+  },
+  "results": [
+    {
+      "seed": 17,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0007988829400091529,
+          "gate_max_error": 0.014942842396516554,
+          "inf_rmse": 0.00039280874857807173,
+          "log_tau_rmse": 0.009562353812678637,
+          "open_rmse": 0.0005790650255390564,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.0009708826893684678,
+          "gate_max_error": 0.005429274232894077,
+          "inf_rmse": 9.386327095494197e-05,
+          "log_tau_rmse": 0.010537039064806816,
+          "open_rmse": 0.00019098314815293844,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.013108071550477805,
+          "gate_max_error": 0.14982967498174793,
+          "inf_rmse": 0.00012067591219892339,
+          "log_tau_rmse": 0.13764129039726797,
+          "open_rmse": 0.0019326986433388501,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "passed": false
+    },
+    {
+      "seed": 29,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0006909044614162375,
+          "gate_max_error": 0.014119210513849012,
+          "inf_rmse": 0.0005847802794086135,
+          "log_tau_rmse": 0.007622844349768491,
+          "open_rmse": 0.0004979714296119623,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.0008891617302089046,
+          "gate_max_error": 0.004246449533909513,
+          "inf_rmse": 5.97213773726669e-05,
+          "log_tau_rmse": 0.009808971326284235,
+          "open_rmse": 0.0004729355729564773,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.015680063075202973,
+          "gate_max_error": 0.18614755990377552,
+          "inf_rmse": 0.00016095172990619118,
+          "log_tau_rmse": 0.16581378215020567,
+          "open_rmse": 0.0018418980194668427,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "passed": false
+    },
+    {
+      "seed": 43,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0006530796518133487,
+          "gate_max_error": 0.015817987593431226,
+          "inf_rmse": 0.00037138271219230856,
+          "log_tau_rmse": 0.006968385758014369,
+          "open_rmse": 0.00044441302989851775,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.00042940056972806646,
+          "gate_max_error": 0.0029796291630420635,
+          "inf_rmse": 5.443289808431603e-05,
+          "log_tau_rmse": 0.004682275988811928,
+          "open_rmse": 0.00010213337521780007,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.011079513497031217,
+          "gate_max_error": 0.13919710042348987,
+          "inf_rmse": 5.6085755223341996e-05,
+          "log_tau_rmse": 0.11652939989947293,
+          "open_rmse": 0.0011802593847974184,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "passed": false
+    }
+  ],
+  "lut_control": {
+    "in_support": {
+      "gate_rmse": 2.457704170811333e-06,
+      "gate_max_error": 0.0002132585109521079,
+      "inf_rmse": 3.185819158407224e-07,
+      "log_tau_rmse": 1.862648491471642e-05,
+      "open_rmse": 3.1340944792504937e-06,
+      "occupancy_violations": 0,
+      "finite": true
+    },
+    "negative_tail": {
+      "gate_rmse": 2.9657339540786034e-07,
+      "gate_max_error": 2.0281643268726945e-06,
+      "inf_rmse": 2.7153584256230728e-08,
+      "log_tau_rmse": 3.205807305675625e-06,
+      "open_rmse": 2.0253396478055525e-08,
+      "occupancy_violations": 0,
+      "finite": true
+    }
+  },
+  "training_seconds": 434.97738365899994,
+  "environment": {
+    "python": "3.13.15",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "cublas_workspace_config": ":4096:8",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "cuda_available": true,
+    "gpu_name": "Tesla T4",
+    "gpu_count": 2
+  },
+  "scope": "isolated K_Pst rates and held-voltage transitions; Ca/Na prior Task18 confirmation retained; no embedded Na/K substitution"
+}
