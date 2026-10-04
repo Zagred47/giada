@@ -40,7 +40,7 @@ def main():
         "Hardware e ambiente": "Kaggle, NEURON 8.2.7+, teacher 642 segmenti, revisione 480054532290c96800cb4312228335dd295bb6e8",
         "Descrizione": "135 episodi; processo exit 0; valid=true; Gate C no-go unicamente per mancanza di eventi nativi richiesti.",
         "Configurazione effettiva": "Cinque schedule, tre gbar, tre bracci, 60 ms, campionamento 0,025 ms; LUT m 2049 f64 congelata.",
-        "Validità tecnica": "Hash tabella, compilazione, probe e replay nativo validi; formula, V, gate, corrente, rilascio, contrasto gbar passano; supporto eventi assente.",
+        "Validità tecnica": "Hash tabella, compilazione, probe LUT e replay nativo validi; formula, V, gate, corrente, rilascio, contrasto gbar passano; copertura delle tre classi richieste assente, un plateau NMDA presente. Audit: probe NMDA locale non rispettato.",
     })
     for suffix, name, value, unit in (
         ("voltage", "Peggior RMSE V", 0.00200289621519927, "mV"),
@@ -57,16 +57,16 @@ def main():
         })
     put("findings", "support-limited", **{
         "Nome": "Task17e: accuratezza sub-soglia confermata, Gate C non informativo sugli eventi",
-        "Risultato": "Tutti i contrasti numerici passano, ma 0 eventi nativi per ciascuna delle tre classi richieste; event_support=false e Gate C no-go.",
-        "Descrizione": "La LUT2049 non mostra una regressione sui casi visitati. Il mancato supporto rigenerativo impedisce la decisione causale sugli eventi.",
-        "Incertezza": "Il comportamento durante eventi rigenerativi resta sconosciuto in questa conferma indipendente.",
+        "Risultato": "Tutti i contrasti numerici passano; 0 eventi rilevati per le tre classi richieste, ma un plateau NMDA è presente e riprodotto con onset identico; event_support=false e Gate C no-go.",
+        "Descrizione": "Audit successivo: il protocollo NMDA richiede cluster_center ma Task17e usa il nexus fisso; 460 è tuft, non nexus. L'assenza di NMDA spike non dimostra durata insufficiente. Supporto somatico/calcio non prequalificato.",
+        "Incertezza": "Copertura incompleta e probe locale non rispettato; analisi post hoc a 1 ms non sostituisce nuova conferma indipendente con tracciati densi.",
         "Limitazioni": "Task 18 non autorizzata; nessuno speedup dimostrato; cinque schedule non bastano per il supporto evento.",
         "Esito": "Misto", "Esperimenti": [ids["experiments"]],
     })
     mirror.local_upsert("claims", {
         "Codice stabile": "claims-giada-task17e-independent-causal-bounded-gate-c-v1",
         "Stato": "Aperta",
-        "Limiti": "La conferma 17e passa i contrasti numerici ma non visita eventi nativi; Gate C resta aperto.",
+        "Limiti": "La conferma 17e passa i contrasti numerici; un plateau NMDA è presente, ma manca la copertura delle tre classi richieste e il probe NMDA locale non era rispettato. Gate C resta aperto.",
     })
     write_json(ROOT / "data/airtable_snapshot.json", mirror.export_snapshot())
     assert mirror.verify()["valid"]

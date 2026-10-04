@@ -1,0 +1,1190 @@
+[
+  {
+    "arm": "native_super",
+    "protocol_index": 0,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 2.0939396280851714e-06,
+        "voltage_max_error_mv": 5.140570053185911e-06,
+        "m_max_error": 2.2566401622273592e-12,
+        "h_max_error": 6.038281149534086e-07,
+        "current_rmse_ma_cm2": 2.093894471667488e-19
+      },
+      "387": {
+        "voltage_rmse_mv": 5.0958345112848825e-06,
+        "voltage_max_error_mv": 6.290366115990764e-06,
+        "m_max_error": 1.6862225871044933e-11,
+        "h_max_error": 9.010023993560878e-08,
+        "current_rmse_ma_cm2": 2.3457482380519654e-17
+      },
+      "460": {
+        "voltage_rmse_mv": 9.265520292978906e-06,
+        "voltage_max_error_mv": 1.3828426162376672e-05,
+        "m_max_error": 3.069999798861479e-10,
+        "h_max_error": 2.6101151373580933e-07,
+        "current_rmse_ma_cm2": 1.9843427890621923e-16
+      },
+      "469": {
+        "voltage_rmse_mv": 3.7638302639188385e-06,
+        "voltage_max_error_mv": 6.454877819805915e-06,
+        "m_max_error": 4.689773489359092e-11,
+        "h_max_error": 3.927411107440548e-08,
+        "current_rmse_ma_cm2": 2.0882204591548414e-17
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 2.0939396280851714e-06,
+      "ais": 2.0885376061428443e-06,
+      "trunk": 2.520841276410842e-06,
+      "hot_zone": 5.0958345112848825e-06,
+      "nexus": 3.821398804992028e-06,
+      "tuft": 9.265520292978906e-06
+    },
+    "events": {},
+    "release": {
+      "event_count_reference": 0,
+      "event_count_candidate": 0,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "native_super",
+    "protocol_index": 1,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 0.00026505118822868576,
+        "voltage_max_error_mv": 0.00888013434971846,
+        "m_max_error": 2.4665849645166826e-05,
+        "h_max_error": 3.88319686406291e-08,
+        "current_rmse_ma_cm2": 7.492028111704658e-08
+      },
+      "387": {
+        "voltage_rmse_mv": 1.8841533229715667e-05,
+        "voltage_max_error_mv": 3.704666873716178e-05,
+        "m_max_error": 3.6440781951219484e-09,
+        "h_max_error": 2.631457285406924e-08,
+        "current_rmse_ma_cm2": 7.974463957448096e-14
+      },
+      "460": {
+        "voltage_rmse_mv": 1.5858025388433255e-05,
+        "voltage_max_error_mv": 3.2293880366296435e-05,
+        "m_max_error": 2.210755955552165e-09,
+        "h_max_error": 2.2037121238938084e-08,
+        "current_rmse_ma_cm2": 3.212158693310305e-14
+      },
+      "469": {
+        "voltage_rmse_mv": 1.9494839842768582e-05,
+        "voltage_max_error_mv": 3.808571901231517e-05,
+        "m_max_error": 4.229907402857405e-09,
+        "h_max_error": 2.7161800142394554e-08,
+        "current_rmse_ma_cm2": 1.0654508165408275e-13
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 0.00026505118822868576,
+      "ais": 0.0004612327473985045,
+      "trunk": 3.149119091012919e-05,
+      "hot_zone": 1.8841533229715667e-05,
+      "nexus": 2.0113039880256218e-05,
+      "tuft": 1.5858025388433255e-05
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 0,
+      "event_count_candidate": 0,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "native_super",
+    "protocol_index": 2,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 0.0015935184588710847,
+        "voltage_max_error_mv": 0.03406939759862482,
+        "m_max_error": 0.00011535366155798754,
+        "h_max_error": 1.7025289322791792e-07,
+        "current_rmse_ma_cm2": 4.976171430637676e-07
+      },
+      "387": {
+        "voltage_rmse_mv": 6.822389151436294e-05,
+        "voltage_max_error_mv": 0.0003917584766774951,
+        "m_max_error": 6.970535923300769e-06,
+        "h_max_error": 4.2298627156434065e-08,
+        "current_rmse_ma_cm2": 3.76740438359345e-08
+      },
+      "460": {
+        "voltage_rmse_mv": 9.35635200154289e-05,
+        "voltage_max_error_mv": 0.0010217427118242028,
+        "m_max_error": 1.1561130846549084e-05,
+        "h_max_error": 2.9636275211686325e-08,
+        "current_rmse_ma_cm2": 5.193185726038263e-08
+      },
+      "469": {
+        "voltage_rmse_mv": 7.584242782301058e-05,
+        "voltage_max_error_mv": 0.0004700361947040932,
+        "m_max_error": 8.36838390494421e-06,
+        "h_max_error": 5.2873040390366555e-08,
+        "current_rmse_ma_cm2": 4.591549922808322e-08
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 0.0015935184588710847,
+      "ais": 0.0028921235040163615,
+      "trunk": 0.00010196618348719478,
+      "hot_zone": 6.822389151436294e-05,
+      "nexus": 7.228652432057518e-05,
+      "tuft": 9.35635200154289e-05
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "calcium_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_plateau": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 144,
+      "event_count_candidate": 144,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "native_super",
+    "protocol_index": 3,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 0.0005366388340327473,
+        "voltage_max_error_mv": 0.013586838148088809,
+        "m_max_error": 4.284824798764242e-05,
+        "h_max_error": 6.157321685851258e-08,
+        "current_rmse_ma_cm2": 1.6631938729854825e-07
+      },
+      "387": {
+        "voltage_rmse_mv": 0.00013720792572512565,
+        "voltage_max_error_mv": 0.001209716561696439,
+        "m_max_error": 1.553590270880756e-05,
+        "h_max_error": 5.2362349123313834e-08,
+        "current_rmse_ma_cm2": 6.029414473381847e-08
+      },
+      "460": {
+        "voltage_rmse_mv": 4.284212050079149e-05,
+        "voltage_max_error_mv": 0.0002886789225975406,
+        "m_max_error": 4.789566871721274e-06,
+        "h_max_error": 2.1580692344258523e-08,
+        "current_rmse_ma_cm2": 3.322689907616166e-08
+      },
+      "469": {
+        "voltage_rmse_mv": 0.0001056847501412037,
+        "voltage_max_error_mv": 0.0006324863597910735,
+        "m_max_error": 1.1427592578938661e-05,
+        "h_max_error": 4.812686260624588e-08,
+        "current_rmse_ma_cm2": 5.392394129709668e-08
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 0.0005366388340327473,
+      "ais": 0.0009366453775461692,
+      "trunk": 6.190701630384311e-05,
+      "hot_zone": 0.00013720792572512565,
+      "nexus": 9.730558887463512e-05,
+      "tuft": 4.284212050079149e-05,
+      "event_probe": 4.284212050079149e-05
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "calcium_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_plateau": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 40,
+      "event_count_candidate": 40,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "formula",
+    "protocol_index": 0,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 1.0744691703382426e-11,
+        "voltage_max_error_mv": 3.446132268436486e-11,
+        "m_max_error": 1.5028482066659424e-17,
+        "h_max_error": 4.544364884395691e-12,
+        "current_rmse_ma_cm2": 1.274178786781342e-24
+      },
+      "387": {
+        "voltage_rmse_mv": 5.946718169587353e-11,
+        "voltage_max_error_mv": 2.2011192868376384e-10,
+        "m_max_error": 5.077691468246409e-16,
+        "h_max_error": 7.704947790898586e-13,
+        "current_rmse_ma_cm2": 2.204562682618014e-22
+      },
+      "460": {
+        "voltage_rmse_mv": 4.679467789394404e-11,
+        "voltage_max_error_mv": 1.6224532828346128e-10,
+        "m_max_error": 9.217666641905473e-16,
+        "h_max_error": 2.1130874827690604e-12,
+        "current_rmse_ma_cm2": 4.621273139203944e-22
+      },
+      "469": {
+        "voltage_rmse_mv": 2.2641452290647903e-11,
+        "voltage_max_error_mv": 7.30295823814231e-11,
+        "m_max_error": 1.4227612415030483e-16,
+        "h_max_error": 3.611555499105634e-13,
+        "current_rmse_ma_cm2": 6.295360167509503e-23
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 1.0744691703382426e-11,
+      "ais": 1.0743255568924775e-11,
+      "trunk": 1.1443406845324504e-11,
+      "hot_zone": 5.946718169587353e-11,
+      "nexus": 2.4297662413213565e-11,
+      "tuft": 4.679467789394404e-11
+    },
+    "events": {},
+    "release": {
+      "event_count_reference": 0,
+      "event_count_candidate": 0,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "formula",
+    "protocol_index": 1,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 2.271629577605196e-10,
+        "voltage_max_error_mv": 4.927831476209121e-09,
+        "m_max_error": 2.1294382923642274e-11,
+        "h_max_error": 5.3734794391857577e-14,
+        "current_rmse_ma_cm2": 1.4227756328176144e-13
+      },
+      "387": {
+        "voltage_rmse_mv": 1.6547772925669137e-11,
+        "voltage_max_error_mv": 5.682920800609281e-11,
+        "m_max_error": 2.167808033776142e-15,
+        "h_max_error": 9.769962616701378e-15,
+        "current_rmse_ma_cm2": 4.6860912218731787e-20
+      },
+      "460": {
+        "voltage_rmse_mv": 1.2364445089587751e-11,
+        "voltage_max_error_mv": 2.169997515011346e-11,
+        "m_max_error": 1.2138456472604586e-15,
+        "h_max_error": 8.548717289613705e-15,
+        "current_rmse_ma_cm2": 1.7620452190222614e-20
+      },
+      "469": {
+        "voltage_rmse_mv": 1.832509782044789e-11,
+        "voltage_max_error_mv": 7.811706836946541e-11,
+        "m_max_error": 2.6164508927506436e-15,
+        "h_max_error": 1.3100631690576847e-14,
+        "current_rmse_ma_cm2": 6.477813772461873e-20
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 2.271629577605196e-10,
+      "ais": 1.6556325095823957e-10,
+      "trunk": 3.841667728477346e-11,
+      "hot_zone": 1.6547772925669137e-11,
+      "nexus": 1.94592385905534e-11,
+      "tuft": 1.2364445089587751e-11
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 0,
+      "event_count_candidate": 0,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "formula",
+    "protocol_index": 2,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 5.634464201791047e-10,
+        "voltage_max_error_mv": 1.0413249373897315e-08,
+        "m_max_error": 4.625405614078204e-11,
+        "h_max_error": 1.0524914273446484e-13,
+        "current_rmse_ma_cm2": 2.014465371784645e-13
+      },
+      "387": {
+        "voltage_rmse_mv": 7.743877753509473e-11,
+        "voltage_max_error_mv": 3.918469992925111e-10,
+        "m_max_error": 7.420231096233465e-12,
+        "h_max_error": 7.038813976123492e-14,
+        "current_rmse_ma_cm2": 6.071439411151988e-14
+      },
+      "460": {
+        "voltage_rmse_mv": 9.466156389210571e-11,
+        "voltage_max_error_mv": 9.087592900414165e-10,
+        "m_max_error": 8.154921182779162e-12,
+        "h_max_error": 5.3734794391857577e-14,
+        "current_rmse_ma_cm2": 6.84488870772407e-14
+      },
+      "469": {
+        "voltage_rmse_mv": 1.099642956294602e-10,
+        "voltage_max_error_mv": 6.673506192100831e-10,
+        "m_max_error": 1.2155998430074533e-11,
+        "h_max_error": 7.893685705084863e-14,
+        "current_rmse_ma_cm2": 7.257207663775626e-14
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 5.634464201791047e-10,
+      "ais": 1.0345810722468175e-09,
+      "trunk": 7.15195418971512e-11,
+      "hot_zone": 7.743877753509473e-11,
+      "nexus": 1.0251036637921258e-10,
+      "tuft": 9.466156389210571e-11
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "calcium_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_plateau": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 144,
+      "event_count_candidate": 144,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "formula",
+    "protocol_index": 3,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 7.413609095342121e-10,
+        "voltage_max_error_mv": 2.3849100472261853e-08,
+        "m_max_error": 6.307065980593052e-11,
+        "h_max_error": 9.736655925962623e-14,
+        "current_rmse_ma_cm2": 1.3066434287678518e-13
+      },
+      "387": {
+        "voltage_rmse_mv": 6.772226907662255e-11,
+        "voltage_max_error_mv": 2.843094648596889e-10,
+        "m_max_error": 1.9283463714714344e-12,
+        "h_max_error": 1.3600232051658168e-13,
+        "current_rmse_ma_cm2": 2.186707054925532e-14
+      },
+      "460": {
+        "voltage_rmse_mv": 3.5079112304291644e-11,
+        "voltage_max_error_mv": 4.2098591279682296e-10,
+        "m_max_error": 4.87354601119705e-12,
+        "h_max_error": 8.260059303211165e-14,
+        "current_rmse_ma_cm2": 3.043240645286355e-14
+      },
+      "469": {
+        "voltage_rmse_mv": 7.496836249613105e-11,
+        "voltage_max_error_mv": 4.098223982396121e-10,
+        "m_max_error": 8.032963183524089e-12,
+        "h_max_error": 1.2856382625159313e-13,
+        "current_rmse_ma_cm2": 3.6817915359757136e-14
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 7.413609095342121e-10,
+      "ais": 1.2498108516631154e-09,
+      "trunk": 2.8366954334811548e-11,
+      "hot_zone": 6.772226907662255e-11,
+      "nexus": 6.74189799502289e-11,
+      "tuft": 3.5079112304291644e-11,
+      "event_probe": 3.5079112304291644e-11
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "calcium_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_plateau": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 40,
+      "event_count_candidate": 40,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "m_pair_2049_f64",
+    "protocol_index": 0,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 1.70336128017275e-11,
+        "voltage_max_error_mv": 4.4295234147284646e-11,
+        "m_max_error": 1.7406627046520362e-10,
+        "h_max_error": 6.1315397203998145e-12,
+        "current_rmse_ma_cm2": 4.857901438641555e-17
+      },
+      "387": {
+        "voltage_rmse_mv": 6.480506520109633e-11,
+        "voltage_max_error_mv": 2.7257840429228963e-10,
+        "m_max_error": 9.222510804035409e-10,
+        "h_max_error": 1.0406120409811592e-12,
+        "current_rmse_ma_cm2": 1.4893350183678126e-15
+      },
+      "460": {
+        "voltage_rmse_mv": 1.0888162156593944e-10,
+        "voltage_max_error_mv": 2.908819851654698e-10,
+        "m_max_error": 7.88902890950583e-10,
+        "h_max_error": 2.8470559243487514e-12,
+        "current_rmse_ma_cm2": 1.7817215093160077e-15
+      },
+      "469": {
+        "voltage_rmse_mv": 4.181289291648985e-11,
+        "voltage_max_error_mv": 1.1669953892123885e-10,
+        "m_max_error": 8.035673144465583e-10,
+        "h_max_error": 4.849454171562684e-13,
+        "current_rmse_ma_cm2": 1.1609653316012583e-15
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 1.70336128017275e-11,
+      "ais": 1.6988435255230335e-11,
+      "trunk": 2.495477374582033e-11,
+      "hot_zone": 6.480506520109633e-11,
+      "nexus": 4.340663801111852e-11,
+      "tuft": 1.0888162156593944e-10
+    },
+    "events": {},
+    "release": {
+      "event_count_reference": 0,
+      "event_count_candidate": 0,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "m_pair_2049_f64",
+    "protocol_index": 1,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 5.638623335283012e-05,
+        "voltage_max_error_mv": 0.00011709215642241588,
+        "m_max_error": 6.966678891551226e-07,
+        "h_max_error": 6.731719148778126e-08,
+        "current_rmse_ma_cm2": 9.783583462574583e-09
+      },
+      "387": {
+        "voltage_rmse_mv": 3.4207879211674554e-05,
+        "voltage_max_error_mv": 6.396632232963384e-05,
+        "m_max_error": 2.313805221173474e-08,
+        "h_max_error": 4.183054302941969e-08,
+        "current_rmse_ma_cm2": 4.896825728580279e-13
+      },
+      "460": {
+        "voltage_rmse_mv": 2.7345841692023225e-05,
+        "voltage_max_error_mv": 5.070274569618505e-05,
+        "m_max_error": 2.033419886166227e-08,
+        "h_max_error": 3.267196202472178e-08,
+        "current_rmse_ma_cm2": 2.7841598537905695e-13
+      },
+      "469": {
+        "voltage_rmse_mv": 3.6067366246635665e-05,
+        "voltage_max_error_mv": 6.81031880418459e-05,
+        "m_max_error": 3.161448271606689e-08,
+        "h_max_error": 4.4211783234437974e-08,
+        "current_rmse_ma_cm2": 7.365632220133464e-13
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 5.638623335283012e-05,
+      "ais": 5.1780434146636565e-05,
+      "trunk": 5.503891056929751e-05,
+      "hot_zone": 3.4207879211674554e-05,
+      "nexus": 3.747178509031944e-05,
+      "tuft": 2.7345841692023225e-05
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 0,
+      "event_count_candidate": 0,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "m_pair_2049_f64",
+    "protocol_index": 2,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 0.0008740281184415683,
+        "voltage_max_error_mv": 0.020851218185233833,
+        "m_max_error": 7.042779034302504e-05,
+        "h_max_error": 9.702127390376347e-08,
+        "current_rmse_ma_cm2": 2.6313787672326903e-07
+      },
+      "387": {
+        "voltage_rmse_mv": 0.00018550521784494353,
+        "voltage_max_error_mv": 0.0006368145511359558,
+        "m_max_error": 1.4061386801544895e-05,
+        "h_max_error": 1.653916972266245e-07,
+        "current_rmse_ma_cm2": 2.197795228874054e-07
+      },
+      "460": {
+        "voltage_rmse_mv": 0.0001845354314873129,
+        "voltage_max_error_mv": 0.0005421952201842828,
+        "m_max_error": 1.2009799562728851e-05,
+        "h_max_error": 1.8380694777331286e-07,
+        "current_rmse_ma_cm2": 2.613843343726182e-07
+      },
+      "469": {
+        "voltage_rmse_mv": 0.00016523910961412235,
+        "voltage_max_error_mv": 0.0005811063150105156,
+        "m_max_error": 1.2633555613983383e-05,
+        "h_max_error": 1.411009249441264e-07,
+        "current_rmse_ma_cm2": 1.9717354879306074e-07
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 0.0008740281184415683,
+      "ais": 0.0014662251681067712,
+      "trunk": 0.00014292642449772425,
+      "hot_zone": 0.00018550521784494353,
+      "nexus": 0.00016594025681259975,
+      "tuft": 0.0001845354314873129
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "calcium_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_plateau": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 144,
+      "event_count_candidate": 144,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  },
+  {
+    "arm": "m_pair_2049_f64",
+    "protocol_index": 3,
+    "seed": 171501,
+    "gbar_multiplier": 1.0,
+    "passed": true,
+    "gates": {
+      "voltage": true,
+      "gates": true,
+      "current": true,
+      "events": true,
+      "release": true
+    },
+    "metrics": {
+      "0": {
+        "voltage_rmse_mv": 0.00032342980032777266,
+        "voltage_max_error_mv": 0.00731617033263543,
+        "m_max_error": 2.331829514604089e-05,
+        "h_max_error": 5.804345015736345e-08,
+        "current_rmse_ma_cm2": 9.927403024198153e-08
+      },
+      "387": {
+        "voltage_rmse_mv": 0.00016034647885446407,
+        "voltage_max_error_mv": 0.0005535948662966916,
+        "m_max_error": 1.1949705043590164e-05,
+        "h_max_error": 1.373992816189329e-07,
+        "current_rmse_ma_cm2": 1.8539391105217654e-07
+      },
+      "460": {
+        "voltage_rmse_mv": 0.0002356417003409232,
+        "voltage_max_error_mv": 0.0008004700467267867,
+        "m_max_error": 1.666209217865422e-05,
+        "h_max_error": 2.0810073297905518e-07,
+        "current_rmse_ma_cm2": 2.9273014927572655e-07
+      },
+      "469": {
+        "voltage_rmse_mv": 0.00015506465896762927,
+        "voltage_max_error_mv": 0.0005319311403297888,
+        "m_max_error": 1.1532322545471096e-05,
+        "h_max_error": 1.340463626764432e-07,
+        "current_rmse_ma_cm2": 1.8307641086401603e-07
+      }
+    },
+    "event_probe_voltage_rmse_mv": {
+      "soma": 0.00032342980032777266,
+      "ais": 0.0005277956795028631,
+      "trunk": 0.0001457004342650488,
+      "hot_zone": 0.00016034647885446407,
+      "nexus": 0.0001556817498931494,
+      "tuft": 0.0002356417003409232,
+      "event_probe": 0.0002356417003409232
+    },
+    "events": {
+      "axonal_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      },
+      "calcium_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_plateau": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "nmda_spike": {
+        "reference_count": 1,
+        "candidate_count": 1,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.5,
+        "passed": true
+      },
+      "somatic_spike": {
+        "reference_count": 2,
+        "candidate_count": 2,
+        "maximum_onset_error_ms": 0.0,
+        "right_censored_match": true,
+        "limit_ms": 0.2,
+        "passed": true
+      }
+    },
+    "release": {
+      "event_count_reference": 40,
+      "event_count_candidate": 40,
+      "discrete_match": true,
+      "mismatch_counts": {
+        "step": 0,
+        "transition_id": 0,
+        "event_index": 0,
+        "synapse_id": 0,
+        "scheduled_time_ms": 0,
+        "random123_seed": 0,
+        "random123_stream_id": 0,
+        "random123_global_index": 0,
+        "rng_sequence_before": 0,
+        "rng_sequence_after": 0,
+        "rng_preview_value": 0,
+        "release_success": 0
+      },
+      "max_release_probability_difference": 0.0,
+      "max_released_quantity_difference": 0.0
+    }
+  }
+]

@@ -1,0 +1,164 @@
+{
+  "schema_version": "giada-task17f-event-supported-confirmation-v1",
+  "valid": true,
+  "code_revision": "8a56e600fdc6693e6b1c5726ab86776e3acac8cb",
+  "config": {
+    "seeds": [
+      171601,
+      171619,
+      171643
+    ],
+    "gbar_multipliers": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "duration_ms": 60,
+    "sample_interval_ms": 0.025,
+    "nmda_variant_synapse_count": 8,
+    "nmda_variant_event_window_ms": 0.6,
+    "calcium_variant_synapse_count": 10,
+    "calcium_variant_event_window_ms": 0.6,
+    "native_repeat_voltage_max_atol_mv": 1e-05,
+    "formula_voltage_rmse_limit_mv": 0.05,
+    "formula_gate_max_error_limit": 0.002,
+    "candidate_voltage_rmse_limit_mv": 2.0,
+    "candidate_gate_max_error_limit": 0.01,
+    "candidate_current_rmse_limit_ma_cm2": 0.0001,
+    "paired_effect_relative_error_limit": 0.2,
+    "paired_effect_floor_mv": 0.05,
+    "spike_onset_limit_ms": 0.2,
+    "dendritic_onset_limit_ms": 0.5,
+    "release_quantity_atol": 1e-10,
+    "pilot_seeds": [
+      171501,
+      171519,
+      171543
+    ],
+    "somatic_amplitudes_na": [
+      0.5,
+      1.0,
+      2.0,
+      4.0,
+      6.0
+    ],
+    "repeats_per_burst": [
+      1,
+      2,
+      4
+    ],
+    "minimum_positive_seeds": 3
+  },
+  "gate_c_authorized": false,
+  "task18_authorized": false,
+  "candidate": "m_pair_2049_f64",
+  "pilot_only": false,
+  "development_smoke": true,
+  "confirmation_accessed": false,
+  "representatives": {
+    "soma": 0,
+    "ais": 640,
+    "basal": 37,
+    "trunk": 361,
+    "nexus": 437,
+    "hot_zone": 387,
+    "tuft": 460
+  },
+  "protocol_freeze_sha256": "6fb81cd37e1bf1220e562c956e33ee4a3bc68c26243dfa21126d39145e863def",
+  "selected_protocols": [
+    {
+      "name": "quiet",
+      "target_kind": null,
+      "candidate": null,
+      "somatic_current_na": 0.0
+    },
+    {
+      "name": "soma_4nA",
+      "target_kind": "somatic_spike",
+      "candidate": null,
+      "somatic_current_na": 4.0
+    },
+    {
+      "name": "calcium_spike_r4_soma0",
+      "target_kind": "calcium_spike",
+      "candidate": {
+        "family": "task17f_calcium",
+        "target": "hot_zone",
+        "required_event_kinds": [
+          "calcium_spike"
+        ],
+        "synapse_count": 12,
+        "burst_count": 3,
+        "events_per_synapse_per_burst": 4,
+        "burst_start_ms": 3,
+        "burst_interval_ms": 1,
+        "pair_with_somatic_spike": false,
+        "maximum_tree_distance_um": null,
+        "forbidden_event_kinds": [],
+        "selection_mode": "target_nearest",
+        "event_probe_mode": "target_representative",
+        "event_probe_kinds": [],
+        "event_window_ms": 0.8
+      },
+      "somatic_current_na": 0.0
+    },
+    {
+      "name": "nmda_spike_r2_soma0",
+      "target_kind": "nmda_spike",
+      "candidate": {
+        "family": "task17f_nmda",
+        "target": "tuft",
+        "required_event_kinds": [
+          "nmda_spike"
+        ],
+        "synapse_count": 10,
+        "burst_count": 2,
+        "events_per_synapse_per_burst": 2,
+        "burst_start_ms": 3,
+        "burst_interval_ms": 1,
+        "pair_with_somatic_spike": false,
+        "maximum_tree_distance_um": null,
+        "forbidden_event_kinds": [],
+        "selection_mode": "branch_cluster",
+        "event_probe_mode": "cluster_center",
+        "event_probe_kinds": [
+          "nmda_spike"
+        ],
+        "event_window_ms": 0.4
+      },
+      "somatic_current_na": 0.0
+    }
+  ],
+  "pilot_trial_count": 27,
+  "frozen_table_sha256": "e15f712faccc68dafbc7d861a14e23262388b9715ae5b564c51c06f261251765",
+  "compilation": {
+    "command": [
+      "/tmp/giada-task17f-venv/bin/nrnivmodl"
+    ],
+    "library": "/tmp/giada-task17f-integration-check/candidate_mods/x86_64/libnrnmech.so"
+  },
+  "grid_probe": {
+    "m_pair_513_f32": 3.552713678800501e-15,
+    "m_pair_513_f64": 3.552713678800501e-15,
+    "m_pair_1025_f64": 3.552713678800501e-15,
+    "m_pair_2049_f64": 3.1086244689504383e-15
+  },
+  "decision": "DEVELOPMENT_SMOKE_COMPLETE",
+  "support": {
+    "valid": true,
+    "uncensored_events_at_gbar1_by_seed": {
+      "somatic_spike": {
+        "171501": 1
+      },
+      "calcium_spike": {
+        "171501": 1
+      },
+      "nmda_spike": {
+        "171501": 1
+      }
+    },
+    "quiet_control_silent": true
+  },
+  "completed_trial_count": 16,
+  "candidate_smoke_passed": true
+}

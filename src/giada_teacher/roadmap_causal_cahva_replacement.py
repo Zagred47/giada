@@ -289,12 +289,13 @@ def _sample(session, suffix):
 
 def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
            canonical_gbar, suffixes=None, *, sample_fn=None,
-           capture_release=False):
+           capture_release=False, actions_by_step=None):
     suffix = "Ca_HVA" if arm == "native" else (suffixes or SUFFIXES)[arm]
     if session.task17_snapshot_suffix != suffix:
         raise RuntimeError("Refusing SaveState restore across a mechanism change")
     native_phase("trial_restore", arm=arm, seed=seed, multiplier=multiplier,
-                 protocol="quiescent" if protocol is None else protocol.candidate_id)
+                 protocol=("explicit_schedule" if actions_by_step is not None else
+                           "quiescent" if protocol is None else protocol.candidate_id))
     rng = json.loads(session.equilibrium_rng_path.read_text(encoding="utf-8"))
     session._restore_native_snapshot(session.equilibrium_snapshot_path,
                                      rng["sequences"], rng.get("random123_seed", session.seed))
@@ -304,7 +305,12 @@ def _trial(session, calibrator, protocol, seed, multiplier, arm, config,
     _restore_canonical_gbar(session, canonical_gbar, suffix)
     session._rekey_rngs(seed)
     session.active_random123_seed = int(seed)
-    if protocol is None:
+    if actions_by_step is not None:
+        # New protocols may supply a frozen, explicitly audited action schedule.
+        # Existing experiments keep their original path when this is omitted.
+        actions = actions_by_step
+        label = "explicit_schedule" if protocol is None else protocol.candidate_id
+    elif protocol is None:
         actions = {}
         label = "quiescent"
     else:
