@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    from src.giada_teacher.single_gate_transfer import native_audit; native_audit('/kaggle/working/giada_task22_8d50ccb4/teacher','/kaggle/working/artifacts/giada_task22_controlled_sharing_e770c37_15fa6151/oracle_single')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'src'
+Traceback (most recent call last):
+  File "/kaggle/working/giada_task22_8d50ccb4/giada/scripts/run_roadmap_task22.py", line 63, in <module>
+    main()
+    ~~~~^^
+  File "/kaggle/working/giada_task22_8d50ccb4/giada/scripts/run_roadmap_task22.py", line 28, in main
+    native_audit(args.teacher, output)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/giada_task22_8d50ccb4/giada/src/giada_teacher/controlled_gate_sharing.py", line 218, in native_audit
+    subprocess=__import__('subprocess');subprocess.run(cmd,check=True)
+                                        ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/usr/bin/python3', '-c', "from src.giada_teacher.single_gate_transfer import native_audit; native_audit('/kaggle/working/giada_task22_8d50ccb4/teacher','/kaggle/working/artifacts/giada_task22_controlled_sharing_e770c37_15fa6151/oracle_single')"]' returned non-zero exit status 1.
