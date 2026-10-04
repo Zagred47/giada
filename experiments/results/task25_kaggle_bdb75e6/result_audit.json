@@ -1,0 +1,47 @@
+{
+  "valid": true,
+  "archive_sha256": "fcdd99fa4e60ef91aa6ac0c67155789143891df738e98ccbfea5d9d7f8c2eeef",
+  "CRC_valid": true,
+  "checkpoint_and_source_hashes_valid": true,
+  "fresh_npz_sha256": "955117191a3b05feca32dc1c3b18125d55edd4a5a7e4ff8955e43d73b924a164",
+  "failures": [
+    {
+      "arm": "sodium_compressed",
+      "seed": 43,
+      "panel": "activation_boundary",
+      "channel": "NaTa_t",
+      "metric": "m_rmse",
+      "value": 0.0011189510630456611,
+      "limit": 0.001
+    },
+    {
+      "arm": "sodium_compressed",
+      "seed": 43,
+      "panel": "activation_boundary",
+      "channel": "NaTs2_t",
+      "metric": "m_rmse",
+      "value": 0.0010788192304407899,
+      "limit": 0.001
+    },
+    {
+      "arm": "both_compressed",
+      "seed": 43,
+      "panel": "activation_boundary",
+      "channel": "NaTa_t",
+      "metric": "m_rmse",
+      "value": 0.0011189510630456611,
+      "limit": 0.001
+    },
+    {
+      "arm": "both_compressed",
+      "seed": 43,
+      "panel": "activation_boundary",
+      "channel": "NaTs2_t",
+      "metric": "m_rmse",
+      "value": 0.0010788192304407899,
+      "limit": 0.001
+    }
+  ],
+  "minimum_identity_rmse_ratio": 415.7946672689992,
+  "interpretation": "Valid frozen composition; independent reference and calcium compression pass3/3. Sodium compression failures do not invalidate the primary reference or retroactively alter Task24b."
+}

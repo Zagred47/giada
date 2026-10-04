@@ -1,0 +1,107 @@
+{
+  "schema_version": "giada-roadmap-task25-preregistration-v1",
+  "stage": "Task25 originale \u2014 meccanismi eterogenei sotto V imposto",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "require_cuda": true,
+  "calcium_source": "experiments/results/task23_kaggle_0f79081",
+  "sodium_source": "experiments/results/task24b_kaggle_bde23cc",
+  "sodium_shared_source": "experiments/results/task24_kaggle_4fad2c6",
+  "channels": [
+    "Ca_HVA",
+    "Ca_LVAst",
+    "NaTa_t",
+    "NaTs2_t",
+    "Nap_Et2"
+  ],
+  "arms": [
+    "independent",
+    "calcium_compressed",
+    "sodium_compressed",
+    "both_compressed"
+  ],
+  "fresh_seeds": [
+    250401,
+    250402,
+    250403,
+    250405
+  ],
+  "sample_count": 8192,
+  "extrema_nodes": 121,
+  "extrema_node_offset": 0.83,
+  "dt_values_ms": [
+    0.025,
+    0.1,
+    0.5,
+    1,
+    5,
+    25,
+    100,
+    500,
+    1000
+  ],
+  "held_horizons_ms": [
+    1,
+    10,
+    100,
+    1000,
+    10000
+  ],
+  "path_dt_ms": {
+    "fast": 0.025,
+    "slow": 1.0
+  },
+  "gates": {
+    "gate_rmse": 0.001,
+    "m_rmse": 0.001,
+    "h_rmse": 0.001,
+    "gate_max_error": 0.01,
+    "inf_rmse": 0.002,
+    "log_tau_rmse": 0.02,
+    "open_rmse": 0.002,
+    "occupancy_violations": 0
+  },
+  "held_gates": {
+    "gate_rmse": 0.002,
+    "m_rmse": 0.002,
+    "h_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003,
+    "occupancy_violations": 0
+  },
+  "current_gates": {
+    "individual_current_normalized_rmse": 0.002,
+    "total_current_normalized_rmse": 0.002,
+    "total_current_normalized_max": 0.01
+  },
+  "path_gates": {
+    "gate_rmse": 0.002,
+    "m_rmse": 0.002,
+    "h_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003,
+    "occupancy_violations": 0
+  },
+  "path_current_gates": {
+    "individual_current_normalized_rmse": 0.003,
+    "total_current_normalized_rmse": 0.003,
+    "total_current_normalized_max": 0.01
+  },
+  "freeze": "No training and no new model selection. Freeze exact previously development-selected calcium independent/shared_heads, sodium decay_channel and conditioned checkpoints before generating fresh2504xx. Reject any failed prerequisite or changed hash. Original frozen models re-evaluated, no retrospective retraining.",
+  "matrix": "2x2 frozen calcium independent/shared_heads x sodium repaired independent/conditioned; 4 bundles x3paired seeds. Same V,10 independent states,dt,conductance/reversal panels and paths. Primary reference=independent. Other arms test compositional reuse, not a new all-mechanism joint trunk (Task26 reserved).",
+  "current_semantics": "Retain analytic I=gbar*m^p*h*(V-E),p2Ca/p3Na. V/E supplied, post-update state. Units mA/cm2. Canonical Eca120/Ena55 with declared diagnostic variation. Normalize total by sum absolute fully-open driving currents, never by cancelling teacher total. Require every individual channel and worst panel, not pooled total alone. No embedded BREAKPOINT timing claim.",
+  "extrema_support": "22 structured corners: all0,all1,each single high and each single low of10states. Cover all marginal gate extremes without claiming all1024joint corners. Fresh off-grid V nodes plus fixed endpoints/canonical seams intentionally repeated.",
+  "hypotheses": {
+    "heterogeneous_composition": "Frozen independent calcium+sodium modules preserve each of5mechanisms and total analytic current on new matched support, held horizons and paths,all3seeds. No masked failure by pooling.",
+    "compression_reuse": "At least one preregistered compressed frozen bundle also passes3/3 with fewer parameters than the valid independent reference; no runtime acceleration inference.",
+    "cancellation": "Opposite Ca/Na driving signs can hide channel error in total. Report cancellation ratio<=0.1 strata,individual errors and worst current panel; total alone cannot promote.",
+    "identity": "Rotating5mechanism rate pairs increases median in-support gate RMSE >=10fold; diagnostic not promotion criterion.",
+    "precision": "Fixed learned rates evaluated withFP32vsFP64 iterative solver distinguish rate error from accumulation. Formula/LUT2049 controls nonselectable, no increased precision rescue of primary.",
+    "path_transfer": "Every seed,mechanism,imposed path and fast/slow dt meets gates, no autonomous V or macro1ms sufficiency claim."
+  },
+  "promotion": "Authorize Task26 preparation only when primary independent passes every required domain,eachmechanism,eachseed,eachpath,current worstpanel,andheldhorizon inFP32. Technical validity separate from scientificNO-GO. Otherarms cannot bypass failedreference. OldTask24 decision unchanged.",
+  "limits": "Five voltage-dependent mechanisms only. Ten explicit states,V imposed,analyticcurrent retained. No SK_E2,CaDynamics,temperaturegeneralization,endogenousvoltage,synapses,axialcoupling orfullneuron. Task26/27/28 remain pending. Task25 does not retrain a joint trunk or select on current targets."
+}
