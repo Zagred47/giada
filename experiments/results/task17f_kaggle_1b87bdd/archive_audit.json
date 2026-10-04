@@ -1,0 +1,67 @@
+{
+  "valid": true,
+  "archive_sha256": "e409a154aab0680ef037050ff2e244564114fb1312c01391c5a9556d529a14f2",
+  "archive_size_bytes": 113739112,
+  "code_provenance_verified": true,
+  "protocol_freeze_verified": true,
+  "dense_trial_count": 171,
+  "finite_dense_array_count": 7908,
+  "all_dense_gate_occupancies_valid": true,
+  "summary_by_arm": {
+    "native_super": {
+      "worst_voltage_rmse_mv": 0.0073127590981589925,
+      "worst_gate_abs_error": 0.0005093485384532193,
+      "worst_current_rmse_ma_cm2": 7.600344149891294e-07,
+      "worst_release_quantity_difference": 0.0
+    },
+    "formula": {
+      "worst_voltage_rmse_mv": 3.0035642670307592e-09,
+      "worst_gate_abs_error": 1.2618966982458346e-10,
+      "worst_current_rmse_ma_cm2": 8.008789923978694e-13,
+      "worst_release_quantity_difference": 0.0
+    },
+    "m_pair_2049_f64": {
+      "worst_voltage_rmse_mv": 0.013858015236790061,
+      "worst_gate_abs_error": 0.0010223991968602575,
+      "worst_current_rmse_ma_cm2": 1.5263346232687276e-06,
+      "worst_release_quantity_difference": 0.0
+    }
+  },
+  "support": {
+    "valid": true,
+    "uncensored_events_at_gbar1_by_seed": {
+      "somatic_spike": {
+        "171601": 1,
+        "171619": 1,
+        "171643": 1
+      },
+      "calcium_spike": {
+        "171601": 1,
+        "171619": 1,
+        "171643": 1
+      },
+      "nmda_spike": {
+        "171601": 1,
+        "171619": 1,
+        "171643": 1
+      }
+    },
+    "quiet_control_silent": true
+  },
+  "identifiable_effect_count": 36,
+  "worst_paired_effect_relative_error": 0.0006456786893018027,
+  "process_status": {
+    "returncode": 0,
+    "last_phase": {
+      "phase": "trial_restore",
+      "arm": "m_pair_2049_f64",
+      "seed": 171643,
+      "multiplier": 1.5,
+      "protocol": "explicit_schedule"
+    },
+    "log": "/kaggle/working/artifacts/giada_task17f_event_confirmation_1b87bdd_3a7e4bfc.process.log",
+    "launch_error": null
+  },
+  "decision": "GATE_C_PASS_BOUNDED_CAHVA",
+  "task18_authorized": true
+}

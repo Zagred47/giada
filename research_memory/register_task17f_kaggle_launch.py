@@ -8,6 +8,8 @@ from .mirror import Mirror, ROOT, write_json
 def main():
     mirror = Mirror()
     root = ROOT.parent / 'experiments/results/task17f_kaggle_1b87bdd'
+    if (root / 'final_report.json').is_file():
+        raise RuntimeError('Completed Task17f: use register_task17f_result; do not restore the historical RUNNING state.')
     manifest = json.loads((root / 'launch_manifest.json').read_text())
     def ref(table, suffix):
         rows = mirror.query("SELECT record_id FROM v_records WHERE stable_code='"

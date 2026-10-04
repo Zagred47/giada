@@ -1,0 +1,87 @@
+{
+  "passed": true,
+  "gates": {
+    "voltage": true,
+    "gates": true,
+    "current": true,
+    "events": true,
+    "release": true
+  },
+  "metrics": {
+    "0": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "387": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "460": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    },
+    "469": {
+      "voltage_rmse_mv": 0.0,
+      "voltage_max_error_mv": 0.0,
+      "m_max_error": 0.0,
+      "h_max_error": 0.0,
+      "current_rmse_ma_cm2": 0.0
+    }
+  },
+  "event_probe_voltage_rmse_mv": {
+    "soma": 0.0,
+    "ais": 0.0,
+    "trunk": 0.0,
+    "hot_zone": 0.0,
+    "nexus": 0.0,
+    "tuft": 0.0
+  },
+  "events": {
+    "axonal_spike": {
+      "reference_count": 1,
+      "candidate_count": 1,
+      "maximum_onset_error_ms": 0.0,
+      "right_censored_match": true,
+      "limit_ms": 0.2,
+      "passed": true
+    },
+    "somatic_spike": {
+      "reference_count": 1,
+      "candidate_count": 1,
+      "maximum_onset_error_ms": 0.0,
+      "right_censored_match": true,
+      "limit_ms": 0.2,
+      "passed": true
+    }
+  },
+  "release": {
+    "event_count_reference": 0,
+    "event_count_candidate": 0,
+    "discrete_match": true,
+    "mismatch_counts": {
+      "step": 0,
+      "transition_id": 0,
+      "event_index": 0,
+      "synapse_id": 0,
+      "scheduled_time_ms": 0,
+      "random123_seed": 0,
+      "random123_stream_id": 0,
+      "random123_global_index": 0,
+      "rng_sequence_before": 0,
+      "rng_sequence_after": 0,
+      "rng_preview_value": 0,
+      "release_success": 0
+    },
+    "max_release_probability_difference": 0.0,
+    "max_released_quantity_difference": 0.0
+  }
+}
