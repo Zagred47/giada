@@ -1,0 +1,1539 @@
+{
+  "schema_version": "giada-roadmap-task21-v1",
+  "valid": true,
+  "per_channel_transfer": {
+    "short_dt": false,
+    "multiscale_dt": true
+  },
+  "fresh_used_for_selection": false,
+  "selection": {
+    "short_dt/transition_only": {
+      "channel": "short_dt",
+      "objective": "transition_only",
+      "width": 32,
+      "step": 1000,
+      "indices": [
+        0,
+        1,
+        2
+      ],
+      "score": 672.3115126778665
+    },
+    "short_dt/rate_supervised": {
+      "channel": "short_dt",
+      "objective": "rate_supervised",
+      "width": 32,
+      "step": 15000,
+      "indices": [
+        3,
+        4,
+        5
+      ],
+      "score": 2.58995381300497
+    },
+    "multiscale_dt/transition_only": {
+      "channel": "multiscale_dt",
+      "objective": "transition_only",
+      "width": 16,
+      "step": 30000,
+      "indices": [
+        6,
+        7,
+        8
+      ],
+      "score": 1.3910249631146432
+    },
+    "multiscale_dt/rate_supervised": {
+      "channel": "multiscale_dt",
+      "objective": "rate_supervised",
+      "width": 32,
+      "step": 30000,
+      "indices": [
+        9,
+        10,
+        11
+      ],
+      "score": 2.2123082567350676
+    }
+  },
+  "learned": [
+    {
+      "channel": "short_dt",
+      "objective": "transition_only",
+      "seed": 17,
+      "width": 32,
+      "step": 1000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.2288122650425072,
+          "gate_max_error": 0.566605346039322,
+          "inf_rmse": 0.44454886995842774,
+          "log_tau_rmse": 1.3754929657443096,
+          "open_rmse": 0.2288122650425072,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.2752401887114241,
+          "gate_max_error": 0.5666307618892051,
+          "inf_rmse": 0.5657356310434236,
+          "log_tau_rmse": 1.1330867016110475,
+          "open_rmse": 0.2752401887114241,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.23783959287343245,
+          "gate_max_error": 0.5666522960225385,
+          "inf_rmse": 0.4441905568033649,
+          "log_tau_rmse": 1.3819072389362128,
+          "open_rmse": 0.23783959287343245,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.2815840181768591,
+          "gate_max_error": 0.5678402054407264,
+          "inf_rmse": 0.5672723298703702,
+          "log_tau_rmse": 0.8937401842603365,
+          "open_rmse": 0.2815840181768591,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.25822193973356605,
+          "gate_max_error": 0.4443053549288061,
+          "inf_rmse": 0.443864965835154,
+          "log_tau_rmse": 0.6577550773092263,
+          "open_rmse": 0.25822193973356605,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.0015123419048771443,
+          "gate_max_error": 0.002518810310372314,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 0.0015123417384589888
+        },
+        "10": {
+          "gate_rmse": 0.014807365035716282,
+          "gate_max_error": 0.0245538567720451,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 0.014807363750337163
+        },
+        "100": {
+          "gate_rmse": 0.12112636128911186,
+          "gate_max_error": 0.19256563058949067,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.12112634476807999
+        },
+        "1000": {
+          "gate_rmse": 0.3548465397747238,
+          "gate_max_error": 0.5364892648947098,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.35484645608563503
+        },
+        "10000": {
+          "gate_rmse": 0.44590371576246557,
+          "gate_max_error": 0.5664479629131512,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.44590354687261763
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "short_dt",
+      "objective": "transition_only",
+      "seed": 29,
+      "width": 32,
+      "step": 1000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.22840942661396002,
+          "gate_max_error": 0.5618812607083589,
+          "inf_rmse": 0.4435604238032818,
+          "log_tau_rmse": 1.3879535484211332,
+          "open_rmse": 0.22840942661396002,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.2722179624780851,
+          "gate_max_error": 0.5619042327678062,
+          "inf_rmse": 0.5611302697061413,
+          "log_tau_rmse": 1.0679809765004527,
+          "open_rmse": 0.2722179624780851,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.2375593451410955,
+          "gate_max_error": 0.5619229113034071,
+          "inf_rmse": 0.44314372003239855,
+          "log_tau_rmse": 1.3940911848827966,
+          "open_rmse": 0.2375593451410955,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.2777878677171758,
+          "gate_max_error": 0.5628954935171272,
+          "inf_rmse": 0.5624324883218698,
+          "log_tau_rmse": 0.7776983851042737,
+          "open_rmse": 0.2777878677171758,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.2578796447874896,
+          "gate_max_error": 0.44352745470984245,
+          "inf_rmse": 0.44344326716540794,
+          "log_tau_rmse": 0.5572034044540629,
+          "open_rmse": 0.2578796447874896,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.0015350007820632131,
+          "gate_max_error": 0.0023392750667121025,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 0.0015350030448441911
+        },
+        "10": {
+          "gate_rmse": 0.01502610040684982,
+          "gate_max_error": 0.022845051210979427,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 0.015026120207006922
+        },
+        "100": {
+          "gate_rmse": 0.12262215826537894,
+          "gate_max_error": 0.18213890067196442,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.12262231700832828
+        },
+        "1000": {
+          "gate_rmse": 0.3541280978200545,
+          "gate_max_error": 0.5313813742753015,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.3541283966079077
+        },
+        "10000": {
+          "gate_rmse": 0.44465657327628555,
+          "gate_max_error": 0.5617540077301221,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.44465691492055853
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "short_dt",
+      "objective": "transition_only",
+      "seed": 43,
+      "width": 32,
+      "step": 1000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.22763829435453542,
+          "gate_max_error": 0.5689864323888093,
+          "inf_rmse": 0.4433031798362503,
+          "log_tau_rmse": 1.3519761421920864,
+          "open_rmse": 0.22763829435453542,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.27567525126491277,
+          "gate_max_error": 0.5690153947150566,
+          "inf_rmse": 0.5679770783586763,
+          "log_tau_rmse": 1.0431702820561595,
+          "open_rmse": 0.27567525126491277,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.23644083321193649,
+          "gate_max_error": 0.5690395568779768,
+          "inf_rmse": 0.4429882093258249,
+          "log_tau_rmse": 1.3580852585665195,
+          "open_rmse": 0.23644083321193649,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.28171643486343995,
+          "gate_max_error": 0.5706418025591041,
+          "inf_rmse": 0.5698553229676399,
+          "log_tau_rmse": 0.76899843251148,
+          "open_rmse": 0.28171643486343995,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.25380848997689087,
+          "gate_max_error": 0.4368614060326374,
+          "inf_rmse": 0.43676766886202695,
+          "log_tau_rmse": 0.5930418661569165,
+          "open_rmse": 0.25380848997689087,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 0.0014716670536472501,
+          "gate_max_error": 0.002358681268030009,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 0.0014716664307605795
+        },
+        "10": {
+          "gate_rmse": 0.014413841099312387,
+          "gate_max_error": 0.02302192240641495,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 0.014413833824965833
+        },
+        "100": {
+          "gate_rmse": 0.1182629244041947,
+          "gate_max_error": 0.1826318310842569,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.11826293263293486
+        },
+        "1000": {
+          "gate_rmse": 0.3524724662630566,
+          "gate_max_error": 0.5339266416188226,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.3524727125883351
+        },
+        "10000": {
+          "gate_rmse": 0.44501092805852893,
+          "gate_max_error": 0.5687924520107465,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.4450111222927465
+        }
+      },
+      "one_step_passed": false,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "short_dt",
+      "objective": "rate_supervised",
+      "seed": 17,
+      "width": 32,
+      "step": 15000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0009327826718400291,
+          "gate_max_error": 0.005046797172200357,
+          "inf_rmse": 0.0014065057911740802,
+          "log_tau_rmse": 0.007223098808559091,
+          "open_rmse": 0.0009327826718400291,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.000982473176237091,
+          "gate_max_error": 0.005282939844402201,
+          "inf_rmse": 0.0002847885954637794,
+          "log_tau_rmse": 0.012187852358739258,
+          "open_rmse": 0.000982473176237091,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0009991458978393932,
+          "gate_max_error": 0.005395556661370704,
+          "inf_rmse": 0.0013806755175437173,
+          "log_tau_rmse": 0.007166346153397261,
+          "open_rmse": 0.0009991458978393932,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.004667607121419474,
+          "gate_max_error": 0.03648907994255213,
+          "inf_rmse": 8.312252301079728e-05,
+          "log_tau_rmse": 0.05161811127624917,
+          "open_rmse": 0.004667607121419474,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0007962984503472949,
+          "gate_max_error": 0.0038375437196137285,
+          "inf_rmse": 0.00010735850949588477,
+          "log_tau_rmse": 0.010359472198834214,
+          "open_rmse": 0.0007962984503472949,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 5.5455108108309865e-06,
+          "gate_max_error": 1.9754566796814643e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 5.54536285390853e-06
+        },
+        "10": {
+          "gate_rmse": 5.477583625631392e-05,
+          "gate_max_error": 0.00019264096678428544,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 5.47699766500215e-05
+        },
+        "100": {
+          "gate_rmse": 0.00048644732157862743,
+          "gate_max_error": 0.001495706938721586,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.00048641924589479474
+        },
+        "1000": {
+          "gate_rmse": 0.0020522021304588745,
+          "gate_max_error": 0.005396582852983056,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.0020520364222638755
+        },
+        "10000": {
+          "gate_rmse": 0.00131398555703969,
+          "gate_max_error": 0.00299487229508184,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.0013110726443525053
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": false,
+      "passed": false
+    },
+    {
+      "channel": "short_dt",
+      "objective": "rate_supervised",
+      "seed": 29,
+      "width": 32,
+      "step": 15000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0006334167793920881,
+          "gate_max_error": 0.0036883849200481933,
+          "inf_rmse": 0.0010097602749495785,
+          "log_tau_rmse": 0.005274308899484782,
+          "open_rmse": 0.0006334167793920881,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.0006274233076648884,
+          "gate_max_error": 0.0033681459816232717,
+          "inf_rmse": 0.00016495704556445428,
+          "log_tau_rmse": 0.00780277264624076,
+          "open_rmse": 0.0006274233076648884,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0006932302878962343,
+          "gate_max_error": 0.003859262404234398,
+          "inf_rmse": 0.0009909643797583207,
+          "log_tau_rmse": 0.005259859976938547,
+          "open_rmse": 0.0006932302878962343,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.0026286967743283135,
+          "gate_max_error": 0.01822613621726843,
+          "inf_rmse": 5.068672105924579e-05,
+          "log_tau_rmse": 0.029482825264026475,
+          "open_rmse": 0.0026286967743283135,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0012029344582696502,
+          "gate_max_error": 0.0073622028005992934,
+          "inf_rmse": 8.66762513406452e-05,
+          "log_tau_rmse": 0.016326568058827737,
+          "open_rmse": 0.0012029344582696502,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 4.031111984852681e-06,
+          "gate_max_error": 1.55822416625373e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 4.029909667615887e-06
+        },
+        "10": {
+          "gate_rmse": 3.9812069200587546e-05,
+          "gate_max_error": 0.00015187138975791825,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 3.980676180152177e-05
+        },
+        "100": {
+          "gate_rmse": 0.00035373224149825227,
+          "gate_max_error": 0.0011803387632149942,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.00035365194408008794
+        },
+        "1000": {
+          "gate_rmse": 0.0014463020172040143,
+          "gate_max_error": 0.003845409621375029,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.0014461243935154251
+        },
+        "10000": {
+          "gate_rmse": 0.0009389955443536015,
+          "gate_max_error": 0.002192399934249467,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.0009381494790916973
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "short_dt",
+      "objective": "rate_supervised",
+      "seed": 43,
+      "width": 32,
+      "step": 15000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.00037611582935026734,
+          "gate_max_error": 0.0023640236889583832,
+          "inf_rmse": 0.0006849997794930344,
+          "log_tau_rmse": 0.0022333608532144893,
+          "open_rmse": 0.00037611582935026734,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.0003960122678571886,
+          "gate_max_error": 0.0024738007553309904,
+          "inf_rmse": 0.0006259578798058668,
+          "log_tau_rmse": 0.0024337556953117827,
+          "open_rmse": 0.0003960122678571886,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.00040096564754237127,
+          "gate_max_error": 0.0029650308905772027,
+          "inf_rmse": 0.0006931993530423003,
+          "log_tau_rmse": 0.002277675382705136,
+          "open_rmse": 0.00040096564754237127,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.004045775661246789,
+          "gate_max_error": 0.029354084978254757,
+          "inf_rmse": 0.00015761249682093092,
+          "log_tau_rmse": 0.04508959606792526,
+          "open_rmse": 0.004045775661246789,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0003830942692041666,
+          "gate_max_error": 0.0019249886337874555,
+          "inf_rmse": 1.3679585650326848e-05,
+          "log_tau_rmse": 0.005232106678512352,
+          "open_rmse": 0.0003830942692041666,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 1.8142709349637782e-06,
+          "gate_max_error": 8.021197668517388e-06,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 1.8131193365991783e-06
+        },
+        "10": {
+          "gate_rmse": 1.7891769160451278e-05,
+          "gate_max_error": 7.820253907508956e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 1.7876571432541886e-05
+        },
+        "100": {
+          "gate_rmse": 0.00015644141464896306,
+          "gate_max_error": 0.0006042243013602011,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.0001563694667944755
+        },
+        "1000": {
+          "gate_rmse": 0.0006863181057438769,
+          "gate_max_error": 0.002536113067543422,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.000687134994019771
+        },
+        "10000": {
+          "gate_rmse": 0.0007057355483776785,
+          "gate_max_error": 0.001601746761760725,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.0007122541191072621
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "objective": "transition_only",
+      "seed": 17,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 338,
+      "dense_macs": 304,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0004043901544232897,
+          "gate_max_error": 0.002920059866319824,
+          "inf_rmse": 0.00032726655755604137,
+          "log_tau_rmse": 0.00456362149764171,
+          "open_rmse": 0.0004043901544232897,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.0005570587876631704,
+          "gate_max_error": 0.003713338948080014,
+          "inf_rmse": 0.0002299959602446626,
+          "log_tau_rmse": 0.005912986024828806,
+          "open_rmse": 0.0005570587876631704,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0004956293229369148,
+          "gate_max_error": 0.004318652373426324,
+          "inf_rmse": 0.0003325859709929482,
+          "log_tau_rmse": 0.004604022783358796,
+          "open_rmse": 0.0004956293229369148,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.003734370734692496,
+          "gate_max_error": 0.025603581915052853,
+          "inf_rmse": 9.066384906172957e-05,
+          "log_tau_rmse": 0.04167258924939454,
+          "open_rmse": 0.003734370734692496,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0009315785046995773,
+          "gate_max_error": 0.004427495592439351,
+          "inf_rmse": 3.815855557216015e-06,
+          "log_tau_rmse": 0.01251761242993809,
+          "open_rmse": 0.0009315785046995773,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 5.153166246096801e-06,
+          "gate_max_error": 2.6907124169861518e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 5.152044576143188e-06
+        },
+        "10": {
+          "gate_rmse": 5.056273921332985e-05,
+          "gate_max_error": 0.0002621995872371663,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 5.055161481552369e-05
+        },
+        "100": {
+          "gate_rmse": 0.0004202191767948805,
+          "gate_max_error": 0.002032327555634428,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.0004201172607354241
+        },
+        "1000": {
+          "gate_rmse": 0.001069407989531825,
+          "gate_max_error": 0.003139399205395521,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.0010689894234560226
+        },
+        "10000": {
+          "gate_rmse": 0.0003259028914857594,
+          "gate_max_error": 0.0009572531581409915,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.0003251147694179726
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "objective": "transition_only",
+      "seed": 29,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 338,
+      "dense_macs": 304,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.00034139636748396757,
+          "gate_max_error": 0.0035000160270822755,
+          "inf_rmse": 0.00022070068111417515,
+          "log_tau_rmse": 0.0040323838498798606,
+          "open_rmse": 0.00034139636748396757,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.0006053500821714929,
+          "gate_max_error": 0.004254267760344876,
+          "inf_rmse": 1.2633425550534954e-05,
+          "log_tau_rmse": 0.006972966649225275,
+          "open_rmse": 0.0006053500821714929,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.00041474569798153417,
+          "gate_max_error": 0.004729869145280952,
+          "inf_rmse": 0.00021653168400166206,
+          "log_tau_rmse": 0.0041420082900558465,
+          "open_rmse": 0.00041474569798153417,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.001975637387427315,
+          "gate_max_error": 0.010187219133225955,
+          "inf_rmse": 1.3206437116308659e-06,
+          "log_tau_rmse": 0.022025590928919665,
+          "open_rmse": 0.001975637387427315,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0002414293828456734,
+          "gate_max_error": 0.001145713021811684,
+          "inf_rmse": 2.492693282459631e-05,
+          "log_tau_rmse": 0.0030872970196448584,
+          "open_rmse": 0.0002414293828456734,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 2.909956586626421e-06,
+          "gate_max_error": 1.0473912456763568e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 2.909935743541516e-06
+        },
+        "10": {
+          "gate_rmse": 2.874601637265034e-05,
+          "gate_max_error": 0.0001038139875380456,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 2.8749052599808595e-05
+        },
+        "100": {
+          "gate_rmse": 0.00025570871938074014,
+          "gate_max_error": 0.0009500017212981382,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.00025572011050962123
+        },
+        "1000": {
+          "gate_rmse": 0.0010183919314197241,
+          "gate_max_error": 0.003908611620715319,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.0010186640823986847
+        },
+        "10000": {
+          "gate_rmse": 0.00022622869045228617,
+          "gate_max_error": 0.000551005729700127,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.00022154611118843306
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "objective": "transition_only",
+      "seed": 43,
+      "width": 16,
+      "step": 30000,
+      "parameter_count": 338,
+      "dense_macs": 304,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0004583325081489997,
+          "gate_max_error": 0.002869324660168815,
+          "inf_rmse": 0.0004755004271440867,
+          "log_tau_rmse": 0.004877629855932954,
+          "open_rmse": 0.0004583325081489997,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.00034055616984449773,
+          "gate_max_error": 0.002105294294086568,
+          "inf_rmse": 6.102201532785418e-05,
+          "log_tau_rmse": 0.0039060151108969246,
+          "open_rmse": 0.00034055616984449773,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0005280775666582518,
+          "gate_max_error": 0.0031651571551418733,
+          "inf_rmse": 0.00046800703549933285,
+          "log_tau_rmse": 0.0048434221301494555,
+          "open_rmse": 0.0005280775666582518,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.004492373868025074,
+          "gate_max_error": 0.03573857689872595,
+          "inf_rmse": 2.020176653900219e-05,
+          "log_tau_rmse": 0.05027767965818608,
+          "open_rmse": 0.004492373868025074,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0007945089102503808,
+          "gate_max_error": 0.005841239296110912,
+          "inf_rmse": 0.00027475460265856085,
+          "log_tau_rmse": 0.011912604051974494,
+          "open_rmse": 0.0007945089102503808,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 4.755869115524705e-06,
+          "gate_max_error": 2.106346165531292e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 4.756729080847198e-06
+        },
+        "10": {
+          "gate_rmse": 4.6670799277551214e-05,
+          "gate_max_error": 0.00020603447291001054,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 4.667964413486531e-05
+        },
+        "100": {
+          "gate_rmse": 0.00038822441075058426,
+          "gate_max_error": 0.0016530833106948029,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.00038826832191314115
+        },
+        "1000": {
+          "gate_rmse": 0.0010262278772754643,
+          "gate_max_error": 0.002650984712078308,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.0010257374656557692
+        },
+        "10000": {
+          "gate_rmse": 0.0004993827068885406,
+          "gate_max_error": 0.0009121653675157626,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.0004967523467912404
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "objective": "rate_supervised",
+      "seed": 17,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0004888280789503824,
+          "gate_max_error": 0.002878275779259365,
+          "inf_rmse": 0.0008895234411378595,
+          "log_tau_rmse": 0.0037050919367238966,
+          "open_rmse": 0.0004888280789503824,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.0005907232547352862,
+          "gate_max_error": 0.0028784566887111174,
+          "inf_rmse": 0.0012100406711209593,
+          "log_tau_rmse": 0.004920689469087497,
+          "open_rmse": 0.0005907232547352862,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0005253335260746807,
+          "gate_max_error": 0.003604409915082818,
+          "inf_rmse": 0.0008750945613960281,
+          "log_tau_rmse": 0.0038189921688472676,
+          "open_rmse": 0.0005253335260746807,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.006777969721891531,
+          "gate_max_error": 0.04920714045539709,
+          "inf_rmse": 0.0007981835537052033,
+          "log_tau_rmse": 0.07461589190176922,
+          "open_rmse": 0.006777969721891531,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0019179482365123456,
+          "gate_max_error": 0.012871920071753307,
+          "inf_rmse": 0.00042888658771620346,
+          "log_tau_rmse": 0.02830107753777844,
+          "open_rmse": 0.0019179482365123456,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 2.7039759217042156e-06,
+          "gate_max_error": 1.582940613409356e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 2.7046856785738894e-06
+        },
+        "10": {
+          "gate_rmse": 2.6608129580479878e-05,
+          "gate_max_error": 0.00015413885651893722,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 2.6614994189259712e-05
+        },
+        "100": {
+          "gate_rmse": 0.00022840995387256769,
+          "gate_max_error": 0.0011775017748099081,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.00022845158428100838
+        },
+        "1000": {
+          "gate_rmse": 0.0009051555421428746,
+          "gate_max_error": 0.0029669337468924417,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.0009050603895866218
+        },
+        "10000": {
+          "gate_rmse": 0.0008981094618038853,
+          "gate_max_error": 0.0014491379393250432,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.0009004248197449374
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "objective": "rate_supervised",
+      "seed": 29,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.0004299762625295981,
+          "gate_max_error": 0.0020333568170390337,
+          "inf_rmse": 0.0008027506605728771,
+          "log_tau_rmse": 0.0019905514858414393,
+          "open_rmse": 0.0004299762625295981,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.00023545935556489503,
+          "gate_max_error": 0.002318411446401547,
+          "inf_rmse": 0.0001678857388561502,
+          "log_tau_rmse": 0.0025644560040821956,
+          "open_rmse": 0.00023545935556489503,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0004368518501150592,
+          "gate_max_error": 0.0028101184188059625,
+          "inf_rmse": 0.0007841405027946761,
+          "log_tau_rmse": 0.0020522790207070647,
+          "open_rmse": 0.0004368518501150592,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.003232197232003081,
+          "gate_max_error": 0.02242951537147375,
+          "inf_rmse": 4.066672742094537e-05,
+          "log_tau_rmse": 0.03626894346751572,
+          "open_rmse": 0.003232197232003081,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0011576062198093943,
+          "gate_max_error": 0.007460041843565746,
+          "inf_rmse": 0.0001666572297245648,
+          "log_tau_rmse": 0.016725364675397713,
+          "open_rmse": 0.0011576062198093943,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 2.0174241529355935e-06,
+          "gate_max_error": 1.11206391968377e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 2.0192528579413703e-06
+        },
+        "10": {
+          "gate_rmse": 1.9860701815560426e-05,
+          "gate_max_error": 0.00010818367539711105,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 1.9885479456797466e-05
+        },
+        "100": {
+          "gate_rmse": 0.00017166977884492776,
+          "gate_max_error": 0.0008320928583365195,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.00017185122879024472
+        },
+        "1000": {
+          "gate_rmse": 0.0006687737362043671,
+          "gate_max_error": 0.0022340709875574016,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.0006688014391361352
+        },
+        "10000": {
+          "gate_rmse": 0.0007376587084276198,
+          "gate_max_error": 0.0017838903151156764,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.000735129338963208
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "objective": "rate_supervised",
+      "seed": 43,
+      "width": 32,
+      "step": 30000,
+      "parameter_count": 1186,
+      "dense_macs": 1120,
+      "metrics": {
+        "in_support": {
+          "gate_rmse": 0.000720087448838648,
+          "gate_max_error": 0.004055885977159668,
+          "inf_rmse": 0.0012346891196947233,
+          "log_tau_rmse": 0.005260848371658245,
+          "open_rmse": 0.000720087448838648,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "negative_tail": {
+          "gate_rmse": 0.0007332770371315931,
+          "gate_max_error": 0.0051579767235011564,
+          "inf_rmse": 0.000218504182274512,
+          "log_tau_rmse": 0.00803044203541157,
+          "open_rmse": 0.0007332770371315931,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "state_extrema": {
+          "gate_rmse": 0.0007763758391832787,
+          "gate_max_error": 0.006006298285596734,
+          "inf_rmse": 0.0012126708663863347,
+          "log_tau_rmse": 0.005402701090644612,
+          "open_rmse": 0.0007763758391832787,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_negative": {
+          "gate_rmse": 0.005015469557894397,
+          "gate_max_error": 0.03404240752235266,
+          "inf_rmse": 7.555872271838007e-05,
+          "log_tau_rmse": 0.05615438112960403,
+          "open_rmse": 0.005015469557894397,
+          "occupancy_violations": 0,
+          "finite": true
+        },
+        "ood_positive": {
+          "gate_rmse": 0.0023465356424586703,
+          "gate_max_error": 0.015187515817793651,
+          "inf_rmse": 0.00036582896543623536,
+          "log_tau_rmse": 0.03410412791817822,
+          "open_rmse": 0.0023465356424586703,
+          "occupancy_violations": 0,
+          "finite": true
+        }
+      },
+      "rollout": {
+        "1": {
+          "gate_rmse": 4.336418565739123e-06,
+          "gate_max_error": 2.530654465338067e-05,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.0009390739658166267,
+          "formula_f32_rmse": 1.81723091872077e-08,
+          "learned_single_macro_update_rmse": 4.3367516487454835e-06
+        },
+        "10": {
+          "gate_rmse": 4.2682788167197654e-05,
+          "gate_max_error": 0.0002465260559207927,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.009308934802612882,
+          "formula_f32_rmse": 1.818070389915586e-07,
+          "learned_single_macro_update_rmse": 4.268574157158093e-05
+        },
+        "100": {
+          "gate_rmse": 0.00036732466577888806,
+          "gate_max_error": 0.0018922806749563925,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.08550758087530905,
+          "formula_f32_rmse": 1.7040281336212942e-06,
+          "learned_single_macro_update_rmse": 0.0003673166217743391
+        },
+        "1000": {
+          "gate_rmse": 0.0014488904619981307,
+          "gate_max_error": 0.004329584752270521,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.4481731859403218,
+          "formula_f32_rmse": 1.017329972265329e-05,
+          "learned_single_macro_update_rmse": 0.001449149773250996
+        },
+        "10000": {
+          "gate_rmse": 0.0011746837050307828,
+          "gate_max_error": 0.002705647144698453,
+          "occupancy_violations": 0,
+          "finite": true,
+          "persistence_rmse": 0.6695205686184014,
+          "formula_f32_rmse": 2.9266527406813376e-05,
+          "learned_single_macro_update_rmse": 0.0011761553657982332
+        }
+      },
+      "one_step_passed": true,
+      "rollout_passed": true,
+      "passed": true
+    }
+  ],
+  "numerical": [
+    {
+      "channel": "short_dt",
+      "family": "linear_lut_513_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 2.7063251708034208e-06,
+        "gate_max_error": 2.0053090302896148e-05,
+        "inf_rmse": 6.109460575329097e-06,
+        "log_tau_rmse": 9.367208641847338e-06,
+        "open_rmse": 2.7063251708034208e-06,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "short_dt",
+      "family": "linear_lut_513_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 2.4697053135679565e-07,
+        "gate_max_error": 1.6452369919761622e-06,
+        "inf_rmse": 1.0249580543080355e-07,
+        "log_tau_rmse": 2.687022972957188e-06,
+        "open_rmse": 2.4697053135679565e-07,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "short_dt",
+      "family": "linear_lut_513_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 2.794113484918304e-06,
+        "gate_max_error": 2.1825290214605442e-05,
+        "inf_rmse": 6.193461063507427e-06,
+        "log_tau_rmse": 9.75921208486879e-06,
+        "open_rmse": 2.794113484918304e-06,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "short_dt",
+      "family": "linear_lut_2049_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 1.7168023061387368e-07,
+        "gate_max_error": 1.2626286914618756e-06,
+        "inf_rmse": 3.7996799585700275e-07,
+        "log_tau_rmse": 5.872173218264936e-07,
+        "open_rmse": 1.7168023061387368e-07,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "short_dt",
+      "family": "linear_lut_2049_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 1.5677810351967517e-08,
+        "gate_max_error": 9.72489361261708e-08,
+        "inf_rmse": 6.420428358388507e-09,
+        "log_tau_rmse": 1.6810059664971762e-07,
+        "open_rmse": 1.5677810351967517e-08,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "short_dt",
+      "family": "linear_lut_2049_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 1.7944965509536387e-07,
+        "gate_max_error": 2.0583765796833298e-06,
+        "inf_rmse": 3.942558680114527e-07,
+        "log_tau_rmse": 6.37397834119057e-07,
+        "open_rmse": 1.7944965509536387e-07,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "family": "linear_lut_513_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 2.7063251708034208e-06,
+        "gate_max_error": 2.0053090302896148e-05,
+        "inf_rmse": 6.109460575329097e-06,
+        "log_tau_rmse": 9.367208641847338e-06,
+        "open_rmse": 2.7063251708034208e-06,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "family": "linear_lut_513_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 2.4697053135679565e-07,
+        "gate_max_error": 1.6452369919761622e-06,
+        "inf_rmse": 1.0249580543080355e-07,
+        "log_tau_rmse": 2.687022972957188e-06,
+        "open_rmse": 2.4697053135679565e-07,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "family": "linear_lut_513_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 2.794113484918304e-06,
+        "gate_max_error": 2.1825290214605442e-05,
+        "inf_rmse": 6.193461063507427e-06,
+        "log_tau_rmse": 9.75921208486879e-06,
+        "open_rmse": 2.794113484918304e-06,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "family": "linear_lut_2049_f64",
+      "domain": "in_support",
+      "metrics": {
+        "gate_rmse": 1.7168023061387368e-07,
+        "gate_max_error": 1.2626286914618756e-06,
+        "inf_rmse": 3.7996799585700275e-07,
+        "log_tau_rmse": 5.872173218264936e-07,
+        "open_rmse": 1.7168023061387368e-07,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "family": "linear_lut_2049_f64",
+      "domain": "negative_tail",
+      "metrics": {
+        "gate_rmse": 1.5677810351967517e-08,
+        "gate_max_error": 9.72489361261708e-08,
+        "inf_rmse": 6.420428358388507e-09,
+        "log_tau_rmse": 1.6810059664971762e-07,
+        "open_rmse": 1.5677810351967517e-08,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    },
+    {
+      "channel": "multiscale_dt",
+      "family": "linear_lut_2049_f64",
+      "domain": "state_extrema",
+      "metrics": {
+        "gate_rmse": 1.7944965509536387e-07,
+        "gate_max_error": 2.0583765796833298e-06,
+        "inf_rmse": 3.942558680114527e-07,
+        "log_tau_rmse": 6.37397834119057e-07,
+        "open_rmse": 1.7944965509536387e-07,
+        "occupancy_violations": 0,
+        "finite": true
+      },
+      "passed": true
+    }
+  ],
+  "environment": {
+    "python": "3.13.15",
+    "platform": "Linux-6.18.48+-x86_64-with-glibc2.39",
+    "cublas_workspace_config": ":4096:8",
+    "torch": "2.11.0+cu128",
+    "cuda_runtime": "12.8",
+    "cuda_available": true,
+    "gpu_name": "Tesla T4",
+    "gpu_count": 2
+  },
+  "training_and_evaluation_seconds": 243.82579403100004,
+  "scope": "Isolated slow h gate, held imposed voltage. Not entire Nap_Et2 m^3*h channel; no current, endogenous voltage, full-neuron, shared-weight or speedup claim. Short vs multiscale duration is intentional information intervention. Long labels exact only at held voltage; simulation rollout remains1ms.",
+  "gpu_benchmark": {
+    "measured": false,
+    "reason": "Task21 is a slow-state accuracy/identifiability experiment; no acceleration claim."
+  },
+  "shared_weights": false,
+  "full_neuron_speedup_claimed": false,
+  "slow_gate_passed": true,
+  "task22_authorized": true,
+  "whole_Nap_channel_tested": false,
+  "current_tested": false,
+  "rollout_dt_ms": 1,
+  "duration_support_is_training_factor": true
+}

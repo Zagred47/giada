@@ -263,14 +263,19 @@ Non si assume che una singola cella sia universale.
 
 - **Task 21 — Dinamica lenta** → Meccanismo con costante temporale molto più
   lunga.
-  **Preregistrata**: h isolato di Nap_Et2, tau circa350–2194ms; supporto
-  dt breve/multiscala × supervisione rate × capacità/budget.24modelli,
-  rollout1ms fino10s, floorfloat32 e persistence. Non intero canale Nap.
+  **Conclusa nel contratto isolato**: h di Nap_Et2, tau circa350–2194ms;
+  multiscala con/senza rate3/3seed, breve/transition0/3, breve/rate2/3.
+  Primario confermato con rollout1ms fino10s; floorfloat32 non spiega il
+  residuo learned. Non intero canale Nap.
   `task21_slow_gate_transfer.json`, `21_roadmap_slow_gate_transfer.ipynb`.
 
 - **Task 22 — Condivisione controllata** → Confrontare modelli distinti, trunk
   condiviso con head separate e modello condizionato dall'identità del
   meccanismo.
+  **Preregistrata**: confronto Ih/Im/Nap_h a V imposto; tre famiglie, width16/32,
+  tre seed, stessi dati e loss perbundle. Parametri non uguali, tradeoff
+  esplicito; controllo identità/head scambiate. SK_E2 escluso per non cambiare
+  contemporaneamente il tipo di ingresso. `22_roadmap_controlled_gate_sharing.ipynb`.
 
 La domanda centrale è:
 
