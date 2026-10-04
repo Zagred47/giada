@@ -1,0 +1,133 @@
+{
+  "schema_version": "giada-roadmap-task23-preregistration-v1",
+  "stage": "Task23 originale \u2014 prima composizione Ca_HVA + Ca_LVAst",
+  "require_cuda": true,
+  "channels": [
+    "Ca_HVA",
+    "Ca_LVAst"
+  ],
+  "families": [
+    "independent",
+    "shared_heads",
+    "conditioned"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "widths": [
+    16,
+    32
+  ],
+  "checkpoints": [
+    0,
+    1000,
+    5000,
+    15000,
+    30000
+  ],
+  "pool_size": 24000,
+  "batch_size": 1024,
+  "learning_rate": 0.003,
+  "inf_weight": 0.1,
+  "log_tau_weight": 0.1,
+  "voltage_domain_mv": [
+    -135,
+    75
+  ],
+  "dt_values_ms": [
+    0.025,
+    0.1,
+    0.5,
+    1,
+    5,
+    25,
+    100,
+    500,
+    1000
+  ],
+  "data_seeds": {
+    "fit": 230101,
+    "fit_regions": 230102,
+    "development": [
+      230201,
+      230202
+    ],
+    "minibatches": 230301,
+    "fresh": [
+      230401,
+      230402,
+      230403,
+      230404
+    ]
+  },
+  "gates": {
+    "gate_rmse": 0.001,
+    "m_rmse": 0.001,
+    "h_rmse": 0.001,
+    "gate_max_error": 0.01,
+    "inf_rmse": 0.002,
+    "log_tau_rmse": 0.02,
+    "open_rmse": 0.002,
+    "occupancy_violations": 0
+  },
+  "pair_gates": {
+    "individual_current_normalized_rmse": 0.002,
+    "total_current_normalized_rmse": 0.002,
+    "total_current_normalized_max": 0.01
+  },
+  "held_gates": {
+    "gate_rmse": 0.002,
+    "m_rmse": 0.002,
+    "h_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003,
+    "occupancy_violations": 0
+  },
+  "path_gates": {
+    "gate_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003,
+    "total_current_normalized_rmse": 0.003,
+    "occupancy_violations": 0
+  },
+  "rollout_horizons_steps": [
+    1,
+    10,
+    100,
+    1000,
+    10000
+  ],
+  "architecture": "2 channels with 2 explicit gates each. Independent: 2 separate 1-w-w-4 MLPs; shared_heads: 1-w-w trunk, 2 heads of width4; conditioned: voltage+2 onehot mechanism ids, 3-w-w-4. SiLU, sigmoid inf, exp(clamped logtau). Initial state and dt only enter analytic convex exponential solver. Analytic gbar*m^2*h*(V-Eca) retained.",
+  "fit_sampling": "50% uniform[-135,75],25%[-105,-65],25%[-45,5]; independent 4D initial states, common multiscale dt. Identical tuples/minibatches/mean gate-rate loss per independent seed bundle across families. Independent Adam moments and norm1 clipping per bundle. Shape-compatible weights paired, shapes differ otherwise.",
+  "selection": "Common width/checkpoint per family over3seeds by worst seed/domain normalized gate/rate/open/current error on development. Freeze all checkpoints and config before fresh/path evaluation. No fresh, OOD, path or held-rollout model selection.",
+  "current_semantics": "Diagnostic algebra on post-update m/h and supplied evaluation V. No embedded BREAKPOINT timing claim. Nominal gbar1e-5 S/cm2,Eca120mV; fixed 15-case panel gbar multipliers(0,1),(1,0),(.25,4),(1,1),(4,.25) crossed with Eca pairs(120,120),(40,160),(160,40). Current density mA/cm2. Total error normalized per tuple by sum absolute fully-open driving currents; individual by own driving. Zero driving yields zero current error, floor1e-12 protects ratio. Report raw individual and total RMSE too.",
+  "path_contract": "5 new imposed paths: constant, steps, ramp, sine, chirp,1000 substeps of.025ms (25ms). Use causal start V for each held substep; future path explicitly supplied experimentally. Paired formula discrete oracle at same dt; not sufficiency at1ms, not autonomous voltage. Long held-V rollout uses repeated1ms steps through10000ms.",
+  "promotion": "Independent pair must pass all required domains, both mechanisms, all3seeds, currents, held horizons and imposed paths. Sharing confirmed only if that reference passes and a shared family also passes3/3 with fewer selected parameters. Task24 preparation authorized by independent pair pass. Ca_LVA isolated native oracle is mandatory before any training.",
+  "hypotheses": {
+    "calva_oracle": "Independent canonical formula matches native Ca_LVAst rates, gate update and current algebra; preserve fixedqt and voltage shift.",
+    "composition": "Independent learned gates plus analytic current preserve both individual calcium currents and their sum within registered normalized limits.",
+    "sharing": "At least one shared pair passes every criterion with fewer parameters than independent reference. Task22 sharing failure motivates strict independent control.",
+    "identity": "Swapping HVA/LVA routing or identity increases median in-support gateRMSE >=10fold acrossseeds; diagnostic, not promotion gate.",
+    "scaling": "Width32 vs16 and30k vs15k provide paired development contrasts; >=10% score improvement supports corresponding capacity/budget benefit. Never infer universal scaling from one selection.",
+    "path_transfer": "Frozen candidates stay bounded and accurate on controlled imposed paths and repeated held1ms updates. Autonomous voltage and physiologic embedded transfer remain untested."
+  },
+  "limits": "First two-calcium-channel composition at imposed V, imposed Eca, explicit m/h. No CaDynamics, endogenous V, synapses, axial coupling, whole-neuron or GPU speedup claim. Widths matched, parameter counts differ; shared output is rate prediction, currents remain analytic. Ca_HVA retrained with new paired data for fair comparison, not silently reusing a legacy decoder.",
+  "required_artifacts": [
+    "native_audit.json",
+    "code_provenance.json",
+    "run_contract.json",
+    "equivalence_preflight.json",
+    "development_ladder.json",
+    "paired_architecture_contrasts.json",
+    "selection_freeze.json",
+    "fresh_metrics.json",
+    "final_report.json",
+    "checkpoint_*.pt",
+    "fit_development.npz",
+    "fresh.npz",
+    "process_status.json",
+    "process.log"
+  ]
+}

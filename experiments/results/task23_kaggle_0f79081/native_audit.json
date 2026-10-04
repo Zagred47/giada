@@ -1,0 +1,31 @@
+{
+  "valid": true,
+  "rows": [
+    {
+      "channel": "Ca_HVA",
+      "rate_scaled_max_error": 5.584657478675118e-13,
+      "gate_max_error": 2.283728761653947e-13,
+      "voltage_drift_mv": 0.0,
+      "current_max_error_ma_cm2": 0.0
+    },
+    {
+      "channel": "Ca_LVAst",
+      "rate_scaled_max_error": 6.776085537924084e-21,
+      "gate_max_error": 3.3306690738754696e-16,
+      "voltage_drift_mv": 0.0,
+      "current_max_error_ma_cm2": 0.0
+    }
+  ],
+  "source_hashes": {
+    "Ca_HVA": {
+      "canonical_mod_sha256": "db310c0746fc0f86e27101cd406feab92d75a1dddf2f2d7259480cd50e5de6df",
+      "instrumented_mod_sha256": "460dd9e039b8cc5bf7754a431a6155b485ea4ab9a775edcfaaac73e65c9276bc"
+    },
+    "Ca_LVAst": {
+      "canonical_mod_sha256": "94e1dae140da644b71fb7c64cb549f76851c8f27860978f4474a16e5efdf99dc",
+      "instrumented_mod_sha256": "75c32731407e008d62cd2d562196f75045c3a275bbc774efbfecdcad3c1f01c2"
+    }
+  },
+  "temperature_policy": "Ca_LVAst canonical qt=2.3^1.3 and V+10 restored; Ca_HVA unchanged.",
+  "current_semantics": "fcurrent algebra at supplied states, not a claim about embedded BREAKPOINT sampling"
+}

@@ -1,0 +1,32 @@
+{
+  "valid": true,
+  "scope": "CPU pipeline smoke only, not a scientific result or promotion",
+  "checkpoints": {
+    "independent": {
+      "family": "independent",
+      "width": 16,
+      "step": 1,
+      "score": 479.0457520847104,
+      "checkpoint": "checkpoint_independent_w16_step1.pt"
+    },
+    "shared_heads": {
+      "family": "shared_heads",
+      "width": 16,
+      "step": 1,
+      "score": 479.0757591157968,
+      "checkpoint": "checkpoint_shared_heads_w16_step1.pt"
+    },
+    "conditioned": {
+      "family": "conditioned",
+      "width": 16,
+      "step": 1,
+      "score": 479.1191362197335,
+      "checkpoint": "checkpoint_conditioned_w16_step1.pt"
+    }
+  },
+  "fresh_used_for_selection": false,
+  "scientific_claim_authorized": false,
+  "learned_row_count": 9,
+  "test_suite": "tests/test_task24_sodium_family.py + tests/test_task23_calcium_pair.py: 8 passed",
+  "native_rates_and_updates_passed": true
+}

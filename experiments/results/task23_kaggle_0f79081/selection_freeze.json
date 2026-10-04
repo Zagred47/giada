@@ -1,0 +1,193 @@
+{
+  "selection": {
+    "independent": {
+      "family": "independent",
+      "width": 16,
+      "step": 30000,
+      "score": 0.7197618477466942,
+      "checkpoint": "checkpoint_independent_w16_step30000.pt"
+    },
+    "shared_heads": {
+      "family": "shared_heads",
+      "width": 16,
+      "step": 30000,
+      "score": 0.7293797541013776,
+      "checkpoint": "checkpoint_shared_heads_w16_step30000.pt"
+    },
+    "conditioned": {
+      "family": "conditioned",
+      "width": 16,
+      "step": 30000,
+      "score": 1.1957524703033107,
+      "checkpoint": "checkpoint_conditioned_w16_step30000.pt"
+    }
+  },
+  "fresh_accessed": false,
+  "config": {
+    "schema_version": "giada-roadmap-task23-preregistration-v1",
+    "stage": "Task23 originale \u2014 prima composizione Ca_HVA + Ca_LVAst",
+    "require_cuda": true,
+    "channels": [
+      "Ca_HVA",
+      "Ca_LVAst"
+    ],
+    "families": [
+      "independent",
+      "shared_heads",
+      "conditioned"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "widths": [
+      16,
+      32
+    ],
+    "checkpoints": [
+      0,
+      1000,
+      5000,
+      15000,
+      30000
+    ],
+    "pool_size": 24000,
+    "batch_size": 1024,
+    "learning_rate": 0.003,
+    "inf_weight": 0.1,
+    "log_tau_weight": 0.1,
+    "voltage_domain_mv": [
+      -135,
+      75
+    ],
+    "dt_values_ms": [
+      0.025,
+      0.1,
+      0.5,
+      1,
+      5,
+      25,
+      100,
+      500,
+      1000
+    ],
+    "data_seeds": {
+      "fit": 230101,
+      "fit_regions": 230102,
+      "development": [
+        230201,
+        230202
+      ],
+      "minibatches": 230301,
+      "fresh": [
+        230401,
+        230402,
+        230403,
+        230404
+      ]
+    },
+    "gates": {
+      "gate_rmse": 0.001,
+      "m_rmse": 0.001,
+      "h_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "open_rmse": 0.002,
+      "occupancy_violations": 0
+    },
+    "pair_gates": {
+      "individual_current_normalized_rmse": 0.002,
+      "total_current_normalized_rmse": 0.002,
+      "total_current_normalized_max": 0.01
+    },
+    "held_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "path_gates": {
+      "gate_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "total_current_normalized_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "rollout_horizons_steps": [
+      1,
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "architecture": "2 channels with 2 explicit gates each. Independent: 2 separate 1-w-w-4 MLPs; shared_heads: 1-w-w trunk, 2 heads of width4; conditioned: voltage+2 onehot mechanism ids, 3-w-w-4. SiLU, sigmoid inf, exp(clamped logtau). Initial state and dt only enter analytic convex exponential solver. Analytic gbar*m^2*h*(V-Eca) retained.",
+    "fit_sampling": "50% uniform[-135,75],25%[-105,-65],25%[-45,5]; independent 4D initial states, common multiscale dt. Identical tuples/minibatches/mean gate-rate loss per independent seed bundle across families. Independent Adam moments and norm1 clipping per bundle. Shape-compatible weights paired, shapes differ otherwise.",
+    "selection": "Common width/checkpoint per family over3seeds by worst seed/domain normalized gate/rate/open/current error on development. Freeze all checkpoints and config before fresh/path evaluation. No fresh, OOD, path or held-rollout model selection.",
+    "current_semantics": "Diagnostic algebra on post-update m/h and supplied evaluation V. No embedded BREAKPOINT timing claim. Nominal gbar1e-5 S/cm2,Eca120mV; fixed 15-case panel gbar multipliers(0,1),(1,0),(.25,4),(1,1),(4,.25) crossed with Eca pairs(120,120),(40,160),(160,40). Current density mA/cm2. Total error normalized per tuple by sum absolute fully-open driving currents; individual by own driving. Zero driving yields zero current error, floor1e-12 protects ratio. Report raw individual and total RMSE too.",
+    "path_contract": "5 new imposed paths: constant, steps, ramp, sine, chirp,1000 substeps of.025ms (25ms). Use causal start V for each held substep; future path explicitly supplied experimentally. Paired formula discrete oracle at same dt; not sufficiency at1ms, not autonomous voltage. Long held-V rollout uses repeated1ms steps through10000ms.",
+    "promotion": "Independent pair must pass all required domains, both mechanisms, all3seeds, currents, held horizons and imposed paths. Sharing confirmed only if that reference passes and a shared family also passes3/3 with fewer selected parameters. Task24 preparation authorized by independent pair pass. Ca_LVA isolated native oracle is mandatory before any training.",
+    "hypotheses": {
+      "calva_oracle": "Independent canonical formula matches native Ca_LVAst rates, gate update and current algebra; preserve fixedqt and voltage shift.",
+      "composition": "Independent learned gates plus analytic current preserve both individual calcium currents and their sum within registered normalized limits.",
+      "sharing": "At least one shared pair passes every criterion with fewer parameters than independent reference. Task22 sharing failure motivates strict independent control.",
+      "identity": "Swapping HVA/LVA routing or identity increases median in-support gateRMSE >=10fold acrossseeds; diagnostic, not promotion gate.",
+      "scaling": "Width32 vs16 and30k vs15k provide paired development contrasts; >=10% score improvement supports corresponding capacity/budget benefit. Never infer universal scaling from one selection.",
+      "path_transfer": "Frozen candidates stay bounded and accurate on controlled imposed paths and repeated held1ms updates. Autonomous voltage and physiologic embedded transfer remain untested."
+    },
+    "limits": "First two-calcium-channel composition at imposed V, imposed Eca, explicit m/h. No CaDynamics, endogenous V, synapses, axial coupling, whole-neuron or GPU speedup claim. Widths matched, parameter counts differ; shared output is rate prediction, currents remain analytic. Ca_HVA retrained with new paired data for fair comparison, not silently reusing a legacy decoder.",
+    "required_artifacts": [
+      "native_audit.json",
+      "code_provenance.json",
+      "run_contract.json",
+      "equivalence_preflight.json",
+      "development_ladder.json",
+      "paired_architecture_contrasts.json",
+      "selection_freeze.json",
+      "fresh_metrics.json",
+      "final_report.json",
+      "checkpoint_*.pt",
+      "fit_development.npz",
+      "fresh.npz",
+      "process_status.json",
+      "process.log"
+    ]
+  },
+  "code_revision": "0f79081c3cd1d49dcee94187e0ab95344c4c60a0",
+  "checkpoint_hashes": {
+    "checkpoint_conditioned_w16_step5000.pt": "88fe25d45c663463b2f578fb4da17bfaa18e2d9307e70812ac44ef8d10a17761",
+    "checkpoint_conditioned_w32_step30000.pt": "3446da4def9468d7d8b679d359a8c7f26da78a77c4e747ea04b7d7e0f082c3b6",
+    "checkpoint_shared_heads_w32_step1000.pt": "997737b20560e492da08f504770fddc42ad40eb8d7e9205ad42160aa46d66f05",
+    "checkpoint_independent_w32_step0.pt": "a3b9004b99f2ed3a4efa507051d6e6bab55b8b9476703888caa556cae2894c0a",
+    "checkpoint_shared_heads_w32_step30000.pt": "2b703bfd9515c7e98903915ae9eebd79fc3b46968356be86010c7cdc246100e9",
+    "checkpoint_conditioned_w16_step30000.pt": "49868b5aa8fba3bb9aec803414ecafe597e5f8f2975585120cc4ecb3e63a4fb0",
+    "checkpoint_independent_w16_step30000.pt": "f69ec835b9513c35f32dc9f66e6befb3fe2ea4825367ce93be484a8954b548f3",
+    "checkpoint_independent_w32_step5000.pt": "1ed8df7919313af943f0bf2624239a878aec5b519ebe841d83e73a8fbb702554",
+    "checkpoint_conditioned_w32_step15000.pt": "596ea588201dc2aafd1c31f85f7d38b2a1675e353fa6d44f66e531e745e96676",
+    "checkpoint_conditioned_w32_step1000.pt": "1251548e24d87dba7545d55236fc56a2640fa3dc5a6f4b3916dae256877b7590",
+    "checkpoint_conditioned_w16_step15000.pt": "ccda6da63b1d28ddf44e78a0950f3e415f28f5df6a702f04ed8fc6909fcd5cf1",
+    "checkpoint_conditioned_w32_step5000.pt": "f93e3f3500bb499870b978a311fc359217d4f35231f07be626c98d22d319ac13",
+    "checkpoint_shared_heads_w16_step15000.pt": "a01672859f3679134a3ed8a4b0229e11804abedfe48d97ced5d44eb74c024017",
+    "checkpoint_conditioned_w16_step0.pt": "810b233dd0dc05c00a38dd4999d5eb5c2b92a948d7d00f79b08d7431a649996e",
+    "checkpoint_shared_heads_w16_step5000.pt": "3467b3f7d3649dd11a186f1246f681880437d6ca63d2cb1d2e9e06e466540dfa",
+    "checkpoint_shared_heads_w16_step1000.pt": "3b8d8bb94eb32b637dc7b2da6876498ebc0f92eddaea3c5076d3b6036bff0249",
+    "checkpoint_shared_heads_w16_step30000.pt": "565dceb95c396626d78960ab27b9481a6c2cbbe9179e0f12dd8991b4800c09ef",
+    "checkpoint_independent_w32_step15000.pt": "c6ff2cdc75fb64adb6750b833081c14fe6bdf989ef715095ff490fe82bc08839",
+    "checkpoint_independent_w16_step15000.pt": "c7364285e773df393f3a28682ab8f337d5e8bc0902ff5ec8071b770910cb98de",
+    "checkpoint_independent_w16_step5000.pt": "9eff191cd1d4dca5d11d69db54ecde9567ac879f2db5b6d419eb3b1b1e3e8e49",
+    "checkpoint_independent_w16_step1000.pt": "6c86d1079591d058f3b129e73c64369faa7a361d954c4b72540de5bf70b20cd8",
+    "checkpoint_independent_w32_step1000.pt": "61f030600e6462bcaf1517decf3025519543aa3e34632dedfaa264870165d959",
+    "checkpoint_independent_w32_step30000.pt": "90170452f209fc835543b67b9f0015441e739e6d08db97d8acd1d6b9492211ca",
+    "checkpoint_independent_w16_step0.pt": "dd0a576cc94893d58209e7b11d5d3b4dc72cebcaf7be5fcd7724fa66406bb532",
+    "checkpoint_conditioned_w16_step1000.pt": "786ba2d06080d1ba2b80d57c748003fd61b20f7125ffc8e9fccb168f442ffc0d",
+    "checkpoint_shared_heads_w16_step0.pt": "6381cacd22fc13a47af2a7f5fcf9a75775132b0bd3ea83348b1976fc082e71ad",
+    "checkpoint_shared_heads_w32_step0.pt": "1f8d844b3f018ba908859caa967a94df41ab7311eda45ab5533a6dc0417519c6",
+    "checkpoint_conditioned_w32_step0.pt": "e121ee2bcd37d73b067f77945db467d42537b2cf7be9d64907d0ce78ec05b60d",
+    "checkpoint_shared_heads_w32_step5000.pt": "0cc0874c62a8b36faba887e3aaa49a4cb61dbcc663c0ac114aff1f0e4a921637",
+    "checkpoint_shared_heads_w32_step15000.pt": "e96c8c6da9df55c973e3a870961afad8645d53b6838143b3b6f39d8a5fd0537e"
+  },
+  "freeze_sha256": "eec5ad557af8c2c33c0efa3c19fa24959c50038a2245e84991d5abeaba3100a9"
+}

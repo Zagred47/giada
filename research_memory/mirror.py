@@ -160,6 +160,8 @@ class ClosingConnection(sqlite3.Connection):
 class Mirror:
     def __init__(self, path=DEFAULT_DB, contract=None):
         self.path = Path(path)
+        from .packed_database import restore_if_missing
+        restore_if_missing(self.path)
         self.contract = contract or Contract()
 
     def connect(self):

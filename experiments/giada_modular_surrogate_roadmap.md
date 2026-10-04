@@ -272,10 +272,12 @@ Non si assume che una singola cella sia universale.
 - **Task 22 — Condivisione controllata** → Confrontare modelli distinti, trunk
   condiviso con head separate e modello condizionato dall'identità del
   meccanismo.
-  **Preregistrata**: confronto Ih/Im/Nap_h a V imposto; tre famiglie, width16/32,
+  **Conclusa**: confronto Ih/Im/Nap_h a V imposto; tre famiglie, width16/32,
   tre seed, stessi dati e loss perbundle. Parametri non uguali, tradeoff
   esplicito; controllo identità/head scambiate. SK_E2 escluso per non cambiare
   contemporaneamente il tipo di ingresso. `22_roadmap_controlled_gate_sharing.ipynb`.
+  Riferimento indipendente confermato3/3, condivisione non confermata nel budget
+  registrato. Risultati verificati: `experiments/results/task22_kaggle_eb494b8/`.
 
 La domanda centrale è:
 
@@ -385,8 +387,18 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   Audit isolato Ca-LVA obbligatorio, riferimento indipendente e due forme di
   condivisione; gate e correnti individuali/sommate sotto V imposto. Nessuna
   autorizzazione implicita a CaDynamics o voltaggio autonomo.
+  **Conclusa (0f79081)**: indipendenti e shared-heads passano3/3; conditioned
+  fallisce la congiunzione. Shared-heads usa440 vs744parametri (-40.86%), senza
+  claim di speedup misurato. 10094 osservazioni scalari registrate; artefatti
+  verificati in `experiments/results/task23_kaggle_0f79081/`.
 
 - **Task 24 — Famiglia del sodio** → Ricerca di compute condiviso.
+  **Preregistrata**: `experiments/task24_sodium_family_composition.json` e
+  `notebooks/24_roadmap_sodium_family_composition.ipynb`. NaTa_t/NaTs2_t/Nap_Et2,
+  tutti6gate, controllo indipendente, shared-heads e conditioned; due width,
+  tre seed e ladder appaiata. Audit nativo preliminare di tutti3canali, metriche
+  per canale e correnti, percorsi25/2500ms e held-V10s. Latenza frozen misurata
+  come diagnostica, separata dalla selezione. Nessun V autonomo.
 
 - **Task 25 — Meccanismi eterogenei** → Combinare cinetiche differenti.
 

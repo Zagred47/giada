@@ -4,7 +4,15 @@ Mirror della [base Airtable](https://airtable.com/app9dZ7ghujkFJIo5), nel worksp
 
 ## Già utilizzabile
 
-Il file `data/research_memory.sqlite` è il database reale, incluso in Git. Non è uno stub.
+Il file `data/research_memory.sqlite` è il database reale operativo. Non è uno stub.
+Git conserva la sua copia lossless `data/research_memory.sqlite.gz` e il relativo
+manifest SHA-256, per evitare il limite di 100 MiB per singolo file. Il mirror
+ricostruisce automaticamente il DB verificato solo se il file operativo manca;
+non sovrascrive mai un database locale esistente. Dopo un pull su una checkout
+già attiva, riconciliare esplicitamente eventuali differenze: non sostituire il DB.
+Per versionare una modifica: verificare il mirror, esportare lo snapshot JSON,
+poi eseguire `python -m research_memory.packed_database` e committare gzip,
+manifest e snapshot insieme. La compressione non rimuove record né relazioni.
 Richiede soltanto Python >= 3.10 con SQLite/JSON1, senza pip, server o servizi persistenti.
 Su questa macchina il runtime Python di Codex è disponibile; il launcher PowerShell lo risolve automaticamente.
 
@@ -22,7 +30,8 @@ python -m research_memory query 'SELECT * FROM "06 · Specifiche dei modelli"'
 python -m unittest discover -s tests -p test_research_memory.py -v
 ```
 
-La base rimane vuota: nessun esperimento o esempio è stato inventato/importato. I test usano database temporanei separati e non scrivono su Airtable.
+La base contiene la memoria scientifica GIADA; nessun esempio dimostrativo va
+aggiunto. I test usano database temporanei separati e non scrivono su Airtable.
 
 ## Identità logica, rappresentazione relazionale
 
@@ -149,7 +158,9 @@ Non serve un token per SQL, test, import/export o workflow via connettore. Le cr
 
 ## Git e recupero
 
-- Database SQLite e snapshot JSON vanno aggiornati nello stesso commit; il JSON fornisce diff ispezionabili.
+- Snapshot lossless SQLite (gzip + manifest SHA-256) e snapshot JSON vanno
+  aggiornati nello stesso commit; il JSON fornisce diff ispezionabili. Il file
+  SQLite operativo resta locale, preservato anche quando Git ne rimuove il tracking.
 - Non fare merge binari del DB: in caso di conflitto, riconciliare la outbox e rigenerare/importare lo snapshot corrente verificato, preservando gli intenti pendenti.
 - Nessun polling, automazione o sync in background è stato attivato. Modifiche manuali su Airtable diventano locali al prossimo pull/import.
 - Non dichiarare «scritto su entrambi» se `pending_writes` è diverso da zero.
