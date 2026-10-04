@@ -28,3 +28,18 @@ def test_teacher_targets_and_rollout():
     model=sharing.model_factory(torch,16,'shared_heads',[17])
     out=sharing.rollout(model,np.c_[values[:4,:2],np.ones(4)],[17],torch,'cpu',[1,10])
     assert set(out[0])==set(sharing.CHANNELS)
+
+
+def test_native_subprocess_sets_repository_cwd(tmp_path,monkeypatch):
+    import json
+    import subprocess
+    from pathlib import Path
+    calls=[]
+    def fake_run(command,**kwargs):
+        calls.append(kwargs['cwd'])
+        for label in ('single','slow'):
+            sub=tmp_path/('oracle_'+label)
+            if sub.is_dir():(sub/'native_audit.json').write_text(json.dumps({'valid':True}))
+    monkeypatch.setattr(subprocess,'run',fake_run)
+    assert sharing.native_audit('teacher',tmp_path)['valid']
+    assert calls==[Path(sharing.__file__).resolve().parents[2]]*2

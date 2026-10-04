@@ -29,6 +29,18 @@ def main():
             'Nome': 'Task22 Kaggle ' + path.name, 'Tipo': 'Report', 'Percorso': path.relative_to(ROOT.parent).as_posix(),
             'SHA-256': hashlib.sha256(path.read_bytes()).hexdigest(), 'Dimensione byte': path.stat().st_size, 'Versione': 'v1'})['record_id'])
     block = mirror.query("SELECT record_id FROM v_records WHERE stable_code='blocks-giada-roadmap-task22-fit-v1'")['rows'][0]['record_id']
+    if manifest.get('previous_attempt'):
+        prior=manifest['previous_attempt']
+        prior_root=ROOT.parent/'experiments/results'/('task22_kaggle_'+prior['code_revision'][:7])
+        old_artifacts=[]
+        for path in prior_root.iterdir():
+            old_artifacts.append(mirror.local_upsert('artifacts',{'Codice stabile':'artifacts-giada-roadmap-task22-attempt1-'+path.stem+'-v1',
+                'Nome':'Task22 first attempt '+path.name,'Tipo':'Report','Percorso':path.relative_to(ROOT.parent).as_posix(),
+                'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size,'Versione':'v1'})['record_id'])
+        mirror.local_upsert('runs',{'Codice stabile':'runs-giada-roadmap-task22-kaggle-attempt1-v1','Nome':'Task22 attempt1 native import failure',
+            'Stato':'Fallita','Blocco':[block],'Hardware e ambiente':'Kaggle T4','Artefatti prodotti':old_artifacts,
+            'Configurazione effettiva':'Version1, commit'+prior['code_revision'],
+            'Validità tecnica':'Execution failure before training, not scientific NO-GO: subprocess python -c did not inherit supervisor sys.path. Fixed repository cwd; native external-cwd replay passed.'})
     mirror.local_upsert('runs', {'Codice stabile': 'runs-giada-roadmap-task22-kaggle-orchestration-v1',
         'Nome': 'Task22 Kaggle MCP — 18sistemi', 'Stato': 'In corso', 'Blocco': [block], 'Seed': '17,29,43; data220xxx',
         'Hardware e ambiente': 'Kaggle ' + manifest['machine_shape'], 'Configurazione effettiva': 'Commit ' + manifest['code_revision'] + ';18sistemi;30ksteps.',
