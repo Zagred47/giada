@@ -246,8 +246,14 @@ Non si assume che una singola cella sia universale.
 
 - **Task 18 — Famiglia HH standard** → Ca-HVA, NaTa e un meccanismo del
   potassio con gate voltage-dependent.
+  **Conclusa nel contratto isolato**: Ca/Na superati nella18; K_Pst confermato
+  nella18d (feature cuspide,3/3seed, tutti domini richiesti). OOD e sostituzione
+  embedded di Na/K restano fuori da questa promozione.
 
 - **Task 19 — Gate singolo** → `Ih`, `Im` o meccanismo equivalente.
+  **Preregistrata (2026-10-04)** in `task19_single_gate_transfer.json`:
+  Ih e Im insieme,24modelli indipendenti, rate supervision/capacità/budget,
+  LUT, stati estremi e rollout a V costante; `19_roadmap_single_gate_transfer.ipynb`.
 
 - **Task 20 — Dipendenza dal calcio** → `SK_E2`, separato dai gate puramente
   voltage-dependent.

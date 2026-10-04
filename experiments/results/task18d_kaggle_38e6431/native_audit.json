@@ -1,0 +1,38 @@
+{
+  "valid": true,
+  "rows": [
+    {
+      "channel": "Ca_HVA",
+      "rate_scaled_max_error": 5.584657478675118e-13,
+      "gate_max_error": 1.5154544286133387e-13,
+      "voltage_drift_mv": 0.0
+    },
+    {
+      "channel": "NaTa_t",
+      "rate_scaled_max_error": 1.957281006740659e-12,
+      "gate_max_error": 1.3209988658502425e-12,
+      "voltage_drift_mv": 0.0
+    },
+    {
+      "channel": "K_Pst",
+      "rate_scaled_max_error": 2.590568019201661e-16,
+      "gate_max_error": 2.220446049250313e-16,
+      "voltage_drift_mv": 0.0
+    }
+  ],
+  "source_hashes": {
+    "Ca_HVA": {
+      "canonical_mod_sha256": "db310c0746fc0f86e27101cd406feab92d75a1dddf2f2d7259480cd50e5de6df",
+      "instrumented_mod_sha256": "460dd9e039b8cc5bf7754a431a6155b485ea4ab9a775edcfaaac73e65c9276bc"
+    },
+    "NaTa_t": {
+      "canonical_mod_sha256": "91f6c02eabee637cadd7014d83782388ede064f06c60ea370047f2a19e5e7476",
+      "instrumented_mod_sha256": "c09b5962c8942ed5adbac10a847018184e620e55769c812d91daf951f6850273"
+    },
+    "K_Pst": {
+      "canonical_mod_sha256": "41ef49ec8f490210f10c647753e29ec6461e8dffcae8b593a110546a9e9af546",
+      "instrumented_mod_sha256": "c812f5f1989f60a1cd90519babf843bc7376f299a3f621492622d4980013ba3f"
+    }
+  },
+  "temperature_policy": "canonical fixed 34C qt for Na/K; Ca_HVA unchanged"
+}
