@@ -5,6 +5,16 @@ from pathlib import Path
 from research_memory.validated_batch import ValidatedBatchMirror
 
 class ValidatedBatchTests(unittest.TestCase):
+    def test_id_cache_includes_pending_rows(self):
+        m=ValidatedBatchMirror()
+        self.assertFalse(m._validated_batch_id_exists(m.staged,'recPendingTest'))
+        m._validated_batch_id_added('recPendingTest')
+        self.assertTrue(m._validated_batch_id_exists(m.staged,'recPendingTest'))
+        for rows in m.staged['tables'].values():
+            if rows:
+                self.assertTrue(m._validated_batch_id_exists(m.staged,rows[0]['id']))
+                break
+
     def test_cached_row_matches_original_without_aliasing(self):
         m=ValidatedBatchMirror()
         for key in m.contract.tables:

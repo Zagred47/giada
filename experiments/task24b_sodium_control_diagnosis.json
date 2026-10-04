@@ -1,0 +1,27 @@
+{
+  "schema_version": "giada-task24b-preregistration-v1",
+  "parent": "Task24 originale; diagnostic subtask, not Task25",
+  "source_result": "experiments/results/task24_kaggle_4fad2c6",
+  "arms": ["constant_bundle", "constant_channel", "decay_bundle", "decay_channel"],
+  "widths": [16, 32],
+  "seeds": [17, 29, 43],
+  "checkpoints": [0, 5000, 15000, 30000, 60000],
+  "decay_start": 15000,
+  "learning_rate_final": 0.0001,
+  "held_development_seed": 241205,
+  "held_fresh_seed": 241405,
+  "fresh_seeds": [241401, 241402, 241403, 241404],
+  "hypotheses": {
+    "annealing": "Late cosine learning-rate decay improves worst-seed development score >=10% at fixed clipping,width,budget; confirmation requires 3/3 fresh conjunction unchanged thresholds.",
+    "clipping": "Per-channel gradient clipping removes coupling in independent models and improves worst-seed development score >=10% vs bundle clipping at fixed schedule,width,budget. An effect is not assumed: record clipping frequency and channel norms.",
+    "budget_capacity": "60k vs30k andwidth32vs16 paired contrasts isolate budget andcapacity; report heterogeneity without universal scaling claims.",
+    "rate_attribution": "Frozen independent Nap_h long-held error can be decomposed by analytic inf replacement,analytic tau replacement,andboth; diagnostic oracle probes never eligible for selection.",
+    "precision": "FP64 repeated held-V updates reduce the same frozen-model error >=50% if FP32 accumulation dominates; separate exact-rate FP32 solver floor from learned-rate error.",
+    "selection": "Adding disjoint development long-held probes to checkpoint selection can reveal a one-step/long-held mismatch. Compare original one-step rule and held-aware rule on development only; primary confirmation uses registered held-aware rule."
+  },
+  "selection": "One common width/checkpoint perarm minimizes worst seed over original development one-step gates and analytic composed held-V gate/current metrics at1000/10000ms on new developmentV. Composed semigroup probe labelled explicitly,not iterative rollout. Freeze before new fresh,iterativeheld andpaths. Original Task24 fresh is diagnosis-only and never used in training/selection.",
+  "training": "From scratch, same original Task24 fit tuples andminibatch sequence; common initialization. 4arms x2width x3seeds=24systems. Only LR schedule andclipping scope change. Original bundle arm exactly reproduces training semantics through30k. All other shared models frozen from Task24,no retraining.",
+  "promotion": "Original gate/current/path/held thresholds unchanged. One preregistered primary repair arm decay_channel mustpass3/3 onnewfresh toauthorize Task25; other arms diagnostic, not post-hoc alternative promotion. Frozen shared-heads/conditioned rechecked onthe same newfresh/held/path panels; sharing claim additionally requires repairedindependent reference andfewerparameters. Original Task24NO-GO remains unchanged.",
+  "limits": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+  "require_cuda": true
+}

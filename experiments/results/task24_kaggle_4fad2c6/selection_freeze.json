@@ -1,0 +1,210 @@
+{
+  "selection": {
+    "independent": {
+      "family": "independent",
+      "width": 16,
+      "step": 15000,
+      "score": 1.3103062617993713,
+      "checkpoint": "checkpoint_independent_w16_step15000.pt"
+    },
+    "shared_heads": {
+      "family": "shared_heads",
+      "width": 32,
+      "step": 15000,
+      "score": 0.7073611986971734,
+      "checkpoint": "checkpoint_shared_heads_w32_step15000.pt"
+    },
+    "conditioned": {
+      "family": "conditioned",
+      "width": 16,
+      "step": 30000,
+      "score": 0.9476102389975886,
+      "checkpoint": "checkpoint_conditioned_w16_step30000.pt"
+    }
+  },
+  "fresh_accessed": false,
+  "config": {
+    "schema_version": "giada-roadmap-task24-preregistration-v1",
+    "stage": "Task24 originale \u2014 famiglia sodio NaTa_t + NaTs2_t + Nap_Et2",
+    "require_cuda": true,
+    "channels": [
+      "NaTa_t",
+      "NaTs2_t",
+      "Nap_Et2"
+    ],
+    "families": [
+      "independent",
+      "shared_heads",
+      "conditioned"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "widths": [
+      16,
+      32
+    ],
+    "checkpoints": [
+      0,
+      1000,
+      5000,
+      15000,
+      30000
+    ],
+    "pool_size": 24000,
+    "batch_size": 1024,
+    "learning_rate": 0.003,
+    "inf_weight": 0.1,
+    "log_tau_weight": 0.1,
+    "voltage_domain_mv": [
+      -135,
+      75
+    ],
+    "dt_values_ms": [
+      0.025,
+      0.1,
+      0.5,
+      1,
+      5,
+      25,
+      100,
+      500,
+      1000,
+      5000,
+      10000
+    ],
+    "data_seeds": {
+      "fit": 240101,
+      "fit_regions": 240102,
+      "development": [
+        240201,
+        240202
+      ],
+      "minibatches": 240301,
+      "fresh": [
+        240401,
+        240402,
+        240403,
+        240404
+      ]
+    },
+    "gates": {
+      "gate_rmse": 0.001,
+      "m_rmse": 0.001,
+      "h_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "open_rmse": 0.002,
+      "occupancy_violations": 0
+    },
+    "pair_gates": {
+      "individual_current_normalized_rmse": 0.002,
+      "total_current_normalized_rmse": 0.002,
+      "total_current_normalized_max": 0.01
+    },
+    "held_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "path_gates": {
+      "gate_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "total_current_normalized_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "path_channel_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003
+    },
+    "path_dt_ms": {
+      "fast_25ms": 0.025,
+      "slow_2500ms": 2.5
+    },
+    "rollout_horizons_steps": [
+      1,
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "architecture": "3channels with2 explicit gates each. Independent:3 separate1-w-w-4 MLPs; shared_heads:1-w-w trunk,3 separate width4 heads; conditioned:V+3onehot ids,4-w-w-4. SiLU,sigmoid inf,exp(clamped logtau). State/dt only enter deterministic exponential convex update. Current remains analytic gbar*m^3*h*(V-Ena). All6gates learned,including fullNap m+h (Task21 onlycovered Nap_h).",
+    "fit_sampling": "50% uniform[-135,75],25%[-75,-25],25%[-65,-35]; independent6D states andcommon11multiscale dt. Identical tuples/minibatches/gate-rate loss acrossfamilies. Adam moments and norm1clipping independent perseed bundle. Shape-compatible weights paired; unequal parametercounts reported.",
+    "selection": "Commonwidth/checkpoint perfamily over3seeds byworst seed/domain normalized gate/rate/open/current error ondevelopment. Complete64state-extrema grid ondistinct61Vnodes; fresh121different nodespluscanonical singularseams. Freeze allcheckpoint hashes/config beforefresh,held/path,swappedidentity,OOD andtiming. No test-driven threshold changes.",
+    "current_semantics": "Diagnostic algebra atpost-update gates andsupplied evaluationV,not embedded BREAKPOINT timing. Nominalgbar1e-5S/cm2,Ena55mV. Fixed18-case panel: multipliers(0,1,1),(1,0,1),(1,1,0),(.25,1,4),(1,1,1),(4,1,.25),crossed withEna(55,55,55),(25,55,85),(85,55,25). Normalize individualby ownfully-open absdrive,totalby sumabsdrive,not teacheropening/netcurrent. Zero drive->zeroerror;1e-12floor. Raw currentdensity mA/cm2 also reported; no cancellation claim basedontotal alone.",
+    "path_contract": "5controlled imposedV paths(constant,steps,ramp,sine,chirp),1000substeps at.025ms(25ms) andtime-stretched2.5ms(2500ms) withidentical Vsequence. Discreteformula oracle samesupplied V/dt;futurepath experimentallyimposed,notinferred. Perchannel andaggregate limitsconjunctive. HeldV repeated1ms through10000ms resolvesslowNap_h. No sufficiencyat1ms/autonomousV claim.",
+    "promotion": "Independent3channel bundle passesallregistered fresh in-support domains,everymechanism/every3seed,individual+total currents,allheldhorizons andbothimposedpathpanels. Sharing onlyifbaseline/sharedfamily eachpass3/3 withfewerselectedparameters. Task25 preparationauthorized onlybyindependent compositionpass. Nativeaudits ofall3channels mandatorybeforetraining;eachindependentMLP servesnewNaTs2/fullNap atomiccontrol. Frozenlatency diagnostic only,notselection/whole-neuron acceleration.",
+    "hypotheses": {
+      "sodium_oracle": "Exactindependent NaTs2/fullNap transcription matchescanonical nativerates/update/current;singular perturbationordering andfixedqt preserved.",
+      "composition": "Independent learned6gates withcheap analyticcurrent preserveeachsodiumcurrent andtheirsum inregistered domain.",
+      "sharing": "Atleast1sharedsodiumfamily passeseverycriterion3/3 withfewerparameters thanvalidindependentcontrol.Calciumsharing doesnotimply sodiumsharing.",
+      "identity": "Cyclicchannel routing/onehotswap increasesmedian in-support gateRMSE>=10fold acrossseeds;diagnosticonly.",
+      "scaling": "Pairedwidth32vs16 and30kvs15k developmentcontrasts>=10% supportcapacity/budget benefitlocally;no universal scalinginference.",
+      "path_transfer": "Frozen6gate model staysaccurate/bounded onfastandslow imposedV panels and10000held1ms updates;examineNap_h separately.",
+      "compute": "Measure frozenrate+solver forwardlatency onsameGPU forbatch1/128/1024,3seedbundles,20warmups and5x100repeats.Parametersaving alonedoesnot establishruntimesaving.Nolatency-basedselection."
+    },
+    "limits": "ImposedV/Ena,explicitm/h,sodiumfamily only.Noendogenousvoltage,synapse/axialcoupling/fullneuron.Sharingwidthmatched,parametercounts unequal.Timingscope onlyfrozenrate+gate solver.SectionIVdependencies remainrequiredbeforeclosedloop.NoTask23rewriting orassumingTask22sharingfailure transferstosodium.",
+    "required_artifacts": [
+      "native_audit.json",
+      "code_provenance.json",
+      "run_contract.json",
+      "equivalence_preflight.json",
+      "development_ladder.json",
+      "paired_architecture_contrasts.json",
+      "paired_scaling_contrasts.json",
+      "selection_freeze.json",
+      "fresh_metrics.json",
+      "inference_benchmark.json",
+      "final_report.json",
+      "checkpoint_*.pt",
+      "fit_development.npz",
+      "fresh.npz",
+      "process_status.json",
+      "process.log"
+    ]
+  },
+  "code_revision": "4fad2c65e76685706485b33963bf57147a7b879f",
+  "checkpoint_hashes": {
+    "checkpoint_shared_heads_w32_step15000.pt": "eb5bc19ae84efd49e6b4ef0b8023eff6e6f23910b630389f3b6051359472ae05",
+    "checkpoint_conditioned_w16_step30000.pt": "f0381de69e93945a33b707988d61b470d63f9a7c69e51e12b566474821fe851c",
+    "checkpoint_independent_w32_step30000.pt": "c78ddbe1b8503f26765ee3fa5221b56eb7ee9cbfe435eaf45c79c3d3415e2669",
+    "checkpoint_conditioned_w16_step1000.pt": "b66a2a7a5f014af3d124af3bbaadca157480897bca3fcb184a555627f6afb21e",
+    "checkpoint_conditioned_w16_step15000.pt": "8ed9c40310da3ec0b84a2007737eae27cc53c3ed64de094c7c14d80c00210d06",
+    "checkpoint_conditioned_w16_step0.pt": "567f07fc4da19a6df7b2b16f95c3e61a2d3367f84a335fc1ffa3b9953c378465",
+    "checkpoint_independent_w16_step30000.pt": "033f5e911f586fb8ffae880787ca9b587de5e49f8170f00636ce90801b811792",
+    "checkpoint_conditioned_w32_step1000.pt": "474a23163fea74ae841867ffc637f3fdb46c5557b201bfd83fec163b7b7e3d13",
+    "checkpoint_independent_w16_step5000.pt": "2a31bf2344ff3e9c64db224afc8154073d9dc54f88dbe2b5835c497a88c0738c",
+    "checkpoint_shared_heads_w16_step5000.pt": "0d3919600c07ee2d0ab1b2a83ca9da7bd7a4ddcc7c2ac2481d4607dc8bd6c8ba",
+    "checkpoint_shared_heads_w32_step0.pt": "4b4ccde58c59c9628cac26c77c6e8e41e698515994ab0e906c6e91a69f4eac23",
+    "checkpoint_conditioned_w32_step15000.pt": "dc3c983b738a3c694e11ce2b983fea7a5029eca4b4ffaa03452cbbc5834ffde1",
+    "checkpoint_conditioned_w32_step0.pt": "45db4396b88bdfce6a3ddecd51e8875e68af7f583345d421268094e5a1c93471",
+    "checkpoint_shared_heads_w16_step15000.pt": "0d91dcfea748ad452f6610dda97be912a913385424ef6e72da259a6f4fc738de",
+    "checkpoint_shared_heads_w32_step1000.pt": "bdf9e8cc54bebddca98ef7ad324e01c1ce358c8eeed641bde2a1424c22aa3f26",
+    "checkpoint_conditioned_w32_step30000.pt": "cd41305c428c3cf22c1f16dd9b4e5dc677e5b76c706285f994c22ac31509bd83",
+    "checkpoint_shared_heads_w16_step0.pt": "6567a11c514c836178936c9f9b2fd368275adf85dc83eb43a1c56c3f48a47c25",
+    "checkpoint_independent_w32_step15000.pt": "c2c9d69184ce87a2d25f5d15f602f65e70839b7337badb6bc5dc0f5408388f68",
+    "checkpoint_independent_w32_step0.pt": "9147341ddafae7c2b94c6f199f41f959ac4866697986ea85502b5bd60068d535",
+    "checkpoint_shared_heads_w32_step5000.pt": "a067334062df3cca0134deb845965c30ab028da4c9be8a1702beeb7e220880d8",
+    "checkpoint_independent_w32_step5000.pt": "5d61f41b3e98826b89c78f065e6ff7595594e33474cc9552c4bde100f6524bb9",
+    "checkpoint_independent_w16_step15000.pt": "38f858c7e71ac5563a4eb37483e26c1f4597c53270d5f8d6b1dab2d3b92831ba",
+    "checkpoint_independent_w32_step1000.pt": "00e54e3920ed0d2675042f0119c7c2d9c5fd4d6745fa0a93ce777a791e71906e",
+    "checkpoint_conditioned_w16_step5000.pt": "ca2b0d238923aae1ea529eb8f306baa45d91d6d066256242d3a8b019da90f065",
+    "checkpoint_shared_heads_w32_step30000.pt": "b60a3971e3511287ac32ff84aa3891d17ce9fe857d7f2b23eddf185c726891d0",
+    "checkpoint_independent_w16_step0.pt": "77cc43eaf9681442097e2ebe016f84f077e70f680031572ab6578df0d9a45cb0",
+    "checkpoint_shared_heads_w16_step30000.pt": "203b6227f3b68c01b977a9e061c3ff9be40de5211d5e21651250ced2280ce6d6",
+    "checkpoint_shared_heads_w16_step1000.pt": "0111fdce54946a26dbf3521c2e30846fdfb62c1dc28c8bf82b1e15051dfdac3d",
+    "checkpoint_independent_w16_step1000.pt": "4d5863f16ed4943c6dd59fe1d0522603837c5d9a362a298ea154f42b1d6491b3",
+    "checkpoint_conditioned_w32_step5000.pt": "138a9ca7a4fe30fccfd1f08234f0cb06a7a2dc6e6d26f85ca8a551bd57cc159a"
+  },
+  "freeze_sha256": "ec4b61289b8d3f32498680559edfa6e4cc0c8dd08d34af4960cfb62ab902288c"
+}

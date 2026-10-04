@@ -393,12 +393,23 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   verificati in `experiments/results/task23_kaggle_0f79081/`.
 
 - **Task 24 — Famiglia del sodio** → Ricerca di compute condiviso.
-  **Preregistrata**: `experiments/task24_sodium_family_composition.json` e
+  **Conclusa (4fad2c6), NO-GO del controllo indipendente**:
+  `experiments/task24_sodium_family_composition.json` e
   `notebooks/24_roadmap_sodium_family_composition.ipynb`. NaTa_t/NaTs2_t/Nap_Et2,
   tutti6gate, controllo indipendente, shared-heads e conditioned; due width,
   tre seed e ladder appaiata. Audit nativo preliminare di tutti3canali, metriche
   per canale e correnti, percorsi25/2500ms e held-V10s. Latenza frozen misurata
   come diagnostica, separata dalla selezione. Nessun V autonomo.
+  Shared-heads e conditioned passano3/3 (1516 e420parametri); indipendenti0/3.
+  Tutti gli sforamenti sono nel gate h di Nap_Et2 (one-step o held1000/10000ms).
+  L'esecuzione è valida; Task25 resta bloccata. Evidenza verificata in
+  `experiments/results/task24_kaggle_4fad2c6/`.
+  **Task24b preregistrata**: matrice2x2 schedule LR x clipping percanale/bundle,
+  width16/32 e budget fino60k, stessi dati/inizializzazione. Selezione development
+  con probe held composto (non rollout iterativo), nuovo fresh dopo freeze;
+  probe oracle inf/tau eFP32/FP64 non selezionabili. Braccio primario
+  `decay_channel` fissato prima del test, soglie invariate; modelli condivisi
+  precedenti congelati. `notebooks/24b_sodium_control_diagnosis.ipynb`.
 
 - **Task 25 — Meccanismi eterogenei** → Combinare cinetiche differenti.
 

@@ -358,8 +358,9 @@ class Mirror:
             if not stable_code or not patch.get(name_fid):
                 raise ValueError("New local records require Nome and Codice stabile")
             provisional = "rec" + hashlib.sha256((key + "\0" + stable_code).encode("utf-8")).hexdigest()[:14]
-            all_ids = {item["id"] for rows in snapshot["tables"].values() for item in rows}
-            if provisional in all_ids:
+            id_lookup = getattr(self, "_validated_batch_id_exists", None)
+            collision = id_lookup(snapshot, provisional) if id_lookup else provisional in {item["id"] for rows in snapshot["tables"].values() for item in rows}
+            if collision:
                 raise ValueError("Deterministic local record ID collision")
             row = {
                 "id": provisional,
@@ -367,6 +368,8 @@ class Mirror:
                 "cellValuesByFieldId": {},
             }
             records.append(row)
+            id_added = getattr(self, "_validated_batch_id_added", None)
+            if id_added: id_added(provisional)
             current = self.contract.normalize(key, {})
 
         before = dict(current)
@@ -403,8 +406,9 @@ class Mirror:
                 target_row["cellValuesByFieldId"] = target_fields
 
         result = self.import_snapshot(snapshot)
-        with self.connect() as conn:
-            conn.execute("INSERT OR REPLACE INTO _mirror_meta VALUES ('operating_mode','local_sqlite_authoritative_pending_airtable_reconciliation')")
+        if not getattr(self, "_defer_local_mode_update", False):
+            with self.connect() as conn:
+                conn.execute("INSERT OR REPLACE INTO _mirror_meta VALUES ('operating_mode','local_sqlite_authoritative_pending_airtable_reconciliation')")
         result.update({"record_id": row["id"], "stable_code": stable_code, "table": key})
         return result
 

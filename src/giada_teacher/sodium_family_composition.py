@@ -53,8 +53,9 @@ def data(seed, count, domain=(-135., 75.)):
     return np.c_[rng.uniform(*domain, count), rng.uniform(0, 1, (count, 6)), rng.choice(DT, count)]
 
 
-def state_grid(fresh=False):
+def state_grid(fresh=False, node_offset=None):
     size, offset = (121, .37) if fresh else (61, .5)
+    if node_offset is not None: offset = node_offset
     v = -135 + 210*(np.arange(size)+offset)/size
     if fresh:
         v = np.r_[v, -135., 75., SEAMS]
@@ -257,8 +258,8 @@ def path_rollout(model,seeds,torch,device,dt=.025):
     return result
 
 
-def held_rollout(model,seeds,torch,device,horizons):
-    v=np.random.default_rng(240405).uniform(-135,75,64)
+def held_rollout(model,seeds,torch,device,horizons,voltage_seed=240405):
+    v=np.random.default_rng(voltage_seed).uniform(-135,75,64)
     values=np.c_[np.repeat(v,2),np.repeat(np.array([[0.]*6,[1.]*6]),64,axis=0),np.ones(128)]
     # Pair each V with both initial extremes, rather than grouping by state.
     values[:,1:7]=np.tile([[0.]*6,[1.]*6],(64,1))

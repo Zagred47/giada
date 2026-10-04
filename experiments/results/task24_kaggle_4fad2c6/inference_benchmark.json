@@ -1,0 +1,132 @@
+{
+  "rows": [
+    {
+      "family": "independent",
+      "batch_size": 1,
+      "median_forward_ms": 0.6309478378295899,
+      "repetitions_ms": [
+        0.6315296173095704,
+        0.6183059310913086,
+        0.6122515106201172,
+        0.8002767944335938,
+        0.6309478378295899
+      ],
+      "width": 16,
+      "seed_bundle_count": 3
+    },
+    {
+      "family": "shared_heads",
+      "batch_size": 1,
+      "median_forward_ms": 0.6673411560058594,
+      "repetitions_ms": [
+        0.6673411560058594,
+        0.6641664123535156,
+        0.9008329772949218,
+        0.7903437042236328,
+        0.6623401641845703
+      ],
+      "width": 32,
+      "seed_bundle_count": 3
+    },
+    {
+      "family": "conditioned",
+      "batch_size": 1,
+      "median_forward_ms": 0.7330403137207031,
+      "repetitions_ms": [
+        0.7133539581298828,
+        0.7221286773681641,
+        0.7330403137207031,
+        0.7562815856933593,
+        0.755547866821289
+      ],
+      "width": 16,
+      "seed_bundle_count": 3
+    },
+    {
+      "family": "independent",
+      "batch_size": 128,
+      "median_forward_ms": 0.6732860565185547,
+      "repetitions_ms": [
+        0.6807059478759766,
+        0.6732860565185547,
+        0.6729302215576172,
+        0.6682911682128906,
+        0.6738326263427734
+      ],
+      "width": 16,
+      "seed_bundle_count": 3
+    },
+    {
+      "family": "shared_heads",
+      "batch_size": 128,
+      "median_forward_ms": 0.6862438201904297,
+      "repetitions_ms": [
+        0.6862438201904297,
+        0.6957225799560547,
+        0.6870652770996094,
+        0.6846921539306641,
+        0.6716623687744141
+      ],
+      "width": 32,
+      "seed_bundle_count": 3
+    },
+    {
+      "family": "conditioned",
+      "batch_size": 128,
+      "median_forward_ms": 0.7357660675048828,
+      "repetitions_ms": [
+        0.7518208312988282,
+        0.733741455078125,
+        0.7330633544921875,
+        0.7423107147216796,
+        0.7357660675048828
+      ],
+      "width": 16,
+      "seed_bundle_count": 3
+    },
+    {
+      "family": "independent",
+      "batch_size": 1024,
+      "median_forward_ms": 0.6791187286376953,
+      "repetitions_ms": [
+        0.6710336303710938,
+        0.6791187286376953,
+        0.680072021484375,
+        0.6731568145751953,
+        0.6805712127685547
+      ],
+      "width": 16,
+      "seed_bundle_count": 3
+    },
+    {
+      "family": "shared_heads",
+      "batch_size": 1024,
+      "median_forward_ms": 0.6785635375976562,
+      "repetitions_ms": [
+        0.7159177398681641,
+        0.6675244903564453,
+        0.6785635375976562,
+        0.6758841705322266,
+        0.6906060791015625
+      ],
+      "width": 32,
+      "seed_bundle_count": 3
+    },
+    {
+      "family": "conditioned",
+      "batch_size": 1024,
+      "median_forward_ms": 0.7333164978027343,
+      "repetitions_ms": [
+        0.7319078063964843,
+        0.7276172637939453,
+        0.7338601684570313,
+        0.7333164978027343,
+        0.74285888671875
+      ],
+      "width": 16,
+      "seed_bundle_count": 3
+    }
+  ],
+  "used_for_selection": false,
+  "scope": "Frozen rate prediction plus exponential gate solver; vectorized3seed bundle. No analytic current, NEURON, whole-neuron or cross-device speedup claim."
+}

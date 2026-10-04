@@ -12,6 +12,8 @@ class ValidatedBatchMirror(StagedMirror):
         self._original_normalize=self.contract.normalize
         self._normalized_rows={}
         self._code_indices={}
+        self._known_record_ids=None
+        self._defer_local_mode_update=True
         codes={k:self.field_id(k,'Codice stabile') for k in self.contract.tables}
         def normalize(table,values,*,partial=False):
             key=self.contract.key(table)
@@ -37,8 +39,17 @@ class ValidatedBatchMirror(StagedMirror):
             self._code_indices[key]=index
         return index.get(code,[])
 
+    def _validated_batch_id_exists(self,snapshot,record_id):
+        if self._known_record_ids is None:
+            self._known_record_ids={row['id'] for rows in snapshot['tables'].values() for row in rows}
+        return record_id in self._known_record_ids
+
+    def _validated_batch_id_added(self,record_id):
+        if self._known_record_ids is not None:self._known_record_ids.add(record_id)
+
     def local_upsert(self,table,values,record_id=None):
         result=super().local_upsert(table,values,record_id)
+        if self._known_record_ids is not None:self._known_record_ids.add(result['record_id'])
         key=self.contract.key(table)
         index=self._code_indices[key]
         fid=self.field_id(key,'Codice stabile')
@@ -57,4 +68,8 @@ class ValidatedBatchMirror(StagedMirror):
         self.contract.normalize=self._original_normalize
         self._normalized_rows.clear()
         self._code_indices.clear()
-        return super().commit_batch()
+        self._known_record_ids=None
+        result=super().commit_batch()
+        with self.connect() as conn:
+            conn.execute("INSERT OR REPLACE INTO _mirror_meta VALUES ('operating_mode','local_sqlite_authoritative_pending_airtable_reconciliation')")
+        return result

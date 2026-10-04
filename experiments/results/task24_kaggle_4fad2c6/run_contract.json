@@ -1,0 +1,150 @@
+{
+  "schema_version": "giada-roadmap-task24-preregistration-v1",
+  "stage": "Task24 originale \u2014 famiglia sodio NaTa_t + NaTs2_t + Nap_Et2",
+  "require_cuda": true,
+  "channels": [
+    "NaTa_t",
+    "NaTs2_t",
+    "Nap_Et2"
+  ],
+  "families": [
+    "independent",
+    "shared_heads",
+    "conditioned"
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "widths": [
+    16,
+    32
+  ],
+  "checkpoints": [
+    0,
+    1000,
+    5000,
+    15000,
+    30000
+  ],
+  "pool_size": 24000,
+  "batch_size": 1024,
+  "learning_rate": 0.003,
+  "inf_weight": 0.1,
+  "log_tau_weight": 0.1,
+  "voltage_domain_mv": [
+    -135,
+    75
+  ],
+  "dt_values_ms": [
+    0.025,
+    0.1,
+    0.5,
+    1,
+    5,
+    25,
+    100,
+    500,
+    1000,
+    5000,
+    10000
+  ],
+  "data_seeds": {
+    "fit": 240101,
+    "fit_regions": 240102,
+    "development": [
+      240201,
+      240202
+    ],
+    "minibatches": 240301,
+    "fresh": [
+      240401,
+      240402,
+      240403,
+      240404
+    ]
+  },
+  "gates": {
+    "gate_rmse": 0.001,
+    "m_rmse": 0.001,
+    "h_rmse": 0.001,
+    "gate_max_error": 0.01,
+    "inf_rmse": 0.002,
+    "log_tau_rmse": 0.02,
+    "open_rmse": 0.002,
+    "occupancy_violations": 0
+  },
+  "pair_gates": {
+    "individual_current_normalized_rmse": 0.002,
+    "total_current_normalized_rmse": 0.002,
+    "total_current_normalized_max": 0.01
+  },
+  "held_gates": {
+    "gate_rmse": 0.002,
+    "m_rmse": 0.002,
+    "h_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003,
+    "occupancy_violations": 0
+  },
+  "path_gates": {
+    "gate_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003,
+    "total_current_normalized_rmse": 0.003,
+    "occupancy_violations": 0
+  },
+  "path_channel_gates": {
+    "gate_rmse": 0.002,
+    "m_rmse": 0.002,
+    "h_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003
+  },
+  "path_dt_ms": {
+    "fast_25ms": 0.025,
+    "slow_2500ms": 2.5
+  },
+  "rollout_horizons_steps": [
+    1,
+    10,
+    100,
+    1000,
+    10000
+  ],
+  "architecture": "3channels with2 explicit gates each. Independent:3 separate1-w-w-4 MLPs; shared_heads:1-w-w trunk,3 separate width4 heads; conditioned:V+3onehot ids,4-w-w-4. SiLU,sigmoid inf,exp(clamped logtau). State/dt only enter deterministic exponential convex update. Current remains analytic gbar*m^3*h*(V-Ena). All6gates learned,including fullNap m+h (Task21 onlycovered Nap_h).",
+  "fit_sampling": "50% uniform[-135,75],25%[-75,-25],25%[-65,-35]; independent6D states andcommon11multiscale dt. Identical tuples/minibatches/gate-rate loss acrossfamilies. Adam moments and norm1clipping independent perseed bundle. Shape-compatible weights paired; unequal parametercounts reported.",
+  "selection": "Commonwidth/checkpoint perfamily over3seeds byworst seed/domain normalized gate/rate/open/current error ondevelopment. Complete64state-extrema grid ondistinct61Vnodes; fresh121different nodespluscanonical singularseams. Freeze allcheckpoint hashes/config beforefresh,held/path,swappedidentity,OOD andtiming. No test-driven threshold changes.",
+  "current_semantics": "Diagnostic algebra atpost-update gates andsupplied evaluationV,not embedded BREAKPOINT timing. Nominalgbar1e-5S/cm2,Ena55mV. Fixed18-case panel: multipliers(0,1,1),(1,0,1),(1,1,0),(.25,1,4),(1,1,1),(4,1,.25),crossed withEna(55,55,55),(25,55,85),(85,55,25). Normalize individualby ownfully-open absdrive,totalby sumabsdrive,not teacheropening/netcurrent. Zero drive->zeroerror;1e-12floor. Raw currentdensity mA/cm2 also reported; no cancellation claim basedontotal alone.",
+  "path_contract": "5controlled imposedV paths(constant,steps,ramp,sine,chirp),1000substeps at.025ms(25ms) andtime-stretched2.5ms(2500ms) withidentical Vsequence. Discreteformula oracle samesupplied V/dt;futurepath experimentallyimposed,notinferred. Perchannel andaggregate limitsconjunctive. HeldV repeated1ms through10000ms resolvesslowNap_h. No sufficiencyat1ms/autonomousV claim.",
+  "promotion": "Independent3channel bundle passesallregistered fresh in-support domains,everymechanism/every3seed,individual+total currents,allheldhorizons andbothimposedpathpanels. Sharing onlyifbaseline/sharedfamily eachpass3/3 withfewerselectedparameters. Task25 preparationauthorized onlybyindependent compositionpass. Nativeaudits ofall3channels mandatorybeforetraining;eachindependentMLP servesnewNaTs2/fullNap atomiccontrol. Frozenlatency diagnostic only,notselection/whole-neuron acceleration.",
+  "hypotheses": {
+    "sodium_oracle": "Exactindependent NaTs2/fullNap transcription matchescanonical nativerates/update/current;singular perturbationordering andfixedqt preserved.",
+    "composition": "Independent learned6gates withcheap analyticcurrent preserveeachsodiumcurrent andtheirsum inregistered domain.",
+    "sharing": "Atleast1sharedsodiumfamily passeseverycriterion3/3 withfewerparameters thanvalidindependentcontrol.Calciumsharing doesnotimply sodiumsharing.",
+    "identity": "Cyclicchannel routing/onehotswap increasesmedian in-support gateRMSE>=10fold acrossseeds;diagnosticonly.",
+    "scaling": "Pairedwidth32vs16 and30kvs15k developmentcontrasts>=10% supportcapacity/budget benefitlocally;no universal scalinginference.",
+    "path_transfer": "Frozen6gate model staysaccurate/bounded onfastandslow imposedV panels and10000held1ms updates;examineNap_h separately.",
+    "compute": "Measure frozenrate+solver forwardlatency onsameGPU forbatch1/128/1024,3seedbundles,20warmups and5x100repeats.Parametersaving alonedoesnot establishruntimesaving.Nolatency-basedselection."
+  },
+  "limits": "ImposedV/Ena,explicitm/h,sodiumfamily only.Noendogenousvoltage,synapse/axialcoupling/fullneuron.Sharingwidthmatched,parametercounts unequal.Timingscope onlyfrozenrate+gate solver.SectionIVdependencies remainrequiredbeforeclosedloop.NoTask23rewriting orassumingTask22sharingfailure transferstosodium.",
+  "required_artifacts": [
+    "native_audit.json",
+    "code_provenance.json",
+    "run_contract.json",
+    "equivalence_preflight.json",
+    "development_ladder.json",
+    "paired_architecture_contrasts.json",
+    "paired_scaling_contrasts.json",
+    "selection_freeze.json",
+    "fresh_metrics.json",
+    "inference_benchmark.json",
+    "final_report.json",
+    "checkpoint_*.pt",
+    "fit_development.npz",
+    "fresh.npz",
+    "process_status.json",
+    "process.log"
+  ]
+}
