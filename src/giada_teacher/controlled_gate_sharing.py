@@ -215,7 +215,10 @@ def native_audit(teacher,output):
     for label,module in [('single','single_gate_transfer'),('slow','slow_gate_transfer')]:
         sub=root/('oracle_'+label);sub.mkdir()
         cmd=[sys.executable,'-c',f'from src.giada_teacher.{module} import native_audit; native_audit({str(teacher)!r},{str(sub)!r})']
-        subprocess=__import__('subprocess');subprocess.run(cmd,check=True)
+        subprocess=__import__('subprocess')
+        # Python -c does not inherit the supervisor's sys.path modifications.
+        # Kaggle's notebook cwd is /kaggle/working, not the checked-out repo.
+        subprocess.run(cmd,check=True,cwd=Path(__file__).resolve().parents[2])
         reports.append(json.loads((sub/'native_audit.json').read_text()))
     report=dict(valid=all(r['valid'] for r in reports),reports=reports,scope='Canonical Ih/Im and Nap_Et2 h; independent native workers.')
     write(root/'native_audit.json',report);return report
