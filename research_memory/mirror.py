@@ -162,6 +162,9 @@ class Mirror:
         self.path = Path(path)
         from .packed_database import restore_if_missing
         restore_if_missing(self.path)
+        from .packed_snapshot import restore_snapshot_if_missing
+        if self.path.resolve() == DEFAULT_DB.resolve():
+            restore_snapshot_if_missing(ROOT / 'data' / 'airtable_snapshot.json')
         self.contract = contract or Contract()
 
     def connect(self):

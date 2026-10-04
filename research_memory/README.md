@@ -12,7 +12,10 @@ non sovrascrive mai un database locale esistente. Dopo un pull su una checkout
 già attiva, riconciliare esplicitamente eventuali differenze: non sostituire il DB.
 Per versionare una modifica: verificare il mirror, esportare lo snapshot JSON,
 poi eseguire `python -m research_memory.packed_database` e committare gzip,
-manifest e snapshot insieme. La compressione non rimuove record né relazioni.
+manifest e snapshot insieme. Lo snapshot JSON leggibile resta locale; Git conserva
+`data/airtable_snapshot.json.gz` con manifest SHA-256, ripristinato solo se manca.
+Eseguire anche `python -m research_memory.packed_snapshot` prima del commit.
+La compressione non rimuove record né relazioni e conserva ogni byte dell'export.
 Richiede soltanto Python >= 3.10 con SQLite/JSON1, senza pip, server o servizi persistenti.
 Su questa macchina il runtime Python di Codex è disponibile; il launcher PowerShell lo risolve automaticamente.
 

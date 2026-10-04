@@ -1,0 +1,276 @@
+{
+  "selection": {
+    "constant_bundle": {
+      "arm": "constant_bundle",
+      "width": 32,
+      "step": 60000,
+      "score": 0.8788583293133467,
+      "checkpoint": "checkpoint_constant_bundle_w32_step60000.pt"
+    },
+    "constant_channel": {
+      "arm": "constant_channel",
+      "width": 32,
+      "step": 60000,
+      "score": 0.8788583293133467,
+      "checkpoint": "checkpoint_constant_channel_w32_step60000.pt"
+    },
+    "decay_bundle": {
+      "arm": "decay_bundle",
+      "width": 16,
+      "step": 60000,
+      "score": 0.6624216820311408,
+      "checkpoint": "checkpoint_decay_bundle_w16_step60000.pt"
+    },
+    "decay_channel": {
+      "arm": "decay_channel",
+      "width": 16,
+      "step": 60000,
+      "score": 0.6624216820311408,
+      "checkpoint": "checkpoint_decay_channel_w16_step60000.pt"
+    }
+  },
+  "one_step_selection_diagnostic": {
+    "constant_bundle": {
+      "arm": "constant_bundle",
+      "width": 32,
+      "step": 60000,
+      "score": 0.7374418066021723,
+      "checkpoint": "checkpoint_constant_bundle_w32_step60000.pt"
+    },
+    "constant_channel": {
+      "arm": "constant_channel",
+      "width": 32,
+      "step": 60000,
+      "score": 0.7374418066021723,
+      "checkpoint": "checkpoint_constant_channel_w32_step60000.pt"
+    },
+    "decay_bundle": {
+      "arm": "decay_bundle",
+      "width": 16,
+      "step": 60000,
+      "score": 0.6624216820311408,
+      "checkpoint": "checkpoint_decay_bundle_w16_step60000.pt"
+    },
+    "decay_channel": {
+      "arm": "decay_channel",
+      "width": 16,
+      "step": 60000,
+      "score": 0.6624216820311408,
+      "checkpoint": "checkpoint_decay_channel_w16_step60000.pt"
+    }
+  },
+  "fresh_accessed": false,
+  "config": {
+    "schema_version": "giada-task24b-preregistration-v1",
+    "stage": "Task24 originale \u2014 famiglia sodio NaTa_t + NaTs2_t + Nap_Et2",
+    "require_cuda": true,
+    "channels": [
+      "NaTa_t",
+      "NaTs2_t",
+      "Nap_Et2"
+    ],
+    "families": [
+      "independent",
+      "shared_heads",
+      "conditioned"
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "widths": [
+      16,
+      32
+    ],
+    "checkpoints": [
+      0,
+      5000,
+      15000,
+      30000,
+      60000
+    ],
+    "pool_size": 24000,
+    "batch_size": 1024,
+    "learning_rate": 0.003,
+    "inf_weight": 0.1,
+    "log_tau_weight": 0.1,
+    "voltage_domain_mv": [
+      -135,
+      75
+    ],
+    "dt_values_ms": [
+      0.025,
+      0.1,
+      0.5,
+      1,
+      5,
+      25,
+      100,
+      500,
+      1000,
+      5000,
+      10000
+    ],
+    "data_seeds": {
+      "fit": 240101,
+      "fit_regions": 240102,
+      "development": [
+        240201,
+        240202
+      ],
+      "minibatches": 240301,
+      "fresh": [
+        241401,
+        241402,
+        241403,
+        241404
+      ]
+    },
+    "gates": {
+      "gate_rmse": 0.001,
+      "m_rmse": 0.001,
+      "h_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "open_rmse": 0.002,
+      "occupancy_violations": 0
+    },
+    "pair_gates": {
+      "individual_current_normalized_rmse": 0.002,
+      "total_current_normalized_rmse": 0.002,
+      "total_current_normalized_max": 0.01
+    },
+    "held_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "path_gates": {
+      "gate_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "total_current_normalized_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "path_channel_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003
+    },
+    "path_dt_ms": {
+      "fast_25ms": 0.025,
+      "slow_2500ms": 2.5
+    },
+    "rollout_horizons_steps": [
+      1,
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "architecture": "3channels with2 explicit gates each. Independent:3 separate1-w-w-4 MLPs; shared_heads:1-w-w trunk,3 separate width4 heads; conditioned:V+3onehot ids,4-w-w-4. SiLU,sigmoid inf,exp(clamped logtau). State/dt only enter deterministic exponential convex update. Current remains analytic gbar*m^3*h*(V-Ena). All6gates learned,including fullNap m+h (Task21 onlycovered Nap_h).",
+    "fit_sampling": "50% uniform[-135,75],25%[-75,-25],25%[-65,-35]; independent6D states andcommon11multiscale dt. Identical tuples/minibatches/gate-rate loss acrossfamilies. Adam moments and norm1clipping independent perseed bundle. Shape-compatible weights paired; unequal parametercounts reported.",
+    "selection": "One common width/checkpoint perarm minimizes worst seed over original development one-step gates and analytic composed held-V gate/current metrics at1000/10000ms on new developmentV. Composed semigroup probe labelled explicitly,not iterative rollout. Freeze before new fresh,iterativeheld andpaths. Original Task24 fresh is diagnosis-only and never used in training/selection.",
+    "current_semantics": "Diagnostic algebra atpost-update gates andsupplied evaluationV,not embedded BREAKPOINT timing. Nominalgbar1e-5S/cm2,Ena55mV. Fixed18-case panel: multipliers(0,1,1),(1,0,1),(1,1,0),(.25,1,4),(1,1,1),(4,1,.25),crossed withEna(55,55,55),(25,55,85),(85,55,25). Normalize individualby ownfully-open absdrive,totalby sumabsdrive,not teacheropening/netcurrent. Zero drive->zeroerror;1e-12floor. Raw currentdensity mA/cm2 also reported; no cancellation claim basedontotal alone.",
+    "path_contract": "5controlled imposedV paths(constant,steps,ramp,sine,chirp),1000substeps at.025ms(25ms) andtime-stretched2.5ms(2500ms) withidentical Vsequence. Discreteformula oracle samesupplied V/dt;futurepath experimentallyimposed,notinferred. Perchannel andaggregate limitsconjunctive. HeldV repeated1ms through10000ms resolvesslowNap_h. No sufficiencyat1ms/autonomousV claim.",
+    "promotion": "Original gate/current/path/held thresholds unchanged. One preregistered primary repair arm decay_channel mustpass3/3 onnewfresh toauthorize Task25; other arms diagnostic, not post-hoc alternative promotion. Frozen shared-heads/conditioned rechecked onthe same newfresh/held/path panels; sharing claim additionally requires repairedindependent reference andfewerparameters. Original Task24NO-GO remains unchanged.",
+    "hypotheses": {
+      "annealing": "Late cosine learning-rate decay improves worst-seed development score >=10% at fixed clipping,width,budget; confirmation requires 3/3 fresh conjunction unchanged thresholds.",
+      "clipping": "Per-channel gradient clipping removes coupling in independent models and improves worst-seed development score >=10% vs bundle clipping at fixed schedule,width,budget. An effect is not assumed: record clipping frequency and channel norms.",
+      "budget_capacity": "60k vs30k andwidth32vs16 paired contrasts isolate budget andcapacity; report heterogeneity without universal scaling claims.",
+      "rate_attribution": "Frozen independent Nap_h long-held error can be decomposed by analytic inf replacement,analytic tau replacement,andboth; diagnostic oracle probes never eligible for selection.",
+      "precision": "FP64 repeated held-V updates reduce the same frozen-model error >=50% if FP32 accumulation dominates; separate exact-rate FP32 solver floor from learned-rate error.",
+      "selection": "Adding disjoint development long-held probes to checkpoint selection can reveal a one-step/long-held mismatch. Compare original one-step rule and held-aware rule on development only; primary confirmation uses registered held-aware rule."
+    },
+    "limits": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+    "required_artifacts": [
+      "native_audit.json",
+      "code_provenance.json",
+      "run_contract.json",
+      "equivalence_preflight.json",
+      "development_ladder.json",
+      "paired_architecture_contrasts.json",
+      "paired_scaling_contrasts.json",
+      "selection_freeze.json",
+      "fresh_metrics.json",
+      "inference_benchmark.json",
+      "final_report.json",
+      "checkpoint_*.pt",
+      "fit_development.npz",
+      "fresh.npz",
+      "process_status.json",
+      "process.log"
+    ],
+    "parent": "Task24 originale; diagnostic subtask, not Task25",
+    "source_result": "experiments/results/task24_kaggle_4fad2c6",
+    "arms": [
+      "constant_bundle",
+      "constant_channel",
+      "decay_bundle",
+      "decay_channel"
+    ],
+    "decay_start": 15000,
+    "learning_rate_final": 0.0001,
+    "held_development_seed": 241205,
+    "held_fresh_seed": 241405,
+    "fresh_seeds": [
+      241401,
+      241402,
+      241403,
+      241404
+    ],
+    "training": "From scratch, same original Task24 fit tuples andminibatch sequence; common initialization. 4arms x2width x3seeds=24systems. Only LR schedule andclipping scope change. Original bundle arm exactly reproduces training semantics through30k. All other shared models frozen from Task24,no retraining.",
+    "base_contract_sha256": "7e52700017b24110c3fcab8a1350caaaa7a4297dab64c0ac838dea85b9fc03d7"
+  },
+  "code_revision": "bde23cc1641a4f21d5fbba6fc362c54751a27ae0",
+  "checkpoint_hashes": {
+    "checkpoint_constant_bundle_w32_step15000.pt": "8fc7e90e83b8bfdaa2556b47dbbdd08cdf5303899347efe49ecba138de60ef65",
+    "checkpoint_constant_bundle_w16_step30000.pt": "347a233f42582dec68506b1f406a10fa6a3f4be022691d77d81102451072acf2",
+    "checkpoint_decay_channel_w16_step0.pt": "c7b8d991d5d5f1b8ec3fa1e88eef5b5f6b28d59eee9b4bb654cc95335a36a171",
+    "checkpoint_decay_bundle_w16_step60000.pt": "36ac0c9db08127beedb7ac03d6e3e48f1853284ec922a6f49135fcc267bddde8",
+    "checkpoint_constant_channel_w16_step30000.pt": "033cf50147e457d8231e4f124f34e9f17e3228936375f14f6d9c7c882534b728",
+    "checkpoint_decay_channel_w32_step0.pt": "13ddba1c7c1a17f815daea00a486cd24f2eb55ab675fa30e74d18738681ee784",
+    "checkpoint_constant_channel_w32_step0.pt": "d71ebc99a8328fc8c5b0c07dea155a36e66cd9412192d56bd64a43140759b540",
+    "checkpoint_decay_channel_w16_step15000.pt": "b1d58159aecb70738706f2a77068e6881cbccf1a8eb25245b770beb9541884ea",
+    "checkpoint_constant_channel_w16_step0.pt": "df13e33308ad1103ab5108fed891360d42aa144f43006eac31b35b7c5e1830bb",
+    "checkpoint_decay_bundle_w16_step5000.pt": "a7697a2d58768087ca295e0a654972f2a57c2be711de56562222b31b242f4b73",
+    "checkpoint_constant_bundle_w32_step30000.pt": "51c64538e00493641db3a3a2baab9ee711801ebea5d82e90518da05c6b90e272",
+    "checkpoint_constant_bundle_w16_step60000.pt": "d7806322ad84fd3889788b27b8c8418a009ea626c6c87b7f9ee7aca9d9a79af9",
+    "checkpoint_constant_channel_w32_step60000.pt": "fa732884000c1f31d94dfb4e04c022ac308058ed0ff676cdf448c6dac38739c4",
+    "checkpoint_decay_channel_w32_step5000.pt": "258c1914db92d7bea0559ffee94d6935182facbaaa69a1f90ba5f91144a7eee7",
+    "checkpoint_decay_channel_w16_step60000.pt": "49af85e2b74c472c8c0567a257a85fe328bb0919a53a291dc2b69b62b6cd137d",
+    "checkpoint_constant_channel_w16_step5000.pt": "71fab84043f16be0c25b670afe5132bd13f6d97ff33e50d94f8d6e1aa329f35f",
+    "checkpoint_decay_channel_w32_step30000.pt": "d8e90ebfd3a388c9debbd93e24887f86c01f5320846d55926b7707012e3369ce",
+    "checkpoint_decay_bundle_w32_step30000.pt": "9dce5ec36f27a8dd1feb992283415bab4839e73e1f6b2f6adb7831eccfeeeed3",
+    "checkpoint_decay_channel_w32_step60000.pt": "c7a9a280b4799c1c12e40088b841b4dad6c623ba5a5760b12a3ffdbfca8c2700",
+    "checkpoint_constant_bundle_w16_step0.pt": "14633cce70d92381cd54b4b9f9ec90f4dc9a98c7d42fffe5a7a8b3e65b1fd468",
+    "checkpoint_decay_channel_w32_step15000.pt": "e01f61a1e8801170dde7f09691da3587411bd82271994356d5e831d7c3f27edd",
+    "checkpoint_constant_channel_w32_step30000.pt": "1b28a0f16b56c87db8210a173ab4446de3dd4c786c39e0b7b267eab82f173ab3",
+    "checkpoint_decay_bundle_w32_step60000.pt": "593f4c83dc9c4cf108f131ecb887e983d117f9e32e8b08c7b7401280276b8329",
+    "checkpoint_constant_bundle_w16_step5000.pt": "91bf04933011213f8896559622905ab5470533c8d6c024d66d50e1891c17791e",
+    "checkpoint_decay_channel_w16_step30000.pt": "c2e8130b652edf9d9d22e2fc7b35c4a966b4acb6e08a67e184b81fc9507c5a2e",
+    "checkpoint_decay_bundle_w32_step0.pt": "49e9f754f336c8ca28231b4130d1c78223ad559ca75f095e8a1cdfe72df54d72",
+    "checkpoint_decay_bundle_w16_step0.pt": "5f9e5801ff940f13fafedaa558f89bb6079e2e4929d405e9e12cbb4e941c0218",
+    "checkpoint_constant_bundle_w32_step60000.pt": "c32e8a003097b55918fa8661ac250886a892d8070c264cf5573b98d4dc168454",
+    "checkpoint_decay_channel_w16_step5000.pt": "da9fdd56c89b3183184d1784a246f24c096be87ea1b10cf82b0a67421c097294",
+    "checkpoint_constant_bundle_w16_step15000.pt": "bfa6a64211e5485f845e6754d995be2ae19797d92f3328b90cdf840acc70a270",
+    "checkpoint_decay_bundle_w16_step15000.pt": "c777cda00059dea4cd29e2c357ec920152791a7d41b0644edf9c1cd6998c46cf",
+    "checkpoint_decay_bundle_w32_step15000.pt": "101b528883980398a91caf118897ceef5660e932107356da3c7eb563bed8fa09",
+    "checkpoint_constant_channel_w16_step15000.pt": "0d98712a428e946776d55dfa9e38206b2817f406c53493d958a639d554746cab",
+    "checkpoint_constant_channel_w32_step5000.pt": "4cc385b2c9310ba282c79a6e2f6f8ec8d2c3d25a6227014a7af824216700d90a",
+    "checkpoint_constant_channel_w16_step60000.pt": "23d446eabe31873a779832970d45235f67e36da5f4d6294f851d22abdf94039f",
+    "checkpoint_constant_bundle_w32_step5000.pt": "89cff29e4784ba460d7f570be3806c171869d66e1f81ac9cc9d0e358d60c1435",
+    "checkpoint_constant_channel_w32_step15000.pt": "e2ab4f72cc924b35a626f3ae7093e354ffd489602751f47284027f240838f39a",
+    "checkpoint_decay_bundle_w32_step5000.pt": "758b24c073b774250439d99fad1b651c34f7e512a44d50307bd0ed8d054f426d",
+    "checkpoint_decay_bundle_w16_step30000.pt": "1974adbc9fabc94ce317a5abb7f283bdba926671ba08da86dcdfec07d61a0b8c",
+    "checkpoint_constant_bundle_w32_step0.pt": "bd648494508cf66e195e81aab1a0152eb4576c1d4166a3c931b4ba4961b408bd"
+  },
+  "freeze_sha256": "3ec0d7811b4cccd1bcccb43b41e55907311c4384cd0cad2b66bf211fe27bcf58"
+}
