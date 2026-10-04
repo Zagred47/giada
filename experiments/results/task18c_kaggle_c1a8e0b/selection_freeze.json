@@ -1,0 +1,87 @@
+{
+  "selected": {
+    "step": 30000,
+    "arm": "tail_and_kink/top0/lr0.003",
+    "indices": [
+      12,
+      13,
+      14
+    ],
+    "score": 2.680127272121616
+  },
+  "config": {
+    "schema_version": "giada-task18c-preregistration-v1",
+    "require_cuda": true,
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "width": 32,
+    "checkpoints": [
+      0,
+      5000,
+      15000,
+      30000
+    ],
+    "pool_size": 24000,
+    "batch_size": 1024,
+    "sampling": [
+      "tail_only",
+      "tail_and_kink"
+    ],
+    "topk_weights": [
+      0,
+      1
+    ],
+    "learning_rates": [
+      0.003,
+      0.0003
+    ],
+    "hypotheses": {
+      "local_coverage": "Replacing an additional25percent of voltages by uniform[-65,-55]mV reduces the local mTau error without losing the negative tail.",
+      "tail_loss": "Adding the mean of the worst5percent of squared transition errors reduces gate_max_error beyond the mean-loss control.",
+      "learning_rate": "A tenfold lower learning rate improves refinement near the mTau cusp at matched training steps.",
+      "budget": "Checkpoints along the same refinement trajectory distinguish continuing improvement from saturation."
+    },
+    "gates": {
+      "gate_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "open_rmse": 0.002,
+      "occupancy_violations": 0
+    },
+    "data_seeds": {
+      "fit": 182101,
+      "tail": 182102,
+      "kink": 182103,
+      "dev_uniform": 182201,
+      "dev_tail": 182202,
+      "dev_kink": 182203,
+      "minibatches": 182301,
+      "fresh": [
+        182401,
+        182402,
+        182403,
+        182404
+      ]
+    },
+    "selection": "One common arm and checkpoint across3seeds minimizes worst-seed worst-domain score including gate_max_error on development uniform, negative-tail and kink domains. Fresh inaccessible until freeze.",
+    "promotion": "All3frozen seeds pass unchanged gates in fresh uniform, negative-tail and kink strata. OOD negative is diagnostic only. Task19 remains blocked otherwise.",
+    "initialization": "Task18b selected width32 step60000 tail_enriched/tau0.1 per-seed weights cloned identically into8arms. All arms reset Adam moments equally; this is not exact optimizer continuation. Baseline frozen parent evaluated on the same new fresh tuples after freeze.",
+    "loss": "mean squared transition error +0.1infMSE +0.1logtauMSE; optional1x top5percent squared transition-error mean. Independent Adam and gradient clipping1.",
+    "scope": "Isolated held-voltage K_Pst rates/gates only; no embedded substitution and no hardware speedup claim. Consumed Task18b fresh used for diagnosis, not confirmation.",
+    "parent_fixture_sha256": "14b41104cd02d0f5f82c32ff2a820c4096de2fab6019d4fee8cbae4873cee52c"
+  },
+  "code_revision": "c1a8e0b02a8169c7de72f8e7907fc87ee8c9dd67",
+  "fresh_accessed": false,
+  "parent_archive_sha256": "14b41104cd02d0f5f82c32ff2a820c4096de2fab6019d4fee8cbae4873cee52c",
+  "checkpoint_hashes": {
+    "checkpoint_step30000.pt": "96e642792f224a6b3c41ffbe2b63c897b09eab68697ce7e93ccb2dec710c3c63",
+    "checkpoint_step0.pt": "38db454cafbced54e496bd1e262953b9daa68319d9f2c217aaabf55d7f1f517b",
+    "checkpoint_step15000.pt": "95b14367b697b8477f212273324cd2c5ad0fc3c03bc7a0f1e07ff28aa247e2e6",
+    "checkpoint_step5000.pt": "18ad19df2350e13d030ce4f90871716af78e15b4bb0067239273f6b01944fc3f"
+  },
+  "freeze_sha256": "ace0a19602fdc0e652830250157835d66f8f44f43d9c3812ee7d42f6e96ca9e3"
+}

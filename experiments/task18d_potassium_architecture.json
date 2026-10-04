@@ -1,0 +1,68 @@
+{
+  "schema_version": "giada-task18d-preregistration-v1",
+  "log_label": "Task18d",
+  "require_cuda": true,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "width": 32,
+  "checkpoints": [
+    0,
+    5000,
+    15000,
+    30000
+  ],
+  "pool_size": 24000,
+  "batch_size": 1024,
+  "sampling": [
+    "smooth",
+    "feature",
+    "split"
+  ],
+  "topk_weights": [
+    0
+  ],
+  "learning_rates": [
+    0.003
+  ],
+  "hypotheses": {
+    "cusp_feature": "An added absolute-voltage distance from-60mV reduces the local mTau error beyond continued smooth-MLP optimization.",
+    "branch_heads": "Two independently learned mTau output heads selected by V<-60 improve worst-case accuracy around the canonical branch change.",
+    "budget": "Paired checkpoints distinguish architectural benefit from further optimization of the smooth parent.",
+    "state_extrema": "The error at initial occupancy0or1 bounds all initial states at each fixed voltage and dt; dense critical-region probes expose rare maxima."
+  },
+  "gates": {
+    "gate_rmse": 0.001,
+    "gate_max_error": 0.01,
+    "inf_rmse": 0.002,
+    "log_tau_rmse": 0.02,
+    "open_rmse": 0.002,
+    "occupancy_violations": 0
+  },
+  "data_seeds": {
+    "fit": 183101,
+    "tail": 183102,
+    "kink": 183103,
+    "dev": [
+      183201,
+      183202,
+      183203
+    ],
+    "minibatches": 183301,
+    "fresh": [
+      183401,
+      183402,
+      183403,
+      183404
+    ]
+  },
+  "selection": "One common architecture/checkpoint minimizes worst-seed worst-domain development score including maxima. Dense development grid201voltages plus branch-neighbors; fresh grid401plus neighbors opens after freeze.",
+  "promotion": "All3seeds pass unchanged gates on fresh uniform, negative-tail, kink and state-extrema grid in[-65,-55]mV. Original thresholds retained; dense-grid requirement additional, preregistered. OOD negative diagnostic only. Target margin max<0.008 is reported as robustness, not a posthoc changed gate.",
+  "initialization": "Clone selected frozen Task18c per-seed weights; extra feature weights zero, second mTau head duplicates first. All3families begin with the same input-output function; Adam reset equally.",
+  "loss": "Mean transitionMSE +0.1infMSE +0.1logtauMSE; lr0.003; independent clipping1 and moments. Same inputs, targets, batches and24k tuples:25percent tail and25percent critical region.",
+  "capacity": "Width32; effective parameters smooth1252, feature1284, split1285 (within3percent). Common padded storage includes inactive parameters; report effective capacity explicitly. Branch threshold is prior structural knowledge, computed only from current V.",
+  "scope": "Isolated K_Pst held-voltage gate/rate learnability; no embedded channel substitution. Consumed18c fresh supplies diagnosis only; new fresh is independent confirmation.",
+  "parent_fixture_sha256": "7ec50ce2de7f3c92f5754d1273fedd0f57454822e65b09459a587399402927d5"
+}
