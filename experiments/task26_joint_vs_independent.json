@@ -1,0 +1,40 @@
+{
+  "schema_version": "giada-roadmap-task26-preregistration-v1",
+  "stage": "Task26 originale — joint vs independent, cinque meccanismi sotto V imposto",
+  "parent_contract": "experiments/task25_heterogeneous_mechanisms.json",
+  "parent_result": "experiments/results/task25_kaggle_bdb75e6",
+  "parent_result_hashes": {
+    "final_report.json": "6afc08ead79a5e55c8bbbe3971a8184e6767612ab5329ab437fcdde74031c7f2",
+    "result_audit.json": "18c5258af5b455d7db074ce6ed8a3f73a07feac9552c756be0ed153f4de7ff24",
+    "composition_freeze.json": "e31776ca97d3c5a163de9e5627a240d272541c6272507da10ea7c7f3c263e60c"
+  },
+  "families": ["independent", "shared_heads"],
+  "widths": [16, 32],
+  "seeds": [17, 29, 43],
+  "checkpoints": [0, 5000, 15000, 30000, 60000],
+  "pool_size": 16384,
+  "batch_size": 256,
+  "development_count": 2048,
+  "learning_rate": 0.003,
+  "learning_rate_final": 0.0001,
+  "decay_start": 15000,
+  "inf_weight": 1.0,
+  "log_tau_weight": 1.0,
+  "clip_norm": 1.0,
+  "data_seeds": {"fit": 260101, "fit_regions": 260102, "minibatches": 260103, "development": [260201,260202], "held_development": 260205},
+  "fresh_seeds": [260401,260402,260403,260405],
+  "extrema_node_offset": 0.67,
+  "require_cuda": true,
+  "hypotheses": {
+    "joint_learnability": "Il trunk condiviso conserva tutti i gate e tutte le correnti nei tre seed, sul medesimo supporto del riferimento indipendente, alle soglie invariate della Task25.",
+    "capacity": "Il confronto width32 vs16 a budget fisso distingue una limitazione di capacità dalla semplice condivisione; shared32 (1780 parametri) vs independent16 (1860) è un controllo quasi allineato, non esattamente parameter-matched.",
+    "budget": "I checkpoint lungo le stesse traiettorie consentono contrasti appaiati 60k vs30k senza riaddestramento; un miglioramento di almeno10% del worst-seed development score è materiale ma non una legge universale.",
+    "gradient_interference": "Coseno negativo tra gradienti dei task sul trunk condiviso è un probe di conflitto locale; non dimostra da solo la causa di un fallimento. Probe a minibatch e checkpoint fissi, mai usato per selezione.",
+    "current_masking": "Somme accurate possono mascherare errori individuali: promozione richiede ogni canale e il peggior pannello di corrente, non soltanto il totale.",
+    "compute": "Condivisione riduce parametri e MAC teorici; latenza GPU warmup/sincronizzata è diagnostica. Nessuno speedup è dedotto dai parametri o da confronti non allineati. GateD resta incompleto."
+  },
+  "training": "Tutti da zero. Matrice2x2 famiglia xwidth,3seed vettorizzati; stesso fit, minibatch, LR cosine, loss percanale (gate+inf+logtau), clipping perseed/bundle, momentiAdam separati. A widthfisso inizializzazione identica di ogni trunk/head prima di divergere; nessun peso congelatoTask25 usato come warmstart. Non alleniamo targetdi corrente (Task27).",
+  "selection": "Un width/checkpoint comune per famiglia minimizza il massimo score development sui3seed, tuttii domini, ogni gate/rate e peggiorpannello corrente; include probe semigroupheld1000/10000ms aV disgiunto. Questo probe non è rolloutiterativo. Pareggi: minorewidth,poi checkpointpiùprecoce. Freeze verificato prima di generare fresh. Nessuna riselezione dopo fresh.",
+  "promotion": "Task27 preparabile solo se referenceindependent e shared_heads selezionati su development superano3/3 tutta la congiunzione fresh,helditerativo e path fast/slow. Technicalvalid separato dalNO-GOscientifico. Compressione dichiarabile solo con meno parametri e3/3; nessuna autorizzazione a closedloop oGateD completo.",
+  "limits": "Cinque canali voltaggio-dipendenti; dieci stati m/h espliciti; V imposto; corrente analitica economica mantenuta. Nessun CaDynamics/SK_E2, calciumfeedback, voltaggioautonomo, temperaturaOOD, sinapsi o neuronecompleto. Task27 targetcorrenti eTask28 blocco completo restano separate."
+}

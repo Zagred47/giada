@@ -412,9 +412,20 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   precedenti congelati. `notebooks/24b_sodium_control_diagnosis.ipynb`.
 
 - **Task 25 — Meccanismi eterogenei** → Combinare cinetiche differenti.
+  **Conclusa (bdb75e6), GO primario**: indipendenti e calcio compresso passano
+  3/3 seed; sodio compresso ed entrambi compressi2/3. Nel seed43, sul supporto
+  activation_boundary, NaTa_t/NaTs2_t m_RMSE superano0.001; correnti, held e path
+  passano. Nuovo dominio: non modifica retroattivamente l'esitoTask24b.
+  22456 osservazioni e6conclusioni collegate nel mirrorSQLite. Nessun training,
+  V imposto; `experiments/results/task25_kaggle_bdb75e6/`.
 
 - **Task 26 — Joint vs independent** → Confronto appaiato tra modelli separati
   e trunk condiviso.
+  **Preregistrata**: `experiments/task26_joint_vs_independent.json`,
+  `notebooks/26_roadmap_joint_vs_independent.ipynb`. Famiglia xwidth16/32,
+  tre seed vettorizzati, ladder fino60k, stesso fit/minibatch/LR e selezione
+  development prima del fresh. Gradienti condivisi, correnti individuali e
+  totale, costi e latenza come probe; nessun targetcorrente nella loss (Task27).
 
 - **Task 27 — Correnti individuali e totale** → La corrente totale può essere
   un target, ma le componenti individuali restano target ausiliari e probe.
