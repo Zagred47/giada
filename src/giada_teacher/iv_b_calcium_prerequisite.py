@@ -53,12 +53,10 @@ def current(protocol, t, config):
     return 0.0
 
 
-def compile_mechanisms(teacher, output, revision):
+def compile_mechanisms(teacher, output, config):
     # Reuse the canonical CRLF-normalized source inventory check.
-    base = json.loads((Path(__file__).resolve().parents[2] /
-                       'experiments/iv_b1_b2_calcium_prerequisite.json').read_text())
     if subprocess.check_output(['git', '-C', str(teacher), 'rev-parse', 'HEAD'],
-                               text=True).strip() != base['teacher_revision']:
+                               text=True).strip() != config['teacher_revision']:
         raise RuntimeError('Canonical teacher revision mismatch')
     source = Path(teacher) / 'L5PC_NEURON_simulation/mods'
     inventory = json.loads((Path(__file__).resolve().parents[2] /
@@ -169,9 +167,12 @@ def analytic(cai0, decay, gamma, depth, protocol, config, with_sk):
     z[0] = sk_inf(cai0)
     for index in range(count):
         amp = current(protocol, index*dt, config)
-        if with_sk:
-            z[index+1] = sk_inf(cai[index]) + (z[index]-sk_inf(cai[index])) * math.exp(-dt)
         cai[index+1] = calcium_exact(cai[index], amp, dt, gamma, depth, decay)
+        if with_sk:
+            # NEURON fixed-step orders CaDynamics before SK: updated cai is a
+            # causal intermediate within the step, not a future teacher input.
+            inf = sk_inf(cai[index+1])
+            z[index+1] = inf + (z[index]-inf) * math.exp(-dt)
     return cai, z
 
 
@@ -182,7 +183,9 @@ def error(a, b):
 
 def run(teacher, output, config, revision):
     output = Path(output)
-    build, hashes = compile_mechanisms(teacher, output, revision)
+    if config['schema_version'] != 'giada-iv-b1-b2-calcium-prerequisite-v2':
+        raise RuntimeError('IV-B confirmation requires the v2 semantic contract')
+    build, hashes = compile_mechanisms(teacher, output, config)
     from neuron import load_mechanisms
     load_mechanisms(str(build.resolve()))
     b1_rows = []
@@ -213,7 +216,7 @@ def run(teacher, output, config, revision):
                 native_cai_gate = np.empty_like(calculated_z)
                 native_cai_gate[0] = sk_inf(cai0)
                 for index in range(len(native_cai_gate)-1):
-                    inf = sk_inf(native['cai'][index])
+                    inf = sk_inf(native['cai'][index+1])
                     native_cai_gate[index+1] = inf + (native_cai_gate[index]-inf)*math.exp(-config['dt_ms'])
                 expected_ik = config['b2_gbar_s_cm2'] * calculated_z * (
                     native['v'] - config['b2_ek_mv'])

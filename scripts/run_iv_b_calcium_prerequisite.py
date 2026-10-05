@@ -20,11 +20,11 @@ def main():
     args = parser.parse_args()
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=False)
-    config = json.loads((ROOT / 'experiments/iv_b1_b2_calcium_prerequisite.json').read_text())
+    config = json.loads((ROOT / 'experiments/iv_b1_b2_calcium_prerequisite_v2.json').read_text())
     revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'],
                                        text=True).strip()
     write(output / 'run_contract.json', config)
-    files = ('experiments/iv_b1_b2_calcium_prerequisite.json',
+    files = ('experiments/iv_b1_b2_calcium_prerequisite_v2.json',
              'src/giada_teacher/iv_b_calcium_prerequisite.py',
              'scripts/run_iv_b_calcium_prerequisite.py')
     write(output / 'code_provenance.json', {

@@ -1,7 +1,7 @@
 import math
 import unittest
 
-from src.giada_teacher.iv_b_calcium_prerequisite import calcium_exact, sk_inf
+from src.giada_teacher.iv_b_calcium_prerequisite import analytic, calcium_exact, sk_inf
 
 
 class CalciumPrerequisiteTests(unittest.TestCase):
@@ -27,6 +27,14 @@ class CalciumPrerequisiteTests(unittest.TestCase):
         self.assertEqual(values, sorted(values))
         self.assertTrue(all(0 <= value <= 1 for value in values))
         self.assertAlmostEqual(values[2], .5)
+
+    def test_sk_uses_causally_updated_calcium(self):
+        config = {'dt_ms': .1, 'duration_ms': .1,
+                  'current_protocol_ma_cm2': {'pulse': [[0.0, .1, -.005]]}}
+        cai, z = analytic(1e-4, 80.0, .05, .1, 'pulse', config, True)
+        expected = sk_inf(cai[1]) + (sk_inf(cai[0])-sk_inf(cai[1]))*math.exp(-.1)
+        self.assertAlmostEqual(z[1], expected)
+        self.assertGreater(z[1], z[0])
 
 
 if __name__ == '__main__':

@@ -1,0 +1,59 @@
+{
+  "schema_version": "giada-iv-b-first-run-posthoc-semantic-audit-v1",
+  "source_archive_sha256": "9730278dd9977e66aceb406f2248d3056462db585d10617ad08a1edf943c0943",
+  "source_decision_unchanged": "IV-B1 PASS; IV-B2 NOT PASSED under v1 reference",
+  "rows": [
+    {
+      "cai0": 0.0001,
+      "protocol": "rest",
+      "old_cai_one_step_rmse": 0.0,
+      "updated_cai_one_step_rmse": 0.0
+    },
+    {
+      "cai0": 0.0001,
+      "protocol": "single",
+      "old_cai_one_step_rmse": 0.00037415727907648676,
+      "updated_cai_one_step_rmse": 3.8232954974021453e-17
+    },
+    {
+      "cai0": 0.0001,
+      "protocol": "paired",
+      "old_cai_one_step_rmse": 0.00037619876773964286,
+      "updated_cai_one_step_rmse": 5.1746039333623396e-17
+    },
+    {
+      "cai0": 0.0001,
+      "protocol": "sustained",
+      "old_cai_one_step_rmse": 0.00011533608704202446,
+      "updated_cai_one_step_rmse": 4.5347401083039733e-17
+    },
+    {
+      "cai0": 0.0005,
+      "protocol": "rest",
+      "old_cai_one_step_rmse": 5.6003438894959044e-05,
+      "updated_cai_one_step_rmse": 2.0780453645899407e-17
+    },
+    {
+      "cai0": 0.0005,
+      "protocol": "single",
+      "old_cai_one_step_rmse": 0.00017890668574538444,
+      "updated_cai_one_step_rmse": 4.519612203791064e-17
+    },
+    {
+      "cai0": 0.0005,
+      "protocol": "paired",
+      "old_cai_one_step_rmse": 0.0001738605809259098,
+      "updated_cai_one_step_rmse": 5.509324452557032e-17
+    },
+    {
+      "cai0": 0.0005,
+      "protocol": "sustained",
+      "old_cai_one_step_rmse": 6.72018992127782e-05,
+      "updated_cai_one_step_rmse": 5.396300654998293e-17
+    }
+  ],
+  "maximum_updated_cai_one_step_rmse": 5.509324452557032e-17,
+  "diagnosis": "Native fixed-step SK uses current-step updated cai. V1 used old cai.",
+  "decision_grade": false,
+  "next_action": "Run separately preregistered v2 on additional pulse schedules."
+}

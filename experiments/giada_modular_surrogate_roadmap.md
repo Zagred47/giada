@@ -575,10 +575,14 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   decisione causale, non una promozione automatica; Gate D speed NO-GO.
 - **Task 32 — Dinamiche lente in feedback**. L'avvio del feedback elettrico resta
   subordinato ai prerequisiti IV-B1 e IV-B2 del piano originale. Protocollo
-  appaiato preregistrato in `experiments/iv_b1_b2_calcium_prerequisite.json`:
-  prima CaDynamics_E2 con corrente imposta, poi CaDynamics → SK_E2 a V imposto.
-  Il notebook non equivale ancora alla Task32 chiusa: nessuna promozione prima
-  del controllo nativo e della decisione sui due prerequisiti.
+  appaiato v1 in `experiments/iv_b1_b2_calcium_prerequisite.json`:
+  CaDynamics_E2 isolato passa 48/48, ma la composizione SK non passa perché
+  il riferimento leggeva cai vecchio. L'audit post-hoc delle tracce native
+  identifica l'ordine causale effettivo: CaDynamics aggiorna cai, poi SK usa
+  quel valore nello stesso passo. La v1 resta non promossa. Conferma v2
+  preregistrata con due protocolli nuovi e soglie invariate in
+  `experiments/iv_b1_b2_calcium_prerequisite_v2.json`. Il notebook non equivale
+  ancora alla Task32 chiusa: nessuna promozione prima della conferma nativa.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
