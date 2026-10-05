@@ -454,6 +454,15 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
 
 - **Task 28 — Blocco ionico completo teacher-forced** → Tutti i gate e le
   correnti locali con voltaggio ancora fornito dal teacher.
+  **Preregistrata**: `experiments/task28_ionic_block_teacher_forced.json`,
+  notebook `notebooks/28_roadmap_ionic_block_teacher_forced.ipynb`. Include
+  esplicitamente gli 11 meccanismi ionici con gate dell'inventario: cinque
+  moduli neurali congelati dalla Task27 e sei moduli a formula canonica,
+  verificati separatamente. Gli ingressi (V), (cai), stato iniziale e passo
+  sono imposti; nessun CaDynamics, training o generazione autonoma. Quattro
+  bracci frozen, tre seed fresh indipendenti, pannelli di corrente firmata e
+  percorsi imposti. Il GO di composizione e Gate D restano decisioni diverse:
+  senza benchmark di compute appaiato Gate D non è dichiarato completo.
 
 ### ✅ Gate D — Componibilità ionica
 
