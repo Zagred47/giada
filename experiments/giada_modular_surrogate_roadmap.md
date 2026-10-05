@@ -565,7 +565,14 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   multicompartimentale, CaDynamics o la velocità. Task31 ancora da
   autorizzare separatamente. Dettagli in
   `experiments/task30c_native_active_result.md`.
-- **Task 31 — Scheduled sampling diagnostico**.
+- **Task 31 — Scheduled sampling diagnostico**. Preflight retrospettivo sui
+  checkpoint congelati 30b/30c: il feedback sul gate è misurabile, ma l'errore
+  assoluto di V resta molto basso fino a 80 ms (peggior episodio nativo
+  0,0271 mV). Nessun nuovo training/test o selezione: continuation con
+  scheduled sampling rimandato finché un dominio indipendente non mostri un
+  collo di bottiglia di esposizione. Rapporto e limiti in
+  `experiments/task31_exposure_diagnostic_result.md`. Task 32 resta una nuova
+  decisione causale, non una promozione automatica; Gate D speed NO-GO.
 - **Task 32 — Dinamiche lente in feedback**.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
 - **Task 34 — Correnti e stati come probe privilegiati**.
