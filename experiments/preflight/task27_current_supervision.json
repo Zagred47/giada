@@ -1,0 +1,15 @@
+{
+  "schema_version": "giada-task27-preflight-v1",
+  "cpu_smoke_valid": true,
+  "cpu_smoke_rows": 24,
+  "cpu_smoke_checkpoints": [0, 1, 2],
+  "cpu_smoke_fresh_seeds": [270991, 270992, 270993, 270994],
+  "registered_fresh_seeds_opened_in_preflight": false,
+  "paired_initialization_max_abs_error": 0.0,
+  "freeze_written_before_fresh": true,
+  "pytest_task26_and_task27_passed": 9,
+  "parent_task26_selection": {"independent_width": 32, "shared_heads_width": 16},
+  "parent_result_hashes_verified": true,
+  "native_teacher_full_recheck": "Runs in Kaggle native worker before GPU training",
+  "note": "CPU preflight verifies routing and integrity, not scientific performance or CUDA behavior."
+}

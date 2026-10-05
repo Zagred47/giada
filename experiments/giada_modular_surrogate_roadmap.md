@@ -428,14 +428,21 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
 
 - **Task 26 — Joint vs independent** → Confronto appaiato tra modelli separati
   e trunk condiviso.
-  **Preregistrata**: `experiments/task26_joint_vs_independent.json`,
-  `notebooks/26_roadmap_joint_vs_independent.ipynb`. Famiglia xwidth16/32,
-  tre seed vettorizzati, ladder fino60k, stesso fit/minibatch/LR e selezione
-  development prima del fresh. Gradienti condivisi, correnti individuali e
-  totale, costi e latenza come probe; nessun targetcorrente nella loss (Task27).
+  **Conclusa (2a6bd21), GO**: entrambe le famiglie superano 3/3 seed e tutte
+  le soglie fresh/held/path. Selezionati independent width32, 6260 parametri,
+  e shared_heads width16, 644 parametri (-89.7%). Il beneficio verificato è
+  la compressione del numero di parametri nel dominio V imposto, non uno
+  speedup del neurone completo. Nessun target corrente nella loss.
+  Risultati in `experiments/results/task26_kaggle_2a6bd21/`.
 
 - **Task 27 — Correnti individuali e totale** → La corrente totale può essere
   un target, ma le componenti individuali restano target ausiliari e probe.
+  **Preregistrata**: `experiments/task27_current_supervision.json` e
+  `notebooks/27_roadmap_current_supervision.ipynb`. Due architetture x quattro
+  loss (none, individual, total, both), tre seed appaiati e budget identico.
+  La corrente resta formula analitica; train su correnti normalizzate, con
+  pannelli che espongono cancellazioni. Width fissati dalla Task26; nuovi
+  fit/development/fresh e freeze prima del fresh. Nessun closed loop.
 
 - **Task 28 — Blocco ionico completo teacher-forced** → Tutti i gate e le
   correnti locali con voltaggio ancora fornito dal teacher.

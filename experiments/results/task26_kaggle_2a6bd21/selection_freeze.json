@@ -1,0 +1,189 @@
+{
+  "config": {
+    "channels": [
+      "Ca_HVA",
+      "Ca_LVAst",
+      "NaTa_t",
+      "NaTs2_t",
+      "Nap_Et2"
+    ],
+    "sample_count": 8192,
+    "extrema_nodes": 121,
+    "dt_values_ms": [
+      0.025,
+      0.1,
+      0.5,
+      1,
+      5,
+      25,
+      100,
+      500,
+      1000
+    ],
+    "held_horizons_ms": [
+      1,
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "path_dt_ms": {
+      "fast": 0.025,
+      "slow": 1.0
+    },
+    "gates": {
+      "gate_rmse": 0.001,
+      "m_rmse": 0.001,
+      "h_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "open_rmse": 0.002,
+      "occupancy_violations": 0
+    },
+    "held_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "current_gates": {
+      "individual_current_normalized_rmse": 0.002,
+      "total_current_normalized_rmse": 0.002,
+      "total_current_normalized_max": 0.01
+    },
+    "path_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "path_current_gates": {
+      "individual_current_normalized_rmse": 0.003,
+      "total_current_normalized_rmse": 0.003,
+      "total_current_normalized_max": 0.01
+    },
+    "current_semantics": "Retain analytic I=gbar*m^p*h*(V-E),p2Ca/p3Na. V/E supplied, post-update state. Units mA/cm2. Canonical Eca120/Ena55 with declared diagnostic variation. Normalize total by sum absolute fully-open driving currents, never by cancelling teacher total. Require every individual channel and worst panel, not pooled total alone. No embedded BREAKPOINT timing claim.",
+    "extrema_support": "22 structured corners: all0,all1,each single high and each single low of10states. Cover all marginal gate extremes without claiming all1024joint corners. Fresh off-grid V nodes plus fixed endpoints/canonical seams intentionally repeated.",
+    "schema_version": "giada-roadmap-task26-preregistration-v1",
+    "stage": "Task26 originale \u2014 joint vs independent, cinque meccanismi sotto V imposto",
+    "parent_contract": "experiments/task25_heterogeneous_mechanisms.json",
+    "parent_result": "experiments/results/task25_kaggle_bdb75e6",
+    "parent_result_hashes": {
+      "final_report.json": "6afc08ead79a5e55c8bbbe3971a8184e6767612ab5329ab437fcdde74031c7f2",
+      "result_audit.json": "18c5258af5b455d7db074ce6ed8a3f73a07feac9552c756be0ed153f4de7ff24",
+      "composition_freeze.json": "e31776ca97d3c5a163de9e5627a240d272541c6272507da10ea7c7f3c263e60c"
+    },
+    "families": [
+      "independent",
+      "shared_heads"
+    ],
+    "widths": [
+      16,
+      32
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "checkpoints": [
+      0,
+      5000,
+      15000,
+      30000,
+      60000
+    ],
+    "pool_size": 16384,
+    "batch_size": 256,
+    "development_count": 2048,
+    "learning_rate": 0.003,
+    "learning_rate_final": 0.0001,
+    "decay_start": 15000,
+    "inf_weight": 1.0,
+    "log_tau_weight": 1.0,
+    "clip_norm": 1.0,
+    "data_seeds": {
+      "fit": 260101,
+      "fit_regions": 260102,
+      "minibatches": 260103,
+      "development": [
+        260201,
+        260202
+      ],
+      "held_development": 260205
+    },
+    "fresh_seeds": [
+      260401,
+      260402,
+      260403,
+      260405
+    ],
+    "extrema_node_offset": 0.67,
+    "require_cuda": true,
+    "hypotheses": {
+      "joint_learnability": "Il trunk condiviso conserva tutti i gate e tutte le correnti nei tre seed, sul medesimo supporto del riferimento indipendente, alle soglie invariate della Task25.",
+      "capacity": "Il confronto width32 vs16 a budget fisso distingue una limitazione di capacit\u00e0 dalla semplice condivisione; shared32 (1780 parametri) vs independent16 (1860) \u00e8 un controllo quasi allineato, non esattamente parameter-matched.",
+      "budget": "I checkpoint lungo le stesse traiettorie consentono contrasti appaiati 60k vs30k senza riaddestramento; un miglioramento di almeno10% del worst-seed development score \u00e8 materiale ma non una legge universale.",
+      "gradient_interference": "Coseno negativo tra gradienti dei task sul trunk condiviso \u00e8 un probe di conflitto locale; non dimostra da solo la causa di un fallimento. Probe a minibatch e checkpoint fissi, mai usato per selezione.",
+      "current_masking": "Somme accurate possono mascherare errori individuali: promozione richiede ogni canale e il peggior pannello di corrente, non soltanto il totale.",
+      "compute": "Condivisione riduce parametri e MAC teorici; latenza GPU warmup/sincronizzata \u00e8 diagnostica. Nessuno speedup \u00e8 dedotto dai parametri o da confronti non allineati. GateD resta incompleto."
+    },
+    "training": "Tutti da zero. Matrice2x2 famiglia xwidth,3seed vettorizzati; stesso fit, minibatch, LR cosine, loss percanale (gate+inf+logtau), clipping perseed/bundle, momentiAdam separati. A widthfisso inizializzazione identica di ogni trunk/head prima di divergere; nessun peso congelatoTask25 usato come warmstart. Non alleniamo targetdi corrente (Task27).",
+    "selection": "Un width/checkpoint comune per famiglia minimizza il massimo score development sui3seed, tuttii domini, ogni gate/rate e peggiorpannello corrente; include probe semigroupheld1000/10000ms aV disgiunto. Questo probe non \u00e8 rolloutiterativo. Pareggi: minorewidth,poi checkpointpi\u00f9precoce. Freeze verificato prima di generare fresh. Nessuna riselezione dopo fresh.",
+    "promotion": "Task27 preparabile solo se referenceindependent e shared_heads selezionati su development superano3/3 tutta la congiunzione fresh,helditerativo e path fast/slow. Technicalvalid separato dalNO-GOscientifico. Compressione dichiarabile solo con meno parametri e3/3; nessuna autorizzazione a closedloop oGateD completo.",
+    "limits": "Cinque canali voltaggio-dipendenti; dieci stati m/h espliciti; V imposto; corrente analitica economica mantenuta. Nessun CaDynamics/SK_E2, calciumfeedback, voltaggioautonomo, temperaturaOOD, sinapsi o neuronecompleto. Task27 targetcorrenti eTask28 blocco completo restano separate.",
+    "parent_contract_sha256": "816ccd0ba8918d411bca6889a60f9cb3180566ce12d31b3f61e2a7a7c84eaa06",
+    "task26_contract_sha256": "57b968925095f23a540d66f53d7ce4e8a7606878774bf344f8760815ef49a9a6"
+  },
+  "selection": {
+    "independent": {
+      "family": "independent",
+      "width": 32,
+      "step": 60000,
+      "score": 0.8770136075670131,
+      "checkpoint": "checkpoint_independent_w32_step60000.pt"
+    },
+    "shared_heads": {
+      "family": "shared_heads",
+      "width": 16,
+      "step": 60000,
+      "score": 0.7499445920580717,
+      "checkpoint": "checkpoint_shared_heads_w16_step60000.pt"
+    }
+  },
+  "code_revision": "2a6bd21792ce8f0285686c4a793029c1775201b2",
+  "fresh_accessed": false,
+  "prerequisite_hashes": {
+    "final_report.json": "6afc08ead79a5e55c8bbbe3971a8184e6767612ab5329ab437fcdde74031c7f2",
+    "result_audit.json": "18c5258af5b455d7db074ce6ed8a3f73a07feac9552c756be0ed153f4de7ff24",
+    "composition_freeze.json": "e31776ca97d3c5a163de9e5627a240d272541c6272507da10ea7c7f3c263e60c"
+  },
+  "checkpoint_hashes": {
+    "checkpoint_independent_w32_step60000.pt": "91d3535e0ef449ddd215fa655416904b257e19efdbeded0badc4d65f29bfaeb0",
+    "checkpoint_shared_heads_w16_step0.pt": "9de00be37113ef923bc3ee3ce4edbd5a49ccd97100e86a2c0a058a8672c0a5f4",
+    "checkpoint_shared_heads_w32_step60000.pt": "3b72a04747832bcb1de2def9d2cc3418ae5d368eeffa07a1177a24229f7db753",
+    "checkpoint_shared_heads_w32_step5000.pt": "e8474e9f276a499fa88ad56a3b3014f67ba33ebbe570e420275e1a44dd4e2d99",
+    "checkpoint_independent_w16_step60000.pt": "bc7564fcd7e3fd047d1a3185235a1b1b7ba1f8c05897bbce48d36a4fb295d672",
+    "checkpoint_independent_w16_step30000.pt": "781b2d81a998437e8048c0454b2e8a54ff81d2b3f3ee97b8a9ad7830583ca102",
+    "checkpoint_independent_w32_step30000.pt": "aab03c24a630830a50b8549ccccb621cfe1bdde82bdec44b3e812f3ff3437137",
+    "checkpoint_shared_heads_w32_step15000.pt": "f2bdea529078aad4e8977ccf76cd79a12ba9a9a517806977c51dfe688e6545a2",
+    "checkpoint_shared_heads_w16_step30000.pt": "34e200952d09aedf967c6cd7f05f1126a9b4c0e7b0e1dbcfbbe22ed32874e5d8",
+    "checkpoint_shared_heads_w32_step30000.pt": "dfe6dd65531025bdf4cd94b57e5c563c4dd32b70c3245ae29fd7a926d16629be",
+    "checkpoint_shared_heads_w16_step5000.pt": "435e5bde8b46b678574b133a42d7ab2da956f6ca5d96ebe14a9c299dcbb95c5c",
+    "checkpoint_shared_heads_w32_step0.pt": "c598cd6c967b7a3335571bf648428a871c9740b33bfd3924c22690e4e33482aa",
+    "checkpoint_independent_w32_step0.pt": "21b90963be3fec268a82e73f7c9a0c8392a0ad1b379e3406c1b6c783acb6d06e",
+    "checkpoint_independent_w16_step5000.pt": "737cf57a2bc8b31742e54c2de3d2575d1569adf8c9ad9d9a89773c3a7ccf25f3",
+    "checkpoint_independent_w16_step0.pt": "9884264bc4af309226bec45b070d30275c2f4a9a8746f79bf56a130959e1d2dd",
+    "checkpoint_shared_heads_w16_step15000.pt": "b575253ac23cbb0d10cd0b339653f3ecef2c94412c5ab745644dade66f4df690",
+    "checkpoint_shared_heads_w16_step60000.pt": "7b73ef298d615a7ab784afbb295d85d1dd53f64c4eb12d66ebdbe3c5bd353dcb",
+    "checkpoint_independent_w32_step5000.pt": "7d739ac2b679d45912218586bff4bea84d98004a2e568652a9614ac12da98bd3",
+    "checkpoint_independent_w16_step15000.pt": "41b79ba233b98e5710ccf0aa27bc746a6e896a6b49ba8ec900ca7bc4a75a517d",
+    "checkpoint_independent_w32_step15000.pt": "2b2a7bf97af3cebda88b4c90040c3835a7f8c2a320cbb25e866631f6106a897b"
+  },
+  "freeze_sha256": "18c621b04792ae78f5cf8b97c80de101b51d0b480f3fee4e036d67ac91818c11"
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "giada-roadmap-task27-preregistration-v1",
+  "stage": "Task27 originale — supervisione delle correnti individuali e totale",
+  "parent_contract": "experiments/task26_joint_vs_independent.json",
+  "parent_run": "experiments/results/task26_kaggle_2a6bd21/final_report.json",
+  "parent_freeze": "experiments/results/task26_kaggle_2a6bd21/selection_freeze.json",
+  "parent_process": "experiments/results/task26_kaggle_2a6bd21/process_status.json",
+  "parent_result_hashes": {
+    "final_report.json": "effa6f074d5a6f093205a49e13a837014afd29222c84713713603dc388e1dd7a",
+    "selection_freeze.json": "d1549d0741dd716234e8fe8cd3df6e46ae8ba049e1828982e42179feb3aa8797",
+    "process_status.json": "825ee4d329426603c544dae1ae4d4d6ed5aec39185e80ed4c154edad4b0b04fb"
+  },
+  "families": ["independent", "shared_heads"],
+  "supervision_arms": ["none", "individual", "total", "both"],
+  "seeds": [17, 29, 43],
+  "checkpoints": [0, 5000, 15000, 30000, 60000],
+  "pool_size": 16384,
+  "batch_size": 256,
+  "development_count": 2048,
+  "learning_rate": 0.003,
+  "learning_rate_final": 0.0001,
+  "decay_start": 15000,
+  "clip_norm": 1.0,
+  "inf_weight": 1.0,
+  "log_tau_weight": 1.0,
+  "individual_current_weight": 1.0,
+  "total_current_weight": 1.0,
+  "data_seeds": {"fit": 270101, "fit_regions": 270102, "minibatches": 270103, "development": [270201, 270202], "held_development": 270205},
+  "fresh_seeds": [270401, 270402, 270403, 270405],
+  "extrema_node_offset": 0.41,
+  "require_cuda": true,
+  "hypotheses": {
+    "individual": "La loss sulle correnti individuali migliora il peggiore errore corrente senza degradare gate, rate e condizioni di lungo orizzonte.",
+    "total": "La loss sul totale può migliorare la somma; il confronto con individual e both rivela se tale miglioramento maschera errori dei singoli canali.",
+    "both": "Loss individuale e totale insieme conserva le soglie della Task26 e migliora almeno uno dei contrasti correnti preregistrati.",
+    "sharing": "Il beneficio della supervisione di corrente può differire tra modelli indipendenti e trunk condiviso, con fit e seed appaiati."
+  },
+  "loss": "Gate+inf+logtau per canale come Task26. Individual aggiunge MSE di open-probability m^p*h per ciascun canale: equivale alla corrente individuale normalizzata per il driving fully-open non nullo. Total aggiunge la MSE della somma delle cinque correnti analitiche normalizzata per la somma dei driving fully-open assoluti su venti pannelli gbar/reversal fissati; mai dividere per la corrente netta teacher. Nessuna head di corrente addestrabile.",
+  "selection": "Per ogni famiglia e braccio, checkpoint comune ai tre seed scelto solo su development con il peggior rapporto a soglia per gate, rate, corrente individuale, corrente totale e probe semigroup disgiunto. Pareggio: checkpoint piu precoce. Il width della famiglia resta quello selezionato nella Task26. Freeze e hash dei checkpoint prima del fresh.",
+  "comparison": "Primario: per-seed differenza del worst-current score fresh between both e none; secondari individual vs none, total vs none, both vs individual, both vs total, separati per famiglia. Riportare gate/rate/held/path e pannello cancellation. Miglioramento materiale: almeno 10% della mediana appaiata, senza degradazione oltre soglia su alcun seed/dominio. Scientific NO-GO se non si verifica; non usare fresh per riselezione.",
+  "promotion": "Task28 preparabile soltanto se i riferimenti none e i candidati both selezionati di entrambe le famiglie passano tutti e tre i seed e tutte le soglie fresh/held/path. Dichiarare utilita della supervisione di corrente solo se il miglioramento materiale preregistrato e verificato. GateD non completato dalla Task27; nessuna autorizzazione al voltaggio autonomo.",
+  "limits": "Cinque canali voltaggio-dipendenti, dieci stati m/h, V imposto, corrente analitica post-update. Niente feedback CaDynamics/SK, sinapsi, temperatura OOD, solve del voltaggio o neurone completo."
+}
