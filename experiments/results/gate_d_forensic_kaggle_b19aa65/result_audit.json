@@ -1,0 +1,27 @@
+{
+  "schema_version": "giada-gate-d-bottleneck-audit-v1",
+  "valid": true,
+  "scientific_status": "diagnostic_only_gate_d_no_go_unchanged",
+  "artifact_sha256": "08cde73d46e3e2e835f2f59f7ecc903663c593391ff31d851996d41bf8cde6b5",
+  "report_sha256": "73d4b2f62b3063b8cbb4cae7a27a4f8a282f579d5f940e84a7712564f3a805fc",
+  "summary": [
+    {
+      "family": "independent",
+      "exact_core_ms": 0.14044800400733948,
+      "neural_core_ms": 0.3832640051841736,
+      "exact_full_ms": 0.3338080048561096,
+      "hybrid_full_ms": 0.5947519838809967,
+      "exact_full_kernel_events_per_4_calls": 56,
+      "hybrid_full_kernel_events_per_4_calls": 80
+    },
+    {
+      "family": "shared_heads",
+      "exact_core_ms": 0.17320000380277634,
+      "neural_core_ms": 0.627263993024826,
+      "exact_full_ms": 0.42340800166130066,
+      "hybrid_full_ms": 0.8682399988174438,
+      "exact_full_kernel_events_per_4_calls": 55,
+      "hybrid_full_kernel_events_per_4_calls": 87
+    }
+  ]
+}
