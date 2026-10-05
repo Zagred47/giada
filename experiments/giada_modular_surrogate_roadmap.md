@@ -546,6 +546,13 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   **Task 30b — conferma prospettica con esposizione attiva**: condizioni
   disgiunte con stimoli entro 1–8 ms, stessa soglia primaria e checkpoint
   congelati. Protocollo `experiments/task30b_active_exposure_confirmation.json`.
+  Conferma completata e verificata: 24/24 episodi non-rest esposti prima di
+  8 ms, sei crossing attivi di riferimento, peggior RMSE per episodio nel
+  both-arm 0,0097 mV (limite 2 mV). GO scientifico **solo** per la mappa
+  autonoma interna a formule esatte del singolo compartimento. Il riferimento
+  attivo NEURON completo non è stato validato; calcio e ingresso sono imposti.
+  Task31 non è automaticamente autorizzata; Gate D speed resta NO-GO.
+  Dettagli in `experiments/task30b_active_exposure_result.md`.
 - **Task 31 — Scheduled sampling diagnostico**.
 - **Task 32 — Dinamiche lente in feedback**.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.

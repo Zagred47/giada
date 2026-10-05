@@ -1,0 +1,68 @@
+{
+  "schema_version": "giada-roadmap-task30b-active-exposure-v1",
+  "reason": "The first Task30 run was technically valid but its 8ms primary horizon had zero injected-current exposure because stimulus onset was >=8ms. Confirm the same scientific claim on disjoint, actively stimulated conditions before any Task31 decision.",
+  "failed_parent_audit": "experiments/results/task30_kaggle_fb08789/result_audit.json",
+  "failed_parent_audit_sha256": "3ad010e46fc0f5c61c4581a8f7fd3e987e8faab0aee6b37cb350bd4a685aa860",
+  "scientific_parent": "experiments/results/task29_kaggle_1245b70",
+  "scientific_parent_sha256": {
+    "final_report.json": "f5e42cbb99afa046e965c1c59a540c8ff375e01853a5a35a235d1c2a42e4b9e2",
+    "result_audit.json": "0f913e458e2c2b31ff85d3ff016dc7cd820f277f666f95716104e0330892f9d7"
+  },
+  "performance_parent": "experiments/results/gate_d_compiled_kaggle_e66dfea",
+  "performance_status": "NO_GO_UNCHANGED",
+  "families": [
+    "independent",
+    "shared_heads"
+  ],
+  "arms": [
+    "none",
+    "both"
+  ],
+  "model_seeds": [
+    17,
+    29,
+    43
+  ],
+  "initial_voltage_mv": [
+    -80.0,
+    -58.0
+  ],
+  "protocols": [
+    "rest",
+    "early_low",
+    "early_high",
+    "early_paired"
+  ],
+  "calcium_levels_mM": [
+    2e-05,
+    8e-05
+  ],
+  "conductance_panels": [
+    "canonical",
+    "sodium_x4"
+  ],
+  "steps": 801,
+  "dt_ms": 0.1,
+  "cm_uf_cm2": 1.0,
+  "g_pas_s_cm2": 0.0001,
+  "e_pas_mv": -76.0,
+  "horizons_ms": [
+    2.0,
+    8.0,
+    20.0,
+    40.0,
+    80.0
+  ],
+  "primary_horizon_ms": 8.0,
+  "require_primary_stimulus_exposure": true,
+  "primary_voltage_rmse_limit_mv": 1.0,
+  "primary_worst_episode_voltage_rmse_limit_mv": 2.0,
+  "physical_voltage_range_mv": [
+    -140.0,
+    100.0
+  ],
+  "event_threshold_mv": -20.0,
+  "native_passive_only_calibration_limit_mv": 0.2,
+  "decision": "Preflight demands injected-current exposure in all 24 non-rest episodes before 8ms. After that, the unchanged Task30 primary threshold applies to every frozen both-arm family/seed: pooled 8ms voltage RMSE <=1mV, worst episode <=2mV, finite traces and no state occupancy or physical-voltage violations. Longer horizons and none-arm are diagnostic. Zero active reference threshold crossings must be reported and limits interpretation, not silently treated as a full active-neuron confirmation.",
+  "limits": "Single-compartment fixed semi-implicit formula-map reference, not independently validated full active NEURON. Calcium and injection imposed. No CaDynamics, axial/synaptic coupling, morphology, deployment speed or Task31 authorization. Gate D performance remains NO-GO. The confirmation changes fresh initial voltage, calcium and stimulus timing/amplitude; frozen checkpoints and numerical thresholds remain unchanged."
+}
