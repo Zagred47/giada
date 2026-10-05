@@ -454,7 +454,7 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
 
 - **Task 28 — Blocco ionico completo teacher-forced** → Tutti i gate e le
   correnti locali con voltaggio ancora fornito dal teacher.
-  **Preregistrata**: `experiments/task28_ionic_block_teacher_forced.json`,
+  **Eseguita, GO nello scope teacher-forced**: `experiments/task28_ionic_block_teacher_forced.json`,
   notebook `notebooks/28_roadmap_ionic_block_teacher_forced.ipynb`. Include
   esplicitamente gli 11 meccanismi ionici con gate dell'inventario: cinque
   moduli neurali congelati dalla Task27 e sei moduli a formula canonica,
@@ -463,6 +463,17 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   bracci frozen, tre seed fresh indipendenti, pannelli di corrente firmata e
   percorsi imposti. Il GO di composizione e Gate D restano decisioni diverse:
   senza benchmark di compute appaiato Gate D non è dichiarato completo.
+  Esecuzione Kaggle `giada-task28-ionic-block-4c3cba7`, versione 2,
+  revisione `4c3cba7`: audit indipendente valido, 144 righe fresh e 48
+  percorsi imposti, tutti i quattro bracci frozen passati. Peggior RMSE
+  fresh dei gate 0,000659; peggior RMSE normalizzato di corrente individuale
+  0,000740; di corrente totale 0,000257. Le sei formule canoniche superano
+  il confronto nativo NEURON. Il blocco è ibrido, non un sostituto neurale
+  completo: V e cai imposti, nessun CaDynamics, passivo, solve assiale o
+  sinapsi. Archivio verificato in
+  `experiments/results/task28_kaggle_4c3cba7/artifact_bundle.zip`, audit in
+  `experiments/results/task28_kaggle_4c3cba7/result_audit.json`. Nessun
+  benchmark appaiato di compute: Gate D resta aperto e Task29 non autorizzata.
 
 ### ✅ Gate D — Componibilità ionica
 
