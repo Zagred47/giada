@@ -1,0 +1,11 @@
+# Task 30c — conferma nativa attiva a singolo compartimento
+
+La Task 30c ha compilato gli 11 meccanismi NMODL originali del teacher alla revisione `074c466` ed eseguito in NEURON 8.2.7 gli stessi 32 episodi preregistrati della Task 30b. In 24 episodi non-rest l'iniezione precede gli 8 ms; sei episodi nativi attraversano la soglia di -20 mV entro l'orizzonte primario. Nessun checkpoint è stato riaddestrato o selezionato sui risultati.
+
+Il controllo essenziale passa: a 8 ms la mappa a formule esatte e NEURON nativo concordano con RMSE pooled **5,41 × 10⁻¹³ mV** e peggior episodio **1,16 × 10⁻¹² mV**, ampiamente sotto i limiti preregistrati di 0,2 e 0,5 mV. Pertanto il riferimento nativo è ammissibile per giudicare i gate appresi in questo sistema. Tutte le sei combinazioni famiglia × seed nel braccio congelato `both` superano 1 mV pooled e 2 mV per episodio; il peggior episodio osservato è **0,00967 mV** (`shared_heads`, seed 17). L'audit indipendente verifica checksum, 1.664 righe, copertura, esposizione e aggregazioni.
+
+**Decisione: GO scientifico per il voltage update autonomo nativo a singolo compartimento con calcio imposto.** Questo rafforza la Task 30b: il suo risultato non dipende soltanto da un riferimento interno alla stessa implementazione numerica. Il controllo nativo usa però gli stessi meccanismi e le stesse equazioni canoniche, quindi la concordanza formula–NEURON verifica implementazione e semantica del solver, non l'intera fisiologia. Non sono stati testati CaDynamics, sinapsi, accoppiamento assiale, morfologia multicompartimentale o accelerazione. Gate D prestazionale resta NO-GO. La Task 31 richiede una decisione e preregistrazione separate; il report non la autorizza automaticamente.
+
+Artefatto e audit: `results/task30c_kaggle_df82f42/`. Notebook: https://www.kaggle.com/code/alessandrobelli/giada-task30c-native-active-df82f42
+
+Il primo tentativo (`27bebeb`) si fermò nel preflight: l'inventario dei `.mod` era stato calcolato su byte CRLF di Windows, mentre Kaggle materializzava LF. Non iniziò la simulazione e non è un NO-GO scientifico. Il fix `df82f42` confronta il contenuto dopo normalizzazione dei soli terminatori di riga; l'artefatto del tentativo è conservato in `results/task30c_kaggle_27bebeb_failed/`.

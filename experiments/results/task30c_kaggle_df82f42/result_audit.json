@@ -1,0 +1,50 @@
+{
+  "schema_version": "giada-task30c-native-active-audit-v1",
+  "valid": true,
+  "native_floor_admissible": true,
+  "scientific_primary_passed": true,
+  "task31_authorized": false,
+  "full_multicompartment_validated": false,
+  "native_active_single_compartment_validated": true,
+  "episode_count": 32,
+  "active_primary_episode_count": 24,
+  "native_primary_crossing_episode_count": 6,
+  "row_count": 1664,
+  "native_floor": {
+    "pooled_rmse_mv": 5.410704458502399e-13,
+    "worst_episode_rmse_mv": 1.1626429372019773e-12,
+    "passed": true
+  },
+  "models": {
+    "independent": {
+      "17": {
+        "pooled_rmse_mv": 0.0008015545304230707,
+        "worst_episode_rmse_mv": 0.0018104973053229268
+      },
+      "29": {
+        "pooled_rmse_mv": 0.001026578616762594,
+        "worst_episode_rmse_mv": 0.002717750009204017
+      },
+      "43": {
+        "pooled_rmse_mv": 0.0014538732352630782,
+        "worst_episode_rmse_mv": 0.0047529200396268225
+      }
+    },
+    "shared_heads": {
+      "17": {
+        "pooled_rmse_mv": 0.0027188630147248435,
+        "worst_episode_rmse_mv": 0.009665503748443573
+      },
+      "29": {
+        "pooled_rmse_mv": 0.0021543124536027684,
+        "worst_episode_rmse_mv": 0.007494303557532067
+      },
+      "43": {
+        "pooled_rmse_mv": 0.0018503261830214368,
+        "worst_episode_rmse_mv": 0.006588469174219231
+      }
+    }
+  },
+  "artifact_sha256": "1c3cfd4f4c21c5d8b483adb3d90729f635697307fc44d9338d80f052bf4b0fa5",
+  "report_sha256": "16dd1825ade7993a614a73118f62811824ba92c6d0ebfe992987723bb5f95665"
+}

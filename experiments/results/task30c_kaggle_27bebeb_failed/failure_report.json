@@ -1,0 +1,6 @@
+{
+  "valid": false,
+  "scientific_no_go": false,
+  "error": "Canonical NMODL hash mismatch: Ca_HVA",
+  "traceback": "Traceback (most recent call last):\n  File \"/kaggle/working/giada_task30c_956389c1/giada/scripts/run_task30c_native_active_confirmation.py\", line 35, in main\n    report = run(ROOT, Path(args.teacher), output, cfg, revision)\n  File \"/kaggle/working/giada_task30c_956389c1/giada/src/giada_teacher/task30c_native_active_confirmation.py\", line 201, in run\n    build, hashes = compile_native(teacher, output, cfg)\n                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/working/giada_task30c_956389c1/giada/src/giada_teacher/task30c_native_active_confirmation.py\", line 53, in compile_native\n    raise RuntimeError(f'Canonical NMODL hash mismatch: {name}')\nRuntimeError: Canonical NMODL hash mismatch: Ca_HVA\n"
+}

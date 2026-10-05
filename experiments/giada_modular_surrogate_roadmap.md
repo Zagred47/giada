@@ -558,6 +558,13 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   il floor formula–NEURON; solo se passa si giudica il modello. Il calcio
   resta imposto e Gate D speed resta NO-GO. Contratto in
   `experiments/task30c_native_active_confirmation.json`.
+  Conferma completata: floor formula–NEURON a 8 ms 5,41e-13 mV pooled,
+  tutti i sei bracci `both` famiglia × seed sotto 1/2 mV pooled/peggior
+  episodio, sei crossing nativi; audit indipendente valido. GO scientifico
+  soltanto per un compartimento attivo con cai imposto; non per il neurone
+  multicompartimentale, CaDynamics o la velocità. Task31 ancora da
+  autorizzare separatamente. Dettagli in
+  `experiments/task30c_native_active_result.md`.
 - **Task 31 — Scheduled sampling diagnostico**.
 - **Task 32 — Dinamiche lente in feedback**.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
