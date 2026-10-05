@@ -573,7 +573,12 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   collo di bottiglia di esposizione. Rapporto e limiti in
   `experiments/task31_exposure_diagnostic_result.md`. Task 32 resta una nuova
   decisione causale, non una promozione automatica; Gate D speed NO-GO.
-- **Task 32 — Dinamiche lente in feedback**.
+- **Task 32 — Dinamiche lente in feedback**. L'avvio del feedback elettrico resta
+  subordinato ai prerequisiti IV-B1 e IV-B2 del piano originale. Protocollo
+  appaiato preregistrato in `experiments/iv_b1_b2_calcium_prerequisite.json`:
+  prima CaDynamics_E2 con corrente imposta, poi CaDynamics → SK_E2 a V imposto.
+  Il notebook non equivale ancora alla Task32 chiusa: nessuna promozione prima
+  del controllo nativo e della decisione sui due prerequisiti.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
