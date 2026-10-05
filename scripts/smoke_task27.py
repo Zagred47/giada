@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from src.giada_teacher.current_supervision_comparison import config,run
 from src.giada_teacher.hh_family_transfer import write
+from scripts.audit_task27_result import audit
 
 root=Path(__file__).resolve().parents[1]
 cfg=config(root)
@@ -21,5 +22,9 @@ with tempfile.TemporaryDirectory(prefix='giada_task27_cpu_') as location:
     assert result['valid'] and len(result['learned'])==24
     assert not result['fresh_used_for_selection']
     assert json.loads((output/'selection_freeze.json').read_text())['fresh_accessed'] is False
+    write(output/'process_status.json',{'phase':'gpu','returncode':0})
+    write(output/'code_provenance.json',{'code_revision':'cpu-preflight','dirty_runtime':False})
+    write(output/'run_contract.json',cfg)
+    assert audit(output)['valid']
     print(json.dumps({'valid':True,'rows':len(result['learned']),
                       'freeze':(output/'selection_freeze.json').exists()}))
