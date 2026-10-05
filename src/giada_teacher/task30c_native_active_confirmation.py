@@ -48,11 +48,17 @@ def compile_native(teacher: Path, output: Path, cfg: dict) -> tuple[Path, dict]:
     hashes = {}
     for name in cfg['channels']:
         mod = source / (name + '.mod')
-        digest = hashlib.sha256(mod.read_bytes()).hexdigest()
-        if digest != canonical[name]:
+        raw = mod.read_bytes()
+        digest = hashlib.sha256(raw).hexdigest()
+        # The historical inventory was generated from a Windows CRLF checkout;
+        # Git materializes these same canonical NMODL sources as LF on Kaggle.
+        normalized_crlf = raw.replace(b'\r\n', b'\n').replace(b'\n', b'\r\n')
+        inventory_digest = hashlib.sha256(normalized_crlf).hexdigest()
+        if inventory_digest != canonical[name]:
             raise RuntimeError(f'Canonical NMODL hash mismatch: {name}')
         shutil.copy2(mod, build / mod.name)
-        hashes[name] = digest
+        hashes[name] = {'checkout_sha256': digest,
+                        'inventory_crlf_sha256': inventory_digest}
     command = shutil.which('nrnivmodl') or str(Path(sys.executable).parent / 'nrnivmodl')
     if not Path(command).is_file():
         raise RuntimeError('nrnivmodl unavailable')
