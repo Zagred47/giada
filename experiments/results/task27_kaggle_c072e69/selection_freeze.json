@@ -1,0 +1,275 @@
+{
+  "config": {
+    "channels": [
+      "Ca_HVA",
+      "Ca_LVAst",
+      "NaTa_t",
+      "NaTs2_t",
+      "Nap_Et2"
+    ],
+    "sample_count": 8192,
+    "extrema_nodes": 121,
+    "dt_values_ms": [
+      0.025,
+      0.1,
+      0.5,
+      1,
+      5,
+      25,
+      100,
+      500,
+      1000
+    ],
+    "held_horizons_ms": [
+      1,
+      10,
+      100,
+      1000,
+      10000
+    ],
+    "path_dt_ms": {
+      "fast": 0.025,
+      "slow": 1.0
+    },
+    "gates": {
+      "gate_rmse": 0.001,
+      "m_rmse": 0.001,
+      "h_rmse": 0.001,
+      "gate_max_error": 0.01,
+      "inf_rmse": 0.002,
+      "log_tau_rmse": 0.02,
+      "open_rmse": 0.002,
+      "occupancy_violations": 0
+    },
+    "held_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "current_gates": {
+      "individual_current_normalized_rmse": 0.002,
+      "total_current_normalized_rmse": 0.002,
+      "total_current_normalized_max": 0.01
+    },
+    "path_gates": {
+      "gate_rmse": 0.002,
+      "m_rmse": 0.002,
+      "h_rmse": 0.002,
+      "gate_max_error": 0.01,
+      "open_rmse": 0.003,
+      "occupancy_violations": 0
+    },
+    "path_current_gates": {
+      "individual_current_normalized_rmse": 0.003,
+      "total_current_normalized_rmse": 0.003,
+      "total_current_normalized_max": 0.01
+    },
+    "current_semantics": "Retain analytic I=gbar*m^p*h*(V-E),p2Ca/p3Na. V/E supplied, post-update state. Units mA/cm2. Canonical Eca120/Ena55 with declared diagnostic variation. Normalize total by sum absolute fully-open driving currents, never by cancelling teacher total. Require every individual channel and worst panel, not pooled total alone. No embedded BREAKPOINT timing claim.",
+    "extrema_support": "22 structured corners: all0,all1,each single high and each single low of10states. Cover all marginal gate extremes without claiming all1024joint corners. Fresh off-grid V nodes plus fixed endpoints/canonical seams intentionally repeated.",
+    "schema_version": "giada-roadmap-task27-preregistration-v1",
+    "stage": "Task27 originale \u2014 supervisione delle correnti individuali e totale",
+    "parent_contract": "experiments/task26_joint_vs_independent.json",
+    "parent_result": "experiments/results/task25_kaggle_bdb75e6",
+    "parent_result_hashes": {
+      "final_report.json": "effa6f074d5a6f093205a49e13a837014afd29222c84713713603dc388e1dd7a",
+      "selection_freeze.json": "d1549d0741dd716234e8fe8cd3df6e46ae8ba049e1828982e42179feb3aa8797",
+      "process_status.json": "825ee4d329426603c544dae1ae4d4d6ed5aec39185e80ed4c154edad4b0b04fb"
+    },
+    "families": [
+      "independent",
+      "shared_heads"
+    ],
+    "widths": [
+      16,
+      32
+    ],
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "checkpoints": [
+      0,
+      5000,
+      15000,
+      30000,
+      60000
+    ],
+    "pool_size": 16384,
+    "batch_size": 256,
+    "development_count": 2048,
+    "learning_rate": 0.003,
+    "learning_rate_final": 0.0001,
+    "decay_start": 15000,
+    "inf_weight": 1.0,
+    "log_tau_weight": 1.0,
+    "clip_norm": 1.0,
+    "data_seeds": {
+      "fit": 270101,
+      "fit_regions": 270102,
+      "minibatches": 270103,
+      "development": [
+        270201,
+        270202
+      ],
+      "held_development": 270205
+    },
+    "fresh_seeds": [
+      270401,
+      270402,
+      270403,
+      270405
+    ],
+    "extrema_node_offset": 0.41,
+    "require_cuda": true,
+    "hypotheses": {
+      "individual": "La loss sulle correnti individuali migliora il peggiore errore corrente senza degradare gate, rate e condizioni di lungo orizzonte.",
+      "total": "La loss sul totale pu\u00f2 migliorare la somma; il confronto con individual e both rivela se tale miglioramento maschera errori dei singoli canali.",
+      "both": "Loss individuale e totale insieme conserva le soglie della Task26 e migliora almeno uno dei contrasti correnti preregistrati.",
+      "sharing": "Il beneficio della supervisione di corrente pu\u00f2 differire tra modelli indipendenti e trunk condiviso, con fit e seed appaiati."
+    },
+    "training": "Tutti da zero. Matrice2x2 famiglia xwidth,3seed vettorizzati; stesso fit, minibatch, LR cosine, loss percanale (gate+inf+logtau), clipping perseed/bundle, momentiAdam separati. A widthfisso inizializzazione identica di ogni trunk/head prima di divergere; nessun peso congelatoTask25 usato come warmstart. Non alleniamo targetdi corrente (Task27).",
+    "selection": "Per ogni famiglia e braccio, checkpoint comune ai tre seed scelto solo su development con il peggior rapporto a soglia per gate, rate, corrente individuale, corrente totale e probe semigroup disgiunto. Pareggio: checkpoint piu precoce. Il width della famiglia resta quello selezionato nella Task26. Freeze e hash dei checkpoint prima del fresh.",
+    "promotion": "Task28 preparabile soltanto se i riferimenti none e i candidati both selezionati di entrambe le famiglie passano tutti e tre i seed e tutte le soglie fresh/held/path. Dichiarare utilita della supervisione di corrente solo se il miglioramento materiale preregistrato e verificato. GateD non completato dalla Task27; nessuna autorizzazione al voltaggio autonomo.",
+    "limits": "Cinque canali voltaggio-dipendenti, dieci stati m/h, V imposto, corrente analitica post-update. Niente feedback CaDynamics/SK, sinapsi, temperatura OOD, solve del voltaggio o neurone completo.",
+    "parent_contract_sha256": "57b968925095f23a540d66f53d7ce4e8a7606878774bf344f8760815ef49a9a6",
+    "task26_contract_sha256": "57b968925095f23a540d66f53d7ce4e8a7606878774bf344f8760815ef49a9a6",
+    "parent_run": "experiments/results/task26_kaggle_2a6bd21/final_report.json",
+    "parent_freeze": "experiments/results/task26_kaggle_2a6bd21/selection_freeze.json",
+    "parent_process": "experiments/results/task26_kaggle_2a6bd21/process_status.json",
+    "supervision_arms": [
+      "none",
+      "individual",
+      "total",
+      "both"
+    ],
+    "individual_current_weight": 1.0,
+    "total_current_weight": 1.0,
+    "loss": "Gate+inf+logtau per canale come Task26. Individual aggiunge MSE di open-probability m^p*h per ciascun canale: equivale alla corrente individuale normalizzata per il driving fully-open non nullo. Total aggiunge la MSE della somma delle cinque correnti analitiche normalizzata per la somma dei driving fully-open assoluti su venti pannelli gbar/reversal fissati; mai dividere per la corrente netta teacher. Nessuna head di corrente addestrabile.",
+    "comparison": "Primario: per-seed differenza del worst-current score fresh between both e none; secondari individual vs none, total vs none, both vs individual, both vs total, separati per famiglia. Riportare gate/rate/held/path e pannello cancellation. Miglioramento materiale: almeno 10% della mediana appaiata, senza degradazione oltre soglia su alcun seed/dominio. Scientific NO-GO se non si verifica; non usare fresh per riselezione.",
+    "task27_contract_sha256": "a83496c727ea55bb9a5d994a14e5293983b3ee3632239463e7aaf7cb53043718"
+  },
+  "selection": {
+    "independent": {
+      "none": {
+        "family": "independent",
+        "arm": "none",
+        "width": 32,
+        "step": 60000,
+        "score": 0.9241457374874404,
+        "checkpoint": "checkpoint_independent_none_step60000.pt"
+      },
+      "individual": {
+        "family": "independent",
+        "arm": "individual",
+        "width": 32,
+        "step": 60000,
+        "score": 0.7443069873164508,
+        "checkpoint": "checkpoint_independent_individual_step60000.pt"
+      },
+      "total": {
+        "family": "independent",
+        "arm": "total",
+        "width": 32,
+        "step": 60000,
+        "score": 0.7314448059084134,
+        "checkpoint": "checkpoint_independent_total_step60000.pt"
+      },
+      "both": {
+        "family": "independent",
+        "arm": "both",
+        "width": 32,
+        "step": 60000,
+        "score": 0.7248810541537359,
+        "checkpoint": "checkpoint_independent_both_step60000.pt"
+      }
+    },
+    "shared_heads": {
+      "none": {
+        "family": "shared_heads",
+        "arm": "none",
+        "width": 16,
+        "step": 60000,
+        "score": 0.7623915999648215,
+        "checkpoint": "checkpoint_shared_heads_none_step60000.pt"
+      },
+      "individual": {
+        "family": "shared_heads",
+        "arm": "individual",
+        "width": 16,
+        "step": 60000,
+        "score": 0.8333805204027636,
+        "checkpoint": "checkpoint_shared_heads_individual_step60000.pt"
+      },
+      "total": {
+        "family": "shared_heads",
+        "arm": "total",
+        "width": 16,
+        "step": 60000,
+        "score": 0.8416465248250173,
+        "checkpoint": "checkpoint_shared_heads_total_step60000.pt"
+      },
+      "both": {
+        "family": "shared_heads",
+        "arm": "both",
+        "width": 16,
+        "step": 60000,
+        "score": 0.7006261449143885,
+        "checkpoint": "checkpoint_shared_heads_both_step60000.pt"
+      }
+    }
+  },
+  "code_revision": "c072e69b198ee532cd7afb0bf95e502b32183d58",
+  "prerequisite_hashes": {
+    "final_report.json": "effa6f074d5a6f093205a49e13a837014afd29222c84713713603dc388e1dd7a",
+    "selection_freeze.json": "d1549d0741dd716234e8fe8cd3df6e46ae8ba049e1828982e42179feb3aa8797",
+    "process_status.json": "825ee4d329426603c544dae1ae4d4d6ed5aec39185e80ed4c154edad4b0b04fb"
+  },
+  "fresh_accessed": false,
+  "checkpoint_hashes": {
+    "checkpoint_shared_heads_none_step30000.pt": "fac2524502d08cf80f939967f9ac4d5ff7e127d628f1456c1c55dc8696b354a2",
+    "checkpoint_shared_heads_total_step0.pt": "c0583db771787879248605cb9d65088bf7cbd47670be134becd93fda0f9e88d3",
+    "checkpoint_independent_both_step15000.pt": "e353de2bf91d10d1ab65c5b24efcdc68cf08a00c2d4fdc8f9591c3a13c54e005",
+    "checkpoint_independent_individual_step30000.pt": "569ff083cc13e4fa3a112b85136fa7343f271fac852f75e4596f3350b2d172b6",
+    "checkpoint_shared_heads_both_step15000.pt": "0e3d36d2e5503da30f7c620ad44be49b4825cb7395c7afe30f2e5cee6e225aed",
+    "checkpoint_independent_individual_step15000.pt": "8150ce582f6f32a2007ddda8b2b68aca4005727fe9e1bd896f021ca9d349e09e",
+    "checkpoint_independent_none_step0.pt": "2258b81efd660770e80a0b7eb85eb8264cded41a8666f8cf73dc73eb9018543c",
+    "checkpoint_shared_heads_both_step0.pt": "9f13ac273f0380ca0a37a18ba3f870ed56f0609075d60cb35e26ba6c6624d032",
+    "checkpoint_shared_heads_none_step5000.pt": "d15f99b190315a2a61eb949d795611929833c2262d2a597d34d658ef56556d40",
+    "checkpoint_shared_heads_none_step60000.pt": "9d05acba1a7fb5d675d1d580ab4633d926ea8bc75acaff257561605844c8ecbc",
+    "checkpoint_independent_both_step30000.pt": "881f091d2f4a232c276fc490d05e223766aa4775668f0cce470db009ee413745",
+    "checkpoint_shared_heads_none_step15000.pt": "c3efb7cabb7ebed384a229ae240fa3dd2159a6df60d04b99358fe65748907dab",
+    "checkpoint_independent_total_step60000.pt": "bd3a40f536516a4f3ec5c2a459c38b63eca8ed45a771af03e148fff5bba6499e",
+    "checkpoint_independent_none_step30000.pt": "352af226bdd33009b97d7d6cd180c37a5bfa7e8a5beaad2f560afcf206ee1023",
+    "checkpoint_shared_heads_total_step60000.pt": "fa82471b05842bac259b2b9738753ea8bbf3f78ca8cd035a3d94b359f12ca155",
+    "checkpoint_shared_heads_both_step60000.pt": "1414abe4703c98a931a9ca357e0985c3063bd06f962ac84df9645b8830a65752",
+    "checkpoint_independent_none_step5000.pt": "4372c1844c23fe7f0fcc466d96c4635d087bca178d50d68cdaad4b5c76b77cae",
+    "checkpoint_shared_heads_total_step30000.pt": "19807cffc6757f7492e4a8b17a65a136b6730492131dc18e390bfacb816c6f29",
+    "checkpoint_independent_both_step60000.pt": "cf26329f6fbb7dcd0c15223e64408f31222ab7097d8cc0fb611ad3f8572c0158",
+    "checkpoint_independent_none_step60000.pt": "8b232d6ccc2cbacd86b7e1f1bac08f9e1cd49ba9065d6ed310b7328524212985",
+    "checkpoint_independent_individual_step0.pt": "46addd5cf4f0b621a5f5853bc0a5eeedbe6b81a485e5712ad76dad16c50b9c30",
+    "checkpoint_independent_total_step5000.pt": "20dc5c9196cea8f2849b7e6161c629586d98c8ac34fd149f910fc08a1e268808",
+    "checkpoint_shared_heads_individual_step0.pt": "eee89cb6436e2851c4311d1c8d56ab91b4a2082bc474784061576500ba86510a",
+    "checkpoint_independent_both_step0.pt": "080bb9c125b714b77a386bc86f7973b633839d7e20fdf842d5cfd56329207886",
+    "checkpoint_shared_heads_individual_step5000.pt": "e1161bb84533904187bc0714594bdfa7df2f51a8708739bd6d61ed43bcfddba9",
+    "checkpoint_independent_none_step15000.pt": "05a8c6c246bedc42ca226ac0ac9f5c2071138b9bb9b9f9b5b851870b4f51345e",
+    "checkpoint_shared_heads_both_step5000.pt": "330c3b3adf4b04280338522bc892976ca2df5569e3b2ecd18afdea8f7fa4c00d",
+    "checkpoint_independent_individual_step5000.pt": "f7424540ca3447de3337fc367679ccd2e4058715b37630444c2f7bed1716b3bb",
+    "checkpoint_shared_heads_total_step5000.pt": "a65c647adc0856b8ea2d1015565c40a6ac34fee933ce6287934f347484cbfb3b",
+    "checkpoint_shared_heads_individual_step60000.pt": "5982380dcf2da2d7073e828e380d27734095578df23d25aa49f355e35d4c689e",
+    "checkpoint_shared_heads_total_step15000.pt": "dc6c24de33736f848f5dd020c685d9c8d005dfe4f193a52a166abeb5d9250a05",
+    "checkpoint_shared_heads_none_step0.pt": "705ba0227c8a008f6ade79c0e58429f4b04a42a164b6ebab09772bded892a6e3",
+    "checkpoint_shared_heads_individual_step30000.pt": "a607de51f3b3fcf867062211bc8c0a219a4d568de58ea3bc1ae4ef803596291d",
+    "checkpoint_shared_heads_individual_step15000.pt": "376b904f813928e154fc1c53a111e7d744316cb52445336dc8036ed475426977",
+    "checkpoint_independent_total_step15000.pt": "537cfde7952c358248d1547a39e4fa8c2558d5c11a14a7340d3c425f7a7658ed",
+    "checkpoint_independent_individual_step60000.pt": "0f93dbf35db748da2455007268f07786db2fa424fad8c7cd601de21fec4590b5",
+    "checkpoint_independent_total_step30000.pt": "fc77d2a640853b05d6a386167df897de8d6caebd5f7289afa78bb252d313303a",
+    "checkpoint_independent_both_step5000.pt": "f7d5485f2b723f7b2c8ede5a32e2754fc6fbc9bafa355c82da5bfde9b702e5e7",
+    "checkpoint_independent_total_step0.pt": "c8492a8248f839755e3db64af4dc14d6fafb0c50807c42044f46450438c26be6",
+    "checkpoint_shared_heads_both_step30000.pt": "3d8ea3ae6f2d99020974bfbd45f6c9498141e911e14d9a590ced46df6ea19686"
+  },
+  "freeze_sha256": "4badc41e1ab7391846f7518238c9d66d34606f02edfdcd9af707b6d530749680"
+}

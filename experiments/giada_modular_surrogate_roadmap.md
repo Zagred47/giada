@@ -437,12 +437,20 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
 
 - **Task 27 — Correnti individuali e totale** → La corrente totale può essere
   un target, ma le componenti individuali restano target ausiliari e probe.
-  **Preregistrata**: `experiments/task27_current_supervision.json` e
-  `notebooks/27_roadmap_current_supervision.ipynb`. Due architetture x quattro
-  loss (none, individual, total, both), tre seed appaiati e budget identico.
-  La corrente resta formula analitica; train su correnti normalizzate, con
-  pannelli che espongono cancellazioni. Width fissati dalla Task26; nuovi
-  fit/development/fresh e freeze prima del fresh. Nessun closed loop.
+  **Conclusa (c072e69), GO circoscritto**: due architetture x quattro loss
+  (none, individual, total, both), tre seed appaiati, budget identico. Tutti
+  gli otto bracci superano 3/3 seed e le soglie fresh/held/path. La loss
+  congiunta individual+total riduce la mediana del peggior errore di corrente
+  del 37,45% nell'architettura indipendente e del 10,88% in quella condivisa
+  rispetto a none: entrambe superano la soglia preregistrata del 10%, ma il
+  margine condiviso è piccolo. Nel modello condiviso la loss solo individuale
+  o solo totale non domina stabilmente la congiunta; mantenere dunque il
+  confronto fattoriale, senza dedurre una legge universale. La corrente resta
+  formula analitica, i width sono fissati dalla Task26, i checkpoint sono
+  congelati prima del fresh e l'audit indipendente verifica 40 hash. Task28 è
+  preparabile; Gate D, voltaggio autonomo e closed loop non sono dimostrati.
+  Archivio completo: `experiments/results/task27_kaggle_c072e69/artifact_bundle.zip`;
+  audit: `experiments/results/task27_kaggle_c072e69/result_audit.json`.
 
 - **Task 28 — Blocco ionico completo teacher-forced** → Tutti i gate e le
   correnti locali con voltaggio ancora fornito dal teacher.
