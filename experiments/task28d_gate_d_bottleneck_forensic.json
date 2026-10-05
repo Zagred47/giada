@@ -1,0 +1,28 @@
+{
+  "schema_version": "giada-gate-d-bottleneck-forensic-v1",
+  "parent_result_dir": "experiments/results/gate_d_compiled_kaggle_e66dfea",
+  "parent_sha256": {
+    "final_report.json": "4089d40df1932468c8dd471890454ed8e648a2e74539dba2e88fc03f3c0d5906",
+    "artifact_bundle.zip": "d34a97eea4b88c57a005d9cf13dc83ecdd6f7a50b7fee8d709a3baeaa99230dd",
+    "result_audit.json": "8a98cf9d4a81d6e04f0cb3665c9889bf363a134bd975fb4c459958065b1f277f"
+  },
+  "purpose": "Localize why the frozen five-neural/six-formula hybrid is slower than an all-formula block after symmetric Inductor compilation. This is a diagnostic decomposition, not a new Gate D promotion test.",
+  "device": "cuda",
+  "dtype": "float32",
+  "compiler_backend": "inductor",
+  "compiler_mode": "default",
+  "fullgraph": true,
+  "batch_size": 642,
+  "model_seeds": [17, 29, 43],
+  "input_seed": 281243,
+  "families": ["independent", "shared_heads"],
+  "arm": "both",
+  "warmup_repetitions": 8,
+  "benchmark_repetitions": 40,
+  "profiler_repetitions": 4,
+  "numeric_tolerance_gate": 0.0001,
+  "numeric_tolerance_current_ma_cm2": 0.0000001,
+  "contrasts": ["exact_core_five_vs_neural_core_five", "exact_gates_vs_hybrid_gates", "exact_full_vs_hybrid_full", "shared_tail_six", "analytic_currents_only"],
+  "interpretation": "The core contrast identifies whether the learned five-channel module itself costs more than five formulas. Gate-only and full contrasts test fusion/assembly and current-head overhead. Tail/current timings are standalone diagnostics; component times are not additive because compiler fusion differs across compositions. CUDA profiler kernel counts and top kernel names are supportive, not a substitute for paired events.",
+  "decision": "No Task29 authorization or Gate D reclassification. Select the next architectural hypothesis only from the measured bottleneck and preserve the compiled NO-GO."
+}
