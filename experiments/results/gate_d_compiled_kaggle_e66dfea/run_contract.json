@@ -1,0 +1,34 @@
+{
+  "schema_version": "giada-gate-d-compiled-confirmation-v1",
+  "motivation": "The preregistered eager-CUDA Gate D test passed, but eleven analytic rate formulas launch many element-wise kernels. A symmetric compiler comparison is needed before claiming a robust compute advantage or promoting Task29.",
+  "parent_result_dir": "experiments/results/gate_d_compute_kaggle_59c91e7",
+  "parent_sha256": {
+    "final_report.json": "964c2b1489dc371ae169d5d548ee6c8aaca1a24ffa4d3b55060bc88754aa1665",
+    "artifact_bundle.zip": "d7563642af9941b0e4233cf41be0043b1addf20f2b489e450d2b93a64cce0c02",
+    "result_audit.json": "9221a2e59b86c726c0e208b1db901fb4bc67ba4dade2de4fa513c6ac71502fb4"
+  },
+  "backend": "torch.compile/inductor",
+  "mode": "default",
+  "fullgraph": true,
+  "dtype": "float32",
+  "device": "cuda",
+  "batch_size": 642,
+  "families": [
+    "independent",
+    "shared_heads"
+  ],
+  "arm": "both",
+  "model_seeds": [
+    17,
+    29,
+    43
+  ],
+  "input_seed": 281243,
+  "warmup_repetitions": 8,
+  "benchmark_repetitions": 40,
+  "maximum_compiled_vs_eager_gate_difference": 0.0001,
+  "maximum_compiled_vs_eager_current_difference_ma_cm2": 1e-07,
+  "minimum_material_reduction": 0.1,
+  "promotion": "Require numerically equivalent compiled exact and hybrid full 18-gate/11-current outputs and >=10% median paired latency reduction for both frozen families at batch 642. This is a separate, outcome-aware confirmation motivated by the eager result, not a retroactive amendment of its preregistration. Failure or technical non-comparability leaves Gate D incomplete and Task29 unauthorized.",
+  "limits": "Only steady-state local CUDA computation; no transfers, training, full-neuron simulation, CaDynamics, passive, axial, synaptic or closed-loop dynamics. Compiler version/hardware must be reported."
+}

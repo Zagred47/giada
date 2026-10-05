@@ -1,0 +1,415 @@
+{
+  "schema_version": "giada-gate-d-compiled-confirmation-v1",
+  "valid": true,
+  "eager_registered_passed": true,
+  "compiled_confirmation_passed": false,
+  "gate_d_robustly_supported": false,
+  "task29_authorized": false,
+  "training_performed": false,
+  "fresh_used_for_selection": false,
+  "device_name": "Tesla T4",
+  "torch_version": "2.11.0+cu128",
+  "cuda_version": "12.8",
+  "code_revision": "e66dfea644450537445cad2cf8251e9b1a7ee677",
+  "compiler_backend": "torch.compile/inductor",
+  "compiler_mode": "default",
+  "rows": [
+    {
+      "family": "independent",
+      "batch_size": 642,
+      "exact_compiled_median_ms": 0.39692799746990204,
+      "hybrid_compiled_median_ms": 0.6891199946403503,
+      "paired_compute_reduction_fraction": -0.7168746986582455,
+      "material_reduction_passed": false,
+      "accuracy_passed": false,
+      "accuracy_rows": [
+        {
+          "seed": 17,
+          "passed": false,
+          "worst_gate_rmse": 0.00015003802116054854,
+          "worst_individual_current_normalized_rmse": 0.0001797477551755832,
+          "worst_total_current_normalized_rmse": 5.626131173467789e-05
+        },
+        {
+          "seed": 29,
+          "passed": false,
+          "worst_gate_rmse": 0.00023682605301348665,
+          "worst_individual_current_normalized_rmse": 0.00022972453283369584,
+          "worst_total_current_normalized_rmse": 7.570858522209337e-05
+        },
+        {
+          "seed": 43,
+          "passed": false,
+          "worst_gate_rmse": 0.00027227109873244256,
+          "worst_individual_current_normalized_rmse": 0.0003257089536248429,
+          "worst_total_current_normalized_rmse": 0.00011225980479776379
+        }
+      ],
+      "exact_gate_difference": 1.1920928955078125e-07,
+      "exact_current_difference_ma_cm2": 4.656612873077393e-10,
+      "hybrid_gate_difference": 5.960464477539062e-07,
+      "hybrid_current_difference_ma_cm2": 4.656612873077393e-10,
+      "paired_timings_ms": [
+        {
+          "exact": 0.4566720128059387,
+          "hybrid": 0.7061120271682739
+        },
+        {
+          "hybrid": 0.6919040083885193,
+          "exact": 0.4392319917678833
+        },
+        {
+          "exact": 0.3829439878463745,
+          "hybrid": 0.7455040216445923
+        },
+        {
+          "hybrid": 0.6942399740219116,
+          "exact": 0.39846399426460266
+        },
+        {
+          "exact": 0.4466240108013153,
+          "hybrid": 0.6895679831504822
+        },
+        {
+          "hybrid": 0.6886720061302185,
+          "exact": 0.4116800129413605
+        },
+        {
+          "exact": 0.3686079978942871,
+          "hybrid": 0.6717439889907837
+        },
+        {
+          "hybrid": 0.6377919912338257,
+          "exact": 0.39024001359939575
+        },
+        {
+          "exact": 0.36185601353645325,
+          "hybrid": 0.6816319823265076
+        },
+        {
+          "hybrid": 0.7105919718742371,
+          "exact": 0.3654080033302307
+        },
+        {
+          "exact": 0.3744960129261017,
+          "hybrid": 0.6315839886665344
+        },
+        {
+          "hybrid": 0.7391999959945679,
+          "exact": 0.47436800599098206
+        },
+        {
+          "exact": 0.407584011554718,
+          "hybrid": 0.6756479740142822
+        },
+        {
+          "hybrid": 0.7311360239982605,
+          "exact": 0.43062400817871094
+        },
+        {
+          "exact": 0.3909760117530823,
+          "hybrid": 0.7019199728965759
+        },
+        {
+          "hybrid": 0.7165759801864624,
+          "exact": 0.3919680118560791
+        },
+        {
+          "exact": 0.4092479944229126,
+          "hybrid": 0.6960639953613281
+        },
+        {
+          "hybrid": 0.6963199973106384,
+          "exact": 0.43747198581695557
+        },
+        {
+          "exact": 0.3561919927597046,
+          "hybrid": 0.6675840020179749
+        },
+        {
+          "hybrid": 0.650592029094696,
+          "exact": 0.36611199378967285
+        },
+        {
+          "exact": 0.3447679877281189,
+          "hybrid": 0.6484479904174805
+        },
+        {
+          "hybrid": 0.7121599912643433,
+          "exact": 0.36320000886917114
+        },
+        {
+          "exact": 0.38547199964523315,
+          "hybrid": 0.6478080153465271
+        },
+        {
+          "hybrid": 0.6738880276679993,
+          "exact": 0.5651199817657471
+        },
+        {
+          "exact": 0.47513601183891296,
+          "hybrid": 0.8458240032196045
+        },
+        {
+          "hybrid": 0.735264003276825,
+          "exact": 0.37004798650741577
+        },
+        {
+          "exact": 0.5216959714889526,
+          "hybrid": 0.8149120211601257
+        },
+        {
+          "hybrid": 0.8378559947013855,
+          "exact": 0.407584011554718
+        },
+        {
+          "exact": 0.40963199734687805,
+          "hybrid": 0.6986240148544312
+        },
+        {
+          "hybrid": 0.7147520184516907,
+          "exact": 0.41356799006462097
+        },
+        {
+          "exact": 0.3953920006752014,
+          "hybrid": 0.7045440077781677
+        },
+        {
+          "hybrid": 0.6686720252037048,
+          "exact": 0.44620800018310547
+        },
+        {
+          "exact": 0.40163201093673706,
+          "hybrid": 0.6718720197677612
+        },
+        {
+          "hybrid": 0.6645439863204956,
+          "exact": 0.3648959994316101
+        },
+        {
+          "exact": 0.3763200044631958,
+          "hybrid": 0.6799359917640686
+        },
+        {
+          "hybrid": 0.6333439946174622,
+          "exact": 0.34544000029563904
+        },
+        {
+          "exact": 0.4029119908809662,
+          "hybrid": 0.6260480284690857
+        },
+        {
+          "hybrid": 0.6449599862098694,
+          "exact": 0.41094401478767395
+        },
+        {
+          "exact": 0.35865598917007446,
+          "hybrid": 0.6573759913444519
+        },
+        {
+          "hybrid": 0.5959039926528931,
+          "exact": 0.3850240111351013
+        }
+      ]
+    },
+    {
+      "family": "shared_heads",
+      "batch_size": 642,
+      "exact_compiled_median_ms": 0.37518399953842163,
+      "hybrid_compiled_median_ms": 0.786191999912262,
+      "paired_compute_reduction_fraction": -1.063413089728931,
+      "material_reduction_passed": false,
+      "accuracy_passed": false,
+      "accuracy_rows": [
+        {
+          "seed": 17,
+          "passed": false,
+          "worst_gate_rmse": 0.000528417504943946,
+          "worst_individual_current_normalized_rmse": 0.0003914853161101554,
+          "worst_total_current_normalized_rmse": 9.791945622702924e-05
+        },
+        {
+          "seed": 29,
+          "passed": false,
+          "worst_gate_rmse": 0.00039495651413764735,
+          "worst_individual_current_normalized_rmse": 0.0002954367414618754,
+          "worst_total_current_normalized_rmse": 9.259206353014246e-05
+        },
+        {
+          "seed": 43,
+          "passed": false,
+          "worst_gate_rmse": 0.0003092529305887614,
+          "worst_individual_current_normalized_rmse": 0.0002571351354598215,
+          "worst_total_current_normalized_rmse": 0.00010435502145177761
+        }
+      ],
+      "exact_gate_difference": 1.1920928955078125e-07,
+      "exact_current_difference_ma_cm2": 4.656612873077393e-10,
+      "hybrid_gate_difference": 3.5762786865234375e-07,
+      "hybrid_current_difference_ma_cm2": 4.656612873077393e-10,
+      "paired_timings_ms": [
+        {
+          "exact": 0.3723199963569641,
+          "hybrid": 0.7687680125236511
+        },
+        {
+          "hybrid": 0.7514240145683289,
+          "exact": 0.3678719997406006
+        },
+        {
+          "exact": 0.38703998923301697,
+          "hybrid": 0.7951679825782776
+        },
+        {
+          "hybrid": 0.7859839797019958,
+          "exact": 0.43007999658584595
+        },
+        {
+          "exact": 0.3686720132827759,
+          "hybrid": 0.838271975517273
+        },
+        {
+          "hybrid": 0.8691520094871521,
+          "exact": 0.3686720132827759
+        },
+        {
+          "exact": 0.3952319920063019,
+          "hybrid": 0.8618559837341309
+        },
+        {
+          "hybrid": 0.7720000147819519,
+          "exact": 0.3694080114364624
+        },
+        {
+          "exact": 0.34700798988342285,
+          "hybrid": 0.7399359941482544
+        },
+        {
+          "hybrid": 0.7708160281181335,
+          "exact": 0.3640959858894348
+        },
+        {
+          "exact": 0.4184960126876831,
+          "hybrid": 0.7987200021743774
+        },
+        {
+          "hybrid": 0.7587519884109497,
+          "exact": 0.37964800000190735
+        },
+        {
+          "exact": 0.3517119884490967,
+          "hybrid": 0.7605119943618774
+        },
+        {
+          "hybrid": 0.7716799974441528,
+          "exact": 0.362527996301651
+        },
+        {
+          "exact": 0.3866240084171295,
+          "hybrid": 0.769536018371582
+        },
+        {
+          "hybrid": 0.6828160285949707,
+          "exact": 0.37356799840927124
+        },
+        {
+          "exact": 0.324864000082016,
+          "hybrid": 0.694271981716156
+        },
+        {
+          "hybrid": 0.7312639951705933,
+          "exact": 0.38016000390052795
+        },
+        {
+          "exact": 0.43856000900268555,
+          "hybrid": 0.8048319816589355
+        },
+        {
+          "hybrid": 0.8033599853515625,
+          "exact": 0.36374399065971375
+        },
+        {
+          "exact": 0.3298879861831665,
+          "hybrid": 0.7353600263595581
+        },
+        {
+          "hybrid": 0.7454720139503479,
+          "exact": 0.376800000667572
+        },
+        {
+          "exact": 0.31996798515319824,
+          "hybrid": 0.8331519961357117
+        },
+        {
+          "hybrid": 0.9019200205802917,
+          "exact": 0.41465601325035095
+        },
+        {
+          "exact": 0.34508800506591797,
+          "hybrid": 0.7000960111618042
+        },
+        {
+          "hybrid": 0.6815680265426636,
+          "exact": 0.3579840064048767
+        },
+        {
+          "exact": 0.32396799325942993,
+          "hybrid": 0.8105279803276062
+        },
+        {
+          "hybrid": 0.8216320276260376,
+          "exact": 0.385888010263443
+        },
+        {
+          "exact": 0.4216960072517395,
+          "hybrid": 0.7864000201225281
+        },
+        {
+          "hybrid": 0.7640640139579773,
+          "exact": 0.4054720103740692
+        },
+        {
+          "exact": 0.3687039911746979,
+          "hybrid": 0.7987520098686218
+        },
+        {
+          "hybrid": 0.825760006904602,
+          "exact": 0.38553598523139954
+        },
+        {
+          "exact": 0.387935996055603,
+          "hybrid": 0.7688639760017395
+        },
+        {
+          "hybrid": 0.7428159713745117,
+          "exact": 0.3911679983139038
+        },
+        {
+          "exact": 0.34911999106407166,
+          "hybrid": 0.8147199749946594
+        },
+        {
+          "hybrid": 0.8191999793052673,
+          "exact": 0.3972800076007843
+        },
+        {
+          "exact": 0.41574400663375854,
+          "hybrid": 0.8487679958343506
+        },
+        {
+          "hybrid": 0.806879997253418,
+          "exact": 0.4078719913959503
+        },
+        {
+          "exact": 0.3638400137424469,
+          "hybrid": 0.7934079766273499
+        },
+        {
+          "hybrid": 0.8028159737586975,
+          "exact": 0.42393600940704346
+        }
+      ]
+    }
+  ],
+  "limits": "Only steady-state local CUDA computation; no transfers, training, full-neuron simulation, CaDynamics, passive, axial, synaptic or closed-loop dynamics. Compiler version/hardware must be reported."
+}

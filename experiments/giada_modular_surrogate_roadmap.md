@@ -491,7 +491,16 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   definitiva si verifica una baseline analitica compilata simmetricamente:
   `experiments/task28c_gate_d_compiled_confirmation.json`. Questa conferma è
   distinta e motivata dal risultato eager, non una modifica retroattiva alla
-  preregistrazione; fino al suo esito, Task29 resta operativamente sospesa.
+  preregistrazione. **Conferma compilata: NO-GO per Gate D** su Tesla T4,
+  batch 642, Inductor simmetrico. Le formule esatte impiegano 0,397 ms contro
+  0,689 ms dell'ibrido independent; 0,375 ms contro 0,786 ms per shared_heads.
+  Il confronto compilato è numericamente equivalente all'eager entro le
+  tolleranze registrate. Le flag di accuratezza compilata sono comunque false;
+  i RMSE restano bassi e la causa più probabile è il test di occupazione sui
+  confini [0,1], ma il report non conserva i conteggi e non permette una
+  quantificazione retrospettiva. Il fallimento del compute è già decisivo:
+  **Gate D resta incompleto e Task29 non autorizzata**. Archivio:
+  `experiments/results/gate_d_compiled_kaggle_e66dfea/`.
 
 ### ✅ Gate D — Componibilità ionica
 

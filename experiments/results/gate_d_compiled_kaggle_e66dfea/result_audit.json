@@ -1,0 +1,31 @@
+{
+  "valid": true,
+  "compiled_confirmation_passed": false,
+  "gate_d_completed": false,
+  "task29_authorized": false,
+  "exact_compiled_faster_in_both_families": true,
+  "rows": [
+    {
+      "family": "independent",
+      "exact_compiled_median_ms": 0.39692799746990204,
+      "hybrid_compiled_median_ms": 0.6891199946403503,
+      "paired_compute_reduction_fraction": -0.7168746986582455,
+      "material_reduction_passed": false,
+      "accuracy_passed": false,
+      "exact_gate_difference": 1.1920928955078125e-07,
+      "hybrid_gate_difference": 5.960464477539062e-07
+    },
+    {
+      "family": "shared_heads",
+      "exact_compiled_median_ms": 0.37518399953842163,
+      "hybrid_compiled_median_ms": 0.786191999912262,
+      "paired_compute_reduction_fraction": -1.063413089728931,
+      "material_reduction_passed": false,
+      "accuracy_passed": false,
+      "exact_gate_difference": 1.1920928955078125e-07,
+      "hybrid_gate_difference": 3.5762786865234375e-07
+    }
+  ],
+  "scope": "Resident Tesla T4, float32, batch 642, same Inductor backend and full local ionic output. No full-neuron speed claim.",
+  "numeric_note": "Compiled-vs-eager outputs agree within registered tolerance. Per-seed gate/current RMSEs are below Task28 thresholds; all accuracy flags still fail, consistent with occupancy-bound checks. The report does not store occupancy counts, so this cannot be quantified retrospectively. Compute failure alone blocks Gate D."
+}
