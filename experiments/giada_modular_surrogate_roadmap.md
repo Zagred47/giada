@@ -553,6 +553,11 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   attivo NEURON completo non è stato validato; calcio e ingresso sono imposti.
   Task31 non è automaticamente autorizzata; Gate D speed resta NO-GO.
   Dettagli in `experiments/task30b_active_exposure_result.md`.
+  **Task 30c — conferma nativa attiva preregistrata**: stesso disegno 30b,
+  undici meccanismi NMODL originali e checkpoint congelati. Prima si misura
+  il floor formula–NEURON; solo se passa si giudica il modello. Il calcio
+  resta imposto e Gate D speed resta NO-GO. Contratto in
+  `experiments/task30c_native_active_confirmation.json`.
 - **Task 31 — Scheduled sampling diagnostico**.
 - **Task 32 — Dinamiche lente in feedback**.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.

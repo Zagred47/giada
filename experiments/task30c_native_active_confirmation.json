@@ -1,0 +1,19 @@
+{
+  "schema_version": "giada-task30c-native-active-confirmation-v1",
+  "purpose": "Independent fixed-step NEURON active eleven-channel reference for the frozen Task30b early-exposure design; first establish the exact-formula-to-native floor before any learned-model verdict.",
+  "parent_result": "experiments/results/task30b_kaggle_ddbffb0",
+  "parent_report_sha256": "8dd5b2abed6ce3f7b9ca3d130d8fb0c3b7b5b0f5df16b0eb67d41f64ea5e2eb5",
+  "parent_artifact_sha256": "046d52ea11e70385df3e7bed40b430652b587a44b5c68898af0848194f1642f6",
+  "parent_config": "experiments/task30b_active_exposure_confirmation.json",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "channels": ["Ca_HVA", "Ca_LVAst", "NaTa_t", "NaTs2_t", "Nap_Et2", "Ih", "Im", "K_Pst", "K_Tst", "SK_E2", "SKv3_1"],
+  "native_neuron_version": "8.2.7",
+  "native_floor_primary_pooled_limit_mv": 0.2,
+  "native_floor_primary_worst_episode_limit_mv": 0.5,
+  "candidate_primary_pooled_limit_mv": 1.0,
+  "candidate_primary_worst_episode_limit_mv": 2.0,
+  "primary_horizon_ms": 8.0,
+  "diagnostic_horizons_ms": [20.0, 40.0, 80.0],
+  "decision": "Native active reference is admissible only if 32/32 episodes are finite, 24/24 non-rest episodes are exposed before 8ms, every canonical channel is compiled at the pinned teacher revision, and the formula-vs-native 8ms pooled/worst floor is <=0.2/0.5mV. Only then assess both frozen families and each of three seeds against <=1/2mV candidate-vs-native 8ms pooled/worst thresholds. Report event crossings and longer horizons but never use them for selection. Failure of native floor is a solver or protocol mismatch, not a learned-model NO-GO.",
+  "scope": "Single compartment, all eleven original NMODL channel mechanisms, imposed fixed cai and reversals, external current. No CaDynamics, axial coupling, synapses, morphology or speed claim. Task31 authorization requires a separate decision; Gate D compiled performance NO-GO unchanged."
+}
