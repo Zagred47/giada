@@ -581,8 +581,12 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   identifica l'ordine causale effettivo: CaDynamics aggiorna cai, poi SK usa
   quel valore nello stesso passo. La v1 resta non promossa. Conferma v2
   preregistrata con due protocolli nuovi e soglie invariate in
-  `experiments/iv_b1_b2_calcium_prerequisite_v2.json`. Il notebook non equivale
-  ancora alla Task32 chiusa: nessuna promozione prima della conferma nativa.
+  `experiments/iv_b1_b2_calcium_prerequisite_v2.json`. La conferma prospettica
+  Kaggle su revisione `8b3a4e5` passa 72/72 IV-B1 e 12/12 IV-B2, inclusi
+  `late_single` e `triplet`; ZIP, tracce e metriche sono stati controllati
+  indipendentemente in `experiments/results/iv_b_v2_kaggle_8b3a4e5/`.
+  È quindi autorizzata la preparazione del feedback elettrico della Task32,
+  **non** dichiarata conclusa la Task32: Ca e SK avevano ancora ica e V imposti.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
