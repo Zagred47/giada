@@ -15,8 +15,11 @@ def main():
     from src.giada_teacher.task30_autonomous_voltage import config, run, verify_parent
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', required=True)
+    parser.add_argument('--config-file', default='task30_autonomous_voltage_microcanary.json',
+                        choices=('task30_autonomous_voltage_microcanary.json',
+                                 'task30b_active_exposure_confirmation.json'))
     args = parser.parse_args()
-    cfg = config(ROOT)
+    cfg = config(ROOT, args.config_file)
     verify_parent(ROOT, cfg)
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=False)
@@ -24,7 +27,7 @@ def main():
     write(output / 'run_contract.json', cfg)
     sources = ('src/giada_teacher/task30_autonomous_voltage.py',
                'src/giada_teacher/ionic_block_teacher_forced.py',
-               'experiments/task30_autonomous_voltage_microcanary.json',
+               'experiments/' + args.config_file,
                'scripts/run_task30_autonomous_voltage.py')
     write(output / 'code_provenance.json', {
         'code_revision': revision,

@@ -538,7 +538,14 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   `experiments/task29_external_clamp_result.md`. La conservazione di corrente
   è un'identità del bilancio imposto: non implica voltage rollout autonomo.
   Gate D prestazionale resta NO-GO e Task30 richiede decisione separata.
-- **Task 30 — Voltage update autonomo**.
+- **Task 30 — Voltage update autonomo**. Primo microcanary eseguito ma
+  **non decision-grade**: la metrica primaria a 8 ms precedeva ogni stimolo
+  iniettato (zero campioni attivi). Il report resta archiviato; il pass
+  numerico non promuove Task31. Audit in
+  `experiments/results/task30_kaggle_fb08789/result_audit.json`.
+  **Task 30b — conferma prospettica con esposizione attiva**: condizioni
+  disgiunte con stimoli entro 1–8 ms, stessa soglia primaria e checkpoint
+  congelati. Protocollo `experiments/task30b_active_exposure_confirmation.json`.
 - **Task 31 — Scheduled sampling diagnostico**.
 - **Task 32 — Dinamiche lente in feedback**.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.

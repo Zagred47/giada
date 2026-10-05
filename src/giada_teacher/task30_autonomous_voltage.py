@@ -14,11 +14,17 @@ from . import ionic_block_teacher_forced as ionic
 from .hh_family_transfer import write
 
 
-def config(root: Path) -> dict:
-    return json.loads((root / 'experiments/task30_autonomous_voltage_microcanary.json').read_text(encoding='utf-8'))
+def config(root: Path, filename: str = 'task30_autonomous_voltage_microcanary.json') -> dict:
+    return json.loads((root / 'experiments' / filename).read_text(encoding='utf-8'))
 
 
 def verify_parent(root: Path, cfg: dict) -> None:
+    if 'failed_parent_audit' in cfg:
+        previous = root / cfg['failed_parent_audit']
+        if hashlib.sha256(previous.read_bytes()).hexdigest() != cfg['failed_parent_audit_sha256']:
+            raise RuntimeError('Task30 non-decision-grade parent audit hash mismatch')
+        if json.loads(previous.read_text(encoding='utf-8'))['decision_grade']:
+            raise RuntimeError('Task30b must follow a non-decision-grade first run')
     folder = root / cfg['scientific_parent']
     hashes = {name: hashlib.sha256((folder / name).read_bytes()).hexdigest()
               for name in cfg['scientific_parent_sha256']}
@@ -41,6 +47,10 @@ def _injection(name: str, t: np.ndarray) -> np.ndarray:
     if name == 'high': return .008 * ((t >= 10.) & (t < 22.))
     if name == 'paired':
         return .006 * (((t >= 8.) & (t < 16.)) | ((t >= 33.) & (t < 41.)))
+    if name == 'early_low': return .003 * ((t >= 1.) & (t < 7.))
+    if name == 'early_high': return .012 * ((t >= 1.) & (t < 7.))
+    if name == 'early_paired':
+        return .008 * (((t >= 1.) & (t < 4.)) | ((t >= 5.) & (t < 8.)))
     raise ValueError(name)
 
 
@@ -254,6 +264,12 @@ def run(root: Path, output: Path, cfg: dict, revision: str) -> dict:
     if not passive['valid']:
         raise RuntimeError('Passive-only native solver calibration failed; no scientific inference')
     design = episodes(cfg)
+    primary_steps = int(round(cfg['primary_horizon_ms'] / cfg['dt_ms']))
+    exposure = design['injection_ma_cm2'][:primary_steps]
+    exposed_episodes = int(np.count_nonzero(np.any(exposure != 0, axis=0)))
+    expected_exposed = len(design['rows']) * (len(cfg['protocols']) - 1) // len(cfg['protocols'])
+    if cfg.get('require_primary_stimulus_exposure', False) and exposed_episodes != expected_exposed:
+        raise RuntimeError(f'Primary exposure preflight failed: {exposed_episodes} != {expected_exposed}')
     reference_v, reference_state = formula_reference(design, cfg)
     if not (np.isfinite(reference_v).all() and np.isfinite(reference_state).all()):
         raise RuntimeError('Formula control nonfinite')
@@ -288,8 +304,14 @@ def run(root: Path, output: Path, cfg: dict, revision: str) -> dict:
                                   'worst_episode_voltage_rmse_mv': worst}
         family_primary[family] = per_seed
     passed = all(row['passed'] for seeds_result in family_primary.values() for row in seeds_result.values())
-    report = {'schema_version': 'giada-roadmap-task30-autonomous-voltage-v1',
+    report = {'schema_version': cfg['schema_version'],
               'valid': True, 'scientific_primary_passed': passed,
+              'primary_exposed_episode_count': exposed_episodes,
+              'primary_nonzero_injection_sample_count': int(np.count_nonzero(exposure)),
+              'reference_active_episode_count_at_primary': int(sum(
+                  np.any((reference_v[:primary_steps, e] < cfg['event_threshold_mv'])
+                         & (reference_v[1:primary_steps+1, e] >= cfg['event_threshold_mv']))
+                  for e in range(len(design['rows'])))),
               'native_passive_solver_calibration': passive,
               'family_primary': family_primary, 'rows': rows,
               'formula_reference_voltage_range_mv': [float(reference_v.min()),float(reference_v.max())],
