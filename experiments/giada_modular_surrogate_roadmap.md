@@ -484,6 +484,14 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   mediana appaiata >=10% in **entrambe** le famiglie; batch 4096/16384 solo
   diagnostici. Il benchmark non autorizza inferenze sul throughput end-to-end
   del neurone o su voltage/Ca closed-loop.
+  L'esecuzione eager su Tesla T4, commit `59c91e7`, supera la soglia: riduzione
+  mediana appaiata 42,57% (independent) e 43,02% (shared_heads) al batch 642,
+  con accuratezza intatta. Il risultato è archiviato in
+  `experiments/results/gate_d_compute_kaggle_59c91e7/`. Prima della promozione
+  definitiva si verifica una baseline analitica compilata simmetricamente:
+  `experiments/task28c_gate_d_compiled_confirmation.json`. Questa conferma è
+  distinta e motivata dal risultato eager, non una modifica retroattiva alla
+  preregistrazione; fino al suo esito, Task29 resta operativamente sospesa.
 
 ### ✅ Gate D — Componibilità ionica
 
