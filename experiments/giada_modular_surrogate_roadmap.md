@@ -499,8 +499,16 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   i RMSE restano bassi e la causa più probabile è il test di occupazione sui
   confini [0,1], ma il report non conserva i conteggi e non permette una
   quantificazione retrospettiva. Il fallimento del compute è già decisivo:
-  **Gate D resta incompleto e Task29 non autorizzata**. Archivio:
+  **Gate D resta incompleto e Task29 non autorizzata dal Gate D originale**. Archivio:
   `experiments/results/gate_d_compiled_kaggle_e66dfea/`.
+
+  **Emendamento prospettico di scope scientifico (Task29)**:
+  `experiments/task29_scientific_track_amendment.json` separa la progressione
+  scientifica dall'eventuale promozione prestazionale. Il NO-GO compilato del
+  Gate D e la soglia originale del 10% restano invariati. Si autorizza soltanto
+  una Task29 *diagnostica* con voltaggio/calcio imposti, controllo canonico a
+  formule e nessun claim di speedup o voltaggio autonomo. Un'eventuale Task30
+  richiederà una decisione separata basata sui risultati della Task29.
 
 ### ✅ Gate D — Componibilità ionica
 
@@ -517,7 +525,8 @@ Non si passa al closed loop se:
 
 Soltanto qui il modello comincia a generare il proprio voltaggio.
 
-- **Task 29 — Ionico + passivo con clamp esterno**.
+- **Task 29 — Ionico + passivo con clamp esterno**. Autorizzata soltanto come
+  studio diagnostico dall'emendamento scientifico; non dal Gate D prestazionale.
 - **Task 30 — Voltage update autonomo**.
 - **Task 31 — Scheduled sampling diagnostico**.
 - **Task 32 — Dinamiche lente in feedback**.
