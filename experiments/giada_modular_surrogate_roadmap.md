@@ -475,6 +475,16 @@ La prima composizione viene valutata sotto voltaggio teacher-forced.
   `experiments/results/task28_kaggle_4c3cba7/result_audit.json`. Nessun
   benchmark appaiato di compute: Gate D resta aperto e Task29 non autorizzata.
 
+- **Gate D compute audit post-Task28 — preregistrato**:
+  `experiments/task28b_gate_d_compute.json`, notebook
+  `notebooks/28b_gate_d_compute.ipynb`. Confronto formule canoniche complete
+  contro blocco ibrido congelato sullo stesso CUDA, medesimi input residenti,
+  dtype e output di 18 gate + 11 correnti. Cronometro con eventi CUDA
+  alternati e controllo numerico preliminare. Primario: batch 642, riduzione
+  mediana appaiata >=10% in **entrambe** le famiglie; batch 4096/16384 solo
+  diagnostici. Il benchmark non autorizza inferenze sul throughput end-to-end
+  del neurone o su voltage/Ca closed-loop.
+
 ### ✅ Gate D — Componibilità ionica
 
 Non si passa al closed loop se:

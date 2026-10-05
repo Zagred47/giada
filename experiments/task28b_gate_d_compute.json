@@ -1,0 +1,26 @@
+{
+  "schema_version": "giada-gate-d-compute-v1",
+  "stage": "Post-Task28 Gate D same-device paired compute audit",
+  "task28_result_dir": "experiments/results/task28_kaggle_4c3cba7",
+  "task28_result_sha256": {
+    "final_report.json": "10d8e5d2dc75176b99237bc84a66bb45b16423003e67021433a11fc2d1a3c233",
+    "artifact_bundle.zip": "0fe290fec235cdf83d5873d5ea2cbf4bb59f6931c0f2cd073169e006a18b5d1e",
+    "result_audit.json": "29bfc26535a21ae03f90ac3672a254050c2ef2cb841d2407e4b7a2fe145a4d11"
+  },
+  "device": "cuda",
+  "dtype": "float32",
+  "families": ["independent", "shared_heads"],
+  "arm": "both",
+  "batch_sizes": [642, 4096, 16384],
+  "model_seeds": [17, 29, 43],
+  "benchmark_repetitions": 60,
+  "warmup_repetitions": 12,
+  "input_seed": 280601,
+  "preflight_max_gate_error": 0.0002,
+  "preflight_max_current_error_ma_cm2": 0.0000001,
+  "material_compute_reduction_minimum": 0.1,
+  "gate_d_batch_size": 642,
+  "timing": "Paired CUDA events, alternating execution order, input resident on same CUDA device, inference/no-grad, synchronized per pair. Exclude model loading, host transfer and compilation. Both branches return all 18 gate states and all 11 signed analytic currents for the same three seeds and batch.",
+  "promotion": "Gate D requires the confirmed Task28 teacher-forced GO, all three seed outputs, preflight exact GPU-vs-NumPy correctness, no current regression, and >=10% median paired latency reduction on batch 642 for both frozen both-arm families. Batch 4096/16384 diagnose scaling; they cannot rescue a failure at the registered primary deployment batch. No fresh outcomes can select a model or kernel after timing.",
+  "limits": "This measures steady-state resident-GPU local ionic compute only. It does not measure end-to-end NEURON speed, host-device transfer, snapshot replay, passive/axial/synaptic/CaDynamics cost, autonomous voltage or entire neuron throughput. Formula channels remain canonical."
+}
