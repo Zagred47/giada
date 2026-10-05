@@ -1,0 +1,64 @@
+{
+  "schema_version": "giada-roadmap-task29-external-clamp-v1",
+  "stage": "Original Task29, prospective scientific-track amendment; not a Gate D speed promotion",
+  "amendment_path": "experiments/task29_scientific_track_amendment.json",
+  "parent_task28_dir": "experiments/results/task28_kaggle_4c3cba7",
+  "parent_task28_sha256": {
+    "final_report.json": "10d8e5d2dc75176b99237bc84a66bb45b16423003e67021433a11fc2d1a3c233",
+    "result_audit.json": "29bfc26535a21ae03f90ac3672a254050c2ef2cb841d2407e4b7a2fe145a4d11"
+  },
+  "parent_gate_d_compiled_dir": "experiments/results/gate_d_compiled_kaggle_e66dfea",
+  "parent_gate_d_compiled_sha256": {
+    "final_report.json": "4089d40df1932468c8dd471890454ed8e648a2e74539dba2e88fc03f3c0d5906",
+    "result_audit.json": "8a98cf9d4a81d6e04f0cb3665c9889bf363a134bd975fb4c459958065b1f277f"
+  },
+  "families": [
+    "independent",
+    "shared_heads"
+  ],
+  "arms": [
+    "none",
+    "both"
+  ],
+  "model_seeds": [
+    17,
+    29,
+    43
+  ],
+  "path_names": [
+    "rest",
+    "slow_ramp",
+    "paired_steps",
+    "oscillation"
+  ],
+  "panel_names": [
+    "canonical",
+    "calcium_x4",
+    "sodium_x4",
+    "potassium_x4",
+    "opposite_sign_cancellation"
+  ],
+  "path_steps": 801,
+  "dt_ms": 0.1,
+  "initial_state_seed": 290001,
+  "cm_uf_cm2": 1.0,
+  "g_pas_s_cm2": 0.0001,
+  "e_pas_mv": -76.0,
+  "native_passive_test_voltages_mv": [
+    -100.0,
+    -76.0,
+    -65.0,
+    -40.0,
+    0.0,
+    40.0
+  ],
+  "native_passive_current_atol_ma_cm2": 1e-10,
+  "gate_rmse_limit": 0.005,
+  "worst_individual_current_normalized_rmse_limit": 0.01,
+  "clamp_demand_normalized_rmse_limit": 0.01,
+  "clock": "At sample k, evaluate ionic and passive currents at imposed V[k] and gate x[k]. Required external current density is C*1e-3*(V[k+1]-V[k])/dt + I_pas(V[k]) + sum_i I_i(V[k],x[k]); inward ionic currents are negative. Then update all 18 gate states with V[k] and imposed cai[k].",
+  "primary_comparison": "For every family, arm, seed, path and conductance panel compare the frozen hybrid with the exact 11-channel formula baseline on the same imposed V, cai, initial gate state, passive parameters and capacitive term. No model selection, retraining or autonomous voltage.",
+  "metric_normalization": "Per-channel current errors divide by the channel driving scale gbar*multiplier*(V-E); clamp-demand error divides by |Icap|+|Ipas|+sum_i |gbar_i*multiplier_i*(V-E_i)|, floored at 1e-12. Report absolute mA/cm2 RMSE too; a small normalized total may hide cancellation.",
+  "decision": "A diagnostic success requires native passive formula agreement and every frozen both-arm family/seed/path/panel below all three limits with zero state occupancy violations. None-arm is a registered ablation, not a rescue or selector. Technical failure is not a scientific NO-GO.",
+  "limits": "This is an algebraic external-clamp current-budget test, not an authentic full NEURON voltage-clamp trajectory or an autonomous membrane rollout. cai and V remain imposed. Capacitive current is fixed by the prescribed V derivative, and the clamp-demand balance is an identity by construction; only hybrid-vs-formula discrepancies and passive native audit are empirical. No speedup, axial, synaptic, CaDynamics, full-neuron, or Task30 claim."
+}

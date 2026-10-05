@@ -527,6 +527,17 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
 
 - **Task 29 — Ionico + passivo con clamp esterno**. Autorizzata soltanto come
   studio diagnostico dall'emendamento scientifico; non dal Gate D prestazionale.
+  **Eseguita, GO diagnostico nello scope imposto**: quattro percorsi di V/cai,
+  cinque pannelli di conduttanza, quattro bracci frozen e tre seed producono
+  240/240 confronti validi, di cui 120/120 primari both-arm; nessuna violazione
+  di occupazione. Il controllo passivo nativo NEURON concorda esattamente con
+  la formula nei sei voltaggi registrati. Peggior RMSE normalizzato di corrente
+  di clamp nei both-arm: 0,000373 (independent) e 0,000179 (shared_heads), sotto
+  soglia 0,01. Audit e limiti in
+  `experiments/results/task29_kaggle_1245b70/result_audit.json` e
+  `experiments/task29_external_clamp_result.md`. La conservazione di corrente
+  è un'identità del bilancio imposto: non implica voltage rollout autonomo.
+  Gate D prestazionale resta NO-GO e Task30 richiede decisione separata.
 - **Task 30 — Voltage update autonomo**.
 - **Task 31 — Scheduled sampling diagnostico**.
 - **Task 32 — Dinamiche lente in feedback**.
