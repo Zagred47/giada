@@ -15,6 +15,13 @@ import numpy as np
 from . import ionic_block_teacher_forced as ionic
 from .hh_family_transfer import write
 
+# Python scalars are trace-time constants. NumPy scalar offsets can look like
+# data-dependent control flow to torch.compile despite being fixed metadata.
+OFFSETS=tuple(int(x) for x in ionic.OFFSETS)
+POWERS=tuple(int(x) for x in ionic.POWERS)
+GBAR_VALUES=tuple(float(x) for x in ionic.GBAR)
+REVERSAL_VALUES=tuple(float(x) for x in ionic.REVERSALS)
+
 
 def config(root: Path) -> dict:
     return json.loads((root / 'experiments/task28b_gate_d_compute.json').read_text(encoding='utf-8'))
@@ -110,13 +117,13 @@ def _rates(name, v, ca, torch):
 def _currents(v, state, torch):
     opening=[]
     for k,names in enumerate(ionic.STATE_NAMES):
-        a=ionic.OFFSETS[k]
-        x=state[...,a].pow(int(ionic.POWERS[k]))
+        a=OFFSETS[k]
+        x=state[...,a].pow(POWERS[k])
         if len(names)==2:x=x*state[...,a+1]
         opening.append(x)
     opened=torch.stack(opening,-1)
-    gb=torch.as_tensor(ionic.GBAR,device=v.device,dtype=v.dtype)
-    reversal=torch.as_tensor(ionic.REVERSALS,device=v.device,dtype=v.dtype)
+    gb=torch.tensor(GBAR_VALUES,device=v.device,dtype=v.dtype)
+    reversal=torch.tensor(REVERSAL_VALUES,device=v.device,dtype=v.dtype)
     return opened*gb*(v[...,None]-reversal)
 
 
@@ -124,7 +131,7 @@ def exact_gpu(v,ca,state,dt,torch):
     parts=[]
     for k,name in enumerate(ionic.CHANNELS):
         inf,tau=_rates(name,v,ca,torch)
-        a,b=ionic.OFFSETS[k:k+2]
+        a,b=OFFSETS[k:k+2]
         if b-a==1:inf,tau=inf[...,None],tau[...,None]
         z=-torch.expm1(-dt[...,None]/tau)
         parts.append((1-z)*state[...,a:b]+z*inf)
@@ -139,7 +146,7 @@ def hybrid_gpu(model,v,ca,state,dt,torch):
     parts=[learned]
     for k,name in enumerate(ionic.CHANNELS[5:],start=5):
         inf,tau=_rates(name,v,ca,torch)
-        a,b=ionic.OFFSETS[k:k+2]
+        a,b=OFFSETS[k:k+2]
         if b-a==1:inf,tau=inf[...,None],tau[...,None]
         z=-torch.expm1(-dt[...,None]/tau)
         parts.append((1-z)*state[...,a:b]+z*inf)
