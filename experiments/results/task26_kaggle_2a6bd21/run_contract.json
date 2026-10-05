@@ -1,0 +1,141 @@
+{
+  "channels": [
+    "Ca_HVA",
+    "Ca_LVAst",
+    "NaTa_t",
+    "NaTs2_t",
+    "Nap_Et2"
+  ],
+  "sample_count": 8192,
+  "extrema_nodes": 121,
+  "dt_values_ms": [
+    0.025,
+    0.1,
+    0.5,
+    1,
+    5,
+    25,
+    100,
+    500,
+    1000
+  ],
+  "held_horizons_ms": [
+    1,
+    10,
+    100,
+    1000,
+    10000
+  ],
+  "path_dt_ms": {
+    "fast": 0.025,
+    "slow": 1.0
+  },
+  "gates": {
+    "gate_rmse": 0.001,
+    "m_rmse": 0.001,
+    "h_rmse": 0.001,
+    "gate_max_error": 0.01,
+    "inf_rmse": 0.002,
+    "log_tau_rmse": 0.02,
+    "open_rmse": 0.002,
+    "occupancy_violations": 0
+  },
+  "held_gates": {
+    "gate_rmse": 0.002,
+    "m_rmse": 0.002,
+    "h_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003,
+    "occupancy_violations": 0
+  },
+  "current_gates": {
+    "individual_current_normalized_rmse": 0.002,
+    "total_current_normalized_rmse": 0.002,
+    "total_current_normalized_max": 0.01
+  },
+  "path_gates": {
+    "gate_rmse": 0.002,
+    "m_rmse": 0.002,
+    "h_rmse": 0.002,
+    "gate_max_error": 0.01,
+    "open_rmse": 0.003,
+    "occupancy_violations": 0
+  },
+  "path_current_gates": {
+    "individual_current_normalized_rmse": 0.003,
+    "total_current_normalized_rmse": 0.003,
+    "total_current_normalized_max": 0.01
+  },
+  "current_semantics": "Retain analytic I=gbar*m^p*h*(V-E),p2Ca/p3Na. V/E supplied, post-update state. Units mA/cm2. Canonical Eca120/Ena55 with declared diagnostic variation. Normalize total by sum absolute fully-open driving currents, never by cancelling teacher total. Require every individual channel and worst panel, not pooled total alone. No embedded BREAKPOINT timing claim.",
+  "extrema_support": "22 structured corners: all0,all1,each single high and each single low of10states. Cover all marginal gate extremes without claiming all1024joint corners. Fresh off-grid V nodes plus fixed endpoints/canonical seams intentionally repeated.",
+  "schema_version": "giada-roadmap-task26-preregistration-v1",
+  "stage": "Task26 originale \u2014 joint vs independent, cinque meccanismi sotto V imposto",
+  "parent_contract": "experiments/task25_heterogeneous_mechanisms.json",
+  "parent_result": "experiments/results/task25_kaggle_bdb75e6",
+  "parent_result_hashes": {
+    "final_report.json": "6afc08ead79a5e55c8bbbe3971a8184e6767612ab5329ab437fcdde74031c7f2",
+    "result_audit.json": "18c5258af5b455d7db074ce6ed8a3f73a07feac9552c756be0ed153f4de7ff24",
+    "composition_freeze.json": "e31776ca97d3c5a163de9e5627a240d272541c6272507da10ea7c7f3c263e60c"
+  },
+  "families": [
+    "independent",
+    "shared_heads"
+  ],
+  "widths": [
+    16,
+    32
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "checkpoints": [
+    0,
+    5000,
+    15000,
+    30000,
+    60000
+  ],
+  "pool_size": 16384,
+  "batch_size": 256,
+  "development_count": 2048,
+  "learning_rate": 0.003,
+  "learning_rate_final": 0.0001,
+  "decay_start": 15000,
+  "inf_weight": 1.0,
+  "log_tau_weight": 1.0,
+  "clip_norm": 1.0,
+  "data_seeds": {
+    "fit": 260101,
+    "fit_regions": 260102,
+    "minibatches": 260103,
+    "development": [
+      260201,
+      260202
+    ],
+    "held_development": 260205
+  },
+  "fresh_seeds": [
+    260401,
+    260402,
+    260403,
+    260405
+  ],
+  "extrema_node_offset": 0.67,
+  "require_cuda": true,
+  "hypotheses": {
+    "joint_learnability": "Il trunk condiviso conserva tutti i gate e tutte le correnti nei tre seed, sul medesimo supporto del riferimento indipendente, alle soglie invariate della Task25.",
+    "capacity": "Il confronto width32 vs16 a budget fisso distingue una limitazione di capacit\u00e0 dalla semplice condivisione; shared32 (1780 parametri) vs independent16 (1860) \u00e8 un controllo quasi allineato, non esattamente parameter-matched.",
+    "budget": "I checkpoint lungo le stesse traiettorie consentono contrasti appaiati 60k vs30k senza riaddestramento; un miglioramento di almeno10% del worst-seed development score \u00e8 materiale ma non una legge universale.",
+    "gradient_interference": "Coseno negativo tra gradienti dei task sul trunk condiviso \u00e8 un probe di conflitto locale; non dimostra da solo la causa di un fallimento. Probe a minibatch e checkpoint fissi, mai usato per selezione.",
+    "current_masking": "Somme accurate possono mascherare errori individuali: promozione richiede ogni canale e il peggior pannello di corrente, non soltanto il totale.",
+    "compute": "Condivisione riduce parametri e MAC teorici; latenza GPU warmup/sincronizzata \u00e8 diagnostica. Nessuno speedup \u00e8 dedotto dai parametri o da confronti non allineati. GateD resta incompleto."
+  },
+  "training": "Tutti da zero. Matrice2x2 famiglia xwidth,3seed vettorizzati; stesso fit, minibatch, LR cosine, loss percanale (gate+inf+logtau), clipping perseed/bundle, momentiAdam separati. A widthfisso inizializzazione identica di ogni trunk/head prima di divergere; nessun peso congelatoTask25 usato come warmstart. Non alleniamo targetdi corrente (Task27).",
+  "selection": "Un width/checkpoint comune per famiglia minimizza il massimo score development sui3seed, tuttii domini, ogni gate/rate e peggiorpannello corrente; include probe semigroupheld1000/10000ms aV disgiunto. Questo probe non \u00e8 rolloutiterativo. Pareggi: minorewidth,poi checkpointpi\u00f9precoce. Freeze verificato prima di generare fresh. Nessuna riselezione dopo fresh.",
+  "promotion": "Task27 preparabile solo se referenceindependent e shared_heads selezionati su development superano3/3 tutta la congiunzione fresh,helditerativo e path fast/slow. Technicalvalid separato dalNO-GOscientifico. Compressione dichiarabile solo con meno parametri e3/3; nessuna autorizzazione a closedloop oGateD completo.",
+  "limits": "Cinque canali voltaggio-dipendenti; dieci stati m/h espliciti; V imposto; corrente analitica economica mantenuta. Nessun CaDynamics/SK_E2, calciumfeedback, voltaggioautonomo, temperaturaOOD, sinapsi o neuronecompleto. Task27 targetcorrenti eTask28 blocco completo restano separate.",
+  "parent_contract_sha256": "816ccd0ba8918d411bca6889a60f9cb3180566ce12d31b3f61e2a7a7c84eaa06",
+  "task26_contract_sha256": "57b968925095f23a540d66f53d7ce4e8a7606878774bf344f8760815ef49a9a6"
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "family": "independent",
+    "width": 16,
+    "parameters": 1860,
+    "rate_mlp_macs_per_voltage": 1680,
+    "excludes": "Nonlinearities, gate update, current algebra, memory traffic; not measured speedup"
+  },
+  {
+    "family": "independent",
+    "width": 32,
+    "parameters": 6260,
+    "rate_mlp_macs_per_voltage": 5920,
+    "excludes": "Nonlinearities, gate update, current algebra, memory traffic; not measured speedup"
+  },
+  {
+    "family": "shared_heads",
+    "width": 16,
+    "parameters": 644,
+    "rate_mlp_macs_per_voltage": 592,
+    "excludes": "Nonlinearities, gate update, current algebra, memory traffic; not measured speedup"
+  },
+  {
+    "family": "shared_heads",
+    "width": 32,
+    "parameters": 1780,
+    "rate_mlp_macs_per_voltage": 1696,
+    "excludes": "Nonlinearities, gate update, current algebra, memory traffic; not measured speedup"
+  }
+]
