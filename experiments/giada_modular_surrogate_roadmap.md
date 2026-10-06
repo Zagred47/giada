@@ -638,7 +638,12 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   superato tutte le 12 celle, i gate A/B, conduttanza, corrente, carica e i
   controlli negativi. **IV-C1 è conclusa soltanto nel suo dominio isolato e
   deterministico**; evidenza in `experiments/iv_c1_event_clock_forensic_result.md`
-  e `experiments/iv_c1_v3_result.md`. IV-C2 e IV-C3 sono ancora aperte;
+  e `experiments/iv_c1_v3_result.md`. IV-C2 ha poi superato il replay
+  nativo appaiato di plasticità/RNG/ripristino in 64 celle e la conferma
+  prospettica delle frequenze native di recupero/rilascio in 16 celle con
+  256 nuovi seed per cella. Il perimetro resta quello di sinapsi isolate a
+  voltaggio imposto; dettagli e limiti in
+  `experiments/iv_c2_v1_result_and_v2_rationale.md`. **IV-C3 resta aperta**:
   Task33 non è ancora autorizzata.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
