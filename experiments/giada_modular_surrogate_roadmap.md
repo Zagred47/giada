@@ -587,6 +587,12 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   indipendentemente in `experiments/results/iv_b_v2_kaggle_8b3a4e5/`.
   È quindi autorizzata la preparazione del feedback elettrico della Task32,
   **non** dichiarata conclusa la Task32: Ca e SK avevano ancora ica e V imposti.
+  Il protocollo Task32 v1 ora preregistrato in
+  `experiments/task32_dynamic_calcium_feedback_preregistration.json` combina
+  gli undici canali, CaDynamics e SK nel singolo compartimento nativo con V e
+  cai autonomi. Separa calibrazione del timing della sorgente di calcio e
+  conferma disgiunta; giudica i checkpoint congelati solo dopo un floor
+  formula–NEURON ammissibile. È un nuovo run, non un esito già acquisito.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
