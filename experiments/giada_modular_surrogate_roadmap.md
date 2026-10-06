@@ -631,9 +631,15 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   con soglie invariate, ma ha fallito ancora il gate A/B in tutte le 12 celle;
   conduttanze, correnti, cariche e controlli restano corretti. Vedi
   `experiments/iv_c1_v1_state_phase_diagnosis.md` e
-  `experiments/iv_c1_v2_result.md`. Il prossimo passo è un audit forense
-  diagnostico per evento e per sinapsi, non una terza conferma costruita per
-  tentativi. IV-C2, IV-C3 e Task33 restano non autorizzate.
+  `experiments/iv_c1_v2_result.md`. L'audit per evento e per sinapsi ha
+  identificato il vero discrimine: il tempo effettivo `h.t` può trovarsi appena
+  prima o dopo il timestamp dell'evento, benché la griglia nominale mostri
+  lo stesso tempo. La conferma v3 preregistrata su schedule disgiunte ha
+  superato tutte le 12 celle, i gate A/B, conduttanza, corrente, carica e i
+  controlli negativi. **IV-C1 è conclusa soltanto nel suo dominio isolato e
+  deterministico**; evidenza in `experiments/iv_c1_event_clock_forensic_result.md`
+  e `experiments/iv_c1_v3_result.md`. IV-C2 e IV-C3 sono ancora aperte;
+  Task33 non è ancora autorizzata.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
 
