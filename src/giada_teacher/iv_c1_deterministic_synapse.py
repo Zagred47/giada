@@ -119,7 +119,8 @@ def native_episode(schedule: dict, hold_mv: float, cfg: dict) -> tuple[dict, dic
             syn.Use = 1.0
             syn.Fac = 0.0
             syn.Dep = 100.0
-            syn.gmax = cfg['gmax_us_per_ns']
+            # gmax is a GLOBAL PARAMETER in both canonical MOD files, not a
+            # RANGE property. The pinned sources fix its default to .001 uS.
             if kind == 'exc':
                 syn.NMDA_ratio = cfg['nmda_ratio']
             else:
@@ -136,8 +137,8 @@ def native_episode(schedule: dict, hold_mv: float, cfg: dict) -> tuple[dict, dic
     h.finitialize(hold_mv)
     for (_, _, event), connection in zip(synapses, connections):
         connection.event(float(event))
-    parameters = {'mg': float(next((syn.mg for kind, syn, _ in synapses
-                                    if kind == 'exc'), 1.0))}
+    # mg is likewise a GLOBAL PARAMETER with canonical default 1 mM.
+    parameters = {'mg': 1.0}
     for receptor in COMPONENTS:
         kind = 'exc' if receptor in ('AMPA', 'NMDA') else 'inh'
         attr = 'tau_r_' + receptor

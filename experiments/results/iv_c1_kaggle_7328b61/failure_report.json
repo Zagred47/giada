@@ -1,0 +1,6 @@
+{
+  "valid": false,
+  "scientific_no_go": false,
+  "error": "'gmax' is not a defined hoc variable name.",
+  "traceback": "Traceback (most recent call last):\n  File \"/kaggle/working/giada_iv_c1_0fd5e0c3/giada/scripts/run_iv_c1_deterministic_synapse.py\", line 38, in main\n    report = run(ROOT, Path(args.teacher), output, cfg, revision)\n  File \"/kaggle/working/giada_iv_c1_0fd5e0c3/giada/src/giada_teacher/iv_c1_deterministic_synapse.py\", line 200, in run\n    native, metadata = native_episode(cfg['calibration_schedule'], hold, cfg)\n                       ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/working/giada_iv_c1_0fd5e0c3/giada/src/giada_teacher/iv_c1_deterministic_synapse.py\", line 122, in native_episode\n    syn.gmax = cfg['gmax_us_per_ns']\n    ^^^^^^^^\nLookupError: 'gmax' is not a defined hoc variable name.\n"
+}
