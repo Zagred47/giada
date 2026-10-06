@@ -106,9 +106,9 @@ def native_episode(schedule: dict, hold_mv: float, cfg: dict) -> tuple[dict, dic
     sec.insert('pas')
     sec.g_pas = 1e-5
     sec.e_pas = hold_mv
-    clamp = h.VClamp(sec(.5))
-    clamp.dur[0] = cfg['duration_ms'] + cfg['dt_ms']
-    clamp.amp[0] = hold_mv
+    clamp = h.SEClamp(sec(.5))
+    clamp.dur1 = cfg['duration_ms'] + cfg['dt_ms']
+    clamp.amp1 = hold_mv
     clamp.rs = 0.001
     synapses = []
     connections = []
