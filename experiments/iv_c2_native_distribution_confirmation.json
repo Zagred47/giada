@@ -1,0 +1,26 @@
+{
+  "schema_version": "giada-iv-c2-native-distribution-v2",
+  "roadmap_id": "IV-C2",
+  "status": "preregistered_before_native_distribution_run",
+  "parent_report": "experiments/results/iv_c2_kaggle_21e9908/final_report.json",
+  "parent_report_sha256": "94feb1b45a7d47ce4d4259c19aee2d13d186b4b66875baddec0477a38f167d1b",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "mechanisms": ["ProbAMPANMDA_EMS", "ProbGABAAB_EMS"],
+  "seed_start": 800001,
+  "replicate_count_per_cell": 256,
+  "stream": 19021,
+  "use_values": [0.2, 0.8],
+  "depression_ms": [2.0, 20.0],
+  "event_time_ms": 2.0,
+  "dt_ms": 0.025,
+  "weight_ns": 0.5,
+  "hold_mv": -65.0,
+  "max_absolute_probability_error": 0.08,
+  "minimum_uniform_misfit": 0.1,
+  "predictions": {
+    "initial_release": "P(release)=1-exp(-Use) for Random123 negexp(1) with recovered initial state",
+    "depressed_recovery": "P(recover)=exp(-exp(-event_time/Dep)) when tsyn=0 and Rstate=0",
+    "depressed_release": "P(release)=P(recover)*(1-exp(-Use)) with independent second draw"
+  },
+  "decision": "Parent v1 exact-replay gates remain required. v2 passes only if both native mechanisms, both Use values and both Dep values meet the preregistered absolute frequency error for initial release, depressed recovery, and depressed release; the uniform alternative must disagree. If the native API fails, outcome is inconclusive. IV-C3 and Task33 remain unauthorized."
+}

@@ -1,0 +1,7 @@
+# GIADA IV-C2 — replay v1 e verifica distributiva v2
+
+Il primo tentativo del notebook v1 (`b04e1f8`) si è fermato prima del run nativo perché il worker, lanciato per percorso, non vedeva il package `src`. Non è un risultato scientifico. Il runner è stato corretto e provato localmente con `--help` prima del nuovo run.
+
+La revisione `21e9908` ha prodotto il [report nativo](results/iv_c2_kaggle_21e9908/final_report.json): 64 combinazioni dei due meccanismi EMS, quattro bracci `Use/Fac/Dep`, due calendari e quattro stream appaiati. Nessuna discrepanza di rilascio, stato plastico, posizione dello stream RNG o suffisso dopo ripristino di stato nativo più RNG. Il controllo con peso zero non consuma RNG; impulsi programmati e rilasci realizzati risultano diversi. Su 10.000 estrazioni indipendenti, il massimo scarto dalla CDF esponenziale è 0,00528; il controllo uniforme diverge di 0,2546.
+
+Questo chiude i gate preregistrati del replay v1, ma la distribuzione verificata in quel run è quella dello **stream**, non ancora la frequenza di rilascio nativa su molti stream indipendenti. Per non confondere le due evidenze, il [contratto v2](iv_c2_native_distribution_confirmation.json) è preregistrato prima del suo run: 256 nuovi seed per cella, entrambi i meccanismi, due valori di `Use`, due costanti `Dep`, stato iniziale recuperato o depresso. Le predizioni sono esplicite per rilascio e recupero. Fino al pass di v2, la chiusura scientifica di IV-C2 resta provvisoria; IV-C3 e Task33 non sono autorizzate.
