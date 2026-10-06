@@ -115,7 +115,8 @@ def analytic_trace(time: np.ndarray, voltage: np.ndarray, schedule: dict,
     return values
 
 
-def native_episode(schedule: dict, hold_mv: float, cfg: dict) -> tuple[dict, dict]:
+def native_episode(schedule: dict, hold_mv: float, cfg: dict,
+                   diagnostic: bool = False) -> tuple[dict, dict]:
     from neuron import h
 
     h.CVode().active(0)
@@ -157,6 +158,11 @@ def native_episode(schedule: dict, hold_mv: float, cfg: dict) -> tuple[dict, dic
     values = {name: np.zeros(len(time), dtype=np.float64)
               for name in (*STATES, *FIELD_NAMES)}
     voltage = np.empty_like(time)
+    actual_time = np.empty_like(time) if diagnostic else None
+    per_synapse = ({str(i): {name: np.empty_like(time) for name in
+                    (('A_AMPA', 'B_AMPA', 'g_AMPA') if kind == 'exc' else
+                     ('A_GABAA', 'B_GABAA', 'g_GABAA'))}
+                    for i, (kind, _, _) in enumerate(synapses)} if diagnostic else None)
     h.finitialize(hold_mv)
     for (_, _, event), connection in zip(synapses, connections):
         connection.event(float(event))
@@ -172,13 +178,18 @@ def native_episode(schedule: dict, hold_mv: float, cfg: dict) -> tuple[dict, dic
         parameters['tau_d_' + receptor] = float(getattr(sample, 'tau_d_' + receptor))
     for n in range(len(time)):
         h.fcurrent()
+        if diagnostic:
+            actual_time[n] = float(h.t)
         voltage[n] = float(sec(.5).v)
-        for kind, syn, _ in synapses:
+        for i, (kind, syn, _) in enumerate(synapses):
             receptors = ('AMPA', 'NMDA') if kind == 'exc' else ('GABAA', 'GABAB')
             for receptor in receptors:
                 for prefix in ('A_', 'B_', 'g_', 'i_'):
                     name = prefix + receptor
                     values[name][n] += float(getattr(syn, name))
+            if diagnostic:
+                for name in per_synapse[str(i)]:
+                    per_synapse[str(i)][name][n] = float(getattr(syn, name))
         if n < len(time) - 1:
             h.fadvance()
     release_count = sum(float(max(values['A_AMPA' if kind == 'exc' else 'A_GABAA'])) > 0
@@ -189,6 +200,9 @@ def native_episode(schedule: dict, hold_mv: float, cfg: dict) -> tuple[dict, dic
                                               else 'B_GABAA')) > 0)
                             for kind, syn, _ in synapses]
     result = {'time_ms': time, 'voltage_mv': voltage, **values}
+    if diagnostic:
+        result['actual_time_ms'] = actual_time
+        result['per_synapse'] = per_synapse
     metadata = {'parameters': parameters,
                 'expected_release_count': len(synapses),
                 'released_synapse_count': sum(per_synapse_released),

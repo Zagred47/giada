@@ -624,12 +624,16 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   sinapsi, V imposto, calibrazione del timing separata da conferma e controlli
   negativi. La preregistrazione non equivale a completamento del prerequisito.
   Il run v1 `5920b73` ha conduttanze/correnti/cariche esatte al rumore numerico,
-  ma fallisce il gate sugli stati A/B: il campione nativo all'istante dell'evento
-  è pre-jump. Nessuna promozione retroattiva. La v2 preregistrata in
-  `experiments/iv_c1_deterministic_synapse_v2.json` congela questa convenzione
-  di osservazione e usa schedule nuove con soglie invariate; dettagli in
-  `experiments/iv_c1_v1_state_phase_diagnosis.md`. IV-C2, IV-C3 e Task33 restano
-  non autorizzate finché i rispettivi gate non passano.
+  ma fallisce il gate sugli stati A/B. La spiegazione iniziale di una
+  convenzione pre-jump uniforme era un'ipotesi, non un fatto acquisito.
+  Nessuna promozione retroattiva. La v2 preregistrata in
+  `experiments/iv_c1_deterministic_synapse_v2.json` ha usato schedule nuove
+  con soglie invariate, ma ha fallito ancora il gate A/B in tutte le 12 celle;
+  conduttanze, correnti, cariche e controlli restano corretti. Vedi
+  `experiments/iv_c1_v1_state_phase_diagnosis.md` e
+  `experiments/iv_c1_v2_result.md`. Il prossimo passo è un audit forense
+  diagnostico per evento e per sinapsi, non una terza conferma costruita per
+  tentativi. IV-C2, IV-C3 e Task33 restano non autorizzate.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
 
