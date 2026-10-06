@@ -643,8 +643,13 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   prospettica delle frequenze native di recupero/rilascio in 16 celle con
   256 nuovi seed per cella. Il perimetro resta quello di sinapsi isolate a
   voltaggio imposto; dettagli e limiti in
-  `experiments/iv_c2_v1_result_and_v2_rationale.md`. **IV-C3 resta aperta**:
-  Task33 non è ancora autorizzata.
+  `experiments/iv_c2_v1_result_and_v2_rationale.md`. IV-C3 ha superato
+  prospetticamente 36/36 celle miste, i tre controlli negativi, la
+  ricostruzione causale online delle correnti e il restart nativo delle
+  quattro sinapsi. Il risultato è documentato in
+  `experiments/iv_c3_integrated_synaptic_interface_result.md`.
+  **La preparazione di Task33 è ora autorizzata**, ma IV-C3 dimostra solo
+  l'interfaccia isolata a voltaggio imposto, non il compartimento autonomo.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
 
