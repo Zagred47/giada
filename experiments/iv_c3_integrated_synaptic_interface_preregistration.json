@@ -1,0 +1,64 @@
+{
+  "schema_version": "giada-iv-c3-integrated-synaptic-interface-v1",
+  "roadmap_id": "IV-C3",
+  "status": "preregistered_before_native_run",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "parent_reports": {
+    "IV-C1": {"path": "experiments/results/iv_c1_v3_kaggle_634adea/final_report.json", "sha256": "a92d48a256749a1c3db2e2bd9c532eeb18c7bb4f97c8797f32ef9976a50f0b0e"},
+    "IV-C2": {"path": "experiments/results/iv_c2_native_distribution_8edd4c2/final_report.json", "sha256": "47406806488e6a3f72f711d334e799c80922fe20d5ba50226b1a9eff3de897fb"}
+  },
+  "dt_ms": 0.025,
+  "duration_ms": 18.0,
+  "holding_voltages_mv": [-75.0, -40.0, 20.0],
+  "confirmation_seeds": [71317, 71329, 71343, 71359],
+  "calibration_seed": 70211,
+  "random123_streams": [301, 302, 303, 304],
+  "synapses": [
+    {"id": "exc_1", "mechanism": "ProbAMPANMDA_EMS", "weight_ns": 0.5, "Use": 0.2, "Fac": 8.0, "Dep": 2.0},
+    {"id": "exc_2", "mechanism": "ProbAMPANMDA_EMS", "weight_ns": 0.5, "Use": 0.75, "Fac": 0.0, "Dep": 20.0},
+    {"id": "inh_1", "mechanism": "ProbGABAAB_EMS", "weight_ns": 0.5, "Use": 0.35, "Fac": 4.0, "Dep": 5.0},
+    {"id": "inh_2", "mechanism": "ProbGABAAB_EMS", "weight_ns": 0.5, "Use": 0.6, "Fac": 0.0, "Dep": 10.0}
+  ],
+  "nmda_ratio": 0.71,
+  "gabab_ratio": 0.5,
+  "gmax_us_per_ns": 0.001,
+  "calibration_schedule_ms": {
+    "exc_1": [3.025, 12.025], "exc_2": [3.275, 12.275],
+    "inh_1": [3.525, 12.525], "inh_2": [3.775, 12.775]
+  },
+  "confirmation_schedules_ms": {
+    "interleaved": {
+      "exc_1": [2.125, 7.375, 11.125], "exc_2": [3.875, 8.125, 12.875],
+      "inh_1": [2.375, 7.625, 11.375], "inh_2": [4.125, 8.375, 13.125]
+    },
+    "coincident_burst": {
+      "exc_1": [2.125, 2.375, 2.625, 11.125, 11.375],
+      "exc_2": [2.125, 2.4, 2.675, 11.125, 11.4],
+      "inh_1": [2.125, 2.35, 2.65, 11.125, 11.35],
+      "inh_2": [2.15, 2.375, 2.625, 11.15, 11.375]
+    },
+    "depression_recovery": {
+      "exc_1": [2.125, 2.375, 5.125, 11.375, 14.125],
+      "exc_2": [2.15, 2.4, 5.15, 11.4, 14.15],
+      "inh_1": [2.175, 2.425, 5.175, 11.425, 14.175],
+      "inh_2": [2.2, 2.45, 5.2, 11.45, 14.2]
+    }
+  },
+  "checkpoint_time_ms": 9.0,
+  "gates": {
+    "max_plastic_state_error": 1e-8,
+    "max_rng_sequence_difference": 0,
+    "max_release_mismatch_count": 0,
+    "max_receptor_state_error": 1e-6,
+    "max_conductance_error_us": 5e-6,
+    "max_current_error_na": 5e-4,
+    "max_integrated_charge_error_na_ms": 0.005,
+    "max_native_restart_state_error": 1e-8,
+    "max_native_restart_current_error_na": 1e-7,
+    "max_holding_error_mv": 0.1
+  },
+  "negative_controls": ["all_zero_weight_has_zero_current_and_no_rng_draws", "scheduled_events_are_not_assumed_released", "opposite_voltage_current_signs_and_nmda_block"],
+  "selection_policy": "Calibration schedule and seed test the same fixed code/gates before any confirmation case. No parameter, threshold, phase or model selection on confirmation cases; a calibration failure is an inconclusive implementation failure. Confirmation requires all 3 schedules x 4 seeds x 3 voltages and controls.",
+  "decision": "IV-C3 passes only if every mixed-event case matches the independent causal online shadow on plastic state, RNG, release, A/B receptor states, conductance, current, charge and imposed voltage; native checkpoint/restart reproduces the suffix; all receptor classes have realized support and all negative controls pass. IV-C1 and IV-C2 reports must be hash-pinned. Only then may Task33 be prepared; this does not establish autonomous-voltage or multicompartmental validity.",
+  "scope": "Four canonical stochastic EMS synapses sharing one voltage-clamped passive compartment; mixed excitatory/inhibitory intra-ms bursts. Planned events and initial RNG are causal inputs; teacher-realized future release is never supplied to the shadow."
+}

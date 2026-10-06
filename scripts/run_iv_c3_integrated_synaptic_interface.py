@@ -1,0 +1,40 @@
+"""Isolated IV-C3 native worker with preserved failure report."""
+
+import argparse
+import json
+from pathlib import Path
+import subprocess
+import sys
+import traceback
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+from src.giada_teacher.hh_family_transfer import write
+from src.giada_teacher.iv_c3_integrated_synaptic_interface import run
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--repo', type=Path, required=True)
+    parser.add_argument('--teacher', type=Path, required=True)
+    parser.add_argument('--output', type=Path, required=True)
+    args = parser.parse_args()
+    args.output.mkdir(parents=True, exist_ok=False)
+    revision = subprocess.check_output(
+        ['git', '-C', str(args.repo), 'rev-parse', 'HEAD'], text=True).strip()
+    try:
+        report = run(args.repo, args.teacher, args.output, revision)
+        print(json.dumps({k: report[k] for k in (
+            'valid', 'diagnosis', 'confirmation_case_count',
+            'iv_c3_passed', 'task33_authorized')}), flush=True)
+    except Exception as error:
+        write(args.output / 'failure_report.json', {
+            'valid': False, 'failure_kind': 'runtime_or_contract',
+            'iv_c3_passed': False, 'task33_authorized': False,
+            'error': repr(error), 'traceback': traceback.format_exc(),
+            'code_revision': revision})
+        raise
+
+
+if __name__ == '__main__':
+    main()
