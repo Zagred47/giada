@@ -107,6 +107,7 @@ def native_reference(d: dict, cfg: dict, base: dict) -> dict:
     voltage = np.empty((steps, count))
     calcium = np.empty_like(voltage)
     ica = np.empty_like(voltage)
+    eca = np.empty_like(voltage)
     gates = np.empty((steps, count, 18))
     for j, row in enumerate(d['rows']):
         sec = h.Section(name=f'giada_task32_{j}')
@@ -118,6 +119,10 @@ def native_reference(d: dict, cfg: dict, base: dict) -> dict:
         sec.e_pas = base['e_pas_mv']
         for name in (*ionic.CHANNELS, 'CaDynamics_E2'):
             sec.insert(name)
+        # CaDynamics writes cai; NEURON otherwise promotes eca to a Nernst
+        # ASSIGNED variable recomputed after each fadvance. Task30c's solver
+        # contract has fixed 120 mV eca, so explicitly preserve that control.
+        h.ion_style('ca_ion', 3, 1, 0, 0, 0, sec=sec)
         seg = sec(.5)
         area = float(h.area(.5, sec=sec))
         clamps = []
@@ -129,7 +134,7 @@ def native_reference(d: dict, cfg: dict, base: dict) -> dict:
         initial_cai = float(cfg['initial_cai_mM'])
         initial_gate = t30.initial_states(np.array([initial_v]), np.array([initial_cai]))[0]
         h.finitialize(initial_v)
-        seg.eca, seg.ena, seg.ek = 120., 55., -85.
+        seg.eca, seg.ena, seg.ek = cfg['eca_mv'], 55., -85.
         seg.cai = initial_cai
         try:
             seg.cai_CaDynamics_E2 = initial_cai
@@ -151,6 +156,7 @@ def native_reference(d: dict, cfg: dict, base: dict) -> dict:
             voltage[n, j] = float(seg.v)
             calcium[n, j] = float(seg.cai)
             ica[n, j] = float(seg.ica)
+            eca[n, j] = float(seg.eca)
             for k, name in enumerate(ionic.CHANNELS):
                 a = ionic.OFFSETS[k]
                 mech = getattr(seg, name)
@@ -161,7 +167,8 @@ def native_reference(d: dict, cfg: dict, base: dict) -> dict:
         h.delete_section(sec=sec)
         if (j+1) % 4 == 0:
             print(f'[GIADA Task32] native {j+1}/{count}', flush=True)
-    return {'voltage': voltage, 'calcium': calcium, 'ica': ica, 'gates': gates}
+    return {'voltage': voltage, 'calcium': calcium, 'ica': ica,
+            'eca': eca, 'gates': gates}
 
 
 def calcium_step(cai: np.ndarray, ica: np.ndarray, cfg: dict) -> np.ndarray:
@@ -269,6 +276,7 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
     native = native_reference(d, cfg, base)
     if not all(np.isfinite(array).all() for array in native.values()):
         raise RuntimeError('Nonfinite native voltage/calcium/gates/current')
+    eca_deviation = float(np.max(np.abs(native['eca']-cfg['eca_mv'])))
     np.savez_compressed(output / 'native_traces.npz', **native)
     calibration = [j for j, row in enumerate(d['rows'])
                    if row['protocol'] in cfg['calibration_protocols']]
@@ -281,12 +289,12 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
     calibration_scores = {scheme: aggregate(episode_metrics(
         result, native, d, cfg, calibration, cfg['primary_horizon_ms']))
         for scheme, result in formulas.items()}
-    selected = min(cfg['source_hypotheses'], key=lambda scheme:
-                   calibration_scores[scheme]['worst_episode_voltage_rmse_mv'])
+    selected = cfg['fixed_source_hypothesis']
     formula_rows = episode_metrics(formulas[selected], native, d, cfg,
                                    confirmation, cfg['primary_horizon_ms'])
     floor = aggregate(formula_rows)
-    floor_pass = bool(floor['finite'] and floor['occupancy_violations'] == 0
+    floor_pass = bool(eca_deviation <= cfg['eca_max_deviation_limit_mv']
+        and floor['finite'] and floor['occupancy_violations'] == 0
         and floor['physical_voltage_violations'] == 0
         and floor['pooled_voltage_rmse_mv'] <= cfg['formula_floor_pooled_limit_mv']
         and floor['worst_episode_voltage_rmse_mv'] <= cfg['formula_floor_worst_episode_limit_mv']
@@ -339,8 +347,9 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
               'scientific_primary_passed': bool(floor_pass and models and all(
                   result['primary']['passed'] for family in models.values()
                   for result in family.values())),
-              'source_hypothesis_selected_on_calibration_only': selected,
+              'source_hypothesis_frozen_before_run': selected,
               'calibration_scores': calibration_scores,
+              'native_eca_max_deviation_mv': eca_deviation,
               'confirmation_formula_floor': floor,
               'confirmation_formula_rows': formula_rows,
               'formula_80ms_diagnostic': aggregate(episode_metrics(

@@ -1,0 +1,9 @@
+# Task 32 v1 — floor nativo non ammissibile
+
+Il primo run [Kaggle](https://www.kaggle.com/code/alessandrobelli/giada-task32-dynamic-calcium-feedback-f8c5d25), revisione `f8c5d25`, ha generato tracce native finite e completato senza eccezioni. Tuttavia, sulle condizioni di conferma il floor formula–NEURON a 40 ms è **6,40 mV pooled / 13,93 mV peggior episodio**, oltre ai limiti preregistrati di 0,2 / 0,5 mV. I checkpoint congelati **non sono stati eseguiti né giudicati**; questo non è un NO-GO del modello.
+
+L'audit indipendente dello ZIP e delle tracce rivela una violazione del contratto: inserire `CaDynamics_E2` promuove `eca` a variabile calcolata dalla concentrazione; NEURON la ricalcola a ogni `fadvance`, mentre il riferimento eredita dalla Task30c `E_Ca=120 mV` fisso. L'inversione apparente ricostruita dai dati nativi varia nell'intervallo diagnostico ~64,6–128,9 mV. Anche l'ipotesi alternativa sul timing di `ica` fallisce a 40 ms (~6,40 mV pooled); il quasi pareggio di calibrazione non era la causa sufficiente. Gli scarti forti compaiono soprattutto negli episodi `early_high/calcium_x16` già a ~6,6–7,9 ms.
+
+La [documentazione NEURON](https://nrn.readthedocs.io/en/latest/nmodl/language/nmodl_neuron_extension.html) esplicita il ricalcolo automatico del potenziale di inversione quando un meccanismo scrive la concentrazione. La v2 corregge l'interfaccia con `ion_style`, mantiene `cai` dinamico ma forza `eca` a parametro fisso, e ne misura la deviazione a ogni passo. Congela inoltre `old_state_ica` prima del run, evitando una scelta su differenze di calibrazione ~10⁻¹⁰ mV. Le soglie, i checkpoint e i protocolli restano invariati. Il primo esito non viene promosso retroattivamente.
+
+L'artefatto e l'audit sono in `results/task32_kaggle_f8c5d25/`. Nessun dato è stato letto o scritto su Airtable.

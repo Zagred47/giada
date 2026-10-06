@@ -593,6 +593,14 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   cai autonomi. Separa calibrazione del timing della sorgente di calcio e
   conferma disgiunta; giudica i checkpoint congelati solo dopo un floor
   formula–NEURON ammissibile. È un nuovo run, non un esito già acquisito.
+  Il primo run `f8c5d25` ha correttamente bloccato il giudizio del modello:
+  NEURON ricalcolava automaticamente `eca` mentre il riferimento lo teneva
+  fisso, producendo un floor 40 ms non ammissibile. Audit e tracce sono in
+  `experiments/results/task32_kaggle_f8c5d25/`; diagnosi in
+  `experiments/task32_first_run_diagnosis.md`. La v2 preregistrata in
+  `experiments/task32_dynamic_calcium_feedback_v2.json` forza e misura `eca`
+  fisso senza cambiare checkpoint o soglie. Nessun NO-GO del modello è stato
+  dichiarato dal primo run.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.

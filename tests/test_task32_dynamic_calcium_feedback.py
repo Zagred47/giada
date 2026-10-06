@@ -11,7 +11,7 @@ from src.giada_teacher.iv_b_calcium_prerequisite import calcium_exact
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CFG = json.loads((ROOT / 'experiments/task32_dynamic_calcium_feedback_preregistration.json').read_text())
+CFG = json.loads((ROOT / 'experiments/task32_dynamic_calcium_feedback_v2.json').read_text())
 BASE = task.t30.config(ROOT, Path(CFG['base_config']).name)
 
 

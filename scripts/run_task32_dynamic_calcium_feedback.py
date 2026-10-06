@@ -21,7 +21,7 @@ def main():
     args = parser.parse_args()
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=False)
-    path = ROOT / 'experiments/task32_dynamic_calcium_feedback_preregistration.json'
+    path = ROOT / 'experiments/task32_dynamic_calcium_feedback_v2.json'
     cfg = json.loads(path.read_text(encoding='utf-8'))
     revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
     write(output / 'run_contract.json', cfg)
@@ -29,7 +29,7 @@ def main():
                'src/giada_teacher/iv_b_calcium_prerequisite.py',
                'src/giada_teacher/task30_autonomous_voltage.py',
                'src/giada_teacher/task30c_native_active_confirmation.py',
-               'experiments/task32_dynamic_calcium_feedback_preregistration.json',
+               'experiments/task32_dynamic_calcium_feedback_v2.json',
                'scripts/run_task32_dynamic_calcium_feedback.py')
     write(output / 'code_provenance.json', {
         'code_revision': revision,
@@ -43,7 +43,7 @@ def main():
             'valid': report['valid'],
             'native_floor_admissible': report['native_floor_admissible'],
             'scientific_primary_passed': report['scientific_primary_passed'],
-            'source_hypothesis': report['source_hypothesis_selected_on_calibration_only'],
+            'source_hypothesis': report['source_hypothesis_frozen_before_run'],
             'model_count': sum(len(family) for family in report['models'].values())}), flush=True)
     except Exception as error:
         write(output / 'failure_report.json', {

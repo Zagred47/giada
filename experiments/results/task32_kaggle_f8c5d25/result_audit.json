@@ -1,0 +1,143 @@
+{
+  "valid": true,
+  "first_run_decision_unchanged": true,
+  "models_not_judged": true,
+  "registered_source_selection": "updated_gate_ica",
+  "source_comparison_posthoc": {
+    "old_state_ica": {
+      "calibration": {
+        "pooled_voltage_rmse_mv": 5.359269676421069e-06,
+        "worst_episode_voltage_rmse_mv": 1.3423685660338541e-05,
+        "worst_episode_cai_rmse_mM": 1.4509078627625346e-09,
+        "worst_episode_sk_gate_rmse": 6.227668827969092e-08,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0
+      },
+      "confirmation": {
+        "pooled_voltage_rmse_mv": 6.395828396544933,
+        "worst_episode_voltage_rmse_mv": 13.9336659056558,
+        "worst_episode_cai_rmse_mM": 0.0010211966376960481,
+        "worst_episode_sk_gate_rmse": 0.006707285026602358,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0
+      }
+    },
+    "updated_gate_ica": {
+      "calibration": {
+        "pooled_voltage_rmse_mv": 5.3594663079111135e-06,
+        "worst_episode_voltage_rmse_mv": 1.3423559952788285e-05,
+        "worst_episode_cai_rmse_mM": 8.669662221149604e-10,
+        "worst_episode_sk_gate_rmse": 3.748371966845062e-08,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0
+      },
+      "confirmation": {
+        "pooled_voltage_rmse_mv": 6.3955446719702485,
+        "worst_episode_voltage_rmse_mv": 13.933050195934177,
+        "worst_episode_cai_rmse_mM": 0.0010446941685047831,
+        "worst_episode_sk_gate_rmse": 0.013881579703944038,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0
+      }
+    }
+  },
+  "native_trace_finite": true,
+  "local_one_step_audit": {
+    "voltage_given_native_next_gates_max_abs_mv": 0.5032741231018374,
+    "gate_given_native_next_cai_max_abs": 0.014916440677519849,
+    "calcium_given_native_ica_max_abs_mM": 8.276421253193447e-07,
+    "calcium_old_gate_ica_max_abs_mM": 1.333805633418287e-05,
+    "calcium_updated_gate_ica_max_abs_mM": 1.3323825990904127e-05,
+    "native_ica_vs_fixed_eca120_rmse_ma_cm2": 0.0013002690929028683,
+    "inferred_eca_range_mv": [
+      64.60136084737933,
+      128.93713295493478
+    ],
+    "worst_gate_one_step": {
+      "step": 48,
+      "episode": 5,
+      "state_index": 4,
+      "error": 0.014916440677519849
+    }
+  },
+  "confirmation_error_onset": {
+    "4": {
+      "episode": {
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high",
+        "panel": "canonical"
+      },
+      "first_error_gt_0p1_mv_ms": null,
+      "max_error_mv": 0.038208930005311004
+    },
+    "5": {
+      "episode": {
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high",
+        "panel": "calcium_x16"
+      },
+      "first_error_gt_0p1_mv_ms": 7.9,
+      "max_error_mv": 20.199083712174676
+    },
+    "6": {
+      "episode": {
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_paired",
+        "panel": "canonical"
+      },
+      "first_error_gt_0p1_mv_ms": null,
+      "max_error_mv": 6.102058775780961e-05
+    },
+    "7": {
+      "episode": {
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_paired",
+        "panel": "calcium_x16"
+      },
+      "first_error_gt_0p1_mv_ms": null,
+      "max_error_mv": 0.0015759388639651206
+    },
+    "12": {
+      "episode": {
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high",
+        "panel": "canonical"
+      },
+      "first_error_gt_0p1_mv_ms": 14.600000000000001,
+      "max_error_mv": 0.11714538676985597
+    },
+    "13": {
+      "episode": {
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high",
+        "panel": "calcium_x16"
+      },
+      "first_error_gt_0p1_mv_ms": 6.6000000000000005,
+      "max_error_mv": 33.711865086602124
+    },
+    "14": {
+      "episode": {
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_paired",
+        "panel": "canonical"
+      },
+      "first_error_gt_0p1_mv_ms": null,
+      "max_error_mv": 0.0007249248148326615
+    },
+    "15": {
+      "episode": {
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_paired",
+        "panel": "calcium_x16"
+      },
+      "first_error_gt_0p1_mv_ms": null,
+      "max_error_mv": 0.06497412955632598
+    }
+  },
+  "calibration_margin_worst_voltage_mv": 1.2570755025672297e-10,
+  "interpretation": "Both source hypotheses fail the registered 40ms confirmation floor in the active high-current arms. The one-step identities and error onsets separate a true calcium-source mismatch from amplified active-trajectory divergence. The first-run decision is unchanged."
+}
