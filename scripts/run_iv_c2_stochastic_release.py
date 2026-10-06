@@ -4,7 +4,10 @@ import argparse
 import json
 from pathlib import Path
 import subprocess
+import sys
 import traceback
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.giada_teacher.iv_c2_stochastic_release import run
 from src.giada_teacher.hh_family_transfer import write
