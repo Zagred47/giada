@@ -1,0 +1,22 @@
+{
+  "schema_version": "giada-task33-observable-synaptic-feedback-v3",
+  "parent_v2_contract": "experiments/task33_observable_synaptic_feedback_v2.json",
+  "parent_v2_contract_sha256": "0368515cb72932d5fcdce9511b7b6dd22a419fa4b3d23bb30fcf7a6056d4ef7a",
+  "parent_v2_report": "experiments/results/task33_v2_final_report.json",
+  "parent_v2_report_sha256": "92b26d62c019e421dbe64b95405f346f6bd40139a1c383bb23f58d3f316aa353",
+  "parent_v2_traces": "experiments/results/task33_v2_native_shadow_traces.npz",
+  "parent_v2_traces_sha256": "a10f8179a5c99a9ef5d1560b53779aca9b87d2f2a0c8dff8b8667d794127d287",
+  "diagnosis": "V2 opened all 16 cases: synaptic state/release/RNG/current and all negative controls passed; voltage floor passed but calcium floor 1.3189055e-6 mM exceeded the unchanged 1e-6 mM gate, so no frozen model was judged. Post-hoc native-state one-step audit found synaptic conductance from the prior tick gives 0.000714 mV RMSE versus 0.021121 mV using next-tick conductance. Replaying the opened v2 set with only that phase changed reduced pooled voltage floor to 0.0001153 mV and worst calcium floor to 2.673e-9 mM. This is diagnostic only and not a v2 promotion.",
+  "unchanged": ["teacher revision", "native and formula mechanism inventory", "dt and 40-ms horizon", "synapse weights and plasticity", "Random123 stream IDs", "calcium source rule", "all v1 numeric thresholds", "frozen Task32 checkpoint families and seeds", "16-case factorial shape", "negative controls"],
+  "overrides": {
+    "synaptic_state_phase": "old",
+    "calibration": {"seed": 83103, "initial_voltage_mv": -70.0, "protocol": "early_low", "schedule": "calibration_sparse"},
+    "confirmation": {"seeds": [83317, 83329], "initial_voltages_mv": [-80.0, -58.0], "protocols": ["rest", "early_high"], "schedules": ["excitatory_lead", "inhibitory_lead"]},
+    "schedules_ms": {
+      "calibration_sparse": {"exc_1": [3.3, 12.3], "exc_2": [4.3, 13.3], "inh_1": [6.3, 14.3], "inh_2": [7.3, 15.3]},
+      "excitatory_lead": {"exc_1": [2.7, 3.0, 8.7, 16.7], "exc_2": [2.8, 3.1, 8.8, 16.8], "inh_1": [5.7, 6.0, 11.7, 19.7], "inh_2": [5.8, 6.1, 11.8, 19.8]},
+      "inhibitory_lead": {"exc_1": [5.7, 6.0, 11.7, 19.7], "exc_2": [5.8, 6.1, 11.8, 19.8], "inh_1": [2.7, 3.0, 8.7, 16.7], "inh_2": [2.8, 3.1, 8.8, 16.8]}
+    }
+  },
+  "decision": "Run the unchanged calibration, 16-cell confirmation and frozen-checkpoint gates on new unopened seed/schedule combinations. The old-state synaptic conductance phase is fixed before v3; neither the v2 diagnostic replay nor v2 confirmation may count as v3 evidence. A native floor failure stops model judgment."
+}

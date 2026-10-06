@@ -1,0 +1,7 @@
+# Task 33 v2 — diagnosi del floor, non promozione
+
+La v2 (`69d825f`) ha calibrato correttamente le quattro sinapsi EMS e aperto tutti i 16 casi confermativi. Rilascio, RNG, plasticità, stati recettoriali, correnti e controlli negativi hanno superato i rispettivi gate. Il floor formula–NEURON del voltaggio ha superato le soglie (RMSE aggregato 0,130556 mV, massimo per caso 0,217028 mV), ma il peggior RMSE del calcio è stato 1,3189055×10⁻⁶ mM, oltre il limite preregistrato di 1×10⁻⁶ mM. La v2 è quindi un **NO-GO d'interfaccia**; nessun checkpoint congelato è stato giudicato.
+
+L'[audit riproducibile](../scripts/audit_task33_v2_floor.py) usa esclusivamente le tracce v2 già aperte. Con gli stati nativi al tempo iniziale del passo, il solver del voltaggio ricostruisce il passo successivo con RMSE 0,021121 mV se legge la conduttanza sinaptica al tick successivo, ma 0,000714 mV se legge quella del tick precedente. Un replay diagnostico che cambia solo questa fase produce RMSE aggregato del voltaggio 0,0001153 mV e peggior RMSE del calcio 2,673×10⁻⁹ mM. Questo risultato **post-hoc non conta come conferma** e non sana retroattivamente la v2.
+
+La [v3 preregistrata](task33_observable_synaptic_feedback_v3.json) fissa la fase prima del nuovo run e usa seed e schedule confermativi non aperti. Tutte le soglie, i pesi, i checkpoint e la matrice da 16 casi rimangono invariati. Il floor nativo resta un gate prima della valutazione dei modelli.

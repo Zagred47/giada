@@ -18,6 +18,16 @@ class TestTask33Contract(unittest.TestCase):
         self.assertEqual(len(cases(cfg)), 16)
         self.assertEqual(t32['dt_ms'], cfg['dt_ms'])
         self.assertEqual(len(c3['synapses']), 4)
+        self.assertEqual(cfg['synaptic_state_phase'], 'old')
+        self.assertEqual(cfg['calibration']['seed'], 83103)
+        self.assertEqual(cfg['confirmation']['seeds'], [83317, 83329])
+        self.assertTrue(set(cfg['confirmation']['seeds']).isdisjoint(
+            {cfg['calibration']['seed'], 81103, 82317, 82329}))
+        for schedule in cfg['schedules_ms'].values():
+            for times in schedule.values():
+                for time_ms in times:
+                    self.assertAlmostEqual(time_ms / cfg['dt_ms'],
+                                           round(time_ms / cfg['dt_ms']))
 
     def test_nmda_block_and_zero_input_voltage(self):
         source = np.array([0., 1., 0., 0.])

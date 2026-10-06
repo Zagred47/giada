@@ -44,7 +44,23 @@ def contract(root: Path) -> tuple[dict, dict, dict]:
     previous = json.loads((root / amendment['prior_final_report']).read_text())
     if previous['diagnosis'] != 'CALIBRATION_IMPLEMENTATION_FAILURE' or previous['confirmation_opened'] or previous['model_judged']:
         raise RuntimeError('Task33 v1 decision status changed')
-    cfg = {**base, **amendment['overrides'], 'schema_version': amendment['schema_version']}
+    v2 = {**base, **amendment['overrides'], 'schema_version': amendment['schema_version']}
+    v2_path = root / 'experiments/task33_observable_synaptic_feedback_v2.json'
+    v3 = json.loads((root / 'experiments/task33_observable_synaptic_feedback_v3.json').read_text())
+    if hashlib.sha256(v2_path.read_bytes()).hexdigest() != v3['parent_v2_contract_sha256']:
+        raise RuntimeError('Task33 v2 preregistration changed')
+    for path_key, hash_key in (('parent_v2_report', 'parent_v2_report_sha256'),
+                               ('parent_v2_traces', 'parent_v2_traces_sha256')):
+        if hashlib.sha256((root / v3[path_key]).read_bytes()).hexdigest() != v3[hash_key]:
+            raise RuntimeError(f'Task33 v2 evidence changed: {path_key}')
+    previous_v2 = json.loads((root / v3['parent_v2_report']).read_text())
+    if not (previous_v2['valid'] and previous_v2['confirmation_opened']
+            and previous_v2['shadow_passed'] and not previous_v2['native_floor_admissible']
+            and not previous_v2['model_judged']):
+        raise RuntimeError('Task33 v2 floor diagnosis changed')
+    cfg = {**v2, **v3['overrides'], 'schema_version': v3['schema_version']}
+    if cfg['synaptic_state_phase'] != 'old':
+        raise RuntimeError('Task33 v3 causal synaptic phase changed')
     for path_key, hash_key, required in (
         ('parent_task32_report', 'parent_task32_sha256', 'scientific_primary_passed'),
         ('parent_iv_c3_report', 'parent_iv_c3_sha256', 'iv_c3_passed')):
@@ -335,9 +351,10 @@ def voltage_step_with_synapses(old_v: np.ndarray, next_state: np.ndarray,
 
 def coupled_rollout(native_rows: list[dict], shadow_rows: list[dict],
                     cfg: dict, t32cfg: dict, base: dict,
-                    model=None, torch=None) -> dict:
+                    model=None, torch=None,
+                    synaptic_state_phase: str | None = None) -> dict:
     count = len(native_rows)
-    steps = len(native_rows[0]['clock'])
+    steps = len(native_rows[0]['voltage'])
     seeds = len(t32cfg['model_seeds']) if model is not None else 1
     voltage = np.empty((seeds, steps, count))
     calcium = np.empty_like(voltage)
@@ -347,6 +364,9 @@ def coupled_rollout(native_rows: list[dict], shadow_rows: list[dict],
     states[:, 0] = t30.initial_states(voltage[0, 0], calcium[0, 0])
     multipliers = np.broadcast_to(native_rows[0]['multipliers'], (seeds, count, 11))
     area = native_rows[0]['area_um2']
+    phase = synaptic_state_phase or cfg.get('synaptic_state_phase', 'next')
+    if phase not in ('old', 'next'):
+        raise ValueError(f'Unknown synaptic state phase: {phase}')
     for k in range(steps-1):
         if model is None:
             next_state = ionic.exact_step(voltage[:, k], calcium[:, k], states[:, k], cfg['dt_ms'])
@@ -357,7 +377,8 @@ def coupled_rollout(native_rows: list[dict], shadow_rows: list[dict],
         calcium[:, k+1] = t32.calcium_step(calcium[:, k], source, t32cfg)
         t32._sk_update(next_state, states[:, k], calcium[:, k+1], cfg['dt_ms'])
         states[:, k+1] = next_state
-        conductance = np.stack([shadow['base_g_us'][k+1] for shadow in shadow_rows])
+        conductance = np.stack([shadow['base_g_us'][k if phase == 'old' else k+1]
+                                for shadow in shadow_rows])
         injected = np.array([row['injection'][k] for row in native_rows])
         voltage[:, k+1] = voltage_step_with_synapses(
             voltage[:, k], next_state, multipliers, injected,
