@@ -1,0 +1,36 @@
+{
+  "schema_version": "giada-iv-c2-stochastic-release-v1",
+  "roadmap_id": "IV-C2",
+  "status": "preregistered_before_native_run",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "parent_report": "experiments/results/iv_c1_v3_kaggle_634adea/final_report.json",
+  "mechanisms": ["ProbAMPANMDA_EMS", "ProbGABAAB_EMS"],
+  "random123_distribution": "negexp(1.0)",
+  "random123_streams": [401, 402, 403, 404],
+  "replicate_seeds": [1701, 2901, 4301, 5901],
+  "dt_ms": 0.025,
+  "duration_ms": 30.0,
+  "hold_mv": -65.0,
+  "weight_ns": 0.5,
+  "arms": [
+    {"name": "low_use_fast_recovery", "Use": 0.2, "Fac": 0.0, "Dep": 2.0},
+    {"name": "high_use_fast_recovery", "Use": 0.8, "Fac": 0.0, "Dep": 2.0},
+    {"name": "low_use_facilitation", "Use": 0.2, "Fac": 8.0, "Dep": 2.0},
+    {"name": "low_use_slow_recovery", "Use": 0.2, "Fac": 0.0, "Dep": 20.0}
+  ],
+  "event_schedules_ms": {
+    "sparse": [2.125, 7.375, 13.625, 22.875],
+    "burst": [2.125, 2.375, 2.625, 2.875, 7.125, 7.375, 7.625, 13.125, 13.375, 22.125, 22.375]
+  },
+  "gates": {
+    "max_state_error": 1e-8,
+    "max_rng_sequence_difference": 0,
+    "max_release_mismatch": 0,
+    "max_checkpoint_suffix_mismatch": 0,
+    "max_distribution_absolute_error": 0.08,
+    "minimum_distribution_draws": 10000
+  },
+  "controls": ["uniform_shadow_must_disagree", "zero_weight_consumes_no_rng", "scheduled_events_distinct_from_realized_releases"],
+  "decision": "IV-C2 passes only when both canonical mechanisms and every preregistered arm/seed/schedule match independent negexp Random123 shadow event-by-event, checkpoint/restart reproduces suffix exactly, distribution audit passes, and controls pass. A failed API or runtime audit is inconclusive, not a biological no-go. IV-C3 and Task33 remain unauthorized.",
+  "scope": "Isolated native canonical stochastic synapses with imposed voltage; no autonomous-voltage or multicompartmental claim."
+}
