@@ -648,8 +648,16 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   ricostruzione causale online delle correnti e il restart nativo delle
   quattro sinapsi. Il risultato è documentato in
   `experiments/iv_c3_integrated_synaptic_interface_result.md`.
-  **La preparazione di Task33 è ora autorizzata**, ma IV-C3 dimostra solo
-  l'interfaccia isolata a voltaggio imposto, non il compartimento autonomo.
+  IV-C3 da sola dimostrava solo l'interfaccia isolata a voltaggio imposto.
+  Task33 v1 si è fermata alla calibrazione per la fase degli eventi fuori
+  griglia; la v2 ha verificato le sinapsi in 16 casi ma non il floor del
+  calcio, senza giudicare i modelli. La v3 prospettica (`21e3c35`) ha
+  corretto la fase della conduttanza nel solver, mantenuto soglie e checkpoint
+  congelati e usato seed/schedule nuovi: floor formula–NEURON, 16 casi,
+  controlli e tutti e sei i checkpoint hanno superato i gate.
+  **Task33 è conclusa solo nel singolo compartimento attivo con quattro
+  sinapsi completamente osservate**. Vedi `experiments/task33_v3_result.md`;
+  non implica ancora accoppiamento assiale, cellula completa o speedup.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
 

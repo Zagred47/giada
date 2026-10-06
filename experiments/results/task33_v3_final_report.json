@@ -1,0 +1,519 @@
+{
+  "schema_version": "giada-task33-observable-synaptic-feedback-v3",
+  "valid": true,
+  "code_revision": "21e3c35e883403618a34f17c86a7257f8c0241d2",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "calibration": {
+    "passed": true,
+    "shadow": {
+      "release_count": 3,
+      "scheduled_count": 8,
+      "release_mismatch_count": 0,
+      "max_shadow_receptor_state_error": 8.032463583163008e-14,
+      "max_plastic_state_error": 0.0,
+      "max_rng_sequence_difference": 0.0,
+      "max_shadow_current_error_na": 4.885428541746839e-15
+    },
+    "formula_floor": {
+      "pooled_voltage_rmse_mv": 2.2558569858868264e-05,
+      "worst_voltage_rmse_mv": 2.2558569858868264e-05,
+      "worst_cai_rmse_mM": 8.53874495140656e-14,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        2.2558569858868264e-05
+      ]
+    }
+  },
+  "confirmation_opened": true,
+  "confirmation_case_count": 16,
+  "confirmation": [
+    {
+      "row": {
+        "schedule": "excitatory_lead",
+        "seed": 83317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "release_count": 5,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.0108640270331537e-14,
+      "max_shadow_receptor_state_error": 1.6422974091767628e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 8.428342169408552,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "excitatory_lead",
+        "seed": 83317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "release_count": 5,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 8.418965394621503e-15,
+      "max_shadow_receptor_state_error": 1.6422974091767628e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 10.872055439457675,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "excitatory_lead",
+        "seed": 83317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "release_count": 5,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 9.880361502914714e-15,
+      "max_shadow_receptor_state_error": 1.6422974091767628e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 7.3957425621834005,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "excitatory_lead",
+        "seed": 83317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "release_count": 5,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 8.169246529243779e-15,
+      "max_shadow_receptor_state_error": 1.6422974091767628e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 13.214510849886132,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "excitatory_lead",
+        "seed": 83329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "release_count": 6,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.5540520259538226e-14,
+      "max_shadow_receptor_state_error": 1.553202011450594e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 14.044496443291749,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "excitatory_lead",
+        "seed": 83329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "release_count": 6,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.25880209034257e-14,
+      "max_shadow_receptor_state_error": 1.553202011450594e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 9.602501193653652,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "excitatory_lead",
+        "seed": 83329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "release_count": 6,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.5203116543460737e-14,
+      "max_shadow_receptor_state_error": 1.553202011450594e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 11.83262274300884,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "excitatory_lead",
+        "seed": 83329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "release_count": 6,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.2440569407967672e-14,
+      "max_shadow_receptor_state_error": 1.553202011450594e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 11.344026611216378,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "inhibitory_lead",
+        "seed": 83317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "release_count": 5,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.4630928846931512e-14,
+      "max_shadow_receptor_state_error": 2.1960211427085596e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 6.947535255675248,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "inhibitory_lead",
+        "seed": 83317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "release_count": 5,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.36145977304436e-14,
+      "max_shadow_receptor_state_error": 2.1960211427085596e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 13.63709929528519,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "inhibitory_lead",
+        "seed": 83317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "release_count": 5,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.4486811273153877e-14,
+      "max_shadow_receptor_state_error": 2.1960211427085596e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 7.213052659858008,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "inhibitory_lead",
+        "seed": 83317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "release_count": 5,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.341399322347947e-14,
+      "max_shadow_receptor_state_error": 2.1960211427085596e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 15.994419862183165,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "inhibitory_lead",
+        "seed": 83329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "release_count": 6,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 2.1999763122337868e-14,
+      "max_shadow_receptor_state_error": 2.1960211427085596e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 13.519854681767683,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "inhibitory_lead",
+        "seed": 83329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "release_count": 6,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 2.0010902657130458e-14,
+      "max_shadow_receptor_state_error": 2.1960211427085596e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 9.438383639219971,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "inhibitory_lead",
+        "seed": 83329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "release_count": 6,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 2.1745626133107265e-14,
+      "max_shadow_receptor_state_error": 2.1960211427085596e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 11.789443637483636,
+      "passed": true
+    },
+    {
+      "row": {
+        "schedule": "inhibitory_lead",
+        "seed": 83329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "release_count": 6,
+      "scheduled_count": 16,
+      "max_shadow_current_error_na": 1.9658753791507166e-14,
+      "max_shadow_receptor_state_error": 2.1960211427085596e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0,
+      "max_plastic_state_error": 0.0,
+      "synaptic_voltage_effect_mv": 12.676963232871465,
+      "passed": true
+    }
+  ],
+  "negative_controls": {
+    "zero_weight_zero_current_no_rng_draw": true,
+    "scheduled_events_not_equated_to_releases": true,
+    "synaptic_voltage_effect_present": true,
+    "teacher_current_probe_not_selection_eligible": true
+  },
+  "support": {
+    "scheduled": 256,
+    "realized": 88,
+    "max_synaptic_voltage_effect_mv": 15.994419862183165
+  },
+  "formula_floor": {
+    "pooled_voltage_rmse_mv": 0.0003655658697390855,
+    "worst_voltage_rmse_mv": 0.0011933538676479004,
+    "worst_cai_rmse_mM": 7.703002247574388e-09,
+    "finite": true,
+    "occupancy_violations": 0,
+    "physical_voltage_violations": 0,
+    "per_episode_voltage_rmse_mv": [
+      1.1323589407261015e-05,
+      0.00012781081783799214,
+      1.2566356844439143e-05,
+      0.0004949101048801559,
+      6.672774278581327e-05,
+      0.0005750089501005967,
+      6.848985916765194e-05,
+      0.0011933538676479004,
+      8.499290168749135e-06,
+      2.893123218779336e-05,
+      8.342316745591763e-06,
+      0.00011364304004473608,
+      6.369948828330653e-05,
+      9.823251117982017e-05,
+      6.22909119136947e-05,
+      0.00028513774133083345
+    ]
+  },
+  "shadow_passed": true,
+  "native_floor_admissible": true,
+  "model_judged": true,
+  "task33_passed": true,
+  "diagnosis": "CONFIRMED_WITHIN_ONE_COMPARTMENT_SCOPE",
+  "models": {
+    "independent": {
+      "17": {
+        "pooled_voltage_rmse_mv": 0.0010559170537144814,
+        "worst_voltage_rmse_mv": 0.002113964075435816,
+        "worst_cai_rmse_mM": 1.0272948624107169e-07,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          9.521038130775681e-06,
+          0.0017266961648436873,
+          6.266633661485245e-05,
+          0.001367360699066411,
+          6.42135790467568e-05,
+          0.002113964075435816,
+          0.000237243994495263,
+          0.002066247419182595,
+          7.431665166830441e-06,
+          0.0006229245060423992,
+          2.9716642886182604e-05,
+          0.001168186664251794,
+          6.172008164673492e-05,
+          0.000532537455521374,
+          7.68159354570713e-05,
+          0.0014624056916104895
+        ],
+        "passed": true
+      },
+      "29": {
+        "pooled_voltage_rmse_mv": 0.0010299949897402054,
+        "worst_voltage_rmse_mv": 0.00273278784172328,
+        "worst_cai_rmse_mM": 1.2140255877092617e-07,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          1.2157749743049126e-05,
+          0.0013040854957848372,
+          0.00010130212329785428,
+          0.001034319831901187,
+          7.246412106592561e-05,
+          0.00273278784172328,
+          0.00032142769438401,
+          0.0014141928309761198,
+          9.712011327716329e-06,
+          0.001124266159587286,
+          4.821489672036654e-05,
+          0.0007529806020869041,
+          7.009977330019999e-05,
+          0.0011524016439003108,
+          9.534680107513306e-05,
+          0.0012005511858654424
+        ],
+        "passed": true
+      },
+      "43": {
+        "pooled_voltage_rmse_mv": 0.0008854764601036974,
+        "worst_voltage_rmse_mv": 0.0017164550272179362,
+        "worst_cai_rmse_mM": 2.1404311162337184e-07,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          1.376833128532787e-05,
+          0.0014911296680582395,
+          3.666882381607138e-05,
+          0.0014388557850134754,
+          6.148594530329445e-05,
+          0.0013835263621303309,
+          0.00012007970223789002,
+          0.0017164550272179362,
+          1.0702331316716048e-05,
+          0.0010974628301537,
+          2.0921313850111297e-05,
+          0.0005769777079195168,
+          5.994381506244292e-05,
+          0.0008827968447424483,
+          5.337609193588397e-05,
+          0.0010235104917397672
+        ],
+        "passed": true
+      }
+    },
+    "shared_heads": {
+      "17": {
+        "pooled_voltage_rmse_mv": 0.0022371897602001156,
+        "worst_voltage_rmse_mv": 0.006576510476524055,
+        "worst_cai_rmse_mM": 4.265801006152985e-07,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          1.3004867700814484e-05,
+          0.004080467311216311,
+          1.4088500233115643e-05,
+          0.0014216646879900289,
+          5.5152954839550624e-05,
+          0.006576510476524055,
+          0.00019200146549593284,
+          0.0010031499362355663,
+          1.0008737243171239e-05,
+          0.0011703176921819298,
+          1.5532867918170154e-05,
+          0.002095047900994076,
+          5.423555451234243e-05,
+          0.0013369239999855937,
+          4.91677528238619e-05,
+          0.0030919144786674224
+        ],
+        "passed": true
+      },
+      "29": {
+        "pooled_voltage_rmse_mv": 0.001229840395306827,
+        "worst_voltage_rmse_mv": 0.0032113753638706027,
+        "worst_cai_rmse_mM": 2.248786708614155e-07,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          1.062176420094894e-05,
+          0.002262518126344423,
+          3.2789858154548745e-05,
+          0.0006230934747514153,
+          7.549416131873716e-05,
+          0.0032113753638706027,
+          0.00011493318931371544,
+          0.0009073055799851392,
+          7.6041344298409945e-06,
+          0.0011695087736312605,
+          2.0053665403853032e-05,
+          0.001159332516494971,
+          7.072893704636003e-05,
+          0.0014073496549032124,
+          7.750953414345381e-05,
+          0.0016830764929102085
+        ],
+        "passed": true
+      },
+      "43": {
+        "pooled_voltage_rmse_mv": 0.0022243202721131975,
+        "worst_voltage_rmse_mv": 0.006004301683254855,
+        "worst_cai_rmse_mM": 3.890623219110258e-07,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          8.923288277161437e-06,
+          0.0047903355812702825,
+          3.0050417190148677e-05,
+          0.0008743005106097939,
+          6.214421756530019e-05,
+          0.006004301683254855,
+          0.00012288984591305564,
+          0.0008737270254411957,
+          6.682159813498856e-06,
+          0.0011954166838094916,
+          1.7741921632640605e-05,
+          0.002304199092394638,
+          5.911640494937157e-05,
+          0.0012327592731704719,
+          6.508826424022071e-05,
+          0.0032169503764121437
+        ],
+        "passed": true
+      }
+    }
+  },
+  "training_performed": false,
+  "teacher_future_release_used_as_input": false,
+  "full_cell_claim": false,
+  "speedup_claim": false
+}
