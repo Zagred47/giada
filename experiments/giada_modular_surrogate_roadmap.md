@@ -608,6 +608,15 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   `experiments/task32_dynamic_calcium_feedback_v3.json`: sorgente del calcio
   dai gate aggiornati **della mappa formula**, senza usare uno stato futuro del
   teacher. Evidenza e limiti in `experiments/task32_v2_timing_diagnosis.md`.
+  La conferma v3 a revisione `05bdabb` supera il floor nativo e tutti i sei
+  checkpoint congelati sul gate primario a 40 ms. Il controllo con calcio
+  congelato mostra che il feedback Ca–SK–V è effettivamente attivo. Due tentativi
+  precedenti della v3 erano interruzioni tecniche, non NO-GO dei modelli; la
+  valutazione GPU è stata isolata dal processo NEURON senza modificare soglie
+  o checkpoint. Report, archivio e limiti scientifici in
+  `experiments/task32_v3_result.md`. Task32 è conclusa **solo nel dominio
+  monocopartimentale preregistrato**: sinapsi, accoppiamento assiale e
+  morfologia restano aperti per le task successive.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
