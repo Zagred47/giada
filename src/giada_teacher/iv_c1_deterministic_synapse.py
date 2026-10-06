@@ -36,6 +36,28 @@ def load_contract(root: Path) -> dict:
     return cfg
 
 
+def load_v2_contract(root: Path) -> dict:
+    spec = json.loads((root / 'experiments/iv_c1_deterministic_synapse_v2.json').read_text())
+    base_path = root / spec['base_contract']
+    if hashlib.sha256(base_path.read_bytes()).hexdigest() != spec['base_contract_sha256']:
+        raise RuntimeError('IV-C1 v2 base preregistration changed')
+    parent = root / spec['parent_v1']
+    for name, key in (('final_report.json', 'parent_v1_report_sha256'),
+                      ('artifact_bundle.zip', 'parent_v1_artifact_sha256')):
+        if hashlib.sha256((parent / name).read_bytes()).hexdigest() != spec[key]:
+            raise RuntimeError('IV-C1 v1 parent artifact changed')
+    previous = json.loads((parent / 'final_report.json').read_text())
+    if not (previous['valid'] and previous['calibration_passed']
+            and not previous['iv_c1_passed'] and not previous['task33_authorized']
+            and len(previous['confirmation']) == 12):
+        raise RuntimeError('IV-C1 v1 diagnostic status changed')
+    cfg = {**json.loads(base_path.read_text()), **spec['overrides'],
+           'schema_version': spec['schema_version']}
+    if cfg['state_observation_phase'] != 'pre_event_at_exact_time':
+        raise RuntimeError('IV-C1 v2 state phase changed')
+    return cfg
+
+
 def compile_native(root: Path, teacher: Path, output: Path, cfg: dict) -> Path:
     source = teacher / 'L5PC_NEURON_simulation/mods'
     build = output / 'compiled_synapses'
@@ -79,7 +101,8 @@ def analytic_trace(time: np.ndarray, voltage: np.ndarray, schedule: dict,
         amplitude = cfg['synapse_weight_ns'] * ratios[receptor] * factor
         for event in times:
             age = time - (event + phase_steps * cfg['dt_ms'])
-            active = age >= -1e-10
+            active = (age > 1e-10 if cfg.get('state_observation_phase') ==
+                      'pre_event_at_exact_time' else age >= -1e-10)
             values[f'A_{receptor}'][active] += amplitude * np.exp(-np.maximum(age[active], 0) / tau_r)
             values[f'B_{receptor}'][active] += amplitude * np.exp(-np.maximum(age[active], 0) / tau_d)
         g = cfg['gmax_us_per_ns'] * (values[f'B_{receptor}'] - values[f'A_{receptor}'])

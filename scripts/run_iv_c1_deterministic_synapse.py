@@ -15,7 +15,7 @@ sys.path.insert(0, str(ROOT))
 
 def main():
     from src.giada_teacher.hh_family_transfer import sha, write
-    from src.giada_teacher.iv_c1_deterministic_synapse import load_contract, run
+    from src.giada_teacher.iv_c1_deterministic_synapse import load_v2_contract, run
     parser = argparse.ArgumentParser()
     parser.add_argument('--teacher', required=True)
     parser.add_argument('--output', required=True)
@@ -24,10 +24,11 @@ def main():
     output.mkdir(parents=True, exist_ok=False)
     fault = (output / 'python_fault.log').open('w', encoding='utf-8')
     faulthandler.enable(file=fault, all_threads=True)
-    cfg = load_contract(ROOT)
+    cfg = load_v2_contract(ROOT)
     revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
     write(output / 'run_contract.json', cfg)
     sources = ('experiments/iv_c1_deterministic_synapse_preregistration.json',
+               'experiments/iv_c1_deterministic_synapse_v2.json',
                'src/giada_teacher/iv_c1_deterministic_synapse.py',
                'scripts/run_iv_c1_deterministic_synapse.py')
     write(output / 'code_provenance.json', {'code_revision': revision,

@@ -1,0 +1,7 @@
+# IV-C1 v1: native state sampling phase
+
+The completed v1 run at `5920b73` is **valid but does not pass IV-C1**. Its calibration chose phase 0: maximum conductance error 4.23e-18 uS versus 7.76e-5 uS for a one-step shift. Across all 12 new-schedule × voltage confirmation cells, maximum conductance error was 1.53e-17 uS, current error 1.48e-15 nA and charge error 1.39e-14 nA ms. The voltage clamp and all negative controls passed.
+
+Nevertheless every cell failed the preregistered state gate: maximum A/B state error was 0.7537896848, exactly the normalized 0.5 nS AMPA event jump. At the event timestamp the native recorder samples the state immediately **before** NetCon applies the equal A/B jump; the v1 closed-form state used the right-continuous post-event value. Because A and B jump by the same amount, conductance B−A and current remain zero at that instant and are unaffected. This is a phase convention in the observable state, not evidence that receptor currents are wrong. The inference is based on the exact jump magnitude and the independent conductance/current agreement; the v1 failure remains unchanged.
+
+The prospective v2 contract `experiments/iv_c1_deterministic_synapse_v2.json` makes state observables left-continuous exactly at event times, keeps all thresholds and canonical mechanisms fixed, and uses new calibration and confirmation schedules. It must pass independently. The v1 archive and report are in `experiments/results/iv_c1_kaggle_5920b73/`.

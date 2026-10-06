@@ -6,7 +6,7 @@ import unittest
 import numpy as np
 
 from src.giada_teacher.iv_c1_deterministic_synapse import (
-    analytic_trace, load_contract, normalization)
+    analytic_trace, load_contract, load_v2_contract, normalization)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +19,20 @@ PARAMETERS = {'mg': 1.0,
 
 
 class IVClPreflight(unittest.TestCase):
+    def test_v2_state_sampling_changes_only_event_instant(self):
+        v2 = load_v2_contract(ROOT)
+        t = np.arange(801) * CFG['dt_ms']
+        v = np.full_like(t, -75.)
+        schedule = {'exc_ms': [4.0], 'inh_ms': [4.0]}
+        old = analytic_trace(t, v, schedule, CFG, 0, PARAMETERS)
+        new = analytic_trace(t, v, schedule, v2, 0, PARAMETERS)
+        at_event = 160
+        self.assertGreater(float(old['A_AMPA'][at_event]), 0.)
+        self.assertEqual(float(new['A_AMPA'][at_event]), 0.)
+        self.assertAlmostEqual(float(old['A_AMPA'][at_event+1]),
+                               float(new['A_AMPA'][at_event+1]), places=12)
+        np.testing.assert_allclose(old['g_AMPA'], new['g_AMPA'], atol=1e-15)
+
     def test_peak_normalization(self):
         for receptor in ('AMPA', 'NMDA', 'GABAA', 'GABAB'):
             r, d = PARAMETERS['tau_r_' + receptor], PARAMETERS['tau_d_' + receptor]

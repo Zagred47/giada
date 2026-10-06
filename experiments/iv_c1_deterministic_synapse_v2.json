@@ -1,0 +1,19 @@
+{
+  "schema_version": "giada-iv-c1-deterministic-synapse-v2",
+  "base_contract": "experiments/iv_c1_deterministic_synapse_preregistration.json",
+  "base_contract_sha256": "506aff08a3d1aa600ef0681ea797438a8311e66db0de1f3aeed6ad8542c6eed8",
+  "parent_v1": "experiments/results/iv_c1_kaggle_5920b73",
+  "parent_v1_report_sha256": "d24c780cfa20d2fcd1d7e2519fbb7870330fa2369b2ee4681ecf4d4d54fc7adc",
+  "parent_v1_artifact_sha256": "94368c211366fb787f089297f1a0edfca697a1b4c692aebc17987b50547a694b",
+  "overrides": {
+    "state_observation_phase": "pre_event_at_exact_time",
+    "calibration_schedule": {"exc_ms": [4.0], "inh_ms": [4.0]},
+    "confirmation_schedules": {
+      "intra_ms_v2": {"exc_ms": [4.1, 4.325, 4.55], "inh_ms": [4.125, 4.35]},
+      "boundary_v2": {"exc_ms": [6.975, 7.0, 7.025, 10.0], "inh_ms": [7.0, 7.025, 10.025]},
+      "mixed_v2": {"exc_ms": [8.2, 8.225, 12.7], "inh_ms": [8.2, 9.0, 12.725]}
+    },
+    "decision": "Require the unchanged v1 state, conductance, current, charge, holding and negative-control gates on new calibration and confirmation schedules. At an event timestamp the state observable is left-continuous, matching the native sampling phase; the analytic conductance remains unchanged because A and B jump equally. No retrospective promotion of v1.",
+    "scope": "Isolated canonical receptor kernels, one observed release per synapse, fixed voltage. State-sampling semantics corrected prospectively on new schedules. No IV-C2/IV-C3 or Task33 claim."
+  }
+}

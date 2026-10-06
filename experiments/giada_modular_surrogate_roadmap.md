@@ -623,6 +623,13 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   analitico/nativo dei kernel AMPA, NMDA, GABAA e GABAB con un evento per
   sinapsi, V imposto, calibrazione del timing separata da conferma e controlli
   negativi. La preregistrazione non equivale a completamento del prerequisito.
+  Il run v1 `5920b73` ha conduttanze/correnti/cariche esatte al rumore numerico,
+  ma fallisce il gate sugli stati A/B: il campione nativo all'istante dell'evento
+  è pre-jump. Nessuna promozione retroattiva. La v2 preregistrata in
+  `experiments/iv_c1_deterministic_synapse_v2.json` congela questa convenzione
+  di osservazione e usa schedule nuove con soglie invariate; dettagli in
+  `experiments/iv_c1_v1_state_phase_diagnosis.md`. IV-C2, IV-C3 e Task33 restano
+  non autorizzate finché i rispettivi gate non passano.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
 
