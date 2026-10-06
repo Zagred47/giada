@@ -1,0 +1,19 @@
+{
+  "schema_version": "giada-task33-observable-synaptic-feedback-v2",
+  "base_contract": "experiments/task33_observable_synaptic_feedback_preregistration.json",
+  "base_contract_sha256": "2ab0f946c10a78fca95d3fded61bbf581d61c88460abfd8e6a479e9f933d81bc",
+  "prior_calibration": "experiments/results/task33_calibration_34c96d5.json",
+  "prior_calibration_sha256": "0572487e8cf7eace287c58750adafbfdca01d6b6c0c03f6e37b3998f91ec2d95",
+  "prior_final_report": "experiments/results/task33_first_run_34c96d5.json",
+  "prior_final_sha256": "88b27e5e083557ad38a2103f2d4e5014635bb307266115b897685eb30d3d6bd8",
+  "reason": "The v1 event timestamps fall between 0.1-ms fixed-solver ticks. Its unopened calibration showed exact release/RNG/plastic state but receptor A/B and current phase mismatch. Align prescribed event timestamps to the registered solver grid, as IV-C3 did at its 0.025-ms grid. No v1 confirmation cell was opened, no frozen checkpoint was judged.",
+  "unchanged": ["teacher", "parent reports", "synapse and ionic mechanisms", "weights", "Random123 streams", "calibration and confirmation seeds", "case counts", "all numeric gates", "frozen checkpoints", "primary horizon"],
+  "overrides": {
+    "schedules_ms": {
+      "calibration_sparse": {"exc_1": [3.1, 12.1], "exc_2": [4.1, 13.1], "inh_1": [6.1, 14.1], "inh_2": [7.1, 15.1]},
+      "excitatory_lead": {"exc_1": [2.1, 2.4, 8.1, 16.1], "exc_2": [2.2, 2.5, 8.2, 16.2], "inh_1": [5.1, 5.4, 11.1, 19.1], "inh_2": [5.2, 5.5, 11.2, 19.2]},
+      "inhibitory_lead": {"exc_1": [5.1, 5.4, 11.1, 19.1], "exc_2": [5.2, 5.5, 11.2, 19.2], "inh_1": [2.1, 2.4, 8.1, 16.1], "inh_2": [2.2, 2.5, 8.2, 16.2]}
+    }
+  },
+  "decision": "Retain all v1 numeric gates. V1 remains an inconclusive calibration failure. Run v2 calibration on-grid and open the new v2 confirmation matrix only if calibration passes. Any future change requires a distinct prospective version and preserves all prior reports."
+}

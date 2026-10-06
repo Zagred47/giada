@@ -31,7 +31,20 @@ AB_NAMES = tuple(f'{prefix}_{receptor}' for receptor in RECEPTORS for prefix in 
 
 
 def contract(root: Path) -> tuple[dict, dict, dict]:
-    cfg = json.loads((root / 'experiments/task33_observable_synaptic_feedback_preregistration.json').read_text())
+    base_path = root / 'experiments/task33_observable_synaptic_feedback_preregistration.json'
+    base = json.loads(base_path.read_text())
+    amendment = json.loads((root / 'experiments/task33_observable_synaptic_feedback_v2.json').read_text())
+    if hashlib.sha256(base_path.read_bytes()).hexdigest() != amendment['base_contract_sha256']:
+        raise RuntimeError('Task33 v1 preregistration changed')
+    for file_key, hash_key in (('prior_calibration', 'prior_calibration_sha256'),
+                               ('prior_final_report', 'prior_final_sha256')):
+        path = root / amendment[file_key]
+        if hashlib.sha256(path.read_bytes()).hexdigest() != amendment[hash_key]:
+            raise RuntimeError(f'Task33 v1 diagnostic changed: {file_key}')
+    previous = json.loads((root / amendment['prior_final_report']).read_text())
+    if previous['diagnosis'] != 'CALIBRATION_IMPLEMENTATION_FAILURE' or previous['confirmation_opened'] or previous['model_judged']:
+        raise RuntimeError('Task33 v1 decision status changed')
+    cfg = {**base, **amendment['overrides'], 'schema_version': amendment['schema_version']}
     for path_key, hash_key, required in (
         ('parent_task32_report', 'parent_task32_sha256', 'scientific_primary_passed'),
         ('parent_iv_c3_report', 'parent_iv_c3_sha256', 'iv_c3_passed')):
@@ -218,6 +231,8 @@ def shadow_case(h, cfg: dict, c3: dict, row: dict, native: dict,
     previous = np.zeros((len(synapses), len(AB_NAMES)))
     prior_native_a = np.zeros(len(synapses))
     base_g = np.zeros((len(native['clock']), len(RECEPTORS)))
+    predicted_ab = np.zeros_like(native['native_ab'])
+    predicted_i = np.zeros_like(native['native_i'])
     max_ab = max_plastic = max_current = max_rng = 0.
     releases = mismatches = 0
     scheduled = sum(len(events) for events in schedule.values())
@@ -260,6 +275,7 @@ def shadow_case(h, cfg: dict, c3: dict, row: dict, native: dict,
             max_plastic = max(max_plastic, *(abs(actual_state[q]-states[j][key]) for q, key in
                                             enumerate(('u', 'Rstate', 'tsyn_fac', 'tsyn'))))
             max_rng = max(max_rng, abs(native['rng_seq'][n, j]-int(shadow_rng[j].seq())))
+            predicted_ab[n, j] = previous[j]
         for r, receptor in enumerate(RECEPTORS):
             base_g[n, r] = c3['gmax_us_per_ns'] * sum(
                 previous[j, AB_NAMES.index(f'B_{receptor}')]
@@ -267,10 +283,11 @@ def shadow_case(h, cfg: dict, c3: dict, row: dict, native: dict,
                 for j in range(len(synapses)))
         voltage = float(native['voltage'][n])
         g = receptor_conductance(base_g[n], voltage)
-        predicted_i = g * (voltage-REVERSALS)
-        max_current = max(max_current, float(np.max(np.abs(predicted_i-native['native_i'][n]))))
+        predicted_i[n] = g * (voltage-REVERSALS)
+        max_current = max(max_current, float(np.max(np.abs(predicted_i[n]-native['native_i'][n]))))
         previous_clock = clock
-    return {'base_g_us': base_g, 'release_count': releases,
+    return {'base_g_us': base_g, 'predicted_ab': predicted_ab,
+            'predicted_i': predicted_i, 'release_count': releases,
             'scheduled_count': scheduled, 'release_mismatch_count': mismatches,
             'max_shadow_receptor_state_error': max_ab,
             'max_plastic_state_error': max_plastic,
@@ -408,9 +425,14 @@ def run_native(root: Path, teacher: Path, output: Path, revision: str) -> dict:
     cal_shadow = shadow_case(h, cfg, c3, cal_row, cal_native)
     cal_formula = coupled_rollout([cal_native], [cal_shadow], cfg, t32cfg, base)
     cal_floor = metrics(cal_formula, [cal_native])
+    np.savez_compressed(output / 'calibration_diagnostic.npz',
+        clock=cal_native['clock'], voltage=cal_native['voltage'],
+        native_ab=cal_native['native_ab'], predicted_ab=cal_shadow['predicted_ab'],
+        native_i=cal_native['native_i'], predicted_i=cal_shadow['predicted_i'])
     calibration_passed = _shadow_pass(cal_shadow, cfg) and _floor_pass(cal_floor, cfg)
     calibration = {'passed': calibration_passed,
-                   'shadow': {key: value for key, value in cal_shadow.items() if key != 'base_g_us'},
+                   'shadow': {key: value for key, value in cal_shadow.items()
+                              if key not in ('base_g_us', 'predicted_ab', 'predicted_i')},
                    'formula_floor': cal_floor}
     write(output / 'calibration_report.json', calibration)
     if not calibration_passed:
