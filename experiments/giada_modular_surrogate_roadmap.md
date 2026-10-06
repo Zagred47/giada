@@ -617,7 +617,12 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   `experiments/task32_v3_result.md`. Task32 è conclusa **solo nel dominio
   monocopartimentale preregistrato**: sinapsi, accoppiamento assiale e
   morfologia restano aperti per le task successive.
-- **Task 33 — Sinapsi con ingressi completamente osservabili**.
+- **Task 33 — Sinapsi con ingressi completamente osservabili**. Ingresso
+  subordinato a IV-C3, che richiede IV-C1 e IV-C2. IV-C1 è preregistrato in
+  `experiments/iv_c1_deterministic_synapse_preregistration.json`: confronto
+  analitico/nativo dei kernel AMPA, NMDA, GABAA e GABAB con un evento per
+  sinapsi, V imposto, calibrazione del timing separata da conferma e controlli
+  negativi. La preregistrazione non equivale a completamento del prerequisito.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.
 

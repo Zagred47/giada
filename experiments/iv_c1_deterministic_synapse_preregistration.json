@@ -1,0 +1,37 @@
+{
+  "schema_version": "giada-iv-c1-deterministic-synapse-v1",
+  "roadmap_id": "IV-C1",
+  "status": "preregistered_before_native_run",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "mechanisms": {
+    "ProbAMPANMDA_EMS": "4ae93e00567c696a94b25ff06ae2e1e7113aef557567d06d9aecb208db4fb791",
+    "ProbGABAAB_EMS": "1ef5bb31c56728e5c81e8ef9f87a68878aa3d6bdcffe5d67ce0e815064673942"
+  },
+  "dt_ms": 0.025,
+  "duration_ms": 20.0,
+  "holding_voltages_mv": [-75.0, -40.0, 0.0, 20.0],
+  "synapse_weight_ns": 0.5,
+  "gmax_us_per_ns": 0.001,
+  "nmda_ratio": 0.71,
+  "gabab_ratio": 0.5,
+  "release_control": "One presynaptic event per native synapse; Use=1, Fac=0, Rstate initially recovered. All four receptor state jumps must be observed. No stochastic-release claim.",
+  "calibration_schedule": {"exc_ms": [2.0], "inh_ms": [2.0]},
+  "confirmation_schedules": {
+    "intra_ms": {"exc_ms": [2.0, 2.225, 2.475], "inh_ms": [2.025, 2.25]},
+    "boundary": {"exc_ms": [0.975, 1.0, 1.025, 5.0], "inh_ms": [1.0, 1.025, 5.025]},
+    "mixed": {"exc_ms": [1.2, 1.225, 3.7], "inh_ms": [1.2, 2.0, 3.725]}
+  },
+  "phase_candidates_steps": [0, 1],
+  "phase_selection": "Choose the event phase with lowest maximum absolute conductance error on calibration only; freeze before confirmation. Report both phase scores. If neither phase passes calibration, stop without judging confirmation.",
+  "calibration_max_conductance_error_us": 0.000005,
+  "confirmation_max_conductance_error_us": 0.000005,
+  "confirmation_max_state_error": 0.01,
+  "confirmation_max_current_error_na": 0.0005,
+  "confirmation_max_charge_error_na_ms": 0.005,
+  "holding_voltage_max_error_mv": 0.1,
+  "release_jump_count_exact": true,
+  "components": ["AMPA", "NMDA", "GABAA", "GABAB"],
+  "negative_controls": ["zero_event_zero_conductance", "NMDA_Mg_block_voltage_contrast", "AMPA_and_GABA_reversal_sign"],
+  "promotion": "IV-C1 passes only if every confirmation schedule and voltage satisfies state/conductance/current/charge and timing gates for both canonical teacher mechanisms, all deterministic releases are observed, and negative controls pass. This does not discharge IV-C2, IV-C3 or Task33.",
+  "scope": "Isolated canonical point-process receptor kernels with observed event times and imposed voltage; one event per synapse; no plasticity, release uncertainty, autonomous voltage or multicompartmental claim."
+}
