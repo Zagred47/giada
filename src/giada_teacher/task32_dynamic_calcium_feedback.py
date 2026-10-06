@@ -290,6 +290,53 @@ def aggregate(rows: list[dict]) -> dict:
             'physical_voltage_violations': sum(row['physical_voltage_violations'] for row in rows)}
 
 
+def evaluate_frozen_models_only(root: Path, teacher: Path, output: Path,
+                                cfg: dict) -> dict:
+    """Evaluate frozen CUDA models in a fresh process without loaded NEURON DLLs."""
+    import torch
+    if not torch.cuda.is_available():
+        raise RuntimeError('Task32 frozen model evaluation requires CUDA')
+    torch.set_num_threads(1)
+    torch.use_deterministic_algorithms(True)
+    base = verify(root, teacher, cfg)
+    d = design(cfg, base)
+    with np.load(output / 'native_traces.npz') as saved:
+        native = {name: saved[name] for name in saved.files}
+    confirmation = [j for j, row in enumerate(d['rows'])
+                    if row['protocol'] in cfg['confirmation_protocols']]
+    loaded, seeds = ionic.load_frozen(root, ionic.config(root), torch, 'cuda')
+    write(output / 'run_progress.json', {'stage': 'frozen_models_loaded'})
+    if list(seeds) != cfg['model_seeds']:
+        raise RuntimeError('Frozen model seed contract changed')
+    selected = cfg['fixed_source_hypothesis']
+    models = {}
+    for family in cfg['families']:
+        write(output / 'run_progress.json', {'stage': 'evaluating_family',
+            'family': family})
+        predicted = rollout(d, cfg, base, selected,
+                            loaded[family, cfg['frozen_arm']], torch)
+        models[family] = {}
+        for seed_index, seed in enumerate(seeds):
+            rows = episode_metrics(predicted, native, d, cfg, confirmation,
+                                   cfg['primary_horizon_ms'], seed_index)
+            primary = aggregate(rows)
+            diagnostic = aggregate(episode_metrics(predicted, native, d, cfg,
+                confirmation, cfg['diagnostic_horizon_ms'], seed_index))
+            primary['passed'] = bool(primary['finite']
+                and primary['occupancy_violations'] == 0
+                and primary['physical_voltage_violations'] == 0
+                and primary['pooled_voltage_rmse_mv'] <= cfg['candidate_pooled_voltage_limit_mv']
+                and primary['worst_episode_voltage_rmse_mv'] <= cfg['candidate_worst_episode_voltage_limit_mv']
+                and primary['worst_episode_cai_rmse_mM'] <= cfg['candidate_cai_rmse_limit_mM']
+                and primary['worst_episode_sk_gate_rmse'] <= cfg['candidate_sk_gate_rmse_limit'])
+            models[family][str(seed)] = {'primary': primary,
+                                        'diagnostic_80ms': diagnostic, 'rows': rows}
+        write(output / 'model_results_partial.json', models)
+        print(f'[GIADA Task32] frozen family {family} evaluated', flush=True)
+    write(output / 'model_results.json', models)
+    return models
+
+
 def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> dict:
     base = verify(root, teacher, cfg)
     d = design(cfg, base)
@@ -349,38 +396,13 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
                                     frozen['voltage'][0, :, j])})
     models = {}
     if floor_pass:
-        write(output / 'run_progress.json', {'stage': 'loading_frozen_models'})
-        import torch
-        if not torch.cuda.is_available():
-            raise RuntimeError('Task32 frozen model evaluation requires CUDA')
-        torch.set_num_threads(1)
-        torch.use_deterministic_algorithms(True)
-        loaded, seeds = ionic.load_frozen(root, ionic.config(root), torch, 'cuda')
-        write(output / 'run_progress.json', {'stage': 'frozen_models_loaded'})
-        if list(seeds) != cfg['model_seeds']:
-            raise RuntimeError('Frozen model seed contract changed')
-        for family in cfg['families']:
-            write(output / 'run_progress.json', {'stage': 'evaluating_family',
-                'family': family})
-            predicted = rollout(d, cfg, base, selected,
-                                loaded[family, cfg['frozen_arm']], torch)
-            models[family] = {}
-            for seed_index, seed in enumerate(seeds):
-                rows = episode_metrics(predicted, native, d, cfg, confirmation,
-                                       cfg['primary_horizon_ms'], seed_index)
-                primary = aggregate(rows)
-                diagnostic = aggregate(episode_metrics(predicted, native, d, cfg,
-                    confirmation, cfg['diagnostic_horizon_ms'], seed_index))
-                primary['passed'] = bool(primary['finite']
-                    and primary['occupancy_violations'] == 0
-                    and primary['physical_voltage_violations'] == 0
-                    and primary['pooled_voltage_rmse_mv'] <= cfg['candidate_pooled_voltage_limit_mv']
-                    and primary['worst_episode_voltage_rmse_mv'] <= cfg['candidate_worst_episode_voltage_limit_mv']
-                    and primary['worst_episode_cai_rmse_mM'] <= cfg['candidate_cai_rmse_limit_mM']
-                    and primary['worst_episode_sk_gate_rmse'] <= cfg['candidate_sk_gate_rmse_limit'])
-                models[family][str(seed)] = {'primary': primary,
-                                            'diagnostic_80ms': diagnostic, 'rows': rows}
-            print(f'[GIADA Task32] frozen family {family} evaluated', flush=True)
+        write(output / 'run_progress.json', {'stage': 'loading_frozen_models_isolated'})
+        worker = root / 'scripts/run_task32_dynamic_calcium_feedback.py'
+        child = subprocess.run([sys.executable, '-u', str(worker), '--model-only',
+            '--output', str(output), '--teacher', str(teacher)], check=False)
+        if child.returncode != 0:
+            raise RuntimeError(f'Isolated frozen-model worker failed (exit={child.returncode})')
+        models = json.loads((output / 'model_results.json').read_text())
     report = {'schema_version': cfg['schema_version'], 'valid': True,
               'native_floor_admissible': floor_pass,
               'scientific_primary_passed': bool(floor_pass and models and all(

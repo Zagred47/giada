@@ -15,16 +15,28 @@ sys.path.insert(0, str(ROOT))
 
 def main():
     from src.giada_teacher.hh_family_transfer import sha, write
-    from src.giada_teacher.task32_dynamic_calcium_feedback import load_v3_contract, run
+    from src.giada_teacher.task32_dynamic_calcium_feedback import (
+        evaluate_frozen_models_only, load_v3_contract, run)
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', required=True)
     parser.add_argument('--teacher', required=True)
+    parser.add_argument('--model-only', action='store_true')
     args = parser.parse_args()
     output = Path(args.output)
-    output.mkdir(parents=True, exist_ok=False)
+    if args.model_only:
+        if not output.is_dir() or not (output / 'premodel_floor.json').is_file():
+            raise RuntimeError('Task32 isolated model worker requires native premodel floor')
+    else:
+        output.mkdir(parents=True, exist_ok=False)
     fault_log = (output / 'python_fault.log').open('w', encoding='utf-8')
     faulthandler.enable(file=fault_log, all_threads=True)
     cfg = load_v3_contract(ROOT)
+    if args.model_only:
+        floor = json.loads((output / 'premodel_floor.json').read_text())
+        if not floor['native_floor_admissible']:
+            raise RuntimeError('Task32 model worker cannot bypass native floor')
+        evaluate_frozen_models_only(ROOT, Path(args.teacher), output, cfg)
+        return
     revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
     write(output / 'run_contract.json', cfg)
     sources = ('src/giada_teacher/task32_dynamic_calcium_feedback.py',
