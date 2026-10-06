@@ -14,15 +14,14 @@ sys.path.insert(0, str(ROOT))
 
 def main():
     from src.giada_teacher.hh_family_transfer import sha, write
-    from src.giada_teacher.task32_dynamic_calcium_feedback import run
+    from src.giada_teacher.task32_dynamic_calcium_feedback import load_v3_contract, run
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', required=True)
     parser.add_argument('--teacher', required=True)
     args = parser.parse_args()
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=False)
-    path = ROOT / 'experiments/task32_dynamic_calcium_feedback_v2.json'
-    cfg = json.loads(path.read_text(encoding='utf-8'))
+    cfg = load_v3_contract(ROOT)
     revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
     write(output / 'run_contract.json', cfg)
     sources = ('src/giada_teacher/task32_dynamic_calcium_feedback.py',
@@ -30,6 +29,7 @@ def main():
                'src/giada_teacher/task30_autonomous_voltage.py',
                'src/giada_teacher/task30c_native_active_confirmation.py',
                'experiments/task32_dynamic_calcium_feedback_v2.json',
+               'experiments/task32_dynamic_calcium_feedback_v3.json',
                'scripts/run_task32_dynamic_calcium_feedback.py')
     write(output / 'code_provenance.json', {
         'code_revision': revision,

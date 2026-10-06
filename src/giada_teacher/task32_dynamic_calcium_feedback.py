@@ -23,6 +23,29 @@ from .iv_b_calcium_prerequisite import FARADAY, sk_inf
 from .hh_family_transfer import write
 
 
+def load_v3_contract(root: Path) -> dict:
+    spec = json.loads((root / 'experiments/task32_dynamic_calcium_feedback_v3.json').read_text())
+    base_path = root / spec['base_contract']
+    if hashlib.sha256(base_path.read_bytes()).hexdigest() != spec['base_contract_sha256']:
+        raise RuntimeError('Task32 v3 base contract changed')
+    parent = root / spec['parent_v2']
+    for name, key in [('final_report.json', 'parent_v2_report_sha256'),
+                      ('artifact_bundle.zip', 'parent_v2_artifact_sha256')]:
+        if hashlib.sha256((parent / name).read_bytes()).hexdigest() != spec[key]:
+            raise RuntimeError('Task32 v2 parent artifact changed')
+    parent_report = json.loads((parent / 'final_report.json').read_text())
+    parent_audit = json.loads((parent / 'result_audit.json').read_text())
+    if not (parent_report['valid'] and not parent_report['native_floor_admissible']
+            and not parent_report['models'] and parent_audit['valid']
+            and parent_audit['model_not_judged']):
+        raise RuntimeError('Task32 v2 diagnostic status changed')
+    base = json.loads(base_path.read_text())
+    cfg = {**base, **spec['overrides'], 'schema_version': spec['schema_version']}
+    if cfg['fixed_source_hypothesis'] != 'updated_gate_ica':
+        raise RuntimeError('Task32 v3 effective source phase changed')
+    return cfg
+
+
 def verify(root: Path, teacher: Path, cfg: dict) -> dict:
     for key, digest_key in [('parent_task30c_report', 'parent_task30c_sha256'),
                             ('parent_iv_b_report', 'parent_iv_b_sha256')]:

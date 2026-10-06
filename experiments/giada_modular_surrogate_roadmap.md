@@ -601,6 +601,13 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   `experiments/task32_dynamic_calcium_feedback_v2.json` forza e misura `eca`
   fisso senza cambiare checkpoint o soglie. Nessun NO-GO del modello è stato
   dichiarato dal primo run.
+  La v2 `e22b669` verifica `eca` fisso e un floor di voltaggio molto basso,
+  ma non supera il gate preregistrato del calcio per una differenza di fase
+  fra gli stati formula e nativi; i checkpoint non sono giudicati neppure lì.
+  L'audit locale dei gate porta alla v3 prospettica in
+  `experiments/task32_dynamic_calcium_feedback_v3.json`: sorgente del calcio
+  dai gate aggiornati **della mappa formula**, senza usare uno stato futuro del
+  teacher. Evidenza e limiti in `experiments/task32_v2_timing_diagnosis.md`.
 - **Task 33 — Sinapsi con ingressi completamente osservabili**.
 - **Task 34 — Correnti e stati come probe privilegiati**.
 - **Task 35 — Full compartment surrogate**.

@@ -1,0 +1,36 @@
+{
+  "valid": true,
+  "v2_decision_unchanged": true,
+  "model_not_judged": true,
+  "native_eca_max_deviation_mv": 0.0,
+  "one_step_calcium_source_errors": {
+    "old_state_ica": {
+      "rmse_mM": 2.845507725879089e-16,
+      "max_abs_mM": 1.2542050731312315e-15
+    },
+    "updated_gate_ica": {
+      "rmse_mM": 5.90085943302753e-08,
+      "max_abs_mM": 1.042765767623338e-06
+    }
+  },
+  "one_step_gate_voltage_alignment": {
+    "old_voltage": {
+      "rmse": 0.000541732366179246,
+      "max_abs": 0.014916551498005914
+    },
+    "new_voltage": {
+      "rmse": 3.51400119617868e-17,
+      "max_abs": 1.5543122344752192e-15
+    }
+  },
+  "updated_gate_source_confirmation_posthoc": {
+    "pooled_voltage_rmse_mv": 0.0009625663775117947,
+    "worst_episode_voltage_rmse_mv": 0.0020567324516082715,
+    "worst_episode_cai_rmse_mM": 4.043604047644789e-08,
+    "worst_episode_sk_gate_rmse": 1.2170984425283726e-06,
+    "finite": true,
+    "occupancy_violations": 0,
+    "physical_voltage_violations": 0
+  },
+  "interpretation": "The old-state source pre-registered in v2 failed its cai gate. Native one-step calcium is reconstructed from recorded old gates, but the free-running formula with updated-gate source matches held-out trajectories post-hoc. This is a phase-alignment issue, not proof that NEURON uses new gates as its calcium source. V3 must prospectively test the effective discrete interface."
+}

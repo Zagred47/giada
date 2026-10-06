@@ -1,0 +1,408 @@
+{
+  "schema_version": "giada-task32-dynamic-calcium-feedback-v2",
+  "valid": true,
+  "native_floor_admissible": false,
+  "scientific_primary_passed": false,
+  "source_hypothesis_frozen_before_run": "old_state_ica",
+  "calibration_scores": {
+    "old_state_ica": {
+      "pooled_voltage_rmse_mv": 3.052089469692262e-09,
+      "worst_episode_voltage_rmse_mv": 7.06971387001485e-09,
+      "worst_episode_cai_rmse_mM": 7.435305088320663e-10,
+      "worst_episode_sk_gate_rmse": 3.204258488388166e-08,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    },
+    "updated_gate_ica": {
+      "pooled_voltage_rmse_mv": 2.7685429246799764e-09,
+      "worst_episode_voltage_rmse_mv": 7.285270559595226e-09,
+      "worst_episode_cai_rmse_mM": 1.822813095340159e-16,
+      "worst_episode_sk_gate_rmse": 7.864059424364744e-15,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    }
+  },
+  "native_eca_max_deviation_mv": 0.0,
+  "confirmation_formula_floor": {
+    "pooled_voltage_rmse_mv": 3.915672608582948e-05,
+    "worst_episode_voltage_rmse_mv": 0.00010185081261773108,
+    "worst_episode_cai_rmse_mM": 2.8937073413043213e-05,
+    "worst_episode_sk_gate_rmse": 0.008350155833334415,
+    "finite": true,
+    "occupancy_violations": 0,
+    "physical_voltage_violations": 0
+  },
+  "confirmation_formula_rows": [
+    {
+      "episode_index": 4,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_high",
+      "panel": "canonical",
+      "horizon_ms": 40.0,
+      "voltage_rmse_mv": 2.810229529767905e-06,
+      "cai_rmse_mM": 2.8199209466795665e-07,
+      "sk_gate_rmse": 3.376431895144126e-05,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    },
+    {
+      "episode_index": 5,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_high",
+      "panel": "calcium_x16",
+      "horizon_ms": 40.0,
+      "voltage_rmse_mv": 3.745413912113529e-05,
+      "cai_rmse_mM": 2.8937073413043213e-05,
+      "sk_gate_rmse": 0.008006882559109998,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    },
+    {
+      "episode_index": 6,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_paired",
+      "panel": "canonical",
+      "horizon_ms": 40.0,
+      "voltage_rmse_mv": 2.337385689513437e-09,
+      "cai_rmse_mM": 2.523706441053555e-09,
+      "sk_gate_rmse": 1.0741898054884295e-07,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    },
+    {
+      "episode_index": 7,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_paired",
+      "panel": "calcium_x16",
+      "horizon_ms": 40.0,
+      "voltage_rmse_mv": 4.8918318622818545e-08,
+      "cai_rmse_mM": 4.083601810723835e-08,
+      "sk_gate_rmse": 2.004140149829945e-06,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    },
+    {
+      "episode_index": 12,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_high",
+      "panel": "canonical",
+      "horizon_ms": 40.0,
+      "voltage_rmse_mv": 2.157353519947886e-05,
+      "cai_rmse_mM": 5.400785407123565e-07,
+      "sk_gate_rmse": 0.00017975017304035213,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    },
+    {
+      "episode_index": 13,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_high",
+      "panel": "calcium_x16",
+      "horizon_ms": 40.0,
+      "voltage_rmse_mv": 0.00010185081261773108,
+      "cai_rmse_mM": 1.8439375372896545e-05,
+      "sk_gate_rmse": 0.008350155833334415,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    },
+    {
+      "episode_index": 14,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_paired",
+      "panel": "canonical",
+      "horizon_ms": 40.0,
+      "voltage_rmse_mv": 3.896608457331564e-08,
+      "cai_rmse_mM": 2.2487107233779154e-08,
+      "sk_gate_rmse": 1.0092441106918636e-06,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    },
+    {
+      "episode_index": 15,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_paired",
+      "panel": "calcium_x16",
+      "horizon_ms": 40.0,
+      "voltage_rmse_mv": 4.034140063725714e-06,
+      "cai_rmse_mM": 4.0161261753325147e-07,
+      "sk_gate_rmse": 6.63128405598502e-05,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0
+    }
+  ],
+  "formula_80ms_diagnostic": {
+    "pooled_voltage_rmse_mv": 2.7855238646120887e-05,
+    "worst_episode_voltage_rmse_mv": 7.215718672874329e-05,
+    "worst_episode_cai_rmse_mM": 2.4217894348592883e-05,
+    "worst_episode_sk_gate_rmse": 0.005908136339392194,
+    "finite": true,
+    "occupancy_violations": 0,
+    "physical_voltage_violations": 0
+  },
+  "frozen_cai_negative_control": [
+    {
+      "episode_index": 2,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_low",
+      "panel": "canonical",
+      "peak_cai_difference_mM": 4.423591067544987e-09,
+      "peak_sk_difference": 1.9296307616101672e-07,
+      "voltage_rmse_mv": 1.4219289098858877e-08
+    },
+    {
+      "episode_index": 3,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_low",
+      "panel": "calcium_x16",
+      "peak_cai_difference_mM": 7.07875839242025e-08,
+      "peak_sk_difference": 3.091736582275955e-06,
+      "voltage_rmse_mv": 2.2782320676681966e-07
+    },
+    {
+      "episode_index": 4,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_high",
+      "panel": "canonical",
+      "peak_cai_difference_mM": 5.488080991443717e-05,
+      "peak_sk_difference": 0.006426769516634688,
+      "voltage_rmse_mv": 0.0007118946507729709
+    },
+    {
+      "episode_index": 5,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_high",
+      "panel": "calcium_x16",
+      "peak_cai_difference_mM": 0.012884275936044652,
+      "peak_sk_difference": 0.9990900974376747,
+      "voltage_rmse_mv": 0.3261290384406188
+    },
+    {
+      "episode_index": 6,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_paired",
+      "panel": "canonical",
+      "peak_cai_difference_mM": 5.366085791071623e-07,
+      "peak_sk_difference": 2.3615362567771755e-05,
+      "voltage_rmse_mv": 2.1147786078818444e-06
+    },
+    {
+      "episode_index": 7,
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_paired",
+      "panel": "calcium_x16",
+      "peak_cai_difference_mM": 8.700046958967403e-06,
+      "peak_sk_difference": 0.0004466369951559865,
+      "voltage_rmse_mv": 3.933085776465149e-05
+    },
+    {
+      "episode_index": 10,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_low",
+      "panel": "canonical",
+      "peak_cai_difference_mM": 1.5769666543883026e-08,
+      "peak_sk_difference": 6.878200857352978e-07,
+      "voltage_rmse_mv": 6.039761333002562e-08
+    },
+    {
+      "episode_index": 11,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_low",
+      "panel": "calcium_x16",
+      "peak_cai_difference_mM": 2.523991391685179e-07,
+      "peak_sk_difference": 1.1058264294131056e-05,
+      "voltage_rmse_mv": 9.70524229560625e-07
+    },
+    {
+      "episode_index": 12,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_high",
+      "panel": "canonical",
+      "peak_cai_difference_mM": 0.00011268911574996718,
+      "peak_sk_difference": 0.03175263095147923,
+      "voltage_rmse_mv": 0.0035063662527816714
+    },
+    {
+      "episode_index": 13,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_high",
+      "panel": "calcium_x16",
+      "peak_cai_difference_mM": 0.01002241906877301,
+      "peak_sk_difference": 0.9990899101237971,
+      "voltage_rmse_mv": 0.3659308912639129
+    },
+    {
+      "episode_index": 14,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_paired",
+      "panel": "canonical",
+      "peak_cai_difference_mM": 4.035751038738969e-06,
+      "peak_sk_difference": 0.0001890941102544732,
+      "voltage_rmse_mv": 2.01920045419196e-05
+    },
+    {
+      "episode_index": 15,
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_paired",
+      "panel": "calcium_x16",
+      "peak_cai_difference_mM": 7.42562867309825e-05,
+      "peak_sk_difference": 0.011901633515515351,
+      "voltage_rmse_mv": 0.0011455250584153525
+    }
+  ],
+  "models": {},
+  "episode_design": [
+    {
+      "initial_voltage_mv": -80.0,
+      "protocol": "rest",
+      "panel": "canonical"
+    },
+    {
+      "initial_voltage_mv": -80.0,
+      "protocol": "rest",
+      "panel": "calcium_x16"
+    },
+    {
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_low",
+      "panel": "canonical"
+    },
+    {
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_low",
+      "panel": "calcium_x16"
+    },
+    {
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_high",
+      "panel": "canonical"
+    },
+    {
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_high",
+      "panel": "calcium_x16"
+    },
+    {
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_paired",
+      "panel": "canonical"
+    },
+    {
+      "initial_voltage_mv": -80.0,
+      "protocol": "early_paired",
+      "panel": "calcium_x16"
+    },
+    {
+      "initial_voltage_mv": -58.0,
+      "protocol": "rest",
+      "panel": "canonical"
+    },
+    {
+      "initial_voltage_mv": -58.0,
+      "protocol": "rest",
+      "panel": "calcium_x16"
+    },
+    {
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_low",
+      "panel": "canonical"
+    },
+    {
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_low",
+      "panel": "calcium_x16"
+    },
+    {
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_high",
+      "panel": "canonical"
+    },
+    {
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_high",
+      "panel": "calcium_x16"
+    },
+    {
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_paired",
+      "panel": "canonical"
+    },
+    {
+      "initial_voltage_mv": -58.0,
+      "protocol": "early_paired",
+      "panel": "calcium_x16"
+    }
+  ],
+  "native_calcium_range_mM": [
+    0.0001,
+    0.01299593752267261
+  ],
+  "native_voltage_range_mv": [
+    -80.0,
+    19.17006316496269
+  ],
+  "canonical_channel_sha256": {
+    "Ca_HVA": {
+      "checkout_sha256": "db310c0746fc0f86e27101cd406feab92d75a1dddf2f2d7259480cd50e5de6df",
+      "inventory_crlf_sha256": "d582257fed34aa4d47211d297e149313405906ab32788a5f8732380f64e6514f"
+    },
+    "Ca_LVAst": {
+      "checkout_sha256": "94e1dae140da644b71fb7c64cb549f76851c8f27860978f4474a16e5efdf99dc",
+      "inventory_crlf_sha256": "19fdcc86f07c12676254f04d08a5def4c3105d71e47dc14ca30dc1b196804cd1"
+    },
+    "NaTa_t": {
+      "checkout_sha256": "91f6c02eabee637cadd7014d83782388ede064f06c60ea370047f2a19e5e7476",
+      "inventory_crlf_sha256": "f1c9f83a6e08ab3d57956e40d193c921e4f495aa1a7df7802ebcc1b613536e55"
+    },
+    "NaTs2_t": {
+      "checkout_sha256": "ac334e8e8fa08a88941b9497385cfeab53439971fc0dd27bcfb1e575d54204ea",
+      "inventory_crlf_sha256": "f3908231a90c0d83cf37abb5063ccab4241c481af672bb4489494ef43b02f547"
+    },
+    "Nap_Et2": {
+      "checkout_sha256": "d2b8a386a1e6ac87aa701e065a0d1a998fb039082469b5336739596de9d579ee",
+      "inventory_crlf_sha256": "6fde5f26bf79eb0dafa5f72be3db552b74c30d7bfdd760b156d2bcea6a1bca32"
+    },
+    "Ih": {
+      "checkout_sha256": "c8fce16998f0915f4ea4e7ee17db3143c28ca5b668d0446d81db052546a60d66",
+      "inventory_crlf_sha256": "55d7fd5b436eaabc3d48bb81adb9e167cdad6c27536bc44a019433637ab5c566"
+    },
+    "Im": {
+      "checkout_sha256": "93074ca6f0480cddd130b5120205d4b06dc689c0dd03e1da84b096f5bc3b47cb",
+      "inventory_crlf_sha256": "ff876d9cd4f13692ad9a8bd902fb506ca66f31ecb6583cc636df81b61ab6a04f"
+    },
+    "K_Pst": {
+      "checkout_sha256": "41ef49ec8f490210f10c647753e29ec6461e8dffcae8b593a110546a9e9af546",
+      "inventory_crlf_sha256": "76e2cdeb0507627af59b9d00184c6fc986031037ef99d7cc3309b7763f89e178"
+    },
+    "K_Tst": {
+      "checkout_sha256": "b8adba9bad5c4f5bc7e2231b42fc4d649e5bbaa42286bf6666a8c94c93ff595e",
+      "inventory_crlf_sha256": "9c30d94c7bcb77518fc3c2da2fc01fcd82a6f0cac10ab8eb683f6fb9560871e9"
+    },
+    "SK_E2": {
+      "checkout_sha256": "c1cbebfdf892a8d86f782b369c5a975c571302236dcbc444c433b4e044e49949",
+      "inventory_crlf_sha256": "01b5b62baeb5fa76a0e8c313adccef386bf0e8475721b885fb181ea44dbf9c1c"
+    },
+    "SKv3_1": {
+      "checkout_sha256": "dbff870df17bea4ff119d964fb330756b087e069ca754a9ebfe74287a7d53e41",
+      "inventory_crlf_sha256": "e66b82b5c00f197b660f5e827651403e0d621d3fca8ff7641eee9bf3cbfa1b18"
+    },
+    "CaDynamics_E2": {
+      "checkout_sha256": "fee7fa2ad830cc009dcce02a6247096fb1431e29705819cdec6b2ccd6cabe0d6",
+      "inventory_crlf_sha256": "ee668bce03aff2e4e806c6f8468bbcae44188d4b1049206485fc7268b008f8ff"
+    }
+  },
+  "code_revision": "e22b6690180e2ea6d9e6a09bd5f1121b3b128554",
+  "training_performed": false,
+  "fresh_used_for_selection": false,
+  "gate_d_performance_status": "NO_GO_UNCHANGED",
+  "scope": "One compartment, original eleven channel NMODL mechanisms plus CaDynamics_E2, autonomous voltage and cai, exogenous current, fixed eca/ena/ek, no morphology, synapses, stochasticity or speed claim. Frozen neural rates for five channels; six canonical formula channels, analytic CaDynamics and SK current."
+}

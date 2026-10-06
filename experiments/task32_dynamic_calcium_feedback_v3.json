@@ -1,0 +1,15 @@
+{
+  "schema_version": "giada-task32-dynamic-calcium-feedback-v3",
+  "base_contract": "experiments/task32_dynamic_calcium_feedback_v2.json",
+  "base_contract_sha256": "7cfe5b6891f42a785eb1473139386fec6c3b1ba298b3004d289d3c86150cedde",
+  "parent_v2": "experiments/results/task32_v2_kaggle_e22b669",
+  "parent_v2_report_sha256": "b5126ceaf67462a5b3b9252b44aab4f328313a8402b94bc4e1d516a9b463e9a4",
+  "parent_v2_artifact_sha256": "b5387ecab94d42648cb02fd217ec9114f931d339478582cab7c05d7550e3f9f3",
+  "overrides": {
+    "purpose": "Prospectively validate the phase-aligned discrete calcium-current interface for autonomous voltage-calcium-SK feedback, then judge the unchanged frozen checkpoint families only if the native floor passes.",
+    "fixed_source_hypothesis": "updated_gate_ica",
+    "source_selection": "The formula's next gate state is aligned with the native gate state that contributes current to the voltage update. It is a causal formula-state intermediate, not a teacher future state. This scheme is frozen before the v3 run based on v2 local gate-timing and current audits; no v3 calibration or confirmation outcome selects it.",
+    "decision": "Require direct eca=120mV throughout, finite native traces, unchanged 40ms exact-formula/native voltage and calcium floors, and informative coupled-vs-frozen calcium/SK contrasts. Only then judge all six unchanged family-by-seed frozen both-arm candidates on the unchanged 1/2mV voltage, 1e-5mM calcium, 0.01 SK gate, finite/physical/occupancy limits. The 80ms horizon is diagnostic. V1 and v2 decisions remain failed/inadmissible under their own registered interfaces; no retrospective promotion or threshold adjustment.",
+    "scope": "One-compartment fixed-eca native CaDynamics/11-channel control with autonomous V and cai; frozen five-channel neural rates; six canonical formula channel rates; analytic calcium and SK current. No synapses, axial coupling, morphology, stochasticity, training or speed claim."
+  }
+}
