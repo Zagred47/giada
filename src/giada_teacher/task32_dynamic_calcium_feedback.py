@@ -301,14 +301,20 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
         raise RuntimeError('Nonfinite native voltage/calcium/gates/current')
     eca_deviation = float(np.max(np.abs(native['eca']-cfg['eca_mv'])))
     np.savez_compressed(output / 'native_traces.npz', **native)
+    write(output / 'run_progress.json', {'stage': 'native_traces_saved',
+        'native_eca_max_deviation_mv': eca_deviation})
     calibration = [j for j, row in enumerate(d['rows'])
                    if row['protocol'] in cfg['calibration_protocols']]
     confirmation = [j for j, row in enumerate(d['rows'])
                     if row['protocol'] in cfg['confirmation_protocols']]
     if len(calibration) != 8 or len(confirmation) != 8:
         raise RuntimeError('Task32 calibration/confirmation support changed')
-    formulas = {scheme: rollout(d, cfg, base, scheme)
-                for scheme in cfg['source_hypotheses']}
+    formulas = {}
+    for scheme in cfg['source_hypotheses']:
+        write(output / 'run_progress.json', {'stage': 'formula_rollout',
+            'scheme': scheme})
+        formulas[scheme] = rollout(d, cfg, base, scheme)
+    write(output / 'run_progress.json', {'stage': 'formula_rollouts_done'})
     calibration_scores = {scheme: aggregate(episode_metrics(
         result, native, d, cfg, calibration, cfg['primary_horizon_ms']))
         for scheme, result in formulas.items()}
@@ -322,6 +328,12 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
         and floor['pooled_voltage_rmse_mv'] <= cfg['formula_floor_pooled_limit_mv']
         and floor['worst_episode_voltage_rmse_mv'] <= cfg['formula_floor_worst_episode_limit_mv']
         and floor['worst_episode_cai_rmse_mM'] <= cfg['formula_floor_cai_rmse_limit_mM'])
+    write(output / 'premodel_floor.json', {'native_floor_admissible': floor_pass,
+        'native_eca_max_deviation_mv': eca_deviation,
+        'confirmation_formula_floor': floor,
+        'source_hypothesis_frozen_before_run': selected})
+    write(output / 'run_progress.json', {'stage': 'premodel_floor_saved'})
+    write(output / 'run_progress.json', {'stage': 'frozen_calcium_control'})
     frozen = rollout(d, cfg, base, selected, frozen_cai=True)
     negative_control = []
     for j, row in enumerate(d['rows']):
@@ -337,15 +349,19 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
                                     frozen['voltage'][0, :, j])})
     models = {}
     if floor_pass:
+        write(output / 'run_progress.json', {'stage': 'loading_frozen_models'})
         import torch
         if not torch.cuda.is_available():
             raise RuntimeError('Task32 frozen model evaluation requires CUDA')
         torch.set_num_threads(1)
         torch.use_deterministic_algorithms(True)
         loaded, seeds = ionic.load_frozen(root, ionic.config(root), torch, 'cuda')
+        write(output / 'run_progress.json', {'stage': 'frozen_models_loaded'})
         if list(seeds) != cfg['model_seeds']:
             raise RuntimeError('Frozen model seed contract changed')
         for family in cfg['families']:
+            write(output / 'run_progress.json', {'stage': 'evaluating_family',
+                'family': family})
             predicted = rollout(d, cfg, base, selected,
                                 loaded[family, cfg['frozen_arm']], torch)
             models[family] = {}

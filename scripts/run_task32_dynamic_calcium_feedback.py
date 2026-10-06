@@ -1,6 +1,7 @@
 """Isolated Task32 runner: preserve diagnostic failures and compact notebook output."""
 
 import argparse
+import faulthandler
 import json
 from pathlib import Path
 import subprocess
@@ -21,6 +22,8 @@ def main():
     args = parser.parse_args()
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=False)
+    fault_log = (output / 'python_fault.log').open('w', encoding='utf-8')
+    faulthandler.enable(file=fault_log, all_threads=True)
     cfg = load_v3_contract(ROOT)
     revision = subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], text=True).strip()
     write(output / 'run_contract.json', cfg)
