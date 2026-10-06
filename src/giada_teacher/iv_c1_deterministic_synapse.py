@@ -58,6 +58,45 @@ def load_v2_contract(root: Path) -> dict:
     return cfg
 
 
+def load_v3_contract(root: Path) -> dict:
+    spec = json.loads((root / 'experiments/iv_c1_deterministic_synapse_v3.json').read_text())
+    base = root / spec['base_contract']
+    if hashlib.sha256(base.read_bytes()).hexdigest() != spec['base_contract_sha256']:
+        raise RuntimeError('IV-C1 v3 base contract changed')
+    parent = root / spec['parent_v2']
+    for name, key in (('final_report.json', 'parent_v2_report_sha256'),
+                      ('artifact_bundle.zip', 'parent_v2_artifact_sha256')):
+        if hashlib.sha256((parent / name).read_bytes()).hexdigest() != spec[key]:
+            raise RuntimeError('IV-C1 v2 parent artifact changed')
+    previous = json.loads((parent / 'final_report.json').read_text())
+    if not (previous['valid'] and previous['calibration_passed']
+            and not previous['iv_c1_passed'] and not previous['task33_authorized']
+            and len(previous['confirmation']) == 12):
+        raise RuntimeError('IV-C1 v2 diagnostic status changed')
+    forensic_path = root / spec['forensic_report']
+    if hashlib.sha256(forensic_path.read_bytes()).hexdigest() != spec['forensic_report_sha256']:
+        raise RuntimeError('IV-C1 forensic report changed')
+    forensic = json.loads(forensic_path.read_text())
+    if not (forensic['provenance']['diagnostic_only'] and
+            not forensic['provenance']['promotion_authorized']):
+        raise RuntimeError('IV-C1 forensic status changed')
+    cfg = {**json.loads(base.read_text()), **spec['overrides'],
+           'schema_version': spec['schema_version']}
+    if cfg['state_observation_phase'] != 'actual_solver_clock':
+        raise RuntimeError('IV-C1 v3 timing contract changed')
+    prior = load_v2_contract(root)
+    used = {event for contract in (json.loads(base.read_text()), prior)
+            for schedule in (contract['calibration_schedule'],
+                             *contract['confirmation_schedules'].values())
+            for events in schedule.values() for event in events}
+    proposed = {event for schedule in (cfg['calibration_schedule'],
+                                       *cfg['confirmation_schedules'].values())
+                for events in schedule.values() for event in events}
+    if used & proposed:
+        raise RuntimeError('IV-C1 v3 reuses an opened event timestamp')
+    return cfg
+
+
 def compile_native(root: Path, teacher: Path, output: Path, cfg: dict) -> Path:
     source = teacher / 'L5PC_NEURON_simulation/mods'
     build = output / 'compiled_synapses'
@@ -101,8 +140,9 @@ def analytic_trace(time: np.ndarray, voltage: np.ndarray, schedule: dict,
         amplitude = cfg['synapse_weight_ns'] * ratios[receptor] * factor
         for event in times:
             age = time - (event + phase_steps * cfg['dt_ms'])
-            active = (age > 1e-10 if cfg.get('state_observation_phase') ==
-                      'pre_event_at_exact_time' else age >= -1e-10)
+            phase = cfg.get('state_observation_phase')
+            active = (age > 1e-10 if phase == 'pre_event_at_exact_time' else
+                      age >= 0 if phase == 'actual_solver_clock' else age >= -1e-10)
             values[f'A_{receptor}'][active] += amplitude * np.exp(-np.maximum(age[active], 0) / tau_r)
             values[f'B_{receptor}'][active] += amplitude * np.exp(-np.maximum(age[active], 0) / tau_d)
         g = cfg['gmax_us_per_ns'] * (values[f'B_{receptor}'] - values[f'A_{receptor}'])
@@ -233,12 +273,18 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
         raise RuntimeError('IV-C1 teacher revision changed')
     build = compile_native(root, teacher, output, cfg)
     load_mechanisms(str(build.resolve()))
+    use_solver_clock = cfg.get('state_observation_phase') == 'actual_solver_clock'
+    def episode(schedule, hold):
+        native, metadata = native_episode(schedule, hold, cfg,
+                                          diagnostic=use_solver_clock)
+        timing = native['actual_time_ms'] if use_solver_clock else native['time_ms']
+        return native, metadata, timing
     cal = {}
     for hold in cfg['holding_voltages_mv']:
-        native, metadata = native_episode(cfg['calibration_schedule'], hold, cfg)
+        native, metadata, timing = episode(cfg['calibration_schedule'], hold)
         cal[str(hold)] = {'native': native, 'metadata': metadata,
                           'scores': {str(phase): compare(native,
-                              analytic_trace(native['time_ms'], native['voltage_mv'],
+                              analytic_trace(timing, native['voltage_mv'],
                                   cfg['calibration_schedule'], cfg, phase,
                                   metadata['parameters']), cfg, hold)
                               for phase in cfg['phase_candidates_steps']}}
@@ -254,8 +300,8 @@ def run(root: Path, teacher: Path, output: Path, cfg: dict, revision: str) -> di
     if calibration_pass:
         for label, schedule in cfg['confirmation_schedules'].items():
             for hold in cfg['holding_voltages_mv']:
-                native, metadata = native_episode(schedule, hold, cfg)
-                predicted = analytic_trace(native['time_ms'], native['voltage_mv'],
+                native, metadata, timing = episode(schedule, hold)
+                predicted = analytic_trace(timing, native['voltage_mv'],
                     schedule, cfg, selected, metadata['parameters'])
                 metrics = compare(native, predicted, cfg, hold)
                 metrics['expected_release_count'] = metadata['expected_release_count']

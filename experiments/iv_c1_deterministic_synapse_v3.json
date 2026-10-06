@@ -1,0 +1,22 @@
+{
+  "schema_version": "giada-iv-c1-deterministic-synapse-v3",
+  "base_contract": "experiments/iv_c1_deterministic_synapse_preregistration.json",
+  "base_contract_sha256": "506aff08a3d1aa600ef0681ea797438a8311e66db0de1f3aeed6ad8542c6eed8",
+  "parent_v2": "experiments/results/iv_c1_v2_kaggle_f28d3bc",
+  "parent_v2_report_sha256": "cee2f75ca51d265e07acdee9d4275b162cbac101f1c0b01c8041fbd1deef423b",
+  "parent_v2_artifact_sha256": "2b65814b4298dab95b08903c7b900e2461b1a2a0613e9c00d3565c0c0700961e",
+  "forensic_report": "experiments/results/iv_c1_forensic_kaggle_b5550b6/state_timing_forensic.json",
+  "forensic_report_sha256": "efcba44586741802d5704235391fe0cab099fde2cf2eb1859c1c7a9ee75c3e58",
+  "overrides": {
+    "state_observation_phase": "actual_solver_clock",
+    "calibration_schedule": {"exc_ms": [3.35], "inh_ms": [3.35]},
+    "confirmation_schedules": {
+      "early_v3": {"exc_ms": [2.75, 3.625, 5.825], "inh_ms": [2.775, 4.175]},
+      "late_v3": {"exc_ms": [10.375, 11.55, 13.625], "inh_ms": [10.4, 11.575, 14.025]},
+      "mixed_v3": {"exc_ms": [1.725, 8.875, 15.325], "inh_ms": [1.725, 8.9, 15.35]}
+    },
+    "timing_input": "Use the public actual solver clock h.t at each sample, not the nominal n*dt grid. This is simulation time, not hidden teacher biological state. Apply an event iff h.t >= its scheduled timestamp, with no numerical tolerance. Do not infer event phase from biological states or outcomes.",
+    "decision": "Same unchanged v1/v2 calibration and 12-cell confirmation numeric gates, both canonical mechanisms, and all three negative controls. An IV-C1 pass is limited to isolated deterministic one-release synapses under imposed voltage; it does not authorize Task33 without IV-C2 and IV-C3.",
+    "scope": "Prospective new schedules test the clock/event-boundary hypothesis after v1/v2 and forensic schedules were opened. No release-RNG, plasticity, autonomous voltage, or multicompartmental claim."
+  }
+}

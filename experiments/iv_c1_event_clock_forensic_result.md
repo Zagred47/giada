@@ -1,0 +1,7 @@
+# IV-C1 — event-clock forensic result (diagnostic only)
+
+The completed Kaggle audit at code revision `b5550b6` inspected the already-opened v2 schedules. It recorded actual NEURON `h.t`, the nominal grid, aggregate A/B states, and each point process around every scheduled event. Its purpose was to explain the v1/v2 failures, **not** to promote IV-C1.
+
+The event-boundary state depends on whether the actual floating-point `h.t` has crossed the scheduled NetCon timestamp. At 4.0 ms, `h.t=4.000000000000023`, so the AMPA A/B jump is already visible. At 10.0 ms, `h.t=9.999999999999966`, and at 12.7 ms, `h.t=12.699999999999813`, so the corresponding jump is not visible until the following sample. The same ordering holds for GABA events. Across all inspected on-grid events, the sign of `h.t − event_time` predicts whether the native state is pre- or post-jump. A uniform nominal-grid convention cannot represent both cases. Equal jumps to A and B explain why `g ∝ B−A`, current, and charge were unaffected.
+
+This identifies a deterministic *interface/sampling* issue, not a failure of the canonical receptor kernels. A prospective v3 must use the actual public solver clock as a non-biological timing input, keep the v1/v2 numeric gates and mechanisms fixed, and test disjoint schedules. The forensic JSON is in `experiments/results/iv_c1_forensic_kaggle_b5550b6/state_timing_forensic.json`. IV-C1, IV-C2, IV-C3, and Task33 remain unpassed here.

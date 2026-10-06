@@ -6,7 +6,7 @@ import unittest
 import numpy as np
 
 from src.giada_teacher.iv_c1_deterministic_synapse import (
-    analytic_trace, load_contract, load_v2_contract, normalization)
+    analytic_trace, load_contract, load_v2_contract, load_v3_contract, normalization)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +19,17 @@ PARAMETERS = {'mg': 1.0,
 
 
 class IVClPreflight(unittest.TestCase):
+    def test_v3_actual_clock_resolves_both_event_orders(self):
+        v3 = load_v3_contract(ROOT)
+        event = v3['calibration_schedule']['exc_ms'][0]
+        actual_clock = np.array([event - 1e-12, event + 1e-12, event + .025])
+        voltage = np.full_like(actual_clock, -75.)
+        state = analytic_trace(actual_clock, voltage,
+            {'exc_ms': [event], 'inh_ms': []}, v3, 0, PARAMETERS)
+        self.assertEqual(float(state['A_AMPA'][0]), 0.)
+        self.assertGreater(float(state['A_AMPA'][1]), 0.)
+        self.assertLess(float(state['A_AMPA'][2]), float(state['A_AMPA'][1]))
+
     def test_v2_state_sampling_changes_only_event_instant(self):
         v2 = load_v2_contract(ROOT)
         t = np.arange(801) * CFG['dt_ms']
