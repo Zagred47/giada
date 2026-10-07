@@ -1,0 +1,42 @@
+{
+  "schema_version": "giada-iv-a1-a2-d1-passive-axial-v1",
+  "valid": false,
+  "iv_a1_a2_passed": false,
+  "iv_d1_opened": false,
+  "iv_d1_passed": false,
+  "task36_authorized": false,
+  "diagnosis": "PASSIVE_SINGLE_INTERFACE_NO_GO",
+  "code_revision": "21ebee1a9ebc6e7cb7a0c0b2870d8208eaf079e7",
+  "single_cases": [
+    {
+      "case": "canonical",
+      "max_native_discrete_error_mv": 3.979039320256561e-13,
+      "analytic_endpoint_error_mv": 0.023629885474790058,
+      "passed": false
+    },
+    {
+      "case": "high_cap",
+      "max_native_discrete_error_mv": 5.400124791776761e-13,
+      "analytic_endpoint_error_mv": 0.014101010328801067,
+      "passed": true
+    },
+    {
+      "case": "high_leak",
+      "max_native_discrete_error_mv": 9.379164112033322e-13,
+      "analytic_endpoint_error_mv": 0.000840957106348128,
+      "passed": true
+    },
+    {
+      "case": "wide_area",
+      "max_native_discrete_error_mv": 9.947598300641403e-14,
+      "analytic_endpoint_error_mv": 0.017479404600194925,
+      "passed": true
+    },
+    {
+      "case": "zero_leak",
+      "max_native_discrete_error_mv": 6.821210263296962e-13,
+      "analytic_endpoint_error_mv": 1.2789769243681803e-13,
+      "passed": true
+    }
+  ]
+}

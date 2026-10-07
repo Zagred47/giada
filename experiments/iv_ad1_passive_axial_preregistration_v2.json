@@ -1,0 +1,42 @@
+{
+  "schema_version": "giada-iv-a1-a2-d1-passive-axial-v2",
+  "status": "preregistered_before_native_run",
+  "roadmap_ids": ["IV-A1", "IV-A2", "IV-D1"],
+  "prior_v1_result_sha256": "3a89d90ac795a93953c3a5a94d2ff3979a1112ebae4ba7d5c7c3816f43211932",
+  "prior_v1_diagnosis": "PASSIVE_SINGLE_INTERFACE_NO_GO; 0.1 ms backward Euler agreed with NEURON but exceeded an absolute continuous-solution threshold in one case; IV-D1 was never opened",
+  "teacher_version": "8.2.7",
+  "dt_ms": 0.1,
+  "duration_ms": 20.0,
+  "single_cases": [
+    {"id":"canonical_new", "length_um":100.0, "diam_um":1.0, "cm_uf_cm2":1.1, "g_pas_s_cm2":0.00012, "e_pas_mv":-75.0, "initial_mv":-58.0, "pulse_na":0.0021},
+    {"id":"high_cap_new", "length_um":100.0, "diam_um":1.0, "cm_uf_cm2":2.2, "g_pas_s_cm2":0.00011, "e_pas_mv":-75.0, "initial_mv":-59.0, "pulse_na":0.0021},
+    {"id":"high_leak_new", "length_um":100.0, "diam_um":1.0, "cm_uf_cm2":1.1, "g_pas_s_cm2":0.00029, "e_pas_mv":-65.0, "initial_mv":-79.0, "pulse_na":0.0021},
+    {"id":"wide_area_new", "length_um":85.0, "diam_um":2.1, "cm_uf_cm2":1.25, "g_pas_s_cm2":0.00009, "e_pas_mv":-71.0, "initial_mv":-54.0, "pulse_na":0.0031},
+    {"id":"zero_leak_new", "length_um":110.0, "diam_um":1.1, "cm_uf_cm2":1.1, "g_pas_s_cm2":0.0, "e_pas_mv":-70.0, "initial_mv":-67.0, "pulse_na":0.0011}
+  ],
+  "geometries": [
+    {"id":"balanced", "parent_length_um":100.0, "parent_diam_um":1.0, "child_length_um":100.0, "child_diam_um":1.0, "ra_ohm_cm":150.0},
+    {"id":"thin_child", "parent_length_um":80.0, "parent_diam_um":1.2, "child_length_um":120.0, "child_diam_um":0.7, "ra_ohm_cm":150.0},
+    {"id":"wide_child", "parent_length_um":120.0, "parent_diam_um":0.8, "child_length_um":80.0, "child_diam_um":1.5, "ra_ohm_cm":100.0}
+  ],
+  "paired_initial_mv": [-80.0, -60.0],
+  "pulse_window_ms": [2.0, 8.0],
+  "paired_pulse_na": 0.002,
+  "passive_membrane": {"cm_uf_cm2":1.0, "g_pas_s_cm2":0.0001, "e_pas_mv":-76.0},
+  "coupling_cases": ["parent_only", "child_only", "symmetric", "disconnected"],
+  "convergence_dt_ms": [0.1, 0.05, 0.025],
+  "gates": {
+    "max_single_native_discrete_error_mv": 1e-7,
+    "max_single_fine_endpoint_error_mv": 0.01,
+    "max_paired_native_discrete_error_mv": 1e-6,
+    "max_capacitive_balance_error_na": 1e-10,
+    "max_axial_antisymmetry_error_na": 1e-12,
+    "max_native_axial_ohm_error_na": 1e-10,
+    "max_disconnected_cross_effect_mv": 1e-8,
+    "max_symmetric_voltage_difference_mv": 1e-8,
+    "max_equilibrium_residual_na": 1e-10,
+    "max_convergence_fine_endpoint_error_mv": 0.003
+  },
+  "decision": "The five new single-compartment cases must match native NEURON to the unchanged discrete tolerance. The difference from the continuous exact solution is recorded separately and must decrease strictly under dt refinement for positive leak, with the finest endpoint within 0.01 mV; zero leak must remain exact. Only then open the prospective v1 two-compartment matrix, previously unopened. All D1 native, conservation, negative-control, equilibrium and convergence gates remain unchanged. No active Task36 without D1 pass.",
+  "limits": "Passive prerequisite only; no active ion channels, calcium, synapses, learned models, full cell or speedup claims. V1 failure remains immutable."
+}

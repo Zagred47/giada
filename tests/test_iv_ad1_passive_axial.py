@@ -1,6 +1,7 @@
 """Pure-math preflight for the preregistered passive axial interface."""
 
 import unittest
+import math
 from pathlib import Path
 
 import numpy as np
@@ -52,6 +53,37 @@ class PassiveAxialTests(unittest.TestCase):
         self.assertGreater(errors[0], errors[1])
         self.assertGreater(errors[1], errors[2])
         self.assertLess(errors[2], cfg['gates']['max_convergence_fine_endpoint_error_mv'])
+
+    def test_v2_new_single_cases_have_prespecified_convergence(self):
+        cfg = passive.config(ROOT, 'iv_ad1_passive_axial_preregistration_v2.json')
+        start, end = cfg['pulse_window_ms']
+        for case in cfg['single_cases']:
+            with self.subTest(case=case['id']):
+                cap, leak = passive.membrane_coefficients(
+                    case['length_um'], case['diam_um'], case['cm_uf_cm2'], case['g_pas_s_cm2'])
+                value = case['initial_mv']
+                if leak:
+                    equilibrium = case['e_pas_mv']
+                    value = equilibrium + (value-equilibrium)*math.exp(-start*leak/cap)
+                    active = equilibrium + case['pulse_na']/leak
+                    value = active + (value-active)*math.exp(-(end-start)*leak/cap)
+                    value = equilibrium + (value-equilibrium)*math.exp(-(cfg['duration_ms']-end)*leak/cap)
+                else:
+                    value += case['pulse_na']*(end-start)/cap
+                errors = []
+                for dt in cfg['convergence_dt_ms']:
+                    predicted = passive.simulate_discrete(
+                        np.array([case['initial_mv']]*2), np.array([cap]*2),
+                        np.array([leak]*2), 0., case['e_pas_mv'],
+                        np.array([case['pulse_na'], 0.]), (start, end),
+                        cfg['duration_ms'], dt)[-1, 0]
+                    errors.append(abs(predicted-value))
+                self.assertLessEqual(errors[-1], cfg['gates']['max_single_fine_endpoint_error_mv'])
+                if leak:
+                    self.assertGreater(errors[0], errors[1])
+                    self.assertGreater(errors[1], errors[2])
+                else:
+                    self.assertLess(max(errors), 1e-9)
 
 
 if __name__ == '__main__':

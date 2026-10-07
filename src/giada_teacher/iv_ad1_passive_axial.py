@@ -11,8 +11,10 @@ import numpy as np
 from .hh_family_transfer import write
 
 
-def config(root: Path) -> dict:
-    spec = json.loads((root / 'experiments/iv_ad1_passive_axial_preregistration.json').read_text())
+def config(root: Path, config_name: str = 'iv_ad1_passive_axial_preregistration.json') -> dict:
+    if Path(config_name).name != config_name:
+        raise ValueError('config_name must be a file name under experiments')
+    spec = json.loads((root / 'experiments' / config_name).read_text())
     if spec['roadmap_ids'] != ['IV-A1', 'IV-A2', 'IV-D1'] or spec['dt_ms'] != .1:
         raise RuntimeError('IV-A1/A2/D1 prospective domain changed')
     if len(spec['single_cases']) != 5 or len(spec['geometries']) != 3:
@@ -151,10 +153,11 @@ def native_paired(h, geometry: dict, membrane: dict, initial: np.ndarray,
     return voltage
 
 
-def run(root: Path, output: Path, revision: str) -> dict:
+def run(root: Path, output: Path, revision: str,
+        config_name: str = 'iv_ad1_passive_axial_preregistration.json') -> dict:
     import neuron
     from neuron import h
-    spec = config(root)
+    spec = config(root, config_name)
     if neuron.__version__.split('+')[0] != spec['teacher_version']:
         raise RuntimeError('IV-A/D1 registered NEURON version changed')
     output.mkdir(parents=True, exist_ok=False)
@@ -179,10 +182,27 @@ def run(root: Path, output: Path, revision: str) -> dict:
             exact = case['initial_mv'] + case['pulse_na']*(window[1]-window[0])/cap
         max_error = float(np.max(np.abs(prediction-native)))
         analytic_error = float(abs(native[-1]-exact))
+        convergence = None
+        if spec['schema_version'].endswith('-v2'):
+            errors = []
+            for spacing in spec['convergence_dt_ms']:
+                refined = simulate_discrete(
+                    np.array([case['initial_mv'], case['initial_mv']]),
+                    np.array([cap, cap]), np.array([leak, leak]), 0.,
+                    case['e_pas_mv'], np.array([case['pulse_na'], 0.]),
+                    window, duration, spacing)[-1, 0]
+                errors.append(float(abs(refined-exact)))
+            convergence = {'dt_ms': spec['convergence_dt_ms'],
+                           'endpoint_error_mv': errors,
+                           'passed': (errors[2] <= limits['max_single_fine_endpoint_error_mv']
+                               and (errors[0] > errors[1] > errors[2]
+                                    if leak else max(errors) <= 1e-9))}
         singles.append({'case': case['id'], 'max_native_discrete_error_mv': max_error,
             'analytic_endpoint_error_mv': analytic_error,
+            'discrete_continuous_convergence': convergence,
             'passed': max_error <= limits['max_single_native_discrete_error_mv']
-                and analytic_error <= limits['max_single_analytic_endpoint_error_mv']})
+                and (convergence['passed'] if convergence else
+                     analytic_error <= limits['max_single_analytic_endpoint_error_mv'])})
     a_pass = all(row['passed'] for row in singles)
     write(output/'iv_a1_a2_report.json', {'passed': a_pass, 'cases': singles})
     if not a_pass:
