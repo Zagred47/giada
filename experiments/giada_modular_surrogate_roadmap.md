@@ -701,6 +701,9 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   RC/leak/correnti, tre geometrie × quattro condizioni assiali, limiti
   disconnesso/simmetrico, bilancio capacitivo e convergenza di `dt`. Questo
   run porta il proprio ID IV-D1, **non** viene rinominato Task 36.
+  **Aggiornamento IV-D1:** il prerequisito passivo è passato nella v3
+  (`experiments/iv_ad1_passive_axial_result.md`); la Task 36 è autorizzata
+  come prossimo esperimento distinto, non considerata completata da IV-D1.
 - **Task 37 — Quattro compartimenti attivi**.
 - **Task 38 — Scaling 8 → 16 compartimenti**.
 - **Task 39 — Prima biforcazione attiva**.
