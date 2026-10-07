@@ -1,0 +1,35 @@
+{
+  "schema_version": "giada-task35-full-local-compartment-v1",
+  "roadmap_id": "Task35",
+  "status": "preregistered_before_native_run",
+  "parent_task33_report": "experiments/results/task33_v3_final_report.json",
+  "parent_task33_sha256": "b7b56cdaeb4a42d523b6652409ca43650a2841f9631dba6d5b6a602ba10ef323",
+  "parent_task34_report": "experiments/results/task34_v3_final_report.json",
+  "parent_task34_sha256": "2b4e4d17451440c3eb83e42b7359224b61ab5677c5c952e0edc984a8c0f4c71b",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "neuron_version": "8.2.7",
+  "dt_ms": 0.1,
+  "duration_ms": 40.0,
+  "panels": ["canonical", "calcium_x4", "sodium_x4", "potassium_x4"],
+  "confirmation": {
+    "seeds": [85317, 85329],
+    "initial_voltages_mv": [-80.0, -58.0],
+    "protocols": ["rest", "early_high"],
+    "schedule": "task35_observed"
+  },
+  "calibration": {
+    "seed": 85103,
+    "initial_voltage_mv": -70.0,
+    "protocol": "early_low",
+    "panel": "canonical",
+    "schedule": "task35_calibration"
+  },
+  "schedules_ms": {
+    "task35_calibration": {"exc_1": [3.4, 12.4], "exc_2": [4.4, 13.4], "inh_1": [6.4, 14.4], "inh_2": [7.4, 15.4]},
+    "task35_observed": {"exc_1": [2.9, 3.2, 8.9, 16.9], "exc_2": [3.0, 3.3, 9.0, 17.0], "inh_1": [5.9, 6.2, 11.9, 19.9], "inh_2": [6.0, 6.3, 12.0, 20.0]}
+  },
+  "decision": "Calibrate native/shadow/formula on one disjoint case. Open 32 independent cases only after calibration passes. Require exact synaptic shadow, admissible native/formula floor and unchanged Task33 V/Ca/physical gates for each of six frozen Task32 models in every panel, not merely pooled. Any technical or floor failure stops model judgment; a candidate failure with admissible floor is scientific NO-GO. No checkpoint selection, retraining or threshold tuning.",
+  "scope": "Full declared local inventory: 11 canonical ion channels, CaDynamics, passive membrane, four stochastic EMS synapses, autonomous V/Ca, presynaptic events and Random123 streams observed. New independent conductance panels test local generalization. Single cylindrical compartment only; excludes axial coupling, morphology, whole-cell behavior and speedup.",
+  "diagnostic_controls": ["zero_weight_zero_current_no_rng_draw_per_panel", "scheduled_events_not_equated_to_releases", "synaptic_voltage_effect_present", "teacher_current_not_model_input"],
+  "selection": "All six Task32 checkpoints frozen before Task35; no Task35 data used for model or threshold selection."
+}

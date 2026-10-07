@@ -136,7 +136,7 @@ def _native_case(h, cfg: dict, base: dict, t32cfg: dict, c3: dict,
     h.ion_style('ca_ion', 3, 1, 0, 0, 0, sec=sec)
     seg = sec(.5)
     area = float(h.area(.5, sec=sec))
-    multipliers = ionic.panel_multipliers()['canonical'].copy()
+    multipliers = ionic.panel_multipliers()[row.get('panel', 'canonical')].copy()
     initial_v = float(row['initial_voltage_mv'])
     initial_gate = t30.initial_states(np.array([initial_v]),
                                       np.array([cfg['initial_cai_mM']]))[0]
@@ -362,7 +362,9 @@ def coupled_rollout(native_rows: list[dict], shadow_rows: list[dict],
     voltage[:, 0] = [row['voltage'][0] for row in native_rows]
     calcium[:, 0] = cfg['initial_cai_mM']
     states[:, 0] = t30.initial_states(voltage[0, 0], calcium[0, 0])
-    multipliers = np.broadcast_to(native_rows[0]['multipliers'], (seeds, count, 11))
+    multipliers = np.broadcast_to(
+        np.stack([row['multipliers'] for row in native_rows])[None, :, :],
+        (seeds, count, len(ionic.CHANNELS)))
     area = native_rows[0]['area_um2']
     phase = synaptic_state_phase or cfg.get('synaptic_state_phase', 'next')
     if phase not in ('old', 'next'):

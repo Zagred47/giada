@@ -667,7 +667,15 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   errori grezzi maggiori rispetto al nativo non sono prevalentemente
   difetti dei gate appresi. Task34 è **diagnosticamente completa** ma non è
   un test indipendente. Dettagli in `experiments/task34_v3_diagnostic_result.md`.
-- **Task 35 — Full compartment surrogate**.
+- **Task 35 — Full compartment surrogate (compartimento locale dichiarato)**.
+  Contratto prospettico in `experiments/task35_full_local_compartment_preregistration.json`:
+  32 nuovi casi appaiati nei pannelli canonico, calcio×4, sodio×4 e potassio×4.
+  Riusa senza riaddestramento i sei checkpoint Task32 e l'interfaccia causale
+  Task33, ma varia le conduttanze per distinguere la conferma locale dalla
+  sola ripetizione del regime canonico. Gate per pannello, floor formula–native,
+  shadow sinaptico e controlli negativi sono obbligatori. Non comprende
+  accoppiamento assiale, morfologia, cellula intera o speedup: questi non sono
+  implicati dal nome della task e restano fuori dalla rivendicazione.
 
 ### 🔬 Matrice causale obbligatoria
 
