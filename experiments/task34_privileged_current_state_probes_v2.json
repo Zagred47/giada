@@ -1,0 +1,12 @@
+{
+  "schema_version": "giada-task34-privileged-current-state-probes-v2",
+  "parent_v1_contract": "experiments/task34_privileged_current_state_probes_preregistration.json",
+  "parent_v1_contract_sha256": "bcef0aa1c36716e6b7a90191272b810829fc69983085ea015507e4c35cf8388e",
+  "parent_v1_report": "experiments/results/task34_v1_final_report.json",
+  "parent_v1_report_sha256": "5b7cb3eb7f5e14d4733bbc425c45d85e85484a51230060377027579a760aee30",
+  "diagnosis": "The v1 baseline reproduced Task33 exactly and current factorial identity passed, but its privileged teacher-state voltage arm used native gates at k+1 in the solver. An opened-data post-hoc one-step audit showed native old gates at k reproduce native next voltage with 1.26046e-5 mV RMSE, versus 7.26650e-4 mV from native gates at k+1. The v1 oracle arm is phase-inconsistent, not a biological or learned-model verdict.",
+  "change_only": "Use native gate state at k rather than k+1 in the privileged teacher-state voltage arm. No new training, checkpoint selection, thresholds, trajectories, teacher-current input, or model architecture changes.",
+  "teacher_state_voltage_phase": "old",
+  "reused_data_status": "Task33 v3 trajectories remain previously opened; v2 is a corrected diagnostic, not independent confirmation.",
+  "decision": "Task34 v2 is diagnostically complete only after exact reproduction of the Task33 model baseline, exact current decomposition identity and phase-consistent privileged arm. Record v1 separately as a technical oracle-arm error. Oracle arms remain ineligible for model selection or deployment."
+}

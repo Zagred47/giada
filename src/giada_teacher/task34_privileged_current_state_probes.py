@@ -16,7 +16,23 @@ from .hh_family_transfer import write
 
 
 def contract(root: Path) -> tuple[dict, dict, dict, dict]:
-    spec = json.loads((root / 'experiments/task34_privileged_current_state_probes_preregistration.json').read_text(encoding='utf-8'))
+    v1_path = root / 'experiments/task34_privileged_current_state_probes_preregistration.json'
+    spec = json.loads(v1_path.read_text(encoding='utf-8'))
+    amendment = json.loads((root / 'experiments/task34_privileged_current_state_probes_v2.json').read_text(encoding='utf-8'))
+    if hashlib.sha256(v1_path.read_bytes()).hexdigest() != amendment['parent_v1_contract_sha256']:
+        raise RuntimeError('Task34 v1 preregistration changed')
+    prior_path = root / amendment['parent_v1_report']
+    if hashlib.sha256(prior_path.read_bytes()).hexdigest() != amendment['parent_v1_report_sha256']:
+        raise RuntimeError('Task34 v1 report changed')
+    prior = json.loads(prior_path.read_text(encoding='utf-8'))
+    if not (prior['valid'] and prior['diagnostic_complete']
+            and not prior['teacher_privileged_arms_selection_eligible']
+            and not prior['independent_confirmation_claimed']):
+        raise RuntimeError('Task34 v1 diagnostic status changed')
+    spec = {**spec, 'schema_version': amendment['schema_version'],
+            'teacher_state_voltage_phase': amendment['teacher_state_voltage_phase']}
+    if spec['teacher_state_voltage_phase'] != 'old':
+        raise RuntimeError('Task34 v2 teacher-state phase changed')
     for name, digest in (('parent_report', 'parent_report_sha256'),
                          ('parent_traces', 'parent_traces_sha256')):
         if hashlib.sha256((root / spec[name]).read_bytes()).hexdigest() != spec[digest]:
@@ -70,8 +86,10 @@ def teacher_voltage_model_state(native: list[dict], cfg: dict, t32cfg: dict,
 
 
 def model_voltage_teacher_state(native: list[dict], shadows: list[dict],
-                                cfg: dict, base: dict) -> dict:
-    """Advance analytic voltage using the teacher's next gate states; oracle."""
+                                cfg: dict, base: dict, phase: str) -> dict:
+    """Advance voltage using phase-registered teacher gate states; oracle."""
+    if phase not in ('old', 'next'):
+        raise ValueError('Unknown teacher-state voltage phase')
     teacher_v = np.stack([row['voltage'] for row in native], axis=-1)
     teacher_gates = np.stack([row['gates'] for row in native], axis=1)
     teacher_cai = np.stack([row['calcium'] for row in native], axis=-1)
@@ -84,7 +102,7 @@ def model_voltage_teacher_state(native: list[dict], shadows: list[dict],
         conductance = np.stack([s['base_g_us'][k] for s in shadows])
         injected = np.array([row['injection'][k] for row in native])
         voltage[:, k+1] = t33.voltage_step_with_synapses(
-            voltage[:, k], teacher_gates[k+1][None], mult, injected,
+            voltage[:, k], teacher_gates[k if phase == 'old' else k+1][None], mult, injected,
             conductance, native[0]['area_um2'], base, cfg['dt_ms'])
     return {'voltage': voltage, 'calcium': teacher_cai[None],
             'gates': teacher_gates[None]}
@@ -154,7 +172,8 @@ def run(root: Path, output: Path, *, code_revision: str) -> dict:
     native_s = np.stack([row['gates'] for row in native], axis=1)
     native_cai = np.stack([row['calcium'] for row in native], axis=-1)
     base_g = np.stack([row['base_g_us'] for row in shadows], axis=1)
-    oracle_voltage = model_voltage_teacher_state(native, shadows, cfg, base)
+    oracle_voltage = model_voltage_teacher_state(
+        native, shadows, cfg, base, spec['teacher_state_voltage_phase'])
     formula = t33.coupled_rollout(native, shadows, cfg, t32cfg, base)
     formula_metrics = t33.metrics(formula, native)
     floor_delta = max(abs(formula_metrics[key]-parent['formula_floor'][key]) for key in (
