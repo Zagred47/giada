@@ -1,0 +1,17 @@
+{
+  "schema_version": "giada-task34-privileged-current-state-probes-v3",
+  "parent_v2_contract": "experiments/task34_privileged_current_state_probes_v2.json",
+  "parent_v2_contract_sha256": "6f4dd6959f094f46ac54be3b7f5dd3241790872dc35f834ba310ccec480a8a54",
+  "parent_v2_report": "experiments/results/task34_v2_final_report.json",
+  "parent_v2_report_sha256": "78615cbfc843ae1c841d688f224fc1ef423bed22f250ccc5083546e713d8e6bf",
+  "diagnosis": "The phase-corrected v2 teacher-state oracle is near the formula floor, but raw model-versus-native gate/current errors resemble exact-formula-versus-native errors. A model-specific attribution cannot be inferred from those raw discrepancies alone.",
+  "added_probes_only": [
+    "Exact formula gate/calcium rollout under imposed native voltage, on the same already-opened 16 trajectories.",
+    "Frozen model gate/calcium rollout under that identical imposed native voltage.",
+    "Per-channel model-minus-formula gate and ionic-current RMSE under the same native voltage.",
+    "Per-channel formula-minus-native gate and ionic-current RMSE under the same native voltage, reported separately."
+  ],
+  "unchanged": "All six frozen checkpoints, Task33 baseline, old-state privileged voltage arm, current factorial, data, model selection prohibition and numeric validity gates.",
+  "interpretation": "A raw model/native channel error cannot be called a learned-model bottleneck unless the matched model/formula channel error is separately measured. This diagnostic reuses opened data and does not provide independent generalization or a new performance claim.",
+  "decision": "Task34 v3 is complete only if v2 baseline and current-factorial metrics reproduce within 1e-9 and 1e-12 respectively, all added per-channel model/formula and formula/native probes are finite, and privileged arms remain non-selectable."
+}

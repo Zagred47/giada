@@ -4,7 +4,7 @@ from pathlib import Path
 import numpy as np
 
 from src.giada_teacher.task34_privileged_current_state_probes import (
-    contract, current_factorial, load_traces,
+    contract, current_factorial, load_traces, teacher_voltage_model_state,
 )
 
 
@@ -20,6 +20,9 @@ class TestTask34PrivilegedProbes(unittest.TestCase):
         self.assertEqual(len(shadows), 16)
         self.assertEqual(cfg['synaptic_state_phase'], 'old')
         self.assertEqual(t32cfg['model_seeds'], [17, 29, 43])
+        exact_clamped = teacher_voltage_model_state(native, cfg, t32cfg)
+        self.assertEqual(exact_clamped['gates'].shape, (1, 401, 16, 18))
+        self.assertTrue(np.isfinite(exact_clamped['gates']).all())
 
     def test_current_factorial_identity(self):
         rng = np.random.default_rng(34)

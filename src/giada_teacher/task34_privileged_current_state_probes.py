@@ -33,6 +33,19 @@ def contract(root: Path) -> tuple[dict, dict, dict, dict]:
             'teacher_state_voltage_phase': amendment['teacher_state_voltage_phase']}
     if spec['teacher_state_voltage_phase'] != 'old':
         raise RuntimeError('Task34 v2 teacher-state phase changed')
+    v2_path = root / 'experiments/task34_privileged_current_state_probes_v2.json'
+    v3 = json.loads((root / 'experiments/task34_privileged_current_state_probes_v3.json').read_text(encoding='utf-8'))
+    if hashlib.sha256(v2_path.read_bytes()).hexdigest() != v3['parent_v2_contract_sha256']:
+        raise RuntimeError('Task34 v2 preregistration changed')
+    v2_report_path = root / v3['parent_v2_report']
+    if hashlib.sha256(v2_report_path.read_bytes()).hexdigest() != v3['parent_v2_report_sha256']:
+        raise RuntimeError('Task34 v2 report changed')
+    v2_report = json.loads(v2_report_path.read_text(encoding='utf-8'))
+    if not (v2_report['valid'] and v2_report['diagnostic_complete']
+            and v2_report['teacher_state_oracle_voltage_rmse_mv'] < .001
+            and not v2_report['model_selection_performed']):
+        raise RuntimeError('Task34 v2 diagnostic status changed')
+    spec['schema_version'] = v3['schema_version']
     for name, digest in (('parent_report', 'parent_report_sha256'),
                          ('parent_traces', 'parent_traces_sha256')):
         if hashlib.sha256((root / spec[name]).read_bytes()).hexdigest() != spec[digest]:
@@ -62,11 +75,11 @@ def load_traces(root: Path, spec: dict) -> tuple[list[dict], list[dict]]:
 
 
 def teacher_voltage_model_state(native: list[dict], cfg: dict, t32cfg: dict,
-                                model, torch) -> dict:
-    """Advance candidate gates/calcium with teacher V clamped; diagnostic oracle."""
+                                model=None, torch=None) -> dict:
+    """Advance exact or candidate gates/calcium with teacher V clamped."""
     teacher_v = np.stack([row['voltage'] for row in native], axis=-1)
     count = len(native)
-    seeds = len(t32cfg['model_seeds'])
+    seeds = len(t32cfg['model_seeds']) if model is not None else 1
     steps = teacher_v.shape[0]
     calcium = np.empty((seeds, steps, count))
     gates = np.empty((seeds, steps, count, 18))
@@ -75,8 +88,10 @@ def teacher_voltage_model_state(native: list[dict], cfg: dict, t32cfg: dict,
     mult = np.broadcast_to(native[0]['multipliers'], (seeds, count, 11))
     for k in range(steps-1):
         old_v = np.broadcast_to(teacher_v[k], (seeds, count))
-        next_state = t30._candidate_gate_step(model, torch, old_v,
-                                               calcium[:, k], gates[:, k], cfg['dt_ms'])
+        next_state = (ionic.exact_step(old_v, calcium[:, k], gates[:, k], cfg['dt_ms'])
+                      if model is None else
+                      t30._candidate_gate_step(model, torch, old_v,
+                                               calcium[:, k], gates[:, k], cfg['dt_ms']))
         source = t32._ca_current(old_v, next_state, mult)
         calcium[:, k+1] = t32.calcium_step(calcium[:, k], source, t32cfg)
         t32._sk_update(next_state, gates[:, k], calcium[:, k+1], cfg['dt_ms'])
@@ -166,6 +181,8 @@ def run(root: Path, output: Path, *, code_revision: str) -> dict:
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
     spec, parent, cfg, t32cfg = contract(root)
+    v3_contract = json.loads((root / 'experiments/task34_privileged_current_state_probes_v3.json').read_text(encoding='utf-8'))
+    prior_v2 = json.loads((root / v3_contract['parent_v2_report']).read_text(encoding='utf-8'))
     native, shadows = load_traces(root, spec)
     base = t30.config(root, Path(t32cfg['base_config']).name)
     native_v = np.stack([row['voltage'] for row in native], axis=-1)
@@ -174,7 +191,11 @@ def run(root: Path, output: Path, *, code_revision: str) -> dict:
     base_g = np.stack([row['base_g_us'] for row in shadows], axis=1)
     oracle_voltage = model_voltage_teacher_state(
         native, shadows, cfg, base, spec['teacher_state_voltage_phase'])
+    oracle_metric = rmse(oracle_voltage['voltage'][0]-native_v)
+    if abs(oracle_metric-prior_v2['teacher_state_oracle_voltage_rmse_mv']) > spec['reproduction_atol']:
+        raise RuntimeError('Task34 v2 teacher-state oracle did not reproduce')
     formula = t33.coupled_rollout(native, shadows, cfg, t32cfg, base)
+    formula_teacher_v = teacher_voltage_model_state(native, cfg, t32cfg)
     formula_metrics = t33.metrics(formula, native)
     floor_delta = max(abs(formula_metrics[key]-parent['formula_floor'][key]) for key in (
         'pooled_voltage_rmse_mv', 'worst_voltage_rmse_mv', 'worst_cai_rmse_mM'))
@@ -186,6 +207,11 @@ def run(root: Path, output: Path, *, code_revision: str) -> dict:
     families = {}
     max_parent_delta = 0.
     max_identity = 0.
+    formula_state_native = formula_teacher_v['gates'][0]
+    formula_native_gate = _gate_probe(formula_state_native, native_s)
+    formula_native_current = ionic.currents(native_v, formula_state_native) - ionic.currents(native_v, native_s)
+    formula_native_current_by_channel = {name: rmse(formula_native_current[..., k])
+                                         for k, name in enumerate(ionic.CHANNELS)}
     for family in spec['frozen_families']:
         model = loaded[family, t32cfg['frozen_arm']]
         closed = t33.coupled_rollout(native, shadows, cfg, t32cfg, base, model, torch)
@@ -202,8 +228,18 @@ def run(root: Path, output: Path, *, code_revision: str) -> dict:
             state_at_teacher_v = clamped['gates'][j]
             state_closed = closed['gates'][j]
             voltage_closed = closed['voltage'][j]
+            matched_model_formula_gate = _gate_probe(state_at_teacher_v, formula_state_native)
+            matched_model_formula_current = (
+                ionic.currents(native_v, state_at_teacher_v)
+                - ionic.currents(native_v, formula_state_native))
+            matched_model_formula_current_by_channel = {
+                name: rmse(matched_model_formula_current[..., k])
+                for k, name in enumerate(ionic.CHANNELS)}
             factorial = current_factorial(native_v, native_s, voltage_closed,
                                           state_closed, spec['decomposition_atol'])
+            prior_net = prior_v2['families'][family][str(seed)]['ionic_current_factorial']['net']
+            if max(abs(factorial['net'][key]-prior_net[key]) for key in prior_net) > spec['reproduction_atol']:
+                raise RuntimeError(f'Task34 v2 current factorial did not reproduce: {family}/{seed}')
             max_identity = max(max_identity, factorial['identity_max_abs_error_ma_cm2'])
             teacher_v_state_error = rmse(state_at_teacher_v-native_s)
             closed_state_error = rmse(state_closed-native_s)
@@ -223,6 +259,11 @@ def run(root: Path, output: Path, *, code_revision: str) -> dict:
                     'synaptic_current_rmse_na': _synaptic_current_probe(
                         native_v, voltage_closed, base_g)},
                 'ionic_current_factorial': factorial,
+                'matched_model_minus_formula_at_teacher_voltage': {
+                    'state_rmse': rmse(state_at_teacher_v-formula_state_native),
+                    'cai_rmse_mM': rmse(clamped['calcium'][j]-formula_teacher_v['calcium'][0]),
+                    'per_channel_gate_rmse': matched_model_formula_gate,
+                    'per_channel_current_rmse_ma_cm2': matched_model_formula_current_by_channel},
                 'diagnostic_flags': {
                     'voltage_feedback_amplifies_state_error_2x': bool(
                         closed_state_error >= ratio*teacher_v_state_error
@@ -239,7 +280,12 @@ def run(root: Path, output: Path, *, code_revision: str) -> dict:
               'current_identity_max_abs_error_ma_cm2': max_identity,
               'case_count': len(native), 'families': families,
               'formula_floor': formula_metrics,
-              'teacher_state_oracle_voltage_rmse_mv': rmse(oracle_voltage['voltage'][0]-native_v),
+              'formula_minus_native_at_teacher_voltage': {
+                  'state_rmse': rmse(formula_state_native-native_s),
+                  'per_channel_gate_rmse': formula_native_gate,
+                  'per_channel_current_rmse_ma_cm2': formula_native_current_by_channel},
+              'teacher_state_oracle_voltage_rmse_mv': oracle_metric,
+              'parent_v2_oracle_metric_delta': abs(oracle_metric-prior_v2['teacher_state_oracle_voltage_rmse_mv']),
               'teacher_privileged_arms_selection_eligible': False,
               'training_performed': False, 'model_selection_performed': False,
               'independent_confirmation_claimed': False,
