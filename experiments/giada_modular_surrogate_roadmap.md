@@ -676,6 +676,10 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   shadow sinaptico e controlli negativi sono obbligatori. Non comprende
   accoppiamento assiale, morfologia, cellula intera o speedup: questi non sono
   implicati dal nome della task e restano fuori dalla rivendicazione.
+  **Esito v1 confermato** su 32 casi indipendenti e tutti i sei checkpoint,
+  con gate per pannello e nessun riaddestramento. Vedi
+  `experiments/task35_full_local_compartment_result.md`. Il prossimo salto
+  causale rimane l'accoppiamento assiale della Task36, previa verifica IV-D1.
 
 ### 🔬 Matrice causale obbligatoria
 

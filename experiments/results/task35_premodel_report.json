@@ -1,0 +1,636 @@
+{
+  "schema_version": "giada-task35-full-local-compartment-v1",
+  "valid": true,
+  "code_revision": "e1a6efd78bbed9e28a160c75e33f7371cdf72d9a",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "calibration": {
+    "passed": true,
+    "formula_floor": {
+      "pooled_voltage_rmse_mv": 4.751133500599641e-06,
+      "worst_voltage_rmse_mv": 4.751133500599641e-06,
+      "worst_cai_rmse_mM": 1.7025958849549458e-15,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        4.751133500599641e-06
+      ]
+    },
+    "shadow": {
+      "release_count": 2,
+      "release_mismatch_count": 0,
+      "max_shadow_current_error_na": 4.9282054932667035e-15,
+      "max_shadow_receptor_state_error": 9.411915691259765e-14,
+      "max_rng_sequence_difference": 0.0
+    }
+  },
+  "confirmation_opened": true,
+  "case_count": 32,
+  "case_summaries": [
+    {
+      "case": {
+        "panel": "canonical",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 2.108122704180815e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "canonical",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 5.818696219295205e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "canonical",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 2.51686692320785e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "canonical",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 5.397592095501835e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "canonical",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.145847197507599e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "canonical",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.0568432623990747e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "canonical",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.1322274159355182e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "canonical",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.0407849576751435e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "calcium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 2.108773225484306e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "calcium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 1.0004150285958247e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "calcium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 2.5175174445113413e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "calcium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 7.696968062909093e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "calcium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.1458468586944201e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "calcium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.0412282947197364e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "calcium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.1322238583971397e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "calcium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.0102971078815564e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "sodium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 2.1439013758728365e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "sodium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 9.893127983495731e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "sodium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 3.036633444697401e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "sodium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 8.170547571850761e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "sodium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.1458470281010096e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "sodium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.0034392750307014e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "sodium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.1321483030582447e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "sodium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 9.977784691409062e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "potassium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 2.1033522146218786e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "potassium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 4.953502885651773e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "potassium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 2.4962670819306254e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "potassium_x4",
+        "schedule": "task35_observed",
+        "seed": 85317,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 7,
+      "max_shadow_current_error_na": 4.313389923016331e-15,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "potassium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.1458531267382298e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "potassium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -80.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.0595816352142531e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "potassium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "rest"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.1323143215159065e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    },
+    {
+      "case": {
+        "panel": "potassium_x4",
+        "schedule": "task35_observed",
+        "seed": 85329,
+        "initial_voltage_mv": -58.0,
+        "protocol": "early_high"
+      },
+      "shadow_passed": true,
+      "scheduled_count": 16,
+      "release_count": 6,
+      "max_shadow_current_error_na": 1.049352611233326e-14,
+      "max_shadow_receptor_state_error": 1.6822654380632684e-13,
+      "max_rng_sequence_difference": 0.0,
+      "release_mismatch_count": 0
+    }
+  ],
+  "formula_floor_by_panel": {
+    "canonical": {
+      "pooled_voltage_rmse_mv": 0.0007756061518473744,
+      "worst_voltage_rmse_mv": 0.0016613387809538283,
+      "worst_cai_rmse_mM": 1.3297870018906117e-08,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        0.00012443096491389222,
+        0.0013178541823141749,
+        0.00012762868331106812,
+        0.0016613387809538283,
+        5.538988550046962e-06,
+        0.00012668770054584163,
+        8.81909353734408e-06,
+        0.0005174965267672184
+      ]
+    },
+    "calcium_x4": {
+      "pooled_voltage_rmse_mv": 0.0014294166847198786,
+      "worst_voltage_rmse_mv": 0.002833385623206386,
+      "worst_cai_rmse_mM": 8.004096746259065e-08,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        0.00012447981816902603,
+        0.0027504155656492817,
+        0.0001276893010891277,
+        0.002833385623206386,
+        5.53900330714308e-06,
+        0.00017125709677304107,
+        8.819002929593359e-06,
+        0.0008317207245082887
+      ]
+    },
+    "sodium_x4": {
+      "pooled_voltage_rmse_mv": 0.0008296871346258907,
+      "worst_voltage_rmse_mv": 0.0016741327642438716,
+      "worst_cai_rmse_mM": 1.0489916314221953e-08,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        0.0001341675158507518,
+        0.001455112999401649,
+        0.00023473361131787573,
+        0.0016741327642438716,
+        5.5390464457476155e-06,
+        0.00024699014129406504,
+        8.865985487129422e-06,
+        0.0006728724770301832
+      ]
+    },
+    "potassium_x4": {
+      "pooled_voltage_rmse_mv": 0.0007223899138265056,
+      "worst_voltage_rmse_mv": 0.001410869885801905,
+      "worst_cai_rmse_mM": 1.4138777857998853e-08,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        0.00012413085953090535,
+        0.0013776552831981786,
+        0.00012620280868967667,
+        0.001410869885801905,
+        5.5382110888174064e-06,
+        0.0001258078520637823,
+        8.791521091630982e-06,
+        0.0004888950698508623
+      ]
+    }
+  },
+  "floor_passed": true,
+  "shadow_passed": true,
+  "negative_controls": {
+    "zero_weight_zero_current_no_rng_draw_per_panel": true,
+    "scheduled_events_not_equated_to_releases": true,
+    "synaptic_voltage_effect_present": true,
+    "teacher_current_not_model_input": true
+  },
+  "synaptic_voltage_effect_mv_by_panel": {
+    "canonical": 21.318997050557115,
+    "calcium_x4": 21.319940256137215,
+    "sodium_x4": 21.495716990475643,
+    "potassium_x4": 21.306653145511177
+  },
+  "model_judged": false,
+  "task35_passed": false,
+  "diagnosis": "READY_FOR_FROZEN_MODEL_EVALUATION",
+  "no_axial_or_whole_cell_claim": true,
+  "speedup_claim": false
+}
