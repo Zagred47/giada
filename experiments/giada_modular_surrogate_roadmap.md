@@ -694,7 +694,13 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
 
 # 🌳 VII. Scaling multicompartmentale
 
-- **Task 36 — Due compartimenti attivi**.
+- **Task 36 — Due compartimenti attivi**. Ingresso bloccato fino alla
+  verifica indipendente IV-D1, preceduta dalla riconciliazione IV-A1/A2.
+  Protocollo passivo prospettico in
+  `experiments/iv_ad1_passive_axial_preregistration.json`: cinque controlli
+  RC/leak/correnti, tre geometrie × quattro condizioni assiali, limiti
+  disconnesso/simmetrico, bilancio capacitivo e convergenza di `dt`. Questo
+  run porta il proprio ID IV-D1, **non** viene rinominato Task 36.
 - **Task 37 — Quattro compartimenti attivi**.
 - **Task 38 — Scaling 8 → 16 compartimenti**.
 - **Task 39 — Prima biforcazione attiva**.

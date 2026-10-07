@@ -1,0 +1,58 @@
+"""Pure-math preflight for the preregistered passive axial interface."""
+
+import unittest
+from pathlib import Path
+
+import numpy as np
+
+from src.giada_teacher import iv_ad1_passive_axial as passive
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class PassiveAxialTests(unittest.TestCase):
+    def test_units_and_reciprocal_axial_current(self):
+        cfg = passive.config(ROOT)
+        geometry = cfg['geometries'][0]
+        cap, leak, axial = passive.coefficients(geometry, cfg['passive_membrane'], True)
+        self.assertAlmostEqual(cap[0], np.pi*100*1*1e-5)
+        self.assertAlmostEqual(axial, 0.005235987755982989)
+        self.assertGreater(axial, 0)
+        old = np.array([-80., -60.])
+        new = passive.passive_step(old, cap, leak, axial, -76., np.array([.002, 0.]), .1)
+        current = axial*(new[0]-new[1])
+        residual = cap*(new-old)/.1 + leak*(new+76.) + np.array([current, -current])-np.array([.002, 0.])
+        self.assertLess(np.max(np.abs(residual)), 1e-13)
+
+    def test_disconnected_and_symmetric_controls(self):
+        cfg = passive.config(ROOT)
+        cap, leak, axial = passive.coefficients(cfg['geometries'][0], cfg['passive_membrane'], False)
+        self.assertEqual(axial, 0)
+        after = passive.passive_step(np.array([-80., -60.]), cap, leak, axial, -76., np.array([.002, 0.]), .1)
+        child_alone = passive.passive_step(np.array([-80., -60.]), cap, leak, axial, -76., np.zeros(2), .1)
+        self.assertAlmostEqual(after[1], child_alone[1])
+        cap, leak, axial = passive.coefficients(cfg['geometries'][0], cfg['passive_membrane'], True)
+        same = passive.passive_step(np.array([-70., -70.]), cap, leak, axial, -76., np.array([.002, .002]), .1)
+        self.assertAlmostEqual(same[0], same[1])
+
+    def test_refinement_approaches_independent_exact_solution(self):
+        cfg = passive.config(ROOT)
+        geometry, membrane = cfg['geometries'][0], cfg['passive_membrane']
+        cap, leak, axial = passive.coefficients(geometry, membrane, True)
+        initial = np.array(cfg['paired_initial_mv'])
+        pulse = passive.current_for_case('parent_only', cfg['paired_pulse_na'])
+        exact = passive.exact_piecewise_endpoint(initial, cap, leak, axial,
+            membrane['e_pas_mv'], pulse, cfg['pulse_window_ms'], cfg['duration_ms'])
+        errors = []
+        for dt in cfg['convergence_dt_ms']:
+            prediction = passive.simulate_discrete(initial, cap, leak, axial,
+                membrane['e_pas_mv'], pulse, cfg['pulse_window_ms'], cfg['duration_ms'], dt)
+            errors.append(float(np.max(np.abs(prediction[-1]-exact))))
+        self.assertGreater(errors[0], errors[1])
+        self.assertGreater(errors[1], errors[2])
+        self.assertLess(errors[2], cfg['gates']['max_convergence_fine_endpoint_error_mv'])
+
+
+if __name__ == '__main__':
+    unittest.main()
