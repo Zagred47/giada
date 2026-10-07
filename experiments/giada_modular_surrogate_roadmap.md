@@ -658,7 +658,15 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   **Task33 è conclusa solo nel singolo compartimento attivo con quattro
   sinapsi completamente osservate**. Vedi `experiments/task33_v3_result.md`;
   non implica ancora accoppiamento assiale, cellula completa o speedup.
-- **Task 34 — Correnti e stati come probe privilegiati**.
+- **Task 34 — Correnti e stati come probe privilegiati**. Audit v1/v2/v3
+  sui 16 casi Task33 già aperti, senza retraining o selezione. La v1 ha
+  rivelato un errore di fase nel braccio oracle degli stati teacher; la v2
+  lo ha corretto prospetticamente. La v3 ha separato modello–formula da
+  formula–stato nativo sotto lo stesso V imposto: il baseline Task33 si
+  riproduce esattamente, la scomposizione delle correnti chiude e gli
+  errori grezzi maggiori rispetto al nativo non sono prevalentemente
+  difetti dei gate appresi. Task34 è **diagnosticamente completa** ma non è
+  un test indipendente. Dettagli in `experiments/task34_v3_diagnostic_result.md`.
 - **Task 35 — Full compartment surrogate**.
 
 ### 🔬 Matrice causale obbligatoria

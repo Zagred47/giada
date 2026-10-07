@@ -1,0 +1,1179 @@
+{
+  "schema_version": "giada-task34-privileged-current-state-probes-v3",
+  "valid": true,
+  "diagnostic_complete": true,
+  "code_revision": "e14e2cecb97c17df43dcf55ae8e8a315e79f10dd",
+  "parent_code_revision": "21e3c35e883403618a34f17c86a7257f8c0241d2",
+  "parent_baseline_max_metric_delta": 0.0,
+  "parent_formula_floor_max_metric_delta": 0.0,
+  "current_identity_max_abs_error_ma_cm2": 5.421010862427522e-20,
+  "case_count": 16,
+  "families": {
+    "independent": {
+      "17": {
+        "deployable_baseline": {
+          "pooled_voltage_rmse_mv": 0.0010559170537144814,
+          "worst_voltage_rmse_mv": 0.002113964075435816,
+          "worst_cai_rmse_mM": 1.0272948624107169e-07,
+          "finite": true,
+          "occupancy_violations": 0,
+          "physical_voltage_violations": 0,
+          "per_episode_voltage_rmse_mv": [
+            9.521038130775681e-06,
+            0.0017266961648436873,
+            6.266633661485245e-05,
+            0.001367360699066411,
+            6.42135790467568e-05,
+            0.002113964075435816,
+            0.000237243994495263,
+            0.002066247419182595,
+            7.431665166830441e-06,
+            0.0006229245060423992,
+            2.9716642886182604e-05,
+            0.001168186664251794,
+            6.172008164673492e-05,
+            0.000532537455521374,
+            7.68159354570713e-05,
+            0.0014624056916104895
+          ]
+        },
+        "teacher_voltage_model_state_privileged_probe": {
+          "state_rmse": 0.0035430595903396126,
+          "cai_rmse_mM": 3.582918570702596e-08,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.003012792588156147,
+            "Ca_LVAst": 0.0028701946559411095,
+            "NaTa_t": 0.0059095909585978774,
+            "NaTs2_t": 0.0059151470935906985,
+            "Nap_Et2": 0.004545451891458382,
+            "Ih": 7.133060229429828e-05,
+            "Im": 0.0010378859105815727,
+            "K_Pst": 0.0005694001773920331,
+            "K_Tst": 0.00205416697142631,
+            "SK_E2": 1.1578441475934909e-05,
+            "SKv3_1": 0.00011052892786186365
+          }
+        },
+        "model_voltage_teacher_state_privileged_probe": {
+          "voltage_rmse_mv": 0.0003390144723012643
+        },
+        "model_voltage_model_state": {
+          "state_rmse": 0.003537117456237896,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.0030065568954935683,
+            "Ca_LVAst": 0.0028651383620378343,
+            "NaTa_t": 0.00590058893361335,
+            "NaTs2_t": 0.005904966293467695,
+            "Nap_Et2": 0.004537522885745273,
+            "Ih": 7.135238003924632e-05,
+            "Im": 0.0010349521139676873,
+            "K_Pst": 0.000568601322935944,
+            "K_Tst": 0.0020518502603341184,
+            "SK_E2": 1.5040989981648375e-05,
+            "SKv3_1": 0.00011034195279726976
+          },
+          "synaptic_current_rmse_na": {
+            "AMPA": 1.1337614835951165e-07,
+            "NMDA": 6.576184056842232e-08,
+            "GABAA": 1.222704006138727e-07,
+            "GABAB": 8.81625662841579e-08
+          }
+        },
+        "ionic_current_factorial": {
+          "per_channel": {
+            "Ca_HVA": {
+              "state_only_ma_cm2": 2.949094941042223e-06,
+              "voltage_only_ma_cm2": 2.433502708886068e-09,
+              "interaction_ma_cm2": 5.0298437791545645e-11,
+              "combined_ma_cm2": 2.94954288604058e-06
+            },
+            "Ca_LVAst": {
+              "state_only_ma_cm2": 2.6877559332867854e-07,
+              "voltage_only_ma_cm2": 2.1372596354122228e-10,
+              "interaction_ma_cm2": 3.762636337099912e-12,
+              "combined_ma_cm2": 2.6882636130874567e-07
+            },
+            "NaTa_t": {
+              "state_only_ma_cm2": 2.4071175914580726e-07,
+              "voltage_only_ma_cm2": 1.3811219511740806e-11,
+              "interaction_ma_cm2": 1.3152756911999213e-12,
+              "combined_ma_cm2": 2.407158520872899e-07
+            },
+            "NaTs2_t": {
+              "state_only_ma_cm2": 2.1433237028078013e-07,
+              "voltage_only_ma_cm2": 1.5815943793096358e-11,
+              "interaction_ma_cm2": 1.9077164509422664e-12,
+              "combined_ma_cm2": 2.143420513664157e-07
+            },
+            "Nap_Et2": {
+              "state_only_ma_cm2": 5.8441753553470255e-06,
+              "voltage_only_ma_cm2": 6.797235582885106e-09,
+              "interaction_ma_cm2": 1.0086924150317177e-10,
+              "combined_ma_cm2": 5.8456774926971664e-06
+            },
+            "Ih": {
+              "state_only_ma_cm2": 1.484087991753656e-08,
+              "voltage_only_ma_cm2": 1.865076188135651e-10,
+              "interaction_ma_cm2": 1.1403746589542236e-12,
+              "combined_ma_cm2": 1.4795816917473782e-08
+            },
+            "Im": {
+              "state_only_ma_cm2": 6.432095494876711e-07,
+              "voltage_only_ma_cm2": 2.1481650539939995e-09,
+              "interaction_ma_cm2": 2.1276350948463898e-11,
+              "combined_ma_cm2": 6.436270575924688e-07
+            },
+            "K_Pst": {
+              "state_only_ma_cm2": 5.743910568185189e-08,
+              "voltage_only_ma_cm2": 1.318777599390881e-10,
+              "interaction_ma_cm2": 2.1628192910586706e-12,
+              "combined_ma_cm2": 5.744620777151756e-08
+            },
+            "K_Tst": {
+              "state_only_ma_cm2": 1.522057986192183e-08,
+              "voltage_only_ma_cm2": 6.088074685308522e-12,
+              "interaction_ma_cm2": 5.237074852107691e-13,
+              "combined_ma_cm2": 1.5218415527625595e-08
+            },
+            "SK_E2": {
+              "state_only_ma_cm2": 3.3089175252672536e-10,
+              "voltage_only_ma_cm2": 1.1418768929496047e-11,
+              "interaction_ma_cm2": 2.0890619842620367e-14,
+              "combined_ma_cm2": 3.3957902217498706e-10
+            },
+            "SKv3_1": {
+              "state_only_ma_cm2": 7.226851114081073e-08,
+              "voltage_only_ma_cm2": 1.0847963985958364e-10,
+              "interaction_ma_cm2": 3.0834058626767684e-12,
+              "combined_ma_cm2": 7.225647262870488e-08
+            }
+          },
+          "net": {
+            "state_only_ma_cm2": 7.439059346947167e-06,
+            "voltage_only_ma_cm2": 1.1514391859463378e-08,
+            "interaction_ma_cm2": 1.5110471463729584e-10,
+            "combined_ma_cm2": 7.4425085662586706e-06
+          },
+          "combined_channel_rmse_sum_ma_cm2": 1.0322788192960163e-05,
+          "cancellation_ratio": 0.7209785212230008,
+          "identity_max_abs_error_ma_cm2": 5.421010862427522e-20
+        },
+        "matched_model_minus_formula_at_teacher_voltage": {
+          "state_rmse": 0.00010433506499591629,
+          "cai_rmse_mM": 3.5829186741090615e-08,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 8.560148454550334e-05,
+            "Ca_LVAst": 0.00013979846451892504,
+            "NaTa_t": 0.00017370711793315298,
+            "NaTs2_t": 0.00012719391668931194,
+            "Nap_Et2": 0.00015710360221231147,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 1.1578442000662243e-05,
+            "SKv3_1": 0.0
+          },
+          "per_channel_current_rmse_ma_cm2": {
+            "Ca_HVA": 1.020947851198123e-07,
+            "Ca_LVAst": 1.1772116839481041e-08,
+            "NaTa_t": 4.277544804247616e-09,
+            "NaTs2_t": 8.114504853863203e-09,
+            "Nap_Et2": 1.8133322595526898e-07,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 2.544084906108441e-10,
+            "SKv3_1": 0.0
+          }
+        },
+        "diagnostic_flags": {
+          "voltage_feedback_amplifies_state_error_2x": false,
+          "teacher_state_reduces_voltage_error_2x": true
+        }
+      },
+      "29": {
+        "deployable_baseline": {
+          "pooled_voltage_rmse_mv": 0.0010299949897402054,
+          "worst_voltage_rmse_mv": 0.00273278784172328,
+          "worst_cai_rmse_mM": 1.2140255877092617e-07,
+          "finite": true,
+          "occupancy_violations": 0,
+          "physical_voltage_violations": 0,
+          "per_episode_voltage_rmse_mv": [
+            1.2157749743049126e-05,
+            0.0013040854957848372,
+            0.00010130212329785428,
+            0.001034319831901187,
+            7.246412106592561e-05,
+            0.00273278784172328,
+            0.00032142769438401,
+            0.0014141928309761198,
+            9.712011327716329e-06,
+            0.001124266159587286,
+            4.821489672036654e-05,
+            0.0007529806020869041,
+            7.009977330019999e-05,
+            0.0011524016439003108,
+            9.534680107513306e-05,
+            0.0012005511858654424
+          ]
+        },
+        "teacher_voltage_model_state_privileged_probe": {
+          "state_rmse": 0.003546276119489613,
+          "cai_rmse_mM": 3.5129646977538394e-08,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.0030447890522354738,
+            "Ca_LVAst": 0.0028670702167701368,
+            "NaTa_t": 0.005924720858327511,
+            "NaTs2_t": 0.005907564899113328,
+            "Nap_Et2": 0.004538833542721562,
+            "Ih": 7.133060229429828e-05,
+            "Im": 0.0010378859105815727,
+            "K_Pst": 0.0005694001773920331,
+            "K_Tst": 0.00205416697142631,
+            "SK_E2": 1.497905353849696e-05,
+            "SKv3_1": 0.00011052892786186365
+          }
+        },
+        "model_voltage_teacher_state_privileged_probe": {
+          "voltage_rmse_mv": 0.0003390144723012643
+        },
+        "model_voltage_model_state": {
+          "state_rmse": 0.0035421717012849062,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.003038703307869172,
+            "Ca_LVAst": 0.0028624109227508407,
+            "NaTa_t": 0.005918554982899389,
+            "NaTs2_t": 0.00590038297952753,
+            "Nap_Et2": 0.00453539915337987,
+            "Ih": 7.136729007331344e-05,
+            "Im": 0.0010363779287272687,
+            "K_Pst": 0.0005686541060184627,
+            "K_Tst": 0.0020525248533639928,
+            "SK_E2": 1.7288006029293714e-05,
+            "SKv3_1": 0.0001103616162112768
+          },
+          "synaptic_current_rmse_na": {
+            "AMPA": 1.1032770582693485e-07,
+            "NMDA": 6.632673018820345e-08,
+            "GABAA": 1.176019785441979e-07,
+            "GABAB": 8.733197526518339e-08
+          }
+        },
+        "ionic_current_factorial": {
+          "per_channel": {
+            "Ca_HVA": {
+              "state_only_ma_cm2": 2.9767776376737466e-06,
+              "voltage_only_ma_cm2": 2.3676105987049987e-09,
+              "interaction_ma_cm2": 4.653028092526324e-11,
+              "combined_ma_cm2": 2.9771975224644093e-06
+            },
+            "Ca_LVAst": {
+              "state_only_ma_cm2": 2.692280198718135e-07,
+              "voltage_only_ma_cm2": 2.4807978060817445e-10,
+              "interaction_ma_cm2": 4.130582840998887e-12,
+              "combined_ma_cm2": 2.6929392277111903e-07
+            },
+            "NaTa_t": {
+              "state_only_ma_cm2": 2.3990572555822207e-07,
+              "voltage_only_ma_cm2": 1.681513919052926e-11,
+              "interaction_ma_cm2": 1.3807003736975365e-12,
+              "combined_ma_cm2": 2.3990741982837243e-07
+            },
+            "NaTs2_t": {
+              "state_only_ma_cm2": 2.1742163576865834e-07,
+              "voltage_only_ma_cm2": 1.5341156409110242e-11,
+              "interaction_ma_cm2": 1.6801055443525712e-12,
+              "combined_ma_cm2": 2.174290751875217e-07
+            },
+            "Nap_Et2": {
+              "state_only_ma_cm2": 5.835037856736735e-06,
+              "voltage_only_ma_cm2": 6.7788543946921174e-09,
+              "interaction_ma_cm2": 1.0393775468661749e-10,
+              "combined_ma_cm2": 5.8362466421444595e-06
+            },
+            "Ih": {
+              "state_only_ma_cm2": 1.4859915553625401e-08,
+              "voltage_only_ma_cm2": 2.198102754169824e-10,
+              "interaction_ma_cm2": 1.25301853159322e-12,
+              "combined_ma_cm2": 1.4823169295239916e-08
+            },
+            "Im": {
+              "state_only_ma_cm2": 6.4298642173199e-07,
+              "voltage_only_ma_cm2": 1.720147266255393e-09,
+              "interaction_ma_cm2": 1.8813267750846395e-11,
+              "combined_ma_cm2": 6.434239068075039e-07
+            },
+            "K_Pst": {
+              "state_only_ma_cm2": 5.741670540443343e-08,
+              "voltage_only_ma_cm2": 1.212962441860316e-10,
+              "interaction_ma_cm2": 1.920348041289738e-12,
+              "combined_ma_cm2": 5.742632763634867e-08
+            },
+            "K_Tst": {
+              "state_only_ma_cm2": 1.521862651729541e-08,
+              "voltage_only_ma_cm2": 5.375282191677735e-12,
+              "interaction_ma_cm2": 4.963125102088475e-13,
+              "combined_ma_cm2": 1.521614451558375e-08
+            },
+            "SK_E2": {
+              "state_only_ma_cm2": 4.133937154030364e-10,
+              "voltage_only_ma_cm2": 1.1039702356138468e-11,
+              "interaction_ma_cm2": 3.730016197117431e-14,
+              "combined_ma_cm2": 4.2089422309709177e-10
+            },
+            "SKv3_1": {
+              "state_only_ma_cm2": 7.22621941511803e-08,
+              "voltage_only_ma_cm2": 9.183651544162585e-11,
+              "interaction_ma_cm2": 2.6014752807414477e-12,
+              "combined_ma_cm2": 7.22551226409294e-08
+            }
+          },
+          "net": {
+            "state_only_ma_cm2": 7.456603527903334e-06,
+            "voltage_only_ma_cm2": 1.119694057058921e-08,
+            "interaction_ma_cm2": 1.4876071589487756e-10,
+            "combined_ma_cm2": 7.459553265237784e-06
+          },
+          "combined_channel_rmse_sum_ma_cm2": 1.0343640147514584e-05,
+          "cancellation_ratio": 0.7211729293415335,
+          "identity_max_abs_error_ma_cm2": 5.421010862427522e-20
+        },
+        "matched_model_minus_formula_at_teacher_voltage": {
+          "state_rmse": 0.00013117467848559457,
+          "cai_rmse_mM": 3.512964725094019e-08,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.00022001524806658884,
+            "Ca_LVAst": 0.0002081978391437519,
+            "NaTa_t": 3.679316381713367e-05,
+            "NaTs2_t": 3.86718166926181e-05,
+            "Nap_Et2": 0.0002452482100700264,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 1.4979053623519452e-05,
+            "SKv3_1": 0.0
+          },
+          "per_channel_current_rmse_ma_cm2": {
+            "Ca_HVA": 1.248206161304705e-07,
+            "Ca_LVAst": 1.8538456001172264e-08,
+            "NaTa_t": 8.264290311967628e-09,
+            "NaTs2_t": 4.871596478623375e-09,
+            "Nap_Et2": 2.288091457241084e-07,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 3.601959250781633e-10,
+            "SKv3_1": 0.0
+          }
+        },
+        "diagnostic_flags": {
+          "voltage_feedback_amplifies_state_error_2x": false,
+          "teacher_state_reduces_voltage_error_2x": true
+        }
+      },
+      "43": {
+        "deployable_baseline": {
+          "pooled_voltage_rmse_mv": 0.0008854764601036974,
+          "worst_voltage_rmse_mv": 0.0017164550272179362,
+          "worst_cai_rmse_mM": 2.1404311162337184e-07,
+          "finite": true,
+          "occupancy_violations": 0,
+          "physical_voltage_violations": 0,
+          "per_episode_voltage_rmse_mv": [
+            1.376833128532787e-05,
+            0.0014911296680582395,
+            3.666882381607138e-05,
+            0.0014388557850134754,
+            6.148594530329445e-05,
+            0.0013835263621303309,
+            0.00012007970223789002,
+            0.0017164550272179362,
+            1.0702331316716048e-05,
+            0.0010974628301537,
+            2.0921313850111297e-05,
+            0.0005769777079195168,
+            5.994381506244292e-05,
+            0.0008827968447424483,
+            5.337609193588397e-05,
+            0.0010235104917397672
+          ]
+        },
+        "teacher_voltage_model_state_privileged_probe": {
+          "state_rmse": 0.003554098271878368,
+          "cai_rmse_mM": 7.172653983919613e-08,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.0030350336147927596,
+            "Ca_LVAst": 0.0028798482846396152,
+            "NaTa_t": 0.0059250643622098765,
+            "NaTs2_t": 0.00591263231243266,
+            "Nap_Et2": 0.004585014142519104,
+            "Ih": 7.133060229429828e-05,
+            "Im": 0.0010378859105815727,
+            "K_Pst": 0.0005694001773920331,
+            "K_Tst": 0.00205416697142631,
+            "SK_E2": 3.279832432564577e-05,
+            "SKv3_1": 0.00011052892786186365
+          }
+        },
+        "model_voltage_teacher_state_privileged_probe": {
+          "voltage_rmse_mv": 0.0003390144723012643
+        },
+        "model_voltage_model_state": {
+          "state_rmse": 0.0035547078550889123,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.003035055136799119,
+            "Ca_LVAst": 0.0028796547590800125,
+            "NaTa_t": 0.005926409727041197,
+            "NaTs2_t": 0.00591370017033163,
+            "Nap_Et2": 0.00458579313863957,
+            "Ih": 7.137491429883251e-05,
+            "Im": 0.001040031822713432,
+            "K_Pst": 0.0005696072224024563,
+            "K_Tst": 0.0020545982221702153,
+            "SK_E2": 3.3408101334912124e-05,
+            "SKv3_1": 0.00011058891746004871
+          },
+          "synaptic_current_rmse_na": {
+            "AMPA": 9.81112314034338e-08,
+            "NMDA": 4.8843311537657266e-08,
+            "GABAA": 8.725534714160497e-08,
+            "GABAB": 8.27230645935382e-08
+          }
+        },
+        "ionic_current_factorial": {
+          "per_channel": {
+            "Ca_HVA": {
+              "state_only_ma_cm2": 2.977340221864939e-06,
+              "voltage_only_ma_cm2": 1.3020943858153046e-09,
+              "interaction_ma_cm2": 3.498531910342313e-11,
+              "combined_ma_cm2": 2.977122445277428e-06
+            },
+            "Ca_LVAst": {
+              "state_only_ma_cm2": 2.7795440188089394e-07,
+              "voltage_only_ma_cm2": 1.4331745283010318e-10,
+              "interaction_ma_cm2": 2.821055121069988e-12,
+              "combined_ma_cm2": 2.7800336554178213e-07
+            },
+            "NaTa_t": {
+              "state_only_ma_cm2": 2.4047934784565107e-07,
+              "voltage_only_ma_cm2": 1.6696643086021412e-11,
+              "interaction_ma_cm2": 1.3923620227508774e-12,
+              "combined_ma_cm2": 2.404740326971503e-07
+            },
+            "NaTs2_t": {
+              "state_only_ma_cm2": 2.2115259641804317e-07,
+              "voltage_only_ma_cm2": 1.678815763709691e-11,
+              "interaction_ma_cm2": 1.7257561966020987e-12,
+              "combined_ma_cm2": 2.2115213420580588e-07
+            },
+            "Nap_Et2": {
+              "state_only_ma_cm2": 5.806367862864901e-06,
+              "voltage_only_ma_cm2": 4.272205474366511e-09,
+              "interaction_ma_cm2": 9.969542873940048e-11,
+              "combined_ma_cm2": 5.806604859539248e-06
+            },
+            "Ih": {
+              "state_only_ma_cm2": 1.4866207549935597e-08,
+              "voltage_only_ma_cm2": 1.640947836625731e-10,
+              "interaction_ma_cm2": 8.307905380537543e-13,
+              "combined_ma_cm2": 1.4845425938779883e-08
+            },
+            "Im": {
+              "state_only_ma_cm2": 6.43153030648523e-07,
+              "voltage_only_ma_cm2": 1.5594319131993635e-09,
+              "interaction_ma_cm2": 1.559868515893232e-11,
+              "combined_ma_cm2": 6.43432826402708e-07
+            },
+            "K_Pst": {
+              "state_only_ma_cm2": 5.744447322630123e-08,
+              "voltage_only_ma_cm2": 7.86505955537082e-11,
+              "interaction_ma_cm2": 1.251892935007271e-12,
+              "combined_ma_cm2": 5.746136921579705e-08
+            },
+            "K_Tst": {
+              "state_only_ma_cm2": 1.5228650064567784e-08,
+              "voltage_only_ma_cm2": 3.4356862462860032e-12,
+              "interaction_ma_cm2": 2.771386799736389e-13,
+              "combined_ma_cm2": 1.522762506691571e-08
+            },
+            "SK_E2": {
+              "state_only_ma_cm2": 7.657197901674908e-10,
+              "voltage_only_ma_cm2": 1.2901442112385483e-11,
+              "interaction_ma_cm2": 6.554055538610831e-14,
+              "combined_ma_cm2": 7.778691366685746e-10
+            },
+            "SKv3_1": {
+              "state_only_ma_cm2": 7.235012238835488e-08,
+              "voltage_only_ma_cm2": 4.7520726314016534e-11,
+              "interaction_ma_cm2": 1.766251052393977e-12,
+              "combined_ma_cm2": 7.237149969974255e-08
+            }
+          },
+          "net": {
+            "state_only_ma_cm2": 7.44020312086254e-06,
+            "voltage_only_ma_cm2": 6.99585461033188e-09,
+            "interaction_ma_cm2": 1.347517656009569e-10,
+            "combined_ma_cm2": 7.440288784558575e-06
+          },
+          "combined_channel_rmse_sum_ma_cm2": 1.0327473452722026e-05,
+          "cancellation_ratio": 0.7204364957817954,
+          "identity_max_abs_error_ma_cm2": 5.421010862427522e-20
+        },
+        "matched_model_minus_formula_at_teacher_voltage": {
+          "state_rmse": 0.00011917110695960414,
+          "cai_rmse_mM": 7.172653926239757e-08,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.00020475323031639558,
+            "Ca_LVAst": 0.00015425238351983222,
+            "NaTa_t": 7.562219577969559e-05,
+            "NaTs2_t": 6.731200109415213e-05,
+            "Nap_Et2": 0.00022651844173591652,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 3.27983239492151e-05,
+            "SKv3_1": 0.0
+          },
+          "per_channel_current_rmse_ma_cm2": {
+            "Ca_HVA": 2.2236709721827483e-07,
+            "Ca_LVAst": 3.270955777777037e-08,
+            "NaTa_t": 6.493118739332093e-09,
+            "NaTs2_t": 1.203286439430147e-08,
+            "Nap_Et2": 1.8323062091498233e-07,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 7.548396759969438e-10,
+            "SKv3_1": 0.0
+          }
+        },
+        "diagnostic_flags": {
+          "voltage_feedback_amplifies_state_error_2x": false,
+          "teacher_state_reduces_voltage_error_2x": true
+        }
+      }
+    },
+    "shared_heads": {
+      "17": {
+        "deployable_baseline": {
+          "pooled_voltage_rmse_mv": 0.0022371897602001156,
+          "worst_voltage_rmse_mv": 0.006576510476524055,
+          "worst_cai_rmse_mM": 4.265801006152985e-07,
+          "finite": true,
+          "occupancy_violations": 0,
+          "physical_voltage_violations": 0,
+          "per_episode_voltage_rmse_mv": [
+            1.3004867700814484e-05,
+            0.004080467311216311,
+            1.4088500233115643e-05,
+            0.0014216646879900289,
+            5.5152954839550624e-05,
+            0.006576510476524055,
+            0.00019200146549593284,
+            0.0010031499362355663,
+            1.0008737243171239e-05,
+            0.0011703176921819298,
+            1.5532867918170154e-05,
+            0.002095047900994076,
+            5.423555451234243e-05,
+            0.0013369239999855937,
+            4.91677528238619e-05,
+            0.0030919144786674224
+          ]
+        },
+        "teacher_voltage_model_state_privileged_probe": {
+          "state_rmse": 0.003547062445457238,
+          "cai_rmse_mM": 1.267267396029892e-07,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.0031169194321922127,
+            "Ca_LVAst": 0.0028848852986353905,
+            "NaTa_t": 0.005942432456250569,
+            "NaTs2_t": 0.005889061862615395,
+            "Nap_Et2": 0.004484553730346841,
+            "Ih": 7.133060229429828e-05,
+            "Im": 0.0010378859105815727,
+            "K_Pst": 0.0005694001773920331,
+            "K_Tst": 0.00205416697142631,
+            "SK_E2": 5.036419273646151e-05,
+            "SKv3_1": 0.00011052892786186365
+          }
+        },
+        "model_voltage_teacher_state_privileged_probe": {
+          "voltage_rmse_mv": 0.0003390144723012643
+        },
+        "model_voltage_model_state": {
+          "state_rmse": 0.003535916923236433,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.003106547984819793,
+            "Ca_LVAst": 0.0028754846745771023,
+            "NaTa_t": 0.005926222566845641,
+            "NaTs2_t": 0.005870994454410469,
+            "Nap_Et2": 0.004466195097727187,
+            "Ih": 7.13123747088427e-05,
+            "Im": 0.0010339989965256926,
+            "K_Pst": 0.000568136283232192,
+            "K_Tst": 0.0020499160767068424,
+            "SK_E2": 5.65282631643438e-05,
+            "SKv3_1": 0.00011030213185185833
+          },
+          "synaptic_current_rmse_na": {
+            "AMPA": 2.522971400446746e-07,
+            "NMDA": 1.3588784562498392e-07,
+            "GABAA": 2.2317413002652246e-07,
+            "GABAB": 2.0212099871774327e-07
+          }
+        },
+        "ionic_current_factorial": {
+          "per_channel": {
+            "Ca_HVA": {
+              "state_only_ma_cm2": 3.091659016748084e-06,
+              "voltage_only_ma_cm2": 3.991152602225155e-09,
+              "interaction_ma_cm2": 7.820995353650071e-11,
+              "combined_ma_cm2": 3.0921475761160196e-06
+            },
+            "Ca_LVAst": {
+              "state_only_ma_cm2": 2.675946625633511e-07,
+              "voltage_only_ma_cm2": 4.942175555030897e-10,
+              "interaction_ma_cm2": 8.41281003372958e-12,
+              "combined_ma_cm2": 2.6775077991202755e-07
+            },
+            "NaTa_t": {
+              "state_only_ma_cm2": 2.4624138719759046e-07,
+              "voltage_only_ma_cm2": 3.5971242871927374e-11,
+              "interaction_ma_cm2": 2.8994078953302262e-12,
+              "combined_ma_cm2": 2.4624937990079825e-07
+            },
+            "NaTs2_t": {
+              "state_only_ma_cm2": 2.3569949111547212e-07,
+              "voltage_only_ma_cm2": 2.89143408893349e-11,
+              "interaction_ma_cm2": 4.038722055022061e-12,
+              "combined_ma_cm2": 2.3571401692305142e-07
+            },
+            "Nap_Et2": {
+              "state_only_ma_cm2": 5.604232223600191e-06,
+              "voltage_only_ma_cm2": 1.2678034929490695e-08,
+              "interaction_ma_cm2": 2.5402953481036424e-10,
+              "combined_ma_cm2": 5.607748315625339e-06
+            },
+            "Ih": {
+              "state_only_ma_cm2": 1.4815680853107513e-08,
+              "voltage_only_ma_cm2": 4.772602988488154e-10,
+              "interaction_ma_cm2": 2.5327049652089203e-12,
+              "combined_ma_cm2": 1.478738518316512e-08
+            },
+            "Im": {
+              "state_only_ma_cm2": 6.424792272660164e-07,
+              "voltage_only_ma_cm2": 3.0734219810851886e-09,
+              "interaction_ma_cm2": 2.3460571329384492e-11,
+              "combined_ma_cm2": 6.428256085113374e-07
+            },
+            "K_Pst": {
+              "state_only_ma_cm2": 5.738828086744835e-08,
+              "voltage_only_ma_cm2": 2.188001730553859e-10,
+              "interaction_ma_cm2": 2.5416197478326766e-12,
+              "combined_ma_cm2": 5.7393143837827796e-08
+            },
+            "K_Tst": {
+              "state_only_ma_cm2": 1.5208889661447203e-08,
+              "voltage_only_ma_cm2": 7.54914952525355e-12,
+              "interaction_ma_cm2": 7.862998563775572e-13,
+              "combined_ma_cm2": 1.5204916444918534e-08
+            },
+            "SK_E2": {
+              "state_only_ma_cm2": 1.3354619037480687e-09,
+              "voltage_only_ma_cm2": 3.0996570860461637e-11,
+              "interaction_ma_cm2": 3.790983428026565e-13,
+              "combined_ma_cm2": 1.3640669921914528e-09
+            },
+            "SKv3_1": {
+              "state_only_ma_cm2": 7.222906687278792e-08,
+              "voltage_only_ma_cm2": 1.2316109394329947e-10,
+              "interaction_ma_cm2": 3.215003196723922e-12,
+              "combined_ma_cm2": 7.221583651471862e-08
+            }
+          },
+          "net": {
+            "state_only_ma_cm2": 7.2795338033551205e-06,
+            "voltage_only_ma_cm2": 2.0362076845103755e-08,
+            "interaction_ma_cm2": 3.3703863374845896e-10,
+            "combined_ma_cm2": 7.286016790977986e-06
+          },
+          "combined_channel_rmse_sum_ma_cm2": 1.0253401025961394e-05,
+          "cancellation_ratio": 0.7105951257080403,
+          "identity_max_abs_error_ma_cm2": 5.421010862427522e-20
+        },
+        "matched_model_minus_formula_at_teacher_voltage": {
+          "state_rmse": 0.00024167644119848814,
+          "cai_rmse_mM": 1.2672674037926247e-07,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.00036748812856305686,
+            "Ca_LVAst": 0.00012640723641261215,
+            "NaTa_t": 0.00038365723016147015,
+            "NaTs2_t": 0.00033324637294078637,
+            "Nap_Et2": 0.00033930357309654006,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 5.036419306620201e-05,
+            "SKv3_1": 0.0
+          },
+          "per_channel_current_rmse_ma_cm2": {
+            "Ca_HVA": 4.620325149751498e-07,
+            "Ca_LVAst": 1.8154051383184968e-08,
+            "NaTa_t": 4.4313037504966013e-08,
+            "NaTs2_t": 5.760939920258406e-08,
+            "Nap_Et2": 3.4904145956304276e-07,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 1.2027678796311168e-09,
+            "SKv3_1": 0.0
+          }
+        },
+        "diagnostic_flags": {
+          "voltage_feedback_amplifies_state_error_2x": false,
+          "teacher_state_reduces_voltage_error_2x": true
+        }
+      },
+      "29": {
+        "deployable_baseline": {
+          "pooled_voltage_rmse_mv": 0.001229840395306827,
+          "worst_voltage_rmse_mv": 0.0032113753638706027,
+          "worst_cai_rmse_mM": 2.248786708614155e-07,
+          "finite": true,
+          "occupancy_violations": 0,
+          "physical_voltage_violations": 0,
+          "per_episode_voltage_rmse_mv": [
+            1.062176420094894e-05,
+            0.002262518126344423,
+            3.2789858154548745e-05,
+            0.0006230934747514153,
+            7.549416131873716e-05,
+            0.0032113753638706027,
+            0.00011493318931371544,
+            0.0009073055799851392,
+            7.6041344298409945e-06,
+            0.0011695087736312605,
+            2.0053665403853032e-05,
+            0.001159332516494971,
+            7.072893704636003e-05,
+            0.0014073496549032124,
+            7.750953414345381e-05,
+            0.0016830764929102085
+          ]
+        },
+        "teacher_voltage_model_state_privileged_probe": {
+          "state_rmse": 0.0035612543263074453,
+          "cai_rmse_mM": 7.595806399209784e-08,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.0030610242580874293,
+            "Ca_LVAst": 0.0028831893290318304,
+            "NaTa_t": 0.00598507229904114,
+            "NaTs2_t": 0.005931959853384379,
+            "Nap_Et2": 0.004512144583818977,
+            "Ih": 7.133060229429828e-05,
+            "Im": 0.0010378859105815727,
+            "K_Pst": 0.0005694001773920331,
+            "K_Tst": 0.00205416697142631,
+            "SK_E2": 2.7563105214680728e-05,
+            "SKv3_1": 0.00011052892786186365
+          }
+        },
+        "model_voltage_teacher_state_privileged_probe": {
+          "voltage_rmse_mv": 0.0003390144723012643
+        },
+        "model_voltage_model_state": {
+          "state_rmse": 0.003555746351337253,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.003054741296873044,
+            "Ca_LVAst": 0.0028780451465186775,
+            "NaTa_t": 0.005976895916556281,
+            "NaTs2_t": 0.005922241401606287,
+            "Nap_Et2": 0.004505578802008482,
+            "Ih": 7.13082885799939e-05,
+            "Im": 0.0010360958700484796,
+            "K_Pst": 0.0005685237429195309,
+            "K_Tst": 0.0020517949035404096,
+            "SK_E2": 3.0693226928328294e-05,
+            "SKv3_1": 0.00011036349336922191
+          },
+          "synaptic_current_rmse_na": {
+            "AMPA": 1.3888925302175566e-07,
+            "NMDA": 7.278249959779822e-08,
+            "GABAA": 1.290589653257213e-07,
+            "GABAB": 1.0936131209358056e-07
+          }
+        },
+        "ionic_current_factorial": {
+          "per_channel": {
+            "Ca_HVA": {
+              "state_only_ma_cm2": 3.0319193059448947e-06,
+              "voltage_only_ma_cm2": 2.2896684286973194e-09,
+              "interaction_ma_cm2": 4.376816002132566e-11,
+              "combined_ma_cm2": 3.032224462744396e-06
+            },
+            "Ca_LVAst": {
+              "state_only_ma_cm2": 2.7351820356175656e-07,
+              "voltage_only_ma_cm2": 2.7318646394514665e-10,
+              "interaction_ma_cm2": 4.54956661958881e-12,
+              "combined_ma_cm2": 2.735915070089177e-07
+            },
+            "NaTa_t": {
+              "state_only_ma_cm2": 2.371747686538323e-07,
+              "voltage_only_ma_cm2": 2.8701779879785814e-11,
+              "interaction_ma_cm2": 2.173743036996628e-12,
+              "combined_ma_cm2": 2.3717722188531297e-07
+            },
+            "NaTs2_t": {
+              "state_only_ma_cm2": 2.2167921198653827e-07,
+              "voltage_only_ma_cm2": 2.375047762714865e-11,
+              "interaction_ma_cm2": 2.5341860353785954e-12,
+              "combined_ma_cm2": 2.216878068241552e-07
+            },
+            "Nap_Et2": {
+              "state_only_ma_cm2": 5.715929104507673e-06,
+              "voltage_only_ma_cm2": 7.248043303967146e-09,
+              "interaction_ma_cm2": 1.387915903720051e-10,
+              "combined_ma_cm2": 5.717705638275004e-06
+            },
+            "Ih": {
+              "state_only_ma_cm2": 1.484148572955839e-08,
+              "voltage_only_ma_cm2": 2.7418664799018027e-10,
+              "interaction_ma_cm2": 1.4863743230505198e-12,
+              "combined_ma_cm2": 1.4823944171204724e-08
+            },
+            "Im": {
+              "state_only_ma_cm2": 6.424567959071288e-07,
+              "voltage_only_ma_cm2": 1.6427344371012685e-09,
+              "interaction_ma_cm2": 1.596301571728735e-11,
+              "combined_ma_cm2": 6.427829735239236e-07
+            },
+            "K_Pst": {
+              "state_only_ma_cm2": 5.738106732197079e-08,
+              "voltage_only_ma_cm2": 1.1898368765575113e-10,
+              "interaction_ma_cm2": 1.629696092118492e-12,
+              "combined_ma_cm2": 5.738978275602714e-08
+            },
+            "K_Tst": {
+              "state_only_ma_cm2": 1.5216808535448915e-08,
+              "voltage_only_ma_cm2": 4.983286304190726e-12,
+              "interaction_ma_cm2": 5.082530195645437e-13,
+              "combined_ma_cm2": 1.5214031872328087e-08
+            },
+            "SK_E2": {
+              "state_only_ma_cm2": 7.06647907910673e-10,
+              "voltage_only_ma_cm2": 1.4238214719539742e-11,
+              "interaction_ma_cm2": 8.840966997461613e-14,
+              "combined_ma_cm2": 7.198359382688065e-10
+            },
+            "SKv3_1": {
+              "state_only_ma_cm2": 7.224057380809943e-08,
+              "voltage_only_ma_cm2": 8.147553636826462e-11,
+              "interaction_ma_cm2": 2.1307080137461484e-12,
+              "combined_ma_cm2": 7.223216990940215e-08
+            }
+          },
+          "net": {
+            "state_only_ma_cm2": 7.3627681038087395e-06,
+            "voltage_only_ma_cm2": 1.1503652298220402e-08,
+            "interaction_ma_cm2": 1.816422832472997e-10,
+            "combined_ma_cm2": 7.36610659194316e-06
+          },
+          "combined_channel_rmse_sum_ma_cm2": 1.028554937490894e-05,
+          "cancellation_ratio": 0.7161607341959187,
+          "identity_max_abs_error_ma_cm2": 5.421010862427522e-20
+        },
+        "matched_model_minus_formula_at_teacher_voltage": {
+          "state_rmse": 0.00017219782729681538,
+          "cai_rmse_mM": 7.595806469202803e-08,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.000180796613005958,
+            "Ca_LVAst": 0.00021473296556066815,
+            "NaTa_t": 0.0002533681537762483,
+            "NaTs2_t": 0.0003092468134592537,
+            "Nap_Et2": 0.00016692000594347253,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 2.756310548300018e-05,
+            "SKv3_1": 0.0
+          },
+          "per_channel_current_rmse_ma_cm2": {
+            "Ca_HVA": 2.395607354467979e-07,
+            "Ca_LVAst": 2.7502389829960365e-08,
+            "NaTa_t": 1.3244056817537117e-08,
+            "NaTs2_t": 1.9423375710434645e-08,
+            "Nap_Et2": 1.7363996885776552e-07,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 6.38849796918166e-10,
+            "SKv3_1": 0.0
+          }
+        },
+        "diagnostic_flags": {
+          "voltage_feedback_amplifies_state_error_2x": false,
+          "teacher_state_reduces_voltage_error_2x": true
+        }
+      },
+      "43": {
+        "deployable_baseline": {
+          "pooled_voltage_rmse_mv": 0.0022243202721131975,
+          "worst_voltage_rmse_mv": 0.006004301683254855,
+          "worst_cai_rmse_mM": 3.890623219110258e-07,
+          "finite": true,
+          "occupancy_violations": 0,
+          "physical_voltage_violations": 0,
+          "per_episode_voltage_rmse_mv": [
+            8.923288277161437e-06,
+            0.0047903355812702825,
+            3.0050417190148677e-05,
+            0.0008743005106097939,
+            6.214421756530019e-05,
+            0.006004301683254855,
+            0.00012288984591305564,
+            0.0008737270254411957,
+            6.682159813498856e-06,
+            0.0011954166838094916,
+            1.7741921632640605e-05,
+            0.002304199092394638,
+            5.911640494937157e-05,
+            0.0012327592731704719,
+            6.508826424022071e-05,
+            0.0032169503764121437
+          ]
+        },
+        "teacher_voltage_model_state_privileged_probe": {
+          "state_rmse": 0.003558509911687372,
+          "cai_rmse_mM": 1.306568208765313e-07,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.0031025843779927315,
+            "Ca_LVAst": 0.002906659698595416,
+            "NaTa_t": 0.005949923140729896,
+            "NaTs2_t": 0.005924596280705661,
+            "Nap_Et2": 0.0045052847350919994,
+            "Ih": 7.133060229429828e-05,
+            "Im": 0.0010378859105815727,
+            "K_Pst": 0.0005694001773920331,
+            "K_Tst": 0.00205416697142631,
+            "SK_E2": 4.7817244398410634e-05,
+            "SKv3_1": 0.00011052892786186365
+          }
+        },
+        "model_voltage_teacher_state_privileged_probe": {
+          "voltage_rmse_mv": 0.0003390144723012643
+        },
+        "model_voltage_model_state": {
+          "state_rmse": 0.0035481400620810985,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.0030930406965625126,
+            "Ca_LVAst": 0.0028986092144361376,
+            "NaTa_t": 0.005934462446413536,
+            "NaTs2_t": 0.005907592546232769,
+            "Nap_Et2": 0.004488336372057868,
+            "Ih": 7.13238624831142e-05,
+            "Im": 0.0010348558444809033,
+            "K_Pst": 0.00056832298374686,
+            "K_Tst": 0.0020502875631832926,
+            "SK_E2": 5.332501190200009e-05,
+            "SKv3_1": 0.00011035056509688412
+          },
+          "synaptic_current_rmse_na": {
+            "AMPA": 2.413218188763118e-07,
+            "NMDA": 1.30955510435114e-07,
+            "GABAA": 2.2269956131587897e-07,
+            "GABAB": 2.0230366733022722e-07
+          }
+        },
+        "ionic_current_factorial": {
+          "per_channel": {
+            "Ca_HVA": {
+              "state_only_ma_cm2": 3.0661017724947907e-06,
+              "voltage_only_ma_cm2": 3.763227637977499e-09,
+              "interaction_ma_cm2": 7.534444888060891e-11,
+              "combined_ma_cm2": 3.0665207504084222e-06
+            },
+            "Ca_LVAst": {
+              "state_only_ma_cm2": 2.734235880491297e-07,
+              "voltage_only_ma_cm2": 4.825135701563758e-10,
+              "interaction_ma_cm2": 7.847239472259225e-12,
+              "combined_ma_cm2": 2.7355089221938166e-07
+            },
+            "NaTa_t": {
+              "state_only_ma_cm2": 2.410855328413771e-07,
+              "voltage_only_ma_cm2": 3.089967579297616e-11,
+              "interaction_ma_cm2": 2.1809859068139577e-12,
+              "combined_ma_cm2": 2.4108777743374517e-07
+            },
+            "NaTs2_t": {
+              "state_only_ma_cm2": 2.226949459084676e-07,
+              "voltage_only_ma_cm2": 2.626498618254884e-11,
+              "interaction_ma_cm2": 2.911332734252684e-12,
+              "combined_ma_cm2": 2.2270645369390854e-07
+            },
+            "Nap_Et2": {
+              "state_only_ma_cm2": 5.657387691964726e-06,
+              "voltage_only_ma_cm2": 1.2573601984954613e-08,
+              "interaction_ma_cm2": 2.531022779211508e-10,
+              "combined_ma_cm2": 5.660852428860256e-06
+            },
+            "Ih": {
+              "state_only_ma_cm2": 1.4815236824126266e-08,
+              "voltage_only_ma_cm2": 4.758825016612015e-10,
+              "interaction_ma_cm2": 2.481961055467589e-12,
+              "combined_ma_cm2": 1.4782065232335162e-08
+            },
+            "Im": {
+              "state_only_ma_cm2": 6.427238559698164e-07,
+              "voltage_only_ma_cm2": 2.8872295276617576e-09,
+              "interaction_ma_cm2": 2.2751058432464783e-11,
+              "combined_ma_cm2": 6.430801171668342e-07
+            },
+            "K_Pst": {
+              "state_only_ma_cm2": 5.7407532235266687e-08,
+              "voltage_only_ma_cm2": 2.0407811828656894e-10,
+              "interaction_ma_cm2": 2.4007281484183618e-12,
+              "combined_ma_cm2": 5.741390171516501e-08
+            },
+            "K_Tst": {
+              "state_only_ma_cm2": 1.5209832638704917e-08,
+              "voltage_only_ma_cm2": 7.401343810077231e-12,
+              "interaction_ma_cm2": 7.517267099170728e-13,
+              "combined_ma_cm2": 1.520610292307674e-08
+            },
+            "SK_E2": {
+              "state_only_ma_cm2": 1.2462113766438016e-09,
+              "voltage_only_ma_cm2": 2.8180462299075598e-11,
+              "interaction_ma_cm2": 3.1707132373823436e-13,
+              "combined_ma_cm2": 1.272313116500491e-09
+            },
+            "SKv3_1": {
+              "state_only_ma_cm2": 7.225851706261143e-08,
+              "voltage_only_ma_cm2": 1.1484417293148005e-10,
+              "interaction_ma_cm2": 3.0746808298772064e-12,
+              "combined_ma_cm2": 7.225074506141958e-08
+            }
+          },
+          "net": {
+            "state_only_ma_cm2": 7.32063715168243e-06,
+            "voltage_only_ma_cm2": 1.98611424284055e-08,
+            "interaction_ma_cm2": 3.320394932940243e-10,
+            "combined_ma_cm2": 7.326720653596831e-06
+          },
+          "combined_channel_rmse_sum_ma_cm2": 1.0268723547831046e-05,
+          "cancellation_ratio": 0.7134986758061451,
+          "identity_max_abs_error_ma_cm2": 5.421010862427522e-20
+        },
+        "matched_model_minus_formula_at_teacher_voltage": {
+          "state_rmse": 0.00018046406767440332,
+          "cai_rmse_mM": 1.3065682154467434e-07,
+          "per_channel_gate_rmse": {
+            "Ca_HVA": 0.00035777929086065036,
+            "Ca_LVAst": 0.00025338918588830613,
+            "NaTa_t": 0.00021343422570709196,
+            "NaTs2_t": 0.00016517077926480716,
+            "Nap_Et2": 0.0001640567509462873,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 4.781724465618104e-05,
+            "SKv3_1": 0.0
+          },
+          "per_channel_current_rmse_ma_cm2": {
+            "Ca_HVA": 4.4599527270402255e-07,
+            "Ca_LVAst": 3.376100039800676e-08,
+            "NaTa_t": 1.3090936002955967e-08,
+            "NaTs2_t": 1.9197256640387823e-08,
+            "Nap_Et2": 2.220698627304772e-07,
+            "Ih": 0.0,
+            "Im": 0.0,
+            "K_Pst": 0.0,
+            "K_Tst": 0.0,
+            "SK_E2": 1.1275808936607932e-09,
+            "SKv3_1": 0.0
+          }
+        },
+        "diagnostic_flags": {
+          "voltage_feedback_amplifies_state_error_2x": false,
+          "teacher_state_reduces_voltage_error_2x": true
+        }
+      }
+    }
+  },
+  "formula_floor": {
+    "pooled_voltage_rmse_mv": 0.0003655658697390855,
+    "worst_voltage_rmse_mv": 0.0011933538676479004,
+    "worst_cai_rmse_mM": 7.703002247574388e-09,
+    "finite": true,
+    "occupancy_violations": 0,
+    "physical_voltage_violations": 0,
+    "per_episode_voltage_rmse_mv": [
+      1.1323589407261015e-05,
+      0.00012781081783799214,
+      1.2566356844439143e-05,
+      0.0004949101048801559,
+      6.672774278581327e-05,
+      0.0005750089501005967,
+      6.848985916765194e-05,
+      0.0011933538676479004,
+      8.499290168749135e-06,
+      2.893123218779336e-05,
+      8.342316745591763e-06,
+      0.00011364304004473608,
+      6.369948828330653e-05,
+      9.823251117982017e-05,
+      6.22909119136947e-05,
+      0.00028513774133083345
+    ]
+  },
+  "formula_minus_native_at_teacher_voltage": {
+    "state_rmse": 0.003542948176300563,
+    "per_channel_gate_rmse": {
+      "Ca_HVA": 0.003021957812954778,
+      "Ca_LVAst": 0.002874426467500264,
+      "NaTa_t": 0.005929677442237376,
+      "NaTs2_t": 0.005913134595093205,
+      "Nap_Et2": 0.0045122577199211865,
+      "Ih": 7.133060229429828e-05,
+      "Im": 0.0010378859105815727,
+      "K_Pst": 0.0005694001773920331,
+      "K_Tst": 0.00205416697142631,
+      "SK_E2": 5.803951805424107e-13,
+      "SKv3_1": 0.00011052892786186365
+    },
+    "per_channel_current_rmse_ma_cm2": {
+      "Ca_HVA": 2.979741668906892e-06,
+      "Ca_LVAst": 2.6831809530934885e-07,
+      "NaTa_t": 2.3849142512513964e-07,
+      "NaTs2_t": 2.1600331395520522e-07,
+      "Nap_Et2": 5.787730146997642e-06,
+      "Ih": 1.4858393642218515e-08,
+      "Im": 6.419549845787204e-07,
+      "K_Pst": 5.736516106208946e-08,
+      "K_Tst": 1.5236692878774545e-08,
+      "SK_E2": 1.3383674111601415e-17,
+      "SKv3_1": 7.227561067637503e-08
+    }
+  },
+  "teacher_state_oracle_voltage_rmse_mv": 0.0003390144723012643,
+  "parent_v2_oracle_metric_delta": 0.0,
+  "teacher_privileged_arms_selection_eligible": false,
+  "training_performed": false,
+  "model_selection_performed": false,
+  "independent_confirmation_claimed": false,
+  "learned_voltage_updater_tested": false,
+  "full_cell_claim": false,
+  "speedup_claim": false
+}
