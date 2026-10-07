@@ -1,0 +1,263 @@
+{
+  "schema_version": "giada-iv-a1-a2-d1-passive-axial-v2",
+  "valid": true,
+  "code_revision": "e57b4664247098c6c92cc37368125052d16d6e59",
+  "neuron_version": "8.2.7",
+  "iv_a1_a2_passed": true,
+  "iv_d1_opened": true,
+  "iv_d1_passed": false,
+  "task36_authorized": false,
+  "diagnosis": "PASSIVE_AXIAL_NO_GO",
+  "single_cases": [
+    {
+      "case": "canonical_new",
+      "max_native_discrete_error_mv": 1.0089706847793423e-12,
+      "analytic_endpoint_error_mv": 0.025142958150141226,
+      "discrete_continuous_convergence": {
+        "dt_ms": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "endpoint_error_mv": [
+          0.025142958149160677,
+          0.012584921786100267,
+          0.0062958257140479645
+        ],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "case": "high_cap_new",
+      "max_native_discrete_error_mv": 3.552713678800501e-13,
+      "analytic_endpoint_error_mv": 0.014127537016264569,
+      "discrete_continuous_convergence": {
+        "dt_ms": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "endpoint_error_mv": [
+          0.014127537016335623,
+          0.007071563237929013,
+          0.0035377341987725686
+        ],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "case": "high_leak_new",
+      "max_native_discrete_error_mv": 7.389644451905042e-13,
+      "analytic_endpoint_error_mv": 0.00227070009559327,
+      "discrete_continuous_convergence": {
+        "dt_ms": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "endpoint_error_mv": [
+          0.0022707000955080048,
+          0.0011129861752579018,
+          0.0005508975293935237
+        ],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "case": "wide_area_new",
+      "max_native_discrete_error_mv": 3.836930773104541e-13,
+      "analytic_endpoint_error_mv": 0.021038100428526718,
+      "discrete_continuous_convergence": {
+        "dt_ms": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "endpoint_error_mv": [
+          0.02103810042888199,
+          0.010532211402548342,
+          0.005269403483069368
+        ],
+        "passed": true
+      },
+      "passed": true
+    },
+    {
+      "case": "zero_leak_new",
+      "max_native_discrete_error_mv": 5.826450433232822e-13,
+      "analytic_endpoint_error_mv": 3.836930773104541e-13,
+      "discrete_continuous_convergence": {
+        "dt_ms": [
+          0.1,
+          0.05,
+          0.025
+        ],
+        "endpoint_error_mv": [
+          1.9895196601282805e-13,
+          2.984279490192421e-13,
+          2.8137492336099967e-12
+        ],
+        "passed": true
+      },
+      "passed": true
+    }
+  ],
+  "paired_cases": [
+    {
+      "geometry": "balanced",
+      "protocol": "parent_only",
+      "axial_conductance_us": 0.005235987755982989,
+      "max_native_discrete_error_mv": 6.679101716144942e-13,
+      "max_capacitive_balance_error_na": 3.941291737419306e-15,
+      "max_axial_antisymmetry_error_na": 5.3013149425851225e-15,
+      "max_native_axial_ohm_error_na": 3.941291737419306e-15,
+      "negative_control_error_mv": 0.0,
+      "passed": true
+    },
+    {
+      "geometry": "balanced",
+      "protocol": "child_only",
+      "axial_conductance_us": 0.005235987755982989,
+      "max_native_discrete_error_mv": 6.536993168992922e-13,
+      "max_capacitive_balance_error_na": 3.941291737419306e-15,
+      "max_axial_antisymmetry_error_na": 5.3013149425851225e-15,
+      "max_native_axial_ohm_error_na": 3.941291737419306e-15,
+      "negative_control_error_mv": 0.0,
+      "passed": true
+    },
+    {
+      "geometry": "balanced",
+      "protocol": "symmetric",
+      "axial_conductance_us": 0.005235987755982989,
+      "max_native_discrete_error_mv": 5.400124791776761e-13,
+      "max_capacitive_balance_error_na": 2.8601253310167607e-16,
+      "max_axial_antisymmetry_error_na": 5.720250662033521e-16,
+      "max_native_axial_ohm_error_na": 2.8601253310167607e-16,
+      "negative_control_error_mv": 0.0,
+      "passed": true
+    },
+    {
+      "geometry": "balanced",
+      "protocol": "disconnected",
+      "axial_conductance_us": 0.0,
+      "max_native_discrete_error_mv": 5.826450433232822e-13,
+      "max_capacitive_balance_error_na": 3.7990444123892075e-16,
+      "max_axial_antisymmetry_error_na": 5.388484797252957e-16,
+      "max_native_axial_ohm_error_na": 3.7990444123892075e-16,
+      "negative_control_error_mv": 4.689582056016661e-13,
+      "passed": true
+    },
+    {
+      "geometry": "thin_child",
+      "protocol": "parent_only",
+      "axial_conductance_us": 0.0034853895854920717,
+      "max_native_discrete_error_mv": 2.1316282072803006e-13,
+      "max_capacitive_balance_error_na": 2.796374243274613e-15,
+      "max_axial_antisymmetry_error_na": 4.0245584642661925e-15,
+      "max_native_axial_ohm_error_na": 2.796374243274613e-15,
+      "negative_control_error_mv": 0.0,
+      "passed": true
+    },
+    {
+      "geometry": "thin_child",
+      "protocol": "child_only",
+      "axial_conductance_us": 0.0034853895854920717,
+      "max_native_discrete_error_mv": 2.1316282072803006e-13,
+      "max_capacitive_balance_error_na": 2.796374243274613e-15,
+      "max_axial_antisymmetry_error_na": 4.0245584642661925e-15,
+      "max_native_axial_ohm_error_na": 2.796374243274613e-15,
+      "negative_control_error_mv": 0.0,
+      "passed": true
+    },
+    {
+      "geometry": "thin_child",
+      "protocol": "symmetric",
+      "axial_conductance_us": 0.0034853895854920717,
+      "max_native_discrete_error_mv": 1.8474111129762605e-13,
+      "max_capacitive_balance_error_na": 3.101038441874829e-16,
+      "max_axial_antisymmetry_error_na": 4.824699667560495e-16,
+      "max_native_axial_ohm_error_na": 3.101038441874829e-16,
+      "negative_control_error_mv": 0.03677007818565414,
+      "passed": false
+    },
+    {
+      "geometry": "thin_child",
+      "protocol": "disconnected",
+      "axial_conductance_us": 0.0,
+      "max_native_discrete_error_mv": 5.115907697472721e-13,
+      "max_capacitive_balance_error_na": 3.426078865054194e-16,
+      "max_axial_antisymmetry_error_na": 5.243201706139899e-16,
+      "max_native_axial_ohm_error_na": 3.426078865054194e-16,
+      "negative_control_error_mv": 1.8474111129762605e-13,
+      "passed": true
+    },
+    {
+      "geometry": "wide_child",
+      "protocol": "parent_only",
+      "axial_conductance_us": 0.0070421753131527124,
+      "max_native_discrete_error_mv": 4.547473508864641e-13,
+      "max_capacitive_balance_error_na": 4.9960036108132044e-15,
+      "max_axial_antisymmetry_error_na": 6.38378239159465e-15,
+      "max_native_axial_ohm_error_na": 4.9960036108132044e-15,
+      "negative_control_error_mv": 0.0,
+      "passed": true
+    },
+    {
+      "geometry": "wide_child",
+      "protocol": "child_only",
+      "axial_conductance_us": 0.0070421753131527124,
+      "max_native_discrete_error_mv": 4.547473508864641e-13,
+      "max_capacitive_balance_error_na": 4.9960036108132044e-15,
+      "max_axial_antisymmetry_error_na": 6.38378239159465e-15,
+      "max_native_axial_ohm_error_na": 4.9960036108132044e-15,
+      "negative_control_error_mv": 0.0,
+      "passed": true
+    },
+    {
+      "geometry": "wide_child",
+      "protocol": "symmetric",
+      "axial_conductance_us": 0.0070421753131527124,
+      "max_native_discrete_error_mv": 5.400124791776761e-13,
+      "max_capacitive_balance_error_na": 4.556266456246134e-16,
+      "max_axial_antisymmetry_error_na": 5.789639601072594e-16,
+      "max_native_axial_ohm_error_na": 4.556266456246134e-16,
+      "negative_control_error_mv": 0.030822557434078135,
+      "passed": false
+    },
+    {
+      "geometry": "wide_child",
+      "protocol": "disconnected",
+      "axial_conductance_us": 0.0,
+      "max_native_discrete_error_mv": 5.115907697472721e-13,
+      "max_capacitive_balance_error_na": 4.562322741819003e-16,
+      "max_axial_antisymmetry_error_na": 6.019490461639521e-16,
+      "max_native_axial_ohm_error_na": 4.562322741819003e-16,
+      "negative_control_error_mv": 2.4158453015843406e-13,
+      "passed": true
+    }
+  ],
+  "convergence": [
+    {
+      "dt_ms": 0.1,
+      "endpoint_error_mv": 0.009112748167481755
+    },
+    {
+      "dt_ms": 0.05,
+      "endpoint_error_mv": 0.004562437251394158
+    },
+    {
+      "dt_ms": 0.025,
+      "endpoint_error_mv": 0.002282737941840196
+    }
+  ],
+  "convergence_passed": true,
+  "equilibrium_residual_na": 5.204170427930421e-17,
+  "equilibrium_native_error_mv": 6.412406605704746e-09,
+  "active_compartments_tested": false,
+  "training_performed": false,
+  "full_cell_claim": false,
+  "speedup_claim": false
+}

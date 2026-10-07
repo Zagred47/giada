@@ -85,6 +85,20 @@ class PassiveAxialTests(unittest.TestCase):
                 else:
                     self.assertLess(max(errors), 1e-9)
 
+    def test_v3_equal_density_symmetric_control_on_new_geometries(self):
+        cfg = passive.config(ROOT, 'iv_ad1_passive_axial_preregistration_v3.json')
+        for geometry in cfg['geometries']:
+            with self.subTest(geometry=geometry['id']):
+                cap, leak, axial = passive.coefficients(geometry, cfg['passive_membrane'], True)
+                pulse = np.array([cfg['paired_pulse_na'],
+                                  cfg['paired_pulse_na'] * cap[1] / cap[0]])
+                trajectory = passive.simulate_discrete(
+                    np.array([-70., -70.]), cap, leak, axial,
+                    cfg['passive_membrane']['e_pas_mv'], pulse,
+                    cfg['pulse_window_ms'], cfg['duration_ms'], cfg['dt_ms'])
+                self.assertLess(np.max(np.abs(trajectory[:, 0]-trajectory[:, 1])),
+                                cfg['gates']['max_symmetric_voltage_difference_mv'])
+
 
 if __name__ == '__main__':
     unittest.main()

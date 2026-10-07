@@ -183,7 +183,7 @@ def run(root: Path, output: Path, revision: str,
         max_error = float(np.max(np.abs(prediction-native)))
         analytic_error = float(abs(native[-1]-exact))
         convergence = None
-        if spec['schema_version'].endswith('-v2'):
+        if spec['schema_version'].endswith(('-v2', '-v3')):
             errors = []
             for spacing in spec['convergence_dt_ms']:
                 refined = simulate_discrete(
@@ -219,6 +219,9 @@ def run(root: Path, output: Path, revision: str,
             connected = kind != 'disconnected'
             cap, leak, axial = coefficients(geometry, spec['passive_membrane'], connected)
             pulse = current_for_case(kind, spec['paired_pulse_na'])
+            if kind == 'symmetric' and spec['schema_version'].endswith('-v3'):
+                # Equal current per area (and equal I/C), not equal absolute nA.
+                pulse[1] = pulse[0] * cap[1] / cap[0]
             initial = np.array([-70., -70.]) if kind == 'symmetric' else np.asarray(spec['paired_initial_mv'])
             native = native_paired(h, geometry, spec['passive_membrane'], initial,
                                    pulse, connected, window, duration, dt)
