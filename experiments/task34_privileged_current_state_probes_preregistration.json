@@ -1,0 +1,26 @@
+{
+  "schema_version": "giada-task34-privileged-current-state-probes-v1",
+  "roadmap_id": "Task34",
+  "parent_report": "experiments/results/task33_v3_final_report.json",
+  "parent_report_sha256": "b7b56cdaeb4a42d523b6652409ca43650a2841f9631dba6d5b6a602ba10ef323",
+  "parent_traces": "experiments/results/task33_v3_native_shadow_traces.npz",
+  "parent_traces_sha256": "6c499af35be7874cd853d2279d7c4809330f9e695a7a2a3c6ef1b75788c7daa2",
+  "parent_code_revision": "21e3c35e883403618a34f17c86a7257f8c0241d2",
+  "domain": "The same 16 already-opened Task33 v3 active one-compartment, four-observed-synapse, 40-ms trajectories. Diagnostic reuse only; no independent generalization claim.",
+  "frozen_families": ["independent", "shared_heads"],
+  "frozen_seeds": [17, 29, 43],
+  "arms": [
+    "teacher_voltage_teacher_state_native_reference",
+    "teacher_voltage_model_state_privileged_probe",
+    "model_voltage_teacher_state_privileged_probe",
+    "model_voltage_model_state_deployable_baseline",
+    "formula_voltage_formula_state_floor"
+  ],
+  "nonexistent_arm": "A learned voltage updater does not exist in the current Task33 architecture; the roadmap's formula-state/learned-voltage arm is explicitly not instantiated or silently replaced.",
+  "current_decomposition": "For each candidate at each time, compute I(V_teacher,S_teacher), I(V_teacher,S_model), I(V_model,S_teacher), I(V_model,S_model) with the same analytic current equations and channel parameters. Report state-only, voltage-only, interaction, and combined errors for each channel and total. This algebraic decomposition is exact but not a claim of independent causal effects of trajectories.",
+  "primary_probes": ["18 gate-state RMSE by channel", "11 ionic-current RMSE by channel", "total ionic-current RMSE and cancellation", "calcium-source current and cai RMSE", "teacher-state oracle voltage RMSE", "teacher-voltage state RMSE", "AMPA/NMDA/GABAA/GABAB voltage-mediated current RMSE"],
+  "reproduction_atol": 1e-9,
+  "decomposition_atol": 1e-12,
+  "interpretation_ratio": 2.0,
+  "decision": "Task34 is diagnostically complete only if the Task33 baseline is reproduced within tolerance for all six frozen candidates, the privileged arms run on all 16 trajectories without retraining/selection, and the exact current decomposition identity passes. Report contrasts even when no component dominates. Do not use teacher-privileged arms to select a deployable checkpoint or claim a new independent performance confirmation."
+}

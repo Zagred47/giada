@@ -1,0 +1,7 @@
+# GIADA Task 34 — correnti e stati come probe privilegiati
+
+La [preregistrazione](task34_privileged_current_state_probes_preregistration.json) è diagnostica e riusa i 16 casi già aperti nella Task 33 v3; non produce un nuovo test indipendente. I sei checkpoint restano congelati. Per ciascuno, lo stesso notebook calcola in parallelo i bracci V/stato teacher–teacher, teacher–modello, modello–teacher e modello–modello, più il floor a formula esatta. I due bracci con segnali del teacher sono **oracle diagnostici**: non possono essere usati per selezionare o addestrare un modello deployabile.
+
+Le correnti ioniche vengono scomposte per ciascuno degli 11 canali in contributo dello stato, del voltaggio e dell'interazione, con una verifica dell'identità algebrica. Si misurano anche errore dei 18 gate, corrente sinaptica per recettore, calcio e cancellazione fra correnti. Il baseline modello–modello deve riprodurre numericamente il report Task 33: se non lo fa, il run è tecnicamente non valido. L'interpretazione a rapporto 2× è una regola descrittiva preregistrata; un contrasto sotto 2× resta misto, non viene forzato in una storia causale.
+
+La matrice generale della roadmap include un voltage updater appreso, ma l'architettura attuale usa il solver analitico: quel braccio è **non istanziato**, non sostituito silenziosamente. Task 34 può restringere l'origine degli errori prima di progettare Task 35, ma da sola non dimostra miglioramento, speedup, cellula completa o generalizzazione fuori dal dominio Task 33.
