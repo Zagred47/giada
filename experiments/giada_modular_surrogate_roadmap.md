@@ -1153,6 +1153,12 @@ equazioni. Tre test locali superati, inclusa ricomposizione/cache e cattura
 fullgraph; questo preflight CPU non certifica CUDA Graph o prestazioni GPU.
 Nessun training e nessuna promozione prima del risultato e della decisione.
 
+**IE-P3 preregistrato:** [confronto readout esatto/appreso](ie_p3_design_v1.md),
+[notebook unico](../notebooks/ie_p3_readout.ipynb). Isola il readout dai18gate:
+algebra storica, algebra vettorizzata, MLP16/32 con3seed appaiati. Non sostituisce
+la dinamica dei gate e non conclude ancora IE-07 o compressione della memoria.
+Esecuzione comune Inductor/CUDA Graph; qualità e costo sono criteri separati.
+
 **IE-P2 concluso:** [risultato e limiti](ie_p2_result_v1.md), 54 celle e
 72 preflight numerici superati. A batch642, stesso full con CUDA Graph
 circa 4,2× più veloce nel microbenchmark; il readout delle conduttanze
