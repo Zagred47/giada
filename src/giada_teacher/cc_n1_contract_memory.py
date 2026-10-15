@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import itertools
 import json
+import math
 from pathlib import Path
 import time
 
@@ -48,6 +49,12 @@ def contract(root):
         for path, expected in primary['prior_sources'].items():
             if sha(root / path) != expected: raise ValueError('CC-N1 second native diagnosis changed')
         spec['native_memory_primary_amendment_sha256'] = sha(primary_path)
+    compile_path = root / 'experiments/cc_n1_gpu_compile_amendment_v1.json'
+    if compile_path.is_file():
+        compile_amendment = json.loads(compile_path.read_text())
+        if sha(root / compile_amendment['parent_gpu_report']) != compile_amendment['parent_gpu_report_sha256']:
+            raise ValueError('CC-N1 prior compile report changed')
+        spec['gpu_compile_amendment_sha256'] = sha(compile_path)
     old = json.loads((root / 'experiments/results/task35_final_report.json').read_text())
     if not old['valid'] or not old['task35_passed']:
         raise ValueError('Task35 prerequisite not confirmed')
@@ -354,17 +361,17 @@ def native_phase(root, teacher, output, revision):
 
 def torch_step(torch, v, ca, state, mult, injection, syn_g, area, cfg, calcium, base, model=None):
     """Resident complete membrane core; fixed iteration count for symmetric compile."""
-    from .gate_d_compute_audit import exact_gpu, hybrid_gpu, GBAR_VALUES, OFFSETS, POWERS
+    from .gate_d_compute_audit import exact_gpu, hybrid_gpu, GBAR_VALUES, OFFSETS, POWERS, REVERSAL_VALUES
     dt = torch.full_like(v, cfg['dt_ms'])
     next_g, _ = exact_gpu(v, ca, state, dt, torch) if model is None else hybrid_gpu(model, v, ca, state, dt, torch)
     gbar = torch.tensor(GBAR_VALUES, dtype=v.dtype, device=v.device) * mult
     ica = sum(gbar[..., k] * next_g[..., OFFSETS[k]].square() * next_g[..., OFFSETS[k]+1] * (v-120.) for k in (0, 1))
-    persistence = np.exp(-cfg['dt_ms'] / calcium['decay_ms'])
+    persistence = math.exp(-cfg['dt_ms'] / calcium['decay_ms'])
     source = -10000 * ica * calcium['gamma'] / (2 * 96485.33212 * calcium['depth_um'])
     next_ca = 1e-4 + (ca-1e-4)*persistence + source*calcium['decay_ms']*(1-persistence)
-    sk = int(ionic.OFFSETS[9])
+    sk = OFFSETS[9]  # Python metadata constant; never convert a NumPy scalar inside Dynamo.
     sk_inf = 1/(1+(.00043/next_ca.clamp_min(1e-7)).pow(4.8))
-    sk_next = sk_inf + (state[..., sk]-sk_inf)*np.exp(-cfg['dt_ms'])
+    sk_next = sk_inf + (state[..., sk]-sk_inf)*math.exp(-cfg['dt_ms'])
     next_g = torch.cat((next_g[..., :sk], sk_next[..., None], next_g[..., sk+1:]), -1)
     openings = []
     for k, names in enumerate(ionic.STATE_NAMES):
@@ -372,7 +379,7 @@ def torch_step(torch, v, ca, state, mult, injection, syn_g, area, cfg, calcium, 
         if len(names) == 2: opening = opening * next_g[..., OFFSETS[k]+1]
         openings.append(opening)
     ion_g = torch.stack(openings, -1) * gbar
-    reversal = torch.tensor(tuple(float(x) for x in ionic.REVERSALS), dtype=v.dtype, device=v.device)
+    reversal = torch.tensor(REVERSAL_VALUES, dtype=v.dtype, device=v.device)
     syn_rev = torch.tensor((0., 0., -80., -97.), dtype=v.dtype, device=v.device)
     density = syn_g * (100./area)
     fixed = torch.cat((density[..., :1], torch.zeros_like(density[..., 1:2]), density[..., 2:]), -1)
@@ -558,6 +565,7 @@ def finalize(root, output, revision):
         'source_sha256': spec['sources'], 'training_performed': False, 'fresh_used_for_selection': False,
         'native_sampling_amendment_sha256': spec.get('native_sampling_amendment_sha256'),
         'native_memory_primary_amendment_sha256': spec.get('native_memory_primary_amendment_sha256'),
+        'gpu_compile_amendment_sha256': spec.get('gpu_compile_amendment_sha256'),
         'cc01': {'contract_recorded': True, 'path': 'contract.json'},
         'cc02': {'native_anchor_valid': native['valid'], 'cost_map_valid': gpu['valid'],
                  'scope': spec['gpu']['scope']},

@@ -20,6 +20,8 @@ def main():
     parser.add_argument('--teacher', type=Path)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--phase', choices=('all', 'native', 'gpu', 'memory'), default='all')
+    parser.add_argument('--reuse-native', action='store_true',
+                        help='Reuse only the exact native v3 artifact registered in the compile amendment')
     args = parser.parse_args()
     output = args.output
     if args.phase in ('all', 'memory'):
@@ -32,18 +34,34 @@ def main():
         try:
             spec, *_ = contract(ROOT)
             if args.phase == 'all':
-                if args.teacher is None: raise ValueError('--teacher required')
+                if args.teacher is None and not args.reuse_native: raise ValueError('--teacher required')
                 shutil.copy2(ROOT / CONFIG, output / 'preregistration.json')
                 write(output / 'contract.json', spec['cc01_contract'])
                 write(output / 'code_provenance.json', {'git_revision': revision,
                     'preregistration_sha256': sha(ROOT / CONFIG), 'source_sha256': spec['sources'],
                     'native_sampling_amendment_sha256': spec.get('native_sampling_amendment_sha256'),
-                    'native_memory_primary_amendment_sha256': spec.get('native_memory_primary_amendment_sha256')})
+                    'native_memory_primary_amendment_sha256': spec.get('native_memory_primary_amendment_sha256'),
+                    'gpu_compile_amendment_sha256': spec.get('gpu_compile_amendment_sha256')})
                 amendment = ROOT / 'experiments/cc_n1_native_sampling_amendment_v1.json'
                 if amendment.is_file(): shutil.copy2(amendment, output / amendment.name)
                 primary = ROOT / 'experiments/cc_n1_native_memory_primary_amendment_v2.json'
                 if primary.is_file(): shutil.copy2(primary, output / primary.name)
-                for phase in ('native', 'gpu'):
+                phases = ('native', 'gpu')
+                if args.reuse_native:
+                    compile_path = ROOT / 'experiments/cc_n1_gpu_compile_amendment_v1.json'
+                    reuse = json.loads(compile_path.read_text())
+                    source = ROOT / reuse['native_reuse_root']
+                    for name, digest in reuse['native_reuse_sha256'].items():
+                        if sha(source / name) != digest: raise RuntimeError('Native reuse artifact changed: '+name)
+                        shutil.copy2(source / name, output / name)
+                    for name in ('new_native_traces.npz', 'native_memory_anchors.json'):
+                        if (source / name).is_file(): shutil.copy2(source / name, output / name)
+                    if not json.loads((output / 'native_report.json').read_text())['valid']:
+                        raise RuntimeError('Reused native report not valid')
+                    write(output / 'native_reuse_provenance.json', reuse)
+                    shutil.copy2(compile_path, output / compile_path.name)
+                    phases = ('gpu',)
+                for phase in phases:
                     write(output / 'progress.json', {'phase': phase, 'code_revision': revision})
                     command = [sys.executable, str(Path(__file__)), '--phase', phase,
                                '--output', str(output), '--teacher', str(args.teacher)]

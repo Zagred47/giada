@@ -1,0 +1,35 @@
+{
+  "state": "V_mV, cai_mM, 18 ion gates, synaptic receptor/plasticity/event cursor/RNG state. A future compact model must declare the causal replacement for each retained or removed variable.",
+  "inputs": "injected current density, physical parameters, presynaptic events available at their causal time, explicit random draws or RNG state. Trial-V interface for later composition is tested in CC-17.",
+  "initialization": "Initial physical state encoder permitted only at initialization; alternatively causal warmup. No teacher state resets during autonomous evaluation.",
+  "units": "V mV; time ms; cai mM; current density mA/cm2; gbar S/cm2; synaptic conductance uS; area um2. Positive ionic/synaptic current is outward; injected current positive inward.",
+  "primary_horizons_ms": [
+    8.0,
+    40.0
+  ],
+  "diagnostic_long_horizons_ms": [
+    200.0,
+    1000.0
+  ],
+  "future_candidate_limits": {
+    "pooled_voltage_rmse_mv": 0.05,
+    "worst_episode_voltage_rmse_mv": 0.1,
+    "worst_episode_cai_rmse_mM": 5e-06,
+    "max_pooled_voltage_rmse_increase_vs_paired_baseline_mv": 0.02,
+    "max_episode_voltage_rmse_increase_vs_paired_baseline_mv": 0.05,
+    "max_episode_cai_rmse_increase_vs_paired_baseline_mM": 1e-06,
+    "spike_count_difference": 0,
+    "spike_timing_p95_error_ms": 0.2,
+    "event_threshold_mv": -20.0,
+    "minimum_teacher_crossings_for_spike_claim": 20,
+    "physical_voltage_range_mv": [
+      -140.0,
+      100.0
+    ],
+    "max_calcium_negative_count": 0,
+    "max_nonfinite_count": 0
+  },
+  "behavioral_policy": "Adaptation/recovery/frequency and stochastic-distribution specifications require dedicated support and preregistration before N4; this phase cannot certify them. No unconditional promotion of an architecture from N1.",
+  "split_policy": "Group whole episodes and conditioning families; no adjacent-window leakage. Fit/development/sealed separated; old Task35 data diagnostic only. New sealed episodes generated only after candidate freeze in CC-19.",
+  "speed_policy": "At least 10% paired median wall latency reduction with paired bootstrap lower 95% bound >0 against symmetric optimized formula and frozen hybrid baselines at registered workload in CC-18/19. N1 only diagnoses cost; no speed promotion."
+}

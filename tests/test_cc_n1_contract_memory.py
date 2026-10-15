@@ -79,6 +79,23 @@ class MemoryTests(unittest.TestCase):
         out = n1.torch_step(torch, *tensors, 100*np.pi, self.cfg, self.calcium, self.base)
         for a, b in zip(out, ref): np.testing.assert_allclose(a.numpy()[0], b, rtol=1e-10, atol=1e-10)
 
+    @unittest.skipUnless(importlib.util.find_spec('torch'), 'torch unavailable in lightweight local runtime')
+    def test_fullgraph_capture_uses_python_metadata_indices(self):
+        import torch
+        v = np.array([-65., -45.])
+        ca = np.array([.0001, .0002])
+        arrays = (v, ca, t30.initial_states(v, ca), np.ones((2, 11)),
+                  np.array([.003, .006]), np.full((2, 4), .00005))
+        tensors = [torch.tensor(a[None], dtype=torch.float32) for a in arrays]
+        cfg, calcium, base, area = dict(self.cfg), dict(self.calcium), dict(self.base), float(100*np.pi)
+        def fn(*x):
+            return n1.torch_step(torch, *x, area, cfg, calcium, base)
+        expected = fn(*tensors)
+        # FX capture catches symbolic NumPy indices without requiring a local CUDA compiler.
+        captured = torch.compile(fn, backend='eager', fullgraph=True)(*tensors)
+        for actual, target in zip(captured, expected):
+            torch.testing.assert_close(actual, target)
+
 
 if __name__ == '__main__':
     unittest.main()

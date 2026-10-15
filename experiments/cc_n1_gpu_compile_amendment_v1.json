@@ -1,0 +1,16 @@
+{
+  "schema_version": "giada-cc-n1-gpu-compile-amendment-v1",
+  "parent_code_revision": "9b6a5813dcd7ee8f3b836c2ed0180d5bc4a6c5b5",
+  "parent_gpu_report": "experiments/results/cc_n1_v3_kaggle_9b6a581/gpu_report.json",
+  "parent_gpu_report_sha256": "92668d2e0a3f9583b79d03af0c2475116f542d128afdaa5b269280230b127070",
+  "diagnosis": "All native continuations and fresh full-synapse floor gates passed. Resident eager CUDA matches all six legacy model rollouts within 0.000289mV and 5.22e-9mM. All nine compilation attempts failed because int(ionic.OFFSETS[9]) converted NumPy metadata into an unbacked symbolic index. No compiled cost was valid.",
+  "single_change": "Use existing immutable Python OFFSETS/REVERSAL_VALUES tuples and math.exp for scalar constants inside the traced membrane step. Add fullgraph FX capture regression check. No numeric thresholds, equations, checkpoints or input data changed.",
+  "native_reuse_root": "experiments/results/cc_n1_v3_kaggle_9b6a581",
+  "native_reuse_sha256": {
+    "native_report.json": "e3478546c1e9f7fa2e2f48b9df2e9f7a0a5b9a8d9280d6e89caab1606311b4d8",
+    "memory_analysis.json": "815975b05b903a5cf88239547d13cbe9781a71c84921e74fcebb3988d2b5309d",
+    "native_memory_traces.npz": "3402edcbd887f5312760eb32122167c6a9293b8b91b3e4ce56b7cd125fb174d6"
+  },
+  "reuse_policy": "Reuse verified native v3 results to rerun only the CUDA accuracy and eager/compiled benchmarks. Copy native source manifests and original revision into the new output. No scientific independence claimed from reusing the same data.",
+  "decision": "Fullgraph capture, compiled/eager numeric equivalence and all original timing workloads must pass. If compilation still fails, preserve incomplete verdict; do not relabel eager timing as compiled. No candidate training or speed promotion."
+}

@@ -1,0 +1,112 @@
+{
+  "schema_version": "giada-cc-n1-contract-memory-v1",
+  "roadmap_ids": ["CC-01", "CC-02", "CC-03", "CC-04"],
+  "status": "preregistered_before_kaggle_execution",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "neuron_version": "8.2.7",
+  "sources": {
+    "experiments/results/task35_final_report.json": "1ced4c0b2af8afb6a1ca0cdac44c58236d5382359c9091ca19fb2b94778b9bc7",
+    "experiments/results/task35_native_shadow_traces.npz": "75028e1cf57203969b96b915c29cf7a170e012b9c6eec943c410e51dd10c0971"
+  },
+  "dt_ms": 0.1,
+  "historical_baseline": "All 32 Task35 episodes and six frozen checkpoints. These opened data are diagnostic benchmarks, never fresh confirmation or model selection.",
+  "domain": {
+    "compartments": 1,
+    "channels": 11,
+    "ionic_gate_states": 18,
+    "calcium": "dynamic; internal mM; fixed E_Ca=120mV",
+    "synapses": "four canonical stochastic EMS synapses; events and RNG explicit; future realized teacher release never model input",
+    "scope": "Existing local cylindrical compartment and four Task35 conductance panels. Clamp-conditioned states below are controlled state interventions, not claims about their natural frequency in physiology."
+  },
+  "cc01_contract": {
+    "state": "V_mV, cai_mM, 18 ion gates, synaptic receptor/plasticity/event cursor/RNG state. A future compact model must declare the causal replacement for each retained or removed variable.",
+    "inputs": "injected current density, physical parameters, presynaptic events available at their causal time, explicit random draws or RNG state. Trial-V interface for later composition is tested in CC-17.",
+    "initialization": "Initial physical state encoder permitted only at initialization; alternatively causal warmup. No teacher state resets during autonomous evaluation.",
+    "units": "V mV; time ms; cai mM; current density mA/cm2; gbar S/cm2; synaptic conductance uS; area um2. Positive ionic/synaptic current is outward; injected current positive inward.",
+    "primary_horizons_ms": [8.0, 40.0],
+    "diagnostic_long_horizons_ms": [200.0, 1000.0],
+    "future_candidate_limits": {
+      "pooled_voltage_rmse_mv": 0.05,
+      "worst_episode_voltage_rmse_mv": 0.1,
+      "worst_episode_cai_rmse_mM": 0.000005,
+      "max_pooled_voltage_rmse_increase_vs_paired_baseline_mv": 0.02,
+      "max_episode_voltage_rmse_increase_vs_paired_baseline_mv": 0.05,
+      "max_episode_cai_rmse_increase_vs_paired_baseline_mM": 0.000001,
+      "spike_count_difference": 0,
+      "spike_timing_p95_error_ms": 0.2,
+      "event_threshold_mv": -20.0,
+      "minimum_teacher_crossings_for_spike_claim": 20,
+      "physical_voltage_range_mv": [-140.0, 100.0],
+      "max_calcium_negative_count": 0,
+      "max_nonfinite_count": 0
+    },
+    "behavioral_policy": "Adaptation/recovery/frequency and stochastic-distribution specifications require dedicated support and preregistration before N4; this phase cannot certify them. No unconditional promotion of an architecture from N1.",
+    "split_policy": "Group whole episodes and conditioning families; no adjacent-window leakage. Fit/development/sealed separated; old Task35 data diagnostic only. New sealed episodes generated only after candidate freeze in CC-19.",
+    "speed_policy": "At least 10% paired median wall latency reduction with paired bootstrap lower 95% bound >0 against symmetric optimized formula and frozen hybrid baselines at registered workload in CC-18/19. N1 only diagnoses cost; no speed promotion."
+  },
+  "native": {
+    "seed": 90601,
+    "initial_voltage_mv": -70.0,
+    "protocols": ["rest", "early_high"],
+    "panels": ["canonical", "calcium_x4", "sodium_x4", "potassium_x4"],
+    "schedule_ms": {
+      "exc_1": [2.6, 3.6, 8.6, 16.6],
+      "exc_2": [2.8, 3.8, 8.8, 16.8],
+      "inh_1": [5.6, 6.6, 11.6, 19.6],
+      "inh_2": [5.8, 6.8, 11.8, 19.8]
+    },
+    "wall_repetitions": 3,
+    "timing_scope": "Python-observed 40ms native episode including setup, events, RNG and probes, separately shadow replay. CPU baseline, not like-for-like GPU speedup. Compilation excluded."
+  },
+  "memory": {
+    "initial_voltage_mv": -65.0,
+    "initial_cai_mM": 0.0001,
+    "preparation_voltages_mv": [-85.0, -65.0, -45.0, -25.0],
+    "preparation_durations_ms": [10.0, 50.0, 200.0],
+    "common_tail_ms": [0.0, 0.5, 2.0, 10.0, 40.0, 200.0],
+    "visible_history_windows_ms": [0.5, 2.0, 10.0, 40.0, 200.0],
+    "panels": ["canonical", "sodium_x4"],
+    "future_current_density_ma_cm2": [0.0, 0.006],
+    "rollout_ms": 10.0,
+    "horizons_ms": [0.1, 1.0, 8.0, 10.0],
+    "conditioning": "Exact constant-voltage/constant-calcium gate evolution from equilibrium at -65mV, then common -65mV tail. At release V and Ca are set identically, synapses zero, physical parameters and future current matched. These are explicit state interventions, not an autonomous physiological-preparation claim.",
+    "window_contrast": "For tail >= window, all visible V/Ca samples in that recent window are exactly identical. Compare future spread of different conditioning histories. Half maximum endpoint separation is a minimax lower bound for any deterministic predictor using only that identical view.",
+    "summary_contrast": "A causal summary containing preparation V, duration and tail distinguishes histories; exact analytical reconstruction from that summary is a privileged diagnostic, not a compact learned deploy model.",
+    "native_anchor": "Eight extreme-history cases: preparation -85/-25mV for 200ms; tails 0/40ms; canonical panel; future current 0/0.006mA/cm2. Native initial gates imported as explicit interventions; full 10ms continuations checked.",
+    "detectable_endpoint_separation_mv": 0.1,
+    "detectable_endpoint_separation_cai_mM": 0.000001,
+    "technical_duplicate_atol": 0.000000000001,
+    "absence_policy": "No detected collision does not prove sufficiency. No universal minimum latent dimension inferred. Persistence at longest tail yields only a lower-bound challenge in tested histories."
+  },
+  "gpu": {
+    "families": ["independent", "shared_heads"],
+    "model_seeds": [17, 29, 43],
+    "frozen_arm": "both",
+    "batch_sizes": [1, 642, 4096],
+    "dtype": "float32",
+    "compile_backend": "inductor",
+    "compile_fullgraph": true,
+    "warmup": 5,
+    "repetitions": 20,
+    "rollout_steps_per_timing": 10,
+    "newton_iterations": 12,
+    "compiled_vs_eager_voltage_atol_mv": 0.002,
+    "compiled_vs_eager_gate_atol": 0.00002,
+    "compiled_vs_eager_cai_atol_mM": 0.00000001,
+    "formula_gpu_vs_numpy_voltage_atol_mv": 0.002,
+    "formula_gpu_vs_numpy_gate_atol": 0.00002,
+    "formula_gpu_vs_numpy_cai_atol_mM": 0.00000001,
+    "torch_rollout_vs_legacy_voltage_atol_mv": 0.05,
+    "torch_rollout_vs_legacy_cai_atol_mM": 0.000001,
+    "scope": "Resident full membrane core: gates, ionic currents, Ca/SK update, semiimplicit voltage with NMDA, 18 gates/V/Ca outputs. Four causal synaptic base conductances supplied by independently audited shadow; receptor/plasticity/RNG generation excluded from resident-core timing and reported separately as host work. Three frozen models vectorized, formula replicated for fairness; latency per ensemble and normalized compartment-step reported. No total end-to-end GPU speed claim.",
+    "compile_failure_policy": "Record compile failure and eager timing explicitly; no compiled speed conclusion, N1 cost gate incomplete; preserve memory diagnostics and downloadable artifacts."
+  },
+  "technical_gates": {
+    "native_formula_pooled_voltage_rmse_mv": 0.2,
+    "native_formula_worst_voltage_rmse_mv": 0.5,
+    "native_formula_worst_cai_rmse_mM": 0.000001,
+    "negative_control_voltage_min_mv": 0.2
+  },
+  "decision": "N1 is complete only when provenance, native/formula anchors, GPU numerical equivalence, timing scope, duplicate controls and view-identity checks pass and each CC task has an explicit conclusion. Finding collisions is an informative result, not technical failure. Compilation/numerical failures preserve diagnostics and block the cost gate. N2 preparation can be recommended only with a declared sufficient operational state/warmup candidate, not a proved minimum dimension. No learned model is trained or promoted; Task36 remains deferred.",
+  "budget": "No optimizer training. 288 analytic memory continuations (72 conditioned states x2 panels x2 currents), eight native anchors, eight native full-synapse cases plus three timed canonical repeats, and three GPU batch sizes x3 arms. Stop on source/native-floor failure before GPU model judgment; collect scientific diagnostics even when no collisions exceed thresholds."
+}
