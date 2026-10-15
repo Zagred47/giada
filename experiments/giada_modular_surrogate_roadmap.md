@@ -1,5 +1,11 @@
 # 🧭 GIADA — Roadmap modulare per surrogate biofisici
 
+> **Priorità aggiornata — 15 ottobre 2026:** prima della Task36, l'utente ha
+> richiesto un percorso dedicato alla compressione appresa del singolo
+> compartimento. Vedi [dropshot CC-01…CC-20](giada_compartment_compression_dropshot_v1.md).
+> È una proposta di direzione, non venti run già preregistrati. Task35 e il
+> prerequisito assiale passivo restano validi; Task36 è rinviata, non rinumerata.
+
 > **Stato:** documento di direzione sperimentale, da usare per pianificare i run.
 >
 > **Piattaforma corrente:** GPU. Tenstorrent è deliberatamente rinviato.
