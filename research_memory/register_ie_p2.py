@@ -46,6 +46,12 @@ def main():
                           x['batch_per_seed']==row['batch_per_seed'] and x['variant']=='full')['timings']['wall_ms']
                 assert abs(statistics.median(1-b/a for a,b in zip(full,times))-
                            row['saving_vs_full']['median_saved_fraction'])<1e-12
+        for row in report['execution_contrasts']:
+            def wall(mode):
+                return next(x for x in report['rows'] if x['batch_per_seed']==row['batch'] and
+                            x['mode']==mode and x['variant']=='full')['timings']['wall_ms']
+            assert abs(statistics.median(1-b/a for a,b in zip(wall('compiled'),wall('cuda_graph')))-
+                       row['median_saved_fraction'])<1e-12
         for p in sorted(folder.iterdir()):
             if p.is_file():
                 artifacts.append(put('artifacts','result-'+p.stem,Nome='IE-P2 output '+p.name,Tipo='Report',

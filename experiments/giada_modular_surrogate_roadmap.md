@@ -1145,6 +1145,22 @@ non un modello promosso o un limite universale. IE-03 deve valutare il
 residuo prima di promettere un'accelerazione grande dalla sola sostituzione
 dei gate; IE-02 globale e IE-04/05 restano aperte.
 
+**IE-P2 — 16 ottobre 2026:** [disegno e contrasti](ie_p2_design_v1.md),
+[protocollo](ie_p2_residual_cost_preregistration_v1.json) e
+[notebook](../notebooks/ie_p2_residual_cost.ipynb) preparati per distinguere
+prefisso ionico, readout, solver e overhead di invocazione, con le stesse
+equazioni. Tre test locali superati, inclusa ricomposizione/cache e cattura
+fullgraph; questo preflight CPU non certifica CUDA Graph o prestazioni GPU.
+Nessun training e nessuna promozione prima del risultato e della decisione.
+
+**IE-P2 concluso:** [risultato e limiti](ie_p2_result_v1.md), 54 celle e
+72 preflight numerici superati. A batch642, stesso full con CUDA Graph
+circa 4,2× più veloce nel microbenchmark; il readout delle conduttanze
+mostra un margine importante anche nel replay. Prima del training occorre
+un controllo algebraico vettorizzato e una baseline di esecuzione comune.
+I buffer non sono candidati causali; profilo globale e interfaccia del
+playground restano aperti. La numerazione IE e originale non cambia.
+
 ## 📜 Prima milestone storica — conservata come riferimento
 
 > Costruire un playground GPU fattoriale per i gate `m` e `h` di Ca-HVA sotto
