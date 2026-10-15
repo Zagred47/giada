@@ -14,6 +14,10 @@
 > **Primo notebook preparato:** [CC-N1 — CC-01…CC-04](../notebooks/cc_n1_contract_memory.ipynb),
 > con [protocollo numerico](cc_n1_contract_memory_preregistration_v1.json).
 >
+> **Secondo notebook preparato:** [CC-N2 — CC-05…CC-08](../notebooks/cc_n2_unified_cell.ipynb),
+> con [matrice e limiti](cc_n2_design_v1.md) e
+> [preregistrazione](cc_n2_unified_cell_preregistration_v1.json). Nessun risultato N2 ancora acquisito.
+>
 > **Principio guida:** comprimere stato e calcoli, preservare le proprietà
 > computazionali, recuperare con l'apprendimento ciò che è recuperabile.
 

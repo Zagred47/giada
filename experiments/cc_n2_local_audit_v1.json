@@ -1,0 +1,9 @@
+{
+  "schema_version": "cc-n2-local-implementation-audit-v1",
+  "valid": true,
+  "environment": "Windows CPU torch 2.4.1; CUDA and NEURON execution reserved for pinned Kaggle subprocesses",
+  "tests_passed": 8,
+  "checks": ["deterministic disjoint role preparations", "batched versus isolated predictions and Adam with independent clipping", "masked latent states and finite gradients", "encoder versus standard initialization information", "rollout/metric shapes", "fullgraph FX capture", "two-update recurrent backward smoke", "all notebook code cells compile"],
+  "limitations": "FX capture is not an Inductor CUDA numerical test. Native compilation and generation have not been executed locally. GPU equivalence and compile preflights execute before training. No scientific result or speed claim from these tests.",
+  "diagnostic_access": "Native role files separated; GPU process reads diagnostic state arrays only after selection_freeze is written. Hash verification does not use target values for model selection."
+}
