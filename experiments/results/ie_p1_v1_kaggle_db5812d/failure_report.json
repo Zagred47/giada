@@ -1,0 +1,7 @@
+{
+  "valid": false,
+  "scientific_no_go": false,
+  "error": "('formula', 'membrane_core')",
+  "traceback": "Traceback (most recent call last):\n  File \"/kaggle/working/giada_ie_p1/giada/scripts/run_ie_p1_ionic_cost.py\", line 26, in <module>\n    run(ROOT,output)\n    ~~~^^^^^^^^^^^^^\n  File \"/kaggle/working/giada_ie_p1/giada/src/giada_teacher/ie_ionic_cost.py\", line 117, in run\n    assert all(float((a-b).abs().max()) <= lim for a,b,lim in zip(aa,ee,limits)), key\n           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: ('formula', 'membrane_core')\n",
+  "code_revision": "db5812d66186a419d5317900f183ab97a95c0b16"
+}

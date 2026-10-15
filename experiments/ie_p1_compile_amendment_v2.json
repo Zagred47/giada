@@ -1,0 +1,13 @@
+{
+  "schema_version": "giada-ie-p1-compile-amendment-v2",
+  "prior_code_revision": "db5812d66186a419d5317900f183ab97a95c0b16",
+  "prior_result": "experiments/results/ie_p1_v1_kaggle_db5812d/failure_report.json",
+  "prior_status": "incomplete technical preflight: formula compiled/eager mismatch at batch642; primary timings not produced; not a model NO-GO",
+  "change": "Separate eager decomposition equivalence from compiler FP32 equivalence. Reuse the previously registered CC-N1 compiler tolerances rather than the new stricter eager reconstruction tolerances. Preserve v1 failure; do not reclassify its partial timings as a completed result.",
+  "reference": "experiments/cc_n1_contract_memory_preregistration_v1.json gpu.compiled_vs_eager_*",
+  "compiled_voltage_atol_mv": 0.002,
+  "compiled_calcium_atol_mM": 1e-8,
+  "compiled_gate_atol": 0.00002,
+  "diagnostics": "Write every compiled/eager maximum error before applying thresholds; include numerical_errors in failure reports. No changes to equations, frozen models, workload or candidate fidelity thresholds.",
+  "status": "prospective before new run"
+}

@@ -19,6 +19,7 @@ if __name__ == '__main__':
     revision = subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip()
     (output/'code_revision.txt').write_text(revision,encoding='utf-8')
     shutil.copy2(ROOT/'experiments/ie_p1_ionic_cost_preregistration_v1.json',output/'preregistration.json')
+    shutil.copy2(ROOT/'experiments/ie_p1_compile_amendment_v2.json',output/'compile_amendment.json')
     with (output/'fault.log').open('w') as fault:
         faulthandler.enable(file=fault)
         try:

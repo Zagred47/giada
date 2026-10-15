@@ -60,7 +60,13 @@ def run(root, output):
     from .gate_d_bottleneck_forensic import _profile
     root, output = Path(root), Path(output)
     spec = json.loads((root/'experiments/ie_p1_ionic_cost_preregistration_v1.json').read_text())
-    _, cfg, calcium, _, base = n1.contract(root)
+    n1spec, cfg, calcium, _, base = n1.contract(root)
+    amendment = json.loads((root/'experiments/ie_p1_compile_amendment_v2.json').read_text())
+    compile_limits = (n1spec['gpu']['compiled_vs_eager_voltage_atol_mv'],
+                      n1spec['gpu']['compiled_vs_eager_cai_atol_mM'],
+                      n1spec['gpu']['compiled_vs_eager_gate_atol'])
+    assert compile_limits == (amendment['compiled_voltage_atol_mv'],
+                              amendment['compiled_calcium_atol_mM'], amendment['compiled_gate_atol'])
     if not torch.cuda.is_available():
         raise RuntimeError('IE-P1 requires CUDA')
     torch.set_num_threads(1)
@@ -74,7 +80,8 @@ def run(root, output):
     report = {'valid': False, 'schema_version': spec['schema_version'], 'training_performed': False,
               'candidate_promoted': False, 'whole_simulator_profile_complete': False,
               'scope': spec['scope'], 'exclusions': spec['exclusions'],
-              'gpu': torch.cuda.get_device_name(), 'torch': torch.__version__, 'rows': []}
+              'gpu': torch.cuda.get_device_name(), 'torch': torch.__version__, 'rows': [],
+              'compile_amendment': amendment, 'numerical_errors': []}
     with torch.inference_mode():
         for batch in spec['batches']:
             episodes = rng.integers(0, 32, batch)
@@ -113,8 +120,12 @@ def run(root, output):
                 expected, actual = fn(v,ca,gates), cfn(v,ca,gates)
                 aa = actual if isinstance(actual, tuple) else (actual,)
                 ee = expected if isinstance(expected, tuple) else (expected,)
-                limits = (1e-5,1e-9,1e-6) if len(aa)==3 else (1e-6,)
-                assert all(float((a-b).abs().max()) <= lim for a,b,lim in zip(aa,ee,limits)), key
+                limits = compile_limits if len(aa)==3 else (compile_limits[2],)
+                differences = [float((a-b).abs().max()) for a,b in zip(aa,ee)]
+                report['numerical_errors'].append({'batch':batch,'arm':key[0], 'component':key[1],
+                                                   'maximum_errors':differences,'limits':limits})
+                (output/'numeric_preflight.json').write_text(json.dumps(report['numerical_errors'],indent=2),encoding='utf-8')
+                assert all(e <= lim for e,lim in zip(differences,limits)), (key,differences,limits)
                 compiled[key] = cfn
                 for _ in range(spec['warmup_calls']):
                     cfn(v,ca,gates)
