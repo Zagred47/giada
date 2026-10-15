@@ -1,0 +1,39 @@
+[GIADA IE-P1] compile formula/ionic_gates batch=1
+[GIADA IE-P1] compile formula/membrane_core batch=1
+[GIADA IE-P1] compile formula/membrane_core_cached_gates batch=1
+[GIADA IE-P1] compile independent/ionic_gates batch=1
+W1015 21:52:46.841000 70 torch/_inductor/utils.py:1731] [0/1] Not enough SMs to use max_autotune_gemm mode
+[GIADA IE-P1] compile independent/membrane_core batch=1
+[GIADA IE-P1] compile independent/membrane_core_cached_gates batch=1
+[GIADA IE-P1] compile shared_heads/ionic_gates batch=1
+[GIADA IE-P1] compile shared_heads/membrane_core batch=1
+[GIADA IE-P1] compile shared_heads/membrane_core_cached_gates batch=1
+/usr/local/lib/python3.13/dist-packages/torch/profiler/profiler.py:224: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+[GIADA IE-P1] formula batch=1 saved-gate diagnostic=0.187
+[GIADA IE-P1] independent batch=1 saved-gate diagnostic=0.575
+[GIADA IE-P1] shared_heads batch=1 saved-gate diagnostic=0.614
+[GIADA IE-P1] compile formula/ionic_gates batch=642
+[GIADA IE-P1] compile formula/membrane_core batch=642
+[GIADA IE-P1] compile formula/membrane_core_cached_gates batch=642
+[GIADA IE-P1] compile independent/ionic_gates batch=642
+[GIADA IE-P1] compile independent/membrane_core batch=642
+[GIADA IE-P1] compile independent/membrane_core_cached_gates batch=642
+[GIADA IE-P1] compile shared_heads/ionic_gates batch=642
+[GIADA IE-P1] compile shared_heads/membrane_core batch=642
+[GIADA IE-P1] compile shared_heads/membrane_core_cached_gates batch=642
+[GIADA IE-P1] formula batch=642 saved-gate diagnostic=0.159
+[GIADA IE-P1] independent batch=642 saved-gate diagnostic=0.482
+[GIADA IE-P1] shared_heads batch=642 saved-gate diagnostic=0.556
+[GIADA IE-P1] compile formula/ionic_gates batch=4096
+[GIADA IE-P1] compile formula/membrane_core batch=4096
+[GIADA IE-P1] compile formula/membrane_core_cached_gates batch=4096
+[GIADA IE-P1] compile independent/ionic_gates batch=4096
+[GIADA IE-P1] compile independent/membrane_core batch=4096
+[GIADA IE-P1] compile independent/membrane_core_cached_gates batch=4096
+[GIADA IE-P1] compile shared_heads/ionic_gates batch=4096
+[GIADA IE-P1] compile shared_heads/membrane_core batch=4096
+[GIADA IE-P1] compile shared_heads/membrane_core_cached_gates batch=4096
+[GIADA IE-P1] formula batch=4096 saved-gate diagnostic=0.152
+[GIADA IE-P1] independent batch=4096 saved-gate diagnostic=0.493
+[GIADA IE-P1] shared_heads batch=4096 saved-gate diagnostic=0.563
