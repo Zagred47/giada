@@ -10,6 +10,9 @@
 >
 > **Numerazione:** CC-01…CC-20; nessuna rinumerazione delle task originali.
 >
+> **Primo notebook preparato:** [CC-N1 — CC-01…CC-04](../notebooks/cc_n1_contract_memory.ipynb),
+> con [protocollo numerico](cc_n1_contract_memory_preregistration_v1.json).
+>
 > **Principio guida:** comprimere stato e calcoli, preservare le proprietà
 > computazionali, recuperare con l'apprendimento ciò che è recuperabile.
 

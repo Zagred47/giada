@@ -1,0 +1,21 @@
+{
+  "schema_version": "giada-cc-n1-local-implementation-audit-v1",
+  "date": "2026-10-15",
+  "valid": true,
+  "phase": "implementation_preflight_before_kaggle",
+  "independent_confirmation": false,
+  "training_performed": false,
+  "checks": {
+    "immutable_task35_report_and_traces_verified": true,
+    "analytic_memory_continuations": 288,
+    "duplicate_replay_max_abs_error": 0.0,
+    "hidden_gate_transplant_max_abs_error": 0.0,
+    "causal_summary_reconstruction_max_abs_error": 0.0,
+    "unit_test_count": 5,
+    "unit_tests_passed": 5,
+    "torch_cpu_float64_complete_step_vs_numpy": "passed rtol=atol=1e-10, dynamic calcium, four conductance panels, nonzero AMPA/NMDA/GABA conductances",
+    "notebook_cells_python_syntax": "passed"
+  },
+  "unverified_locally": ["Linux NEURON continuation", "CUDA float32/Inductor numerical equivalence", "GPU timings"],
+  "limits": "Analytic controlled-history outputs were inspected to validate implementation. They are already opened diagnostic data, never sealed scientific confirmation. No preregistered thresholds changed from this inspection; native anchors are required before using them for scientific conclusions."
+}
