@@ -1,0 +1,14 @@
+{
+  "schema_version": "giada-cc-n1-native-sampling-amendment-v1",
+  "prior_code_revision": "a5e1a2caba868a806e8ca80fa717c86bd73903cc",
+  "prior_kaggle_version": 1,
+  "prior_result": "TECHNICAL_NATIVE_FLOOR_FAILURE_BEFORE_GPU",
+  "prior_sources": {
+    "experiments/results/cc_n1_v1_native_memory_anchors.json": "7919b081d0411d327bf890add1f4d87f59856ce3929a2de665f152a4002a49dd",
+    "experiments/results/cc_n1_v1_native_failure.json": "8692bb83b15fa3f796c5082f20d0b8715f0f58c73e0d3625a4c77ebddb3ef72d"
+  },
+  "diagnosis": "All eight initial gate interventions reproduced exactly and all native continuations were finite. Two high-preparation zero-tail anchors exceeded the calcium floor (1.156e-6 and 1.541e-6mM versus 1e-6mM), with V RMSE below 0.087mV. The new native-memory helper omitted per-tick h.fcurrent(), which is present in the audited Task35 _native_case sampling contract. This is a candidate instrumentation cause to test; no architecture was judged.",
+  "single_change": "Call h.fcurrent() immediately before recording each native-memory tick, matching Task35's established native current sampling contract. Do not alter gate initialization, current, step, solver, states, numerical thresholds, data grid or learned checkpoints.",
+  "reuse_policy": "The eight anchor conditions and analytic histories are reopened diagnostic controls, not independent sealed confirmation. Retain v1 failure and report exact interface amendment and hashes. No threshold relaxation.",
+  "decision": "Retry the full native gate at unchanged thresholds; only a passed native gate permits CUDA. If calcium discrepancy remains, preserve artifacts and inspect stepwise gate/current/Ca ordering before another change."
+}

@@ -36,6 +36,12 @@ def contract(root):
     for path, expected in spec['sources'].items():
         if sha(root / path) != expected:
             raise ValueError(f'CC-N1 immutable source mismatch: {path}')
+    amendment_path = root / 'experiments/cc_n1_native_sampling_amendment_v1.json'
+    if amendment_path.is_file():
+        amendment = json.loads(amendment_path.read_text())
+        for path, expected in amendment['prior_sources'].items():
+            if sha(root / path) != expected: raise ValueError('CC-N1 prior native diagnosis changed')
+        spec['native_sampling_amendment_sha256'] = sha(amendment_path)
     old = json.loads((root / 'experiments/results/task35_final_report.json').read_text())
     if not old['valid'] or not old['task35_passed']:
         raise ValueError('Task35 prerequisite not confirmed')
@@ -204,6 +210,7 @@ def native_memory_case(h, row, initial, spec, cfg, calcium, base):
     ticks = round(spec['memory']['rollout_ms'] / spec['dt_ms']) + 1
     v, ca, gates = np.empty(ticks), np.empty(ticks), np.empty((ticks, 18))
     for n in range(ticks):
+        h.fcurrent()  # Match Task35: recompute ionic currents at each recorded native tick.
         v[n], ca[n] = float(seg.v), float(seg.cai)
         for k, name in enumerate(ionic.CHANNELS):
             for q, state_name in enumerate(ionic.STATE_NAMES[k]):
@@ -509,6 +516,7 @@ def finalize(root, output, revision):
     report = {'schema_version': spec['schema_version'], 'roadmap_ids': spec['roadmap_ids'],
         'valid': bool(valid), 'code_revision': revision, 'preregistration_sha256': sha(root / CONFIG),
         'source_sha256': spec['sources'], 'training_performed': False, 'fresh_used_for_selection': False,
+        'native_sampling_amendment_sha256': spec.get('native_sampling_amendment_sha256'),
         'cc01': {'contract_recorded': True, 'path': 'contract.json'},
         'cc02': {'native_anchor_valid': native['valid'], 'cost_map_valid': gpu['valid'],
                  'scope': spec['gpu']['scope']},
