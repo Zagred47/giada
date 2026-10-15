@@ -1159,6 +1159,13 @@ algebra storica, algebra vettorizzata, MLP16/32 con3seed appaiati. Non sostituis
 la dinamica dei gate e non conclude ancora IE-07 o compressione della memoria.
 Esecuzione comune Inductor/CUDA Graph; qualità e costo sono criteri separati.
 
+**IE-P3 concluso:** [risultato verificato](ie_p3_result_v1.md).48celle e51preflight
+validi. Al batch642, algebra vettorizzata esatta:48,26% di tempo risparmiato
+contro la storica con CUDA Graph, stessa qualità diagnostica. Tutte6reti
+falliscono qualità e costo rispetto al controllo vettorizzato. Conservare
+questa baseline; nessuna sostituzione appresa promossa e nessuna conclusione
+di impossibilità per un operatore ionico più ampio.
+
 **IE-P2 concluso:** [risultato e limiti](ie_p2_result_v1.md), 54 celle e
 72 preflight numerici superati. A batch642, stesso full con CUDA Graph
 circa 4,2× più veloce nel microbenchmark; il readout delle conduttanze
