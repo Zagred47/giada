@@ -1,6 +1,7 @@
 # 🧭 GIADA — Dropshot per la compressione appresa del compartimento
 
-> **Stato:** proposta di direzione sperimentale; nessun nuovo run avviato.
+> **Stato:** direzione approvata; N1 completato. Vedi
+> [risultati CC-01…CC-04](cc_n1_result_v1.md) e [registro delle verifiche](cc_n1_progress_v1.md).
 >
 > **Piattaforma corrente:** GPU. Kernel custom e Tenstorrent sono differiti.
 >

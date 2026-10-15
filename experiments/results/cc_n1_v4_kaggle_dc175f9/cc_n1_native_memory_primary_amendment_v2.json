@@ -1,0 +1,14 @@
+{
+  "schema_version": "giada-cc-n1-native-memory-primary-amendment-v2",
+  "prior_code_revision": "78c00dbad03c5629c01c79a1a294c134cfdb99a0",
+  "prior_sources": {
+    "experiments/results/cc_n1_v2_native_memory_anchors.json": "7919b081d0411d327bf890add1f4d87f59856ce3929a2de665f152a4002a49dd",
+    "experiments/results/cc_n1_v2_native_failure.json": "b39eb878d80eaf3131c88126ce442a75a5777c695ce0778a2506c6bc99086e32"
+  },
+  "finding": "Per-tick current recomputation left all eight anchor errors unchanged. The proposed sampling explanation was not supported. Two high-preparation zero-tail states exceed the fixed analytic/native calcium floor. This is a scoped numerical-map limitation under state intervention; no learned candidate has failed.",
+  "change": "Run all 288 controlled-state continuations directly in canonical NEURON and use those native targets for CC-03/04 collision conclusions. Keep the analytic matrix as a diagnostic comparator and report its unchanged failed floor. Validate native duplicate and hidden-state-transplant replay. Continue CC-02 only if its separate fresh full-synapse native/formula floor passes unchanged thresholds.",
+  "unchanged": ["physical-state interventions", "conditioning history grid", "matching views", "future forcing", "step 0.1ms", "all numeric tolerances", "new model acceptance limits", "all frozen checkpoint families/seeds", "no training", "Task35 provenance"],
+  "budget": "Replace eight native memory anchors by the full 288-case native matrix plus two reproducibility controls; 10ms each. Eight full-synapse cases and GPU workloads unchanged. No optimizer steps or architecture search.",
+  "interpretation": "The original analytic-memory floor remains inadmissible on its failed cases. A native collision witness does not require that analytic map to reproduce it. Initial gate preparations remain declared interventions obtained from the constant-clamp formulas; no natural-frequency claim. Native direct continuation is now primary; analytic collision statistics alone cannot authorize N2.",
+  "decision": "Memory branch passes instrumentation only if all native trajectories are finite/physical, all initial interventions match exactly, and duplicate/transplant controls pass. Baseline cost branch has its own unchanged native/formula and CUDA-equivalence gates. The final report must explicitly retain analytic_memory_floor_passed=false if it fails, and may recommend only N2 preparation with native targets. No model or speed promotion."
+}

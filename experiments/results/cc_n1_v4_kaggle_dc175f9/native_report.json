@@ -1,0 +1,179 @@
+{
+  "valid": true,
+  "code_revision": "9b6a5813dcd7ee8f3b836c2ed0180d5bc4a6c5b5",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "neuron_version": "8.2.7",
+  "analytic_memory_floor_passed": false,
+  "native_memory_matrix_valid": true,
+  "floors_by_panel": {
+    "canonical": {
+      "pooled_voltage_rmse_mv": 0.000475860006672893,
+      "worst_voltage_rmse_mv": 0.0006704646851698039,
+      "worst_cai_rmse_mM": 8.15975797944794e-09,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        5.7987911167823076e-05,
+        0.0006704646851698039
+      ]
+    },
+    "calcium_x4": {
+      "pooled_voltage_rmse_mv": 0.001029919051345131,
+      "worst_voltage_rmse_mv": 0.0014553706261423113,
+      "worst_cai_rmse_mM": 5.054236146312517e-08,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        5.799004405453283e-05,
+        0.0014553706261423113
+      ]
+    },
+    "sodium_x4": {
+      "pooled_voltage_rmse_mv": 0.0005712249619871348,
+      "worst_voltage_rmse_mv": 0.0008056989431489532,
+      "worst_cai_rmse_mM": 8.167471344679669e-09,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        5.8695207666954264e-05,
+        0.0008056989431489532
+      ]
+    },
+    "potassium_x4": {
+      "pooled_voltage_rmse_mv": 0.00046043753763826774,
+      "worst_voltage_rmse_mv": 0.0006485769650113462,
+      "worst_cai_rmse_mM": 7.875664492919874e-09,
+      "finite": true,
+      "occupancy_violations": 0,
+      "physical_voltage_violations": 0,
+      "per_episode_voltage_rmse_mv": [
+        5.7908311920254134e-05,
+        0.0006485769650113462
+      ]
+    }
+  },
+  "native_rows": [
+    {
+      "row": {
+        "panel": "canonical",
+        "protocol": "rest",
+        "schedule": "cc_n1",
+        "seed": 90601,
+        "initial_voltage_mv": -70.0
+      },
+      "native_wall_seconds": 0.041553741999990734,
+      "shadow_wall_seconds": 0.05669256699999892,
+      "shadow_passed": true
+    },
+    {
+      "row": {
+        "panel": "canonical",
+        "protocol": "early_high",
+        "schedule": "cc_n1",
+        "seed": 90601,
+        "initial_voltage_mv": -70.0
+      },
+      "native_wall_seconds": 0.038537743999995655,
+      "shadow_wall_seconds": 0.056866712000015696,
+      "shadow_passed": true
+    },
+    {
+      "row": {
+        "panel": "calcium_x4",
+        "protocol": "rest",
+        "schedule": "cc_n1",
+        "seed": 90601,
+        "initial_voltage_mv": -70.0
+      },
+      "native_wall_seconds": 0.037101577000015595,
+      "shadow_wall_seconds": 0.056121136999990995,
+      "shadow_passed": true
+    },
+    {
+      "row": {
+        "panel": "calcium_x4",
+        "protocol": "early_high",
+        "schedule": "cc_n1",
+        "seed": 90601,
+        "initial_voltage_mv": -70.0
+      },
+      "native_wall_seconds": 0.03786425199999144,
+      "shadow_wall_seconds": 0.05562455000000455,
+      "shadow_passed": true
+    },
+    {
+      "row": {
+        "panel": "sodium_x4",
+        "protocol": "rest",
+        "schedule": "cc_n1",
+        "seed": 90601,
+        "initial_voltage_mv": -70.0
+      },
+      "native_wall_seconds": 0.03636946700001431,
+      "shadow_wall_seconds": 0.05336276700001008,
+      "shadow_passed": true
+    },
+    {
+      "row": {
+        "panel": "sodium_x4",
+        "protocol": "early_high",
+        "schedule": "cc_n1",
+        "seed": 90601,
+        "initial_voltage_mv": -70.0
+      },
+      "native_wall_seconds": 0.03605123099998764,
+      "shadow_wall_seconds": 0.05659803800000418,
+      "shadow_passed": true
+    },
+    {
+      "row": {
+        "panel": "potassium_x4",
+        "protocol": "rest",
+        "schedule": "cc_n1",
+        "seed": 90601,
+        "initial_voltage_mv": -70.0
+      },
+      "native_wall_seconds": 0.040186492999993106,
+      "shadow_wall_seconds": 0.05433121699999788,
+      "shadow_passed": true
+    },
+    {
+      "row": {
+        "panel": "potassium_x4",
+        "protocol": "early_high",
+        "schedule": "cc_n1",
+        "seed": 90601,
+        "initial_voltage_mv": -70.0
+      },
+      "native_wall_seconds": 0.03763827099999162,
+      "shadow_wall_seconds": 0.05319751299998643,
+      "shadow_passed": true
+    }
+  ],
+  "negative_controls": {
+    "zero_weight_no_current": true,
+    "zero_weight_no_release": true,
+    "zero_weight_no_rng_advance": true,
+    "synaptic_effect_present": true
+  },
+  "synaptic_voltage_effect_mv": 20.60342090889344,
+  "cpu_timings": [
+    {
+      "native_wall_seconds": 0.03580845500002283,
+      "shadow_wall_seconds": 0.05675144599999271
+    },
+    {
+      "native_wall_seconds": 0.03610974599999395,
+      "shadow_wall_seconds": 0.05666803599999071
+    },
+    {
+      "native_wall_seconds": 0.03666744300002733,
+      "shadow_wall_seconds": 0.057120015000009516
+    }
+  ],
+  "cpu_timing_scope": "Python-observed 40ms native episode including setup, events, RNG and probes, separately shadow replay. CPU baseline, not like-for-like GPU speedup. Compilation excluded.",
+  "gpu_authorized_by_technical_floor": true
+}

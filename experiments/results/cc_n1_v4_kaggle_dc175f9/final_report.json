@@ -1,0 +1,84 @@
+{
+  "schema_version": "giada-cc-n1-contract-memory-v1",
+  "roadmap_ids": [
+    "CC-01",
+    "CC-02",
+    "CC-03",
+    "CC-04"
+  ],
+  "valid": true,
+  "code_revision": "dc175f9d47d8a7f974f4c6a19a0468f89a22f6a6",
+  "preregistration_sha256": "c65ed6ed783989912322b1e59d891aca0281cef422da85957fe3d013e8990a37",
+  "source_sha256": {
+    "experiments/results/task35_final_report.json": "1ced4c0b2af8afb6a1ca0cdac44c58236d5382359c9091ca19fb2b94778b9bc7",
+    "experiments/results/task35_native_shadow_traces.npz": "75028e1cf57203969b96b915c29cf7a170e012b9c6eec943c410e51dd10c0971"
+  },
+  "training_performed": false,
+  "fresh_used_for_selection": false,
+  "native_sampling_amendment_sha256": "077ead44a70dc75ddf4f7cde3063f403076e6f2329897d9d37ad4d8066918982",
+  "native_memory_primary_amendment_sha256": "7085baf1695d5ab8bb839c363f876ec093fb41e143c813a56eb3afc0ca0209ea",
+  "gpu_compile_amendment_sha256": "e369ba22f879df145cc38513df4d2012bb04a12019b7adfd5020efe96b9366ba",
+  "cc01": {
+    "contract_recorded": true,
+    "path": "contract.json"
+  },
+  "cc02": {
+    "native_anchor_valid": true,
+    "cost_map_valid": true,
+    "scope": "Resident full membrane core: gates, ionic currents, Ca/SK update, semiimplicit voltage with NMDA, 18 gates/V/Ca outputs. Four causal synaptic base conductances supplied by independently audited shadow; receptor/plasticity/RNG generation excluded from resident-core timing and reported separately as host work. Three frozen models vectorized, formula replicated for fairness; latency per ensemble and normalized compartment-step reported. No total end-to-end GPU speed claim."
+  },
+  "cc03": {
+    "instantaneous_collision_detected": true
+  },
+  "cc04": {
+    "recent_history_collision_detected": true,
+    "history_windows": {
+      "0.0": {
+        "matched_groups": 96,
+        "detected_groups": 60,
+        "max_voltage_endpoint_separation_mv": 3.2639696707256185,
+        "max_calcium_endpoint_separation_mM": 2.941395483712832e-05
+      },
+      "0.5": {
+        "matched_groups": 80,
+        "detected_groups": 44,
+        "max_voltage_endpoint_separation_mv": 2.985399546520199,
+        "max_calcium_endpoint_separation_mM": 1.6724891443912554e-05
+      },
+      "2.0": {
+        "matched_groups": 64,
+        "detected_groups": 28,
+        "max_voltage_endpoint_separation_mv": 2.893938427052582,
+        "max_calcium_endpoint_separation_mM": 4.6157436758290435e-06
+      },
+      "10.0": {
+        "matched_groups": 48,
+        "detected_groups": 16,
+        "max_voltage_endpoint_separation_mv": 1.9461752699058508,
+        "max_calcium_endpoint_separation_mM": 3.2630168913109944e-06
+      },
+      "40.0": {
+        "matched_groups": 32,
+        "detected_groups": 8,
+        "max_voltage_endpoint_separation_mv": 1.614070089130891,
+        "max_calcium_endpoint_separation_mM": 1.9766673527849677e-06
+      },
+      "200.0": {
+        "matched_groups": 16,
+        "detected_groups": 4,
+        "max_voltage_endpoint_separation_mv": 1.4778693602707413,
+        "max_calcium_endpoint_separation_mM": 1.2255538411286553e-06
+      }
+    },
+    "operational_memory_candidate": "Persistent recurrent z initialized from physical state once or a separately validated causal warmup; keep synaptic states explicit initially.",
+    "minimum_latent_dimension_proved": false
+  },
+  "analytic_memory_floor_passed": false,
+  "memory_collision_target_source": "canonical_NEURON_direct_continuations",
+  "diagnosis": "N1_NATIVE_DIAGNOSTIC_COMPLETE_WITH_ANALYTIC_MEMORY_FLOOR_LIMIT",
+  "n2_preparation_recommended": true,
+  "n2_run_authorized": false,
+  "task36_authorized_by_this_run": false,
+  "new_model_promoted": false,
+  "speedup_claim": false
+}
