@@ -38,12 +38,16 @@ def main():
     if launch_path.is_file():
         launch=json.loads(launch_path.read_text(encoding='utf-8'))
         assert launch['run_requested'] and launch['scientific_result']=='pending'
+        arm=mirror.local_upsert('arms',{'Codice stabile':'arms-giada-cc-n2-execution-v1',
+            'Nome':'CC-N2 paired native and vectorized exploratory matrix',
+            'Ruolo':'Oracle diagnostico','Protocollo':[protocol],
+            'Configurazione residua':json.dumps(launch,ensure_ascii=False)})['record_id']
         run=mirror.local_upsert('runs',{'Codice stabile':'runs-giada-cc-n2-kaggle-v1',
             'Nome':'CC-N2 native and 27-member GPU matrix — Kaggle v1',
-            'Esperimento':[exp],'Protocollo':[protocol],'Stato':'In corso',
-            'Commit codice':launch['code_revision'],
-            'Configurazione':json.dumps(launch,ensure_ascii=False),
-            'Descrizione':'Run requested through Kaggle MCP. No scientific result at registration.'})['record_id']
+            'Braccio':[arm],'Stato':'In corso',
+            'Hardware e ambiente':'Kaggle T4, native NEURON 8.2.7 and CUDA in distinct subprocesses',
+            'Configurazione effettiva':json.dumps(launch,ensure_ascii=False),
+            'Validità tecnica':'Run requested through Kaggle MCP. No scientific result at registration.'})['record_id']
         mirror.local_upsert('artifacts',{'Codice stabile':'artifacts-giada-cc-n2-launch-v1',
             'Nome':'CC-N2 Kaggle launch v1','Tipo':'Report','Percorso':launch_path.relative_to(repo).as_posix(),
             'Versione':'v1','SHA-256':hashlib.sha256(launch_path.read_bytes()).hexdigest(),
