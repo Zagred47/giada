@@ -1166,6 +1166,13 @@ falliscono qualità e costo rispetto al controllo vettorizzato. Conservare
 questa baseline; nessuna sostituzione appresa promossa e nessuna conclusione
 di impossibilità per un operatore ionico più ampio.
 
+**IE-P4 preregistrato:** [disegno](ie_p4_design_v1.md),
+[notebook](../notebooks/ie_p4_discrete_ionic.ipynb). IE-04/06/07/08: coefficienti
+discreti congiunti per17gate dipendenti daV, SK canonico nella faseCa→SK,
+readout vettorizzato esatto. Formule/LUT e matrice capacità×supervisione,
+3seed e budget crescenti lungo la stessa traiettoria. Nessuna riduzione di
+memoria, nessuna nuova conferma nativa o promozione già dichiarata.
+
 **IE-P2 concluso:** [risultato e limiti](ie_p2_result_v1.md), 54 celle e
 72 preflight numerici superati. A batch642, stesso full con CUDA Graph
 circa 4,2× più veloce nel microbenchmark; il readout delle conduttanze
