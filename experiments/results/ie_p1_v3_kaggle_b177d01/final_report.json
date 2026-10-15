@@ -1,0 +1,3349 @@
+{
+  "valid": true,
+  "schema_version": "giada-ie-p1-ionic-cost-v1",
+  "training_performed": false,
+  "candidate_promoted": false,
+  "whole_simulator_profile_complete": false,
+  "scope": "Resident single-compartment core on historical Task35 states; phase 1 of cost mapping. No native regeneration, optimizer, architecture selection or whole-simulator speed claim.",
+  "exclusions": "Native host generation of presynaptic events, plasticity and RNG; H2D/D2H; loading, compile, training; axial coupling. IE-02 whole-simulator cost mapping remains incomplete until excluded work is measured under a deployable implementation.",
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu128",
+  "rows": [
+    {
+      "arm": "formula",
+      "batch_per_seed": 1,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.1688515000012103,
+            0.15566800000215153,
+            0.15625569999997424,
+            0.16921020000495446,
+            0.15456040000003668,
+            0.16295299999455892,
+            0.14485789999980625,
+            0.14241100000162987,
+            0.13234809999858044,
+            0.15625039999918044,
+            0.14282809999599522,
+            0.21216659999936383,
+            0.15120730000148797,
+            0.1499283999976342,
+            0.14514520000261655,
+            0.15309890000025916,
+            0.13856190000183233,
+            0.15559409999923446,
+            0.14286869999864393,
+            0.14219729999922492,
+            0.13199529999496917,
+            0.2537183000015375,
+            0.13594789999729073,
+            0.15667640000174288,
+            0.15553669999803788,
+            0.1554865000002792,
+            0.14769539999974768,
+            0.14635290000342138,
+            0.13438159999736854,
+            0.159470500000225
+          ],
+          "cuda_ms": [
+            0.1640447974205017,
+            0.15319360494613649,
+            0.15380480289459228,
+            0.16660159826278687,
+            0.15199040174484252,
+            0.16043519973754883,
+            0.1425536036491394,
+            0.1401311993598938,
+            0.13011519908905028,
+            0.15381439924240112,
+            0.1403231978416443,
+            0.20971839427947997,
+            0.14869120121002197,
+            0.14766080379486085,
+            0.14278080463409423,
+            0.15069119930267333,
+            0.13625600337982177,
+            0.15325119495391845,
+            0.140502405166626,
+            0.1400063991546631,
+            0.12964799404144287,
+            0.2514688014984131,
+            0.1335487961769104,
+            0.15423040390014647,
+            0.15319039821624755,
+            0.15324480533599855,
+            0.14524799585342407,
+            0.14404480457305907,
+            0.1322335958480835,
+            0.15723520517349243
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.42567240000153106,
+            0.41754950000267854,
+            0.4069993999962662,
+            0.42730499999947824,
+            0.40466660000220145,
+            0.4299021999997876,
+            0.40727030000198283,
+            0.369358599999714,
+            0.36436000000321656,
+            0.4486467000049288,
+            0.379280499998913,
+            0.40526120000095034,
+            0.3906434000043646,
+            0.3710490999992544,
+            0.36466049999717143,
+            0.3886516000022766,
+            0.3933408000023064,
+            0.4249490000006517,
+            0.4341259000000264,
+            0.3742977999991126,
+            0.3576046000034694,
+            0.3786124999976437,
+            0.3931614999999056,
+            0.4049108000003798,
+            0.41509529999643746,
+            0.370824399999492,
+            0.3578589999960968,
+            0.40428439999686816,
+            0.3650531999994655,
+            0.3911017999996602
+          ],
+          "cuda_ms": [
+            0.42300801277160643,
+            0.41507840156555176,
+            0.40464320182800295,
+            0.42495999336242674,
+            0.4022336006164551,
+            0.4274144172668457,
+            0.4048895835876465,
+            0.3670399904251099,
+            0.3621344089508057,
+            0.446288013458252,
+            0.37693119049072266,
+            0.4029280185699463,
+            0.3882688045501709,
+            0.3688607931137085,
+            0.36249599456787107,
+            0.3863840103149414,
+            0.39101760387420653,
+            0.422489595413208,
+            0.4317215919494629,
+            0.3720383882522583,
+            0.3553663969039917,
+            0.3764064073562622,
+            0.39096319675445557,
+            0.4016160011291504,
+            0.4126272201538086,
+            0.36843841075897216,
+            0.35561280250549315,
+            0.4018847942352295,
+            0.3628992080688477,
+            0.3885632038116455
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.36501160000170785,
+            0.3387480000014875,
+            0.34914479999770265,
+            0.3397288000030585,
+            0.33886600000414546,
+            0.35326299999951516,
+            0.3250748999960251,
+            0.2988143999971271,
+            0.3057243999990078,
+            0.3428724000002603,
+            0.3093666999973266,
+            0.31063690000223687,
+            0.4923457000018061,
+            0.29640650000146707,
+            0.30541470000002846,
+            0.305692300003102,
+            0.3095863999988069,
+            0.3402875999995558,
+            0.3145908000021791,
+            0.32524859999512046,
+            0.2917287999991913,
+            0.3098098000009486,
+            0.32004159999701187,
+            0.36730350000198086,
+            0.31261309999877085,
+            0.2960560000019541,
+            0.2975322999986929,
+            0.30441879999898447,
+            0.3101392000019132,
+            0.31541500000003
+          ],
+          "cuda_ms": [
+            0.3625184059143066,
+            0.3361216068267822,
+            0.3467072010040283,
+            0.3372607946395874,
+            0.33639039993286135,
+            0.35082240104675294,
+            0.32273919582366944,
+            0.2965503931045532,
+            0.3034976005554199,
+            0.34050559997558594,
+            0.30718719959259033,
+            0.30830399990081786,
+            0.4898560047149658,
+            0.29408960342407225,
+            0.3032128095626831,
+            0.30323200225830077,
+            0.30697920322418215,
+            0.3379616022109985,
+            0.3122848033905029,
+            0.3229696035385132,
+            0.28955841064453125,
+            0.30574400424957277,
+            0.3177184104919434,
+            0.3647808074951172,
+            0.3100703954696655,
+            0.29368319511413576,
+            0.2953279972076416,
+            0.30207679271697996,
+            0.3069888114929199,
+            0.3130496025085449
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.18735151537438016,
+        "bootstrap_95pct": [
+          0.1734239869771268,
+          0.20139693870274744
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 4,
+          "kernel_event_time_ms": 0.023295999999999366,
+          "top_kernel_events": [
+            {
+              "name": "triton_poi_fused_add_bitwise_or_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_stack_sub_unsqueeze_where_0",
+              "device_time_us": 7.199999999999818
+            },
+            {
+              "name": "triton_poi_fused_add_bitwise_or_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_stack_sub_unsqueeze_where_0",
+              "device_time_us": 6.5919999999996435
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_1",
+              "device_time_us": 5.0239999999994325
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_1",
+              "device_time_us": 4.480000000000473
+            }
+          ]
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 36,
+          "kernel_event_time_ms": 0.1279020000000005,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_17",
+              "device_time_us": 7.583999999999833
+            },
+            {
+              "name": "triton_poi_fused_add_bitwise_or_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_stack_sub_where_0",
+              "device_time_us": 7.072000000000116
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_17",
+              "device_time_us": 7.007999999999811
+            },
+            {
+              "name": "triton_poi_fused_add_bitwise_or_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_stack_sub_where_0",
+              "device_time_us": 6.912000000000262
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_4",
+              "device_time_us": 4.543999999999869
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_4",
+              "device_time_us": 4.511999999999716
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_mul_neg_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_1",
+              "device_time_us": 3.8720000000002983
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_mul_neg_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_1",
+              "device_time_us": 3.838999999999942
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 30,
+          "kernel_event_time_ms": 0.09840099999999893,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 7.232000000000198
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 6.976000000000113
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 4.5759999999997945
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 4.51299999999992
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.2000000000000455
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.0720000000001164
+            },
+            {
+              "name": "triton_poi_fused_cat_lift_fresh_mul_slice_zeros_like_13",
+              "device_time_us": 2.94399999999996
+            },
+            {
+              "name": "triton_poi_fused_cat_lift_fresh_mul_slice_zeros_like_13",
+              "device_time_us": 2.912000000000262
+            }
+          ]
+        }
+      }
+    },
+    {
+      "arm": "independent",
+      "batch_per_seed": 1,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.5415464000009251,
+            0.5560947999981636,
+            0.5404742999985501,
+            0.5668485000001056,
+            0.5370223999989321,
+            0.5397668000000522,
+            0.5350496999994903,
+            0.48380370000131734,
+            0.4881092000005083,
+            0.5864250999991327,
+            0.4894295999974929,
+            0.5556201000047167,
+            0.5012045999990278,
+            0.4888250000021799,
+            0.49866699999938646,
+            0.5123328000024685,
+            0.47605679999946915,
+            0.5043951000004654,
+            0.5199468999990131,
+            0.4966436999950474,
+            0.4945969999994304,
+            0.5125944999974763,
+            0.5216361000009329,
+            0.5950913999981822,
+            0.5262227999992319,
+            0.5026115000021036,
+            0.5004809000013211,
+            0.49650400000018635,
+            0.506083900000931,
+            0.5105813000000126
+          ],
+          "cuda_ms": [
+            0.5388256072998047,
+            0.5535711765289306,
+            0.535971212387085,
+            0.5643968105316162,
+            0.5345280170440674,
+            0.5373824119567872,
+            0.5326687812805175,
+            0.48148479461669924,
+            0.48578882217407227,
+            0.5841055870056152,
+            0.4872128009796143,
+            0.5533664226531982,
+            0.49891839027404783,
+            0.48660478591918943,
+            0.496233606338501,
+            0.5072800159454346,
+            0.4738880157470703,
+            0.5020224094390869,
+            0.5175327777862548,
+            0.4943871974945068,
+            0.4923520088195801,
+            0.5102464199066162,
+            0.5190656185150146,
+            0.5920896053314209,
+            0.5238719940185547,
+            0.50032639503479,
+            0.4980800151824951,
+            0.4941823959350586,
+            0.5037631988525391,
+            0.5082208156585694
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.7427174000042669,
+            0.785884999999098,
+            0.7624571000008018,
+            0.7506907999982104,
+            0.7850348000033591,
+            0.7631886000012855,
+            0.7670409000013478,
+            0.7522523000034198,
+            0.7007707000013852,
+            0.7280116000004,
+            0.7201935000011872,
+            0.772730699998192,
+            0.7324168000025111,
+            0.7286856999996871,
+            0.7167033000030187,
+            0.7609999999999673,
+            0.711691199995812,
+            0.73797609999815,
+            0.7923758000004,
+            0.7035788999985471,
+            0.7406086999992567,
+            0.7476285999985066,
+            0.7041995999998107,
+            0.9359764999999243,
+            0.7257396999989396,
+            0.7239636000008431,
+            0.7395894000012504,
+            0.7192148999990877,
+            0.721540299997514,
+            0.7322319000024891
+          ],
+          "cuda_ms": [
+            0.7402368068695069,
+            0.7833727836608887,
+            0.7600480079650879,
+            0.7482143878936768,
+            0.7825471878051757,
+            0.7607872009277343,
+            0.7645887851715087,
+            0.749945592880249,
+            0.6984096050262452,
+            0.7257760047912598,
+            0.7178431987762451,
+            0.7679615974426269,
+            0.7301472187042236,
+            0.7263584136962891,
+            0.714355182647705,
+            0.7586048126220704,
+            0.7093664169311523,
+            0.7354400157928467,
+            0.7878272056579589,
+            0.7012351989746094,
+            0.7383071899414062,
+            0.7453152179718018,
+            0.7019167900085449,
+            0.9333632469177247,
+            0.7233535766601562,
+            0.7215104103088379,
+            0.7372479915618897,
+            0.7155104160308838,
+            0.7191264152526855,
+            0.72991042137146
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.33520559999828947,
+            0.3442895000034696,
+            0.32350710000059735,
+            0.3217502999973476,
+            0.3209802000014861,
+            0.3186088000006748,
+            0.3205995999962852,
+            0.30704289999903267,
+            0.3213076000008641,
+            0.2990977000024486,
+            0.2956536999988657,
+            0.31927420000101847,
+            0.30836259999773574,
+            0.3149078000035388,
+            0.3458817000023373,
+            0.318514299999606,
+            0.32269260000248323,
+            0.31375579999917136,
+            0.328175099997452,
+            0.3193167999995694,
+            0.30423629999631885,
+            0.30603369999653296,
+            0.29959800000369796,
+            0.32517489999577265,
+            0.3274383000018588,
+            0.3138732000024902,
+            0.3527593000001161,
+            0.30170949999615004,
+            0.30715020000116056,
+            0.33715650000090136
+          ],
+          "cuda_ms": [
+            0.33296959400177,
+            0.3418175935745239,
+            0.32105920314788816,
+            0.31963200569152833,
+            0.3186048030853271,
+            0.316211199760437,
+            0.31811840534210206,
+            0.30460801124572756,
+            0.3190783977508545,
+            0.2967583894729614,
+            0.29342079162597656,
+            0.3166879892349243,
+            0.3058464050292969,
+            0.3124351978302002,
+            0.3418303966522217,
+            0.31620800495147705,
+            0.3201728105545044,
+            0.31143999099731445,
+            0.32566080093383787,
+            0.3171072006225586,
+            0.3020224094390869,
+            0.30376639366149905,
+            0.2973311901092529,
+            0.322873592376709,
+            0.3250175952911377,
+            0.3114975929260254,
+            0.349068808555603,
+            0.2994368076324463,
+            0.30494399070739747,
+            0.3345056056976318
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.575273696266299,
+        "bootstrap_95pct": [
+          0.5671465362149688,
+          0.5822800179401557
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 22,
+          "kernel_event_time_ms": 0.07631700000000365,
+          "top_kernel_events": [
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 5.568000000000211
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.736000000000786
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_3",
+              "device_time_us": 4.47899999999936
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_3",
+              "device_time_us": 4.352000000000771
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.3200000000006185
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.191999999999098
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_select_sigmoid_slice_sub_transpose_unsqueeze_view_where_2",
+              "device_time_us": 3.6480000000001382
+            },
+            {
+              "name": "triton_poi_fused_add_div_exp_expm1_lt_mul_neg_pow_rsub_sigmoid_slice_stack_unsqueeze_where_4",
+              "device_time_us": 3.6479999999992287
+            }
+          ]
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 54,
+          "kernel_event_time_ms": 0.18633400000000097,
+          "top_kernel_events": [
+            {
+              "name": "triton_poi_fused_add_cat_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 7.744000000000142
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 7.679999999999836
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_20",
+              "device_time_us": 7.135999999999967
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_20",
+              "device_time_us": 6.976000000000113
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.768000000000029
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.576000000000022
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_7",
+              "device_time_us": 4.576000000000022
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_7",
+              "device_time_us": 4.512000000000171
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 30,
+          "kernel_event_time_ms": 0.09836599999999954,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 6.975999999999658
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 6.975999999999658
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 4.576000000000022
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 4.543000000000575
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.16800000000012
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.104000000000269
+            },
+            {
+              "name": "triton_poi_fused_cat_lift_fresh_mul_slice_zeros_like_13",
+              "device_time_us": 2.9440000000004147
+            },
+            {
+              "name": "triton_poi_fused_cat_lift_fresh_mul_slice_zeros_like_13",
+              "device_time_us": 2.9440000000004147
+            }
+          ]
+        }
+      }
+    },
+    {
+      "arm": "shared_heads",
+      "batch_per_seed": 1,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.5885250999995151,
+            0.6100411000034001,
+            0.5958438000050137,
+            0.5919279000011102,
+            0.5983563000029335,
+            0.5903711000030398,
+            0.6027630000005502,
+            0.5576915000006011,
+            0.5801055000006272,
+            0.5552217999991171,
+            0.5746853999994528,
+            0.5633658000022024,
+            0.5677946999981032,
+            0.5611558999987665,
+            0.5665743999998085,
+            0.5451899000036065,
+            0.5824804999974731,
+            0.5566220000048361,
+            0.581640000001471,
+            0.5788927000025978,
+            0.6107799000005798,
+            0.5698750000021846,
+            0.5423156000006202,
+            0.5911711999999625,
+            0.5668264999997064,
+            0.5681723000009242,
+            0.6439275999980509,
+            0.5701633999990463,
+            0.5554615999983525,
+            0.6151982999995198
+          ],
+          "cuda_ms": [
+            0.5860991954803467,
+            0.6075583934783936,
+            0.5934751987457275,
+            0.5895904064178467,
+            0.595798397064209,
+            0.5879807949066163,
+            0.6002624034881592,
+            0.5554143905639648,
+            0.5777760028839112,
+            0.5527520179748535,
+            0.5723104000091552,
+            0.5610239982604981,
+            0.5654528141021729,
+            0.5586944103240967,
+            0.5642240047454834,
+            0.5428927898406982,
+            0.5799935817718506,
+            0.5543776035308838,
+            0.5792928218841553,
+            0.5765376091003418,
+            0.608355188369751,
+            0.567414379119873,
+            0.540012788772583,
+            0.5888031959533692,
+            0.564524793624878,
+            0.5658624172210693,
+            0.6414847850799561,
+            0.5677728176116943,
+            0.5530176162719727,
+            0.6127583980560303
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.8319814999993014,
+            0.8508859000016855,
+            0.9404007999989972,
+            0.8984069000007366,
+            0.8927886999970269,
+            0.829943599995886,
+            0.8693144000005759,
+            0.796556799997461,
+            0.7982614000013655,
+            0.8047344999965844,
+            0.7766430000003766,
+            0.7862517999967622,
+            0.7765742000003684,
+            0.7794520000004468,
+            0.8439253999995344,
+            0.7695073000036246,
+            0.7778003999987959,
+            0.7950076999975408,
+            0.854620799998429,
+            0.8155773999988014,
+            0.8202154000002793,
+            0.7995420999975522,
+            0.7920513999977175,
+            0.8220448999963992,
+            0.829359899995552,
+            0.8252742000024682,
+            0.8601226999985556,
+            0.7636695999963194,
+            0.8117705999950431,
+            0.8145006999995985
+          ],
+          "cuda_ms": [
+            0.8295840263366699,
+            0.8485952377319336,
+            0.9379648208618164,
+            0.896019172668457,
+            0.8901887893676758,
+            0.8274975776672363,
+            0.8665727615356446,
+            0.7942431926727295,
+            0.7958816051483154,
+            0.8024160385131835,
+            0.774345588684082,
+            0.7838687896728516,
+            0.7743552207946778,
+            0.7772128105163574,
+            0.8415231704711914,
+            0.7672351837158203,
+            0.7753727912902832,
+            0.7926720142364502,
+            0.8523263931274414,
+            0.8123904228210449,
+            0.8178463935852051,
+            0.7972864151000977,
+            0.7897920131683349,
+            0.8197888374328614,
+            0.8270976066589355,
+            0.8228863716125489,
+            0.8562399864196777,
+            0.7614431858062745,
+            0.8093728065490723,
+            0.8122367858886719
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.30943510000156493,
+            0.32078940000133116,
+            0.36271710000050916,
+            0.345030399995494,
+            0.3315359999987777,
+            0.3406956999981503,
+            0.3582621999953517,
+            0.31434359999593653,
+            0.3048208999985036,
+            0.2951311000003898,
+            0.29512660000250435,
+            0.3039467999997214,
+            0.3250039000022298,
+            0.3033424000022933,
+            0.30188500000463137,
+            0.2982646999953431,
+            0.31424480000055155,
+            0.2998440999988361,
+            0.3227666999976009,
+            0.3187754999999015,
+            0.5126750999977503,
+            0.3517687999988084,
+            0.3136368000014045,
+            0.30661879999911434,
+            0.3203097000039179,
+            0.31127679999940483,
+            0.33302159999948344,
+            0.31035810000048514,
+            0.33117770000217206,
+            0.2997965000020031
+          ],
+          "cuda_ms": [
+            0.3069983959197998,
+            0.31825919151306153,
+            0.35991361141204836,
+            0.3424288034439087,
+            0.3289184093475342,
+            0.33821759223937986,
+            0.3556672096252441,
+            0.31191039085388184,
+            0.30246400833129883,
+            0.29284799098968506,
+            0.2928031921386719,
+            0.30164480209350586,
+            0.3225759983062744,
+            0.30111041069030764,
+            0.2996000051498413,
+            0.2959775924682617,
+            0.3117439985275269,
+            0.29769599437713623,
+            0.3201600074768066,
+            0.31641600131988523,
+            0.510038423538208,
+            0.34815680980682373,
+            0.3110368013381958,
+            0.30233919620513916,
+            0.317961597442627,
+            0.30901761054992677,
+            0.33018879890441893,
+            0.30808000564575194,
+            0.3286463975906372,
+            0.297542405128479
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.613604964155966,
+        "bootstrap_95pct": [
+          0.6072566742707711,
+          0.6214086193923027
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 24,
+          "kernel_event_time_ms": 0.08303900000000021,
+          "top_kernel_events": [
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.800000000000182
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.704000000000178
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.576000000000022
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_select_sigmoid_slice_sub_unsqueeze_where_0",
+              "device_time_us": 4.512000000000171
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_select_sigmoid_slice_sub_unsqueeze_where_0",
+              "device_time_us": 4.44800000000032
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.44800000000032
+            },
+            {
+              "name": "void gemmk1_kernel<int, float, 256, 5, true, false, false, false, cublasGemvTensorStridedBatched<float const>, cublasGemvTensorStridedBatched<float const>, cubl",
+              "device_time_us": 3.680000000000291
+            },
+            {
+              "name": "triton_poi_fused_add_div_exp_expm1_lt_mul_neg_pow_rsub_sigmoid_slice_stack_unsqueeze_where_3",
+              "device_time_us": 3.6799999999998363
+            }
+          ]
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 56,
+          "kernel_event_time_ms": 0.19286200000000145,
+          "top_kernel_events": [
+            {
+              "name": "triton_poi_fused_add_cat_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_4",
+              "device_time_us": 7.776000000000295
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_4",
+              "device_time_us": 7.744000000000142
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_19",
+              "device_time_us": 7.072000000000116
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_19",
+              "device_time_us": 6.9760000000005675
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.800000000000182
+            },
+            {
+              "name": "std::enable_if<!(false), void>::type internal::gemvx::kernel<int, int, float, float, float, float, false, true, true, false, 6, false, cublasGemvParamsEx<int, c",
+              "device_time_us": 4.639999999999873
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_6",
+              "device_time_us": 4.574999999999818
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_6",
+              "device_time_us": 4.544000000000324
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 30,
+          "kernel_event_time_ms": 0.09817300000000205,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 6.975999999999658
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 6.975999999999658
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 4.575000000000273
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 4.511999999999716
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.16800000000012
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.0720000000001164
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_3",
+              "device_time_us": 2.912000000000262
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_4",
+              "device_time_us": 2.912000000000262
+            }
+          ]
+        }
+      }
+    },
+    {
+      "arm": "formula",
+      "batch_per_seed": 642,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.19725880000009965,
+            0.19299379999893063,
+            0.17178230000354233,
+            0.18289810000169382,
+            0.1725861000011264,
+            0.19198360000132197,
+            0.1691654000012477,
+            0.17956660000209013,
+            0.1697536999984095,
+            0.19645169999762402,
+            0.18045420000021295,
+            0.18370050000271476,
+            0.17361299999834046,
+            0.18396789999997054,
+            0.1759514000013951,
+            0.18689449999556018,
+            0.17702080000390197,
+            0.19114730000069358,
+            0.17209569999749874,
+            0.1846985999975459,
+            0.16892130000201178,
+            0.20460490000004938,
+            0.17510530000208746,
+            0.20236710000176572,
+            0.1855403000035949,
+            0.1858513000001949,
+            0.1733856999976524,
+            0.18262980000258722,
+            0.1680670000041573,
+            0.18164809999916542
+          ],
+          "cuda_ms": [
+            0.19328960180282592,
+            0.19040640592575073,
+            0.1692031979560852,
+            0.180348801612854,
+            0.17006720304489137,
+            0.18918399810791015,
+            0.166703999042511,
+            0.17698880434036254,
+            0.16703039407730103,
+            0.19383039474487304,
+            0.1778272032737732,
+            0.1811519980430603,
+            0.17096960544586182,
+            0.18141759634017945,
+            0.17348159551620485,
+            0.18430720567703246,
+            0.17449920177459716,
+            0.18852479457855226,
+            0.16937919855117797,
+            0.18217600584030152,
+            0.16640959978103637,
+            0.20169920921325685,
+            0.17234879732131958,
+            0.19968639612197875,
+            0.1827712059020996,
+            0.1833343982696533,
+            0.17080639600753783,
+            0.18017280101776123,
+            0.16553280353546143,
+            0.17913919687271118
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.47618499999657615,
+            0.4787403999955586,
+            0.4534151000029851,
+            0.4613651999989088,
+            0.46457259999783673,
+            0.4734450000000834,
+            0.45192449999831297,
+            0.4634936000002199,
+            0.4468350999957238,
+            0.5218154999965918,
+            0.4549530000019786,
+            0.4678957999999511,
+            0.45615459999908126,
+            0.46979420000070604,
+            0.4489225999975588,
+            0.4871075999972163,
+            0.44225890000006984,
+            0.46540110000137247,
+            0.4633518999980879,
+            0.48250350000103026,
+            0.4555615000015223,
+            0.4776418000005833,
+            0.4744701999982226,
+            0.48874789999899804,
+            0.46228530000007595,
+            0.4674824999995053,
+            0.4533863000006022,
+            0.46935390000157895,
+            0.4432283000028292,
+            0.47554120000086186
+          ],
+          "cuda_ms": [
+            0.4734975814819336,
+            0.4761792182922363,
+            0.45088958740234375,
+            0.45885438919067384,
+            0.46198720932006837,
+            0.47072639465332033,
+            0.44941120147705077,
+            0.46080641746520995,
+            0.444320011138916,
+            0.5191679954528808,
+            0.45240001678466796,
+            0.46362881660461425,
+            0.4535999774932861,
+            0.46713919639587403,
+            0.4464384078979492,
+            0.48459839820861816,
+            0.4387360095977783,
+            0.4628416061401367,
+            0.4608128070831299,
+            0.47986559867858886,
+            0.45308799743652345,
+            0.47232961654663086,
+            0.47191362380981444,
+            0.4862239837646484,
+            0.4597023963928223,
+            0.46497597694396975,
+            0.45081281661987305,
+            0.466707181930542,
+            0.44071040153503416,
+            0.47285118103027346
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.3926879999994526,
+            0.4015331999994487,
+            0.39386370000329407,
+            0.388495099997499,
+            0.3896110999960456,
+            0.39141029999996135,
+            0.38291699999604134,
+            0.3951734999986911,
+            0.3815271999997094,
+            0.391253999998753,
+            0.3943273999993835,
+            0.39115659999993113,
+            0.3811345000030997,
+            0.3954545999988568,
+            0.3865883000003123,
+            0.4025816999956078,
+            0.38735600000450177,
+            0.38565030000086153,
+            0.3805957999986731,
+            0.3958130999990317,
+            0.3878794999991442,
+            0.3931691999980558,
+            0.410189500001934,
+            0.40141670000366503,
+            0.39939170000025115,
+            0.39122659999861753,
+            0.42547909999939293,
+            0.3941946999987067,
+            0.38311939999857714,
+            0.4281079000008958
+          ],
+          "cuda_ms": [
+            0.3900480031967163,
+            0.39883520603179934,
+            0.3913503885269165,
+            0.38592960834503176,
+            0.3870368003845215,
+            0.38747200965881345,
+            0.38035199642181394,
+            0.39258561134338377,
+            0.37903680801391604,
+            0.38870398998260497,
+            0.39178240299224854,
+            0.3885279893875122,
+            0.37854719161987305,
+            0.39284799098968504,
+            0.3840384006500244,
+            0.3999775886535645,
+            0.3847584009170532,
+            0.3829216003417969,
+            0.3778079986572266,
+            0.39142398834228515,
+            0.38527679443359375,
+            0.3905087947845459,
+            0.40760321617126466,
+            0.39876480102539064,
+            0.3967168092727661,
+            0.3886656045913696,
+            0.422870397567749,
+            0.3915519952774048,
+            0.38055360317230225,
+            0.4254432201385498
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.1591859868712575,
+        "bootstrap_95pct": [
+          0.14615660228267513,
+          0.1642412459340295
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 0,
+          "kernel_event_time_ms": 0.0,
+          "top_kernel_events": []
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 30,
+          "kernel_event_time_ms": 0.1826219999999994,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_17",
+              "device_time_us": 46.6869999999999
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_17",
+              "device_time_us": 34.110999999999876
+            },
+            {
+              "name": "triton_poi_fused_add_bitwise_or_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_stack_sub_where_0",
+              "device_time_us": 8.672000000000025
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_4",
+              "device_time_us": 7.008000000000266
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_mul_neg_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_1",
+              "device_time_us": 4.735999999999876
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_3",
+              "device_time_us": 4.512000000000171
+            },
+            {
+              "name": "triton_poi_fused_add_lt_mul_neg_pow_reciprocal_rsub_slice_unsqueeze_where_2",
+              "device_time_us": 4.288000000000011
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_8",
+              "device_time_us": 3.5520000000001346
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 24,
+          "kernel_event_time_ms": 0.15193399999999838,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 46.36800000000039
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 33.69499999999971
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 5.472999999999956
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.5839999999998327
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_2",
+              "device_time_us": 3.4879999999993743
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.48700000000008
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.456000000000131
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_11",
+              "device_time_us": 3.2640000000001237
+            }
+          ]
+        }
+      }
+    },
+    {
+      "arm": "independent",
+      "batch_per_seed": 642,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.5387719000054858,
+            0.5206966999992346,
+            0.5142513000009785,
+            0.5164299000000483,
+            0.5099665999978242,
+            0.5163972999980615,
+            0.5188580999970327,
+            0.49527730000136216,
+            0.4918748000022788,
+            0.49850039999910223,
+            0.5264838000016425,
+            0.5136436999976013,
+            0.4949028999988059,
+            0.4985368000006929,
+            0.5126862000054189,
+            0.5070275999969454,
+            0.5142460999991272,
+            0.5114364999997179,
+            0.49581319999560947,
+            0.4924463999998352,
+            0.497494699999379,
+            0.5060836999973617,
+            0.5448876000002656,
+            0.5062780999992356,
+            0.5065393999984735,
+            0.5127572999981567,
+            0.52661779999994,
+            0.5241683000008379,
+            0.5031312000028265,
+            0.5094650999978967
+          ],
+          "cuda_ms": [
+            0.5361728191375732,
+            0.5178719997406006,
+            0.5115839958190918,
+            0.5138815879821778,
+            0.5073472023010254,
+            0.5137856006622314,
+            0.516323184967041,
+            0.49274559020996095,
+            0.4892255783081055,
+            0.49592318534851076,
+            0.5238304138183594,
+            0.5110176086425782,
+            0.492307186126709,
+            0.4960224151611328,
+            0.5099520206451416,
+            0.5044864177703857,
+            0.5117311954498291,
+            0.5089280128479003,
+            0.493225622177124,
+            0.4897727966308594,
+            0.4948671817779541,
+            0.5035200119018555,
+            0.5421120166778565,
+            0.5037312030792236,
+            0.50381441116333,
+            0.5101312160491943,
+            0.523958396911621,
+            0.5208864212036133,
+            0.5005792140960693,
+            0.5068128108978271
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.7995902999994087,
+            0.7821844000034162,
+            0.7653995999987728,
+            0.7720805000019482,
+            0.7615011999973831,
+            0.7721567000032792,
+            0.7615704999977879,
+            0.7977839000034237,
+            0.7692859000030694,
+            0.7878200000050128,
+            0.7892433999984405,
+            0.7824067000001378,
+            0.7518849000007322,
+            0.7598694999956024,
+            0.7873609999990094,
+            0.7602712999982941,
+            0.7859840000037366,
+            0.7620865999967918,
+            0.7605287999979282,
+            0.7715899000004356,
+            0.746128499997667,
+            0.7863928000006126,
+            0.7680019000019911,
+            0.7886966999990364,
+            0.7668418000037036,
+            0.810503399998197,
+            0.8024037999973643,
+            0.8385433999990255,
+            0.7525233000023945,
+            0.761933000001136
+          ],
+          "cuda_ms": [
+            0.7970016002655029,
+            0.7793407917022706,
+            0.7628511905670166,
+            0.7695104122161865,
+            0.758892822265625,
+            0.7695136070251465,
+            0.7588575839996338,
+            0.7952000141143799,
+            0.7665599822998047,
+            0.7852287769317627,
+            0.786627197265625,
+            0.7773727893829345,
+            0.7492800235748291,
+            0.75731201171875,
+            0.7848288059234619,
+            0.7577248096466065,
+            0.7833600044250488,
+            0.7595712184906006,
+            0.7578623771667481,
+            0.7690400123596192,
+            0.743555212020874,
+            0.7837823867797852,
+            0.7653535842895508,
+            0.7861248016357422,
+            0.7643040180206299,
+            0.8078463554382325,
+            0.7998432159423828,
+            0.835916805267334,
+            0.7499839782714843,
+            0.7594175815582276
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.3874016999986907,
+            0.40841050000040013,
+            0.3881565999961367,
+            0.39558340000098724,
+            0.3887778999967395,
+            0.3881630000023506,
+            0.3975863999983176,
+            0.3840695000008054,
+            0.403188500001761,
+            0.38896279999676153,
+            0.4108505999965928,
+            0.40447360000257504,
+            0.38666159999820593,
+            0.40647460000400315,
+            0.4108231000031992,
+            0.38942109999879904,
+            0.39799560000233214,
+            0.39658629999621553,
+            0.3980680999973174,
+            0.40874499999858926,
+            0.38819009999997434,
+            0.3936033000002226,
+            0.40043770000011136,
+            0.4113566000000901,
+            0.40385159999800635,
+            0.39285450000079436,
+            0.4159598000001097,
+            0.38602359999799774,
+            0.3956907000031151,
+            0.3850145000001248
+          ],
+          "cuda_ms": [
+            0.3848639965057373,
+            0.40583038330078125,
+            0.3853919982910156,
+            0.3930624008178711,
+            0.3843519926071167,
+            0.38471360206604005,
+            0.3949631929397583,
+            0.38155839443206785,
+            0.4006815910339355,
+            0.38644800186157224,
+            0.40790719985961915,
+            0.4019040107727051,
+            0.3840991973876953,
+            0.4039135932922363,
+            0.4081855773925781,
+            0.3868864059448242,
+            0.39447360038757323,
+            0.39404799938201907,
+            0.39549119472503663,
+            0.40621438026428225,
+            0.38568639755249023,
+            0.39100160598754885,
+            0.3977952003479004,
+            0.40867199897766116,
+            0.4013343811035156,
+            0.39026880264282227,
+            0.4133152008056641,
+            0.3833120107650757,
+            0.3930176019668579,
+            0.38246400356292726
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.4823235402285061,
+        "bootstrap_95pct": [
+          0.47851651376837856,
+          0.49116461868664474
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 10,
+          "kernel_event_time_ms": 0.1427840000000001,
+          "top_kernel_events": [
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 39.77599999999984
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 38.71900000000005
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_expand_mul_permute_select_silu_slice_unsqueeze_view_0",
+              "device_time_us": 15.77599999999984
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_3",
+              "device_time_us": 10.33600000000024
+            },
+            {
+              "name": "triton_poi_fused_add_permute_silu_unsqueeze_view_1",
+              "device_time_us": 8.705000000000382
+            },
+            {
+              "name": "triton_poi_fused__unsafe_view_add_cat_clone_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 7.648000000000138
+            },
+            {
+              "name": "triton_poi_fused__unsafe_view_add_cat_clone_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 7.6159999999999854
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_div_exp_expm1_neg_permute_select_slice_unsqueeze_view_2",
+              "device_time_us": 4.895999999999731
+            }
+          ]
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 40,
+          "kernel_event_time_ms": 0.3382980000000014,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_20",
+              "device_time_us": 46.335000000000036
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 39.9670000000001
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 38.6869999999999
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_20",
+              "device_time_us": 33.56800000000021
+            },
+            {
+              "name": "triton_poi_fused__unsafe_view_add_cat_clone_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 21.888000000000147
+            },
+            {
+              "name": "triton_poi_fused__unsafe_view_add_cat_clone_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 21.407000000000153
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_expand_mul_permute_select_silu_slice_unsqueeze_view_0",
+              "device_time_us": 15.903999999999996
+            },
+            {
+              "name": "triton_poi_fused_add_permute_silu_unsqueeze_view_1",
+              "device_time_us": 8.256000000000313
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 24,
+          "kernel_event_time_ms": 0.15276699999999915,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 46.62299999999959
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 33.66300000000001
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 5.471999999999753
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.6159999999999854
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.519999999999982
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_2",
+              "device_time_us": 3.519999999999982
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.519999999999982
+            },
+            {
+              "name": "triton_poi_fused_cat_lift_fresh_mul_slice_zeros_like_13",
+              "device_time_us": 3.3919999999998254
+            }
+          ]
+        }
+      }
+    },
+    {
+      "arm": "shared_heads",
+      "batch_per_seed": 642,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.6042468999964967,
+            0.6153851000021859,
+            0.5992165000009209,
+            0.5960281999989547,
+            0.607850099999041,
+            0.6202216000019689,
+            0.6004302999997435,
+            0.592213800001673,
+            0.6015253000043685,
+            0.6007425000007061,
+            0.7388182999989112,
+            0.5884627999989789,
+            0.598847899999555,
+            0.609105999996018,
+            0.6099952999989,
+            0.6205240999975103,
+            0.6259188999990783,
+            0.5852758000003178,
+            0.6549221000000216,
+            0.5945456000006288,
+            0.6289324999954715,
+            0.6126462000054289,
+            0.5915544000004047,
+            0.6568533000006482,
+            0.6115577999992183,
+            0.5968600000016977,
+            0.6700668999997106,
+            0.6114900999989459,
+            0.600641299996596,
+            0.5835056000023542
+          ],
+          "cuda_ms": [
+            0.6016448020935059,
+            0.6127935886383057,
+            0.5966527938842774,
+            0.5934720039367676,
+            0.6051199913024903,
+            0.617628812789917,
+            0.5978528022766113,
+            0.5896895885467529,
+            0.598902416229248,
+            0.5982143878936768,
+            0.7361792087554931,
+            0.5840640068054199,
+            0.596230411529541,
+            0.606496000289917,
+            0.6072288036346436,
+            0.6178944110870361,
+            0.6232927799224853,
+            0.5827648162841796,
+            0.6521696090698242,
+            0.591919994354248,
+            0.6261472225189209,
+            0.6100224018096924,
+            0.5879456043243408,
+            0.6541920185089112,
+            0.6089759826660156,
+            0.5943039894104004,
+            0.6673247814178467,
+            0.6089056015014649,
+            0.5980991840362548,
+            0.5810239791870118
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.8769810000046618,
+            0.8566192999978739,
+            0.8919093999963934,
+            0.8554022999987865,
+            0.9239375000049677,
+            0.9122146000038356,
+            0.8867763000012019,
+            0.8581074000005628,
+            0.8828681000011329,
+            0.8731699999998455,
+            0.9509052999987944,
+            0.8672002999958295,
+            0.8887562999973397,
+            0.8709144999954788,
+            0.9040979000019433,
+            0.8642675000032796,
+            0.9146278000002894,
+            0.8614300999965963,
+            0.9231551000027594,
+            0.8829685000023346,
+            1.1833196999987194,
+            0.8798058000024866,
+            0.9038708999980827,
+            0.9177740000041013,
+            0.9096886000008908,
+            0.8844607000014548,
+            0.9281729000008454,
+            0.899693799999568,
+            0.8733945000017229,
+            0.8668501999977707
+          ],
+          "cuda_ms": [
+            0.8744159698486328,
+            0.8538623809814453,
+            0.8875743865966796,
+            0.8528223991394043,
+            0.918934440612793,
+            0.9096960067749024,
+            0.8841952323913574,
+            0.8555647850036621,
+            0.8802975654602051,
+            0.8705951690673828,
+            0.948265552520752,
+            0.8646783828735352,
+            0.8862272262573242,
+            0.8684096336364746,
+            0.9015392303466797,
+            0.8617280006408692,
+            0.9120256423950195,
+            0.8588768005371094,
+            0.9205535888671875,
+            0.8804191589355469,
+            1.1804448127746583,
+            0.8771967887878418,
+            0.9011391639709473,
+            0.9149600028991699,
+            0.9070560455322265,
+            0.8818719863891602,
+            0.9254112243652344,
+            0.8971199989318848,
+            0.870905590057373,
+            0.8642687797546387
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.39829909999866686,
+            0.3863297999998849,
+            0.3944332999992639,
+            0.3920531000005667,
+            0.3938344000005145,
+            0.3995319000011932,
+            0.4006589000027816,
+            0.3824598999983664,
+            0.38651410000056785,
+            0.383832799997208,
+            0.4078309999954399,
+            0.39507239999920785,
+            0.39164000000369015,
+            0.39662840000005417,
+            0.3916256000024987,
+            0.3832972999987305,
+            0.43771840000204065,
+            0.41403729999842653,
+            0.3947031999985029,
+            0.3923990999965099,
+            0.5105700999990859,
+            0.41515870000239374,
+            0.4139231000010568,
+            0.4048635000003742,
+            0.4015227000024879,
+            0.40607809999642086,
+            0.4117318999988129,
+            0.3893215000005057,
+            0.38823689999958333,
+            0.40152799999759736
+          ],
+          "cuda_ms": [
+            0.3957664012908936,
+            0.3838047981262207,
+            0.39174718856811525,
+            0.38950400352478026,
+            0.39134399890899657,
+            0.3969536066055298,
+            0.39814081192016604,
+            0.37994239330291746,
+            0.3839456081390381,
+            0.3813215970993042,
+            0.4040383815765381,
+            0.39223361015319824,
+            0.388972806930542,
+            0.3940256118774414,
+            0.38840320110321047,
+            0.38058559894561766,
+            0.435148811340332,
+            0.41146559715270997,
+            0.3921760082244873,
+            0.38988480567932127,
+            0.5078720092773438,
+            0.41257920265197756,
+            0.41141438484191895,
+            0.40227198600769043,
+            0.3989792108535767,
+            0.40349440574645995,
+            0.4090400218963623,
+            0.3866528034210205,
+            0.38572158813476565,
+            0.39879679679870605
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.5559985430893807,
+        "bootstrap_95pct": [
+          0.5470070983293489,
+          0.5591014449798445
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 13,
+          "kernel_event_time_ms": 0.07491100000000142,
+          "top_kernel_events": [
+            {
+              "name": "volta_sgemm_32x128_tn",
+              "device_time_us": 9.88799999999992
+            },
+            {
+              "name": "volta_sgemm_32x128_tn",
+              "device_time_us": 9.695999999999913
+            },
+            {
+              "name": "volta_sgemm_32x128_tn",
+              "device_time_us": 9.567000000000007
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_select_sigmoid_slice_sub_transpose_unsqueeze_view_where_2",
+              "device_time_us": 6.400000000000091
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_select_sigmoid_slice_sub_unsqueeze_where_0",
+              "device_time_us": 6.079999999999927
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_select_sigmoid_slice_sub_transpose_unsqueeze_view_where_2",
+              "device_time_us": 5.984000000000378
+            },
+            {
+              "name": "triton_poi_fused_add_div_exp_expm1_lt_mul_neg_pow_rsub_sigmoid_slice_stack_unsqueeze_where_3",
+              "device_time_us": 4.89600000000064
+            },
+            {
+              "name": "triton_poi_fused_add_div_exp_expm1_lt_mul_neg_pow_rsub_sigmoid_slice_stack_unsqueeze_where_3",
+              "device_time_us": 4.895999999999731
+            }
+          ]
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 45,
+          "kernel_event_time_ms": 0.28043700000000127,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_19",
+              "device_time_us": 45.853999999999814
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_19",
+              "device_time_us": 33.08600000000024
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_4",
+              "device_time_us": 21.278999999999996
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_4",
+              "device_time_us": 21.022999999999683
+            },
+            {
+              "name": "volta_sgemm_32x128_tn",
+              "device_time_us": 9.88799999999992
+            },
+            {
+              "name": "volta_sgemm_32x128_tn",
+              "device_time_us": 9.598999999999933
+            },
+            {
+              "name": "volta_sgemm_32x128_tn",
+              "device_time_us": 9.535999999999603
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_6",
+              "device_time_us": 5.440000000000055
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 24,
+          "kernel_event_time_ms": 0.14995100000000094,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 44.25600000000031
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 33.662999999999556
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 5.4399999999996
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.6159999999999854
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.4880000000002838
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.4880000000002838
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_2",
+              "device_time_us": 3.456000000000131
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_7",
+              "device_time_us": 3.2960000000002765
+            }
+          ]
+        }
+      }
+    },
+    {
+      "arm": "formula",
+      "batch_per_seed": 4096,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.23041790000206674,
+            0.22467499999834217,
+            0.19934829999783688,
+            0.1969678000023123,
+            0.17857359999879918,
+            0.1916657999970539,
+            0.1690099999962058,
+            0.19689220000032037,
+            0.18139929999847482,
+            0.18248309999648882,
+            0.17136069999992287,
+            0.19687120000071445,
+            0.1723752999964745,
+            0.18077729999959047,
+            0.17141579999702117,
+            0.22232750000057422,
+            0.1910470999973768,
+            0.18608230000154435,
+            0.17182010000169612,
+            0.23556500000267988,
+            0.1925274999962312,
+            0.236758099998724,
+            0.17897000000175467,
+            0.21512359999746877,
+            0.22116140000321138,
+            0.2142354999989493,
+            0.19309900000052949,
+            0.18426679999947737,
+            0.16929230000073403,
+            0.18551239999737845
+          ],
+          "cuda_ms": [
+            0.22552320957183838,
+            0.22188479900360109,
+            0.19639040231704713,
+            0.1942463994026184,
+            0.17591359615325927,
+            0.1888543963432312,
+            0.166486394405365,
+            0.19319039583206177,
+            0.17874239683151244,
+            0.17984639406204223,
+            0.1688159942626953,
+            0.194377601146698,
+            0.16993279457092286,
+            0.17821439504623413,
+            0.1687648057937622,
+            0.21975998878479003,
+            0.18852800130844116,
+            0.1835487961769104,
+            0.16927039623260498,
+            0.2327359914779663,
+            0.18998719453811647,
+            0.23424320220947265,
+            0.1746240019798279,
+            0.21244480609893798,
+            0.21829760074615479,
+            0.21160640716552734,
+            0.1903167963027954,
+            0.18164800405502318,
+            0.16679999828338624,
+            0.18297280073165895
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.5104655999957686,
+            0.572497200005273,
+            0.5030223999995087,
+            0.5106183000009423,
+            0.47333670000284656,
+            0.4836189000002378,
+            0.4634053000017957,
+            0.4745576000004803,
+            0.4943121999986033,
+            0.46725189999961003,
+            0.4527699999982815,
+            0.4666581000037695,
+            0.45541300000309093,
+            0.4745755999977064,
+            0.4442675000007057,
+            0.5261970999981713,
+            0.44858420000082333,
+            0.4931826999950317,
+            0.44599560000051497,
+            0.4794078000031732,
+            0.4564247000018895,
+            0.4964020999977947,
+            0.4760476999990715,
+            0.502213700002585,
+            0.5243894000045657,
+            0.4991907000032825,
+            0.45047790000012355,
+            0.47533680000242384,
+            0.47580440000274393,
+            0.49563199999624885
+          ],
+          "cuda_ms": [
+            0.5075583934783936,
+            0.5696095943450927,
+            0.5003456115722656,
+            0.5079775810241699,
+            0.47084479331970214,
+            0.48097920417785645,
+            0.4609568119049072,
+            0.4718944072723389,
+            0.4916831970214844,
+            0.46372160911560056,
+            0.4503039836883545,
+            0.4641632080078125,
+            0.45191359519958496,
+            0.47202558517456056,
+            0.4417888164520264,
+            0.5202400207519531,
+            0.446073579788208,
+            0.4906400203704834,
+            0.4432960033416748,
+            0.4767615795135498,
+            0.4538623809814453,
+            0.493942403793335,
+            0.47321281433105467,
+            0.49960641860961913,
+            0.521782398223877,
+            0.4965343952178955,
+            0.44797120094299314,
+            0.4727935791015625,
+            0.4732704162597656,
+            0.493120002746582
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.4436246000011579,
+            0.47596109999972214,
+            0.4436350999981187,
+            0.43274129999986144,
+            0.4386957999997776,
+            0.39178960000185725,
+            0.38953849999643353,
+            0.4476616999966154,
+            0.4098080000005666,
+            0.39600510000354916,
+            0.39737299999842435,
+            0.3944354999987354,
+            0.3831110000021454,
+            0.3854866999972728,
+            0.396203399998285,
+            0.4751101000010749,
+            0.3864389000000301,
+            0.39056850000065424,
+            0.38462030000232517,
+            0.3929200000015953,
+            0.3952645999959259,
+            0.40312820000281135,
+            0.39122000000020307,
+            0.4073280000000068,
+            0.49169449999908466,
+            0.42409320000160733,
+            0.38825809999707417,
+            0.42185570000015105,
+            0.3971743000022343,
+            0.4141141999980391
+          ],
+          "cuda_ms": [
+            0.4409664154052734,
+            0.4728096008300781,
+            0.44092798233032227,
+            0.42998719215393066,
+            0.4358367919921875,
+            0.38931200504302976,
+            0.3870719909667969,
+            0.44492158889770506,
+            0.40724802017211914,
+            0.39353280067443847,
+            0.39479680061340333,
+            0.39174718856811525,
+            0.38064000606536863,
+            0.3829184055328369,
+            0.39371840953826903,
+            0.4722815990447998,
+            0.3816832065582275,
+            0.3880959987640381,
+            0.38098878860473634,
+            0.39048640727996825,
+            0.39263999462127686,
+            0.4003007888793945,
+            0.3886624097824097,
+            0.40484161376953126,
+            0.48755202293395994,
+            0.42137918472290037,
+            0.38569281101226804,
+            0.4193312168121338,
+            0.39467198848724366,
+            0.41130881309509276
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.15249779536113073,
+        "bootstrap_95pct": [
+          0.1358061818404332,
+          0.16447243115623422
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 0,
+          "kernel_event_time_ms": 0.0,
+          "top_kernel_events": []
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 30,
+          "kernel_event_time_ms": 0.24149900000000024,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_17",
+              "device_time_us": 67.29500000000007
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_17",
+              "device_time_us": 63.327000000000226
+            },
+            {
+              "name": "triton_poi_fused_add_bitwise_or_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_stack_sub_where_0",
+              "device_time_us": 11.552000000000135
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_4",
+              "device_time_us": 11.423999999999978
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_mul_neg_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_1",
+              "device_time_us": 5.568000000000211
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_3",
+              "device_time_us": 4.320000000000164
+            },
+            {
+              "name": "triton_poi_fused_add_lt_mul_neg_pow_reciprocal_rsub_slice_unsqueeze_where_2",
+              "device_time_us": 4.0
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_12",
+              "device_time_us": 3.4559999999999036
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 24,
+          "kernel_event_time_ms": 0.2103020000000006,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 67.231
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 64.44599999999991
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 10.400000000000091
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.9680000000000746
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.4559999999999036
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_2",
+              "device_time_us": 3.423999999999978
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.3600000000001273
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_4",
+              "device_time_us": 3.3280000000004293
+            }
+          ]
+        }
+      }
+    },
+    {
+      "arm": "independent",
+      "batch_per_seed": 4096,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.5883723000010832,
+            0.613642199999731,
+            0.5701365000049918,
+            0.5440651000014896,
+            0.5467302999988988,
+            0.5320241000049464,
+            0.517454200002021,
+            0.5499599000017952,
+            0.5253263999975388,
+            0.5263069000022824,
+            0.514655799997854,
+            0.5018237000001591,
+            0.5017989999998917,
+            0.5084438999972463,
+            0.4931830999964859,
+            0.5163624000033451,
+            0.5110838000007334,
+            0.5107508000037342,
+            0.4992160000028889,
+            0.5272628000000168,
+            0.524153800000704,
+            0.5132802000048287,
+            0.5100062999986221,
+            0.5134842000018125,
+            0.5732822000027227,
+            0.539522499997247,
+            0.507141700001057,
+            0.5322018000015305,
+            0.4920920000017759,
+            0.5224894000036784
+          ],
+          "cuda_ms": [
+            0.5855999946594238,
+            0.610646390914917,
+            0.5672287940979004,
+            0.5413792133331299,
+            0.5440192222595215,
+            0.5293375968933105,
+            0.514243221282959,
+            0.5472864151000977,
+            0.5226912021636962,
+            0.5237055778503418,
+            0.5120096206665039,
+            0.4991903781890869,
+            0.4989759922027588,
+            0.5046239852905273,
+            0.49067840576171873,
+            0.5137279987335205,
+            0.5085184097290039,
+            0.5082143783569336,
+            0.4967199802398682,
+            0.5246687889099121,
+            0.5216608047485352,
+            0.5106016159057617,
+            0.5075295925140381,
+            0.5109087944030761,
+            0.5695903778076172,
+            0.5367616176605224,
+            0.5046080112457275,
+            0.5293888092041016,
+            0.48956799507141113,
+            0.5196832180023193
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.8831934999989244,
+            0.9072518999971635,
+            0.8445463999976255,
+            0.8364534000008916,
+            0.7907349999982216,
+            0.8197562000020753,
+            0.7766763999995874,
+            0.8220022999978482,
+            0.7985834999999497,
+            0.7975301999977091,
+            0.7847828000024037,
+            0.7640100000003258,
+            0.7710952000024918,
+            0.7927242999983264,
+            0.7557964000000084,
+            0.7687422999993032,
+            0.7637208000005558,
+            0.767286999996486,
+            0.7932337999989159,
+            0.8137827999973979,
+            0.7785350000006019,
+            0.777946900001325,
+            0.8031398000014178,
+            0.828379799997947,
+            0.9389921999968465,
+            1.1335665999979483,
+            0.7854686000030142,
+            0.8048895999991146,
+            0.7750133000001824,
+            0.7955193999976018
+          ],
+          "cuda_ms": [
+            0.8803135871887207,
+            0.9044992446899414,
+            0.8418848037719726,
+            0.8339743614196777,
+            0.7880383968353272,
+            0.8171392440795898,
+            0.7740863800048828,
+            0.8194239616394043,
+            0.7960256099700928,
+            0.7936831951141358,
+            0.7821760177612305,
+            0.7597375869750976,
+            0.7683680057525635,
+            0.7900928020477295,
+            0.7532479763031006,
+            0.7661695957183838,
+            0.7607711791992188,
+            0.7647168159484863,
+            0.7906816005706787,
+            0.8107071876525879,
+            0.7750080108642579,
+            0.7744128227233886,
+            0.800534439086914,
+            0.8257535934448242,
+            0.9361791610717773,
+            1.1306207656860352,
+            0.7828288078308105,
+            0.8020735740661621,
+            0.7723840236663818,
+            0.7928544044494629
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.4530669000018861,
+            0.44405940000160626,
+            0.40734579999934795,
+            0.415245499999628,
+            0.41327970000111236,
+            0.510025999994923,
+            0.40129740000338643,
+            0.40432319999581523,
+            0.3898822999985896,
+            0.41099919999965095,
+            0.39939449999906174,
+            0.41155080000407906,
+            0.3901790999975674,
+            0.39962779999882514,
+            0.39004219999583256,
+            0.38886090000005424,
+            0.43016419999730715,
+            0.3878033999967556,
+            0.4044513999986066,
+            0.41626420000397957,
+            0.4171085000052699,
+            0.4062328000031812,
+            0.39997199999675104,
+            0.4044002000000546,
+            0.420250499996655,
+            0.44973239999990255,
+            0.3991891999987729,
+            0.3959765999979936,
+            0.4020905999993829,
+            0.3972956999973576
+          ],
+          "cuda_ms": [
+            0.4501376152038574,
+            0.4412543773651123,
+            0.40482559204101565,
+            0.4126016139984131,
+            0.41075520515441893,
+            0.5073984146118165,
+            0.39875519275665283,
+            0.40183358192443847,
+            0.3873023986816406,
+            0.40796480178833006,
+            0.3968512058258057,
+            0.4090591907501221,
+            0.3877216100692749,
+            0.3970463991165161,
+            0.3874207973480225,
+            0.38638079166412354,
+            0.42461438179016114,
+            0.3851360082626343,
+            0.40194239616394045,
+            0.4135551929473877,
+            0.41466560363769533,
+            0.40365118980407716,
+            0.39711039066314696,
+            0.4017983913421631,
+            0.41756482124328614,
+            0.44678401947021484,
+            0.3965696096420288,
+            0.3933759927749634,
+            0.3993024110794067,
+            0.39481918811798095
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.4928878555632293,
+        "bootstrap_95pct": [
+          0.4858364426367307,
+          0.501286416593482
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 10,
+          "kernel_event_time_ms": 0.39132099999999853,
+          "top_kernel_events": [
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 108.2859999999996
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 103.32600000000002
+            },
+            {
+              "name": "triton_poi_fused_add_permute_silu_unsqueeze_view_1",
+              "device_time_us": 66.49499999999989
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_expand_mul_permute_select_silu_slice_unsqueeze_view_0",
+              "device_time_us": 54.68799999999965
+            },
+            {
+              "name": "triton_poi_fused_add_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_sigmoid_slice_sub_unsqueeze_where_3",
+              "device_time_us": 13.82400000000007
+            },
+            {
+              "name": "triton_poi_fused__unsafe_view_add_cat_clone_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 12.06399999999985
+            },
+            {
+              "name": "triton_poi_fused__unsafe_view_add_cat_clone_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 11.966999999999643
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_div_exp_expm1_neg_permute_select_slice_unsqueeze_view_2",
+              "device_time_us": 9.759999999999764
+            }
+          ]
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 40,
+          "kernel_event_time_ms": 0.6897150000000017,
+          "top_kernel_events": [
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 108.47800000000007
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 103.71000000000004
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_20",
+              "device_time_us": 68.12699999999995
+            },
+            {
+              "name": "triton_poi_fused_add_permute_silu_unsqueeze_view_1",
+              "device_time_us": 66.97499999999991
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_20",
+              "device_time_us": 66.78200000000015
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_expand_mul_permute_select_silu_slice_unsqueeze_view_0",
+              "device_time_us": 54.36700000000019
+            },
+            {
+              "name": "triton_poi_fused__unsafe_view_add_cat_clone_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 45.02300000000014
+            },
+            {
+              "name": "triton_poi_fused__unsafe_view_add_cat_clone_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_5",
+              "device_time_us": 44.95899999999983
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 24,
+          "kernel_event_time_ms": 0.2140450000000003,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 68.79899999999998
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 66.7510000000002
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 10.496000000000095
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.8400000000001455
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_2",
+              "device_time_us": 3.423999999999978
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.3920000000000528
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.3600000000001273
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_4",
+              "device_time_us": 3.2950000000000728
+            }
+          ]
+        }
+      }
+    },
+    {
+      "arm": "shared_heads",
+      "batch_per_seed": 4096,
+      "seed_count": 3,
+      "numeric_preflight_max_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "timings": {
+        "ionic_gates": {
+          "wall_ms": [
+            0.6708861000049637,
+            0.6971920000012233,
+            0.656687499997588,
+            0.6594841999969958,
+            0.6858912999973654,
+            0.8768603000021358,
+            0.6186114999991332,
+            0.61560899999904,
+            0.6291250000003856,
+            0.6143921999978375,
+            0.6019406000007166,
+            0.589629899997135,
+            0.643678300002648,
+            0.5921420999982274,
+            0.6079290999991827,
+            0.6164095999963592,
+            0.6798840000044493,
+            0.6032134000008682,
+            0.6227396999975099,
+            0.6136971999978869,
+            0.6151261000013619,
+            0.6290310999986559,
+            0.6240930999979355,
+            0.6407233000004453,
+            0.8107476000020597,
+            0.7479111999998622,
+            0.6022433999987697,
+            0.6207342999971388,
+            0.6338839000022745,
+            0.5931426000017836
+          ],
+          "cuda_ms": [
+            0.6681312084197998,
+            0.6942048072814941,
+            0.6537439823150635,
+            0.6560736179351807,
+            0.6831808090209961,
+            0.8739616394042968,
+            0.6160543918609619,
+            0.6129183769226074,
+            0.626470422744751,
+            0.6117792129516602,
+            0.5993504047393798,
+            0.5870431900024414,
+            0.641107177734375,
+            0.5875936031341553,
+            0.6052896022796631,
+            0.6138432025909424,
+            0.677180814743042,
+            0.6005824089050293,
+            0.6200895786285401,
+            0.611081600189209,
+            0.6124127864837646,
+            0.6264287948608398,
+            0.6214911937713623,
+            0.638150405883789,
+            0.8078240394592285,
+            0.7448959827423096,
+            0.5996672153472901,
+            0.6182047843933105,
+            0.6312287807464599,
+            0.5904928207397461
+          ]
+        },
+        "membrane_core": {
+          "wall_ms": [
+            0.9636971000020367,
+            1.008645800004615,
+            0.993324199998824,
+            0.948130800003355,
+            1.2438729000052717,
+            1.0054408999963016,
+            0.9263201000010213,
+            0.9275117000015598,
+            0.9194960999991508,
+            0.885091400004967,
+            0.9230999999999767,
+            0.8744125000021086,
+            0.9230411999965327,
+            0.8734946999993554,
+            0.9126503999993929,
+            0.8605010999986007,
+            0.8964495000043371,
+            0.8716219999996611,
+            0.9418084000003546,
+            0.9183688000007351,
+            0.8972140000025774,
+            0.8800035999968259,
+            0.9089623999955165,
+            0.8776129000011679,
+            1.0481759000015245,
+            1.0852397999997265,
+            0.8900079000000005,
+            0.8993459999999232,
+            0.939911799997617,
+            0.8802159000026677
+          ],
+          "cuda_ms": [
+            0.9607935905456543,
+            1.005622386932373,
+            0.990112018585205,
+            0.9454527854919433,
+            1.2412447929382324,
+            1.0026464462280273,
+            0.9237759590148926,
+            0.924835205078125,
+            0.9169119834899903,
+            0.8824447631835938,
+            0.9204832077026367,
+            0.8718527793884278,
+            0.9203295707702637,
+            0.8709407806396484,
+            0.9101183891296387,
+            0.8578847885131836,
+            0.8938495635986328,
+            0.869046401977539,
+            0.9391615867614747,
+            0.9157312393188477,
+            0.8946784019470215,
+            0.8773983955383301,
+            0.9064160346984863,
+            0.8750464439392089,
+            1.045142364501953,
+            1.0821279525756835,
+            0.8874303817749023,
+            0.896729564666748,
+            0.937388801574707,
+            0.8775615692138672
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "wall_ms": [
+            0.41588770000089426,
+            0.4308991000016249,
+            0.43795929999532746,
+            0.411828999995123,
+            0.46850580000068476,
+            0.46455930000206536,
+            0.39626320000252235,
+            0.3931801999954132,
+            0.3925774000038018,
+            0.40368310000076235,
+            0.3988125999967451,
+            0.42623670000239144,
+            0.44068579999816393,
+            0.42636059999949794,
+            0.3883260000009159,
+            0.3989051000019117,
+            0.4119287999969856,
+            0.38187260000199785,
+            0.416974699999173,
+            0.40223139999966406,
+            0.386904799995591,
+            0.3835770000023331,
+            0.3875579000009566,
+            0.4021324000007098,
+            0.4508304999944812,
+            0.4661440000006678,
+            0.4277441999988696,
+            0.4741828000021542,
+            0.4016365999973459,
+            0.40692970000009154
+          ],
+          "cuda_ms": [
+            0.41320319175720216,
+            0.42803521156311036,
+            0.4347263813018799,
+            0.4091360092163086,
+            0.46572160720825195,
+            0.4617152214050293,
+            0.3936415910720825,
+            0.3905055999755859,
+            0.3900320053100586,
+            0.40103678703308104,
+            0.39628798961639405,
+            0.42369279861450193,
+            0.4380191802978516,
+            0.4235487937927246,
+            0.38487040996551514,
+            0.3963903903961182,
+            0.40937280654907227,
+            0.37928640842437744,
+            0.41441922187805175,
+            0.39850559234619143,
+            0.38441920280456543,
+            0.381168007850647,
+            0.3850464105606079,
+            0.3995359897613525,
+            0.44786558151245115,
+            0.46317119598388673,
+            0.425164794921875,
+            0.4715583801269531,
+            0.3990432024002075,
+            0.4043680191040039
+          ]
+        }
+      },
+      "gate_buffer_diagnostic": {
+        "median_saved_fraction": 0.5630671096840223,
+        "bootstrap_95pct": [
+          0.5421982842026822,
+          0.5693338183250014
+        ],
+        "interpretation": "Paired timing-block uncertainty on this device/run; not cross-device statistical replication."
+      },
+      "profiles": {
+        "ionic_gates": {
+          "valid": true,
+          "kernel_event_count": 13,
+          "kernel_event_time_ms": 0.13010999999999967,
+          "top_kernel_events": [
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 18.49499999999989
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 18.463000000000193
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 18.399999999999636
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_select_sigmoid_slice_sub_transpose_unsqueeze_view_where_2",
+              "device_time_us": 13.664000000000215
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_select_sigmoid_slice_sub_transpose_unsqueeze_view_where_2",
+              "device_time_us": 13.66399999999976
+            },
+            {
+              "name": "triton_poi_fused_add_silu_unsqueeze_1",
+              "device_time_us": 9.11999999999989
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_eq_exp_expm1_lt_mul_neg_pow_reciprocal_rsub_select_sigmoid_slice_sub_unsqueeze_where_0",
+              "device_time_us": 7.968000000000302
+            },
+            {
+              "name": "triton_poi_fused_add_silu_unsqueeze_1",
+              "device_time_us": 7.936000000000149
+            }
+          ]
+        },
+        "membrane_core": {
+          "valid": true,
+          "kernel_event_count": 45,
+          "kernel_event_time_ms": 0.43365499999999885,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_19",
+              "device_time_us": 67.13499999999976
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_19",
+              "device_time_us": 66.71799999999985
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_4",
+              "device_time_us": 41.12099999999964
+            },
+            {
+              "name": "triton_poi_fused_add_cat_div_exp_expm1_lt_mul_neg_permute_pow_reciprocal_rsub_sigmoid_slice_stack_sub_transpose_unsqueeze_view_where_4",
+              "device_time_us": 41.120000000000346
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 18.71900000000005
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 18.559000000000196
+            },
+            {
+              "name": "volta_sgemm_64x64_tn",
+              "device_time_us": 18.559000000000196
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_6",
+              "device_time_us": 10.400000000000091
+            }
+          ]
+        },
+        "membrane_core_cached_gates": {
+          "valid": true,
+          "kernel_event_count": 24,
+          "kernel_event_time_ms": 0.2089870000000001,
+          "top_kernel_events": [
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 66.6869999999999
+            },
+            {
+              "name": "triton_per_fused_add_cat_clamp_div_exp_lift_fresh_mul_pow_select_slice_sub_sum_zeros_like_14",
+              "device_time_us": 63.90299999999934
+            },
+            {
+              "name": "triton_poi_fused_add_cat_clamp_min_mul_pow_reciprocal_select_slice_sub_unsqueeze_1",
+              "device_time_us": 10.462999999999738
+            },
+            {
+              "name": "triton_poi_fused_add_div_lift_fresh_mul_pow_select_sub_0",
+              "device_time_us": 3.743999999999687
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.3919999999998254
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_2",
+              "device_time_us": 3.3919999999998254
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_6",
+              "device_time_us": 3.3280000000004293
+            },
+            {
+              "name": "triton_poi_fused_mul_pow_select_stack_9",
+              "device_time_us": 3.32799999999952
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "compile_amendment": {
+    "schema_version": "giada-ie-p1-compile-amendment-v2",
+    "prior_code_revision": "db5812d66186a419d5317900f183ab97a95c0b16",
+    "prior_result": "experiments/results/ie_p1_v1_kaggle_db5812d/failure_report.json",
+    "prior_status": "incomplete technical preflight: formula compiled/eager mismatch at batch642; primary timings not produced; not a model NO-GO",
+    "change": "Separate eager decomposition equivalence from compiler FP32 equivalence. Reuse the previously registered CC-N1 compiler tolerances rather than the new stricter eager reconstruction tolerances. Preserve v1 failure; do not reclassify its partial timings as a completed result.",
+    "reference": "experiments/cc_n1_contract_memory_preregistration_v1.json gpu.compiled_vs_eager_*",
+    "compiled_voltage_atol_mv": 0.002,
+    "compiled_calcium_atol_mM": 1e-08,
+    "compiled_gate_atol": 2e-05,
+    "diagnostics": "Write every compiled/eager maximum error before applying thresholds; include numerical_errors in failure reports. No changes to equations, frozen models, workload or candidate fidelity thresholds.",
+    "status": "prospective before new run"
+  },
+  "numerical_errors": [
+    {
+      "batch": 1,
+      "arm": "formula",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        5.960464477539063e-08
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 1,
+      "arm": "formula",
+      "component": "membrane_core",
+      "maximum_errors": [
+        0.0,
+        0.0,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 1,
+      "arm": "formula",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 1,
+      "arm": "independent",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        5.960464477539063e-08
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 1,
+      "arm": "independent",
+      "component": "membrane_core",
+      "maximum_errors": [
+        0.0,
+        0.0,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 1,
+      "arm": "independent",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 1,
+      "arm": "shared_heads",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        1.862645149230957e-09
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 1,
+      "arm": "shared_heads",
+      "component": "membrane_core",
+      "maximum_errors": [
+        0.0,
+        0.0,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 1,
+      "arm": "shared_heads",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "formula",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        1.1920928955078125e-07
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "formula",
+      "component": "membrane_core",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        1.1920928955078125e-07
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "formula",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "independent",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        1.1920928955078125e-07
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "independent",
+      "component": "membrane_core",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        1.1920928955078125e-07
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "independent",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "shared_heads",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        1.7881393432617188e-07
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "shared_heads",
+      "component": "membrane_core",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        1.7881393432617188e-07
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 642,
+      "arm": "shared_heads",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "formula",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        1.1920928955078125e-07
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "formula",
+      "component": "membrane_core",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        1.1920928955078125e-07
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "formula",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "independent",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        1.7881393432617188e-07
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "independent",
+      "component": "membrane_core",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        1.7881393432617188e-07
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "independent",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "shared_heads",
+      "component": "ionic_gates",
+      "maximum_errors": [
+        1.7881393432617188e-07
+      ],
+      "limits": [
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "shared_heads",
+      "component": "membrane_core",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        1.7881393432617188e-07
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    },
+    {
+      "batch": 4096,
+      "arm": "shared_heads",
+      "component": "membrane_core_cached_gates",
+      "maximum_errors": [
+        1.52587890625e-05,
+        1.1641532182693481e-10,
+        5.960464477539063e-08
+      ],
+      "limits": [
+        0.002,
+        1e-08,
+        2e-05
+      ]
+    }
+  ],
+  "next": "Use result to complete IE-03 target selection and IE-04 interface; IE-05 new isolated playground needs separate numerical preregistration. No IE-06 training authorized by a technical pass alone."
+}

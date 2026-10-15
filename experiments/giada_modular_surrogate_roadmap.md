@@ -1138,6 +1138,13 @@ e [protocollo](ie_p1_ionic_cost_preregistration_v1.json) preparati per la prima
 fase residente di IE-02…04. Il profilo globale (eventi/RNG/trasferimenti) e
 il nuovo playground IE-05 restano aperti; IE-P1 non addestra candidati.
 
+**IE-P1 concluso nella v3:** [risultato e incidenti](ie_p1_result_v1.md).
+Sul core formula il buffer dei gate risparmia circa il 16% a batch642,
+contro circa il 48–56% sugli ibridi. È una misura diagnostica di opportunità,
+non un modello promosso o un limite universale. IE-03 deve valutare il
+residuo prima di promettere un'accelerazione grande dalla sola sostituzione
+dei gate; IE-02 globale e IE-04/05 restano aperte.
+
 ## 📜 Prima milestone storica — conservata come riferimento
 
 > Costruire un playground GPU fattoriale per i gate `m` e `h` di Ca-HVA sotto
