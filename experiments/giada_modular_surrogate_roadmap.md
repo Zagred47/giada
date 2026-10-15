@@ -1173,6 +1173,12 @@ readout vettorizzato esatto. Formule/LUT e matrice capacità×supervisione,
 3seed e budget crescenti lungo la stessa traiettoria. Nessuna riduzione di
 memoria, nessuna nuova conferma nativa o promozione già dichiarata.
 
+**IE-P4 concluso:** [risultato e audit](ie_p4_result_v1.md).84celle/preflight
+validi,14bracci riprodotti suCPU. Supervisione interna: beneficio sui path6/6,
+RMSEV storica10,29–16,10volte inferiore, ma nessuna rete supera tutti i gate
+di qualità/costo. LUT supera qualità e risparmia18,57%graph a642; ordinario
+più lento8,60%, vantaggio non universale. Nessuna promozione operativa.
+
 **IE-P2 concluso:** [risultato e limiti](ie_p2_result_v1.md), 54 celle e
 72 preflight numerici superati. A batch642, stesso full con CUDA Graph
 circa 4,2× più veloce nel microbenchmark; il readout delle conduttanze

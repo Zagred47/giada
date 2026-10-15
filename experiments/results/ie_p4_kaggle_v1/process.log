@@ -1,0 +1,29 @@
+/kaggle/working/giada_ie_p4/giada/src/giada_teacher/ie_discrete_ionic.py:112: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  for n,p in iso.named_parameters():maximum=max(maximum,float((p[k]-dict(model.named_parameters())[n][k]).abs().max()))
+[GIADA IE-P4] training 0/10000 dev median=0.316115
+[GIADA IE-P4] training 100/10000 dev median=0.0838469
+[GIADA IE-P4] training 500/10000 dev median=0.023082
+[GIADA IE-P4] training 1500/10000 dev median=0.0145042
+[GIADA IE-P4] training 3000/10000 dev median=0.00952235
+[GIADA IE-P4] training 6000/10000 dev median=0.00551886
+[GIADA IE-P4] training 10000/10000 dev median=0.00405932
+[GIADA IE-P4] historical formula_vectorized V=0.000999262
+[GIADA IE-P4] historical lut025 V=0.00105391
+[GIADA IE-P4] historical transition_w32_seed17 V=0.5576
+[GIADA IE-P4] historical transition_w32_seed29 V=0.423904
+[GIADA IE-P4] historical transition_w32_seed43 V=0.464217
+[GIADA IE-P4] historical transition_w64_seed17 V=0.466145
+[GIADA IE-P4] historical transition_w64_seed29 V=0.433627
+[GIADA IE-P4] historical transition_w64_seed43 V=0.510509
+[GIADA IE-P4] historical internal_w32_seed17 V=0.0398372
+[GIADA IE-P4] historical internal_w32_seed29 V=0.0397419
+[GIADA IE-P4] historical internal_w32_seed43 V=0.0450954
+[GIADA IE-P4] historical internal_w64_seed17 V=0.0390599
+[GIADA IE-P4] historical internal_w64_seed29 V=0.0399308
+[GIADA IE-P4] historical internal_w64_seed43 V=0.0317101
+W1015 23:00:34.742000 71 torch/_inductor/utils.py:1731] [0/2] Not enough SMs to use max_autotune_gemm mode
+[GIADA IE-P4] benchmark batch=1 complete
+[GIADA IE-P4] benchmark batch=642 complete
+[GIADA IE-P4] benchmark batch=4096 complete
+[GIADA IE-P4] complete; inspect quality and cost separately
