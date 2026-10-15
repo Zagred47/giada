@@ -1,0 +1,37 @@
+{
+  "schema_version": "giada-ie-p2-residual-cost-v1",
+  "roadmap_ids": ["IE-02", "IE-03", "IE-04"],
+  "parent_report": "experiments/results/ie_p1_v3_kaggle_b177d01/final_report.json",
+  "parent_sha256": "d80b29618758746146a873822318226b805a8236a57b69aed5c5c4f499034e88",
+  "scope": "Formula-only resident core on historical Task35 states. Isolate ionic prefix, readout and membrane solve costs without retraining or changing equations. No whole-simulator profile or learned speedup claim.",
+  "dt_ms": 0.1,
+  "batches": [1, 642, 4096],
+  "primary_batch": 642,
+  "seed_count": 3,
+  "input_seed": 81501,
+  "warmup_calls": 10,
+  "repetitions": 30,
+  "calls_per_block": 20,
+  "variants": ["full", "cached_gates", "cached_conductance", "cached_prefix", "cached_voltage", "cached_both", "ionic_prefix_only", "membrane_solve_only", "legacy_abi"],
+  "modes": ["compiled", "cuda_graph"],
+  "abi": "Counterfactual core variants all return Vnext, Canext, gate_next, sum(g_ion), sum(g_ion*E). The two port sums remain observable to prevent dead-code elimination in the cached-voltage branch. legacy_abi returns only the original three outputs and quantifies instrumentation effects. Standalone components have their own outputs, never additive costs.",
+  "cache_boundaries": {
+    "cached_gates": "Only initial 18 gate updates replaced; calcium and same-step SK recomputed.",
+    "cached_conductance": "Gate updates and Ca/SK retained; only final ionic g_sum and gE_sum readouts buffered. Calcium current remains recomputed.",
+    "cached_prefix": "Entire prefix including gates, calcium, SK and final conductance sums buffered; unchanged membrane solve remains.",
+    "cached_voltage": "Prefix computed and observable; final membrane voltage buffered, bypassing voltage solve including synaptic current assembly and 12 NMDA Newton iterations.",
+    "cached_both": "Both prefix and voltage buffered; invocation/buffer-return floor, not a deployable model."
+  },
+  "numeric": {"voltage_atol_mv": 0.002, "calcium_atol_mM": 1e-8, "gate_atol": 0.00002, "sum_g_atol_s_cm2": 2e-8, "sum_gE_atol_ma_cm2": 2e-6},
+  "execution": "FP32, TF32 off, Inductor fullgraph, deterministic input states. Warmup/compile/capture excluded from timings. Reverse/interleave call order over repetitions. CUDA graph replays fixed-input compiled functions on the same GPU; validate outputs against eager before timing. Replay mode is diagnostic for submission overhead and is not a complete recurrent deployment benchmark.",
+  "validation": "Full recomposition must match the old Task35 core first; every cached variant must match the same full output for identical fixed inputs. Persist detailed errors before gate decisions. Compiled numerical failure stops the run. CUDA graph availability failure leaves compiled results valid but the execution hypothesis inconclusive; no silent substitution.",
+  "hypotheses": {
+    "H_dispatch": "If graph replay reduces full median paired wall time by >=50% at batch642, a substantial execution opportunity exists without changing math. This does not establish deployable rollout speedup.",
+    "H_ionic": "If cached_prefix saves >=30% at batch642 with bootstrap lower bound >0, investigate a broader ionic operator rather than gate rates alone.",
+    "H_solver": "If cached_voltage saves >=30% with bootstrap lower bound >0, localize voltage-solve/assembly costs before attributing most runtime to analytic channel formulas.",
+    "H_readout": "If cached_conductance saves >=20% with bootstrap lower bound >0, final ionic readout is a measurable target even with state retained."
+  },
+  "decision": "Describe an opportunity map, not a winning architecture. Compare stage opportunities within each execution mode. If instrumented full differs from legacy_abi by >=10%, flag ABI perturbation and qualify targeting conclusions. Cache effects interact through compiler fusion; fractions need not sum to 1. No architecture training, kernel rewrite, solver approximation, new dt or Task36 automatically authorized.",
+  "uncertainty": "2000 bootstrap resamples of paired timing blocks, seed81502, as IE-P1; interval describes within-run variability only. Repeat device/run if estimates near decision boundaries.",
+  "exclusions": "Host event/plasticity/RNG generation, transfers, training, loading, graph capture and native simulation. Those remain part of open global IE-02 and are not declared solved."
+}
