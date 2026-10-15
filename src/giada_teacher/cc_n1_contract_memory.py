@@ -42,6 +42,12 @@ def contract(root):
         for path, expected in amendment['prior_sources'].items():
             if sha(root / path) != expected: raise ValueError('CC-N1 prior native diagnosis changed')
         spec['native_sampling_amendment_sha256'] = sha(amendment_path)
+    primary_path = root / 'experiments/cc_n1_native_memory_primary_amendment_v2.json'
+    if primary_path.is_file():
+        primary = json.loads(primary_path.read_text())
+        for path, expected in primary['prior_sources'].items():
+            if sha(root / path) != expected: raise ValueError('CC-N1 second native diagnosis changed')
+        spec['native_memory_primary_amendment_sha256'] = sha(primary_path)
     old = json.loads((root / 'experiments/results/task35_final_report.json').read_text())
     if not old['valid'] or not old['task35_passed']:
         raise ValueError('Task35 prerequisite not confirmed')
@@ -244,24 +250,57 @@ def native_phase(root, teacher, output, revision):
     rows, initial = memory_design(spec)
     with np.load(output / 'memory_traces.npz') as traces:
         memory_arrays = {k: traces[k] for k in ('voltage', 'calcium', 'gates')}
-    anchors = []
+    anchors, native_matrix = [], []
     for j, row in enumerate(rows):
-        if row['preparation_voltage_mv'] not in (-85., -25.) or row['preparation_ms'] != 200. \
-                or row['tail_ms'] not in (0., 40.) or row['panel'] != 'canonical': continue
         native = native_memory_case(h, row, initial[j], spec, cfg, calcium, base)
+        native_matrix.append(native)
         error_v = t32.rmse(native['voltage'], memory_arrays['voltage'][:, j])
         error_ca = t32.rmse(native['calcium'], memory_arrays['calcium'][:, j])
         anchors.append({'row_index': j, 'row': row, 'voltage_rmse_mv': error_v,
                         'cai_rmse_mM': error_ca,
                         'initial_gate_max_abs_error': float(np.max(np.abs(native['gates'][0]-initial[j]))),
                         'finite': all(np.isfinite(a).all() for a in native.values())})
+        if (j+1) % 48 == 0: print(f'[GIADA CC-N1] native memory {j+1}/{len(rows)}', flush=True)
     g = spec['technical_gates']
-    anchor_valid = len(anchors) == 8 and all(r['finite'] and r['initial_gate_max_abs_error'] <= 1e-12
+    anchor_valid = len(anchors) == len(rows) and all(r['finite'] and r['initial_gate_max_abs_error'] <= 1e-12
         and r['voltage_rmse_mv'] <= g['native_formula_worst_voltage_rmse_mv']
         and r['cai_rmse_mM'] <= g['native_formula_worst_cai_rmse_mM'] for r in anchors)
-    write(output / 'native_memory_anchors.json', {'valid': anchor_valid, 'rows': anchors})
-    if not anchor_valid or not memory['valid']:
-        raise RuntimeError('Native memory anchor or duplicate control failed; no architecture verdict')
+    write(output / 'native_memory_anchors.json', {'valid': anchor_valid,
+          'analytic_memory_floor_passed': anchor_valid, 'rows': anchors})
+    native_arrays = {k: np.stack([r[k] for r in native_matrix], axis=1)
+                     for k in ('voltage', 'calcium', 'gates')}
+    np.savez_compressed(output / 'native_memory_traces.npz', **native_arrays)
+    duplicate = native_memory_case(h, rows[0], initial[0], spec, cfg, calcium, base)
+    # Metadata differs but the hidden state, V/Ca and all physical forcing match.
+    receiver = dict(rows[0]); receiver['preparation_voltage_mv'] = -25.
+    transplant = native_memory_case(h, receiver, initial[0], spec, cfg, calcium, base)
+    duplicate_error = max(float(np.max(np.abs(duplicate[k]-native_matrix[0][k]))) for k in duplicate)
+    transplant_error = max(float(np.max(np.abs(transplant[k]-native_matrix[0][k]))) for k in transplant)
+    native_collisions = collision_report(rows, native_arrays, spec)
+    windows = {}
+    for window in [0.] + spec['memory']['visible_history_windows_ms']:
+        matched = [r for r in native_collisions if r['tail_ms'] >= window]
+        windows[str(window)] = {'matched_groups': len(matched),
+            'detected_groups': sum(r['detectable'] for r in matched),
+            'max_voltage_endpoint_separation_mv': max(r['voltage_endpoint_separation_mv'] for r in matched),
+            'max_calcium_endpoint_separation_mM': max(r['calcium_endpoint_separation_mM'] for r in matched)}
+    native_valid = all(r['finite'] and r['initial_gate_max_abs_error'] <= 1e-12 for r in anchors)
+    native_valid &= bool(np.min(native_arrays['voltage']) >= -140 and np.max(native_arrays['voltage']) <= 100
+        and np.min(native_arrays['calcium']) >= 0 and np.min(native_arrays['gates']) >= -1e-12
+        and np.max(native_arrays['gates']) <= 1+1e-12
+        and max(duplicate_error, transplant_error) <= spec['memory']['technical_duplicate_atol'])
+    memory = {**memory, 'valid': bool(native_valid and memory['valid']),
+        'collision_target_source': 'canonical_NEURON_direct_continuations',
+        'analytic_memory_floor_passed': bool(anchor_valid),
+        'analytic_collisions': memory['collisions'], 'collisions': native_collisions,
+        'analytic_history_windows': memory['history_windows'], 'history_windows': windows,
+        'instantaneous_collision_detected': any(r['detectable'] for r in native_collisions),
+        'recent_history_collision_detected': any(r['detectable'] and r['matching_recent_windows_ms'] for r in native_collisions),
+        'native_controls': {'duplicate_max_abs_error': duplicate_error,
+                            'hidden_state_transplant_max_abs_error': transplant_error}}
+    write(output / 'memory_analysis.json', memory)
+    if not memory['valid']:
+        raise RuntimeError('Native memory instrumentation or duplicate control failed')
 
     cfg = {**cfg, 'schedules_ms': {'cc_n1': spec['native']['schedule_ms']}}
     fresh, shadows, summaries = [], [], []
@@ -302,7 +341,8 @@ def native_phase(root, teacher, output, revision):
         base_g_us=np.stack([r['base_g_us'] for r in shadows]), area_um2=np.array(fresh[0]['area_um2']))
     report = {'valid': bool(native_valid), 'code_revision': revision,
               'teacher_revision': actual, 'neuron_version': neuron.__version__,
-              'native_memory_anchor_valid': bool(anchor_valid), 'floors_by_panel': floors,
+              'analytic_memory_floor_passed': bool(anchor_valid),
+              'native_memory_matrix_valid': bool(memory['valid']), 'floors_by_panel': floors,
               'native_rows': summaries, 'negative_controls': controls,
               'synaptic_voltage_effect_mv': effect, 'cpu_timings': timed,
               'cpu_timing_scope': spec['native']['timing_scope'],
@@ -517,6 +557,7 @@ def finalize(root, output, revision):
         'valid': bool(valid), 'code_revision': revision, 'preregistration_sha256': sha(root / CONFIG),
         'source_sha256': spec['sources'], 'training_performed': False, 'fresh_used_for_selection': False,
         'native_sampling_amendment_sha256': spec.get('native_sampling_amendment_sha256'),
+        'native_memory_primary_amendment_sha256': spec.get('native_memory_primary_amendment_sha256'),
         'cc01': {'contract_recorded': True, 'path': 'contract.json'},
         'cc02': {'native_anchor_valid': native['valid'], 'cost_map_valid': gpu['valid'],
                  'scope': spec['gpu']['scope']},
@@ -525,7 +566,11 @@ def finalize(root, output, revision):
                  'history_windows': memory['history_windows'],
                  'operational_memory_candidate': memory['operational_memory_candidate'],
                  'minimum_latent_dimension_proved': False},
-        'diagnosis': 'N1_DIAGNOSTIC_COMPLETE' if valid else 'N1_COST_OR_TECHNICAL_GATE_INCOMPLETE',
+        'analytic_memory_floor_passed': memory.get('analytic_memory_floor_passed'),
+        'memory_collision_target_source': memory.get('collision_target_source'),
+        'diagnosis': ('N1_NATIVE_DIAGNOSTIC_COMPLETE_WITH_ANALYTIC_MEMORY_FLOOR_LIMIT'
+                      if valid and not memory.get('analytic_memory_floor_passed', True) else
+                      'N1_DIAGNOSTIC_COMPLETE' if valid else 'N1_COST_OR_TECHNICAL_GATE_INCOMPLETE'),
         'n2_preparation_recommended': bool(valid), 'n2_run_authorized': False,
         'task36_authorized_by_this_run': False, 'new_model_promoted': False, 'speedup_claim': False}
     write(output / 'final_report.json', report)

@@ -37,9 +37,12 @@ def main():
                 write(output / 'contract.json', spec['cc01_contract'])
                 write(output / 'code_provenance.json', {'git_revision': revision,
                     'preregistration_sha256': sha(ROOT / CONFIG), 'source_sha256': spec['sources'],
-                    'native_sampling_amendment_sha256': spec.get('native_sampling_amendment_sha256')})
+                    'native_sampling_amendment_sha256': spec.get('native_sampling_amendment_sha256'),
+                    'native_memory_primary_amendment_sha256': spec.get('native_memory_primary_amendment_sha256')})
                 amendment = ROOT / 'experiments/cc_n1_native_sampling_amendment_v1.json'
                 if amendment.is_file(): shutil.copy2(amendment, output / amendment.name)
+                primary = ROOT / 'experiments/cc_n1_native_memory_primary_amendment_v2.json'
+                if primary.is_file(): shutil.copy2(primary, output / primary.name)
                 for phase in ('native', 'gpu'):
                     write(output / 'progress.json', {'phase': phase, 'code_revision': revision})
                     command = [sys.executable, str(Path(__file__)), '--phase', phase,
