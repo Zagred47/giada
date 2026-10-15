@@ -1,6 +1,15 @@
 # 🧠 GIADA — Compressione appresa del compartimento
 
-**Direzione richiesta il 15 ottobre 2026. Piano v1 da discutere; non è ancora una preregistrazione di run.**
+**Documento storico della direzione CC richiesta il 15 ottobre 2026; non è una preregistrazione di run.**
+
+> **Priorità successiva nella stessa giornata:** l'utente ha richiesto di
+> riprendere la decomposizione modulare con efficienza ionica misurata prima
+> della compressione dell'intero compartimento. Il riferimento operativo è
+> ora la **sezione VI-bis, IE-01…IE-16**, nel
+> [dropshot originale aggiornato](giada_modular_surrogate_roadmap.md).
+> N1 e gli artefatti N2 sono conservati; prosecuzione N3…N6 sospesa.
+> Questo approfondimento resta consultabile per ipotesi e confronti futuri,
+> senza autorizzare la vecchia sequenza in automatico.
 
 ## 🎯 Il cambiamento
 

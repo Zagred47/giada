@@ -1,0 +1,242 @@
+{
+  "valid": true,
+  "audit_scope": "saved-array recomputation, selection minima, freeze and artifact hashes; no GPU checkpoint replay",
+  "code_revision": "469661b570ba56825309f917fdf25a4a886a83f8",
+  "maximum_metric_relative_difference": 8.668799624814353e-07,
+  "selection_reproduced": true,
+  "candidate_promoted": false,
+  "diagnostic_summary": [
+    {
+      "arm": "explicit18",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 0.2515176683664322,
+      "worst_episode_voltage_rmse_mv": 0.9674715995788574,
+      "maximum_seed_calcium_worst_rmse_mM": 1.727200833556708e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "explicit18",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 0.798799475034078,
+      "worst_episode_voltage_rmse_mv": 3.458941698074341,
+      "maximum_seed_calcium_worst_rmse_mM": 4.0970673580886796e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z0",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 1.3191183805465698,
+      "worst_episode_voltage_rmse_mv": 4.049423694610596,
+      "maximum_seed_calcium_worst_rmse_mM": 3.502946492517367e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z0",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 2.5038366317749023,
+      "worst_episode_voltage_rmse_mv": 6.1966071128845215,
+      "maximum_seed_calcium_worst_rmse_mM": 9.80653494480066e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z4",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 1.0647343397140503,
+      "worst_episode_voltage_rmse_mv": 3.8315370082855225,
+      "maximum_seed_calcium_worst_rmse_mM": 3.164615191053599e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z4",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 2.442732890446981,
+      "worst_episode_voltage_rmse_mv": 11.92238998413086,
+      "maximum_seed_calcium_worst_rmse_mM": 9.20894744922407e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z8",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 1.110825002193451,
+      "worst_episode_voltage_rmse_mv": 2.8917903900146484,
+      "maximum_seed_calcium_worst_rmse_mM": 2.6467334464541636e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z8",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 2.549632708231608,
+      "worst_episode_voltage_rmse_mv": 9.185392379760742,
+      "maximum_seed_calcium_worst_rmse_mM": 7.158035441534594e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z16",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 1.1608877182006836,
+      "worst_episode_voltage_rmse_mv": 3.8841025829315186,
+      "maximum_seed_calcium_worst_rmse_mM": 4.881827044300735e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z16",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 3.1929569244384766,
+      "worst_episode_voltage_rmse_mv": 9.46557331085205,
+      "maximum_seed_calcium_worst_rmse_mM": 0.00013984378892928362,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "conductance_z8",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 0.6208897829055786,
+      "worst_episode_voltage_rmse_mv": 3.7682790756225586,
+      "maximum_seed_calcium_worst_rmse_mM": 3.247861604904756e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "conductance_z8",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 2.031248768170675,
+      "worst_episode_voltage_rmse_mv": 10.98578929901123,
+      "maximum_seed_calcium_worst_rmse_mM": 0.00012226629769429564,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "direct_z8",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 1.4099591970443726,
+      "worst_episode_voltage_rmse_mv": 4.519254207611084,
+      "maximum_seed_calcium_worst_rmse_mM": 3.3927302865777165e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "direct_z8",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 3.6684393882751465,
+      "worst_episode_voltage_rmse_mv": 10.205610275268555,
+      "maximum_seed_calcium_worst_rmse_mM": 0.00012148895621066913,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z8_standard",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 1.2213135957717896,
+      "worst_episode_voltage_rmse_mv": 3.8643343448638916,
+      "maximum_seed_calcium_worst_rmse_mM": 3.2865136745385826e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z8_standard",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 2.457663615544637,
+      "worst_episode_voltage_rmse_mv": 9.882765769958496,
+      "maximum_seed_calcium_worst_rmse_mM": 9.251818846678361e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z8_warmup",
+      "horizon_ms": 8.0,
+      "mean_seed_voltage_rmse_mv": 1.2179339130719502,
+      "worst_episode_voltage_rmse_mv": 4.746747970581055,
+      "maximum_seed_calcium_worst_rmse_mM": 2.805391159199644e-05,
+      "passing_seeds": 0
+    },
+    {
+      "arm": "current_z8_warmup",
+      "horizon_ms": 30.0,
+      "mean_seed_voltage_rmse_mv": 2.6777467330296836,
+      "worst_episode_voltage_rmse_mv": 9.827814102172852,
+      "maximum_seed_calcium_worst_rmse_mM": 7.203300629043952e-05,
+      "passing_seeds": 0
+    }
+  ],
+  "limitations": [
+    "No independent test; all opened data now historical/development.",
+    "Probe decodes initial gates from initial state; it does not certify evolved latent dynamics.",
+    "Most selections use the final budget; this alone does not establish a training-budget bottleneck.",
+    "No time comparison against Task35: domains, synapses and thresholds differ."
+  ],
+  "files": {
+    "baseline_evaluation.json": {
+      "sha256": "be4d4054c3988b4ba30f7ae72623f37fc5a6011bf4fce8bdfcc70fde5c23312d",
+      "bytes": 14637
+    },
+    "checkpoint_0.pt": {
+      "sha256": "b9cc70dca966141a4c07a2d066f12eaf53e7c6552f9ef0efad0cc2e93ddfc1bc",
+      "bytes": 704993
+    },
+    "checkpoint_150.pt": {
+      "sha256": "9a77340ea175741cab0ac8d1c055b13160367cd23cec8d03d9ead01af4973f99",
+      "bytes": 705037
+    },
+    "checkpoint_1500.pt": {
+      "sha256": "da0423365e35a4d53e6e9bbbc300a2e004d16e610cf1242d0446199ac8f937ef",
+      "bytes": 705059
+    },
+    "checkpoint_500.pt": {
+      "sha256": "240ccc3019160f42580a4ddd950e6c4cae2fbb4eab66a7b1d1317eb14748cf91",
+      "bytes": 705037
+    },
+    "compile_preflight.json": {
+      "sha256": "4b35ca5b83b8035594fb3b1b0105f7621ce99f18dc81438d96bdb435f945c209",
+      "bytes": 120
+    },
+    "dataset_manifest.json": {
+      "sha256": "0ead20e67e6cb96599d8a3a1dc586e60421da8f54d265b6ce520a54d1a399d29",
+      "bytes": 25295
+    },
+    "development_frozen_rollout.npz": {
+      "sha256": "4ce69112ad5783f3f6835f8834cf4e73886d000df54caa8b61fdbd54d6803042",
+      "bytes": 7673868
+    },
+    "diagnostic_frozen_rollout.npz": {
+      "sha256": "a0e93c18c9cb9bd038b0fc22c7b32d1a47336dee74987387f7e9f2178a4829b9",
+      "bytes": 7699463
+    },
+    "equivalence_preflight.json": {
+      "sha256": "16280341aa0fad701b4fb21668b830b33322b13e1f4644064608d87e69296abb",
+      "bytes": 172
+    },
+    "evaluation.json": {
+      "sha256": "0e578a8d90c02229cd4d4d801cbf7fef7243556e7d20cd785f22a0435e4426a7",
+      "bytes": 45826
+    },
+    "final_report.json": {
+      "sha256": "277442a11884d3278f8d0b3ae71435d07744b5565680456f2d6c79b22dd3bdba",
+      "bytes": 50614
+    },
+    "frozen_checkpoint.pt": {
+      "sha256": "9cf8bbd76e0c7994aabe7e0ed521923ad23853dc735a1e0f975b99838ae00e81",
+      "bytes": 705807
+    },
+    "gate_probes.json": {
+      "sha256": "c328c262e3d7772910b290a7868f4e1c178a938b9d05f2d6475bbf8800f32d04",
+      "bytes": 2915
+    },
+    "initial_latent_probes.npz": {
+      "sha256": "cec42d0a10bb04926dbd4f063910db72d89c3fa707089efa78f627c4b68796a0",
+      "bytes": 67431
+    },
+    "learning_curves.json": {
+      "sha256": "163d9995d6c6ccc53caade5e82552d83465ec296b2cf4fded4d08a547d2e8544",
+      "bytes": 40169
+    },
+    "memory_interventions.json": {
+      "sha256": "017add759672511c28f4cee51db64619f567aa506c0d04c23374a7f1193f2089",
+      "bytes": 44235
+    },
+    "native_dataset.npz": {
+      "sha256": "7b3a0f825454f13e1e163d023a4b40fccdc9a89780f6a9e5ab5fddbfb4df08bf",
+      "bytes": 6754724
+    },
+    "preregistration.json": {
+      "sha256": "05a5b1433cc2d8a602b96117930eb3a1b4ce11278aa9530dcef4eb1b52c32237",
+      "bytes": 4740
+    },
+    "selection_freeze.json": {
+      "sha256": "51753fb96766ccc51bb295bb1abfe4818c477370671626a2232d0c6543b39b23",
+      "bytes": 1331
+    }
+  }
+}

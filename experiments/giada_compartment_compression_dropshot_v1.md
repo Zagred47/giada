@@ -1,6 +1,10 @@
 # 🧭 GIADA — Dropshot per la compressione appresa del compartimento
 
-> **Stato:** direzione approvata; N1 completato. Vedi
+> **Stato aggiornato — 15 ottobre 2026:** percorso storico conservato;
+> prosecuzione N3…N6 sospesa per la nuova priorità dell'utente.
+> Il piano operativo corrente è la **sezione VI-bis, IE-01…IE-16**, del
+> [dropshot originale aggiornato](giada_modular_surrogate_roadmap.md).
+> N1 completato. Vedi
 > [risultati CC-01…CC-04](cc_n1_result_v1.md) e [registro delle verifiche](cc_n1_progress_v1.md).
 >
 > **Piattaforma corrente:** GPU. Kernel custom e Tenstorrent sono differiti.
@@ -16,7 +20,13 @@
 >
 > **Secondo notebook preparato:** [CC-N2 — CC-05…CC-08](../notebooks/cc_n2_unified_cell.ipynb),
 > con [matrice e limiti](cc_n2_design_v1.md) e
-> [preregistrazione](cc_n2_unified_cell_preregistration_v1.json). Nessun risultato N2 ancora acquisito.
+> [preregistrazione](cc_n2_unified_cell_preregistration_v1.json).
+> N2 terminato tecnicamente: la prima lettura dei report non promuove alcun
+> candidato nelle soglie CC, incluso il controllo esplicito.
+> [Audit IE-01 e risultati](cc_n2_result_v1.md): metriche salvate, selezione
+> e hash verificati; risultati registrati nel mirror SQLite. Non equivale a una
+> dimostrazione dell'impossibilità di comprimere. Le sezioni successive
+> conservano il piano storico, non autorizzano nuovi run CC automaticamente.
 >
 > **Principio guida:** comprimere stato e calcoli, preservare le proprietà
 > computazionali, recuperare con l'apprendimento ciò che è recuperabile.

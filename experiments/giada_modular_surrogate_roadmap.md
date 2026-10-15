@@ -1,10 +1,18 @@
 # 🧭 GIADA — Roadmap modulare per surrogate biofisici
 
-> **Priorità aggiornata — 15 ottobre 2026:** prima della Task36, l'utente ha
-> richiesto un percorso dedicato alla compressione appresa del singolo
-> compartimento. Vedi [dropshot CC-01…CC-20](giada_compartment_compression_dropshot_v1.md).
-> È una proposta di direzione, non venti run già preregistrati. Task35 e il
-> prerequisito assiale passivo restano validi; Task36 è rinviata, non rinumerata.
+> **Direzione corrente — 15 ottobre 2026:** riprendere la decomposizione
+> modulare, con priorità all'**efficienza misurata del blocco ionico** prima
+> della Task36. Il percorso operativo è nella **sezione VI-bis, IE-01…IE-16**
+> di questo dropshot. Le task sono decisioni scientifiche, non sedici notebook
+> obbligatori né protocolli numerici già preregistrati.
+>
+> **Continuità:** Task0…35 e i prerequisiti conservano identità ed evidenze.
+> Il [percorso CC](giada_compartment_compression_dropshot_v1.md) resta storico:
+> N1 è concluso; N2 è terminato tecnicamente senza candidati promossi nelle
+> soglie CC. [Audit IE-01 e risultati N2](cc_n2_result_v1.md): 108 valutazioni
+> ricalcolate da array salvati e selezione verificata, nessun nuovo training.
+> N3…N6 sono sospesi come sequenza operativa, non dichiarati eseguiti o falliti.
+> Task36 è rinviata per priorità, senza invalidare il prerequisito assiale.
 
 > **Stato:** documento di direzione sperimentale, da usare per pianificare i run.
 >
@@ -685,7 +693,8 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   **Esito v1 confermato** su 32 casi indipendenti e tutti i sei checkpoint,
   con gate per pannello e nessun riaddestramento. Vedi
   `experiments/task35_full_local_compartment_result.md`. Il prossimo salto
-  causale rimane l'accoppiamento assiale della Task36, previa verifica IV-D1.
+  causale strutturale rimane l'accoppiamento assiale della Task36. La priorità
+  corrente inserisce prima il percorso di efficienza ionica VI-bis.
 
 ### 🔬 Matrice causale obbligatoria
 
@@ -695,6 +704,247 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
 | surrogate | teacher | isola l'errore del voltage updater |
 | surrogate | surrogate | misura l'interazione closed-loop |
 | formula originale | voltage updater appreso | controllo meccanicistico |
+
+---
+
+# ⚡ VI-bis. Efficienza ionica appresa — percorso prioritario IE
+
+> **Obiettivo:** sostituire una parte sostanziale della computazione ionica
+> con un modulo appreso più economico, a fedeltà dichiarata, e verificarne il
+> beneficio nel compartimento Task35. Non massimizzare la percentuale di rete.
+>
+> **Numerazione stabile:** IE significa *efficienza ionica*. IE-01…IE-16 sono
+> nuove task; non riutilizzano gli ID originali né CC. Una sottotask futura
+> avrà un suffisso esplicito e una propria ipotesi, senza cambiare i parent.
+>
+> **Stato:** pianificazione approvata come direzione; nessun nuovo run IE
+> eseguito, nessun modello promosso e nessuna infrastruttura remota avviata
+> da questo aggiornamento documentale.
+
+## 📚 A. Evidenze acquisite e bersaglio computazionale
+
+- Task35 conferma il compartimento locale ibrido nei 32 casi registrati;
+  peggior V pooled per modello/pannello 0,010606 mV. Non certifica speedup.
+- [Task28d](results/gate_d_forensic_kaggle_b19aa65/result_audit.json): il core
+  dei cinque canali appresi costa più delle cinque formule che sostituisce.
+  La presenza dei sei canali analitici non spiega da sola il rallentamento.
+- [CC-N1](cc_n1_result_v1.md): a batch642 per seed, tre seed, T4/FP32 e
+  compilazione simmetrica, core formula 0,423835 ms contro 0,807482/0,904102 ms
+  per i due ibridi. Lo stato resta V/Ca/18 gate. Il benchmark esclude la
+  generazione host di eventi/plasticità/RNG: non è il tempo totale del simulatore.
+- CC-N1 dimostra collisioni delle viste V/Ca nel dominio controllato. Non
+  identifica la memoria latente minima e non prova impossibilità universale.
+- CC-N2 non promuove neppure il controllo nuovo a 18 gate nelle soglie CC:
+  il fallimento non può essere attribuito soltanto alla riduzione dello stato.
+  Audit IE-01 eseguito: [esito](cc_n2_result_v1.md), con limiti del confronto.
+
+- **Task IE-01 — Riconciliazione delle evidenze** → Acquisire report, curve,
+  checkpoint e provenance N2; completare audit e registrazione nel mirror
+  SQLite. Collegare Task28d, Task35 e CC-N1/N2, distinguendo risultati,
+  ipotesi, incidenti e domini. Le soglie Task35 e CC sono diverse e non vanno
+  scambiate. I dati già aperti restano development o benchmark storici.
+
+- **Task IE-02 — Profilo causale del costo** → Misurare separatamente e nella
+  composizione: valutazione dei tassi, update dei gate, aperture/conduttanze,
+  correnti, Ca/SK, solver, sinapsi e gestione eventi. Usare sostituzioni
+  diagnostiche a output precomputato solo per stimare margini, mai come
+  candidati causali. Rilevare lanci, memoria, sincronizzazioni e operazioni.
+  Le latenze isolate non sono additive per effetto della fusione del codice.
+
+- **Task IE-03 — Bilancio di accelerazione e scelta del bersaglio** → Fissare
+  workload principale, batch secondari, precisione e margini di qualità.
+  Stimare il massimo beneficio globale ottenibile accelerando il blocco
+  scelto; distinguere costo per passo e per millisecondo biologico. Se il
+  margine è trascurabile, cambiare bersaglio prima di investire nel training.
+  Soglia minima di guadagno e incertezza si preregistrano prima della ricerca;
+  il vecchio Gate D/10% resta storico e non viene reinterpretato.
+
+### ✅ Gate IE-A — Un bersaglio che valga il costo della ricerca
+
+Servono baseline riproducibili, un blocco con margine utile, contratto di
+qualità e un confronto contro **formule GPU competitive**, oltre all'ibrido.
+Un miglioramento rispetto al solo ibrido lento non dimostra una soluzione
+vantaggiosa rispetto alle formule. Nessuna promessa di accelerazione massiccia.
+
+## 🔌 B. Contratto del blocco e playground isolato
+
+- **Task IE-04 — Porta ionica e ordine causale** → Congelare stato, ingressi,
+  parametri visibili, unità e fasi pre/post-step. Il modulo deve fornire le
+  conduttanze richieste dal solver e la corrente Ca nella fase appropriata;
+  una sola corrente netta non è sufficiente. Conservare il bilancio
+  `I_k = g_k (V - E_k)` e l'ordine già verificato Ca → SK. Se un primo studio
+  lascia SK canonico per isolare la dipendenza da Ca, dichiararlo: non è
+  ancora la sostituzione completa degli undici canali. Variare E o parametri
+  esclusi dal training richiede un dominio esplicito, non un claim implicito.
+
+- **Task IE-05 — Playground ionico appaiato** → V/Ca imposti, stessi path e
+  condizioni iniziali per tutti i bracci; target nativi e formula verificati
+  nel dominio. Coprire transitori rapidi, memoria lenta, recupero, stati fuori
+  equilibrio, correnti piccole/grandi e blocchi di canale. Split per path e
+  famiglia, non per punti vicini. Verificare supporto di ciascuna metrica.
+
+Il primo passo resta **0,1 ms**, coerente con Task35. Le vecchie conclusioni
+sull'insufficienza del solo V a passi maggiori non vengono cancellate.
+Solver, sinapsi e legge Ca rimangono congelati; l'uscita ionica alimenta Ca,
+quindi l'effetto sul suo feedback sarà comunque verificato in composizione.
+
+## 🧮 C. Ridurre il calcolo prima di ridurre la memoria
+
+- **Task IE-06 — Riferimenti e condivisione a stato esplicito** → Confrontare
+  formule, ibrido congelato, approssimatori numerici pertinenti (LUT/spline o
+  polinomi) e rete congiunta dei tassi. Riutilizzare il lavoro già svolto sui
+  gate; evitare di ripetere task atomiche concluse senza un nuovo contrasto.
+  Tutti conservano lo stesso stato e la stessa interfaccia.
+
+- **Task IE-07 — Operatore discreto congiunto economico** → Confrontare il
+  riferimento a tassi con coefficienti di transizione appresi direttamente:
+  `x_next = r_theta * x + (1-r_theta) * u_theta`, con coefficienti in [0,1].
+  È un'estensione controllata del precedente direct-z, non un'idea mai testata.
+  Stimare anche il costo delle attivazioni e delle letture/scritture; non
+  assumere che rimuovere exp(-dt/tau) renda automaticamente veloce la rete.
+  Il vincolo convesso preserva l'intervallo dei gate, non garantisce da solo
+  la stabilità dell'intero compartimento.
+
+- **Task IE-08 — Learnability e frontiera costo–errore** → Piccola matrice
+  preregistrata di capacità/condivisione e supervisione (transizioni contro
+  transizioni più target interni), con mini scaling dati/budget e checkpoint
+  crescenti. Inizializzazioni, seed e stream appaiati ove compatibili.
+  Misurare gate, conduttanze, correnti, carica e rollout forzati per regime.
+  Mantenere separati pesi, stato persistente, temporanei, operazioni e latenza.
+  Individuare quali termini producono l'errore, senza compensazioni nascoste
+  fra correnti entranti e uscenti.
+
+### ✅ Gate IE-B — Primo risultato locale concreto
+
+Promozione prestazionale solo con fedeltà e risparmio misurato sul blocco,
+replicati nei seed/workload preregistrati. Un braccio accurato ma lento può
+restare un controllo scientifico; non raggiunge questa milestone.
+Se i bracci espliciti falliscono, diagnosticare dati/ottimizzazione/capacità
+prima di attribuire il limite allo stato. Un ramo latente può essere studiato
+come alternativa motivata se il costo dello stato esplicito non offre margine;
+non richiede che l'esplicito diventi vincente, ma richiede un controllo valido.
+
+## 🧠 D. Compressione della memoria ionica, quando giustificata
+
+- **Task IE-09 — Memoria sufficiente e inizializzazione** → Riutilizzare le
+  collisioni CC-N1 e i probe N2. Separare encoder di stato usato una volta,
+  warmup causale e stato standard; non dichiarare equivalenti informazioni
+  diverse. Precisare l'inizializzazione disponibile nel simulatore reale.
+
+- **Task IE-10 — Operatore ionico ricorrente compatto** → Poche dimensioni di
+  z e un readout delle conduttanze per canale. Confrontare con il controllo
+  esplicito allo stesso passo; regolare capacità separatamente da dimensione
+  dello stato. Solo dopo testare gruppi di canali, mantenendo la possibilità
+  di applicare i parametri e gli interventi previsti. I gruppi non possono
+  nascondere la perdita di identificabilità dei singoli canali.
+
+- **Task IE-11 — Distillazione, uso della memoria e recupero del limite** →
+  Supervisione interna solo nel training; probe dei gate, reset/permutazione
+  dello stato e orizzonti ricorsivi appaiati. Mini scaling per distinguere
+  informazione mancante, rappresentazione e training insufficiente.
+  La perdita di informazione causale non è recuperabile dal solo scaling.
+
+Queste task si attivano se la compressione offre una specifica opportunità
+di risparmio o risponde a un limite osservato. Non è obbligatorio ridurre z
+per promuovere un aggiornamento esplicito già accurato e conveniente.
+
+## 🔁 E. Reinserimento nel compartimento congelato
+
+- **Task IE-12 — Sostituzione causale e attribuzione** → Inserire il candidato
+  nel compartimento Task35 con solver/sinapsi/Ca invariati. Confrontare V/Ca
+  imposti e autonomi, gruppi ionici sostituiti separatamente e insieme, con
+  controlli di fase. Misurare dove nasce un'eventuale amplificazione degli
+  errori. Un candidato locale fallito qui non è promosso come compartimento.
+
+- **Task IE-13 — Fedeltà dinamica e interventi** → Nuovi stimoli di sviluppo,
+  conduttanze/blocchi, recupero e orizzonti lunghi; timing/conteggio spike,
+  adattamento e refrattarietà soltanto dove il teacher e il supporto dati
+  li rendono valutabili. Distinguere errore numerico, qualità delle risposte
+  e sensibilità agli interventi. Conservare le correnti Ca e il feedback SK.
+
+- **Task IE-14 — Utilità integrata e freeze** → Misurare costo del blocco e
+  dell'intero compartimento, includendo eventi, trasferimenti, stato e RNG
+  nel perimetro operativo dichiarato. Confrontare formule e ibridi con pari
+  ottimizzazione; latenza/throughput a batch rappresentativi, riscaldamento,
+  sincronizzazione e ripetizioni. Nessun timing in contesa sulla stessa GPU.
+  Congelare candidato, dominio, inizializzazione, codice e criteri di conferma.
+
+- **Task IE-15 — Conferma indipendente congiunta** → Nuovi seed/path/domìni
+  riservati dopo freeze; verificare qualità e vantaggio computazionale con
+  intervalli d'incertezza e casi peggiori. Nessun aggiustamento sui risultati
+  del test; una riparazione richiede nuova conferma. Gli stress estremi fuori
+  contratto sono riportati separatamente, non esclusi dopo aver visto l'esito.
+
+- **Task IE-16 — Decisione e rientro** → Registrare evidenze e limiti nel
+  mirror SQLite. Se qualità e utilità passano, proporre il rientro alla Task36
+  con il modulo e la porta assiale verificati. Se emerge un altro collo di
+  bottiglia dominante, motivare un nuovo blocco di lavoro prima di ampliarlo.
+  Un NO-GO circoscritto conserva il riferimento Task35; nessuna promozione
+  per obbligo di calendario e nessun ritorno automatico alla ricerca monolitica.
+
+### ✅ Gate IE-C — Modulo utile nel sistema
+
+Occorrono insieme fedeltà del compartimento, robustezza nel dominio e un
+vantaggio materiale nel workload prefissato. Le soglie originali restano
+immutate per i vecchi risultati; i nuovi margini di non inferiorità e il
+target di speedup saranno fissati prima dei run, senza scegliere a posteriori
+fra i limiti più permissivi di Task35 e quelli CC.
+
+## 🧭 F. Estensioni condizionali, non nuovi obblighi seriali
+
+- **Sinapsi:** aprire una compressione dedicata solo se costo/memoria lo
+  giustificano; preservare eventi, plasticità, stato RNG e contratti pathwise
+  o distribuzionali. Prima isolare, poi reinserire e confermare.
+- **Solver:** partire da profilo e controllo numerico. Sostituirlo solo per
+  un risparmio credibile, con bilancio, stabilità e floor indipendente.
+  Una formula economica può rimanere nella soluzione finale.
+- **Tempo:** passi maggiori richiedono un proprio esperimento di sufficienza
+  degli ingressi e convergenza; non sono impliciti nella compressione ionica.
+- **Coarse-graining del compartimento:** riaprire CC o un nuovo emendamento
+  identificato soltanto con un limite preciso e componenti già comprese.
+  Evitare sia di abbandonarlo per principio sia di riprenderlo automaticamente.
+- **Hardware:** GPU corrente e compilazione simmetrica già nei benchmark;
+  kernel custom, precisione ridotta e acceleratori specifici dopo un profilo
+  che motivi l'intervento, con validazione numerica separata. Tenstorrent differito.
+
+## 🧬 G. OpenEvolve — ricerca assistita futura
+
+L'utente riferisce un'installazione di OpenEvolve sul proprio droplet
+DigitalOcean. **Disponibilità dichiarata, non verificata in questo aggiornamento.**
+Possibile collegamento futuro a RunPod tramite strumenti/MCP da verificare;
+nessuna connessione, installazione, allocazione o spesa viene avviata qui.
+
+L'ingresso richiede IE-02…05: bersaglio misurato, interfaccia congelata,
+valutatore numerico e costo di valutazione sostenibile. Non occorre aspettare
+IE-16 se questi prerequisiti sono soddisfatti. Primo pilota piccolo con budget
+di tentativi, token, GPU e tempo prefissati; confronto con candidati manuali.
+
+Evolvere solo il modulo ammesso, non teacher, dati, metriche o soglie.
+Valutazione a stadi: validità → fedeltà → rollout → costo. Criteri fisici come
+vincoli obbligatori; niente giudizio LLM nel punteggio scientifico. Test finale
+separato dalla ricerca, esecuzione isolata, codice/checkpoint/traiettoria delle
+modifiche conservati. Ogni candidato neurale richiede il suo training equo:
+la ricerca evolutiva non ne annulla il costo. Una scoperta promettente richiede
+ablazioni causali per capire quale modifica aiuta. Il database di programmi
+OpenEvolve non sostituisce la memoria scientifica SQLite.
+
+Riferimenti: [OpenEvolve](https://github.com/algorithmicsuperintelligence/openevolve),
+[valutatore](https://github.com/algorithmicsuperintelligence/openevolve/blob/main/openevolve/evaluator.py).
+I risultati del progetto esterno non sono promesse di speedup per GIADA.
+
+## ⚡ H. Organizzazione dei run e criteri di arresto
+
+IE-01…05 condividono audit/artefatti; IE-06…08 possono essere una piccola
+matrice appaiata; IE-09…11 una seconda solo se motivata. IE-12…14 possono
+condividere checkpoint e dati di sviluppo, ma il freeze precede sempre IE-15.
+IE-16 è una decisione. Nessuna corrispondenza obbligatoria task = notebook.
+
+Parallelizzare contrasti indipendenti e salvare checkpoint intermedi; non
+eseguire combinazioni senza un'ipotesi. Vettorizzazione verificata per Adam,
+gradienti e clipping; processi NEURON/CUDA isolati come nei run precedenti.
+Preregistrare budget e regola di stop per ciascun run. Una saturazione porta
+a diagnosi e decisione esplicita, non a un numero indefinito di tentativi.
+Fallimento tecnico, NO-GO scientifico e NO-GO prestazionale sono distinti.
 
 ---
 
@@ -708,8 +958,9 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   disconnesso/simmetrico, bilancio capacitivo e convergenza di `dt`. Questo
   run porta il proprio ID IV-D1, **non** viene rinominato Task 36.
   **Aggiornamento IV-D1:** il prerequisito passivo è passato nella v3
-  (`experiments/iv_ad1_passive_axial_result.md`); la Task 36 è autorizzata
-  come prossimo esperimento distinto, non considerata completata da IV-D1.
+  (`experiments/iv_ad1_passive_axial_result.md`); il prerequisito scientifico
+  è soddisfatto, ma l'esecuzione Task36 è differita per il percorso IE.
+  Ripresa tramite decisione IE-16; IV-D1 non è il completamento della Task36.
 - **Task 37 — Quattro compartimenti attivi**.
 - **Task 38 — Scaling 8 → 16 compartimenti**.
 - **Task 39 — Prima biforcazione attiva**.
@@ -846,6 +1097,9 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 ↓
 8. Compartimento attivo closed-loop
 ↓
+8-bis. Efficienza ionica IE — profilo, update congiunto, eventuale memoria compatta,
+       reinserimento e conferma di qualità + costo (priorità corrente)
+↓ decisione IE-16
 9. Piccoli sistemi multicompartmentali
 ↓
 10. Branch e subtree
@@ -865,7 +1119,26 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prima milestone concreta
+# 🥇 Prossima milestone concreta — priorità corrente
+
+> Localizzare il margine di risparmio e preparare un confronto isolato del
+> blocco ionico: formule competitive, baseline congelata e aggiornamento
+> congiunto appreso, a stato/ingressi/passo controllati. Cercare il primo punto
+> con qualità ammissibile **e** costo inferiore, poi provarlo nel compartimento.
+
+La prima attività è IE-01…05, con audit N2, profilo riutilizzabile e contratto
+di interfaccia. Non si lancia N3 automaticamente e non si riaddestra il
+compartimento intero prima di aver circoscritto il problema. Le nuove task
+sono pianificate in questo documento; la loro registrazione DB e le relative
+preregistrazioni numeriche vanno completate prima dell'esecuzione.
+
+**Avanzamento:** audit N2 concluso con ricostruzione indipendente delle
+metriche salvate; [primo notebook IE-P1](../notebooks/ie_p1_ionic_cost.ipynb)
+e [protocollo](ie_p1_ionic_cost_preregistration_v1.json) preparati per la prima
+fase residente di IE-02…04. Il profilo globale (eventi/RNG/trasferimenti) e
+il nuovo playground IE-05 restano aperti; IE-P1 non addestra candidati.
+
+## 📜 Prima milestone storica — conservata come riferimento
 
 > Costruire un playground GPU fattoriale per i gate `m` e `h` di Ca-HVA sotto
 > voltage clamp, verificato sia contro le formule di `Ca_HVA.mod` sia contro
