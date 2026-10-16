@@ -1179,12 +1179,17 @@ RMSEV storica10,29–16,10volte inferiore, ma nessuna rete supera tutti i gate
 di qualità/costo. LUT supera qualità e risparmia18,57%graph a642; ordinario
 più lento8,60%, vantaggio non universale. Nessuna promozione operativa.
 
-**IE-P6 preregistrato:** [disegno](ie_p6_design_v1.md),
+**IE-P6 concluso:** [risultato e limiti](ie_p6_result_v1.md),
+[disegno preregistrato](ie_p6_design_v1.md),
 [notebook](../notebooks/ie_p6_residual_repair.ipynb). Matrice copertura ×
 ricorrenza breve, operatori locali appresi81/161nodi, deployment tabulato,
 attribuzione sui nuovi parent IE-P5. Il training comprende18modelli
 (12MLP+6locali);35mappe in valutazione.
-Soglie e blocchi fisici invariati; nessuna promozione implicita.
+Soglie e blocchi fisici invariati. Tutti6operatori locali superano qualità
+e criterio di costo graph a642 (10,0–10,7%risparmio); LUT analitica resta
+più veloce (25,3%). Matrice: copertura migliora worst-case ma non ogni metrica;
+obiettivo temporale testato peggiora.210preflight/celle validi,35mappe
+riprodotteCPU. Nessuna nuova conferma nativa o promozione implicita.
 
 **IE-P5 preregistrato (poi concluso, esito sotto):** [disegno](ie_p5_design_v1.md),
 [notebook](../notebooks/ie_p5_accuracy_execution.ipynb). IE-08/12: refit
