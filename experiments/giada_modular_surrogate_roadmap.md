@@ -1179,6 +1179,14 @@ RMSEV storica10,29–16,10volte inferiore, ma nessuna rete supera tutti i gate
 di qualità/costo. LUT supera qualità e risparmia18,57%graph a642; ordinario
 più lento8,60%, vantaggio non universale. Nessuna promozione operativa.
 
+**IE-P7 preregistrato:** [disegno](ie_p7_design_v1.md),
+[notebook](../notebooks/ie_p7_native_operational.ipynb). Sei operatori locali
+congelati;32nuovi episodi nativi e test atomici/path indipendenti. Il timing
+IE-P6 includeva già il core di membrana: qui si aggiunge il perimetro operativo
+dichiarato (eventi/RNG indipendenti,IPC,trasferimenti,rollout e output), contro
+formule,LUT e tutti6ibridiTask35. Nessun training o promozione automatica;
+copertura parziale IE-12–15, non completamento implicito IE-16 o Task36.
+
 **IE-P6 concluso:** [risultato e limiti](ie_p6_result_v1.md),
 [disegno preregistrato](ie_p6_design_v1.md),
 [notebook](../notebooks/ie_p6_residual_repair.ipynb). Matrice copertura ×
