@@ -79,6 +79,9 @@ class ConfirmationTests(unittest.TestCase):
         data={'voltage':v[:,None],'calcium':ca[:,None],'gates':g[:,None,:],'multipliers':np.ones((2,11)),
               'injection':np.zeros((2,8)),'base_g_us':np.zeros((2,8,4)),'area_um2':100*np.pi}
         step,reset,state,_=p7.stepper(torch,None,data,np.arange(2),8,self.cfg,self.ca,self.base,'cpu')
+        # The compiled recurrent frame must never revisit NumPy area metadata.
+        # This guards the Torch inference-mode dispatch-key failure on Kaggle.
+        del data['area_um2']
         initial=[x.clone() for x in state]
         for _ in range(8):step()
         reference=[x.clone() for x in state];reset()

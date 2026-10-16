@@ -1,0 +1,85 @@
+Warning: no DISPLAY environment variable.
+--No graphics will be displayed.
+[GIADA IE-P7] native 4/32
+[GIADA IE-P7] native 8/32
+[GIADA IE-P7] native 12/32
+[GIADA IE-P7] native 16/32
+[GIADA IE-P7] native 20/32
+[GIADA IE-P7] native 24/32
+[GIADA IE-P7] native 28/32
+[GIADA IE-P7] native 32/32
+[GIADA IE-P7] independent native quality formula_vectorized: True
+[GIADA IE-P7] independent native quality formula_vectorized: True
+[GIADA IE-P7] independent native quality lut025: True
+[GIADA IE-P7] independent native quality local81_seed17: True
+[GIADA IE-P7] independent native quality local81_seed29: True
+[GIADA IE-P7] independent native quality local81_seed43: True
+[GIADA IE-P7] independent native quality local161_seed17: True
+[GIADA IE-P7] independent native quality local161_seed29: True
+[GIADA IE-P7] independent native quality local161_seed43: True
+[GIADA IE-P7] independent native quality hybrid_independent_seed17: True
+[GIADA IE-P7] independent native quality hybrid_independent_seed29: True
+[GIADA IE-P7] independent native quality hybrid_independent_seed43: True
+[GIADA IE-P7] independent native quality hybrid_shared_heads_seed17: False
+[GIADA IE-P7] independent native quality hybrid_shared_heads_seed29: True
+[GIADA IE-P7] independent native quality hybrid_shared_heads_seed43: False
+W1016 14:37:31.021000 314 torch/_inductor/utils.py:1731] [0/3] Not enough SMs to use max_autotune_gemm mode
+[GIADA IE-P7] benchmark batch=1 complete
+[GIADA IE-P7] benchmark batch=642 complete
+Traceback (most recent call last):
+  File "/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py", line 44, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py", line 38, in main
+    p7.gpu_phase(ROOT,output,revision,server)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/giada_ie_p7/giada/src/giada_teacher/ie_native_operational_confirmation.py", line 280, in gpu_phase
+    operational=workload(torch,root,output,ops,data,cfg,ca,base,spec,server)
+  File "/kaggle/working/giada_ie_p7/giada/src/giada_teacher/ie_native_operational_confirmation.py", line 215, in workload
+    for _ in range(ticks):compiled()
+                          ~~~~~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/eval_frame.py", line 1024, in compile_wrapper
+    return fn(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/convert_frame.py", line 2316, in __call__
+    result = self._torchdynamo_orig_backend(
+        frame, cache_entry, self.hooks, frame_state, skip=1
+    )
+  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/convert_frame.py", line 729, in __call__
+    result = _compile(
+        frame.f_code,
+    ...<16 lines>...
+        convert_frame_box=self._box,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/convert_frame.py", line 1827, in _compile
+    guarded_code, tracer_output = compile_inner(code, one_graph, hooks)
+                                  ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/torch/_utils_internal.py", line 96, in wrapper_function
+    return function(*args, **kwargs)
+  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/convert_frame.py", line 1500, in compile_inner
+    return _compile_inner(code, one_graph, hooks)
+  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/convert_frame.py", line 1634, in _compile_inner
+    check_fn = dynamo_output.build_guards(
+        code,
+    ...<2 lines>...
+        cache_entry=cache_entry,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/convert_frame.py", line 904, in build_guards
+    return CheckFunctionManager(
+        code,
+    ...<5 lines>...
+        strict_error=strict_error,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/torch/_dynamo/guards.py", line 3928, in __init__
+    raise AssertionError(
+    ...<2 lines>...
+    )
+AssertionError: Guard failed on the same frame it was created. This is a bug - please create an issue.Guard fail reason: 1/0: tensor '___from_numpy(data['area_um2'])' dispatch key set mismatch. expected DispatchKeySet(CPU, BackendSelect, ADInplaceOrView), actual DispatchKeySet(CPU, BackendSelect)
+
+Traceback (most recent call last):
+  File "/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py", line 44, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py", line 33, in main
+    if completed.returncode:raise RuntimeError(f'IE-P7 {phase} subprocess exit={completed.returncode}; inspect phase failure report')
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: IE-P7 gpu subprocess exit=1; inspect phase failure report

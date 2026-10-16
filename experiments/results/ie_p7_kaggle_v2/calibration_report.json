@@ -1,0 +1,41 @@
+{
+  "interface_valid": true,
+  "floor_passed": true,
+  "floor_metrics": [
+    {
+      "voltage_rmse_mv": 2.1382655646758797e-06,
+      "voltage_max_mv": 4.506646320123764e-06,
+      "calcium_max_mm": 2.7454709512764186e-16,
+      "gate_rmse": 0.001114392712794538,
+      "finite": true,
+      "voltage_domain_exits": 0,
+      "occupancy_violations": 0,
+      "negative_calcium": 0
+    }
+  ],
+  "synaptic_audit": [
+    {
+      "case": {
+        "seed": 90703,
+        "panel": "canonical",
+        "initial_voltage_mv": -70.0,
+        "protocol": "early_low",
+        "schedule": "p7_calibration"
+      },
+      "shadow_passed": true,
+      "shadow_metrics": {
+        "release_count": 3,
+        "scheduled_count": 8,
+        "release_mismatch_count": 0,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15,
+        "max_plastic_state_error": 0.0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.196959198423997e-16
+      },
+      "forcing_max_delta_us": 2.358139725155972e-18,
+      "release_count_equal": true,
+      "final_rng_equal": true,
+      "initial_state_equal": true
+    }
+  ]
+}

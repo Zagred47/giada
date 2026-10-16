@@ -185,6 +185,10 @@ def native_quality(torch,ops,data,cfg,ca,base,spec):
     return result
 
 def stepper(torch,op,data,indices,ticks,cfg,ca,base,device='cuda'):
+    # Resolve immutable NumPy metadata before Dynamo traces the recurrent frame.
+    # Conversion inside inference_mode creates a transient NumPy-backed tensor
+    # with incompatible dispatch-key guards in the pinned Kaggle Torch runtime.
+    area_um2=float(data['area_um2'])
     def t(x):return torch.tensor(x,device=device,dtype=torch.float32)
     v=t(data['voltage'][indices,0]);c=t(data['calcium'][indices,0]);g=t(data['gates'][indices,0]);initial=(v.clone(),c.clone(),g.clone())
     mult=t(data['multipliers'][indices]);injection=t(data['injection'][indices,:ticks]);forcing=t(data['base_g_us'][indices,:ticks]);tick=torch.zeros(1,device=device,dtype=torch.int64)
@@ -197,7 +201,7 @@ def stepper(torch,op,data,indices,ticks,cfg,ca,base,device='cuda'):
         tick.zero_()
     def step():
         syn=torch.index_select(forcing,1,tick).squeeze(1);inj=torch.index_select(injection,1,tick).squeeze(1)
-        nv,nc,ng,*_=p4.core(torch,v,c,g,mult,inj,syn,float(data['area_um2']),cfg,ca,base,op)
+        nv,nc,ng,*_=p4.core(torch,v,c,g,mult,inj,syn,area_um2,cfg,ca,base,op)
         v.copy_(nv);c.copy_(nc);g.copy_(ng);tick.add_(1)
         return v,c,g
     return step,reset,(v,c,g),forcing
