@@ -25,7 +25,7 @@ def contract(root):
     assert sha(root/spec['checkpoint'])==spec['checkpoint_sha256'] and sha(root/spec['parent_checkpoint'])==spec['parent_sha256']
     _,cfg,ca,c3,base=n1.contract(root)
     assert cfg['dt_ms']==spec['dt_ms'] and cfg['synaptic_state_phase']=='old'
-    cfg={**cfg,'schedules_ms':spec['schedules_ms']}
+    cfg={**cfg,'schedules_ms':spec['schedules_ms'],'receptor_time_semantics':'ems_fixed_step'}
     return spec,cfg,ca,c3,base
 
 def cases(spec):
@@ -44,7 +44,7 @@ def independent_forcing(rows,cfg,c3,constants,ticks,rng_factory):
                 if event>clock[-1]:break
                 state,_=t33.shadow_step(state,event,params,rng.repick)
                 if not state['released']:continue
-                total+=1;mask=clock>=event;elapsed=clock[mask]-event
+                total+=1;age=t33.fixed_step_event_age(clock,event,cfg['dt_ms']);mask=age>=0;elapsed=age[mask]
                 for name in active:
                     rise,decay,factor=constants['parameters'][name]
                     ratio=c3['nmda_ratio'] if name=='NMDA' else c3['gabab_ratio'] if name=='GABAB' else 1.
@@ -90,7 +90,7 @@ def native_phase(root,teacher,output):
         reports=[]
         for i,(row,native) in enumerate(zip(rows,natives)):
             shadow=t33.shadow_case(h,cfg,c3,row,native)
-            reports.append({'case':row,'shadow_passed':t33._shadow_pass(shadow,cfg),'forcing_max_delta_us':float(np.max(np.abs(forcing[i]-shadow['base_g_us']))),
+            reports.append({'case':row,'shadow_passed':t33._shadow_pass(shadow,cfg),'shadow_metrics':{k:v for k,v in shadow.items() if not isinstance(v,np.ndarray)},'forcing_max_delta_us':float(np.max(np.abs(forcing[i]-shadow['base_g_us']))),
                 'release_count_equal':summaries[i]['release_count']==shadow['release_count'],'final_rng_equal':summaries[i]['rng_positions']==native['rng_seq'][-1].tolist(),
                 'initial_state_equal':native['initial_plastic']==constants['initial_plastic']})
         v,c,g=numpy_floor(natives,forcing,cfg,ca,base)

@@ -232,6 +232,23 @@ def _native_case(h, cfg: dict, base: dict, t32cfg: dict, c3: dict,
             'injection': injection, 'multipliers': multipliers}
 
 
+def fixed_step_event_age(clock, event, dt):
+    """Age of explicit EMS A/B states, not continuous event-time convolution.
+
+    NET_RECEIVE keeps the true event time for plasticity. The fixed-step
+    mechanism decays A/B once by dt if delivery precedes the midpoint state
+    update, and zero times otherwise. Preserve the solver's floating clock:
+    an exact nominal half-grid tie can fall on either side after accumulation.
+    """
+    clock = np.asarray(clock, dtype=np.float64)
+    first = int(np.searchsorted(clock, event, side='left'))
+    age = np.full(clock.shape, -1., dtype=np.float64)
+    if first < len(clock):
+        midpoint = clock[max(0, first-1)] + dt/2
+        age[first:] = (np.arange(len(clock)-first) + int(event <= midpoint))*dt
+    return age
+
+
 def shadow_case(h, cfg: dict, c3: dict, row: dict, native: dict,
                 zero_weight: bool = False) -> dict:
     """Independent online plasticity/receptor replay; native V is audit-only."""
@@ -277,8 +294,10 @@ def shadow_case(h, cfg: dict, c3: dict, row: dict, native: dict,
                         ratio = c3['nmda_ratio'] if receptor == 'NMDA' else (
                             c3['gabab_ratio'] if receptor == 'GABAB' else 1.)
                         amount = cfg['synapse_weight_ns'] * ratio * factor
-                        previous[j, AB_NAMES.index(f'A_{receptor}')] += amount * math.exp(-(clock-event)/rise)
-                        previous[j, AB_NAMES.index(f'B_{receptor}')] += amount * math.exp(-(clock-event)/decay)
+                        age = (fixed_step_event_age(native['clock'], event, cfg['dt_ms'])[n]
+                               if cfg.get('receptor_time_semantics') == 'ems_fixed_step' else clock-event)
+                        previous[j, AB_NAMES.index(f'A_{receptor}')] += amount * math.exp(-age/rise)
+                        previous[j, AB_NAMES.index(f'B_{receptor}')] += amount * math.exp(-age/decay)
             primary = active[0]
             rise, _, factor = native['parameters'][primary]
             actual_a = native['native_ab'][n, j, AB_NAMES.index(f'A_{primary}')]

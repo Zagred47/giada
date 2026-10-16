@@ -1,0 +1,37 @@
+{
+  "schema_version":"ie-p7-v1",
+  "roadmap_ids":["IE-12","IE-13","IE-14","IE-15"],
+  "scope":"Frozen IE-P6 learned local operators: new native confirmation and operational-cost dilution. Partial coverage of IE roadmap, no automatic IE-16/Task36 promotion.",
+  "checkpoint":"experiments/results/ie_p6_kaggle_v1/frozen_checkpoint.pt",
+  "checkpoint_sha256":"29fe16904870d7d78b972e5c4de7e819ab32b6064d9eab5709f78fde7d87b89a",
+  "parent_checkpoint":"experiments/results/ie_p5_kaggle_v1/frozen_checkpoint.pt",
+  "parent_sha256":"55f97b1e6a6502c2d57b047e3a178dbd82f7cdac0703a25d572d55fba3da5d05",
+  "teacher_revision":"074c4666300a8ad246601dab179a97a6942f0f29","neuron_version":"8.2.7",
+  "model_seeds":[17,29,43],"knots":[81,161],"dt_ms":0.1,"duration_ms":40.0,
+  "native_seeds":[90717,90729],"initial_voltages_mv":[-80.0,-58.0],"protocols":["rest","early_high"],
+  "panels":["canonical","calcium_x4","sodium_x4","potassium_x4"],
+  "calibration":{"seed":90703,"panel":"canonical","initial_voltage_mv":-70.0,"protocol":"early_low","schedule":"p7_calibration"},
+  "schedules_ms":{
+    "p7_calibration":{"exc_1":[3.45,12.45],"exc_2":[4.45,13.45],"inh_1":[6.45,14.45],"inh_2":[7.45,15.45]},
+    "p7_confirmation":{"exc_1":[2.75,3.45,9.15,17.25],"exc_2":[2.95,3.65,9.35,17.45],"inh_1":[5.75,6.45,12.15,20.25],"inh_2":[5.95,6.65,12.35,20.45]}
+  },
+  "freeze":"Both complete local families and all3seeds, no best-seed choice; checkpoint SHA verified and freeze.json written before native generation. No retraining, tuning, conversion or selecting on confirmation.",
+  "native":"First disjoint calibration; require audited native/shadow/RNG equality and admissible formula floor before opening32confirmation episodes. Native NEURON and CUDA stay in different OSprocesses. Independent generator uses its own Random123, prescribed schedules and public constants, never native future release/current. Negative zero-weight control and independent duplicate forcing.",
+  "baselines":"Vectorized exact formula, analytic .25mV LUT and all6original Task35 frozen hybrid checkpoints, each deployed without unused seed padding. Same phase/readout/solver. Historical traces not new confirmation.",
+  "quality":{"fresh_gate_rmse":0.001,"fresh_gate_max_abs":0.01,"forced_path_gate_rmse":0.005,"forced_path_gate_max_abs":0.03,"historical_voltage_rmse_mv":0.05,"historical_voltage_max_abs_mv":0.1,"historical_calcium_max_abs_mm":0.000005},
+  "native_quality":"For each of32episodes: Vrmse<=.05mV,Vmax<=.1mV,Camax<=5e-6mM, voltage domain[-100,60], Ca>=0,gateoccupancy[0,1], finite. Also Vrmse excess vs pairedformula<=.02mV,Camax excess<=1e-6mM. Formula itself must meet absolute gates; floor failure prevents model judgment. Spike count equality and matched timing<=.2ms reported, behavioral claim only if>=20native crossings. All6members reported; each family's confirmation requires3/3pass.",
+  "atomic":"Seed82011 uniform8192newtransitions;24newimposed400step paths seed82002. All fixed before fresh access, no training. Same P6 thresholds; no outside-voltage extrapolation claim.",
+  "execution":{"batches":[1,642],"primary_batch":642,"repetitions":20,"calls_per_block":20,"warmup":10,"minimum_paired_saving":0.1},
+  "data_seed":82001,"numeric_limits":[0.002,0.00000001,0.00002,0.0000000001,0.00000001],
+  "workload":{"batches":[1,642],"ticks":80,"repetitions":10,"modes":["compiled","cuda_graph"],"numeric_atol":[0.005,0.00000001,0.00002]},
+  "operational_scope":"One8msstaged episode: independent CPU Random123/plasticity/receptor generation in persistent isolated subprocess, pipe serialization, H2Dforcing+initial-state/reset,80causalGPUsteps with autonomousV/Ca/gates and own-V NMDA, endpoint D2H. Clock/schedule/constants prescribed, no teacher-realized future input. Synapses may be generated before electrical integration because release/receptor kinetics in this canonical mechanism do not depend on postsynapticV; NMDA block remains online. Core timing excludes these stages and is separately reported. Process startup/compilation excluded and reported. This measured orchestration is not an irreducible cost floor or best possible GPU synaptic implementation; no full-morphology claim.",
+  "decision":"Quality and timing are separate. Require registered>=10%pairedmedianwall saving with bootstrap lowerbound>0 atb642 for BOTH core and operational workload vs optimizedformula and all originalhybrid controls, plus independent native and atomic quality for3/3seeds before recommending scoped integration. Compare paired analytic LUT as mandatory frontier. If speed dilutes, report measured stage shares, not automatic model failure or changed thresholds.",
+  "hypotheses":{
+    "H_native":"Frozen local learned operators retain registered quality on independent native seed/schedule cases across4conductance panels.",
+    "H_recurrence":"New atomic and imposed-path quality generalizes without further training; all members evaluated.",
+    "H_cost":"Resident-core advantage repeats on same GPU/backend with within-run uncertainty, not a cross-device proof.",
+    "H_dilution":"Events/RNG/serialization/transfers/loop overhead dilute the core advantage in the declared staged workload; measured stage attribution distinguishes causes.",
+    "H_frontier":"Learned local operators offer a memory-quality-cost tradeoff but do not automatically beat analytic LUT; no neural superiority assumed."
+  },
+  "exclusions":"No training or architecture change, native/CUDA co-import, new time step, new hardware, custom kernels, threshold relaxation or automatic promotion.40msnativeconfirmation only; adaptation/long-horizon/fullcell and fullGPU stochastic implementation remain untested. Technical or formula-floor failure is not a learned-model scientific no-go."
+}

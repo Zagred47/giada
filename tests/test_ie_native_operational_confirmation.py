@@ -36,6 +36,34 @@ class ConfirmationTests(unittest.TestCase):
         short,_=p7.independent_forcing(rows,self.cfg,self.c3,constants,81,FakeRandom)
         self.assertTrue(np.array_equal(a[:,:81],short))
 
+    def test_ems_half_step_ties_against_native_trace(self):
+        path=ROOT/'experiments/results/ie_p7_calibration_blocked_v1/calibration_native.npz'
+        data=np.load(path);clock=data['clock'];dt=self.cfg['dt_ms']
+        # Independent archived calibration only, never confirmation outcomes.
+        metadata=json.loads(path.with_name('metadata.json').read_text())
+        corrected=np.zeros_like(data['native_ab']);continuous=np.zeros_like(corrected)
+        for j,params in enumerate(self.c3['synapses']):
+            primary='AMPA' if params['mechanism']=='ProbAMPANMDA_EMS' else 'GABAA'
+            rise=metadata['parameters'][primary][0]
+            a=data['native_ab'][:,j,p7.t33.AB_NAMES.index('A_'+primary)]
+            jumps=a[1:]-a[:-1]*np.exp(-dt/rise)
+            for event in self.cfg['schedules_ms']['p7_calibration'][params['id']]:
+                first=np.searchsorted(clock,event)
+                if jumps[first-1]<1e-7:continue
+                age=p7.t33.fixed_step_event_age(clock,event,dt);mask=age>=0
+                for receptor in (('AMPA','NMDA') if primary=='AMPA' else ('GABAA','GABAB')):
+                    r,d,factor=metadata['parameters'][receptor]
+                    ratio=self.c3['nmda_ratio'] if receptor=='NMDA' else self.c3['gabab_ratio'] if receptor=='GABAB' else 1.
+                    amount=self.cfg['synapse_weight_ns']*ratio*factor
+                    for prefix,tau in (('A',r),('B',d)):
+                        q=p7.t33.AB_NAMES.index(prefix+'_'+receptor)
+                        corrected[mask,j,q]+=amount*np.exp(-age[mask]/tau)
+                        continuous[mask,j,q]+=amount*np.exp(-(clock[mask]-event)/tau)
+        self.assertLess(np.max(np.abs(corrected-data['native_ab'])),1e-12)
+        self.assertGreater(np.max(np.abs(continuous-data['native_ab'])),.05)
+        self.assertEqual(p7.t33.fixed_step_event_age(clock,6.45,dt)[np.searchsorted(clock,6.45)],0.)
+        self.assertEqual(p7.t33.fixed_step_event_age(clock,13.45,dt)[np.searchsorted(clock,13.45)],dt)
+
     def test_old_hybrid_unpadded_equivalence(self):
         from src.giada_teacher.joint_heterogeneous_comparison import model_factory
         for family in ('independent','shared_heads'):
