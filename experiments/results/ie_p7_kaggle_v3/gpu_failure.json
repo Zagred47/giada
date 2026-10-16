@@ -1,0 +1,8 @@
+{
+  "valid": false,
+  "scientific_no_go": false,
+  "phase": "gpu",
+  "error": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py\", line 38, in main\n    p7.gpu_phase(ROOT,output,revision,server)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/working/giada_ie_p7/giada/src/giada_teacher/ie_native_operational_confirmation.py\", line 284, in gpu_phase\n    operational=workload(torch,root,output,ops,data,cfg,ca,base,spec,server)\n  File \"/kaggle/working/giada_ie_p7/giada/src/giada_teacher/ie_native_operational_confirmation.py\", line 220, in workload\n    torch.cuda.synchronize();check=p4.p2.differences(torch,state,reference,w['numeric_atol'])\n                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/kaggle/working/giada_ie_p7/giada/src/giada_teacher/ie_residual_cost.py\", line 88, in differences\n    assert len(aa)==len(ee)==len(limits)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "code_revision": "8d4852d68d2be154ee81d953ba52eb496b5584a0"
+}

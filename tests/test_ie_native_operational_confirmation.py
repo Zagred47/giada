@@ -84,11 +84,12 @@ class ConfirmationTests(unittest.TestCase):
         del data['area_um2']
         initial=[x.clone() for x in state]
         for _ in range(8):step()
-        reference=[x.clone() for x in state];reset()
+        reference=tuple(x.clone() for x in state);reset()
         for x,y in zip(state,initial):self.assertTrue(torch.equal(x,y))
         compiled=torch.compile(step,fullgraph=True,backend='eager')
         for _ in range(8):compiled()
         for x,y in zip(state,reference):self.assertTrue(torch.equal(x,y))
+        self.assertTrue(p7.p4.p2.differences(torch,state,reference,self.spec['workload']['numeric_atol'])['valid'])
 
     def test_frozen_ops_and_thresholds(self):
         ops=p7.operators(torch,ROOT,'cpu');self.assertEqual(len(ops),14)

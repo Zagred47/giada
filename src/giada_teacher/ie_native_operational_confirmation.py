@@ -215,7 +215,7 @@ def workload(torch,root,output,ops,data,cfg,ca,base,spec,server):
             eager,reset,state,forcing=stepper(torch,op,data,indices,ticks,cfg,ca,base)
             reset()
             for _ in range(ticks):eager()
-            reference=[x.clone() for x in state];reset();compiled=torch.compile(eager,fullgraph=True)
+            reference=tuple(x.clone() for x in state);reset();compiled=torch.compile(eager,fullgraph=True)
             for _ in range(ticks):compiled()
             torch.cuda.synchronize();check=p4.p2.differences(torch,state,reference,w['numeric_atol'])
             checks.append({'batch':batch,'name':name,'mode':'compiled',**check})

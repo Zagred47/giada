@@ -1,0 +1,52 @@
+Warning: no DISPLAY environment variable.
+--No graphics will be displayed.
+[GIADA IE-P7] native 4/32
+[GIADA IE-P7] native 8/32
+[GIADA IE-P7] native 12/32
+[GIADA IE-P7] native 16/32
+[GIADA IE-P7] native 20/32
+[GIADA IE-P7] native 24/32
+[GIADA IE-P7] native 28/32
+[GIADA IE-P7] native 32/32
+[GIADA IE-P7] independent native quality formula_vectorized: True
+[GIADA IE-P7] independent native quality formula_vectorized: True
+[GIADA IE-P7] independent native quality lut025: True
+[GIADA IE-P7] independent native quality local81_seed17: True
+[GIADA IE-P7] independent native quality local81_seed29: True
+[GIADA IE-P7] independent native quality local81_seed43: True
+[GIADA IE-P7] independent native quality local161_seed17: True
+[GIADA IE-P7] independent native quality local161_seed29: True
+[GIADA IE-P7] independent native quality local161_seed43: True
+[GIADA IE-P7] independent native quality hybrid_independent_seed17: True
+[GIADA IE-P7] independent native quality hybrid_independent_seed29: True
+[GIADA IE-P7] independent native quality hybrid_independent_seed43: True
+[GIADA IE-P7] independent native quality hybrid_shared_heads_seed17: False
+[GIADA IE-P7] independent native quality hybrid_shared_heads_seed29: True
+[GIADA IE-P7] independent native quality hybrid_shared_heads_seed43: False
+W1016 14:48:47.171000 313 torch/_inductor/utils.py:1731] [0/3] Not enough SMs to use max_autotune_gemm mode
+[GIADA IE-P7] benchmark batch=1 complete
+[GIADA IE-P7] benchmark batch=642 complete
+Traceback (most recent call last):
+  File "/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py", line 44, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py", line 38, in main
+    p7.gpu_phase(ROOT,output,revision,server)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/giada_ie_p7/giada/src/giada_teacher/ie_native_operational_confirmation.py", line 284, in gpu_phase
+    operational=workload(torch,root,output,ops,data,cfg,ca,base,spec,server)
+  File "/kaggle/working/giada_ie_p7/giada/src/giada_teacher/ie_native_operational_confirmation.py", line 220, in workload
+    torch.cuda.synchronize();check=p4.p2.differences(torch,state,reference,w['numeric_atol'])
+                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/kaggle/working/giada_ie_p7/giada/src/giada_teacher/ie_residual_cost.py", line 88, in differences
+    assert len(aa)==len(ee)==len(limits)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+Traceback (most recent call last):
+  File "/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py", line 44, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/kaggle/working/giada_ie_p7/giada/scripts/run_ie_p7_confirmation.py", line 33, in main
+    if completed.returncode:raise RuntimeError(f'IE-P7 {phase} subprocess exit={completed.returncode}; inspect phase failure report')
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: IE-P7 gpu subprocess exit=1; inspect phase failure report
