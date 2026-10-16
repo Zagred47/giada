@@ -1194,6 +1194,16 @@ un controllo algebraico vettorizzato e una baseline di esecuzione comune.
 I buffer non sono candidati causali; profilo globale e interfaccia del
 playground restano aperti. La numerazione IE e originale non cambia.
 
+## IE-P5 — esito verificato
+
+Esperimento completato: [risultati e limiti](ie_p5_result_v1.md).
+Il refit standard migliora il voltaggio diagnostico 3,48–4,84 volte; il pacchetto
+balanced peggiora tutti e tre i seed. Nessun candidato appreso supera tutte
+le soglie. La tabulazione fine delle predizioni migliora il costo CUDA Graph
+con maggiore memoria, non dimostra accelerazione diretta della MLP.
+Le attribuzioni oracle riguardano soltanto i vecchi modelli congelati.
+Nessuna promozione operativa e nessuna modifica della numerazione delle task.
+
 ## 📜 Prima milestone storica — conservata come riferimento
 
 > Costruire un playground GPU fattoriale per i gate `m` e `h` di Ca-HVA sotto
