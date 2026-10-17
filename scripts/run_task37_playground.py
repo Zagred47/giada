@@ -104,13 +104,22 @@ def run(output):
     controls = p.sensitivity_controls(spec)
     p.save_json(output / 'reference_preflight.json', preflight)
     p.save_json(output / 'evaluator_controls.json', controls)
-    manifest, cases, rows, signatures = [], [], [], set()
+    manifest, cases, rows, signatures, history_pairs = [], [], [], set(), []
     start = time.perf_counter()
     for family in spec['families']:
         for role in spec['roles']:
             inputs, meta = p.make_paths(spec, role, family)
             g, currents, source = p.recurrent_reference(inputs['voltage'], inputs['bridge_ca'],
                 inputs['initial_gates'], inputs['multipliers'], inputs['reversals'], spec['dt_ms'])
+            if family == 'same_v_history':
+                split = int(len(g)*.4)
+                for j in range(0, len(meta), 2):
+                    assert np.array_equal(inputs['voltage'][split:, j], inputs['voltage'][split:, j+1])
+                    assert np.array_equal(inputs['bridge_ca'][:, j], inputs['bridge_ca'][:, j+1])
+                    delta = float(np.max(np.abs(currents[split:, j]-currents[split:, j+1])))
+                    assert delta > 1e-12
+                    history_pairs.append(dict(role=role, pair=j//2, current_future_delta_ma_cm2=delta,
+                        same_initial_state=True, same_current_voltage_and_ca=True, same_parameters=True))
             path = output / f'{role}__{family}.npz'
             arrays = {**inputs, 'gate_targets': g, 'current_targets': currents, 'calcium_source_current': source}
             np.savez_compressed(path, **{k: v.astype(np.float32) for k, v in arrays.items()})
@@ -130,11 +139,13 @@ def run(output):
     p.save_json(output / 'dataset_manifest.json', manifest)
     p.save_json(output / 'cases.json', cases)
     p.save_json(output / 'storage_conversion_evaluation.json', rows)
+    p.save_json(output / 'matched_history_probe.json', history_pairs)
     qualitative_figure(output)
     report = dict(valid=True, task=37, decision='GO_TASK38_IMPLEMENTATION_WITH_GPU_PREFLIGHT',
         scope=spec['scope'], reference_preflight_passed=preflight['valid'],
         evaluator_controls_passed=controls['valid'], defective_controls_detected=len(controls['controls_detected']),
         actual_recurrent_reset_detected=True, partitions=list(spec['roles']),
+        matched_history_pairs=len(history_pairs),
         trajectory_count=len(cases), family_count=len(spec['families']), file_count=len(manifest),
         total_biological_ms=sum(m['duration_ms'] for m in cases),
         rare_trajectory_count=sum(m['rare'] for m in cases),

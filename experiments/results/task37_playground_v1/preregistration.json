@@ -1,0 +1,190 @@
+{
+  "schema_version": "giada-new-task37-v1",
+  "task": 37,
+  "date": "2026-10-17",
+  "parent_commit": "7b15e2d",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "scope": "Deterministic development playground for the 11-channel ionic operator at imposed V and imposed calcium bridge. Recurrent physical gate targets, individual signed currents and evaluators; no training, new native simulation, membrane/axial/synapse replacement or emergent-spike validation.",
+  "dt_ms": 0.1,
+  "voltage_domain_mv": [
+    -100,
+    60
+  ],
+  "calcium_domain_mM": [
+    1e-07,
+    0.01
+  ],
+  "calcium_stress_mM": [
+    1e-08,
+    0.02
+  ],
+  "roles": {
+    "calibration": {
+      "seed": 97101,
+      "trajectories_per_family": 2
+    },
+    "fit": {
+      "seed": 97201,
+      "trajectories_per_family": 4
+    },
+    "fit_extra": {
+      "seed": 97301,
+      "trajectories_per_family": 4
+    },
+    "development": {
+      "seed": 97401,
+      "trajectories_per_family": 2
+    },
+    "stress_diagnostic": {
+      "seed": 97501,
+      "trajectories_per_family": 2
+    }
+  },
+  "confirmation": "Not generated, inspected or used here. New seeds/trajectories and selection freeze required by Task41; no claim that a public seed is a security seal.",
+  "families": {
+    "steps": {
+      "duration_ms": 80,
+      "rare": false
+    },
+    "ramps": {
+      "duration_ms": 200,
+      "rare": false
+    },
+    "chirp": {
+      "duration_ms": 200,
+      "rare": false
+    },
+    "rapid_voltage_train": {
+      "duration_ms": 100,
+      "rare": true
+    },
+    "paired_recovery": {
+      "duration_ms": 600,
+      "rare": true
+    },
+    "same_v_history": {
+      "duration_ms": 3000,
+      "rare": true
+    },
+    "slow_recovery": {
+      "duration_ms": 10000,
+      "rare": true
+    },
+    "calcium_switch": {
+      "duration_ms": 500,
+      "rare": true
+    },
+    "channel_block": {
+      "duration_ms": 200,
+      "rare": true
+    },
+    "reversal": {
+      "duration_ms": 120,
+      "rare": true
+    },
+    "activation_boundary": {
+      "duration_ms": 300,
+      "rare": true
+    },
+    "seams": {
+      "duration_ms": 80,
+      "rare": true
+    }
+  },
+  "initial_states": "Initial gates from independent equilibrium preparation V/Ca, alternating with uniform off-equilibrium occupancy. Preparation is metadata and cannot cross partitions. No periodic reset during recurrent target generation.",
+  "parameter_policy": "gbar multipliers in [0.25,4] plus declared exact zeros; E perturbations +/-5mV, +/-15mV stress. Those affect readout, not canonical kinetic rates. Kinetic parameters/temperature fixed. V and calcium bridge imposed externally, not future teacher inputs.",
+  "phase": "At tick k update V-dependent gates using V[k], compute I_Ca_source from them at V[k]; update SK from previous SK and supplied bridge cai_next[k]. Produce 11 conductances and I_k at V[k]. The imposed bridge is an isolated diagnostic input; in causal composition CaDynamics must compute it from I_Ca_source, verified separately against the existing prefix.",
+  "storage": "One NPZ per role/family with V, cai bridge, initial gates, gbar/E parameters, gate/current targets and source current. Target recurrence generated in float64; float32 storage conversion floor measured. Full unrounded source can be regenerated from fixed manifest and seeds. All stored trajectory hashes and support counts retained.",
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "reference_preflight": {
+    "random_and_boundary_points": 512,
+    "seed": 97601,
+    "gate_atol": 2e-05,
+    "calcium_atol_mM": 1e-08,
+    "current_atol_ma_cm2": 2e-08,
+    "sum_g_atol_s_cm2": 2e-09
+  },
+  "defective_controls": [
+    "50pct_peak_attenuation",
+    "1ms_delay",
+    "opposing_current_cancellation",
+    "persistent_drift",
+    "wrong_memory_reset",
+    "nonfinite",
+    "missing_event",
+    "false_event_on_quiescent_channel"
+  ],
+  "evaluator_acceptance": "Correct float64 reference and float32 stored reference pass; each registered defective control is detected on its designated controlled fixture. This demonstrates sensitivity to those faults, not complete detection of unknown faults.",
+  "task38_39_draft": {
+    "seeds": [
+      17,
+      29,
+      43
+    ],
+    "widths": [
+      32,
+      64
+    ],
+    "losses": [
+      "gate",
+      "gate_plus_individual_current"
+    ],
+    "budget_checkpoints": [
+      0,
+      1000,
+      3000,
+      10000,
+      30000
+    ],
+    "learning_rate": 0.001,
+    "batch_size": 2048,
+    "coverage_contrast": "fit versus fit+fit_extra, same update budget; preserve family sampling exposure counters",
+    "state": "18 physical gate states, no compression",
+    "status": "Draft only; training requires Task38 architecture/optimizer parity and GPU preflight, including all source and numerical checks."
+  },
+  "cost_contract": {
+    "primary_batch": 642,
+    "secondary_batches": [
+      1,
+      4096
+    ],
+    "primary_work": "80 causal ionic ticks at dt0.1ms, per-site explicit state, all 11 currents, conductances and pre-Ca source observable, Ca bridge supplied identically",
+    "dtype": "float32",
+    "baseline": "competitive exact formula and analytic LUT, same readout and compilation",
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "interval": "paired bootstrap95 lower bound >0",
+    "costs_separate": [
+      "ionic-only",
+      "resident compartment core",
+      "staged operational"
+    ],
+    "timing_performed_in_task37": false
+  },
+  "limits": "Synthetic imposed paths are controlled stress, not a physiological frequency distribution. Voltage pulse counts are not emergent spikes. Channel activation boundaries are not validated dynamical bifurcations. Rare-case coverage and compute may matter; no abstract model is judged or trained. Fully coupled Ca/V, burst/ISI, near-bifurcation sensitivity and qualitative model-behavior gates remain required at Task40/41; no promotion using this isolated suite alone."
+}

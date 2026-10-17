@@ -146,6 +146,13 @@ def make_paths(spec, role, family):
             rev[j] = ionic.REVERSALS + rng.uniform(-15, 15, 11)
             if family == 'calcium_switch':
                 calcium[t >= end] = spec['calcium_stress_mM'][j % 2]
+        if family == 'same_v_history' and j % 2:
+            # Isolate the past: initial state, Ca and readout parameters match
+            # within each pair, while only the early V history differs.
+            calcium = ca[:, j-1].copy()
+            initial[j] = initial[j-1]
+            mult[j], rev[j] = mult[j-1], rev[j-1]
+            prep_v, prep_ca = metadata[j-1]['preparation_v_mv'], metadata[j-1]['preparation_ca_mM']
         v[:, j], ca[:, j] = x, calcium
         # Signature includes all inputs/initial state/parameters, not the seed alone.
         h = hashlib.sha256()
@@ -156,7 +163,9 @@ def make_paths(spec, role, family):
             input_sha256=h.hexdigest(), pulse_count=pulse_count,
             onset_ms=float(onset), end_ms=float(end), preparation_v_mv=float(prep_v),
             preparation_ca_mM=float(prep_ca), initial_kind='equilibrium' if j % 2 == 0 else 'off_equilibrium',
-            rare=spec['families'][family]['rare']))
+            rare=spec['families'][family]['rare'], history_pair=j//2 if family == 'same_v_history' else None))
+        if family == 'same_v_history':
+            metadata[-1]['initial_kind'] = 'matched_pair_equilibrium'
     return dict(voltage=v, bridge_ca=ca, initial_gates=initial, multipliers=mult,
                 reversals=rev), metadata
 

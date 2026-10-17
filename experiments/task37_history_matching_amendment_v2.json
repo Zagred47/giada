@@ -1,0 +1,13 @@
+{
+  "task": 37,
+  "version": "history-matching-v2",
+  "base_protocol": "experiments/task37_ionic_playground_preregistration_v1.json",
+  "reason": "Isolate the history contrast from initial-state, calcium and readout-parameter differences in same_v_history.",
+  "override": "Within each same_v_history pair use the same initial equilibrium state, calcium bridge, gbar and E; only early voltage history differs. Common tail has identical voltage. Other families keep alternating equilibrium/off-equilibrium initial states.",
+  "timing": "Implemented before v2 materialization; formalized here before model training. V1 was a development implementation preflight, not a held-out model test.",
+  "thresholds_changed": false,
+  "model_training_performed": false,
+  "confirmation_accessed": false,
+  "technical_incident": "V1 reached dataset generation but lacked matplotlib for the qualitative figure; local isolated plotting dependencies installed, v2 fully regenerated. The original source is preserved at commit 9a39b6a.",
+  "interpretation": "No learned-model go/no-go follows from this implementation correction. No universal behavioral validation follows from matched imposed-voltage histories."
+}

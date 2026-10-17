@@ -76,6 +76,16 @@ class IonicPlaygroundTests(unittest.TestCase):
         self.assertGreater(np.max(np.abs(currents[:, 0]-currents[:, 1])), 1e-5)
         self.assertGreater(abs(g[-1, 0, 9]-g[-1, 1, 9]), .1)
 
+    def test_history_pairs_are_causally_matched(self):
+        data, metadata = p.make_paths(self.spec, 'fit', 'same_v_history')
+        split = int(len(data['voltage'])*.4)
+        for j in range(0, len(metadata), 2):
+            self.assertTrue(np.array_equal(data['voltage'][split:, j], data['voltage'][split:, j+1]))
+            self.assertFalse(np.array_equal(data['voltage'][:split, j], data['voltage'][:split, j+1]))
+            for key in ('initial_gates', 'multipliers', 'reversals'):
+                self.assertTrue(np.array_equal(data[key][j], data[key][j+1]))
+            self.assertTrue(np.array_equal(data['bridge_ca'][:, j], data['bridge_ca'][:, j+1]))
+
     def test_intervention_cannot_be_hidden_by_identical_base(self):
         r = np.full((100, 11), 1e-4)
         result = p.evaluate_intervention(r, r*2, r, r, .1, self.spec['quality'])

@@ -969,8 +969,9 @@ Fallimento tecnico, NO-GO scientifico e NO-GO prestazionale sono distinti.
 # 🪜 VI-ter. Sei blocchi di astrazione ionica progressiva — Task 36–71
 
 > **Stato:** Task36 conclusa come audit di contratto, con
-> [esito e limiti](task36_result_v1.md). Task37–71 pianificate, non eseguite
-> né già preregistrate numericamente. Si prepara ora Task37; ogni run successivo
+> [esito e limiti](task36_result_v1.md). Task37 conclusa nel playground isolato
+> ([risultato](task37_result_v1.md)); Task38–71 pianificate. Si prepara ora
+> Task38; ogni run successivo
 > richiede il proprio contratto e i prerequisiti indicati. Una task può
 > condividere un notebook con altre quando non dipende dal loro risultato.
 
@@ -1157,6 +1158,12 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
   pari V ma storie diverse, step/rampe/chirp, recupero lento, Ca variabile,
   stati non all'equilibrio e blocchi/variazioni gbar. Split per traiettoria
   e protocollo, controlli nativi e test di sufficienza; riservare conferme.
+  **Conclusa nello scope isolato:**168traiettorie/12famiglie,60NPZ e cinque
+  ruoli; riferimento canonico e confronto numerico con il prefisso già
+  validato, senza nuova simulazione NEURON. Nove test, otto controlli difettosi,
+  reset reale e sette coppie storiche appaiate. Conferma non generata.
+  Valutatori/soglie ioniche pronti; comportamenti emergenti e biforcazioni
+  dinamiche richiedono ancora Task40–41. Vedi `task37_result_v1.md`.
 - **Task 38 — Aggiornamento appreso a stato esplicito** → Confrontare update
   congiunto diretto vincolato dei 18 gate con il riferimento a coefficienti
   discreti già studiato. Includere SK con l'ingresso Ca nella fase corretta.
@@ -1596,11 +1603,12 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prossima milestone concreta — Task37
+# 🥇 Prossima milestone concreta — Task38
 
-> Task36 ha fissato il contratto della progressione ionica. Preparare ora
-> supporto e valutatori della Task37, quindi i contrasti Task38–39 nello
-> stesso notebook dove possibile, rispettando i gate prima del training.
+> Task36 ha fissato il contratto; Task37 ha implementato il playground e
+> i valutatori isolati. Preparare l'update congiunto esplicito Task38 e la
+> matrice Task39 nello stesso notebook dove possibile, con preflight GPU,
+> budget appaiati e freeze prima di nuove conferme.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
