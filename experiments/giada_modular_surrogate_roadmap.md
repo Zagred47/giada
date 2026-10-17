@@ -1169,6 +1169,11 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
   discreti già studiato. Includere SK con l'ingresso Ca nella fase corretta.
   Conservare aperture/readout algebraici per isolare l'astrazione dell'update;
   l'eventuale controllo SK canonico va etichettato come sostituzione parziale.
+  **Protocollo prospettico pronto:** `task38_joint_transition_preregistration_v1.json`,
+  notebook `giada_task38_joint_transition.ipynb`: width32/64 × tre seed,
+  checkpoint lungo lo stesso training, soglie Task37 invariate. Ricorrenze
+  development/stress dopo freeze; risultati ancora da acquisire. Nessuna
+  conferma indipendente o accelerazione del compartimento già dimostrata.
 - **Task 39 — Learnability, bias e mini scaling** → Matrice piccola di
   capacità e supervisione gate/correnti, budget crescenti sulla stessa
   traiettoria e dati a difficoltà controllata. Probe interni, rollout brevi
