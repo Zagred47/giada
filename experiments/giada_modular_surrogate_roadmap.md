@@ -1,10 +1,12 @@
 # 🧭 GIADA — Roadmap modulare per surrogate biofisici
 
-> **Direzione corrente — 15 ottobre 2026:** riprendere la decomposizione
-> modulare, con priorità all'**efficienza misurata del blocco ionico** prima
-> della Task36. Il percorso operativo è nella **sezione VI-bis, IE-01…IE-16**
-> di questo dropshot. Le task sono decisioni scientifiche, non sedici notebook
-> obbligatori né protocolli numerici già preregistrati.
+> **Direzione corrente — 17 ottobre 2026:** aumentare gradualmente
+> l'astrazione del **solo blocco ionico**, dai gate alle correnti, cercando
+> fedeltà causale e accelerazione misurata. Sei nuovi blocchi, **Task 36–71**,
+> alternano singolo compartimento e più compartimenti a tre livelli di
+> astrazione. Sono nella **sezione VI-ter** di questo stesso dropshot.
+> La prima attività è la **Task 36 — Contratto e scala di astrazione ionica**.
+> Le task sono decisioni scientifiche, non trentasei run obbligatori.
 >
 > **Continuità:** Task0…35 e i prerequisiti conservano identità ed evidenze.
 > Il [percorso CC](giada_compartment_compression_dropshot_v1.md) resta storico:
@@ -12,7 +14,10 @@
 > soglie CC. [Audit IE-01 e risultati N2](cc_n2_result_v1.md): 108 valutazioni
 > ricalcolate da array salvati e selezione verificata, nessun nuovo training.
 > N3…N6 sono sospesi come sequenza operativa, non dichiarati eseguiti o falliti.
-> Task36 è rinviata per priorità, senza invalidare il prerequisito assiale.
+> Le vecchie Task36–49 diventano **Task72–85**, con corrispondenza esplicita
+> sotto. Gli identificativi nei vecchi artefatti e nel DB restano storici;
+> non si rietichettano risultati o protocolli già registrati.
+> IE e CC conservano le evidenze ma non sono più la sequenza operativa corrente.
 
 > **Stato:** documento di direzione sperimentale, da usare per pianificare i run.
 >
@@ -308,7 +313,9 @@ La domanda centrale è:
 
 ### 🗂️ Registro operativo e dipendenze (riconciliazione 2026-10-04)
 
-Le task originali 1–49 conservano numero e significato. Questa sezione usa
+Le Task1–35 conservano numero e significato; dal 17 ottobre le precedenti
+Task36–49 sono rinviate e rinumerate Task72–85 (tabella in VI-ter).
+Questa sezione usa
 identificativi `IV-A1` … `IV-D3`, registrati come **azioni proposte**, non come
 esperimenti già preregistrati o conclusi. Il piano strutturato e i criteri di
 completamento sono in [giada_section_iv_plan.json](giada_section_iv_plan.json).
@@ -340,7 +347,9 @@ per esempio, la Task20 su SK con calcio imposto non valida CaDynamics.
 - Task32: IV-B2 prima del feedback con dinamiche lente.
 - Task33: IV-C3 prima dell'integrazione sinaptica.
 - Task35: IV-A2, IV-B2 e IV-C3 per il compartimento locale completo dichiarato.
-- Task36: IV-D1; Task37–38: IV-D2; Task39–44: IV-D3.
+- Task72 (ex36): IV-D1; Task73–74 (ex37–38): IV-D2;
+  Task75–80 (ex39–44): IV-D3. Gli stessi prerequisiti passivi si applicano
+  alle geometrie dei nuovi blocchi multicompartmentali 2, 4 e 6 in VI-ter.
 
 Questi sono prerequisiti aggiuntivi: restano necessari i gate ionici e le
 validazioni del sistema ricevente. IV-A1, IV-B1 e IV-C1 possono condividere un
@@ -693,8 +702,9 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
   **Esito v1 confermato** su 32 casi indipendenti e tutti i sei checkpoint,
   con gate per pannello e nessun riaddestramento. Vedi
   `experiments/task35_full_local_compartment_result.md`. Il prossimo salto
-  causale strutturale rimane l'accoppiamento assiale della Task36. La priorità
-  corrente inserisce prima il percorso di efficienza ionica VI-bis.
+  causale strutturale del piano precedente era l'accoppiamento assiale
+  dell'exTask36, ora Task72. La priorità corrente è la scala di astrazione
+  ionica Task36–71, che include propri test di trasferimento assiale.
 
 ### 🔬 Matrice causale obbligatoria
 
@@ -707,19 +717,26 @@ Soltanto qui il modello comincia a generare il proprio voltaggio.
 
 ---
 
-# ⚡ VI-bis. Efficienza ionica appresa — percorso prioritario IE
+# ⚡ VI-bis. Efficienza ionica appresa — percorso IE conservato
+
+> **Archivio di direzione, aggiornato il 17 ottobre 2026:** il percorso IE
+> documenta le ipotesi e i contrasti precedenti. La sequenza attiva è ora
+> Task36–71 in VI-ter. Le attività IE non eseguite non diventano concluse:
+> i loro quesiti pertinenti confluiscono nei nuovi contratti, senza rinominare
+> i notebook IE-P1…P7 o riutilizzarne i test aperti come conferme fresh.
 
 > **Obiettivo:** sostituire una parte sostanziale della computazione ionica
 > con un modulo appreso più economico, a fedeltà dichiarata, e verificarne il
 > beneficio nel compartimento Task35. Non massimizzare la percentuale di rete.
 >
-> **Numerazione stabile:** IE significa *efficienza ionica*. IE-01…IE-16 sono
-> nuove task; non riutilizzano gli ID originali né CC. Una sottotask futura
+> **Numerazione storica:** IE significa *efficienza ionica*. IE-01…IE-16 sono
+> gli ID del percorso precedente; non riutilizzano gli ID originali né CC. Una sottotask futura
 > avrà un suffisso esplicito e una propria ipotesi, senza cambiare i parent.
 >
-> **Stato:** pianificazione approvata come direzione; nessun nuovo run IE
-> eseguito, nessun modello promosso e nessuna infrastruttura remota avviata
-> da questo aggiornamento documentale.
+> **Stato:** esistono run IE, descritti nel registro di avanzamento in fondo.
+> Questo aggiornamento modifica la pianificazione, non esegue esperimenti
+> e non promuove candidati. La chiusura documentale dei risultati più recenti
+> va verificata nella Task36 prima di riusarli come baseline.
 
 ## 📚 A. Evidenze acquisite e bersaglio computazionale
 
@@ -876,7 +893,8 @@ per promuovere un aggiornamento esplicito già accurato e conveniente.
   contratto sono riportati separatamente, non esclusi dopo aver visto l'esito.
 
 - **Task IE-16 — Decisione e rientro** → Registrare evidenze e limiti nel
-  mirror SQLite. Se qualità e utilità passano, proporre il rientro alla Task36
+  mirror SQLite. Nel piano IE, qualità e utilità avrebbero consentito di
+  proporre il rientro all'exTask36 (ora Task72)
   con il modulo e la porta assiale verificati. Se emerge un altro collo di
   bottiglia dominante, motivare un nuovo blocco di lavoro prima di ampliarlo.
   Un NO-GO circoscritto conserva il riferimento Task35; nessuna promozione
@@ -948,27 +966,476 @@ Fallimento tecnico, NO-GO scientifico e NO-GO prestazionale sono distinti.
 
 ---
 
+# 🪜 VI-ter. Sei blocchi di astrazione ionica progressiva — Task 36–71
+
+> **Stato di tutte le Task36–71:** pianificate, non eseguite né già
+> preregistrate numericamente. Si prepara prima Task36; ogni run successivo
+> richiede il proprio contratto e i prerequisiti indicati. Una task può
+> condividere un notebook con altre quando non dipende dal loro risultato.
+
+## 🎯 Bersaglio e tre gradini di astrazione
+
+Il bersaglio comprende **dinamica ionica, memoria e produzione delle correnti
+individuali** degli undici canali del compartimento. L'ipotesi è che una
+transizione appresa con calcolo condiviso e, gradualmente, memoria compressa
+possa essere più economica della composizione meccanicistica. Il beneficio
+va misurato: più astrazione, meno parametri o meno formule non garantiscono
+da soli una latenza inferiore. Dati e training possono ridurre l'errore di
+approssimazione; non ricostruiscono informazione causale eliminata dagli input
+o da uno stato insufficiente.
+
+| Blocchi | Task | Livello | Stato persistente del candidato | Computazione da apprendere |
+|---|---|---|---|---|
+| 1 → 2 | 36–41 → 42–47 | 1 — transizione congiunta esplicita | Gate fisici conservati | Aggiornamento discreto congiunto, oltre le sole curve dei rate |
+| 3 → 4 | 48–53 → 54–59 | 2 — memoria per famiglie | Piccoli stati latenti per gruppi motivati | Dinamiche e aperture efficaci senza ricostruire tutti i gate in inferenza |
+| 5 → 6 | 60–65 → 66–71 | 3 — memoria ionica condivisa | Un unico stato ricorrente locale, dimensione da verificare | Intero operatore ionico, senza imporre la separazione dinamica per famiglia |
+
+In ogni coppia, il primo blocco studia **un compartimento**; il secondo
+trasferisce **lo stesso livello di astrazione** a compartimenti realmente
+accoppiati. I pesi possono essere condivisi, ma ogni compartimento conserva
+il proprio stato e i propri parametri. Un batch di compartimenti indipendenti
+non costituisce validazione multicompartmentale. Le tre verifiche spaziali
+riusano geometrie e protocolli comparabili, senza aumentare contemporaneamente
+astrazione, passo temporale e scala morfologica.
+
+## 🔒 Contratto comune e criteri per salire di livello
+
+- **Confine fisico:** solver di membrana e assiale, passivo, CaDynamics,
+  sinapsi e RNG restano quelli verificati. Cambiano soltanto il modulo ionico
+  e il suo adattatore esplicitamente conteggiato. Ca è un ingresso reale;
+  il feedback delle correnti Ca viene testato attraverso CaDynamics invariato.
+  La fase Ca → SK e la corrente Ca richiesta prima dell'update devono restare
+  implementabili causalmente, anche se servono due chiamate alla rete.
+- **Porta compatibile:** fornire correnti per canale e conduttanze/coefficienti
+  richiesti dal solver semi-implicito, nella sua convenzione temporale.
+  Predire solo I totale non basta. L'eventuale readout diretto non può
+  sostituire di nascosto il solver con un integratore esplicito.
+- **Tempo e informazione:** partenza a dt = 0,1 ms e precisione di riferimento
+  comune. V, Ca, parametri ammessi e stato precedente sono disponibili online;
+  nessun V futuro, reset periodico al teacher o stato privilegiato nel rollout.
+  Encoder iniziale e warmup vanno dichiarati, valutati e inclusi nel costo.
+- **Bias da conservare e mettere alla prova:** causalità, memoria multiscala,
+  correnti individuali, maschere di presenza, blocco esatto con gbar = 0 e
+  risposta ai potenziali di inversione. Readout primario economico:
+  `g_k = gbar_k * a_k`, `I_k = g_k * (V - E_k)`, con aperture ammissibili.
+  Le potenze dei gate vengono eliminate dai candidati latenti quando il
+  readout impara direttamente a_k. Il readout di corrente diretto è una
+  ablation controllata, non un obbligo di cancellare algebra economica.
+- **Fedeltà causale:** oltre a RMSE, correnti piccole/grandi e carica integrata,
+  misurare risposte a storie diverse con stesso V, recupero, inattivazione,
+  adattamento, blocchi e variazioni parametriche. Valutare V/Ca, spike e
+  sensibilità degli esiti agli interventi solo nei regimi dove il teacher li
+  manifesta e il supporto è sufficiente. Somiglianza di forma e numero di
+  spike non certificano da soli la stessa dinamica. L'equivalenza resta
+  relativa al dominio e agli interventi testati, mai a tutti i comportamenti.
+- **Controlli e costo:** teacher nativo verificato, formule GPU competitive,
+  LUT pertinente, riferimento Task35 e miglior livello precedente congelato.
+  Stessi dati/seed e budget appaiati ove compatibili; compilazione simmetrica.
+  Riportare latenza ionica, core integrato e wall-clock operativo separatamente,
+  memoria dello stato/pesi/temporanei e costo per ms biologico. Non attribuire
+  al blocco ionico un costo host/RNG/IPC né spacciare un risparmio locale per
+  speedup dell'intero neurone. Niente kernel custom necessario per dimostrare
+  il primo vantaggio architetturale; le baseline restano ottimizzate equamente.
+- **Decisioni:** soglie, margini di non inferiorità, target di risparmio,
+  workload primario, seed, budget e regole di stop si congelano prima del run.
+  Non si allentano i vecchi gate. Dopo sviluppo: freeze e nuovi test disgiunti.
+  Un test già aperto può informare la fase successiva solo come evidenza
+  dichiarata di sviluppo; la conferma successiva richiede un nuovo insieme.
+  Separare errore tecnico, NO-GO scientifico e NO-GO di velocità. Un livello
+  accurato ma lento può essere il controllo del successivo, con decisione
+  motivata sul risparmio atteso; non è una promozione prestazionale. Un livello
+  inaccurato richiede diagnosi prima di aggiungere un'altra astrazione.
+
+## 🔍 Valutazione dei regimi rari e dei futuri divergenti — requisito trasversale
+
+**Precisazione dell'utente, 17 ottobre 2026:** aumentando l'astrazione può
+crescere il fabbisogno di dati e di training, soprattutto per regimi rari e
+vicino alle transizioni dinamiche. Un errore medio basso, anche su un insieme
+etichettato OOD, non certifica fedeltà delle risposte o dei rollout. Un
+fallimento locale non dimostra da solo che l'astrazione sia sbagliata; un
+successo medio non autorizza a ignorarlo. Questo requisito vale per tutti
+e sei i blocchi, dalla Task36 alla Task71.
+
+### 📚 Recuperare i valutatori storici senza trasferirli alla cieca
+
+Nella repository esistono
+[`RapidFireEventDetector` e `RapidFireSomaEvaluator`](../src/neuronio/neuronio_rapid_fire_eval_utils.py)
+e [`NeuronioEvaluator`](../src/neuronio/neuronio_eval_utils.py). Il modulo
+rapid-fire misura copertura degli eventi, errori sui picchi, code della
+distribuzione e metriche sulle finestre rapide, con visualizzazione degli
+eventi peggiori. È un precedente utile, non una validazione delle nuove correnti.
+Il detector usa quantili e indici di campionamento: conversione a tempo fisico,
+normalizzazioni, soglie, smoothing e definizione dell'evento vanno verificati
+prima del riuso a dt = 0,1 ms. Un transiente rapido rilevato da quel codice
+non equivale automaticamente a una sequenza di spike ad alta frequenza.
+Servono valutatori ionici specifici e test autoregressivi dedicati.
+
+### 🧪 Distinguere copertura, sforzo di training e stato insufficiente
+
+- Registrare per regime il numero di traiettorie indipendenti, eventi,
+  durate, combinazioni di parametri e campioni effettivamente visti durante
+  il training. Ripetere un evento non crea nuova diversità; molti punti
+  adiacenti non sono molte osservazioni indipendenti.
+- In caso di fallimento raro, usare un contrasto mirato **copertura × budget**:
+  dati correnti contro nuove traiettorie del regime, budget corrente contro
+  maggiore esposizione di training. A parità di architettura e test disgiunto,
+  separare l'effetto di nuova informazione da quello di più aggiornamenti.
+  Riportare campioni visti e compute effettivo, non soltanto epoche.
+- Distinguere inoltre sottopeso nella loss, campionamento sbilanciato,
+  ottimizzazione e capacità con ablazioni mirate. Sovracampionamento e loss
+  per regime vanno confrontati anche sui regimi comuni per rilevare regressioni.
+  Gli interventi sono scelti sul development, mai sul test finale.
+- Curve di errore per regime e checkpoint a budget crescenti guidano la
+  diagnosi. Un miglioramento con dati/compute supporta quella spiegazione
+  nel dominio osservato, non prova che lo scaling risolverà ogni residuo.
+  Se storie fuse nello stesso stato richiedono futuri differenti, aumentare
+  soltanto il budget non elimina il problema informativo.
+
+### 📏 Metriche numeriche, comportamento e revisione qualitativa
+
+- **Regimi separati:** dati rappresentativi della distribuzione attesa e
+  suite di stress stratificata, riportati separatamente. Oltre alla media,
+  errori per canale/regime, quantili di coda, casi peggiori, frequenza dei
+  fallimenti e incertezza per traiettoria/seed. Soglie obbligatorie per regimi
+  critici impediscono che lunghi periodi quiescenti nascondano errori rari.
+  Copertura insufficiente significa «non valutabile», non «passato».
+- **Correnti:** segno, ampiezza e timing dei picchi, onset/offset, carica
+  integrata firmata e assoluta, inattivazione e recupero; analizzare anche
+  le componenti che si cancellano nella somma. Normalizzazioni e scale
+  assolute vanno dichiarate, evitando divisioni instabili vicino a corrente zero.
+- **Risposte causali:** coppie con storia diversa e stesso V, impulsi
+  ravvicinati e treni rapidi, recupero dopo pausa, variazioni di Ca/gbar/E
+  e blocchi selettivi. Confrontare la variazione di risposta prodotta dallo
+  stesso intervento, non soltanto due tracce di base somiglianti.
+- **Transizioni e biforcazioni dinamiche:** scandire ampiezza/frequenza degli
+  stimoli e parametri intorno ai cambi di regime osservati nel teacher;
+  misurare spostamenti delle soglie, ritardi, isteresi e regime raggiunto
+  quando presenti. Distinguere queste biforcazioni dalle ramificazioni
+  morfologiche. Prima verificare convergenza del riferimento e sensibilità
+  alle perturbazioni: la divergenza di traiettorie va interpretata rispetto
+  al floor numerico e alla dinamica del teacher, non automaticamente imputata
+  al surrogate né giustificata senza misura.
+- **Autoregressione reale:** orizzonti crescenti, senza reset o correzioni
+  teacher; errore e drift nel tempo, tempo al superamento della tolleranza,
+  recupero e cambi di regime. In composizione includere spike mancanti/spuri,
+  timing, intervalli inter-spike e struttura dei burst dove supportati.
+- **Revisione qualitativa riproducibile:** pannelli allineati di correnti,
+  V/Ca e stati/probe, diagrammi di fase e mappe stimolo–risposta; selezione
+  prefissata di casi tipici, casuali, rari e peggiori, con scale comuni.
+  Una checklist descrive anomalie come burst troncato, recupero errato,
+  inversione spuria o deriva. L'ispezione visiva integra i gate quantitativi,
+  non li sostituisce e non consente di scegliere soltanto figure favorevoli.
+- **Testare i valutatori:** controlli deliberatamente difettosi, per esempio
+  ritardo della corrente, picchi attenuati, memoria azzerata o drift piccolo
+  ma persistente, devono essere rilevati; il riferimento corretto deve passare.
+  Qualunque anomalia nuova diventa un caso documentato e un futuro test di
+  regressione. Se emerge nel fresh, quel fresh resta aperto e la riparazione
+  richiede una nuova conferma indipendente.
+
+Task36 definisce questo contratto; Task37 costruisce supporto e valutatori;
+Task39/51/63 diagnosticano dati e compute; le conferme di ogni blocco lo
+applicano nel proprio scope. Nessuna suite garantisce di scoprire subito ogni
+errore ignoto: mantenere un catalogo dei failure mode e ampliare prospetticamente
+la copertura è parte del lavoro, non un motivo per reinterpretare vecchi pass.
+
+## 🧩 Blocco 1 — Transizione ionica congiunta, singolo compartimento
+
+**Domanda:** possiamo sostituire le cinetiche e l'integrazione dei gate con
+un operatore discreto appreso, conservando inizialmente lo stato fisico?
+
+- **Task 36 — Contratto e scala di astrazione ionica** → Riconciliare Task35,
+  CC e IE, completando audit/provenance dei risultati riusati. Inventariare
+  gate, correnti, Ca/SK e fasi del solver; congelare baseline, domini,
+  comportamenti richiesti e profilo di costo. Separare ciò che è già noto
+  dalle nuove ipotesi: non ripetere IE sotto un numero diverso.
+- **Task 37 — Playground di memoria e interventi** → Generare sequenze con
+  pari V ma storie diverse, step/rampe/chirp, recupero lento, Ca variabile,
+  stati non all'equilibrio e blocchi/variazioni gbar. Split per traiettoria
+  e protocollo, controlli nativi e test di sufficienza; riservare conferme.
+- **Task 38 — Aggiornamento appreso a stato esplicito** → Confrontare update
+  congiunto diretto vincolato dei 18 gate con il riferimento a coefficienti
+  discreti già studiato. Includere SK con l'ingresso Ca nella fase corretta.
+  Conservare aperture/readout algebraici per isolare l'astrazione dell'update;
+  l'eventuale controllo SK canonico va etichettato come sostituzione parziale.
+- **Task 39 — Learnability, bias e mini scaling** → Matrice piccola di
+  capacità e supervisione gate/correnti, budget crescenti sulla stessa
+  traiettoria e dati a difficoltà controllata. Probe interni, rollout brevi
+  e lunghi, attribuzione per canale: distinguere ottimizzazione, copertura,
+  errore di fase e rappresentazione prima di aumentare lo stato nascosto.
+- **Task 40 — Reinserimento causale e costo locale** → V/Ca imposti contro
+  autonomi, sostituzioni per famiglia e congiunte nel compartimento invariato.
+  Testare interventi e timing; misurare costo ionico e integrato allo stesso
+  lavoro/accuratezza. Congelare candidato e contratto della conferma.
+- **Task 41 — Conferma indipendente del livello 1** → Nuovi protocolli/seed
+  e pannelli parametrici, qualità e costo con incertezza e casi peggiori.
+  Registrare GO, controllo accurato ma lento o NO-GO motivato, per dominio.
+  Autorizzare il trasferimento spaziale soltanto con controllo locale valido.
+
+### ✅ Uscita del blocco 1
+
+Operatore e interfaccia congelati, errore attribuibile e costo misurato.
+La ricorrenza deve funzionare senza correzioni del teacher; occupazioni
+limitate non sono da sole una dimostrazione di stabilità del compartimento.
+
+## 🌿 Blocco 2 — Livello 1 in più compartimenti
+
+**Domanda:** il guadagno locale e la fedeltà si conservano quando i voltaggi
+si influenzano tramite il solver assiale classico?
+
+- **Task 42 — Porta assiale e sistemi appaiati** → Riutilizzare IV-D1;
+  verificare IV-D2/D3 prima di catene/biforcazioni. Costruire riferimenti
+  attivi 2/4/8/16 compartimenti e una biforcazione piccola, con floor nativo,
+  unità e bilanci verificati. Queste geometrie restano il pannello comune
+  dei blocchi 4 e 6; la loro ampiezza finale si preregistra prima dei run.
+- **Task 43 — Trasferimento congelato del livello 1** → Applicare i pesi
+  della Task41 con stati locali distinti, parametri eterogenei e ordine dei
+  nodi permutato. Prima path imposti, poi feedback assiale; nessun retraining
+  nascosto nel risultato di trasferimento.
+- **Task 44 — Localizzazione dell'errore di composizione** → Sostituire un
+  sito, un gruppo di canali e poi tutti; confrontare accoppiamento nullo,
+  debole e forte. Misurare correnti locali, V/Ca e propagazione; un batch
+  disconnesso è solo il controllo negativo dell'accoppiamento.
+- **Task 45 — Copertura multicompartmentale controllata** → Se necessario,
+  refit con path locali prodotti da sistemi accoppiati, stessa architettura
+  e stessa rappresentazione del livello 1. Confronto appaiato con frozen,
+  mini scaling e morfologie riservate; nessuna informazione futura dai vicini.
+- **Task 46 — Interventi spaziali e frontiera di costo** → Stimoli locali,
+  blocchi selettivi e conduttanze eterogenee; ritardi/attenuazione e crossing
+  dove presenti. Separare costo ionico dal solve assiale e dal traffico dati;
+  freeze prima della conferma, senza modificare il livello di astrazione.
+- **Task 47 — Conferma e decisione sul livello 1** → Geometrie/seed/stimoli
+  disgiunti, confronto con formula e candidato locale. Registrare limiti di
+  trasferimento e risparmio reale; formulare quale costo o ridondanza rende
+  sensata la compressione del blocco 3, senza proclamarla già riuscita.
+
+### ✅ Uscita del blocco 2
+
+Validità di trasferimento nel piccolo sistema accoppiato dichiarato e
+frontiera qualità–costo. Non equivale alla validazione del Hay completo.
+
+## 🧠 Blocco 3 — Memorie ioniche per famiglie, singolo compartimento
+
+**Domanda:** possiamo eliminare parte dei gate espliciti senza perdere la
+memoria che determina correnti e risposta agli interventi?
+
+- **Task 48 — Ridondanza e stato minimo per famiglia** → Usare i dati dei
+  blocchi 1–2 per proporre raggruppamenti motivati. Cercare collisioni di
+  aperture/correnti con futuro diverso, probe di recupero e tempi lenti.
+  Un'apertura per canale non viene assunta sufficiente al posto dei gate.
+- **Task 49 — Encoder e inizializzazione causale** → Confrontare encoding
+  iniziale dello stato fisico disponibile con warmup causale e stato standard
+  nel proprio dominio. Decoder dei gate solo come probe/training; verificare
+  restart e storie non viste, includendo il costo di inizializzazione.
+- **Task 50 — Ricorrenze compatte per famiglie** → Poche dimensioni di
+  memoria per famiglia, capacità del trunk variata separatamente. Imparare
+  direttamente aperture efficaci e produrre correnti individuali con readout
+  economico; mantenere Ca/SK e parametri espliciti. Controllo livello 1 identico
+  per dati, input e perimetro; nessuna necessità di ricostruire i gate online.
+- **Task 51 — Diagnosi della compressione** → Dimensione dello stato ×
+  supervisione ausiliaria in una matrice mirata, ladder dati/budget, reset e
+  scambio di memoria come controlli. Misurare separatamente saturazione da
+  informazione persa e training insufficiente, recupero e correnti cancellate
+  nel totale. Gli oracle privilegiati non sono candidati selezionabili.
+- **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
+  candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
+  Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare
+  byte di stato, latenze e costo degli adattatori. Congelare la scelta.
+- **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
+  contro formule e livello 1, con contratti comuni. Decidere se la memoria
+  ridotta conserva le risposte nel dominio e se il risparmio è materiale;
+  conservare un esito accurato ma lento come tale, senza chiamarlo speedup.
+
+### ✅ Uscita del blocco 3
+
+Memoria per famiglie sufficiente nel dominio testato, senza accesso ai gate
+teacher durante l'inferenza; qualità e riduzione di costo valutate separatamente.
+
+## 🌳 Blocco 4 — Livello 2 in più compartimenti
+
+**Domanda:** la memoria per famiglie rimane sufficiente con storie locali
+generate dall'accoppiamento e con interventi eterogenei?
+
+- **Task 54 — Trasferimento congelato delle memorie** → Stessi sistemi della
+  Task42, checkpoint Task53, stato latente distinto per sito e famiglia.
+  Verificare inizializzazione, restart e porta assiale senza cambiare solver.
+- **Task 55 — Memoria sotto perturbazioni spaziali** → Stesso V locale ma
+  storie di stimolazione differenti, ingresso distale/prossimale, coupling
+  e blocchi selettivi. Confrontare livello 1 e 2 per corrente e risposta
+  temporale, non soltanto per V medio dell'intero sistema.
+- **Task 56 — Attribuzione locale e tra famiglie** → Sostituzioni miste
+  formula/latente per sito e famiglia, probe della memoria, controllo con
+  coupling disattivato. Distinguere errore locale accumulato, copertura e
+  interazione con calcio; nessun aggiornamento appreso del solver assiale.
+- **Task 57 — Riparazione del trasferimento senza nuova astrazione** →
+  Eventuale refit sulla copertura accoppiata con architettura e dimensioni
+  congelate; braccio frozen appaiato e budget dichiarato. Se occorre più
+  memoria, tornare alla diagnosi Task51 con emendamento e nuova conferma.
+- **Task 58 — Costo e robustezza spaziale del livello 2** → Misurare memoria
+  per sito, throughput e latenza sui workload comuni, includendo readout e
+  inizializzazione. Confrontare formule e livello 1, con tempi ionici e
+  integrati distinti; freeze e dominio di validità esplicito.
+- **Task 59 — Conferma e decisione sul livello 2** → Nuove geometrie/seed e
+  interventi riservati; registrare quali memorie sono davvero comprimibili.
+  Autorizzare lo studio della memoria condivisa sulla base di una domanda
+  causale e di un controllo valido, non per automatismo di calendario.
+
+### ✅ Uscita del blocco 4
+
+Trasferimento causale della stessa rappresentazione compressa, con errori
+e costo per sito documentati; nessuna fusione di compartimenti fisici.
+
+## 🔗 Blocco 5 — Un operatore ionico ricorrente condiviso, singolo compartimento
+
+**Domanda:** possiamo rimuovere la separazione dinamica per famiglie e
+comprimere ulteriormente il lavoro, conservando le risposte dei singoli canali?
+
+- **Task 60 — Contratto della memoria condivisa** → Cercare ridondanze tra
+  le memorie del livello 2; fissare quali stati/interventi devono rimanere
+  distinguibili. Il nuovo z è locale al compartimento e non ingloba sinapsi,
+  solver o CaDynamics. Una dimensione minore è un'ipotesi da verificare.
+- **Task 61 — Ricorrenza ionica unificata** → Piccolo stato multiscala
+  condiviso con output per gli undici canali, condizionato su V/Ca e parametri
+  ammessi. Confrontare memoria condivisa e per famiglie a budget/capacità
+  controllati; mantenere la semantica delle due fasi Ca/SK nell'interfaccia.
+- **Task 62 — Astrazione del readout e ablation dei vincoli** → Confrontare
+  aperture apprese + algebra economica con corrente predetta direttamente e
+  coefficienti compatibili con il solver. Isolare il costo/beneficio del
+  vincolo di inversione, del blocco esatto e delle teste individuali; una
+  sola corrente totale resta controllo diagnostico, non porta promuovibile.
+- **Task 63 — Learnability e memoria emergente** → Mini scaling di stato,
+  capacità, dati e budget con poche ipotesi ortogonali; distillazione dai
+  gate disponibile solo in training. Probe di memoria lenta e controfattuali
+  su storia, gbar e Ca per scoprire compensazioni spurie tra correnti.
+- **Task 64 — Operatore completo nel compartimento** → Rollout e interventi
+  con tutti gli altri moduli congelati, confronto con livelli 1/2 e formule.
+  Valutare ricorrenza stabile, costo totale del modulo e beneficio integrato;
+  congelare la variante selezionata prima di aprire il fresh.
+- **Task 65 — Conferma indipendente del livello 3** → Nuove combinazioni di
+  stimoli/parametri e storie iniziali, misure per canale e dinamiche locali.
+  Decidere se la maggiore astrazione conserva la risposta causale richiesta
+  e dove migliora realmente accuratezza–memoria–velocità.
+
+### ✅ Uscita del blocco 5
+
+Un unico modello ionico ricorrente locale candidato, con stato e contratto
+verificati. Conservare algebra utile non ne riduce il livello di astrazione
+della memoria; rimuoverla deve portare un beneficio misurato.
+
+## 🌲 Blocco 6 — Livello 3 in più compartimenti e decisione complessiva
+
+**Domanda:** lo stesso operatore condiviso conserva qualità e vantaggio
+quando viene replicato in un sistema elettricamente accoppiato?
+
+- **Task 66 — Trasferimento congelato dell'operatore unico** → Stessi
+  sistemi della Task42, pesi Task65 e stato z locale per sito. Validare porte,
+  permutazione dei nodi, eterogeneità e restart; nessuna memoria globale
+  condivisa che cambi il livello di astrazione o anticipi i vicini.
+- **Task 67 — Fedeltà causale spaziale** → Protocolli e interventi appaiati
+  con i livelli 1/2: propagazione, recupero, adattamento e risposta a blocchi
+  dove supportati. Analizzare correnti per sito e Ca oltre ai segnali somatici.
+- **Task 68 — Diagnosi e riparazione circoscritta** → Frozen contro eventuale
+  refit di copertura a struttura invariata, con sostituzioni per sito e probe.
+  Distinguere generalizzazione, inizializzazione e insufficienza dello stato;
+  una modifica della rappresentazione torna alla Task63 e richiede nuovo freeze.
+- **Task 69 — Frontiera comune dei tre livelli** → Confrontare i candidati
+  congelati su stessi workload, qualità e hardware: correnti, comportamento,
+  memoria e tempi ionici/integrati/operativi. Quantificare il risparmio di
+  lavoro ottenuto dall'astrazione e la quota che limita lo speedup globale.
+- **Task 70 — Conferma finale indipendente** → Congelare sulla sola fase di
+  sviluppo livello, candidato e soglie; nuovi sistemi/stimoli/seed per il
+  giudizio finale. Selezionare poi sui risultati fresh non è consentito;
+  nessun claim sul neurone completo da questi piccoli sistemi.
+- **Task 71 — Sintesi nel DB e decisione di prosecuzione** → Registrare nel
+  mirror SQLite successi, fallimenti, ipotesi discriminate, domini, costi e
+  mapping delle task. Concludere quale livello è utile, quale va scartato e
+  quale domanda resta aperta. Se nessuno offre qualità e risparmio, mantenere
+  il riferimento e formulare una diagnosi: non dichiarare il programma riuscito.
+
+### ✅ Uscita del blocco 6
+
+Decisione basata su fedeltà causale e vantaggio misurato, non sulla quantità
+di formule eliminate. La soluzione migliore può stare a uno dei tre livelli;
+non è obbligatorio promuovere quello più astratto.
+
+## ⚡ Esecuzione informativa e continuità dei numeri
+
+Preparare insieme i contrasti indipendenti che condividono dati e controlli;
+vettorizzare training/seed quando verificato, salvare budget intermedi e
+misurare i timing senza contesa. Esempi di possibili notebook unici:
+Task37–39, Task43–44, Task49–51, Task55–56, Task61–63, Task67–68.
+La dipendenza da un risultato resta reale: dati, freeze e conferme non vengono
+mescolati per ridurre il numero di run. La checklist per task conserva esito,
+prove e prerequisiti anche quando il notebook ne copre più di una.
+Ipotesi e protocolli entrano nel mirror SQLite prima del relativo run;
+risultati, limiti e decisioni dopo ciascun audit, non soltanto alla Task71.
+La Task71 sintetizza il percorso, non rimanda la registrazione delle evidenze.
+
+| Numero precedente | Numero corrente | Contenuto preservato |
+|---|---|---|
+| 36 | 72 | Due compartimenti attivi |
+| 37 | 73 | Quattro compartimenti attivi |
+| 38 | 74 | Scaling 8 → 16 compartimenti |
+| 39 | 75 | Prima biforcazione attiva |
+| 40 | 76 | Branch dendritico |
+| 41 | 77 | Subtree |
+| 42 | 78 | Morfologia ridotta da 32 segmenti |
+| 43 | 79 | Scaling 64 → 128 → 256 segmenti |
+| 44 | 80 | Hay completo a 642 segmenti |
+| 45 | 81 | Fusione di due segmenti |
+| 46 | 82 | Piccolo blocco lineare |
+| 47 | 83 | Branch operator |
+| 48 | 84 | Subtree operator |
+| 49 | 85 | Neurone gerarchico coarse-grained |
+
+Gli ID già presenti nel DB, nei file e nelle conversazioni conservano il
+significato della loro revisione. Le nuove registrazioni devono citare questa
+revisione del dropshot e il titolo della task; un riferimento storico a
+«Task36» significa «exTask36 / attuale Task72», non il nuovo contratto ionico.
+I risultati multicompartmentali dei sei blocchi possono soddisfare parti
+delle Task72–75 soltanto tramite audit esplicito di equivalenza del contratto;
+non si duplicano run già validi e non si assegnano completamenti automatici.
+
+---
+
+## 📌 Promemoria — seguito del dropshot, dopo la serie ionica
+
+**Se questa serie dimostra una strada efficace**, applicare lo stesso
+percorso graduale alle altre aree del modello: membrana/solver, sinapsi e
+relative memorie, dinamiche del calcio e altre componenti pertinenti.
+Definire allora i nuovi blocchi sulla base delle lezioni misurate qui.
+L'obiettivo di lungo periodo è arrivare eventualmente a **un unico modello
+astratto che calcoli insieme le dinamiche necessarie**, con ulteriore
+astrazione e composizione validate progressivamente. È una direzione di
+ricerca, non una garanzia che tutta la fisica debba scomparire o che più dati
+possano recuperare qualsiasi perdita informativa.
+
+Il piano restante è conservato sotto questa linea; cambiano soltanto i
+numeri delle task rinviate e i relativi rimandi. Prima di riprenderlo, Task71
+decide quali prerequisiti siano già soddisfatti e quali estensioni preparare.
+
+---
+
 # 🌳 VII. Scaling multicompartmentale
 
-- **Task 36 — Due compartimenti attivi**. Ingresso bloccato fino alla
+- **Task 72 — Due compartimenti attivi (ex Task36)**. Ingresso bloccato fino alla
   verifica indipendente IV-D1, preceduta dalla riconciliazione IV-A1/A2.
   Protocollo passivo prospettico in
   `experiments/iv_ad1_passive_axial_preregistration.json`: cinque controlli
   RC/leak/correnti, tre geometrie × quattro condizioni assiali, limiti
   disconnesso/simmetrico, bilancio capacitivo e convergenza di `dt`. Questo
-  run porta il proprio ID IV-D1, **non** viene rinominato Task 36.
+  run porta il proprio ID IV-D1, **non** viene rinominato Task 72.
   **Aggiornamento IV-D1:** il prerequisito passivo è passato nella v3
   (`experiments/iv_ad1_passive_axial_result.md`); il prerequisito scientifico
-  è soddisfatto, ma l'esecuzione Task36 è differita per il percorso IE.
-  Ripresa tramite decisione IE-16; IV-D1 non è il completamento della Task36.
-- **Task 37 — Quattro compartimenti attivi**.
-- **Task 38 — Scaling 8 → 16 compartimenti**.
-- **Task 39 — Prima biforcazione attiva**.
-- **Task 40 — Branch dendritico**.
-- **Task 41 — Subtree**.
-- **Task 42 — Morfologia ridotta da 32 segmenti**.
-- **Task 43 — Scaling 64 → 128 → 256 segmenti**.
-- **Task 44 — Hay completo a 642 segmenti effettivi**.
+  è soddisfatto, ma l'esecuzione è differita dopo i sei blocchi Task36–71.
+  Ripresa tramite decisione Task71; IV-D1 non è il completamento della Task72.
+- **Task 73 — Quattro compartimenti attivi (ex Task37)**.
+- **Task 74 — Scaling 8 → 16 compartimenti (ex Task38)**.
+- **Task 75 — Prima biforcazione attiva (ex Task39)**.
+- **Task 76 — Branch dendritico (ex Task40)**.
+- **Task 77 — Subtree (ex Task41)**.
+- **Task 78 — Morfologia ridotta da 32 segmenti (ex Task42)**.
+- **Task 79 — Scaling 64 → 128 → 256 segmenti (ex Task43)**.
+- **Task 80 — Hay completo a 642 segmenti effettivi (ex Task44)**.
 
 Per ogni livello confrontare:
 
@@ -985,11 +1452,11 @@ locali o dal coupling morfologico.
 
 Il coarse-graining inizia soltanto dopo avere una composizione esplicita valida.
 
-- **Task 45 — Fusione di due segmenti**.
-- **Task 46 — Piccolo blocco lineare**.
-- **Task 47 — Branch operator**.
-- **Task 48 — Subtree operator**.
-- **Task 49 — Neurone gerarchico coarse-grained**.
+- **Task 81 — Fusione di due segmenti (ex Task45)**.
+- **Task 82 — Piccolo blocco lineare (ex Task46)**.
+- **Task 83 — Branch operator (ex Task47)**.
+- **Task 84 — Subtree operator (ex Task48)**.
+- **Task 85 — Neurone gerarchico coarse-grained (ex Task49)**.
 
 Ogni operatore aggregato viene confrontato con gli stessi moduli espliciti già
 validati. In questo modo la perdita informativa è misurabile.
@@ -1097,10 +1564,15 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 ↓
 8. Compartimento attivo closed-loop
 ↓
-8-bis. Efficienza ionica IE — profilo, update congiunto, eventuale memoria compatta,
-       reinserimento e conferma di qualità + costo (priorità corrente)
-↓ decisione IE-16
-9. Piccoli sistemi multicompartmentali
+8-bis. Evidenze IE conservate → Task36: contratto della nuova progressione
+↓
+8-ter. Livello 1: update congiunto esplicito — singolo (36–41), multiplo (42–47)
+↓
+8-quater. Livello 2: memorie per famiglie — singolo (48–53), multiplo (54–59)
+↓
+8-quinquies. Livello 3: memoria condivisa — singolo (60–65), multiplo (66–71)
+↓ decisione Task71 e promemoria sulle altre aree del modello
+9. Ripresa dello scaling multicompartmentale originale (Task72–80)
 ↓
 10. Branch e subtree
 ↓
@@ -1119,14 +1591,25 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prossima milestone concreta — priorità corrente
+# 🥇 Prossima milestone concreta — Task36
+
+> Congelare il contratto della progressione ionica: evidenze riusabili,
+> baseline competitive, interfacce e timing, memoria disponibile, proprietà
+> causali da preservare e costo che vogliamo eliminare. Poi preparare il
+> playground e i contrasti Task37–39 nello stesso notebook dove possibile.
+
+Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
+La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
+titoli coerenti, precede la loro esecuzione. Airtable resta congelato.
+
+## 📚 Registro di avanzamento IE — conservato, non sequenza corrente
 
 > Localizzare il margine di risparmio e preparare un confronto isolato del
 > blocco ionico: formule competitive, baseline congelata e aggiornamento
 > congiunto appreso, a stato/ingressi/passo controllati. Cercare il primo punto
 > con qualità ammissibile **e** costo inferiore, poi provarlo nel compartimento.
 
-La prima attività è IE-01…05, con audit N2, profilo riutilizzabile e contratto
+La prima attività del precedente piano era IE-01…05, con audit N2, profilo riutilizzabile e contratto
 di interfaccia. Non si lancia N3 automaticamente e non si riaddestra il
 compartimento intero prima di aver circoscritto il problema. Le nuove task
 sono pianificate in questo documento; la loro registrazione DB e le relative
@@ -1185,7 +1668,9 @@ congelati;32nuovi episodi nativi e test atomici/path indipendenti. Il timing
 IE-P6 includeva già il core di membrana: qui si aggiunge il perimetro operativo
 dichiarato (eventi/RNG indipendenti,IPC,trasferimenti,rollout e output), contro
 formule,LUT e tutti6ibridiTask35. Nessun training o promozione automatica;
-copertura parziale IE-12–15, non completamento implicito IE-16 o Task36.
+copertura parziale IE-12–15, non completamento implicito IE-16 o exTask36
+(ora Task72). Questa voce conserva lo stato della preregistrazione;
+la riconciliazione dei successivi run è parte della nuova Task36.
 
 **IE-P6 concluso:** [risultato e limiti](ie_p6_result_v1.md),
 [disegno preregistrato](ie_p6_design_v1.md),
