@@ -28,7 +28,8 @@ def model_class(torch):
                 self.register_parameter(name, torch.nn.Parameter(torch.stack([r[k] for r in rows])))
 
         def forward(self, v, ca, state):
-            old = state[..., IDS]
+            # Basic slices avoid materializing a host index tensor during capture.
+            old = torch.cat((state[..., :16], state[..., 17:]), -1)
             inp = torch.cat(((v[..., None]+40)/80, old*2-1), -1)
             raw = torch.bmm(torch.nn.functional.silu(torch.bmm(inp, self.a)+self.b), self.c)+self.d[:, None, :]
             candidate, fraction = torch.sigmoid(raw).split(17, -1)
