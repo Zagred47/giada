@@ -63,6 +63,33 @@ def main():
             Metrica=[metric], Partizioni=partitions, Ruolo='Diagnostica', Target=spec['quality'],
             **{'Aggregazione e pesi': 'Per seed/case/channel; conjunction for development pass, stress separate. No mean-only behavioral claim.',
                'Gestione classi assenti': 'Not evaluable is not a pass for unsupported events.'})
+    launch_path = repo/'experiments/results/task38_protocol_v1/kaggle_launch.json'
+    if launch_path.exists():
+        launch = json.loads(launch_path.read_text())
+        assert launch['status_at_verification'] == 'RUNNING' and launch['published_source_full_revision_verified']
+        launch_art = put('artifacts', 'kaggle-launch', Nome='Task38 verified Kaggle launch', Tipo='Log',
+            Percorso=launch_path.relative_to(repo).as_posix(), Versione='v1',
+            **{'SHA-256': hashlib.sha256(launch_path.read_bytes()).hexdigest(), 'Dimensione byte': launch_path.stat().st_size})
+        for width in spec['architectures']:
+            arm = ref(f'arms-giada-task38-joint-transition-w{width}-v1')
+            put('runs', 'kaggle-w'+str(width), Nome=f'Task38 width{width} paired seed group, Kaggle v{launch["version"]}',
+                Stato='In corso', Braccio=[arm], **{'Artefatti prodotti': [launch_art],
+                'Configurazione effettiva': json.dumps(dict(launch=launch, width=width, seeds=spec['seeds'])),
+                'Hardware e ambiente': spec['runtime']+' '+launch['machine_shape'],
+                'Validità tecnica': 'Submission/source pin and RUNNING status verified; CUDA preflights and scientific outcome pending.'})
+        incident_path = launch_path.parent/'cuda_preflight_incident_v1.json'
+        if incident_path.exists():
+            incident = json.loads(incident_path.read_text())
+            ia = put('artifacts', 'cuda-preflight-incident-v1', Nome='Task38 v1 CUDA preflight incident',
+                Tipo='Log', Percorso=incident_path.relative_to(repo).as_posix(), Versione='v1',
+                **{'SHA-256': hashlib.sha256(incident_path.read_bytes()).hexdigest(), 'Dimensione byte': incident_path.stat().st_size})
+            failed = put('runs', 'v1-cuda-preflight', Nome='Task38 v1 technical stop before all training',
+                Stato='Fallita', Braccio=[ref('arms-giada-task38-joint-transition-w32-v1')],
+                **{'Artefatti prodotti': [ia], 'Configurazione effettiva': json.dumps(incident),
+                   'Validità tecnica': 'Technical failure before either width training started; not scientific NO-GO. Second width training was not reached.'})
+            put('anomalies', 'v1-cuda-host-index', Nome='Task38 host-index copy during CUDA graph capture',
+                Stato='Spiegata', Run=[failed], Atteso='Device-only recurrence capture',
+                Osservato=incident['error'], **{'Possibili cause': incident['attribution']})
     mirror.local_upsert('actions', {'Codice stabile': 'actions-giada-ionic-abstraction-20261017-task38-v1',
         'Nome': 'Task38 — Aggiornamento appreso a stato esplicito', 'Stato': 'Pronta',
         'Descrizione': 'Protocol registered; launch CUDA run after tests and push. Await actual results; no scientific GO claimed.'})
