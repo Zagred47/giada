@@ -41,7 +41,7 @@ def main():
         Formula='max channel NRMSE across the two trajectories of one family, role and seed',Direzione='Minimizzare',**{'Unità':'dimensionless'})
     ev=put('evaluations','family_worst_current_nrmse',task=38,Nome='Task38 post-run diagnostic family strata',Versione='v1',
         Metrica=[metric],Protocollo=[protocol38],Partizioni=partitions[2:],Ruolo='Diagnostica',
-        Target='Per-case values and gate statistics retained in description JSON, full per-channel metrics in hashed recurrence_evaluation artifact.',
+        Target='All per-case, per-channel, event, gate and horizon metrics retained as queryable JSON in observation description; identical detailed report also archived with hash.',
         **{'Aggregazione e pesi':'Worst over channels/cases within each family/seed/role; not a new primary endpoint.'})
     grouped=defaultdict(list)
     for r in read('recurrence_evaluation.json'):grouped[(r['model'],r['role'],r['family'],r['seed'])].append(r)
@@ -50,11 +50,26 @@ def main():
         detail=[]
         for row in rows:
             worst=max(row['metrics']['channels'],key=lambda c:c['nrmse'])
-            detail.append(dict(case=row['case'],passed=row['metrics']['passed'],gate=row['metrics']['gate'],worst_current=worst))
+            detail.append(dict(case=row['case'],passed=row['metrics']['passed'],gate=row['metrics']['gate'],worst_current=worst,
+                metrics=row['metrics']))
         obs.append(put('observations',f'{model}-{role}-{family}-{seed}',task=38,Nome=f'Task38 {model}/{role}/{family}/seed{seed}',
             Valore=max(x['worst_current']['nrmse'] for x in detail),Numerosità=len(rows),Run=[runs38[model]],
             **{'Specifica di valutazione':[ev],'Artefatti dettagliati':[arts38['recurrence_evaluation.json']],
                'Strato o sottogruppo':f'{role}/{family}/seed{seed}','Descrizione':json.dumps(dict(cases=detail))}))
+    curve_metric=put('metrics','one_step_selection_loss',task=38,Nome='Task38 one-step selection loss',
+        Formula='Common normalized gate increment MSE + individual current MSE, development only',Direzione='Minimizzare')
+    curve_eval=put('evaluations','one_step_selection_loss',task=38,Nome='Task38 checkpoint trajectory, not repeated independent trials',
+        Versione='v1',Metrica=[curve_metric],Protocollo=[protocol38],Partizioni=[partitions[2]],Ruolo='Diagnostica',
+        Target='Paired seed curves at0/1k/3k/10k/30k, same optimizer trajectory')
+    for row in read('training_curves.json'):
+        for width,values in row['models'].items():
+            for seed,value in zip((17,29,43),values):
+                obs.append(put('observations',f'curve-w{width}-seed{seed}-step{row["step"]}',task=38,
+                    Nome=f'Task38 w{width}/seed{seed}/step{row["step"]}',Valore=value,Numerosità=1,
+                    Run=[runs38['joint_w'+width]],**{'Specifica di valutazione':[curve_eval],
+                    'Artefatti dettagliati':[arts38['training_curves.json']],
+                    'Strato o sottogruppo':f'development/seed{seed}/step{row["step"]}',
+                    'Descrizione':json.dumps(dict(step=row['step'],seed=seed,width=int(width),elapsed_seconds=row['elapsed_seconds']))}))
     finding=put('findings','outcome',task=38,Nome='Task38 learns one-step but joint recurrent quality insufficient',Esito='Misto',
         Esperimenti=[exp38],Osservazioni=obs,
         **{'Risultato':(repo/'experiments/task38_result_v1.md').read_text(encoding='utf-8'),'Limitazioni':audit['limitations']})
