@@ -1,0 +1,75 @@
+{
+  "schema_version": "giada-task36-ionic-abstraction-contract-v1",
+  "date": "2026-10-17",
+  "task": 36,
+  "title": "Contratto e scala di astrazione ionica",
+  "roadmap_revision": "16fb36b",
+  "old_task36_current_number": 72,
+  "mode": "local evidence audit and interface specification; no training",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "channels": ["Ca_HVA", "Ca_LVAst", "NaTa_t", "NaTs2_t", "Nap_Et2", "Ih", "Im", "K_Pst", "K_Tst", "SK_E2", "SKv3_1"],
+  "gate_names": [["m", "h"], ["m", "h"], ["m", "h"], ["m", "h"], ["m", "h"], ["m"], ["m"], ["m", "h"], ["m", "h"], ["z"], ["m"]],
+  "interface": {
+    "dt_ms": 0.1,
+    "reference_precision": "float64 native/reference and float32 candidate, with explicit numerical floor",
+    "voltage_domain_mv": [-100, 60],
+    "calcium_domain": "Nonnegative cai in mM; numerical floor 1e-7 mM in existing SK formula. Task37 must freeze covered log-Ca range and stress strata before generation/training; no extrapolation claim beyond it.",
+    "level1_state": "18 physical gates, ordered as channels/gate_names; no latent reduction",
+    "inputs": ["causal membrane voltage in mV", "local calcium in mM at declared phase", "previous local ionic state", "dt=0.1 ms", "declared channel parameters and presence masks"],
+    "parameter_policy": "gbar and E remain explicit readout parameters initially; variation of kinetics/temperature is outside scope until included in the declared training contract",
+    "phases": [
+      "A: update V-dependent gates from previous ionic state and current V; calcium-channel opening uses these updated gates and current V for the calcium source",
+      "B: exact unchanged CaDynamics consumes that source and computes next cai",
+      "C: SK update consumes next cai and previous SK state, in the same tick; other gate states are not advanced a second time",
+      "D: final channel conductances and solver coefficients are formed; membrane solver consumes them with its existing synaptic phase"
+    ],
+    "outputs": ["next 18 gates at level1, later next latent state", "11 per-channel conductances in S/cm2", "11 ionic current densities in mA/cm2 at declared voltage and phase", "calcium-source current density before CaDynamics", "sum_g in S/cm2", "sum_gE in mA/cm2"],
+    "readout": "a_k=product of specified gate powers at level1; later learned effective openings. g_k=gbar_k*a_k; I_k=g_k*(V-E_k). Keep algebra cheap and exact unless a preregistered ablation demonstrates utility of learning it.",
+    "sign_convention": "Outward positive current; inward negative current when V<E and conductance positive.",
+    "initialization": "Level1 uses explicit physical initial state. Future latent encoder may consume physical initial state once if available; warmup and standard-state initialization are separate information contracts, never silently equated.",
+    "unchanged": ["membrane solver", "axial solver", "passive membrane", "CaDynamics", "synapses and RNG", "dt"],
+    "forbidden": ["future teacher voltage", "teacher-realized future releases", "periodic hidden-state correction from teacher", "using total current alone as solver interface", "global shared hidden state across distinct compartments"]
+  },
+  "evidence_documents": [
+    "experiments/task35_full_local_compartment_result.md",
+    "experiments/cc_n1_result_v1.md",
+    "experiments/cc_n2_result_v1.md",
+    "experiments/ie_p1_result_v1.md",
+    "experiments/ie_p2_result_v1.md",
+    "experiments/ie_p3_result_v1.md",
+    "experiments/ie_p4_result_v1.md",
+    "experiments/ie_p5_result_v1.md",
+    "experiments/ie_p6_result_v1.md",
+    "experiments/results/ie_p7_kaggle_v4/result_audit.json"
+  ],
+  "baselines": [
+    {"id": "formula", "role": "primary causal accuracy reference and competitive optimized cost baseline", "source": "src/giada_teacher/ie_residual_cost.py"},
+    {"id": "analytic_lut025", "role": "strong numerical cost/quality baseline, not learned", "source": "src/giada_teacher/ie_discrete_ionic.py"},
+    {"id": "task35_hybrids", "role": "historical reference, all seeds; original success under its own thresholds, not universal success under tighter IE criteria", "source": "experiments/task35_full_local_compartment_result.md"},
+    {"id": "ie_p6_local81_161", "role": "frozen learned coefficient maps with explicit state; not a recurrent latent model or dense MLP speedup", "checkpoint": "experiments/results/ie_p6_kaggle_v1/frozen_checkpoint.pt", "sha256": "29fe16904870d7d78b972e5c4de7e819ab32b6064d9eab5709f78fde7d87b89a"}
+  ],
+  "hypotheses": [
+    {"id": "joint_update", "statement": "Learning a joint discrete state transition can remove useful work beyond separately learned rates while preserving 18 physical states.", "contrast": "Task38 joint transition versus frozen discrete-coefficient map and exact formula, same state and readout", "falsifier": "No admissible quality/cost point in registered capacity/data/budget range; scoped, not universal impossibility"},
+    {"id": "rare_coverage", "statement": "Some rare-regime failures can reflect missing independent histories rather than inadequate abstraction.", "contrast": "new independent rare trajectories versus repetitions, matched exposure budget", "falsifier": "No held-out regime improvement with added diversity under registered budget; alternative optimization and state explanations remain"},
+    {"id": "rare_compute", "statement": "Some rare-regime failures can reflect insufficient training exposure or loss imbalance.", "contrast": "coverage x update budget, plus targeted sampling/loss only when justified; same independent test", "falsifier": "Saturated or worsening per-regime curves; more compute is not assumed to solve an information collision"},
+    {"id": "memory_sufficiency", "statement": "Memory compression may preserve the histories needed for future individual currents and recovery.", "contrast": "same present V with distinct histories, reset/permutation and rollout probes; state dimension separate from network width", "falsifier": "Indistinguishable latent histories require different futures or persistent intervention/recovery failure in registered domain"},
+    {"id": "readout_bias", "statement": "Exact cheap conductance/reversal algebra can aid causal generalization more than direct current prediction.", "contrast": "same recurrence with effective-opening versus direct-current compatible readout", "falsifier": "Direct readout matches intervention quality and improves cost on disjoint confirmation; no universal necessity claimed"},
+    {"id": "spatial_transfer", "statement": "Local ionic abstraction can transfer to genuinely coupled compartments without additional nonlocal hidden inputs.", "contrast": "frozen local model, disconnected control and true axial coupling on matched geometries", "falsifier": "Local validity fails under verified coupling; separate coverage from state/interface inadequacy"},
+    {"id": "behavioral_fidelity", "statement": "Stratified causal and autoregressive evaluation detects failures concealed by low aggregate error.", "contrast": "known defective controls and near-transition/rapid/recovery suites versus ordinary mean-only evaluation", "falsifier": "Evaluator fails to detect registered defective controls or lacks enough teacher events; suite is then not decision-ready"}
+  ],
+  "evaluation_requirements": [
+    {"id": "current", "metric": "Per-channel RMSE and maximum absolute error of signed current, plus conditional normalized errors", "unit": "mA/cm2", "aggregation": "Per regime/channel/trajectory; median, tails, worst-case and support, not only pooled mean"},
+    {"id": "charge", "metric": "Signed and absolute integrated current error over event and recovery windows", "unit": "mA*ms/cm2", "aggregation": "Per channel and window; retain cancellation diagnostics"},
+    {"id": "transient", "metric": "Current peak magnitude/timing, onset/offset, inactivation and paired-pulse recovery", "unit": "mixed, reported separately", "aggregation": "Event matching in physical ms, false/missed events retained"},
+    {"id": "intervention", "metric": "Error in teacher-versus-surrogate response difference under same causal intervention", "unit": "declared observable units", "aggregation": "Per gbar/E/Ca/block/history stratum; paired responses"},
+    {"id": "transition", "metric": "Shift of observed regime-transition threshold, hysteresis and attained regime", "unit": "stimulus units and categorical response", "aggregation": "Teacher convergence/sensitivity first; distinguish dynamic bifurcation from morphology"},
+    {"id": "rollout", "metric": "Error/drift by horizon and first passage beyond tolerance, recovery and burst structure", "unit": "mV, mM, ms, counts as separate metrics", "aggregation": "Autonomous rollout without resets; per trajectory/seed, censor nonfailure explicitly"},
+    {"id": "qualitative", "metric": "Fixed checklist on aligned traces, phase plots and stimulus-response maps", "unit": "documented categorical assessment", "aggregation": "Typical, random, rare and worst cases selected reproducibly; numerical gates still required"},
+    {"id": "cost", "metric": "Paired wall/CUDA latency, throughput, state/weight/temp bytes and initialization cost", "unit": "ms, biological-ms/s, bytes separately", "aggregation": "Ionic-only, resident full core and operational workload distinct; paired uncertainty and worst-case"}
+  ],
+  "future_run_gate": {
+    "task37_required_before_training": ["frozen numerical current/charge/event/behavior thresholds calibrated on development/native floor", "actual rare event coverage counts", "independent path and confirmation splits", "defective-control detection and correct-reference pass", "budget ladder and capacity grid", "primary ionic cost workload and prospective saving target", "phase and initialization executable tests"],
+    "historical_gates": "Preserve original Task35 and IE thresholds with original scope. IE-P7 has V RMSE<=0.05 mV, max<=0.1 mV, Ca max<=5e-6 mM and noninferiority checks; these are historical reference criteria, not substitutes for new current/behavior gates.",
+    "task36_completion": "All declared sources hashed, inventory/phases verified against code, IE-P7 closed with scoped audit, hypotheses/evaluation specifications and next actions linked in SQLite, integrity verified and snapshots packed. No claim of Task37 readiness or new model performance."
+  }
+}

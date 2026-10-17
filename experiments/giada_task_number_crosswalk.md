@@ -1,6 +1,10 @@
 # Registro di corrispondenza tra roadmap e studi
 
 La numerazione vincolante è quella di `giada_modular_surrogate_roadmap.md`.
+Dal 17 ottobre 2026, le nuove Task36–71 sono i sei blocchi di astrazione
+ionica: Task36 è il contratto, non l'accoppiamento di due compartimenti.
+Le precedenti Task36–49 diventano Task72–85, con mapping esplicito nel
+dropshot; nei vecchi artefatti/record gli ID mantengono il significato storico.
 L'esistenza di un notebook con lo stesso numero **non** dimostra il
 completamento di una task. Verificare sempre domanda, protocollo e gate.
 

@@ -968,8 +968,9 @@ Fallimento tecnico, NO-GO scientifico e NO-GO prestazionale sono distinti.
 
 # 🪜 VI-ter. Sei blocchi di astrazione ionica progressiva — Task 36–71
 
-> **Stato di tutte le Task36–71:** pianificate, non eseguite né già
-> preregistrate numericamente. Si prepara prima Task36; ogni run successivo
+> **Stato:** Task36 conclusa come audit di contratto, con
+> [esito e limiti](task36_result_v1.md). Task37–71 pianificate, non eseguite
+> né già preregistrate numericamente. Si prepara ora Task37; ogni run successivo
 > richiede il proprio contratto e i prerequisiti indicati. Una task può
 > condividere un notebook con altre quando non dipende dal loro risultato.
 
@@ -1148,6 +1149,10 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
   gate, correnti, Ca/SK e fasi del solver; congelare baseline, domini,
   comportamenti richiesti e profilo di costo. Separare ciò che è già noto
   dalle nuove ipotesi: non ripetere IE sotto un numero diverso.
+  **Conclusa come audit locale (17 ottobre):** inventario/fasi e 22 fonti
+  verificati; IE-P7 v4 riconciliata, sette ipotesi aperte e otto specifiche
+  di valutazione. GO alla preparazione Task37, nessun training autorizzato
+  senza i suoi valutatori, soglie e supporto. Vedi `task36_result_v1.md`.
 - **Task 37 — Playground di memoria e interventi** → Generare sequenze con
   pari V ma storie diverse, step/rampe/chirp, recupero lento, Ca variabile,
   stati non all'equilibrio e blocchi/variazioni gbar. Split per traiettoria
@@ -1591,12 +1596,11 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prossima milestone concreta — Task36
+# 🥇 Prossima milestone concreta — Task37
 
-> Congelare il contratto della progressione ionica: evidenze riusabili,
-> baseline competitive, interfacce e timing, memoria disponibile, proprietà
-> causali da preservare e costo che vogliamo eliminare. Poi preparare il
-> playground e i contrasti Task37–39 nello stesso notebook dove possibile.
+> Task36 ha fissato il contratto della progressione ionica. Preparare ora
+> supporto e valutatori della Task37, quindi i contrasti Task38–39 nello
+> stesso notebook dove possibile, rispettando i gate prima del training.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
@@ -1671,6 +1675,13 @@ formule,LUT e tutti6ibridiTask35. Nessun training o promozione automatica;
 copertura parziale IE-12–15, non completamento implicito IE-16 o exTask36
 (ora Task72). Questa voce conserva lo stato della preregistrazione;
 la riconciliazione dei successivi run è parte della nuova Task36.
+
+**IE-P7 v4 conclusa e riconciliata in Task36:**
+[risultato verificato](ie_p7_result_v1.md). 56 celle core e 56 operative,
+14 classificazioni ricalcolate; otto mappe/riferimenti riprodotti sulle
+32 tracce native. Sei operatori locali passano qualità e costo residente,
+ma non il criterio operativo del 10%. Supporto insufficiente per un claim
+generale sui comportamenti; nessuna promozione o training aggiuntivo.
 
 **IE-P6 concluso:** [risultato e limiti](ie_p6_result_v1.md),
 [disegno preregistrato](ie_p6_design_v1.md),

@@ -1,0 +1,285 @@
+{
+  "valid": true,
+  "schema_version": "giada-task36-ionic-abstraction-contract-v1",
+  "task": 36,
+  "title": "Contratto e scala di astrazione ionica",
+  "mode": "local evidence audit and interface specification; no training",
+  "training_performed": false,
+  "new_test_accessed": false,
+  "new_native_simulation_performed": false,
+  "code_revision_at_execution": "16fb36b6b92daad6f40e09eda1020b70bbebe371",
+  "original_task36_current_number": 72,
+  "channels": [
+    "Ca_HVA",
+    "Ca_LVAst",
+    "NaTa_t",
+    "NaTs2_t",
+    "Nap_Et2",
+    "Ih",
+    "Im",
+    "K_Pst",
+    "K_Tst",
+    "SK_E2",
+    "SKv3_1"
+  ],
+  "physical_gate_count": 18,
+  "voltage_dependent_gate_count": 17,
+  "sk_gate_index": 16,
+  "phase_order_verified_in_existing_source": true,
+  "sources": {
+    "experiments/task35_full_local_compartment_result.md": {
+      "sha256": "e81c32f208a6a70ef3e0d1254ee87eeb48c48c0a630fe3ad6e2eedb49cb4020b",
+      "bytes": 3328
+    },
+    "experiments/cc_n1_result_v1.md": {
+      "sha256": "64907c12c1dcbd71348333cbdde02245944ad46e65c2f992a77e1f1fb96cfbd9",
+      "bytes": 5429
+    },
+    "experiments/cc_n2_result_v1.md": {
+      "sha256": "832fef3a909e70c54fca6e0b4cab2b9ccdb3e675e20d49fa874397bfa63d922d",
+      "bytes": 3211
+    },
+    "experiments/ie_p1_result_v1.md": {
+      "sha256": "2cab9d0bcff4cd50ba817a3467406d4c749ef22e309a0b805d308faa17a20da4",
+      "bytes": 3509
+    },
+    "experiments/ie_p2_result_v1.md": {
+      "sha256": "9134a1b2367421f5ea296e626e26723f828499b289117faff0b9891f23d499f0",
+      "bytes": 4703
+    },
+    "experiments/ie_p3_result_v1.md": {
+      "sha256": "a157565d7b73077e6185eb1d40df4ad8243b619e759b2056c20456088148b5b6",
+      "bytes": 2731
+    },
+    "experiments/ie_p4_result_v1.md": {
+      "sha256": "9b13fa6e5f070c25d8706a8c5616bd31ede66c7ba3584f6d203b383490c0e9d3",
+      "bytes": 3972
+    },
+    "experiments/ie_p5_result_v1.md": {
+      "sha256": "028c16ed5f0ddbd800b6d2d224197fcd8b045ec6b540ba483dfb1644b4bb757e",
+      "bytes": 2948
+    },
+    "experiments/ie_p6_result_v1.md": {
+      "sha256": "e25afd180cb5cc8b09261f050f835a0200d4b66808f9c3b2f813211546b03321",
+      "bytes": 4812
+    },
+    "experiments/results/ie_p7_kaggle_v4/result_audit.json": {
+      "sha256": "3ac891048c8cc2919ba5a197b9f86711c8f68a0a0c897be1867f9eda9cbc98fe",
+      "bytes": 5456
+    },
+    "experiments/giada_modular_surrogate_roadmap.md": {
+      "sha256": "55861599ddb5b92ad08a8fe349ee82366bf58e93ede6d91a58d93450171eb9f1",
+      "bytes": 97731
+    },
+    "experiments/task36_ionic_abstraction_contract_v1.json": {
+      "sha256": "39e27eb6210782d682405f8fa0ec927937f193d7e5ba49dfc82e2767a724b760",
+      "bytes": 10416
+    },
+    "experiments/task36_ionic_abstraction_contract_v1.md": {
+      "sha256": "8e3e0c6282608938b22474bdea42c39580e4ed9b48410c633a06004a0d877c83",
+      "bytes": 4770
+    },
+    "src/giada_teacher/ionic_block_teacher_forced.py": {
+      "sha256": "5adea174ee82815c9adb00d6d6a4e5cef4df4c929ec51a02908ffa4be4cc25a9",
+      "bytes": 24111
+    },
+    "src/giada_teacher/ie_discrete_ionic.py": {
+      "sha256": "5ba10b01f2d9a8c5a280173e19392f81f99b5047204c5758d1c3c76a86a023f2",
+      "bytes": 18473
+    },
+    "src/giada_teacher/ie_residual_cost.py": {
+      "sha256": "53b750276b77b2a87a5c5d53af3979b48ab933d7ebb2cb5d989a92fd82254e80",
+      "bytes": 13005
+    },
+    "src/giada_teacher/ie_readout_comparison.py": {
+      "sha256": "3cc358771c93925ab9bf374c0b4b33315af3d6670deef45746e4ad292881ca6d",
+      "bytes": 12580
+    },
+    "src/neuronio/neuronio_rapid_fire_eval_utils.py": {
+      "sha256": "3d555b470d97a84c60076fd43617d88dd9c65832e4ec26241b0869b6a621c2a0",
+      "bytes": 22805
+    },
+    "src/neuronio/neuronio_eval_utils.py": {
+      "sha256": "756c37ddf685bf309ba1323b69ca216097f32af0301d1a154ed7cabd09d3ddac",
+      "bytes": 13620
+    },
+    "scripts/audit_ie_p7_result.py": {
+      "sha256": "ba49c85664d8fbb6600efafb88f42cfadd98a0ccd2c48d3198ffedd9ba8d2837",
+      "bytes": 7386
+    },
+    "scripts/run_task36_contract_audit.py": {
+      "sha256": "a2b2ffa84b6d6c0be3041f5541fef03310f276d5897e4f21bd5250dcc019557e",
+      "bytes": 5899
+    },
+    "experiments/results/ie_p6_kaggle_v1/frozen_checkpoint.pt": {
+      "sha256": "29fe16904870d7d78b972e5c4de7e819ab32b6064d9eab5709f78fde7d87b89a",
+      "bytes": 215071
+    }
+  },
+  "ie_p7_audit": "328dee00b62d85af0f49d8edaf51b6b20fadc03d",
+  "ie_p7_primary": {
+    "local81_seed17": {
+      "core_saving": 0.22856101362162473,
+      "operational_saving": -0.00194969050024707,
+      "quality": true,
+      "core_cost": true,
+      "operational_cost": false,
+      "core_vs_hybrids": true,
+      "operational_vs_hybrids": false
+    },
+    "local81_seed29": {
+      "core_saving": 0.22865911779360837,
+      "operational_saving": 0.03353224674470784,
+      "quality": true,
+      "core_cost": true,
+      "operational_cost": false,
+      "core_vs_hybrids": true,
+      "operational_vs_hybrids": false
+    },
+    "local81_seed43": {
+      "core_saving": 0.2283288785749184,
+      "operational_saving": 0.03261182923573275,
+      "quality": true,
+      "core_cost": true,
+      "operational_cost": false,
+      "core_vs_hybrids": true,
+      "operational_vs_hybrids": false
+    },
+    "local161_seed17": {
+      "core_saving": 0.22765658643468684,
+      "operational_saving": 0.03430264590244686,
+      "quality": true,
+      "core_cost": true,
+      "operational_cost": false,
+      "core_vs_hybrids": true,
+      "operational_vs_hybrids": false
+    },
+    "local161_seed29": {
+      "core_saving": 0.22271746835207124,
+      "operational_saving": 0.012012428766360606,
+      "quality": true,
+      "core_cost": true,
+      "operational_cost": false,
+      "core_vs_hybrids": true,
+      "operational_vs_hybrids": false
+    },
+    "local161_seed43": {
+      "core_saving": 0.21998318581494541,
+      "operational_saving": 0.045683932078438516,
+      "quality": true,
+      "core_cost": true,
+      "operational_cost": false,
+      "core_vs_hybrids": true,
+      "operational_vs_hybrids": false
+    }
+  },
+  "ie_p7_native_behavior_support": false,
+  "ie_p7_formula_operational_stage_medians_ms": {
+    "wall_ms": 95.89578549997668,
+    "rng_events_rpc_ms": 89.94301999996424,
+    "h2d_reset_ms": 1.2763915000277848,
+    "rollout_ms": 4.560728500052846,
+    "d2h_ms": 0.13882499996498154
+  },
+  "baseline_workload_limits": "IE-P7 resident core is not isolated ionic latency; operational host producer/RPC is implementation-specific. No new profiling performed in Task36.",
+  "open_evaluation_gaps": [
+    "frozen numerical current/charge/event/behavior thresholds calibrated on development/native floor",
+    "actual rare event coverage counts",
+    "independent path and confirmation splits",
+    "defective-control detection and correct-reference pass",
+    "budget ladder and capacity grid",
+    "primary ionic cost workload and prospective saving target",
+    "phase and initialization executable tests"
+  ],
+  "hypotheses_registered_as_open": [
+    "joint_update",
+    "rare_coverage",
+    "rare_compute",
+    "memory_sufficiency",
+    "readout_bias",
+    "spatial_transfer",
+    "behavioral_fidelity"
+  ],
+  "evaluation_specifications": [
+    "current",
+    "charge",
+    "transient",
+    "intervention",
+    "transition",
+    "rollout",
+    "qualitative",
+    "cost"
+  ],
+  "roadmap_actions": {
+    "36": "Contratto e scala di astrazione ionica",
+    "37": "Playground di memoria e interventi",
+    "38": "Aggiornamento appreso a stato esplicito",
+    "39": "Learnability, bias e mini scaling",
+    "40": "Reinserimento causale e costo locale",
+    "41": "Conferma indipendente del livello 1",
+    "42": "Porta assiale e sistemi appaiati",
+    "43": "Trasferimento congelato del livello 1",
+    "44": "Localizzazione dell'errore di composizione",
+    "45": "Copertura multicompartmentale controllata",
+    "46": "Interventi spaziali e frontiera di costo",
+    "47": "Conferma e decisione sul livello 1",
+    "48": "Ridondanza e stato minimo per famiglia",
+    "49": "Encoder e inizializzazione causale",
+    "50": "Ricorrenze compatte per famiglie",
+    "51": "Diagnosi della compressione",
+    "52": "Closed loop e interventi a stato compresso",
+    "53": "Conferma indipendente del livello 2",
+    "54": "Trasferimento congelato delle memorie",
+    "55": "Memoria sotto perturbazioni spaziali",
+    "56": "Attribuzione locale e tra famiglie",
+    "57": "Riparazione del trasferimento senza nuova astrazione",
+    "58": "Costo e robustezza spaziale del livello 2",
+    "59": "Conferma e decisione sul livello 2",
+    "60": "Contratto della memoria condivisa",
+    "61": "Ricorrenza ionica unificata",
+    "62": "Astrazione del readout e ablation dei vincoli",
+    "63": "Learnability e memoria emergente",
+    "64": "Operatore completo nel compartimento",
+    "65": "Conferma indipendente del livello 3",
+    "66": "Trasferimento congelato dell'operatore unico",
+    "67": "Fedeltà causale spaziale",
+    "68": "Diagnosi e riparazione circoscritta",
+    "69": "Frontiera comune dei tre livelli",
+    "70": "Conferma finale indipendente",
+    "71": "Sintesi nel DB e decisione di prosecuzione",
+    "72": "Due compartimenti attivi (ex Task36)",
+    "73": "Quattro compartimenti attivi (ex Task37)",
+    "74": "Scaling 8 → 16 compartimenti (ex Task38)",
+    "75": "Prima biforcazione attiva (ex Task39)",
+    "76": "Branch dendritico (ex Task40)",
+    "77": "Subtree (ex Task41)",
+    "78": "Morfologia ridotta da 32 segmenti (ex Task42)",
+    "79": "Scaling 64 → 128 → 256 segmenti (ex Task43)",
+    "80": "Hay completo a 642 segmenti effettivi (ex Task44)",
+    "81": "Fusione di due segmenti (ex Task45)",
+    "82": "Piccolo blocco lineare (ex Task46)",
+    "83": "Branch operator (ex Task47)",
+    "84": "Subtree operator (ex Task48)",
+    "85": "Neurone gerarchico coarse-grained (ex Task49)"
+  },
+  "historical_number_mapping": {
+    "36": 72,
+    "37": 73,
+    "38": 74,
+    "39": 75,
+    "40": 76,
+    "41": 77,
+    "42": 78,
+    "43": 79,
+    "44": 80,
+    "45": 81,
+    "46": 82,
+    "47": 83,
+    "48": 84,
+    "49": 85
+  },
+  "decision": "GO_TASK37_PREPARATION_ONLY",
+  "task37_training_authorized": false,
+  "candidate_promoted": false,
+  "completion_scope": "Task36 source/evidence contract audit completed; SQLite registration/verify/packing reported separately in memory receipt."
+}
