@@ -1,0 +1,20 @@
+{
+  "device": "cuda",
+  "torch": "2.11.0+cu128",
+  "gpu": "Tesla T4",
+  "compile": [
+    {
+      "enabled": true,
+      "max_loss_error": 7.62939453125e-06
+    },
+    {
+      "enabled": false,
+      "reason": "1.52587890625e-05"
+    }
+  ],
+  "members": 6,
+  "parameters_per_member": {
+    "32": 1772,
+    "64": 3468
+  }
+}

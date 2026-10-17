@@ -1,0 +1,30 @@
+{
+  "valid": true,
+  "task": 38,
+  "decision": "DEVELOPMENT_NO_GO_DIAGNOSE_TASK39",
+  "summaries": {
+    "frozen_local161_SKcanonical": {
+      "all_development_passed": false,
+      "passed_cases": 53,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0001903879310702905
+    },
+    "joint_w32": {
+      "all_development_passed": false,
+      "passed_cases": 0,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.009583242237567902
+    },
+    "joint_w64": {
+      "all_development_passed": false,
+      "passed_cases": 1,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.01641210727393627
+    }
+  },
+  "quality_thresholds_changed": false,
+  "independent_confirmation_accessed": false,
+  "autonomous_voltage_calcium": false,
+  "speedup_demonstrated": false,
+  "limits": "No new sealed test, no autonomous V/Ca, no emergent spike/bifurcation claim, no spatial transfer, no replacement of membrane/synapses/calcium. Task39 retains loss/coverage contrasts. A scientific NO-GO still produces final_report; runtime failures produce failure_report and are not model NO-GO."
+}

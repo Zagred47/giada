@@ -970,8 +970,9 @@ Fallimento tecnico, NO-GO scientifico e NO-GO prestazionale sono distinti.
 
 > **Stato:** Task36 conclusa come audit di contratto, con
 > [esito e limiti](task36_result_v1.md). Task37 conclusa nel playground isolato
-> ([risultato](task37_result_v1.md)); Task38–71 pianificate. Si prepara ora
-> Task38; ogni run successivo
+> ([risultato](task37_result_v1.md)); Task38 conclusa con NO-GO ricorrente
+> ([risultato](task38_result_v1.md)). Si prepara ora Task39; Task40–71 restano
+> pianificate e vincolate alla qualità. Ogni run successivo
 > richiede il proprio contratto e i prerequisiti indicati. Una task può
 > condividere un notebook con altre quando non dipende dal loro risultato.
 
@@ -1172,13 +1173,19 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
   **Protocollo prospettico pronto:** `task38_joint_transition_preregistration_v1.json`,
   notebook `giada_task38_joint_transition.ipynb`: width32/64 × tre seed,
   checkpoint lungo lo stesso training, soglie Task37 invariate. Ricorrenze
-  development/stress dopo freeze; risultati ancora da acquisire. Nessuna
+  development/stress dopo freeze. Nessuna
   conferma indipendente o accelerazione del compartimento già dimostrata.
+  **Esito acquisito:** training30k completato, NO-GO ricorrente (0/72 e1/72
+  per width32/64; baseline53/72). Vedi `task38_result_v1.md`.
 - **Task 39 — Learnability, bias e mini scaling** → Matrice piccola di
   capacità e supervisione gate/correnti, budget crescenti sulla stessa
   traiettoria e dati a difficoltà controllata. Probe interni, rollout brevi
   e lunghi, attribuzione per canale: distinguere ottimizzazione, copertura,
   errore di fase e rappresentazione prima di aumentare lo stato nascosto.
+  **Protocollo pronto:** `task39_learnability_preregistration_v1.json`;
+  2×2×2 copertura/esposizione/bias + due ancore loss, tre seed e ladder fino60k,
+  stesso notebook `giada_task39_learnability.ipynb`. Task40 resta bloccata
+  fino a superamento della qualità e audit, senza cambiare le soglie.
 - **Task 40 — Reinserimento causale e costo locale** → V/Ca imposti contro
   autonomi, sostituzioni per famiglia e congiunte nel compartimento invariato.
   Testare interventi e timing; misurare costo ionico e integrato allo stesso
@@ -1608,12 +1615,13 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prossima milestone concreta — Task38
+# 🥇 Prossima milestone concreta — Task39
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
-> i valutatori isolati. Preparare l'update congiunto esplicito Task38 e la
-> matrice Task39 nello stesso notebook dove possibile, con preflight GPU,
-> budget appaiati e freeze prima di nuove conferme.
+> i valutatori isolati. Task38 ha completato il tentativo congiunto senza
+> superare la qualità ricorrente. Eseguire la diagnosi fattoriale Task39,
+> con preflight GPU, budget appaiati e freeze prima delle valutazioni lunghe.
+> Task40 non è autorizzata dal solo miglioramento della loss media.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
