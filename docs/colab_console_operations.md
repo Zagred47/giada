@@ -78,3 +78,25 @@ exit reporting, download/checksum parity and reconnect/poll behavior. Record
 actual outcomes in `.colab-bridge`, excluding auth secrets.
 
 Official reference: https://github.com/googlecolab/google-colab-cli
+
+## Task39e runtime-independent recovery
+
+Use `scripts/task39e_local_supervisor.py` on the PC with explicit session,
+revision and destination. Keep its console process alive; `--attach` monitors
+an already-running driver without starting another scientific worker. The
+supervisor retrieves process.log/status every30seconds, downloads immutable
+recovery bundles when their SHA changes, and verifies SHA256 plus ZIP CRC.
+`external_backup_receipt.json` is evidence of a completed OFF-VM copy; a remote
+archive path alone is NOT. Logs under `/content` are not durable storage.
+
+CLI0.7.4 may also report success for a default-format large binary download
+whose body is empty. `colab_checked_download.py` uses the official authenticated
+Contents client with explicit `format=base64`, verifies the decoded byte count,
+and atomically replaces the local file. Recovery additionally checks SHA/CRC.
+
+Manager mirrors every worker stdout/stderr line to CLI history, including the
+full failure report. Before each selection checkpoint weights are saved first;
+checkpoint_phase identifies whether selection or gradient diagnostics failed.
+No automatic scientific restart, threshold relaxation or inference of GO from
+driver exit is permitted. A retry without full Adam/RNG state restarts from
+the registered initialization rather than pretending to resume the trajectory.

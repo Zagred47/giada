@@ -15,14 +15,14 @@ def cli(repo, *args, **kwargs):
     return subprocess.run(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),*map(str,args)],cwd=repo,**kwargs)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);a=p.parse_args()
-    repo=Path(__file__).resolve().parents[1];dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=False)
+    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--attach',action='store_true');a=p.parse_args()
+    repo=Path(__file__).resolve().parents[1];dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=a.attach)
     remote='/content/giada_task39e_'+a.revision[:12];seen=set();started=time.time()
-    with (dest/'console.log').open('w',encoding='utf-8') as log:
-        driver=subprocess.Popen(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',a.session,'-f','scripts/colab_task39e_driver.py'],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
+    with (dest/'console.log').open('a',encoding='utf-8') as log:
+        driver=None if a.attach else subprocess.Popen(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',a.session,'-f','scripts/colab_task39e_driver.py'],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
         def download(name,target):
-            r=cli(repo,'download','-s',a.session,remote+'/'+name,target,capture_output=True,text=True)
-            return r.returncode==0 and target.exists() and 'not found' not in r.stdout.lower()
+            r=cli(repo,'download','-s',a.session,remote+'/'+name,target,capture_output=True,text=True,encoding='utf-8',errors='replace')
+            return r.returncode==0 and target.exists() and 'not found' not in (r.stdout+r.stderr).lower()
         finished=False
         while True:
             download('process.log',dest/'process.log')
@@ -45,9 +45,10 @@ def main():
                         assert download(target.name,target),'Final archive download failed'
                         assert hashlib.sha256(target.read_bytes()).hexdigest()==state['archive_sha256']
                     break
-            if driver.poll() is not None:
+            if driver is not None and driver.poll() is not None:
                 if time.time()-started>120:break
+            print(json.dumps(dict(recovery_poll=True,bundles=len(seen),state=state.get('phase') if got else 'unavailable')),flush=True)
             time.sleep(30)
-        (dest/'supervisor_receipt.json').write_text(json.dumps(dict(finished=finished,driver_exit=driver.poll(),external_bundles=len(seen),elapsed_seconds=time.time()-started,session=a.session,revision=a.revision),indent=2))
+        (dest/'supervisor_receipt.json').write_text(json.dumps(dict(finished=finished,driver_exit=driver.poll() if driver else None,external_bundles=len(seen),elapsed_seconds=time.time()-started,session=a.session,revision=a.revision),indent=2))
         return 0 if finished else 1
 if __name__=='__main__':raise SystemExit(main())

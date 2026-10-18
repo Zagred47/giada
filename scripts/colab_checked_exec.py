@@ -24,6 +24,8 @@ def main():
     args=sys.argv[1:]
     cli=str(Path(sys.executable).with_name('colab'))
     base=[cli,'--auth=oauth2']
+    if args and args[0]=='download' and '--help' not in args and '-h' not in args:
+        return subprocess.run([sys.executable,str(Path(__file__).with_name('colab_checked_download.py')),*args[1:]]).returncode
     if not args or args[0]!='exec':return subprocess.run(base+args).returncode
     if '--help' in args or '-h' in args:return subprocess.run(base+args).returncode
     session=None
