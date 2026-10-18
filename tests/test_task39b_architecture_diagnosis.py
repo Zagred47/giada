@@ -32,6 +32,12 @@ class Task39bTests(unittest.TestCase):
         np.testing.assert_array_equal(a[...,:2],self.data[...,:2])
         self.assertFalse(np.array_equal(a[:,0,2:20],self.data[:,0,2:20]))
 
+    def test_cached_readout_is_identical(self):
+        b=torch.tensor(self.data[:,0]);gbar=torch.tensor(t.p.ionic.GBAR,dtype=torch.float32)
+        expected=t.old.readout(torch,b[:,0],b[:,20:38],b[:,38:49],b[:,49:60])
+        got=t.captured_readout(torch,b[:,0],b[:,20:38],b[:,38:49],b[:,49:60],gbar)
+        torch.testing.assert_close(got,expected,rtol=0,atol=0)
+
     def test_all_optimizer_members(self):
         m=t.model_class(torch)(self.defs,self.seeds,list(range(8)))
         b=torch.tensor(self.data[:2,:16])[None].expand(36,-1,-1,-1)

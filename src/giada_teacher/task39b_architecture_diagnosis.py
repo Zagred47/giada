@@ -43,6 +43,7 @@ def model_class(torch):
             self.register_buffer('head_mask',mask)
             self.register_buffer('multi',torch.tensor([d['architecture']=='multiscale' for d in definitions for _ in seeds])[:,None,None])
             self.register_buffer('offsets',torch.tensor([0.,-3.,-6.,-9.])+multiscale_shift())
+            self.register_buffer('gbar',torch.tensor(p.ionic.GBAR,dtype=torch.float32))
 
         def fraction(self,raw):
             return torch.where(self.multi,torch.sigmoid(raw[...,None]+self.offsets).mean(-1),torch.sigmoid(raw))
@@ -89,17 +90,27 @@ def objective(torch,model,batch,gs,cs,short,relative):
         b=batch[:,:,tick]
         if tick and tick%8==0:state=torch.where(short,b[...,2:20],state)
         state=model(b[...,0],b[...,1],state)
-        current=old.readout(torch,b[...,0],state,b[...,38:49],b[...,49:60])
+        current=captured_readout(torch,b[...,0],state,b[...,38:49],b[...,49:60],model.gbar)
         total=total+((state-b[...,20:38])/gs).square().mean((1,2))+((current-b[...,60:71])/cs).square().mean((1,2))
         total=total+relative*((current-b[...,60:71])/scale).square().mean((1,2))
     return total/batch.shape[2]
+
+
+def captured_readout(torch,v,gates,mult,rev,gbar):
+    """Same algebra as Task38, but constants already on GPU before capture."""
+    openings=[]
+    for k,names in enumerate(p.ionic.STATE_NAMES):
+        a=p.OFFSETS[k];value=gates[...,a]**int(p.ionic.POWERS[k])
+        if len(names)==2:value=value*gates[...,a+1]
+        openings.append(value)
+    return torch.stack(openings,-1)*mult*gbar*(v[...,None]-rev)
 
 
 def split_models(torch,model,definitions,seeds,device):
     result=[]
     for k,d in enumerate(definitions):
         m=model_class(torch)([d],seeds,model.rapid).to(device)
-        state={n:(x.clone() if n=='offsets' else x[k*len(seeds):(k+1)*len(seeds)].clone()) for n,x in model.state_dict().items()}
+        state={n:(x.clone() if n in ('offsets','gbar') else x[k*len(seeds):(k+1)*len(seeds)].clone()) for n,x in model.state_dict().items()}
         m.load_state_dict(state); result.append(m)
     return result
 

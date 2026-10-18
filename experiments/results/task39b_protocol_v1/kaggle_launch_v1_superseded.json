@@ -1,0 +1,10 @@
+{
+  "task": "39b", "kernel_id": 139390428, "version": 1,
+  "url": "https://www.kaggle.com/code/alessandrobelli/giada-task39b-training-architecture-diagnosis",
+  "revision": "d9ba1ecadd32ed7de67643af0c9e574860b8d2ab",
+  "last_observed_status": "QUEUED",
+  "superseded_for_scientific_use": true,
+  "reason": "Code audit found CPU-to-GPU creation of a readout constant inside captured training. Replaced with cached GPU buffer, exactly equal numerically; no architecture, loss, data or threshold change.",
+  "training_results_observed": false,
+  "cancellation_confirmed": false
+}

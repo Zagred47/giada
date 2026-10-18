@@ -24,6 +24,10 @@ def main():
         assert launch['status_at_verification'] in ('RUNNING','QUEUED') and launch['published_source_pin_verified']
         art=put('artifacts','launch',Nome='Task39b verified Kaggle dispatch',Tipo='Log',Versione='v1',
             Percorso=path.relative_to(repo).as_posix(),**{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size})
+        previous=folder/'kaggle_launch_v1_superseded.json'
+        if previous.exists():
+            put('artifacts','launch-v1-superseded',Nome='Task39b superseded technical launch v1',Tipo='Log',Versione='v1',
+                Percorso=previous.relative_to(repo).as_posix(),**{'SHA-256':hashlib.sha256(previous.read_bytes()).hexdigest(),'Dimensione byte':previous.stat().st_size})
         for d in defs:
             put('runs',d['name'],Nome='Task39b running '+d['name'],Stato='In corso',
                 **{'Artefatti prodotti':[art],'Configurazione effettiva':json.dumps(dict(arm=d,seeds=spec['seeds'],launch=launch)),
