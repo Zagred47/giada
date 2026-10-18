@@ -1,0 +1,62 @@
+{
+  "status": "post_hoc_proposal_not_preregistration",
+  "task": "39e",
+  "next_task_proposed": "39f",
+  "outcome": "Technically completed at180000 with finite parameters and Adam states. Best development56/72 vs39d43/72;15 gained,2 lost. Scientific NO_GO_TASK40_BLOCKED.",
+  "limits": "72 evaluations are24 protocols x3 seeds. Historical comparison confounds training budget, selection rule and CUDA optimizer-state repair. Best count is descriptive, no independently confirmed winner. Stress cannot select. Resident ionic-core timing is not end-to-end acceleration. SQLite is authoritative; Airtable and Drive backup are not updated by this registration.",
+  "findings": [
+    "Best shared_o1_s1_h0 has16 failed cases:7 amplitude,1 charge,10 timing with overlap;9 timing-only. All72 gate checks pass.",
+    "Timing failures:8 offsets,1 onset,1 peak; zero missing events among the failed cases. K_Pst recovery case0 offsets1.0/0.9/1.6ms; Nap_Et2 recovery case1 offsets2.2/1.5/11.2ms. These6 failures recur across all seeds.",
+    "Other timing:Ca_LVAst same_v_history case0 seed17 offset0.5ms; Im case0 seed29 offset0.4ms; Im case1 seed43 onset0.6ms; Nap_Et2 calcium_switch case0 seed43 peak1.2ms.",
+    "Amplitude failures:SK_E2 rapid train seed43 and reversal seeds29/43;SKv3_1 history cases0/1 seed29;NaTa_t activation boundary seed43;Ca_HVA seams seed17. Only SK_E2 reversal seed43 also fails charge.",
+    "Only1/14 registered contrasts supported:tail objective shared empirical46->54. Stratification, split heads and longer sequences are not consistently supported under tested packages. Best56 does not identify a general causal effect of stratification.",
+    "Metric uses a common reference baseline and10% reference amplitude threshold for first/last crossing; flat peak comparison already uses near-maximum intervals. No raw39e trace audit has yet demonstrated whether crossing sensitivity or rate bias dominates. Existing timing/oracle files in39e archive concern frozen39d parents."
+  ],
+  "hypotheses": [
+    {
+      "id": "slow_tail_crossing",
+      "priority": "high",
+      "statement": "Small tail-current errors shift threshold crossings substantially where current slopes are small; normalized current RMSE underweights the relevant local error.",
+      "test": "Replay frozen39e predictions and save signed crossing shifts, local current slopes, residual at reference crossing, delta_t approximation residual/slope, and connected-event identity. Controlled tiny perturbations and time-grid phase shifts are diagnostic only. Test FIT-only crossing-band/derivative loss versus unchanged objective.",
+      "falsifier": "Crossings are well conditioned, shifts are not explained by local residual/slope, and the matched temporal objective does not improve these errors across seeds."
+    },
+    {
+      "id": "equilibrium_vs_rate",
+      "priority": "high",
+      "statement": "Residual bias in learned equilibrium u or update z produces incorrect slow recovery; gate RMSE alone cannot distinguish them.",
+      "test": "Frozen39e 2x2 intervention:learned u/z,teacher u only,teacher z only,both teacher; also teacher-state reset diagnostic. Record current/timing per channel and coefficient errors along each trajectory. Teacher interventions never selectable.",
+      "falsifier": "Neither individual nor joint coefficient replacement repairs the residual despite a verified replay floor; investigate interface/metric semantics instead."
+    },
+    {
+      "id": "transition_support",
+      "priority": "medium_high",
+      "statement": "Stratified static V/Ca anchors do not guarantee coverage of recovery tails, transitions and rare initial-state histories.",
+      "test": "Paired uniform versus FIT-only transition/recovery coverage, equal labeled ticks and updates; log coverage by time-since-transition, activity and initial gate state. New FIT seeds, no copying development trajectories.",
+      "falsifier": "Coverage improves as intended but held development recovery/timing errors do not improve consistently."
+    },
+    {
+      "id": "capacity_or_budget",
+      "priority": "medium",
+      "statement": "Remaining precision may exceed the tested shared trunk capacity or optimization budget, especially for weak currents; split heads did not test a width increase.",
+      "test": "Current width versus doubled hidden width at same abstraction, paired data and labeled ticks; save increasing-budget checkpoints on each trajectory. Report actual parameters, wall time and resident inference cost, with matched-wall-time secondary comparison.",
+      "falsifier": "Larger capacity or more updates reduce training loss but do not improve the predeclared per-channel and strict behavioral metrics."
+    },
+    {
+      "id": "metric_or_precision",
+      "priority": "diagnostic_not_assumed",
+      "statement": "Some timing discrepancies may involve disconnected threshold crossings or numerical sensitivity rather than a uniform physiological delay.",
+      "test": "Audit current39e traces inFP32/FP64 with same frozen weights and clock, connected excursions, perturbations and phase shifts. Keep original pass/fail; report diagnostics separately. Prior parent precision probes are not evidence for current39e weights.",
+      "falsifier": "Signed timing error persists with stable event identity and negligible perturbation/precision sensitivity."
+    }
+  ],
+  "proposed_experiment": {
+    "diagnostic_stage": "Same notebook first replays frozen39e coefficients and crossing audits; no training or candidate selection in oracle interventions.",
+    "training_matrix": "2x2x2:baseline versus temporal tail loss;uniform versus transition/recovery FIT coverage;current versus doubled hidden width. Three paired seeds,8arms/24models. Current best39e is frozen reference. Factorial controls begin from scratch with matched seed streams to avoid confounding warm start with intervention.",
+    "budgets": "Prospectively fix budgets after runtime preflight; save checkpoints on one trajectory, including common budgets comparable to39e. No threshold change, no posthoc extension motivated by development.",
+    "loss_contract": "Keep successful39e tail objective in all arms. Define new derivative/crossing-band term solely with FIT teacher traces, capped weights and scale floors; calibrate weights on fixed FIT gradients. Exact numeric specification belongs in next preregistration.",
+    "diagnostics": "Gradient norms/conflicts, clipping incidence, u/z probes, training/development gap, all-channel residuals, all72 development cases, regressions on previously passing cases, separate stress panel, finite parameters and Adam at every checkpoint.",
+    "selection": "Freeze original strict quality thresholds and a prospective selection rule. Do not choose a different winner from stress or construct a per-case oracle ensemble. Any successful candidate still requires fresh independent confirmation.",
+    "compute": "Vectorize independent models on one GPU only after optimizer ownership and update parity preflights; checkpoint/log backups outside runtime verified by SHA256. Report inference cost on identical workload and accuracy-qualified candidates.",
+    "not_launched": true
+  }
+}

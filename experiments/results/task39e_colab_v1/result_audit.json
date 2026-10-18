@@ -1,0 +1,4558 @@
+{
+  "valid": true,
+  "rows": 1584,
+  "channel_metrics": 17424,
+  "archive_sha256": "10b515c6d2193378a9f85771f2333ad8cc93b4b81b950e3c61349f71e6ad7f95",
+  "numerical_verification": {
+    "checkpoint_180000.pt": {
+      "tensors": 44,
+      "all_finite": true
+    },
+    "frozen_checkpoint.pt": {
+      "tensors": 44,
+      "all_finite": true
+    },
+    "optimizer_180000.pt": {
+      "tensors": 124,
+      "all_finite": true
+    }
+  },
+  "freeze_hash_valid": true,
+  "checkpoint_hash_valid": true,
+  "models": {
+    "frozen_local161_SKcanonical": {
+      "development": {
+        "passed": 53,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_max": 7,
+          "current_rmse": 13,
+          "timing": 8,
+          "charge": 7,
+          "timing_only": 6
+        },
+        "failed_channels": {
+          "K_Tst": 5,
+          "NaTa_t": 4,
+          "NaTs2_t": 4,
+          "Im": 2,
+          "SKv3_1": 3,
+          "K_Pst": 3,
+          "Nap_Et2": 3,
+          "Ih": 5,
+          "Ca_LVAst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.31578225600145954
+          },
+          "ramps": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 4.067801625551359
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.1696305833387902
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.2069021826143188
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.05403841270127952
+          },
+          "same_v_history": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 4.330450930324779
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.12004342289788666
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.1067845370093816
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.07444921090094889
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 3.504516452324986
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 35.58628188246722
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.18046948580831318
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 11.871046270213482
+          },
+          "29": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 35.58628188246722
+          },
+          "43": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 33.995865270371205
+          }
+        },
+        "median_severity": 0.04367542344383145,
+        "worst_severity": 35.58628188246722,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.00562672257298535,
+            "nmax": 0.00883628843786928,
+            "signed_charge_normalized": 0.004427494292961787,
+            "absolute_charge_normalized": 0.004427494292961787
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.3558628188246722,
+            "nmax": 0.5568939771357443,
+            "signed_charge_normalized": 0.3087476939938886,
+            "absolute_charge_normalized": 0.3087476939938886
+          },
+          "NaTa_t": {
+            "nrmse": 0.33995865270371206,
+            "nmax": 0.4963605148023289,
+            "signed_charge_normalized": 0.31784605855752757,
+            "absolute_charge_normalized": 0.31784605855752757
+          },
+          "NaTs2_t": {
+            "nrmse": 0.28760432831504545,
+            "nmax": 0.5318169477232689,
+            "signed_charge_normalized": 0.24917645979833536,
+            "absolute_charge_normalized": 0.24917645979833536
+          },
+          "Nap_Et2": {
+            "nrmse": 0.002733159635036189,
+            "nmax": 0.004581442831854453,
+            "signed_charge_normalized": 0.0023997375161387397,
+            "absolute_charge_normalized": 0.0023997375161387397
+          },
+          "Ih": {
+            "nrmse": 0.2718883182157627,
+            "nmax": 0.37522682846531785,
+            "signed_charge_normalized": 0.25340974129947286,
+            "absolute_charge_normalized": 0.25340974129947286
+          },
+          "Im": {
+            "nrmse": 0.001928943204733711,
+            "nmax": 0.003639787466002817,
+            "signed_charge_normalized": 0.0014872043411144821,
+            "absolute_charge_normalized": 0.0014872043411144821
+          },
+          "K_Pst": {
+            "nrmse": 0.0049158038632298095,
+            "nmax": 0.007788799039281712,
+            "signed_charge_normalized": 0.0045288218403419294,
+            "absolute_charge_normalized": 0.0045288218403419294
+          },
+          "K_Tst": {
+            "nrmse": 0.04314185282150587,
+            "nmax": 0.203390081277568,
+            "signed_charge_normalized": 0.03989952092203895,
+            "absolute_charge_normalized": 0.03989952092203895
+          },
+          "SK_E2": {
+            "nrmse": 3.795152355009788e-07,
+            "nmax": 8.88995384408817e-07,
+            "signed_charge_normalized": 3.624742522642564e-07,
+            "absolute_charge_normalized": 3.624742522642564e-07
+          },
+          "SKv3_1": {
+            "nrmse": 0.043304509303247786,
+            "nmax": 0.09460396690022957,
+            "signed_charge_normalized": 0.04162344702933106,
+            "absolute_charge_normalized": 0.04162344702933106
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 56,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_max": 6,
+          "current_rmse": 13,
+          "charge": 3,
+          "timing": 3,
+          "timing_only": 3
+        },
+        "failed_channels": {
+          "K_Tst": 6,
+          "NaTa_t": 1,
+          "SKv3_1": 7,
+          "K_Pst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.07957187448192013
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 5.5665998460377555
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.38873053135608376
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.14441076385782042
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.18355544642631882
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.4480944361288692
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.3401997534759118
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.05851585122590396
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.035325686136881515
+          },
+          "reversal": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.02109506572577772
+          },
+          "activation_boundary": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 2.7269774346924383
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.28517070200874417
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 19,
+            "total": 24,
+            "worst_severity": 5.5665998460377555
+          },
+          "29": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 5.375851907034284
+          },
+          "43": {
+            "passed": 19,
+            "total": 24,
+            "worst_severity": 3.4480944361288692
+          }
+        },
+        "median_severity": 0.0552803503115538,
+        "worst_severity": 5.5665998460377555,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.0059009160849373245,
+            "nmax": 0.00817072586189235,
+            "signed_charge_normalized": 0.0055976846026424415,
+            "absolute_charge_normalized": 0.0055976846026424415
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.004456209572970717,
+            "nmax": 0.0068910675281499325,
+            "signed_charge_normalized": 0.004080246366323174,
+            "absolute_charge_normalized": 0.004080246366323174
+          },
+          "NaTa_t": {
+            "nrmse": 0.010375961533806202,
+            "nmax": 0.04691848684991487,
+            "signed_charge_normalized": 0.002823759456697563,
+            "absolute_charge_normalized": 0.002823759456697563
+          },
+          "NaTs2_t": {
+            "nrmse": 0.007561244432409943,
+            "nmax": 0.03461055029263942,
+            "signed_charge_normalized": 0.004497982301988061,
+            "absolute_charge_normalized": 0.004497982301988061
+          },
+          "Nap_Et2": {
+            "nrmse": 0.0009350492913363876,
+            "nmax": 0.0019393917110437225,
+            "signed_charge_normalized": 0.0007237659545127647,
+            "absolute_charge_normalized": 0.0007237659545127647
+          },
+          "Ih": {
+            "nrmse": 0.00410291966571744,
+            "nmax": 0.010388970416433576,
+            "signed_charge_normalized": 0.004026831383772641,
+            "absolute_charge_normalized": 0.004026831383772641
+          },
+          "Im": {
+            "nrmse": 0.0018508052546868914,
+            "nmax": 0.009177772321315942,
+            "signed_charge_normalized": 0.0017012889599725572,
+            "absolute_charge_normalized": 0.0017012889599725572
+          },
+          "K_Pst": {
+            "nrmse": 0.004049730840626539,
+            "nmax": 0.007855329553287566,
+            "signed_charge_normalized": 0.0030551642915534675,
+            "absolute_charge_normalized": 0.0030551642915534675
+          },
+          "K_Tst": {
+            "nrmse": 0.05566599846037756,
+            "nmax": 0.2164890816504615,
+            "signed_charge_normalized": 0.018762528989093467,
+            "absolute_charge_normalized": 0.018762528989093467
+          },
+          "SK_E2": {
+            "nrmse": 3.6763333484281545e-07,
+            "nmax": 1.37850174393739e-06,
+            "signed_charge_normalized": 3.1085539545312027e-07,
+            "absolute_charge_normalized": 3.1085539545312027e-07
+          },
+          "SKv3_1": {
+            "nrmse": 0.03448094436128869,
+            "nmax": 0.04536328217159775,
+            "signed_charge_normalized": 0.028982697507215088,
+            "absolute_charge_normalized": 0.028982697507215088
+          }
+        }
+      }
+    },
+    "joint_wlong_000": {
+      "development": {
+        "passed": 44,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_max": 16,
+          "charge": 14,
+          "current_rmse": 19,
+          "timing": 12,
+          "timing_only": 9
+        },
+        "failed_channels": {
+          "NaTa_t": 8,
+          "NaTs2_t": 9,
+          "K_Tst": 6,
+          "SK_E2": 6,
+          "Ca_LVAst": 4,
+          "Ca_HVA": 3,
+          "Im": 3,
+          "SKv3_1": 4,
+          "K_Pst": 6,
+          "Nap_Et2": 6,
+          "Ih": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6774564584096273
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 9.322676893700521
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7013549369815025
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 13.959282233344577
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7244884967803955
+          },
+          "same_v_history": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 6.912669866663565
+          },
+          "slow_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 0.8615454694719377
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.7732317937756213
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8906384309132894
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 37.78038214693378
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 145.13943865992113
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8055641300632684
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 139.38998515343144
+          },
+          "29": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 91.44233699132396
+          },
+          "43": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 145.13943865992113
+          }
+        },
+        "median_severity": 0.6211991177675972,
+        "worst_severity": 145.13943865992113,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.04241705432882721,
+            "nmax": 0.06657026232046785,
+            "signed_charge_normalized": 0.0328893780501009,
+            "absolute_charge_normalized": 0.0328893780501009
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.3811588404523653,
+            "nmax": 0.4077385757407994,
+            "signed_charge_normalized": 0.3786356167487842,
+            "absolute_charge_normalized": 0.3786356167487842
+          },
+          "NaTa_t": {
+            "nrmse": 1.4513943865992112,
+            "nmax": 1.564155189079835,
+            "signed_charge_normalized": 1.448856716593102,
+            "absolute_charge_normalized": 1.448856716593102
+          },
+          "NaTs2_t": {
+            "nrmse": 0.37274878732899286,
+            "nmax": 0.3994525600218463,
+            "signed_charge_normalized": 0.37216253645162783,
+            "absolute_charge_normalized": 0.37216253645162783
+          },
+          "Nap_Et2": {
+            "nrmse": 0.00867760670485209,
+            "nmax": 0.014408285564008508,
+            "signed_charge_normalized": 0.007645506405247615,
+            "absolute_charge_normalized": 0.007645506405247615
+          },
+          "Ih": {
+            "nrmse": 0.13148873811652365,
+            "nmax": 0.13654915628968592,
+            "signed_charge_normalized": 0.13072951488865958,
+            "absolute_charge_normalized": 0.13072951488865958
+          },
+          "Im": {
+            "nrmse": 0.01318526623843758,
+            "nmax": 0.028257234928227647,
+            "signed_charge_normalized": 0.012738494110035208,
+            "absolute_charge_normalized": 0.012738494110035208
+          },
+          "K_Pst": {
+            "nrmse": 0.01914463641094093,
+            "nmax": 0.029254441696378797,
+            "signed_charge_normalized": 0.017539648887002244,
+            "absolute_charge_normalized": 0.017539648887002244
+          },
+          "K_Tst": {
+            "nrmse": 0.14974486092639333,
+            "nmax": 0.29384676590001435,
+            "signed_charge_normalized": 0.14927608605925166,
+            "absolute_charge_normalized": 0.14927608605925166
+          },
+          "SK_E2": {
+            "nrmse": 0.37780382146933783,
+            "nmax": 0.4144508938804931,
+            "signed_charge_normalized": 0.3770959831437489,
+            "absolute_charge_normalized": 0.3770959831437489
+          },
+          "SKv3_1": {
+            "nrmse": 0.06912669866663565,
+            "nmax": 0.11645196772535858,
+            "signed_charge_normalized": 0.04332757740112688,
+            "absolute_charge_normalized": 0.04332757740112688
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 44,
+        "total": 72,
+        "gate_passed": 70,
+        "failures": {
+          "timing": 17,
+          "current_max": 14,
+          "charge": 13,
+          "current_rmse": 20,
+          "gate": 2,
+          "timing_only": 8
+        },
+        "failed_channels": {
+          "NaTa_t": 6,
+          "NaTs2_t": 3,
+          "K_Tst": 6,
+          "SK_E2": 3,
+          "Ih": 4,
+          "Im": 8,
+          "SKv3_1": 9,
+          "Ca_HVA": 7,
+          "K_Pst": 10,
+          "Ca_LVAst": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7168392340342205
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 15.18626942067893
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.450041446246788
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5220271081403802
+          },
+          "paired_recovery": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.0290184231601587
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.023960048915412
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.9113426582742875
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.608302898498109
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7591068744659424
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.8870104948679607
+          },
+          "activation_boundary": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 8.03860882881241
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 3.3654972907020118
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 15.18626942067893
+          },
+          "29": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 7.765095834925291
+          },
+          "43": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 6.468812091941446
+          }
+        },
+        "median_severity": 0.6001373224742601,
+        "worst_severity": 15.18626942067893,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.03686775830337323,
+            "nmax": 0.04458983995863366,
+            "signed_charge_normalized": 0.03601230490195799,
+            "absolute_charge_normalized": 0.03601230490195799
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.009288988864229231,
+            "nmax": 0.023824663277467326,
+            "signed_charge_normalized": 0.008556492564465484,
+            "absolute_charge_normalized": 0.008556492564465484
+          },
+          "NaTa_t": {
+            "nrmse": 0.06468812091941446,
+            "nmax": 0.16260414485797536,
+            "signed_charge_normalized": 0.038020582290827006,
+            "absolute_charge_normalized": 0.038020582290827006
+          },
+          "NaTs2_t": {
+            "nrmse": 0.024946040964304705,
+            "nmax": 0.06979286796561109,
+            "signed_charge_normalized": 0.013293398243008967,
+            "absolute_charge_normalized": 0.013293398243008967
+          },
+          "Nap_Et2": {
+            "nrmse": 0.0060830289849810905,
+            "nmax": 0.020328482513924027,
+            "signed_charge_normalized": 0.004292650694071817,
+            "absolute_charge_normalized": 0.004292650694071817
+          },
+          "Ih": {
+            "nrmse": 0.010346946574070594,
+            "nmax": 0.021276190232584074,
+            "signed_charge_normalized": 0.009911518326747274,
+            "absolute_charge_normalized": 0.010123110285376857
+          },
+          "Im": {
+            "nrmse": 0.017482056599914978,
+            "nmax": 0.02697119737899182,
+            "signed_charge_normalized": 0.017002644987054,
+            "absolute_charge_normalized": 0.017002644987054
+          },
+          "K_Pst": {
+            "nrmse": 0.013433937657434095,
+            "nmax": 0.027790691913321574,
+            "signed_charge_normalized": 0.01221629015943616,
+            "absolute_charge_normalized": 0.01221629015943616
+          },
+          "K_Tst": {
+            "nrmse": 0.1518626942067893,
+            "nmax": 0.3232622404014066,
+            "signed_charge_normalized": 0.09728695482358186,
+            "absolute_charge_normalized": 0.09728695482358186
+          },
+          "SK_E2": {
+            "nrmse": 0.03365497290702012,
+            "nmax": 0.05476336623038488,
+            "signed_charge_normalized": 0.028650208166197438,
+            "absolute_charge_normalized": 0.028650208166197438
+          },
+          "SKv3_1": {
+            "nrmse": 0.08038608828812412,
+            "nmax": 0.12441048543141554,
+            "signed_charge_normalized": 0.08023964713931978,
+            "absolute_charge_normalized": 0.08023964713931978
+          }
+        }
+      }
+    },
+    "joint_wlong_111": {
+      "development": {
+        "passed": 45,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_rmse": 18,
+          "current_max": 2,
+          "timing": 9,
+          "timing_only": 8,
+          "charge": 4
+        },
+        "failed_channels": {
+          "Ca_LVAst": 6,
+          "K_Tst": 2,
+          "SK_E2": 7,
+          "Ca_HVA": 4,
+          "SKv3_1": 3,
+          "Im": 1,
+          "K_Pst": 6,
+          "Nap_Et2": 4,
+          "NaTs2_t": 4,
+          "NaTa_t": 1
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9549319744110107
+          },
+          "ramps": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.2360800772850207
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6324021066151734
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.485091872068163
+          },
+          "paired_recovery": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.0031401443848438
+          },
+          "same_v_history": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 3.444380794378659
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.7049599830695314
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.1425919029572502
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9058528982193038
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.4745589543179327
+          },
+          "activation_boundary": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 2.362717758151239
+          },
+          "seams": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.2899420034776554
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 3.444380794378659
+          },
+          "29": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 2.849780515269782
+          },
+          "43": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 1.6180129676083521
+          }
+        },
+        "median_severity": 0.7152865104073447,
+        "worst_severity": 3.444380794378659,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.03444380794378659,
+            "nmax": 0.05415208577653272,
+            "signed_charge_normalized": 0.02658442809033567,
+            "absolute_charge_normalized": 0.02658442809033567
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.0139086981325054,
+            "nmax": 0.04556456476588702,
+            "signed_charge_normalized": 0.011489565361223695,
+            "absolute_charge_normalized": 0.011489565361223695
+          },
+          "NaTa_t": {
+            "nrmse": 0.010399362447114579,
+            "nmax": 0.046320638164318896,
+            "signed_charge_normalized": 0.006284776469269032,
+            "absolute_charge_normalized": 0.006284776469269032
+          },
+          "NaTs2_t": {
+            "nrmse": 0.01079191418944532,
+            "nmax": 0.03469943596389038,
+            "signed_charge_normalized": 0.006615770986549543,
+            "absolute_charge_normalized": 0.006615770986549543
+          },
+          "Nap_Et2": {
+            "nrmse": 0.00656780569034316,
+            "nmax": 0.009836411161560294,
+            "signed_charge_normalized": 0.005085017743933028,
+            "absolute_charge_normalized": 0.005085017743933028
+          },
+          "Ih": {
+            "nrmse": 0.006108608880598387,
+            "nmax": 0.010525996312123982,
+            "signed_charge_normalized": 0.005455577056831553,
+            "absolute_charge_normalized": 0.005456140951446298
+          },
+          "Im": {
+            "nrmse": 0.008240187117027365,
+            "nmax": 0.03556877798501328,
+            "signed_charge_normalized": 0.0038663463075276714,
+            "absolute_charge_normalized": 0.0038663463075276714
+          },
+          "K_Pst": {
+            "nrmse": 0.013360039806214934,
+            "nmax": 0.03914696074788746,
+            "signed_charge_normalized": 0.011085978545799199,
+            "absolute_charge_normalized": 0.011085978545799199
+          },
+          "K_Tst": {
+            "nrmse": 0.02362717758151239,
+            "nmax": 0.03259699613899832,
+            "signed_charge_normalized": 0.023582226570591447,
+            "absolute_charge_normalized": 0.023582226570591447
+          },
+          "SK_E2": {
+            "nrmse": 0.02474558954317933,
+            "nmax": 0.0501570072192422,
+            "signed_charge_normalized": 0.024699608907918995,
+            "absolute_charge_normalized": 0.024699608907918995
+          },
+          "SKv3_1": {
+            "nrmse": 0.02849780515269782,
+            "nmax": 0.03659485714996965,
+            "signed_charge_normalized": 0.02389958331285976,
+            "absolute_charge_normalized": 0.02389958331285976
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 45,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_rmse": 18,
+          "timing": 12,
+          "charge": 5,
+          "timing_only": 9,
+          "current_max": 3
+        },
+        "failed_channels": {
+          "K_Tst": 2,
+          "Ca_HVA": 9,
+          "Im": 3,
+          "SKv3_1": 9,
+          "Ih": 1,
+          "K_Pst": 12,
+          "Ca_LVAst": 5,
+          "NaTs2_t": 2,
+          "NaTa_t": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9698847929636638
+          },
+          "ramps": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.5298729697520062
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7290690536153215
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7681846463362582
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.874242807159092
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.83502279977783
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6456130142725234
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.1666884933402724
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.1269575434636299
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.804211695988973
+          },
+          "activation_boundary": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 15.359126482229179
+          },
+          "seams": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.8050998850210263
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 15.359126482229179
+          },
+          "29": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 11.73111452745241
+          },
+          "43": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 7.860284164246734
+          }
+        },
+        "median_severity": 0.6432143543243016,
+        "worst_severity": 15.359126482229179,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.1535912648222918,
+            "nmax": 0.1971084161460449,
+            "signed_charge_normalized": 0.15051343162503,
+            "absolute_charge_normalized": 0.15051343162503
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.017457454358478054,
+            "nmax": 0.04350549840093732,
+            "signed_charge_normalized": 0.016538929272353696,
+            "absolute_charge_normalized": 0.016538929272353696
+          },
+          "NaTa_t": {
+            "nrmse": 0.011678811274551278,
+            "nmax": 0.04264192968157265,
+            "signed_charge_normalized": 0.006670539483209895,
+            "absolute_charge_normalized": 0.006670539483209895
+          },
+          "NaTs2_t": {
+            "nrmse": 0.011289945449039048,
+            "nmax": 0.035750600841070485,
+            "signed_charge_normalized": 0.006972240749587772,
+            "absolute_charge_normalized": 0.006972240749587772
+          },
+          "Nap_Et2": {
+            "nrmse": 0.00872333807520205,
+            "nmax": 0.026221162108223034,
+            "signed_charge_normalized": 0.006562792160586074,
+            "absolute_charge_normalized": 0.006562792160586074
+          },
+          "Ih": {
+            "nrmse": 0.006472194611491466,
+            "nmax": 0.009926595592289209,
+            "signed_charge_normalized": 0.006233383386342072,
+            "absolute_charge_normalized": 0.006356822931226172
+          },
+          "Im": {
+            "nrmse": 0.007591316225134015,
+            "nmax": 0.0437121403579546,
+            "signed_charge_normalized": 0.00636142289864469,
+            "absolute_charge_normalized": 0.00636142289864469
+          },
+          "K_Pst": {
+            "nrmse": 0.018050998850210262,
+            "nmax": 0.03715303853563438,
+            "signed_charge_normalized": 0.017295934149201764,
+            "absolute_charge_normalized": 0.017295934149201764
+          },
+          "K_Tst": {
+            "nrmse": 0.015298729697520061,
+            "nmax": 0.03174372349667846,
+            "signed_charge_normalized": 0.01071043331556008,
+            "absolute_charge_normalized": 0.01071043331556008
+          },
+          "SK_E2": {
+            "nrmse": 0.005467013052414054,
+            "nmax": 0.007757725949671892,
+            "signed_charge_normalized": 0.003956267099953331,
+            "absolute_charge_normalized": 0.003956267099953331
+          },
+          "SKv3_1": {
+            "nrmse": 0.031448237055456664,
+            "nmax": 0.03659484265812332,
+            "signed_charge_normalized": 0.031383377515071496,
+            "absolute_charge_normalized": 0.031383377515071496
+          }
+        }
+      }
+    },
+    "joint_wshared_o0_s0_h0": {
+      "development": {
+        "passed": 46,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_max": 15,
+          "charge": 13,
+          "current_rmse": 16,
+          "timing": 13,
+          "timing_only": 10
+        },
+        "failed_channels": {
+          "NaTa_t": 8,
+          "NaTs2_t": 9,
+          "K_Tst": 6,
+          "SK_E2": 4,
+          "Ca_LVAst": 4,
+          "Ca_HVA": 3,
+          "Nap_Et2": 7,
+          "Im": 3,
+          "SKv3_1": 3,
+          "K_Pst": 6,
+          "Ih": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5377292633056641
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.896855128729735
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6137607549200464
+          },
+          "rapid_voltage_train": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 12.107861138849357
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5777239799499512
+          },
+          "same_v_history": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 6.75333577896516
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.41079918543497723
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6784404836544503
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8165160814921062
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 32.75360411167339
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 135.20656187888858
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8578004660822811
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 135.20656187888858
+          },
+          "29": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 67.23926481222014
+          },
+          "43": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 113.52455068108893
+          }
+        },
+        "median_severity": 0.5668939040171975,
+        "worst_severity": 135.20656187888858,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.027166390758319836,
+            "nmax": 0.04266250708962648,
+            "signed_charge_normalized": 0.02104884691497409,
+            "absolute_charge_normalized": 0.02104884691497409
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.5741412885016295,
+            "nmax": 0.610931034413282,
+            "signed_charge_normalized": 0.5704548053743724,
+            "absolute_charge_normalized": 0.5704548053743724
+          },
+          "NaTa_t": {
+            "nrmse": 1.3520656187888858,
+            "nmax": 1.4496354809203253,
+            "signed_charge_normalized": 1.3499775694114853,
+            "absolute_charge_normalized": 1.3499775694114853
+          },
+          "NaTs2_t": {
+            "nrmse": 0.33903694935487216,
+            "nmax": 0.3632166467754117,
+            "signed_charge_normalized": 0.3385106715165154,
+            "absolute_charge_normalized": 0.3385106715165154
+          },
+          "Nap_Et2": {
+            "nrmse": 0.011460963151079648,
+            "nmax": 0.017187850093534483,
+            "signed_charge_normalized": 0.00886812267724249,
+            "absolute_charge_normalized": 0.00886812267724249
+          },
+          "Ih": {
+            "nrmse": 0.10829193121980513,
+            "nmax": 0.11289819695149977,
+            "signed_charge_normalized": 0.10765486658210202,
+            "absolute_charge_normalized": 0.10765486658210202
+          },
+          "Im": {
+            "nrmse": 0.006107333811140649,
+            "nmax": 0.02449552328496042,
+            "signed_charge_normalized": 0.005481924269343969,
+            "absolute_charge_normalized": 0.005481924269343969
+          },
+          "K_Pst": {
+            "nrmse": 0.021709540114155775,
+            "nmax": 0.03084281312488295,
+            "signed_charge_normalized": 0.02000514988926857,
+            "absolute_charge_normalized": 0.02000514988926857
+          },
+          "K_Tst": {
+            "nrmse": 0.10646750711922813,
+            "nmax": 0.2705393325691004,
+            "signed_charge_normalized": 0.10602558953377585,
+            "absolute_charge_normalized": 0.10602558953377585
+          },
+          "SK_E2": {
+            "nrmse": 0.3275360411167339,
+            "nmax": 0.35948230882951376,
+            "signed_charge_normalized": 0.32692203982480555,
+            "absolute_charge_normalized": 0.32692203982480555
+          },
+          "SKv3_1": {
+            "nrmse": 0.0675333577896516,
+            "nmax": 0.08371488460240298,
+            "signed_charge_normalized": 0.038684754274205056,
+            "absolute_charge_normalized": 0.038684754274205056
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 45,
+        "total": 72,
+        "gate_passed": 70,
+        "failures": {
+          "timing": 13,
+          "current_max": 15,
+          "charge": 15,
+          "current_rmse": 19,
+          "gate": 2,
+          "timing_only": 8
+        },
+        "failed_channels": {
+          "NaTa_t": 6,
+          "NaTs2_t": 3,
+          "K_Tst": 6,
+          "SK_E2": 3,
+          "SKv3_1": 9,
+          "Ca_HVA": 7,
+          "Ca_LVAst": 2,
+          "K_Pst": 8,
+          "Im": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5744755268096924
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 15.234794465804896
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.2536309828820997
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6107621902965374
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5432990033765583
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 6.974624778760337
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.5158454638762542
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.51989522007569
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6968041261037191
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.7731060187021892
+          },
+          "activation_boundary": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 8.146441375428227
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.9077668553097267
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 15.234794465804896
+          },
+          "29": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 8.545125153864788
+          },
+          "43": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 8.146441375428227
+          }
+        },
+        "median_severity": 0.5278089821366536,
+        "worst_severity": 15.234794465804896,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.02520302577067007,
+            "nmax": 0.03192061558181046,
+            "signed_charge_normalized": 0.024126474640318085,
+            "absolute_charge_normalized": 0.024126474640318085
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.009482126202671224,
+            "nmax": 0.03134861423033318,
+            "signed_charge_normalized": 0.007681595123361433,
+            "absolute_charge_normalized": 0.007681595123361433
+          },
+          "NaTa_t": {
+            "nrmse": 0.056420441283251244,
+            "nmax": 0.13938159522975446,
+            "signed_charge_normalized": 0.033885437221151185,
+            "absolute_charge_normalized": 0.033885437221151185
+          },
+          "NaTs2_t": {
+            "nrmse": 0.0216908975898374,
+            "nmax": 0.05985804947850517,
+            "signed_charge_normalized": 0.011637765644999487,
+            "absolute_charge_normalized": 0.011637765644999487
+          },
+          "Nap_Et2": {
+            "nrmse": 0.008429769833339281,
+            "nmax": 0.01594295354439774,
+            "signed_charge_normalized": 0.006730957437217229,
+            "absolute_charge_normalized": 0.006730957437217229
+          },
+          "Ih": {
+            "nrmse": 0.006730042020922724,
+            "nmax": 0.014835507689360476,
+            "signed_charge_normalized": 0.0028589707513297165,
+            "absolute_charge_normalized": 0.005549868211913047
+          },
+          "Im": {
+            "nrmse": 0.009616823470421821,
+            "nmax": 0.030538109514826876,
+            "signed_charge_normalized": 0.00872583445007224,
+            "absolute_charge_normalized": 0.00872583445007224
+          },
+          "K_Pst": {
+            "nrmse": 0.012115597046429925,
+            "nmax": 0.025728546661850746,
+            "signed_charge_normalized": 0.01117170306305011,
+            "absolute_charge_normalized": 0.01117170306305011
+          },
+          "K_Tst": {
+            "nrmse": 0.15234794465804896,
+            "nmax": 0.3355652245549915,
+            "signed_charge_normalized": 0.09318169233259642,
+            "absolute_charge_normalized": 0.09318169233259642
+          },
+          "SK_E2": {
+            "nrmse": 0.029077668553097267,
+            "nmax": 0.047315253565219414,
+            "signed_charge_normalized": 0.02475355439363208,
+            "absolute_charge_normalized": 0.02475355439363208
+          },
+          "SKv3_1": {
+            "nrmse": 0.08146441375428226,
+            "nmax": 0.09470078900216317,
+            "signed_charge_normalized": 0.08131107187655617,
+            "absolute_charge_normalized": 0.08131107187655617
+          }
+        }
+      }
+    },
+    "joint_wshared_o0_s1_h0": {
+      "development": {
+        "passed": 43,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "timing": 16,
+          "current_max": 16,
+          "charge": 15,
+          "current_rmse": 20,
+          "timing_only": 9
+        },
+        "failed_channels": {
+          "NaTa_t": 7,
+          "NaTs2_t": 9,
+          "K_Tst": 6,
+          "SK_E2": 5,
+          "Ca_LVAst": 8,
+          "SKv3_1": 6,
+          "Im": 3,
+          "K_Pst": 3,
+          "Ca_HVA": 2,
+          "Nap_Et2": 6,
+          "Ih": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8112092812856039
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 13.81585924339943
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8218898397821954
+          },
+          "rapid_voltage_train": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 12.227322772855624
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6823182106018066
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 9.488135735121906
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.8450493934374392
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.8421548206544712
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.4427528634691408
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 33.15846435573293
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 185.07074105091726
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9465643134396521
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 185.07074105091726
+          },
+          "29": {
+            "passed": 16,
+            "total": 24,
+            "worst_severity": 65.50877691877666
+          },
+          "43": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 78.85210347372318
+          }
+        },
+        "median_severity": 0.652355842478402,
+        "worst_severity": 185.07074105091726,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.026566994512371274,
+            "nmax": 0.04160418064092378,
+            "signed_charge_normalized": 0.02055165900700787,
+            "absolute_charge_normalized": 0.02055165900700787
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.24608443322178825,
+            "nmax": 0.26362899909766474,
+            "signed_charge_normalized": 0.24443881501097173,
+            "absolute_charge_normalized": 0.24443881501097173
+          },
+          "NaTa_t": {
+            "nrmse": 1.8507074105091725,
+            "nmax": 1.9844158924961641,
+            "signed_charge_normalized": 1.847845532575349,
+            "absolute_charge_normalized": 1.847845532575349
+          },
+          "NaTs2_t": {
+            "nrmse": 0.6532294326755315,
+            "nmax": 0.6870323001195471,
+            "signed_charge_normalized": 0.6526004673946559,
+            "absolute_charge_normalized": 0.6526004673946559
+          },
+          "Nap_Et2": {
+            "nrmse": 0.011144338872874889,
+            "nmax": 0.01854413255396996,
+            "signed_charge_normalized": 0.009778415450315728,
+            "absolute_charge_normalized": 0.009778415450315728
+          },
+          "Ih": {
+            "nrmse": 0.05127706167138756,
+            "nmax": 0.05314908318631305,
+            "signed_charge_normalized": 0.0509848177688598,
+            "absolute_charge_normalized": 0.0509848177688598
+          },
+          "Im": {
+            "nrmse": 0.01015547216234074,
+            "nmax": 0.028169896027089542,
+            "signed_charge_normalized": 0.009812739715247352,
+            "absolute_charge_normalized": 0.009812739715247352
+          },
+          "K_Pst": {
+            "nrmse": 0.017161960630755594,
+            "nmax": 0.031424251108973615,
+            "signed_charge_normalized": 0.013579270439729082,
+            "absolute_charge_normalized": 0.013579270439729082
+          },
+          "K_Tst": {
+            "nrmse": 0.19657467185647273,
+            "nmax": 0.46544160654491007,
+            "signed_charge_normalized": 0.19587487362552286,
+            "absolute_charge_normalized": 0.19587487362552286
+          },
+          "SK_E2": {
+            "nrmse": 0.3315846435573293,
+            "nmax": 0.36302866527522876,
+            "signed_charge_normalized": 0.33096476302970784,
+            "absolute_charge_normalized": 0.33096476302970784
+          },
+          "SKv3_1": {
+            "nrmse": 0.09488135735121907,
+            "nmax": 0.20910239654452284,
+            "signed_charge_normalized": 0.09084393424598873,
+            "absolute_charge_normalized": 0.09084393424598873
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 49,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "timing": 10,
+          "current_max": 14,
+          "charge": 16,
+          "current_rmse": 19,
+          "timing_only": 4
+        },
+        "failed_channels": {
+          "NaTa_t": 6,
+          "NaTs2_t": 3,
+          "K_Tst": 6,
+          "SK_E2": 3,
+          "Im": 2,
+          "K_Pst": 6,
+          "SKv3_1": 9,
+          "Ca_HVA": 7,
+          "Ca_LVAst": 6,
+          "Ih": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7993896802266439
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 26.318119586645544
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.278655631827505
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8216056078510146
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.731564864158151
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 9.015104448486744
+          },
+          "slow_recovery": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.9696894613222216
+          },
+          "calcium_switch": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.976772704488522
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5913704837414554
+          },
+          "reversal": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.5989372730255127
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 5.260605515753132
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.9674015454652194
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 12.730263927124094
+          },
+          "29": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 16.65399900851583
+          },
+          "43": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 26.318119586645544
+          }
+        },
+        "median_severity": 0.5785523353212245,
+        "worst_severity": 26.318119586645544,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.023330798583008478,
+            "nmax": 0.03793366647826483,
+            "signed_charge_normalized": 0.02289065508097426,
+            "absolute_charge_normalized": 0.02289065508097426
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.011579084623632583,
+            "nmax": 0.03264697396881919,
+            "signed_charge_normalized": 0.01081040529227524,
+            "absolute_charge_normalized": 0.01081040529227524
+          },
+          "NaTa_t": {
+            "nrmse": 0.0636710227605543,
+            "nmax": 0.16068843908469216,
+            "signed_charge_normalized": 0.03622722304766977,
+            "absolute_charge_normalized": 0.03622722304766977
+          },
+          "NaTs2_t": {
+            "nrmse": 0.045494578954121456,
+            "nmax": 0.12831628938827425,
+            "signed_charge_normalized": 0.02395395989139934,
+            "absolute_charge_normalized": 0.02395395989139934
+          },
+          "Nap_Et2": {
+            "nrmse": 0.009767727044885221,
+            "nmax": 0.015446124791759067,
+            "signed_charge_normalized": 0.00689041648597635,
+            "absolute_charge_normalized": 0.00689041648597635
+          },
+          "Ih": {
+            "nrmse": 0.009696894613222215,
+            "nmax": 0.017918695231899182,
+            "signed_charge_normalized": 0.008520730963167612,
+            "absolute_charge_normalized": 0.008799790132713104
+          },
+          "Im": {
+            "nrmse": 0.009472513826442822,
+            "nmax": 0.03015116761353578,
+            "signed_charge_normalized": 0.00849614476752878,
+            "absolute_charge_normalized": 0.00849614476752878
+          },
+          "K_Pst": {
+            "nrmse": 0.015556248106518056,
+            "nmax": 0.030175930849862257,
+            "signed_charge_normalized": 0.01163634930700054,
+            "absolute_charge_normalized": 0.01163634930700054
+          },
+          "K_Tst": {
+            "nrmse": 0.26318119586645544,
+            "nmax": 0.5760501665961425,
+            "signed_charge_normalized": 0.1626802134243815,
+            "absolute_charge_normalized": 0.1626802134243815
+          },
+          "SK_E2": {
+            "nrmse": 0.029674015454652192,
+            "nmax": 0.0482854936214172,
+            "signed_charge_normalized": 0.025261274797139785,
+            "absolute_charge_normalized": 0.025261274797139785
+          },
+          "SKv3_1": {
+            "nrmse": 0.09015104448486744,
+            "nmax": 0.24281254511623204,
+            "signed_charge_normalized": 0.0871847123109401,
+            "absolute_charge_normalized": 0.0871847123109401
+          }
+        }
+      }
+    },
+    "joint_wshared_o1_s0_h0": {
+      "development": {
+        "passed": 54,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_rmse": 10,
+          "current_max": 1,
+          "timing": 8,
+          "timing_only": 8,
+          "charge": 3
+        },
+        "failed_channels": {
+          "SK_E2": 6,
+          "Ca_LVAst": 1,
+          "K_Pst": 4,
+          "Nap_Et2": 5,
+          "K_Tst": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5837301413218181
+          },
+          "ramps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6920092322816329
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6186822361679695
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.6990615736305423
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5967170933693852
+          },
+          "same_v_history": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.720200132754973
+          },
+          "slow_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 0.4551708698272705
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.7318003505325403
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7597347100575765
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 3.2866801050719996
+          },
+          "activation_boundary": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.6296334746931467
+          },
+          "seams": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.0754891534903435
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 2.883661869075301
+          },
+          "29": {
+            "passed": 16,
+            "total": 24,
+            "worst_severity": 3.2866801050719996
+          },
+          "43": {
+            "passed": 21,
+            "total": 24,
+            "worst_severity": 2.455616568415514
+          }
+        },
+        "median_severity": 0.44809638552921194,
+        "worst_severity": 3.2866801050719996,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.006988893774272167,
+            "nmax": 0.022669848173383373,
+            "signed_charge_normalized": 0.005354875441154009,
+            "absolute_charge_normalized": 0.005354875441154009
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.007450380709444559,
+            "nmax": 0.01800410072872471,
+            "signed_charge_normalized": 0.006168349627929072,
+            "absolute_charge_normalized": 0.006168349627929072
+          },
+          "NaTa_t": {
+            "nrmse": 0.006239049083997688,
+            "nmax": 0.027510189207573862,
+            "signed_charge_normalized": 0.006005479484976139,
+            "absolute_charge_normalized": 0.006005479484976139
+          },
+          "NaTs2_t": {
+            "nrmse": 0.00716940405939144,
+            "nmax": 0.022209810353274694,
+            "signed_charge_normalized": 0.004265841182874139,
+            "absolute_charge_normalized": 0.004265841182874139
+          },
+          "Nap_Et2": {
+            "nrmse": 0.007318003505325403,
+            "nmax": 0.014080074600895286,
+            "signed_charge_normalized": 0.005136561976041705,
+            "absolute_charge_normalized": 0.005136561976041705
+          },
+          "Ih": {
+            "nrmse": 0.008402189670147641,
+            "nmax": 0.017877595724177173,
+            "signed_charge_normalized": 0.0052030521740091115,
+            "absolute_charge_normalized": 0.007855126330047802
+          },
+          "Im": {
+            "nrmse": 0.005420644307219941,
+            "nmax": 0.02284317130561174,
+            "signed_charge_normalized": 0.0037598551738840615,
+            "absolute_charge_normalized": 0.0037598551738840615
+          },
+          "K_Pst": {
+            "nrmse": 0.010754891534903435,
+            "nmax": 0.02920110298181262,
+            "signed_charge_normalized": 0.009009939082699427,
+            "absolute_charge_normalized": 0.009009939082699427
+          },
+          "K_Tst": {
+            "nrmse": 0.016296334746931467,
+            "nmax": 0.020398408442337427,
+            "signed_charge_normalized": 0.016261713550813302,
+            "absolute_charge_normalized": 0.016261713550813302
+          },
+          "SK_E2": {
+            "nrmse": 0.03286680105072,
+            "nmax": 0.0504448854525063,
+            "signed_charge_normalized": 0.0328059775682586,
+            "absolute_charge_normalized": 0.0328059775682586
+          },
+          "SKv3_1": {
+            "nrmse": 0.00720200132754973,
+            "nmax": 0.009299213604350154,
+            "signed_charge_normalized": 0.0053954452192133346,
+            "absolute_charge_normalized": 0.0053954452192133346
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 62,
+        "total": 72,
+        "gate_passed": 71,
+        "failures": {
+          "timing": 7,
+          "timing_only": 6,
+          "gate": 1,
+          "current_max": 1,
+          "current_rmse": 3
+        },
+        "failed_channels": {
+          "Ca_LVAst": 3,
+          "K_Pst": 7,
+          "Ca_HVA": 1
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6001830101013184
+          },
+          "ramps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6988751825996272
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6688957101098316
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7676170019824659
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7855965192447243
+          },
+          "same_v_history": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.0355810324350994
+          },
+          "slow_recovery": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.4610767401496767
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6335814681959553
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6497363249460857
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.6726702054341634
+          },
+          "activation_boundary": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8925569651862072
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.4792836460589815
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 21,
+            "total": 24,
+            "worst_severity": 1.2682583459947652
+          },
+          "29": {
+            "passed": 20,
+            "total": 24,
+            "worst_severity": 1.4792836460589815
+          },
+          "43": {
+            "passed": 21,
+            "total": 24,
+            "worst_severity": 1.3335836039407283
+          }
+        },
+        "median_severity": 0.4571063897933791,
+        "worst_severity": 1.4792836460589815,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.0072647435190774205,
+            "nmax": 0.025759812838198958,
+            "signed_charge_normalized": 0.005760022050103566,
+            "absolute_charge_normalized": 0.005760022050103566
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.008925569651862073,
+            "nmax": 0.05126688368807986,
+            "signed_charge_normalized": 0.006479330313331691,
+            "absolute_charge_normalized": 0.006479330313331691
+          },
+          "NaTa_t": {
+            "nrmse": 0.007033330949194174,
+            "nmax": 0.025754394917002345,
+            "signed_charge_normalized": 0.003972647295587756,
+            "absolute_charge_normalized": 0.003972647295587756
+          },
+          "NaTs2_t": {
+            "nrmse": 0.007534456127114908,
+            "nmax": 0.022735510077965114,
+            "signed_charge_normalized": 0.004473198199148921,
+            "absolute_charge_normalized": 0.004473198199148921
+          },
+          "Nap_Et2": {
+            "nrmse": 0.006335814681959553,
+            "nmax": 0.02641316807979177,
+            "signed_charge_normalized": 0.004465660508748228,
+            "absolute_charge_normalized": 0.004465660508748228
+          },
+          "Ih": {
+            "nrmse": 0.007855965192447243,
+            "nmax": 0.018074397505351524,
+            "signed_charge_normalized": 0.007438594598662712,
+            "absolute_charge_normalized": 0.007644819958617092
+          },
+          "Im": {
+            "nrmse": 0.006465659186932215,
+            "nmax": 0.0348151119709633,
+            "signed_charge_normalized": 0.005265087474541975,
+            "absolute_charge_normalized": 0.005265087474541975
+          },
+          "K_Pst": {
+            "nrmse": 0.014792836460589815,
+            "nmax": 0.027251939534704322,
+            "signed_charge_normalized": 0.013819852237518956,
+            "absolute_charge_normalized": 0.013819852237518956
+          },
+          "K_Tst": {
+            "nrmse": 0.006988751825996272,
+            "nmax": 0.01869978841797288,
+            "signed_charge_normalized": 0.003446092251728499,
+            "absolute_charge_normalized": 0.003446092251728499
+          },
+          "SK_E2": {
+            "nrmse": 0.0036808600117797527,
+            "nmax": 0.006832189597966898,
+            "signed_charge_normalized": 0.0026637797895268734,
+            "absolute_charge_normalized": 0.0026637797895268734
+          },
+          "SKv3_1": {
+            "nrmse": 0.007213761977457989,
+            "nmax": 0.00929919871399063,
+            "signed_charge_normalized": 0.005563586244842092,
+            "absolute_charge_normalized": 0.005583974471414536
+          }
+        }
+      }
+    },
+    "joint_wshared_o1_s1_h0": {
+      "development": {
+        "passed": 56,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_rmse": 7,
+          "timing": 10,
+          "timing_only": 9,
+          "charge": 1
+        },
+        "failed_channels": {
+          "SK_E2": 3,
+          "Ca_LVAst": 1,
+          "Im": 2,
+          "SKv3_1": 2,
+          "K_Pst": 3,
+          "Nap_Et2": 4,
+          "NaTa_t": 1,
+          "Ca_HVA": 1
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9706263439761348
+          },
+          "ramps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6499654524053702
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6002601014775173
+          },
+          "rapid_voltage_train": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.35245003621916
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7618347803751628
+          },
+          "same_v_history": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 2.312788729335119
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.6953039846292539
+          },
+          "calcium_switch": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.8819814677364579
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5203797060154493
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 3.1127733133071
+          },
+          "activation_boundary": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.1565338432773
+          },
+          "seams": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.1500617724509163
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 20,
+            "total": 24,
+            "worst_severity": 1.1500617724509163
+          },
+          "29": {
+            "passed": 19,
+            "total": 24,
+            "worst_severity": 2.312788729335119
+          },
+          "43": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 3.1127733133071
+          }
+        },
+        "median_severity": 0.5214916486493059,
+        "worst_severity": 3.1127733133071,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.011500617724509164,
+            "nmax": 0.031212692056426183,
+            "signed_charge_normalized": 0.008585462713048284,
+            "absolute_charge_normalized": 0.008585462713048284
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.008482992224480285,
+            "nmax": 0.0347651992314627,
+            "signed_charge_normalized": 0.007224760980785211,
+            "absolute_charge_normalized": 0.007224760980785211
+          },
+          "NaTa_t": {
+            "nrmse": 0.011565338432773001,
+            "nmax": 0.041800041621287275,
+            "signed_charge_normalized": 0.011539697100077772,
+            "absolute_charge_normalized": 0.011539697100077772
+          },
+          "NaTs2_t": {
+            "nrmse": 0.0061754999931091905,
+            "nmax": 0.020622356237265983,
+            "signed_charge_normalized": 0.003616478630069479,
+            "absolute_charge_normalized": 0.003616478630069479
+          },
+          "Nap_Et2": {
+            "nrmse": 0.00881981467736458,
+            "nmax": 0.01774073305470633,
+            "signed_charge_normalized": 0.006181421179765933,
+            "absolute_charge_normalized": 0.006181421179765933
+          },
+          "Ih": {
+            "nrmse": 0.004978048953458854,
+            "nmax": 0.014703491858429904,
+            "signed_charge_normalized": 0.003571585144758496,
+            "absolute_charge_normalized": 0.003571585144758496
+          },
+          "Im": {
+            "nrmse": 0.008005000241367034,
+            "nmax": 0.02546605191886132,
+            "signed_charge_normalized": 0.006431936855541878,
+            "absolute_charge_normalized": 0.006431936855541878
+          },
+          "K_Pst": {
+            "nrmse": 0.008578999492987668,
+            "nmax": 0.03564607851200477,
+            "signed_charge_normalized": 0.007097486812143896,
+            "absolute_charge_normalized": 0.007097486812143896
+          },
+          "K_Tst": {
+            "nrmse": 0.009510751527216829,
+            "nmax": 0.01413770633350187,
+            "signed_charge_normalized": 0.00943420517888702,
+            "absolute_charge_normalized": 0.00943420517888702
+          },
+          "SK_E2": {
+            "nrmse": 0.031127733133071,
+            "nmax": 0.040154221007841766,
+            "signed_charge_normalized": 0.03106930409567152,
+            "absolute_charge_normalized": 0.03106930409567152
+          },
+          "SKv3_1": {
+            "nrmse": 0.02312788729335119,
+            "nmax": 0.032307632216402885,
+            "signed_charge_normalized": 0.016317479690599566,
+            "absolute_charge_normalized": 0.016317479690599566
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 53,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_rmse": 9,
+          "timing": 12,
+          "timing_only": 10,
+          "charge": 1
+        },
+        "failed_channels": {
+          "SK_E2": 1,
+          "NaTa_t": 2,
+          "Ca_LVAst": 3,
+          "Im": 2,
+          "SKv3_1": 3,
+          "Ih": 2,
+          "K_Pst": 9,
+          "Nap_Et2": 1,
+          "Ca_HVA": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.198670780837392
+          },
+          "ramps": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.6190115128164346
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.4927674524131424
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5221590259064963
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.4738497606679956
+          },
+          "same_v_history": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 2.3072724961687663
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6033222397698099
+          },
+          "calcium_switch": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.3784669710490784
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.4983670350549958
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.4672884941101074
+          },
+          "activation_boundary": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 3.4843534628042563
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.2272109405361036
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 19,
+            "total": 24,
+            "worst_severity": 1.2272109405361036
+          },
+          "29": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 3.4843534628042563
+          },
+          "43": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 1.4282963153018584
+          }
+        },
+        "median_severity": 0.4397412141164144,
+        "worst_severity": 3.4843534628042563,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.028189212854689234,
+            "nmax": 0.035357741878123995,
+            "signed_charge_normalized": 0.0276315775275087,
+            "absolute_charge_normalized": 0.0276315775275087
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.008155756720260051,
+            "nmax": 0.02904807090781512,
+            "signed_charge_normalized": 0.006746226165988401,
+            "absolute_charge_normalized": 0.006746226165988401
+          },
+          "NaTa_t": {
+            "nrmse": 0.011053657749007526,
+            "nmax": 0.03904381201013278,
+            "signed_charge_normalized": 0.006379534823633789,
+            "absolute_charge_normalized": 0.006379534823633789
+          },
+          "NaTs2_t": {
+            "nrmse": 0.006427672093454081,
+            "nmax": 0.02143710069882423,
+            "signed_charge_normalized": 0.0036769582862712096,
+            "absolute_charge_normalized": 0.0036769582862712096
+          },
+          "Nap_Et2": {
+            "nrmse": 0.013784669710490785,
+            "nmax": 0.02218520577135828,
+            "signed_charge_normalized": 0.009724186451870221,
+            "absolute_charge_normalized": 0.009724186451870221
+          },
+          "Ih": {
+            "nrmse": 0.0060332223976981,
+            "nmax": 0.008793527899503903,
+            "signed_charge_normalized": 0.005375023981117786,
+            "absolute_charge_normalized": 0.005367330267197321
+          },
+          "Im": {
+            "nrmse": 0.00799961369071912,
+            "nmax": 0.025393452629111014,
+            "signed_charge_normalized": 0.007058020431489009,
+            "absolute_charge_normalized": 0.007058020431489009
+          },
+          "K_Pst": {
+            "nrmse": 0.012272109405361036,
+            "nmax": 0.024966015462690578,
+            "signed_charge_normalized": 0.011254800780101505,
+            "absolute_charge_normalized": 0.011254800780101505
+          },
+          "K_Tst": {
+            "nrmse": 0.006190115128164347,
+            "nmax": 0.014801548242213209,
+            "signed_charge_normalized": 0.003846985068898202,
+            "absolute_charge_normalized": 0.003846985068898202
+          },
+          "SK_E2": {
+            "nrmse": 0.011986707808373919,
+            "nmax": 0.017009204503525947,
+            "signed_charge_normalized": 0.008674504327940908,
+            "absolute_charge_normalized": 0.008674504327940908
+          },
+          "SKv3_1": {
+            "nrmse": 0.034843534628042565,
+            "nmax": 0.03652415710744386,
+            "signed_charge_normalized": 0.03477321487117624,
+            "absolute_charge_normalized": 0.03477321487117624
+          }
+        }
+      }
+    },
+    "joint_wsplit_o0_s0_h1": {
+      "development": {
+        "passed": 43,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_max": 13,
+          "charge": 11,
+          "current_rmse": 18,
+          "timing": 15,
+          "timing_only": 11
+        },
+        "failed_channels": {
+          "NaTa_t": 6,
+          "NaTs2_t": 7,
+          "K_Tst": 6,
+          "SK_E2": 4,
+          "Ca_LVAst": 6,
+          "Ca_HVA": 3,
+          "Im": 3,
+          "SKv3_1": 4,
+          "K_Pst": 6,
+          "Nap_Et2": 7,
+          "Ih": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5958318710327148
+          },
+          "ramps": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 4.400133273926798
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.4617412885030111
+          },
+          "rapid_voltage_train": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 11.625988072359345
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6548007329305013
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 10.910785820018871
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.48555334409077966
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.7380044059209891
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8289635181427002
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 31.480395640795223
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 22.3593908863192
+          },
+          "seams": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.0959955713428722
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 22.3593908863192
+          },
+          "29": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 20.246400880606046
+          },
+          "43": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 31.480395640795223
+          }
+        },
+        "median_severity": 0.5302284519670721,
+        "worst_severity": 31.480395640795223,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.08221630322688375,
+            "nmax": 0.1288763729407974,
+            "signed_charge_normalized": 0.06352946564990977,
+            "absolute_charge_normalized": 0.06352946564990977
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.10268034357647572,
+            "nmax": 0.11115402655577776,
+            "signed_charge_normalized": 0.10196131593086129,
+            "absolute_charge_normalized": 0.10196131593086129
+          },
+          "NaTa_t": {
+            "nrmse": 0.223593908863192,
+            "nmax": 0.24369245679152207,
+            "signed_charge_normalized": 0.22308938794409122,
+            "absolute_charge_normalized": 0.22308938794409122
+          },
+          "NaTs2_t": {
+            "nrmse": 0.11394995606035126,
+            "nmax": 0.12331513859540907,
+            "signed_charge_normalized": 0.11372431080898134,
+            "absolute_charge_normalized": 0.11372431080898134
+          },
+          "Nap_Et2": {
+            "nrmse": 0.012280664590042872,
+            "nmax": 0.020259627190731683,
+            "signed_charge_normalized": 0.010797269503243506,
+            "absolute_charge_normalized": 0.010797269503243506
+          },
+          "Ih": {
+            "nrmse": 0.041371230608667146,
+            "nmax": 0.04310109931513709,
+            "signed_charge_normalized": 0.04112504975178596,
+            "absolute_charge_normalized": 0.04112504975178596
+          },
+          "Im": {
+            "nrmse": 0.008600687240869244,
+            "nmax": 0.024868946685556847,
+            "signed_charge_normalized": 0.007628362871501166,
+            "absolute_charge_normalized": 0.007628362871501166
+          },
+          "K_Pst": {
+            "nrmse": 0.014357958569306517,
+            "nmax": 0.026807906923296217,
+            "signed_charge_normalized": 0.013287873512074822,
+            "absolute_charge_normalized": 0.013287873512074822
+          },
+          "K_Tst": {
+            "nrmse": 0.08141094169506084,
+            "nmax": 0.12115382206195956,
+            "signed_charge_normalized": 0.08119934257397549,
+            "absolute_charge_normalized": 0.08119934257397549
+          },
+          "SK_E2": {
+            "nrmse": 0.3148039564079522,
+            "nmax": 0.34517551569415406,
+            "signed_charge_normalized": 0.3142137934177233,
+            "absolute_charge_normalized": 0.3142137934177233
+          },
+          "SKv3_1": {
+            "nrmse": 0.10910785820018871,
+            "nmax": 0.13602573559860617,
+            "signed_charge_normalized": 0.09958785473952624,
+            "absolute_charge_normalized": 0.09958785473952624
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 46,
+        "total": 72,
+        "gate_passed": 70,
+        "failures": {
+          "charge": 16,
+          "timing": 17,
+          "current_max": 14,
+          "current_rmse": 19,
+          "gate": 2,
+          "timing_only": 7
+        },
+        "failed_channels": {
+          "NaTa_t": 6,
+          "K_Tst": 6,
+          "NaTs2_t": 1,
+          "SK_E2": 3,
+          "Ca_HVA": 12,
+          "SKv3_1": 9,
+          "Ca_LVAst": 4,
+          "Im": 3,
+          "K_Pst": 8
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6562400898388834
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 6.047068837554497
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.2070664819590393
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6954452102106258
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.630742119792971
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 10.693290657752797
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.33744772275288903
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6631201703348343
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7063368956247966
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.8125921090443929
+          },
+          "activation_boundary": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 15.18278674558651
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.7994902548874157
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 6.303786372066315
+          },
+          "29": {
+            "passed": 16,
+            "total": 24,
+            "worst_severity": 12.42107700130588
+          },
+          "43": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 15.18278674558651
+          }
+        },
+        "median_severity": 0.5361398061116537,
+        "worst_severity": 15.18278674558651,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.1518278674558651,
+            "nmax": 0.19223863891580525,
+            "signed_charge_normalized": 0.14978386637991314,
+            "absolute_charge_normalized": 0.14978386637991314
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.015166049233670093,
+            "nmax": 0.030011845916380137,
+            "signed_charge_normalized": 0.013196971726287778,
+            "absolute_charge_normalized": 0.013196971726287778
+          },
+          "NaTa_t": {
+            "nrmse": 0.018386875792326413,
+            "nmax": 0.0461965756880987,
+            "signed_charge_normalized": 0.01083950881434069,
+            "absolute_charge_normalized": 0.01083950881434069
+          },
+          "NaTs2_t": {
+            "nrmse": 0.011221043532339265,
+            "nmax": 0.03222959044959438,
+            "signed_charge_normalized": 0.005883483347986549,
+            "absolute_charge_normalized": 0.005883483347986549
+          },
+          "Nap_Et2": {
+            "nrmse": 0.006631201703348343,
+            "nmax": 0.014401448800018108,
+            "signed_charge_normalized": 0.004686738464807903,
+            "absolute_charge_normalized": 0.004686738464807903
+          },
+          "Ih": {
+            "nrmse": 0.0038145360598991714,
+            "nmax": 0.00905287111662321,
+            "signed_charge_normalized": 0.003328936224006368,
+            "absolute_charge_normalized": 0.003328936224006368
+          },
+          "Im": {
+            "nrmse": 0.008442397934764851,
+            "nmax": 0.03477226051053129,
+            "signed_charge_normalized": 0.00696954811022479,
+            "absolute_charge_normalized": 0.00696954811022479
+          },
+          "K_Pst": {
+            "nrmse": 0.014763409643183841,
+            "nmax": 0.030127140105867724,
+            "signed_charge_normalized": 0.01381596288699899,
+            "absolute_charge_normalized": 0.01381596288699899
+          },
+          "K_Tst": {
+            "nrmse": 0.06047068837554497,
+            "nmax": 0.1225997700714994,
+            "signed_charge_normalized": 0.041602404204126725,
+            "absolute_charge_normalized": 0.041602404204126725
+          },
+          "SK_E2": {
+            "nrmse": 0.027994902548874157,
+            "nmax": 0.04555335821542809,
+            "signed_charge_normalized": 0.023831812097338954,
+            "absolute_charge_normalized": 0.023831812097338954
+          },
+          "SKv3_1": {
+            "nrmse": 0.10693290657752798,
+            "nmax": 0.1360256574307664,
+            "signed_charge_normalized": 0.09328814414381062,
+            "absolute_charge_normalized": 0.09328814414381062
+          }
+        }
+      }
+    },
+    "joint_wsplit_o0_s1_h1": {
+      "development": {
+        "passed": 41,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_rmse": 24,
+          "timing": 15,
+          "timing_only": 7,
+          "current_max": 12,
+          "charge": 13
+        },
+        "failed_channels": {
+          "NaTa_t": 7,
+          "Im": 4,
+          "NaTs2_t": 6,
+          "Ca_LVAst": 9,
+          "SK_E2": 6,
+          "SKv3_1": 9,
+          "Ca_HVA": 7,
+          "K_Pst": 7,
+          "Nap_Et2": 3,
+          "Ih": 3,
+          "K_Tst": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7751603921254476
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.2951950791691007
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.43733517328898114
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 21.85596480963082
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7334212462107341
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 32.335508151243374
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.5727830522175827
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5757504083114848
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5344609419504802
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 58.92808474334532
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 15.905579513821236
+          },
+          "seams": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.4639706811314324
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 21.66075926840501
+          },
+          "29": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 32.335508151243374
+          },
+          "43": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 58.92808474334532
+          }
+        },
+        "median_severity": 0.6054665190592161,
+        "worst_severity": 58.92808474334532,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.07638217105053532,
+            "nmax": 0.11982232480850248,
+            "signed_charge_normalized": 0.059025757244955575,
+            "absolute_charge_normalized": 0.059025757244955575
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.055742920972983674,
+            "nmax": 0.060480246874642415,
+            "signed_charge_normalized": 0.055343337264394554,
+            "absolute_charge_normalized": 0.055343337264394554
+          },
+          "NaTa_t": {
+            "nrmse": 0.15905579513821236,
+            "nmax": 0.17274098644181884,
+            "signed_charge_normalized": 0.15872129402338897,
+            "absolute_charge_normalized": 0.15872129402338897
+          },
+          "NaTs2_t": {
+            "nrmse": 0.09689938624843056,
+            "nmax": 0.10451529217228805,
+            "signed_charge_normalized": 0.09671936828224206,
+            "absolute_charge_normalized": 0.09671936828224206
+          },
+          "Nap_Et2": {
+            "nrmse": 0.008108148495919261,
+            "nmax": 0.013342923465180297,
+            "signed_charge_normalized": 0.0071348273770577885,
+            "absolute_charge_normalized": 0.0071348273770577885
+          },
+          "Ih": {
+            "nrmse": 0.049534958099706795,
+            "nmax": 0.05189304735134425,
+            "signed_charge_normalized": 0.0492364921795317,
+            "absolute_charge_normalized": 0.0492364921795317
+          },
+          "Im": {
+            "nrmse": 0.011232187499759723,
+            "nmax": 0.02343517769463579,
+            "signed_charge_normalized": 0.009721297197277604,
+            "absolute_charge_normalized": 0.009721297197277604
+          },
+          "K_Pst": {
+            "nrmse": 0.01112052669667199,
+            "nmax": 0.03436497599586086,
+            "signed_charge_normalized": 0.009642409299707264,
+            "absolute_charge_normalized": 0.009642409299707264
+          },
+          "K_Tst": {
+            "nrmse": 0.01349802292141347,
+            "nmax": 0.03303382081904451,
+            "signed_charge_normalized": 0.01345349442305841,
+            "absolute_charge_normalized": 0.01345349442305841
+          },
+          "SK_E2": {
+            "nrmse": 0.5892808474334532,
+            "nmax": 0.648903509989435,
+            "signed_charge_normalized": 0.5881758007247024,
+            "absolute_charge_normalized": 0.5881758007247024
+          },
+          "SKv3_1": {
+            "nrmse": 0.32335508151243375,
+            "nmax": 0.3954557108905786,
+            "signed_charge_normalized": 0.3028400472248463,
+            "absolute_charge_normalized": 0.3028400472248463
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 41,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "timing": 16,
+          "current_max": 12,
+          "current_rmse": 23,
+          "charge": 11,
+          "timing_only": 8
+        },
+        "failed_channels": {
+          "NaTa_t": 6,
+          "K_Tst": 6,
+          "SK_E2": 3,
+          "Ca_LVAst": 6,
+          "Ca_HVA": 17,
+          "Im": 5,
+          "SKv3_1": 9,
+          "K_Pst": 13
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7897694905598959
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.3257092303677562
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 2.29281453838071
+          },
+          "rapid_voltage_train": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.0009081154909072
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7030689782872587
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 31.540366782256633
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.4679242769877116
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.570736328760783
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.6157974402109783
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6640990575154623
+          },
+          "activation_boundary": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 21.834024693002434
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 5.34607051717833
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 21.218170638051376
+          },
+          "29": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 31.540366782256633
+          },
+          "43": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 18.08740540209071
+          }
+        },
+        "median_severity": 0.5709339113106793,
+        "worst_severity": 31.540366782256633,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.12651247030437068,
+            "nmax": 0.16110605457616406,
+            "signed_charge_normalized": 0.12489796666685127,
+            "absolute_charge_normalized": 0.12489796666685127
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.018052165523817467,
+            "nmax": 0.037882930553585395,
+            "signed_charge_normalized": 0.016847788058264784,
+            "absolute_charge_normalized": 0.016847788058264784
+          },
+          "NaTa_t": {
+            "nrmse": 0.01168970778240165,
+            "nmax": 0.041213963290673415,
+            "signed_charge_normalized": 0.006612254202811977,
+            "absolute_charge_normalized": 0.006612254202811977
+          },
+          "NaTs2_t": {
+            "nrmse": 0.008756991908479205,
+            "nmax": 0.026014908360459946,
+            "signed_charge_normalized": 0.004559701835084715,
+            "absolute_charge_normalized": 0.004559701835084715
+          },
+          "Nap_Et2": {
+            "nrmse": 0.006949857159904562,
+            "nmax": 0.019533060453564465,
+            "signed_charge_normalized": 0.004354831009821636,
+            "absolute_charge_normalized": 0.004354831009821636
+          },
+          "Ih": {
+            "nrmse": 0.009891242999866257,
+            "nmax": 0.02065528155694221,
+            "signed_charge_normalized": 0.009107891885215961,
+            "absolute_charge_normalized": 0.009107891885215961
+          },
+          "Im": {
+            "nrmse": 0.011099384152375198,
+            "nmax": 0.03683539600988526,
+            "signed_charge_normalized": 0.009023656935402899,
+            "absolute_charge_normalized": 0.009023656935402899
+          },
+          "K_Pst": {
+            "nrmse": 0.015427327030645258,
+            "nmax": 0.026998664663439392,
+            "signed_charge_normalized": 0.01493563487498028,
+            "absolute_charge_normalized": 0.01493563487498028
+          },
+          "K_Tst": {
+            "nrmse": 0.023257092303677562,
+            "nmax": 0.05626165269065895,
+            "signed_charge_normalized": 0.013022049996843211,
+            "absolute_charge_normalized": 0.013022049996843211
+          },
+          "SK_E2": {
+            "nrmse": 0.0534607051717833,
+            "nmax": 0.08699144739898737,
+            "signed_charge_normalized": 0.04551059136775042,
+            "absolute_charge_normalized": 0.04551059136775042
+          },
+          "SKv3_1": {
+            "nrmse": 0.31540366782256635,
+            "nmax": 0.39545568064854597,
+            "signed_charge_normalized": 0.2849725533382484,
+            "absolute_charge_normalized": 0.2849725533382484
+          }
+        }
+      }
+    },
+    "joint_wsplit_o1_s0_h1": {
+      "development": {
+        "passed": 53,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_max": 2,
+          "current_rmse": 9,
+          "timing": 10,
+          "timing_only": 9,
+          "charge": 2
+        },
+        "failed_channels": {
+          "Ca_LVAst": 2,
+          "SK_E2": 6,
+          "Ca_HVA": 4,
+          "K_Pst": 3,
+          "Nap_Et2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7325094611853555
+          },
+          "ramps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6119882926054347
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5660189210176535
+          },
+          "rapid_voltage_train": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 2.248932994491625
+          },
+          "paired_recovery": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.1857580453592897
+          },
+          "same_v_history": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.8835692896392326
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.5180472832745189
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.7225442492110118
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.718142643630967
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 4.176860273651747
+          },
+          "activation_boundary": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6742547825994829
+          },
+          "seams": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.1365489966785274
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 4.176860273651747
+          },
+          "29": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 2.819828377901182
+          },
+          "43": {
+            "passed": 20,
+            "total": 24,
+            "worst_severity": 1.7957885148348558
+          }
+        },
+        "median_severity": 0.5423714634147963,
+        "worst_severity": 4.176860273651747,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.018835692896392326,
+            "nmax": 0.029709028878011273,
+            "signed_charge_normalized": 0.014537086601046452,
+            "absolute_charge_normalized": 0.014537086601046452
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.013798538482778991,
+            "nmax": 0.0380099246880774,
+            "signed_charge_normalized": 0.010711842060044515,
+            "absolute_charge_normalized": 0.010711842060044515
+          },
+          "NaTa_t": {
+            "nrmse": 0.006722914119905853,
+            "nmax": 0.03203951549950694,
+            "signed_charge_normalized": 0.005905152870783621,
+            "absolute_charge_normalized": 0.005905152870783621
+          },
+          "NaTs2_t": {
+            "nrmse": 0.004652036249778423,
+            "nmax": 0.014259062488285613,
+            "signed_charge_normalized": 0.0026524027124962173,
+            "absolute_charge_normalized": 0.0026524027124962173
+          },
+          "Nap_Et2": {
+            "nrmse": 0.007225442492110119,
+            "nmax": 0.01323381470401297,
+            "signed_charge_normalized": 0.005066204928575175,
+            "absolute_charge_normalized": 0.005066204928575175
+          },
+          "Ih": {
+            "nrmse": 0.00395670984175271,
+            "nmax": 0.015194830364771254,
+            "signed_charge_normalized": 0.0015638612068733814,
+            "absolute_charge_normalized": 0.0028169720270311577
+          },
+          "Im": {
+            "nrmse": 0.005207114563700783,
+            "nmax": 0.025063830457995373,
+            "signed_charge_normalized": 0.0037578428026798444,
+            "absolute_charge_normalized": 0.0037578428026798444
+          },
+          "K_Pst": {
+            "nrmse": 0.00947583471681985,
+            "nmax": 0.03147530455818927,
+            "signed_charge_normalized": 0.007939018083410613,
+            "absolute_charge_normalized": 0.007939018083410613
+          },
+          "K_Tst": {
+            "nrmse": 0.005378568608351978,
+            "nmax": 0.017536611234005243,
+            "signed_charge_normalized": 0.0023973412996671477,
+            "absolute_charge_normalized": 0.0023973412996671477
+          },
+          "SK_E2": {
+            "nrmse": 0.041768602736517474,
+            "nmax": 0.06677077906264028,
+            "signed_charge_normalized": 0.041690267538605656,
+            "absolute_charge_normalized": 0.041690267538605656
+          },
+          "SKv3_1": {
+            "nrmse": 0.008976130645465815,
+            "nmax": 0.014209239371004346,
+            "signed_charge_normalized": 0.006159928090676955,
+            "absolute_charge_normalized": 0.006159928090676955
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 58,
+        "total": 72,
+        "gate_passed": 71,
+        "failures": {
+          "timing": 8,
+          "timing_only": 7,
+          "gate": 1,
+          "current_max": 3,
+          "charge": 3,
+          "current_rmse": 6
+        },
+        "failed_channels": {
+          "Ca_LVAst": 8,
+          "K_Pst": 8,
+          "Ca_HVA": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7656693458557129
+          },
+          "ramps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8464849051225835
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.4801255925382545
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5233434375908574
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8172736015362333
+          },
+          "same_v_history": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.0573903719584148
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.4529112819261339
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7175098873637278
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5499343077341716
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.7572869459788005
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 8.353824864969427
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.3060608370280602
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 8.353824864969427
+          },
+          "29": {
+            "passed": 20,
+            "total": 24,
+            "worst_severity": 7.75311275288445
+          },
+          "43": {
+            "passed": 20,
+            "total": 24,
+            "worst_severity": 6.452845832051655
+          }
+        },
+        "median_severity": 0.4375882879345582,
+        "worst_severity": 8.353824864969427,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.08353824864969428,
+            "nmax": 0.10662296348345661,
+            "signed_charge_normalized": 0.08172122243402657,
+            "absolute_charge_normalized": 0.08172122243402657
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.012672753017127655,
+            "nmax": 0.04452015883901734,
+            "signed_charge_normalized": 0.010343986166167975,
+            "absolute_charge_normalized": 0.010343986166167975
+          },
+          "NaTa_t": {
+            "nrmse": 0.007509185338766504,
+            "nmax": 0.02950288991902325,
+            "signed_charge_normalized": 0.004280310368237371,
+            "absolute_charge_normalized": 0.004280310368237371
+          },
+          "NaTs2_t": {
+            "nrmse": 0.004898711188507253,
+            "nmax": 0.014634102726848794,
+            "signed_charge_normalized": 0.0027863986903352675,
+            "absolute_charge_normalized": 0.0027863986903352675
+          },
+          "Nap_Et2": {
+            "nrmse": 0.007175098873637278,
+            "nmax": 0.020031176189301142,
+            "signed_charge_normalized": 0.005058889316249736,
+            "absolute_charge_normalized": 0.005058889316249736
+          },
+          "Ih": {
+            "nrmse": 0.005233434375908575,
+            "nmax": 0.013906339070672263,
+            "signed_charge_normalized": 0.003066765585477722,
+            "absolute_charge_normalized": 0.004631377643421888
+          },
+          "Im": {
+            "nrmse": 0.004957601265380455,
+            "nmax": 0.022970208386221165,
+            "signed_charge_normalized": 0.0037623614197327252,
+            "absolute_charge_normalized": 0.0037623614197327252
+          },
+          "K_Pst": {
+            "nrmse": 0.013060608370280603,
+            "nmax": 0.025279235772032595,
+            "signed_charge_normalized": 0.012187967633541885,
+            "absolute_charge_normalized": 0.012187967633541885
+          },
+          "K_Tst": {
+            "nrmse": 0.008464849051225834,
+            "nmax": 0.020551237452342976,
+            "signed_charge_normalized": 0.002955367855319461,
+            "absolute_charge_normalized": 0.002955367855319461
+          },
+          "SK_E2": {
+            "nrmse": 0.005979251294599106,
+            "nmax": 0.00848459702605711,
+            "signed_charge_normalized": 0.004326910053256101,
+            "absolute_charge_normalized": 0.004326910053256101
+          },
+          "SKv3_1": {
+            "nrmse": 0.007342758225777735,
+            "nmax": 0.009484772767676754,
+            "signed_charge_normalized": 0.005930980642832806,
+            "absolute_charge_normalized": 0.005930980642832806
+          }
+        }
+      }
+    },
+    "joint_wsplit_o1_s1_h1": {
+      "development": {
+        "passed": 53,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_rmse": 9,
+          "timing": 11,
+          "timing_only": 10,
+          "charge": 2
+        },
+        "failed_channels": {
+          "SK_E2": 5,
+          "Ca_LVAst": 5,
+          "Ca_HVA": 1,
+          "SKv3_1": 1,
+          "Nap_Et2": 7,
+          "K_Pst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8535145110417145
+          },
+          "ramps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6529426707533992
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.634038187039227
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.5239211821541965
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.632568137895388
+          },
+          "same_v_history": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.9337809824783236
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.6636488783447814
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6356014037986379
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6086499375758532
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.8135589852878047
+          },
+          "activation_boundary": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9877112155604095
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9144275234968059
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 2.8135589852878047
+          },
+          "29": {
+            "passed": 19,
+            "total": 24,
+            "worst_severity": 1.409671573064954
+          },
+          "43": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 2.3891818513708682
+          }
+        },
+        "median_severity": 0.5883821757829888,
+        "worst_severity": 2.8135589852878047,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.019337809824783236,
+            "nmax": 0.030546040623662077,
+            "signed_charge_normalized": 0.01492460436225933,
+            "absolute_charge_normalized": 0.01492460436225933
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.012042323306053515,
+            "nmax": 0.03318244391723907,
+            "signed_charge_normalized": 0.009931411218475808,
+            "absolute_charge_normalized": 0.009931411218475808
+          },
+          "NaTa_t": {
+            "nrmse": 0.00913339620764881,
+            "nmax": 0.031399169358707305,
+            "signed_charge_normalized": 0.009121184490565402,
+            "absolute_charge_normalized": 0.009121184490565402
+          },
+          "NaTs2_t": {
+            "nrmse": 0.008868873179276392,
+            "nmax": 0.014131955537445994,
+            "signed_charge_normalized": 0.008823894742364568,
+            "absolute_charge_normalized": 0.008823894742364568
+          },
+          "Nap_Et2": {
+            "nrmse": 0.011553645370366964,
+            "nmax": 0.01706009649396181,
+            "signed_charge_normalized": 0.008940974916495113,
+            "absolute_charge_normalized": 0.008940974916495113
+          },
+          "Ih": {
+            "nrmse": 0.0069351663392635855,
+            "nmax": 0.018351298117678907,
+            "signed_charge_normalized": 0.0055249832840308325,
+            "absolute_charge_normalized": 0.006529352739705285
+          },
+          "Im": {
+            "nrmse": 0.005545817340490958,
+            "nmax": 0.023532676245409712,
+            "signed_charge_normalized": 0.00364830741589758,
+            "absolute_charge_normalized": 0.00364830741589758
+          },
+          "K_Pst": {
+            "nrmse": 0.009877112155604096,
+            "nmax": 0.03269583151248126,
+            "signed_charge_normalized": 0.009289858227488937,
+            "absolute_charge_normalized": 0.009289858227488937
+          },
+          "K_Tst": {
+            "nrmse": 0.0051746608024103476,
+            "nmax": 0.010095211922831615,
+            "signed_charge_normalized": 0.00516991818234876,
+            "absolute_charge_normalized": 0.00516991818234876
+          },
+          "SK_E2": {
+            "nrmse": 0.02813558985287805,
+            "nmax": 0.04524491386459158,
+            "signed_charge_normalized": 0.02808388251772165,
+            "absolute_charge_normalized": 0.02808388251772165
+          },
+          "SKv3_1": {
+            "nrmse": 0.010115046686510806,
+            "nmax": 0.016013666508511794,
+            "signed_charge_normalized": 0.0070441529687361405,
+            "absolute_charge_normalized": 0.0070441529687361405
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 52,
+        "total": 72,
+        "gate_passed": 72,
+        "failures": {
+          "current_rmse": 7,
+          "timing": 13,
+          "timing_only": 13,
+          "current_max": 3,
+          "charge": 3
+        },
+        "failed_channels": {
+          "SK_E2": 1,
+          "NaTa_t": 2,
+          "Ih": 1,
+          "Im": 2,
+          "Ca_LVAst": 5,
+          "K_Pst": 7,
+          "Ca_HVA": 4
+        },
+        "families": {
+          "steps": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.3926815131937056
+          },
+          "ramps": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.5136173869608116
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7012653392323417
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6872238297177325
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5871851601554112
+          },
+          "same_v_history": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 0.9915038051107041
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.7488531755709724
+          },
+          "calcium_switch": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.645269821298614
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.4058718681335449
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.46265721321105957
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 10.732828481273277
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.326265351305026
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 10.732828481273277
+          },
+          "29": {
+            "passed": 16,
+            "total": 24,
+            "worst_severity": 5.886186250817286
+          },
+          "43": {
+            "passed": 19,
+            "total": 24,
+            "worst_severity": 5.939881133450387
+          }
+        },
+        "median_severity": 0.4310341562343159,
+        "worst_severity": 10.732828481273277,
+        "channel_worst": {
+          "Ca_HVA": {
+            "nrmse": 0.10732828481273277,
+            "nmax": 0.1398008383394735,
+            "signed_charge_normalized": 0.10504466524739395,
+            "absolute_charge_normalized": 0.10504466524739395
+          },
+          "Ca_LVAst": {
+            "nrmse": 0.01326265351305026,
+            "nmax": 0.036594878304237195,
+            "signed_charge_normalized": 0.01263307347861979,
+            "absolute_charge_normalized": 0.01263307347861979
+          },
+          "NaTa_t": {
+            "nrmse": 0.007556571859332891,
+            "nmax": 0.029299722426726828,
+            "signed_charge_normalized": 0.004090608383822905,
+            "absolute_charge_normalized": 0.004090608383822905
+          },
+          "NaTs2_t": {
+            "nrmse": 0.004542775758472878,
+            "nmax": 0.015534121671391976,
+            "signed_charge_normalized": 0.0036242146005227285,
+            "absolute_charge_normalized": 0.0036242146005227285
+          },
+          "Nap_Et2": {
+            "nrmse": 0.009074937550680885,
+            "nmax": 0.01519981222364889,
+            "signed_charge_normalized": 0.007107571402235856,
+            "absolute_charge_normalized": 0.007107571402235856
+          },
+          "Ih": {
+            "nrmse": 0.0074885317557097245,
+            "nmax": 0.011792194657502445,
+            "signed_charge_normalized": 0.006674942382153597,
+            "absolute_charge_normalized": 0.006702410597782862
+          },
+          "Im": {
+            "nrmse": 0.004717351624249711,
+            "nmax": 0.02112125902170417,
+            "signed_charge_normalized": 0.004143805294781739,
+            "absolute_charge_normalized": 0.004143805294781739
+          },
+          "K_Pst": {
+            "nrmse": 0.011356379152328688,
+            "nmax": 0.020812376567331488,
+            "signed_charge_normalized": 0.010561910564759119,
+            "absolute_charge_normalized": 0.010561910564759119
+          },
+          "K_Tst": {
+            "nrmse": 0.0022669945628975745,
+            "nmax": 0.012209639397553746,
+            "signed_charge_normalized": 0.0017607342919923655,
+            "absolute_charge_normalized": 0.0017607342919923655
+          },
+          "SK_E2": {
+            "nrmse": 0.013926815131937057,
+            "nmax": 0.019762231084046837,
+            "signed_charge_normalized": 0.01007842832291932,
+            "absolute_charge_normalized": 0.01007842832291932
+          },
+          "SKv3_1": {
+            "nrmse": 0.008014628845950503,
+            "nmax": 0.01033153403141177,
+            "signed_charge_normalized": 0.006531297130988239,
+            "absolute_charge_normalized": 0.006531297130988239
+          }
+        }
+      }
+    }
+  },
+  "best_development_arm": "joint_wshared_o1_s1_h0",
+  "residual_cases": [
+    {
+      "family": "rapid_voltage_train",
+      "case": 0,
+      "seed": 43,
+      "channels": [
+        {
+          "channel": "SK_E2",
+          "nrmse": 0.013524500362191601,
+          "nmax": 0.040154221007841766,
+          "signed_charge": 0.0071276607120036315,
+          "absolute_charge": 0.0071276607120036315,
+          "scale": 1.0000000116860974e-07,
+          "event": {
+            "status": "not_evaluable",
+            "reason": "insufficient or boundary transient"
+          },
+          "timing_failed": false
+        }
+      ]
+    },
+    {
+      "family": "same_v_history",
+      "case": 0,
+      "seed": 17,
+      "channels": [
+        {
+          "channel": "Ca_LVAst",
+          "nrmse": 0.0009881640758594085,
+          "nmax": 0.02022888658576346,
+          "signed_charge": 0.00011794103803858617,
+          "absolute_charge": 0.00011794103803858617,
+          "scale": 9.73940495896386e-06,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.5
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "same_v_history",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Im",
+          "nrmse": 0.0004803923624224508,
+          "nmax": 0.0036946976024757223,
+          "signed_charge": 0.00017643182530693288,
+          "absolute_charge": 0.00017643182530693288,
+          "scale": 0.0007982717361301184,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.4
+          },
+          "timing_failed": true
+        },
+        {
+          "channel": "SKv3_1",
+          "nrmse": 0.020436044758288367,
+          "nmax": 0.032307632216402885,
+          "signed_charge": 0.012053238387494601,
+          "absolute_charge": 0.012053238387494601,
+          "scale": 1.0828311133082025e-05,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.1
+          },
+          "timing_failed": false
+        }
+      ]
+    },
+    {
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "SKv3_1",
+          "nrmse": 0.02312788729335119,
+          "nmax": 0.029727339845453435,
+          "signed_charge": 0.016317479690599566,
+          "absolute_charge": 0.016317479690599566,
+          "scale": 5.202305146667641e-07,
+          "event": {
+            "status": "not_evaluable",
+            "reason": "insufficient or boundary transient"
+          },
+          "timing_failed": false
+        }
+      ]
+    },
+    {
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 43,
+      "channels": [
+        {
+          "channel": "Im",
+          "nrmse": 0.008005000241367034,
+          "nmax": 0.012347141891128096,
+          "signed_charge": 0.006431936855541878,
+          "absolute_charge": 0.006431936855541878,
+          "scale": 1.1929751963180024e-05,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.6000000000000001,
+            "offset_error_ms": 0.0
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "slow_recovery",
+      "case": 0,
+      "seed": 17,
+      "channels": [
+        {
+          "channel": "K_Pst",
+          "nrmse": 0.0002183210287104488,
+          "nmax": 0.0017881544402132631,
+          "signed_charge": 2.1911401687308108e-05,
+          "absolute_charge": 2.1911401687308108e-05,
+          "scale": 4.2869178287219256e-05,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 1.0
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "slow_recovery",
+      "case": 1,
+      "seed": 17,
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "nrmse": 0.00017959196889469342,
+          "nmax": 0.001955599203552458,
+          "signed_charge": 7.715005018189978e-05,
+          "absolute_charge": 7.715005018189978e-05,
+          "scale": 0.00032277629361487925,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 2.2
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "slow_recovery",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "K_Pst",
+          "nrmse": 0.00022790548947382387,
+          "nmax": 0.0037138077745976703,
+          "signed_charge": 1.7322485892217203e-05,
+          "absolute_charge": 1.7322485892217203e-05,
+          "scale": 4.2869178287219256e-05,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.9
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "slow_recovery",
+      "case": 1,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "nrmse": 0.00011308605015121518,
+          "nmax": 0.0009854565378596503,
+          "signed_charge": 4.859576878329652e-05,
+          "absolute_charge": 4.859576878329652e-05,
+          "scale": 0.00032277629361487925,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 1.5
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "slow_recovery",
+      "case": 0,
+      "seed": 43,
+      "channels": [
+        {
+          "channel": "K_Pst",
+          "nrmse": 0.0002550940971956032,
+          "nmax": 0.001454653337732907,
+          "signed_charge": 5.6542527537661404e-05,
+          "absolute_charge": 5.6542527537661404e-05,
+          "scale": 4.2869178287219256e-05,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 1.6
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "slow_recovery",
+      "case": 1,
+      "seed": 43,
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "nrmse": 0.0009464217995006273,
+          "nmax": 0.0026957363223265754,
+          "signed_charge": 0.00040709082327386903,
+          "absolute_charge": 0.00040709082327386903,
+          "scale": 0.00032277629361487925,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 11.200000000000001
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "calcium_switch",
+      "case": 0,
+      "seed": 43,
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "nrmse": 0.007720241722809748,
+          "nmax": 0.01648391735672045,
+          "signed_charge": 0.005431231749109184,
+          "absolute_charge": 0.005431231749109184,
+          "scale": 0.00011039462697226554,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 1.2000000000000002,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.0
+          },
+          "timing_failed": true
+        }
+      ]
+    },
+    {
+      "family": "reversal",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "SK_E2",
+          "nrmse": 0.015577210973998118,
+          "nmax": 0.015670962705835144,
+          "signed_charge": 0.015548408932325897,
+          "absolute_charge": 0.015548408932325897,
+          "scale": 1.0000000116860974e-07,
+          "event": {
+            "status": "not_evaluable",
+            "reason": "insufficient or boundary transient"
+          },
+          "timing_failed": false
+        }
+      ]
+    },
+    {
+      "family": "reversal",
+      "case": 0,
+      "seed": 43,
+      "channels": [
+        {
+          "channel": "SK_E2",
+          "nrmse": 0.031127733133071,
+          "nmax": 0.03131776082331842,
+          "signed_charge": 0.03106930409567152,
+          "absolute_charge": 0.03106930409567152,
+          "scale": 1.0000000116860974e-07,
+          "event": {
+            "status": "not_evaluable",
+            "reason": "insufficient or boundary transient"
+          },
+          "timing_failed": false
+        }
+      ]
+    },
+    {
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 43,
+      "channels": [
+        {
+          "channel": "NaTa_t",
+          "nrmse": 0.011565338432773001,
+          "nmax": 0.012578062150775943,
+          "signed_charge": 0.011539697100077772,
+          "absolute_charge": 0.011539697100077772,
+          "scale": 1.086277592321494e-07,
+          "event": {
+            "status": "not_evaluable",
+            "reason": "insufficient or boundary transient"
+          },
+          "timing_failed": false
+        }
+      ]
+    },
+    {
+      "family": "seams",
+      "case": 0,
+      "seed": 17,
+      "channels": [
+        {
+          "channel": "Ca_HVA",
+          "nrmse": 0.011500617724509164,
+          "nmax": 0.024656945239996064,
+          "signed_charge": 0.008585462713048284,
+          "absolute_charge": 0.008585462713048284,
+          "scale": 0.0012613027356564999,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.1
+          },
+          "timing_failed": false
+        }
+      ]
+    }
+  ],
+  "timing_failure_events": {
+    "offset_error_ms": 8,
+    "onset_error_ms": 1,
+    "peak_error_ms": 1
+  },
+  "prior_best": {
+    "passed": 43,
+    "total": 72,
+    "gate_passed": 72,
+    "failures": {
+      "current_max": 17,
+      "charge": 14,
+      "current_rmse": 20,
+      "timing": 14,
+      "timing_only": 9
+    },
+    "failed_channels": {
+      "NaTa_t": 9,
+      "NaTs2_t": 9,
+      "K_Tst": 6,
+      "Ca_LVAst": 11,
+      "Ih": 6,
+      "SK_E2": 6,
+      "Im": 3,
+      "SKv3_1": 3,
+      "Ca_HVA": 2,
+      "K_Pst": 7,
+      "Nap_Et2": 6
+    },
+    "families": {
+      "steps": {
+        "passed": 6,
+        "total": 6,
+        "worst_severity": 0.5625585714975994
+      },
+      "ramps": {
+        "passed": 0,
+        "total": 6,
+        "worst_severity": 20.88401864969025
+      },
+      "chirp": {
+        "passed": 6,
+        "total": 6,
+        "worst_severity": 0.9341188171374774
+      },
+      "rapid_voltage_train": {
+        "passed": 3,
+        "total": 6,
+        "worst_severity": 7.699456340384645
+      },
+      "paired_recovery": {
+        "passed": 6,
+        "total": 6,
+        "worst_severity": 0.6488263607025146
+      },
+      "same_v_history": {
+        "passed": 0,
+        "total": 6,
+        "worst_severity": 4.230023575553614
+      },
+      "slow_recovery": {
+        "passed": 0,
+        "total": 6,
+        "worst_severity": 0.6388548861590687
+      },
+      "calcium_switch": {
+        "passed": 4,
+        "total": 6,
+        "worst_severity": 0.5215705137216096
+      },
+      "channel_block": {
+        "passed": 6,
+        "total": 6,
+        "worst_severity": 0.9956399599711101
+      },
+      "reversal": {
+        "passed": 3,
+        "total": 6,
+        "worst_severity": 21.29329799726378
+      },
+      "activation_boundary": {
+        "passed": 3,
+        "total": 6,
+        "worst_severity": 251.13584244215318
+      },
+      "seams": {
+        "passed": 6,
+        "total": 6,
+        "worst_severity": 0.8989862410408731
+      }
+    },
+    "seeds": {
+      "17": {
+        "passed": 14,
+        "total": 24,
+        "worst_severity": 147.6473056170304
+      },
+      "29": {
+        "passed": 14,
+        "total": 24,
+        "worst_severity": 162.79512802780874
+      },
+      "43": {
+        "passed": 15,
+        "total": 24,
+        "worst_severity": 251.13584244215318
+      }
+    },
+    "median_severity": 0.5795337217498531,
+    "worst_severity": 251.13584244215318,
+    "channel_worst": {
+      "Ca_HVA": {
+        "nrmse": 0.041229986415341466,
+        "nmax": 0.06462427923560367,
+        "signed_charge_normalized": 0.031936131798448245,
+        "absolute_charge_normalized": 0.031936131798448245
+      },
+      "Ca_LVAst": {
+        "nrmse": 2.5113584244215317,
+        "nmax": 2.6348000089912724,
+        "signed_charge_normalized": 2.4961645386890012,
+        "absolute_charge_normalized": 2.4961645386890012
+      },
+      "NaTa_t": {
+        "nrmse": 1.9929254529598874,
+        "nmax": 2.13734012011298,
+        "signed_charge_normalized": 1.9898397092683293,
+        "absolute_charge_normalized": 1.9898397092683293
+      },
+      "NaTs2_t": {
+        "nrmse": 0.5458561598180718,
+        "nmax": 0.5841424871331979,
+        "signed_charge_normalized": 0.5450304495658177,
+        "absolute_charge_normalized": 0.5450304495658177
+      },
+      "Nap_Et2": {
+        "nrmse": 0.010632895191220964,
+        "nmax": 0.017557648171834087,
+        "signed_charge_normalized": 0.00935092805234626,
+        "absolute_charge_normalized": 0.00935092805234626
+      },
+      "Ih": {
+        "nrmse": 0.45362818828798535,
+        "nmax": 0.46836540341532756,
+        "signed_charge_normalized": 0.45103409255992216,
+        "absolute_charge_normalized": 0.45103409255992216
+      },
+      "Im": {
+        "nrmse": 0.012272707054217603,
+        "nmax": 0.02986924397197797,
+        "signed_charge_normalized": 0.012237866527585194,
+        "absolute_charge_normalized": 0.012237866527585194
+      },
+      "K_Pst": {
+        "nrmse": 0.06271840006487671,
+        "nmax": 0.08967950472592401,
+        "signed_charge_normalized": 0.05758089596622652,
+        "absolute_charge_normalized": 0.05758089596622652
+      },
+      "K_Tst": {
+        "nrmse": 0.3024260609934026,
+        "nmax": 0.699142986121872,
+        "signed_charge_normalized": 0.3013632159524406,
+        "absolute_charge_normalized": 0.3013632159524406
+      },
+      "SK_E2": {
+        "nrmse": 0.21293297997263783,
+        "nmax": 0.2285968209457827,
+        "signed_charge_normalized": 0.2125337787828186,
+        "absolute_charge_normalized": 0.2125337787828186
+      },
+      "SKv3_1": {
+        "nrmse": 0.04230023575553614,
+        "nmax": 0.1066121881882227,
+        "signed_charge_normalized": 0.035100143719005765,
+        "absolute_charge_normalized": 0.035100143719005765
+      }
+    }
+  },
+  "gained": [
+    [
+      "ramps",
+      0,
+      17
+    ],
+    [
+      "ramps",
+      1,
+      17
+    ],
+    [
+      "ramps",
+      0,
+      29
+    ],
+    [
+      "ramps",
+      1,
+      29
+    ],
+    [
+      "ramps",
+      0,
+      43
+    ],
+    [
+      "ramps",
+      1,
+      43
+    ],
+    [
+      "rapid_voltage_train",
+      0,
+      17
+    ],
+    [
+      "rapid_voltage_train",
+      0,
+      29
+    ],
+    [
+      "same_v_history",
+      1,
+      17
+    ],
+    [
+      "same_v_history",
+      0,
+      43
+    ],
+    [
+      "calcium_switch",
+      0,
+      17
+    ],
+    [
+      "calcium_switch",
+      0,
+      29
+    ],
+    [
+      "reversal",
+      0,
+      17
+    ],
+    [
+      "activation_boundary",
+      0,
+      17
+    ],
+    [
+      "activation_boundary",
+      0,
+      29
+    ]
+  ],
+  "lost": [
+    [
+      "calcium_switch",
+      0,
+      43
+    ],
+    [
+      "seams",
+      0,
+      17
+    ]
+  ],
+  "supported_contrasts": [
+    {
+      "axis": "tail",
+      "control": "shared_o0_s0_h0",
+      "treatment": "shared_o1_s0_h0",
+      "paired_ratios": [
+        0.6781831725677658,
+        0.7829053564442418,
+        0.877897632080163
+      ],
+      "worst_ratios": [
+        0.0213278248407673,
+        0.04888036944262773,
+        0.021630709425257154
+      ],
+      "supported": true
+    }
+  ],
+  "registered_contrasts": 14,
+  "sources": {
+    "timing_audit.json": "4871e23bf1146cc70eec765f61b51873ba0c53540a153415524092fc1eae6ce4",
+    "timing__base_n1_h1_b0__float32__slow_recovery__0__43.npz": "b2e9737658a21fe1d32a608553f99a7c63e04f4551c38b2cc6895389f895bf41",
+    "preregistration.json": "43d9c0bfa66cdf5fb2eb238937f51fbc4c6ccd2ac932a3d991fedbaa81c58f03",
+    "optimizer_3000.pt": "d1b2556692a7b13e3a4f5043c3945a0cd3f227a3c7e5dbc821d4b68e0654edd2",
+    "timing__base_n0_h0_b0__float32__same_v_history__1__43.npz": "e998c436e5b898412d5a59526ae829088a13538cc447320dc2eabe1490084bcd",
+    "frozen_oracle_attribution.json": "9e1af1975d85b82900a41e35072aabc52e66d81013624613004aefe2de4f3e79",
+    "training_curves.json": "6c934d3dbaddae546182dbc2d46f0e958453b350f3b92d7af92d6044c182fb07",
+    "timing__base_n0_h0_b0__float32__same_v_history__1__29.npz": "cd2a5d0e26cbe7ab4629b8ad58f69ec88c8044c34bc6584fff3b9fa54454d713",
+    "timing__base_n1_h1_b0__float32__same_v_history__1__29.npz": "499d005edba8f9fc6fe9458655f80d6513daff294a27fb2da17684117f8128a1",
+    "checkpoint_10000.pt": "205a2b9ca642a0d18013dc959181e40fe337bc25e749336f72a114535ccc0a46",
+    "timing__base_n1_h1_b0__float32__slow_recovery__0__29.npz": "7b5e4da2144ce3b25db14c4a0e60b35f333fa2008d4419df8b6eedec18da9f5b",
+    "final_report.json": "0a8c111398ae392320168767bd78aa72992fd640b61da965e8d4093d14c33c64",
+    "timing__base_n1_h1_b0__float32__same_v_history__1__17.npz": "8dc6dee8c9bd4a0533821507cc2c768729abc5fa45be61123b5583931cd5bba8",
+    "timing__base_n1_h1_b0__float64__calcium_switch__0__43.npz": "515d39ee52cc50fad2a004587eda00afa725f5728363f59bf4ce15954245f15b",
+    "timing__base_n0_h0_b0__float64__same_v_history__1__29.npz": "497df8174c1783a4700b4a1fd124567c171dc50847e4a4da3331fbac4948bf71",
+    "timing__base_n0_h0_b0__float32__slow_recovery__1__17.npz": "60b4bb22b6dd4811be7b31971e746fc63e31eaa4fccd5aaa6565a58dc6377837",
+    "timing__base_n0_h0_b0__float64__same_v_history__0__29.npz": "e63a559defd04ac5d1bf913d84e23b76c7a948f4c9a9154ba0f4813562566c39",
+    "oracle_preflight.json": "06d251b738d2962f3956fe016e10a641201f04f2debff0bcb2516f1993e4d2eb",
+    "timing__base_n1_h1_b0__float64__same_v_history__1__29.npz": "691e60daa05ed54073f7df0da9bcecab976b3d68872586fb7bdd236cb68c2af1",
+    "checkpoint_30000.pt": "ad34697ac66bf0696c1b3406a0b5d15b98174bc8b604edd5eb6581dcb158486b",
+    "process.log": "edfe297308622ee682cf052a4073b6435e880961b36a54e01726ef1e7bfe0dd6",
+    "timing__base_n0_h0_b0__float32__slow_recovery__1__43.npz": "7c345c835d61d7c1320da4aaccbef4df814de18641b6b3ce85a14de1bd87ea5c",
+    "timing__base_n0_h0_b0__float32__slow_recovery__1__29.npz": "6b72a3d0ad2fd599842695409cfb93d3c38fe77faabab8c10a590ef67f88a14e",
+    "timing__base_n0_h0_b0__float64__slow_recovery__0__43.npz": "4c5bb85f363494a18552c193c8a8c2df41364b71dc90c92f45c0ac09f3035701",
+    "timing__base_n0_h0_b0__float32__same_v_history__0__17.npz": "b6adfb8064d768daf134e70bc61d41a4c67a8a98784c30f05ec86bdd9748264d",
+    "checkpoint_180000.pt": "aa264c5962b81e9f67badaf227518ab0f4c43a94312052d8cc90d6e1ca159f05",
+    "timing__base_n1_h1_b0__float64__slow_recovery__1__29.npz": "e010b62f22214fc18888bc5d2f47aff8d7b5d6a4c7d7bdc6eb445df081e87f86",
+    "timing__base_n1_h1_b0__float64__calcium_switch__0__17.npz": "6cbee4e18c4457ab184ff9c8d6fd63a65a3231a5798fbb3704f0f0fa777a8b51",
+    "timing__base_n1_h1_b0__float64__slow_recovery__0__17.npz": "cbbf9a89c90d03ae25a0a41f4cac2b96c9fc0f2c570a928785c94456e76b7fda",
+    "composition_preflight.json": "1b2e02f305198909cb495cb38e3eff1c26ce7bcb67743af9cb115cd2e17057db",
+    "optimizer_60000.pt": "0615ac2cabb68215ef37f03ce7f5640f340c13062573d2b67c0216fdeca3e507",
+    "common_selection_diagnostic.json": "381d8b6f19885e046760489105d7de7688eb7630c321fd200663206b747848b5",
+    "optimizer_10000.pt": "71bf328b53d22cb253bf391e00b1d37535aff13b20d1c380eafb9d94eb245ff7",
+    "window_support.json": "61aa6a23ca34447f775a9f6429cc223150d264813c31540b8df8af196694fa77",
+    "execution.json": "7d6e4483425fd55906e9c99f5f05d54a567de10c5dd0e8250eadb951f000abe6",
+    "checkpoint_0.pt": "2268113b9bea94e11e3d98be47e9c6802d37ca324d4cb6bcdc0493fa2f935674",
+    "optimizer_preflight.json": "ce9c186ddf38f2bec4f98ad18377c27e0ea3dbef39e9920c9c76fed89c3f4749",
+    "timing__base_n1_h1_b0__float64__same_v_history__1__17.npz": "80323ae84107ceaa54ab58cb999160d998ffd0c528836a5beecb422947687663",
+    "timing__base_n1_h1_b0__float64__calcium_switch__0__29.npz": "2371a422e057dba41255e3cf84bcd42a1b858f9a81b9fdf8241ea7b64c62af44",
+    "checkpoint_3000.pt": "42d381d72e3c468fe7d122f93b3a37fc9cf35573e01096791e52b9ffa03804a5",
+    "timing__base_n0_h0_b0__float32__same_v_history__0__29.npz": "53105570df5969503fae725dd9eb6ed02b6c75c79f484a5169b0dcb270b1d58a",
+    "timing__base_n1_h1_b0__float32__same_v_history__1__43.npz": "c2a2e7a699f5e93a1171f181d74cf8a98e0b6898c1228521213efa9dcda95818",
+    "optimizer_90000.pt": "73db3a9674a174ab5f73dc7eebe7240ba350bc124efbe88a75e8e211ef46ed5b",
+    "timing__base_n0_h0_b0__float64__slow_recovery__1__29.npz": "b43f7e5cb538d8d421b83f72980b716b24d66c96db27667eda8b8f85569aba73",
+    "timing__base_n0_h0_b0__float32__slow_recovery__0__17.npz": "4016930fe17eb303bd4a8ebe39458d9773c167e32133e4975e8d609d0e43c57f",
+    "timing__base_n0_h0_b0__float32__calcium_switch__0__17.npz": "eb21a1f1708fe4d3633e97a69ce2722a2aafd104c21adf6950999218348686cb",
+    "timing__base_n0_h0_b0__float64__same_v_history__1__17.npz": "7f4f7fb535f2013239e7970cf9a0d9001251ce493584e86dcf81da8dc1755544",
+    "timing__base_n0_h0_b0__float64__same_v_history__1__43.npz": "752f602abfe614bbfa9e8061ef0f092476de238fa85e4a7423d4cd69fbc24fd0",
+    "matched_history_probes.json": "b269bd6debebfbff17ef1736284b2cbfc27e50e50356d04fe44a0e214b7eb577",
+    "recurrence_preflight.json": "6cb62e70f624c02554768998d4956f2799c7939a3ef2468d821e1fc92cc45bd7",
+    "revision.json": "11ca41bb55c7dd89894959053d81543231687bef082898d9e2e2beba48e6129f",
+    "timing__base_n1_h1_b0__float64__slow_recovery__0__29.npz": "a62a404074d9711a2556a1e3c5c32cafa68cc19b264823f7759268d5ac9b3fc6",
+    "timing__base_n0_h0_b0__float32__slow_recovery__0__43.npz": "b8278c42c4ac1cb55914b6673cde43f615a319b255fc7c008729c1480cfbdea5",
+    "timing__base_n1_h1_b0__float64__slow_recovery__0__43.npz": "0798003d269b4ff3a508e08e04c249c387b9f22065c4392cfd2459bad0721b21",
+    "checkpoint_90000.pt": "efc31af7b12f42d67518fa2b8743cb2c6327c5866044a185c013f9c947ee1c29",
+    "gradient_probes.json": "9caba7db13bcf256672d713454d57dc234931f9ea0b961bf6d7fabb2fa82a8a1",
+    "timing__base_n1_h1_b0__float32__calcium_switch__0__43.npz": "09972742d7024eb147caa8b5dfec60e7cb1cff0bec5f4dbf4d20a97580629e9c",
+    "optimizer_180000.pt": "418261d14f614e4f5c5643a72b1684c0334d5232060759f98df61e51bebda08a",
+    "resident_cost_benchmark.json": "ce31252e7595372f78a87a0b7b451ffdd093ce76b198429fac40ffe0ee125ae6",
+    "timing__base_n0_h0_b0__float64__calcium_switch__0__17.npz": "4ba60ebb8ac74df97b4585dac9756c556dc6810e8c36c8e75918b15f91293893",
+    "timing__base_n0_h0_b0__float32__same_v_history__1__17.npz": "0e96670d1df95bdf0e3a2458890a1d2745f196df828b7274e6a2862ceff10c27",
+    "optimizer_0.pt": "18fa1825d0a44252e3a7f61db24a182967a6169f32a305165dc0fb8ab1229a2a",
+    "timing__base_n1_h1_b0__float32__slow_recovery__1__29.npz": "e9bcaa5fc3f9c61b6df8799fa2591f0f914c17d94e7a8b9b4413978dc098c3f7",
+    "timing__base_n1_h1_b0__float64__slow_recovery__1__17.npz": "d4876e3cd8e2d07b81e6ef1bc543589c8e15a0a93c5da99757f2a2fbf2537b42",
+    "timing__base_n1_h1_b0__float32__calcium_switch__0__17.npz": "f828dc912555852c528092ea8d547d916b4562f12a30b6a69f3ad8495adb217b",
+    "timing__base_n0_h0_b0__float64__same_v_history__0__43.npz": "c6811f902f4ccbd3480fd202c0ade5acb1dd42069c285e6c791dbedf2c0a9fca",
+    "timing__base_n0_h0_b0__float32__calcium_switch__0__29.npz": "45babdee7374e9881baa65f4691e78f0ba3d13f940ef2ae000c951407cb7892e",
+    "paired_contrasts.json": "0c91de50dcc3d9d3f283f3994787f89f4748aceaf9d50befa4700c462cc53438",
+    "timing__base_n0_h0_b0__float64__slow_recovery__0__17.npz": "0fb69175aa43224f5bb9bb2c760607025dcd02a560b7b96c6e288d5400388065",
+    "numerical_health.json": "d5c65eae2a008b67c187b37de7145036455be4303ad0b02d47f6bf7bcad084d0",
+    "timing__base_n0_h0_b0__float64__slow_recovery__1__17.npz": "de7ca70b8c57199a150ebd8709d7f8d89105b0297784deca570d063b76bf5eae",
+    "timing__base_n0_h0_b0__float64__slow_recovery__1__43.npz": "d65ed389ec5a915bf0d41112ba71787292a915de58a01d665b2aa83354e9085f",
+    "checkpoint_phase.json": "f8c77a30e1a657611e8c6de1c139c075847e38e58f0a2f9c27cda521b00cc99b",
+    "timing__base_n0_h0_b0__float64__same_v_history__0__17.npz": "baf279cea78cecee72422420c3ce79990f39545cd95e5e1302485d807aeec89c",
+    "fit_loss_calibration.json": "b30024f571e8cd2ebaadc7c74d0bd01037c93bcc4f3f82e1d015c36631939162",
+    "timing__base_n1_h1_b0__float64__same_v_history__1__43.npz": "3b27991d047d3ed1fd38ebe23a42802adc544ef5a8f138f4c9a6c674fe16a2e6",
+    "timing__base_n1_h1_b0__float32__slow_recovery__0__17.npz": "54bb1126df7aecb132a9c72737b9f077d92d4cb3e38bb0842317389cff217188",
+    "recurrence_evaluation.json": "cf28d6a051bdc388575e199f9e393370619cb87dc763907c8cc081158f1d87b8",
+    "optimizer_30000.pt": "d92d713aad3e5e3141b7507d080fa2a5ce98a832f445de6b4e4bc0aada8928b6",
+    "optimizer_120000.pt": "470d64edf38d8f3f694415fa7340efdddc3e4a5650845e5f2cff301a93c20803",
+    "timing__base_n1_h1_b0__float32__slow_recovery__1__43.npz": "5790970d175d0696c4c3da576510f1d0093241e76a4a2084795bbd7f33af403b",
+    "timing__base_n0_h0_b0__float64__slow_recovery__0__29.npz": "a916905bac78254831318b5353425eb8ad09c6e8bad848fc25f52a06f7eb08b1",
+    "timing__base_n0_h0_b0__float32__same_v_history__0__43.npz": "d68cbb68a97682c70e63ca3334a14059d63f7dfa6c7b6f2dd7bc6b5192a51a3e",
+    "exposure.json": "b4550082ae664df001099ea47acb23d30029c37afb7001603efb1e9332bb2e6e",
+    "timing__base_n0_h0_b0__float32__slow_recovery__0__29.npz": "75544d465aa6eb62050df361460f47227b01edc521c488a642de6c5aca20d1cd",
+    "checkpoint_60000.pt": "ee2d44f17a680c8b4cb5d50db221b635caf10bad12a46386c523668f3176ede4",
+    "timing__base_n0_h0_b0__float64__calcium_switch__0__29.npz": "d168dd7fb34e253471575aa971c5d8ff2ba69e253a153623246137fbd6985799",
+    "selection_freeze.json": "9742d7ec1c89bc6ee307b0aa9964b12fc583b8c8e7c66f885ed2ca8dcfd78df8",
+    "checkpoint_120000.pt": "e7d51332eb5a88b6d412628359b3d5929e8ddb37cebc92c33223c5706b7da6b6",
+    "timing__base_n1_h1_b0__float64__slow_recovery__1__43.npz": "05bddfb5e52b9cb3fca9c502b2f8ddec6a8711d40c5ba33b08c48d136a648cd3",
+    "timing__base_n1_h1_b0__float32__calcium_switch__0__29.npz": "3423ca61ea34e05d6660812201d7141bf1fe21cdda4848df02ed420316ebb3ae",
+    "timing__base_n1_h1_b0__float32__slow_recovery__1__17.npz": "d478e01d5faad87cdae9db8e4fd9a2024fff197f9699a894026947c421e438a6",
+    "frozen_checkpoint.pt": "296d70fc0cfc77c7edf393b3fcfe02dd120b1476b13eb15487c9c16ff4123ce9",
+    "common_selection_diagnostic/matched_history_probes.json": "1f5a92fb80730f33b36ea9de5439f4c78de05f4b4b35994141a25f5ec8ce9035",
+    "common_selection_diagnostic/recurrence_preflight.json": "6cb62e70f624c02554768998d4956f2799c7939a3ef2468d821e1fc92cc45bd7",
+    "common_selection_diagnostic/recurrence_evaluation.json": "982f038cd64877f7ce249828e70719d485007920cec9f095e4e9884a2b058487"
+  },
+  "limits": "Post-hoc development analysis;72 cases are24 protocols x3 seeds, not72 independent protocols. Task40 blocked. Historical39d comparison confounds budget, selection and repaired CUDA optimizer ownership. Inherited frozen oracle/timing files concern older parents, not39e models. No independent confirmation, no end-to-end speed claim."
+}

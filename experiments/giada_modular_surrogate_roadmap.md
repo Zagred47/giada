@@ -1615,7 +1615,7 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prossima milestone concreta — Task39e
+# 🥇 Stato corrente — Task39e conclusa; proposta Task39f
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
 > i valutatori isolati. Task38 ha completato il tentativo congiunto senza
@@ -1637,6 +1637,20 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 > vecchia regola usando gli stessi checkpoint. Soglie37 invariate.
 > Esecuzione tramite CLI Colab/WSL collaudata, non automazione dell'editor browser.
 > Task40 non è autorizzata dal solo miglioramento della loss media.
+
+**Aggiornamento19 ottobre2026:** Task39e retry2 conclusa a180000 aggiornamenti,
+parametri e stati Adam finali finiti, archivio esterno finale verificato.
+Miglior nuovo braccio56/72 development (39d43/72),15 casi recuperati e2 persi.
+Restano16 fallimenti:7 ampiezza,1 carica,10 timing, categorie sovrapposte;
+9 casi falliscono soltanto sul timing. Otto scarti temporali riguardano
+l'offset, uno l'onset e uno il picco. Solo1/14 contrasti preregistrati supportato.
+Il confronto storico non isola un intervento: cambiano budget, selezione e
+correzione della proprietà degli stati Adam nel CUDA Graph.
+[Audit completo](results/task39e_colab_v1/result_audit.json) e
+[ipotesi/proposta39f](task39e_residual_hypotheses.json) conservano dettagli e limiti.
+Task40 resta bloccata. Task39f è proposta, non preregistrata né avviata:
+audit congelato u/z e crossing, poi matrice obiettivo temporale×supporto
+transizioni×capacità con soglie invariate e mini scaling laws.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
