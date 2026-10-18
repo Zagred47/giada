@@ -33,6 +33,14 @@ class Task39eTests(unittest.TestCase):
         x=torch.tensor([0.,0.],requires_grad=True)
         y=e.censored_logit_error(torch,x,torch.tensor([0.,1.]));y.sum().backward()
         self.assertGreater(float(x.grad[0]),0);self.assertLess(float(x.grad[1]),0)
+    def test_finite_gradient_diagnostic_overflow(self):
+        x=torch.full((2,4,8),1e25,dtype=torch.float32)
+        self.assertTrue(torch.isfinite(x).all())
+        self.assertFalse(torch.isfinite(x.norm(dim=-1)).all())
+        y=x.double();n=y.norm(dim=-1)
+        cosine=torch.bmm(y,y.transpose(1,2))/(n[:,:,None]*n[:,None,:]).clamp_min(1e-20)
+        self.assertTrue(torch.isfinite(cosine).all())
+        torch.testing.assert_close(cosine,torch.ones_like(cosine))
     def test_equal_target_ticks_and_initial_states(self):
         a=self.data[:2];short=a.reshape(8,64,-1)
         np.testing.assert_array_equal(short.reshape(a.shape),a)

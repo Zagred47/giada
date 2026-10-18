@@ -111,8 +111,11 @@ def gradient_probe(torch,g,s,scales,step):
         grad=torch.autograd.grad(values[:,i].sum(),tuple(g['model'].parameters()),retain_graph=i<3)
         grads.append(torch.cat([x.flatten(1) for x in grad],-1).detach())
     stack=torch.stack(grads,1);norm=stack.norm(dim=-1)
-    cosine=torch.bmm(stack,stack.transpose(1,2))/(norm[:,:,None]*norm[:,None,:]).clamp_min(1e-20)
-    return dict(step=step,cohort=g['key'],losses=values.detach().cpu().tolist(),term_norms=norm.cpu().tolist(),
+    # Diagnostics only: FP32 dot products can overflow even for finite gradients.
+    # Preserve original norm return (FIT loss calibration) bit-for-bit.
+    diagnostic=stack.double();dn=diagnostic.norm(dim=-1)
+    cosine=torch.bmm(diagnostic,diagnostic.transpose(1,2))/(dn[:,:,None]*dn[:,None,:]).clamp_min(1e-20)
+    return dict(step=step,cohort=g['key'],losses=values.detach().cpu().tolist(),term_norms=dn.cpu().tolist(),
                 cosines=cosine.cpu().tolist(),weights=s['weights'].cpu().tolist()),norm
 
 def optimizer_preflight(torch,g,s,scales,seeds):
@@ -206,6 +209,12 @@ def run(root,output,device='cuda'):
     curves=[];probes=[];start=time.perf_counter();family_exposure=np.zeros((len(families),2),dtype=np.int64)
     for step in range(spec['checkpoints'][-1]+1):
         if step in spec['checkpoints']:
+            # Preserve the actual weights BEFORE any diagnostic/evaluation can fail.
+            pending=output/f'checkpoint_{step}.tmp'
+            torch.save({g['key']:g['model'].state_dict() for g in cohorts},pending)
+            pending.replace(output/f'checkpoint_{step}.pt')
+            p.save_json(output/'checkpoint_phase.json',dict(step=step,phase='before_selection',parameters_finite={g['key']:all(bool(torch.isfinite(x).all()) for x in g['model'].parameters()) for g in cohorts}))
+            print(f'[GIADA Task39e] checkpoint_saved {step} before_selection',flush=True)
             common,parts,ranks,panel=checkpoint_scores(torch,cohorts,dev,held,normal,spec,device,quality);assert np.isfinite(common).all()
             j=0
             for g in cohorts:
@@ -216,7 +225,7 @@ def run(root,output,device='cuda'):
                     j+=1
             curves.append(dict(step=step,common_development_score=common.tolist(),panel=panel,elapsed_seconds=time.perf_counter()-start,clipping_counts=[x.cpu().tolist() for x in clips]))
             p.save_json(output/'training_curves.json',curves)
-            torch.save({g['key']:g['model'].state_dict() for g in cohorts},output/f'checkpoint_{step}.pt')
+            p.save_json(output/'checkpoint_phase.json',dict(step=step,phase='gradient_probe',common_finite=bool(np.isfinite(common).all())))
             for g,s in zip(cohorts,static):probes.append(gradient_probe(torch,g,s,scales,step)[0])
             p.save_json(output/'gradient_probes.json',probes)
             print(f'[GIADA Task39e] checkpoint {step} median_common={np.median(common):.6g} elapsed={(time.perf_counter()-start)/60:.1f}min',flush=True)
