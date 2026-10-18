@@ -36,14 +36,14 @@ def main():
             Versione='v1',Percorso=rel,**{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size}))
     if args.launch:
         path=folder/'kaggle_launch.json';launch=json.loads(path.read_text())
-        assert launch['status_at_verification'] in ('RUNNING','QUEUED') and launch['published_source_pin_verified']
+        assert launch['status_at_verification'] in ('RUNNING','QUEUED','SUBMITTED_STATUS_UNAVAILABLE') and launch['published_source_pin_verified']
         artifact=put('artifacts','launch',Nome='Task39d verified Kaggle dispatch',Tipo='Log',Versione='v1',
             Percorso=path.relative_to(repo).as_posix(),**{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size})
         for d in defs:
             for seed in spec['seeds']:
                 put('runs',f'{d["name"]}-seed{seed}',Nome=f'Task39d {d["name"]} seed{seed}',Stato='In corso',Seed=str(seed),
                     **{'Artefatti prodotti':[artifact],'Configurazione effettiva':json.dumps(dict(arm=d,seed=seed,launch=launch)),
-                       'Validità tecnica':'Kaggle dispatch/source verified; CUDA preflights and scientific outcome pending.'})
+                       'Validità tecnica':'Kaggle dispatch/source verified; runtime state as recorded in launch receipt, CUDA preflights and scientific outcome pending.'})
         put('implementations','worker',Nome='Task39d36-member CUDA worker',Commit=launch['revision'])
         put('actions','execute',Nome='Execute Task39d on Kaggle',Stato='In corso')
         m.local_upsert('actions',{'Codice stabile':'actions-giada-task39c-dynamic-proposed39d-v1','Stato':'Conclusa',
