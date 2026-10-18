@@ -208,13 +208,14 @@ def optimizer_preflight(torch,g,s,scales,seeds,short):
     return dict(valid=True,members=model.a.shape[0],max_abs_error=error)
 
 
-def capture_training(torch,groups,static,scales,spec):
+def capture_training(torch,groups,static,scales,spec,objective_fn=None):
+    loss_fn=objective_fn or objective
     originals=[{k:x.detach().clone() for k,x in g['model'].named_parameters()} for g in groups]
     opts=[torch.optim.Adam(g['model'].parameters(),lr=spec['learning_rate'],capturable=True) for g in groups]
     clips=[torch.zeros(g['model'].a.shape[0],device='cuda') for g in groups]
     def update():
         for g,s,opt,counter in zip(groups,static,opts,clips):
-            opt.zero_grad(set_to_none=False);objective(torch,g,s,scales,spec['short_ticks']).sum().backward()
+            opt.zero_grad(set_to_none=False);loss_fn(torch,g,s,scales,spec['short_ticks']).sum().backward()
             norm=torch.stack([x.grad.flatten(1).square().sum(1) for x in g['model'].parameters()]).sum(0).sqrt()
             counter.add_((norm>1).float())
             for x in g['model'].parameters():x.grad.div_(norm.clamp_min(1).reshape(-1,*([1]*(x.ndim-1))))
@@ -316,7 +317,7 @@ def oracle_audit(torch,root,output,spec,quality,device):
                             failed=any(e['event']['status']=='missing_event' or (e['event']['status']=='evaluable' and (e['event']['peak_error_ms']>.2+1e-9 or max(e['event']['onset_error_ms'],e['event']['offset_error_ms'])>.3+1e-9)) for e in events)
                             if failed:np.savez_compressed(output/f'timing__{row["parent_arm"]}__{precision}__{family}__{case}__{row["seed"]}.npz',reference=a['current_targets'][:,case],prediction=cur[:,case],time_ms=np.arange(shape[0])*.1)
             p.save_json(output/'frozen_oracle_attribution.json',rows);p.save_json(output/'timing_audit.json',timings)
-            print(f'[GIADA Task39d] frozen attribution {precision}/{family}',flush=True)
+            print(f'[GIADA Task{spec.get("task","39d")}] frozen attribution {precision}/{family}',flush=True)
     valid=all(r['passed'] and r['gate_max']<=spec['floor_gate_atol'] and r['current_max']<=spec['floor_current_atol'] for r in floors)
     p.save_json(output/'oracle_preflight.json',dict(valid=valid,teacher_floor=floors,rows=len(rows),selection_eligible=False))
     if not valid:raise RuntimeError('Teacher oracle failed; stop before training')

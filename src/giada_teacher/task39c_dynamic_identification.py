@@ -364,7 +364,7 @@ def training_graph(torch,cohorts,static,scales,weights,spec):
         backend='single CUDA graph, three member-vectorized architecture cohorts, independent Adam/clipping')
 
 
-def cost_benchmark(torch,cohorts,seeds,device,output,model_factory=None,splitter=None):
+def cost_benchmark(torch,cohorts,seeds,device,output,model_factory=None,splitter=None,task_label='39c'):
     """Matched resident ionic work, including every current on every tick."""
     from .gate_d_compute_audit import _rates
     n,ticks,repetitions=642,80,30
@@ -423,7 +423,7 @@ def cost_benchmark(torch,cohorts,seeds,device,output,model_factory=None,splitter
                 median_saving_fraction=float(np.median(saving)),paired_mean_saving_ci95=np.quantile(boot,[.025,.975]).tolist(),
                 finite=bool(torch.isfinite(state).all() and torch.isfinite(cur).all())))
             del graph,iso
-        print(f'[GIADA Task39c] resident cost {definition["name"]}',flush=True)
+        print(f'[GIADA Task{task_label}] resident cost {definition["name"]}',flush=True)
     report=dict(valid=all(r['finite'] for r in rows),rows=rows,batch=n,ticks=ticks,repetitions=repetitions,
         backend='CUDA Graph for both formula and network; exact current readout, same80ticks and external V/Ca',
         training_throughput_used=False,operational_transfer_cost_measured=False,

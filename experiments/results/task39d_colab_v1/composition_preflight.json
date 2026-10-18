@@ -1,0 +1,37 @@
+{
+  "valid": true,
+  "rows": [
+    {
+      "architecture": "base",
+      "ticks": 1,
+      "max_abs_error": 1.5105731776543507e-08
+    },
+    {
+      "architecture": "base",
+      "ticks": 1000,
+      "max_abs_error": 1.2212453270876722e-15
+    },
+    {
+      "architecture": "base",
+      "ticks": 100000,
+      "max_abs_error": 1.2212453270876722e-15
+    },
+    {
+      "architecture": "linear",
+      "ticks": 1,
+      "max_abs_error": 1.5882922976828695e-08
+    },
+    {
+      "architecture": "linear",
+      "ticks": 1000,
+      "max_abs_error": 1.2212453270876722e-15
+    },
+    {
+      "architecture": "linear",
+      "ticks": 100000,
+      "max_abs_error": 1.2212453270876722e-15
+    }
+  ],
+  "reference": "Repeated affine map in float64, same learned u/z; GPU stable composition in float32",
+  "inference_step_changed": false
+}

@@ -1615,7 +1615,7 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prossima milestone concreta — Task39d
+# 🥇 Prossima milestone concreta — Task39e
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
 > i valutatori isolati. Task38 ha completato il tentativo congiunto senza
@@ -1626,11 +1626,16 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 > Task39c è conclusa: migliore nuovo braccio44/72 casi development, contro16/72
 > in39b; progresso descrittivo, non effetto causale di un unico intervento.
 > Persistono errori di correnti e timing: NO-GO scientifico.
-> Si prepara [Task39d](task39d_preregistration_v1.json), sottotask della39:
-> 8 bracci scala correnti×storia/esposizione×bilanciamento, 4 sidecar
-> eventi/bias lineare appreso, 3seed,36 membri in due coorti vettorizzate.
-> Oracoli sui nuovi checkpoint39c e audit degli attraversamenti prima del fit.
-> Stessi target/update, soglie37 invariate, costo residente misurato dopo freeze.
+> Task39d è conclusa su Colab: massimo43/72, nessun nuovo vincitore; la scala
+> locale riduce fortemente le code ma non soddisfa il contratto completo.
+> [Risultato39d](task39d_result_and_next_hypotheses.md).
+> Si prepara [Task39e](task39e_preregistration_v1.json), sempre sottotask39:
+> obiettivo delle code×copertura coefficienti×teste u/z,8bracci più2sidecar
+> memoria64/256tick a pari512target/update;3seed,30membri vettorizzati.
+> Oracoli sui nuovi checkpoint39d prima del fit; selezione prospettica include
+> timing nel pannello development, con confronto non selezionabile sulla
+> vecchia regola usando gli stessi checkpoint. Soglie37 invariate.
+> Esecuzione tramite CLI Colab/WSL collaudata, non automazione dell'editor browser.
 > Task40 non è autorizzata dal solo miglioramento della loss media.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.

@@ -1,0 +1,65 @@
+{
+  "task": "39d",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dataset": "experiments/results/task37_playground_v2",
+  "normalizers": "experiments/results/task38_kaggle_v2/fit_normalizers.json",
+  "parent": "experiments/results/task39c_kaggle_v1",
+  "parent_sha256": "b8003fe3abd1f0d056ff26c06e2df6d3eb58e6d9a12df10d2b5e8852d713b575",
+  "oracle_parent_arms": [
+    "base_i1_s0_d1",
+    "wide_i1_s1_d1"
+  ],
+  "floor_gate_atol": 2e-05,
+  "floor_current_atol": 2e-07,
+  "data_seed": 99491,
+  "windows_per_family": 512,
+  "sequence_length": 64,
+  "batch_sequences": 8,
+  "anchor_batch": 64,
+  "held_ticks": [
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000
+  ],
+  "development_windows_per_family": 2,
+  "development_anchor_nodes": 96,
+  "development_long_ticks": 20000,
+  "checkpoints": [
+    0,
+    3000,
+    10000,
+    30000,
+    60000,
+    90000,
+    120000
+  ],
+  "learning_rate": 0.001,
+  "recurrence_chunk": 32,
+  "numeric_atol": 1e-05,
+  "architecture": "18 bounded states, x_next=x+z*(u-x), learned u,z, dt0.1ms.17 V-only gates, Ca-only SK. Base width32 and linear-logit sidecar width31+36 slopes both1220 active parameters. Same seeded prefixes, not identical initial functions. No canonical kinetics during candidate inference; unchanged cheap individual-current readout.",
+  "matrix": "8base arms: global/local current scale x ordinary-reset16/targeted-continuous64 history package x fixed/phase-balanced loss. Event loss and parameter-matched linear-logit sidecars at000 and111.12arms x3seeds=36; two cohorts, one CUDA training graph.",
+  "training": "Same512 variable targets and64 held anchors per member/update. Ordinary pool versus fit-only transient/weak/tail/uniform strata, equal family counts, fit_extra50/50. History arm combines coverage with continuous64 versus reset16: interpret only as package, not separately causal subfactors. All arms share held inputs, all6durations and coefficient supervision. Same data_seed and mini-batch indices, but targeted windows intentionally differ. No development failure-target mining. Fixed120k steps, checkpoints0/3k/10k/30k/60k/90k/120k.",
+  "loss": "Variable/held normalized gate+current losses weight0.5 each; u and log(z) supervision retained in every arm. Initial auxiliary gradient-norm weights from base000 per-seed FIT probe, shared across arms and architectures, clamp.001..1000. Balance intervention recalibrates only auxiliary weights at30k/60k/90k using same FIT probe; never development. Local scale is per-window channel max abs target, floor1e-7; held scale uses max initial/endpoint abs current, a proxy not entire trajectory max. Event package adds normalized signed charge plus smooth10%-crossing occupancy and derivative error; not claimed as separable causes. All unweighted losses, gradient cosines and clipping saved.",
+  "selection": "At seven checkpoints identical development-only maximum of gate/current normalized MSE across12families short8/full512ticks, two variable-V20k-tick tail windows (same_v_history and slow_recovery), and96independent stratified development held nodes at all6durations. Tail windows initialize once at their supplied true pre-state; no periodic reset. Earliest minimum per member. Selection deliberately differs prospectively from39b and does not allow retroactive re-selection. Full10s evaluator and already-open stress only after freeze. Independent confirmation remains unopened.",
+  "quality": "All Task37 thresholds, timing, occupancy, current blocking, charge and per-channel gates unchanged. Full development pass plus audit required before Task40. Severity excludes timing but strict pass includes timing; never discard timing-only cases. New independent confirmation is a future task.",
+  "contrasts": "12paired factorial edges plus2event-package and2linear-bias comparisons. On full development post-freeze severity, median paired3seed ratio<=0.8, all3<1, worst ratio<=1.05. Report strict timing pass separately because severity excludes timing. Budget ratios along same Adam trajectory at30k/60k/120k; no unlimited scaling claim. Linear sidecar exchanges36 nonlinear parameters for36 slopes, preserving1220 total, not identical function classes. Interactions are descriptive factorial differences, not independent confirmation.",
+  "oracles": "Two frozen39c arms x3seeds x12development families x2cases: learned/u/z/both replacements inFP32/FP64 plus18single-gate u+z swaps inFP32. Not selectable. Both-teacher FP64 must satisfy unchanged quality and max gate2e-5/current2e-7 before training. Save crossing samples, slopes, representative FP32-epsilon perturbation diagnostics and full failed-timing traces. Perturbation is not a measured teacher error floor. No tolerance changes.",
+  "preflights": "Dataset/checkpoint/freeze SHA; held composition; all36 isolated/vectorized Adam+clip parity; recurrence chunk boundaries; CUDA graph two-update parity/reset; finite loss/parameters. Fit-only timing cap4hours projected training, otherwise technical stop. No budget or threshold adaptation after quality. Local CPU tests plus actual CUDA preflights before training.",
+  "cost": "After freeze measure each arm/seed at batch642,80ticks, same dt/readout/input workload and CUDA graph backend as competitive vectorized canonical formula.30paired repetitions with state reset, individual currents computed every tick. Report operational separately if measured; this notebook benchmarks resident ionic core only. No speed claim from training throughput and no promotion from speed alone.",
+  "limits": "Teacher-forced imposed V/Ca ionic operator only. No full compartment, autonomous membrane, causal calcium coupling, multicompartment fidelity or emergent spike/bifurcation guarantee. No new data-scaled confirmation claim. Task39d is a subtask of Task39; Task40 remains gated. Protocol derives from exploratory SQL precedents and is prospective for this run. Architectural superiority and a definitive repair are not assumed. History and event interventions are packages. No claim that 64ticks fully covers slow memory. Common development selection remains global-scale, deliberately held constant; strict local/timing metrics evaluated after freeze. No guaranteed repair.",
+  "short_ticks": 16,
+  "balance_steps": [
+    30000,
+    60000,
+    90000
+  ],
+  "max_projected_training_seconds": 14400
+}
