@@ -1,0 +1,58 @@
+{
+  "task": "39c",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dataset": "experiments/results/task37_playground_v2",
+  "normalizers": "experiments/results/task38_kaggle_v2/fit_normalizers.json",
+  "parent": "experiments/results/task39b_kaggle_v2",
+  "parent_sha256": "34d75b87491cc4eafafa9dde96eea2f49d40eaf5c10e255e10c85bfc494e2817",
+  "oracle_parent_arms": [
+    "base_h8_c1_r0",
+    "base_h64_c1_r0"
+  ],
+  "floor_gate_atol": 2e-05,
+  "floor_current_atol": 2e-07,
+  "data_seed": 99491,
+  "windows_per_family": 512,
+  "sequence_length": 32,
+  "batch_sequences": 16,
+  "anchor_batch": 64,
+  "held_ticks": [
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000
+  ],
+  "development_windows_per_family": 2,
+  "development_anchor_nodes": 96,
+  "development_long_ticks": 20000,
+  "checkpoints": [
+    0,
+    3000,
+    10000,
+    30000,
+    60000,
+    90000,
+    120000
+  ],
+  "learning_rate": 0.001,
+  "recurrence_chunk": 32,
+  "numeric_atol": 1e-05,
+  "architecture": "18 physical occupancy states, x_next=x+z*(u-x), same dt0.1ms and cheap individual-current readout. V-only17 gates and Ca-only SK. Base shared width32 with1220 active parameters, wide64 with2372, independent per-gate width16 with1188. Shared trunk takes one normalized input, unlike zero-padded older implementation. No canonical kinetics at candidate inference. Separate weights are not masked shared heads. Base/wide prefix initialization paired; separate architecture initialization is seeded but not equal functions.",
+  "matrix": "8base arms: coefficient supervision off/on x anchor support existing/stratified x held duration0.1ms/log-spaced0.1..10000ms. Four architecture comparisons: wide and separate at minimal0/0/0 and complete1/1/1 anchors.12arms x3seeds=36. Three architecture cohorts are member-vectorized in one CUDA training graph; no sequential seed training.",
+  "training": "Every member sees the same16 variable-V windows of32ticks/update, fit and fit_extra mixed50/50, no intermediate reset.64held anchor targets/update. Existing anchor inputs/pre-states come from fit/fit_extra windows; stratified intervention replaces anchor V/Ca with Latin stratification over declared fit domain and random/extreme states. Multipliers/reversals preserved. Variable-V inputs are unchanged by support intervention; its effect is therefore anchor coverage. Equal target/node-pool counts do not imply equal diversity or FLOPs. Held long targets compose the learned affine map exactly only at constant V/Ca, with stable log-decay/expm1; inference dt is unchanged. No stress sampling or fit-target mining from development failures.",
+  "loss": "Half normalized variable gate+individual-current MSE plus half normalized held gate+current MSE. Information arm adds u MSE and log(z) MSE, each per-gate fit-std normalized with floors0.05/0.5. Two scalar weights are initial base-cohort fit gradient-norm ratios, clipped0.001..1000 and frozen before training. Same weights across seeds and architectures. Log(z) target floor1e-30 for labels. Report per-term gradients and actual clipping counters; do not adapt weights to development or stress.",
+  "selection": "At seven checkpoints identical development-only maximum of gate/current normalized MSE across12families short8/full512ticks, two variable-V20k-tick tail windows (same_v_history and slow_recovery), and96independent stratified development held nodes at all6durations. Tail windows initialize once at their supplied true pre-state; no periodic reset. Earliest minimum per member. Selection deliberately differs prospectively from39b and does not allow retroactive re-selection. Full10s evaluator and already-open stress only after freeze. Independent confirmation remains unopened.",
+  "quality": "All Task37 thresholds, timing, occupancy, current blocking, charge and per-channel gates unchanged. Full development pass plus audit required before Task40. Severity excludes timing but strict pass includes timing; never discard timing-only cases. New independent confirmation is a future task.",
+  "contrasts": "12paired factorial edges and4architecture comparisons. On full development post-freeze severity, median paired3seed ratio<=0.8, all3<1, worst ratio<=1.05. Report all effects and interactions even if unsupported. Budget ratios along same Adam trajectory at30k/60k/120k under common prospective selection; no claim of unlimited scaling. Wider versus independent architectures are conditional capacity/specialization tests, not exact equality of per-gate approximation classes.",
+  "oracles": "Before training, two frozen39b parent arms x3seeds, both float32 and identical weights castfloat64, all development families. Swap teacheru, teacherz, both, or both for Ca/K/Na/Ih groups. Teacherboth float64 must pass unchanged quality and max gate2e-5/current2e-7 floor, else technical stop before training. These are unselectable diagnostic interventions; save full timing-only current traces and evaluator event details. Channel-group effects need not add. Float64 casts diagnose the learned map, not all backend rounding effects.",
+  "preflights": "Dataset/freeze/checkpoint hashes; long composition versus explicit repeated learned recurrence and exact teacher labels; stable gradients; boundedness and V/Ca independence; all36 members isolated/vectorized Adam+clipping parity; chunk boundaries; two CUDA captured updates parity and timing with full optimizer reset. Budget120k fixed before quality. CPU tests exercise small fixtures; actual CUDA preflights run inside notebook before training.",
+  "cost": "After freeze measure each architecture/seed at batch642,80ticks, same dt/readout/input workload and CUDA graph backend as competitive vectorized canonical formula.30paired repetitions with state reset, individual currents computed every tick. Report operational separately if measured; this notebook benchmarks resident ionic core only. No speed claim from training throughput and no promotion from speed alone.",
+  "limits": "Teacher-forced imposed V/Ca ionic operator only. No full compartment, autonomous membrane, causal calcium coupling, multicompartment fidelity or emergent spike/bifurcation guarantee. No new data-scaled confirmation claim. Task39c is a subtask of Task39; Task40 remains gated. Protocol derives from exploratory SQL precedents and is prospective for this run. Architectural superiority and a definitive repair are not assumed."
+}

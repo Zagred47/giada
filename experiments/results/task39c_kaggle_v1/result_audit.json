@@ -1,0 +1,4426 @@
+{
+  "valid": true,
+  "rows": 1872,
+  "channel_metrics": 20592,
+  "checkpoint_hash_valid": true,
+  "freeze_hash_valid": true,
+  "summaries_recomputed": true,
+  "finite": true,
+  "occupancy_violations": 0,
+  "models": {
+    "frozen_local161_SKcanonical": {
+      "development": {
+        "passed": 53,
+        "total": 72,
+        "failures": {
+          "current_rmse": 13,
+          "current_max": 7,
+          "timing": 8,
+          "charge": 7,
+          "timing_only": 6
+        },
+        "failed_channels": {
+          "K_Tst": 5,
+          "NaTa_t": 4,
+          "NaTs2_t": 4,
+          "Im": 2,
+          "SKv3_1": 3,
+          "K_Pst": 3,
+          "Nap_Et2": 3,
+          "Ih": 5,
+          "Ca_LVAst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.31578225600145954
+          },
+          "ramps": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 4.067801625551359
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.1696305833387902
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.2069021826143188
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.05403841270127952
+          },
+          "same_v_history": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 4.330450930324779
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.12004342289788666
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.1067845370093816
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.07444921090094889
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 3.504516452324986
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 35.58628188246722
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.18046948580831318
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 11.871046270213482
+          },
+          "29": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 35.58628188246722
+          },
+          "43": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 33.995865270371205
+          }
+        },
+        "median_severity": 0.04367542344383145,
+        "worst_severity": 35.58628188246722
+      },
+      "stress_diagnostic": {
+        "passed": 56,
+        "total": 72,
+        "failures": {
+          "current_rmse": 13,
+          "current_max": 6,
+          "charge": 3,
+          "timing": 3,
+          "timing_only": 3
+        },
+        "failed_channels": {
+          "K_Tst": 6,
+          "NaTa_t": 1,
+          "SKv3_1": 7,
+          "K_Pst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.07957187448192013
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 5.5665998460377555
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.38873053135608376
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.14441076385782042
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.18355544642631882
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.4480944361288692
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.3401997534759118
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.05851585122590396
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.035325686136881515
+          },
+          "reversal": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.02109506572577772
+          },
+          "activation_boundary": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 2.7269774346924383
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.28517070200874417
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 19,
+            "total": 24,
+            "worst_severity": 5.5665998460377555
+          },
+          "29": {
+            "passed": 18,
+            "total": 24,
+            "worst_severity": 5.375851907034284
+          },
+          "43": {
+            "passed": 19,
+            "total": 24,
+            "worst_severity": 3.4480944361288692
+          }
+        },
+        "median_severity": 0.0552803503115538,
+        "worst_severity": 5.5665998460377555
+      }
+    },
+    "joint_wbase_i0_s0_d0": {
+      "development": {
+        "passed": 7,
+        "total": 72,
+        "failures": {
+          "current_rmse": 44,
+          "timing": 28,
+          "gate": 32,
+          "current_max": 42,
+          "gate_max": 32,
+          "timing_only": 6,
+          "charge": 24,
+          "gate_rmse": 10
+        },
+        "failed_channels": {
+          "Ca_LVAst": 31,
+          "Im": 40,
+          "K_Pst": 18,
+          "SKv3_1": 12,
+          "Ca_HVA": 10,
+          "NaTa_t": 12,
+          "NaTs2_t": 18,
+          "K_Tst": 6,
+          "Ih": 13,
+          "Nap_Et2": 10,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.376946846644084
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 21.95802627740242
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.2275989912652843
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 29.136697292897683
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.1684736410776777
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 20.476692326185542
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.2182056903839111
+          },
+          "calcium_switch": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.952196781778648
+          },
+          "channel_block": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.929253339767456
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 144.21764647458664
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 601.6263983048926
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 4.05416186527565
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 2,
+            "total": 24,
+            "worst_severity": 601.6263983048926
+          },
+          "29": {
+            "passed": 2,
+            "total": 24,
+            "worst_severity": 439.46421994530095
+          },
+          "43": {
+            "passed": 3,
+            "total": 24,
+            "worst_severity": 556.587069666467
+          }
+        },
+        "median_severity": 1.9133528073628745,
+        "worst_severity": 601.6263983048926
+      },
+      "stress_diagnostic": {
+        "passed": 11,
+        "total": 72,
+        "failures": {
+          "gate": 29,
+          "current_rmse": 46,
+          "current_max": 43,
+          "gate_max": 29,
+          "timing": 28,
+          "charge": 20,
+          "gate_rmse": 3,
+          "timing_only": 2
+        },
+        "failed_channels": {
+          "Ca_LVAst": 24,
+          "Im": 44,
+          "SKv3_1": 14,
+          "NaTa_t": 12,
+          "NaTs2_t": 22,
+          "K_Tst": 6,
+          "Ca_HVA": 17,
+          "Ih": 15,
+          "SK_E2": 4,
+          "K_Pst": 19,
+          "Nap_Et2": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.3112704753875732
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 21.262213308780233
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 3.4329695699063607
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.3018595621723605
+          },
+          "paired_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.9668841388203264
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 20.40128469145529
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.6698958530738324
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.3935985384250285
+          },
+          "channel_block": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 2.077362934748332
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.8597088103522375
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 40.608896175748946
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 8.111524917010357
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 4,
+            "total": 24,
+            "worst_severity": 40.608896175748946
+          },
+          "29": {
+            "passed": 3,
+            "total": 24,
+            "worst_severity": 31.2575675918813
+          },
+          "43": {
+            "passed": 4,
+            "total": 24,
+            "worst_severity": 39.84698807651533
+          }
+        },
+        "median_severity": 1.7072742138605372,
+        "worst_severity": 40.608896175748946
+      }
+    },
+    "joint_wbase_i0_s0_d1": {
+      "development": {
+        "passed": 7,
+        "total": 72,
+        "failures": {
+          "gate": 32,
+          "current_rmse": 36,
+          "current_max": 41,
+          "gate_max": 32,
+          "charge": 18,
+          "timing": 19,
+          "timing_only": 9
+        },
+        "failed_channels": {
+          "Ca_LVAst": 30,
+          "Ca_HVA": 20,
+          "NaTa_t": 8,
+          "NaTs2_t": 19,
+          "K_Tst": 7,
+          "SK_E2": 5,
+          "Im": 12,
+          "K_Pst": 18,
+          "SKv3_1": 6,
+          "Nap_Et2": 6,
+          "Ih": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.0244005249028727
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 6.9500406002623665
+          },
+          "chirp": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.104367772738139
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 14.549469079679525
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.4817933241526287
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 11.203236004260889
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.881872574488322
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.5879293282826743
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.607927680015564
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 39.664444147169924
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 94.38731685125896
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.74236064450305
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 3,
+            "total": 24,
+            "worst_severity": 47.442799820414365
+          },
+          "29": {
+            "passed": 2,
+            "total": 24,
+            "worst_severity": 84.03551108433238
+          },
+          "43": {
+            "passed": 2,
+            "total": 24,
+            "worst_severity": 94.38731685125896
+          }
+        },
+        "median_severity": 1.466427246729533,
+        "worst_severity": 94.38731685125896
+      },
+      "stress_diagnostic": {
+        "passed": 16,
+        "total": 72,
+        "failures": {
+          "gate": 24,
+          "current_rmse": 38,
+          "current_max": 37,
+          "gate_max": 24,
+          "timing": 29,
+          "charge": 16,
+          "timing_only": 5
+        },
+        "failed_channels": {
+          "Ca_LVAst": 27,
+          "Im": 28,
+          "NaTa_t": 6,
+          "NaTs2_t": 22,
+          "K_Tst": 11,
+          "Ca_HVA": 28,
+          "SK_E2": 3,
+          "K_Pst": 22,
+          "SKv3_1": 8,
+          "Nap_Et2": 3,
+          "Ih": 1
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.5923500061035156
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 10.15852052501702
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.6132575286001716
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.8358976438518773
+          },
+          "paired_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.8104231009923277
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 10.512834255881454
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6928483645121257
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8076508839925131
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.2474542768809345
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.2811486160591408
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 27.541969924872745
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.9337880941139582
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 5,
+            "total": 24,
+            "worst_severity": 24.89169498060536
+          },
+          "29": {
+            "passed": 5,
+            "total": 24,
+            "worst_severity": 21.969520001167588
+          },
+          "43": {
+            "passed": 6,
+            "total": 24,
+            "worst_severity": 27.541969924872745
+          }
+        },
+        "median_severity": 1.2518238698062853,
+        "worst_severity": 27.541969924872745
+      }
+    },
+    "joint_wbase_i0_s1_d0": {
+      "development": {
+        "passed": 14,
+        "total": 72,
+        "failures": {
+          "gate": 29,
+          "current_rmse": 48,
+          "timing": 29,
+          "gate_max": 28,
+          "current_max": 35,
+          "gate_rmse": 15,
+          "charge": 27,
+          "timing_only": 5
+        },
+        "failed_channels": {
+          "Ca_LVAst": 26,
+          "Im": 41,
+          "K_Pst": 17,
+          "Ca_HVA": 9,
+          "NaTa_t": 9,
+          "NaTs2_t": 14,
+          "K_Tst": 6,
+          "Ih": 19,
+          "SK_E2": 4,
+          "SKv3_1": 5,
+          "Nap_Et2": 7
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 2.402317508777512
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 21.629075411350172
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 2.3263803884736234
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 22.64560541590219
+          },
+          "paired_recovery": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 2.398227429479096
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 61.95314855162145
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.238971815508247
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.663351729047342
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.248202063100228
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 79.2540942964195
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 549.1926483546995
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.783598495002124
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 4,
+            "total": 24,
+            "worst_severity": 466.17265078936924
+          },
+          "29": {
+            "passed": 6,
+            "total": 24,
+            "worst_severity": 249.01010771971758
+          },
+          "43": {
+            "passed": 4,
+            "total": 24,
+            "worst_severity": 549.1926483546995
+          }
+        },
+        "median_severity": 1.9089854051672588,
+        "worst_severity": 549.1926483546995
+      },
+      "stress_diagnostic": {
+        "passed": 16,
+        "total": 72,
+        "failures": {
+          "current_rmse": 42,
+          "timing": 30,
+          "current_max": 41,
+          "gate_max": 30,
+          "gate_rmse": 12,
+          "charge": 27,
+          "gate": 32,
+          "timing_only": 2
+        },
+        "failed_channels": {
+          "Ca_LVAst": 24,
+          "Ih": 19,
+          "NaTa_t": 10,
+          "NaTs2_t": 14,
+          "Im": 45,
+          "K_Tst": 6,
+          "SK_E2": 3,
+          "Ca_HVA": 12,
+          "K_Pst": 20,
+          "SKv3_1": 8,
+          "Nap_Et2": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.3487338073137562
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 32.41067760228025
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 3.0315548394938783
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 3.7619623888773717
+          },
+          "paired_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 4.266367346109436
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 61.869989410115366
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 4.924958681468352
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.9763721278774917
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.9597152868906658
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.511666481159751
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 45.99997510699667
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 6.317753445341133
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 5,
+            "total": 24,
+            "worst_severity": 61.869989410115366
+          },
+          "29": {
+            "passed": 6,
+            "total": 24,
+            "worst_severity": 48.68798462477605
+          },
+          "43": {
+            "passed": 5,
+            "total": 24,
+            "worst_severity": 41.3174831269792
+          }
+        },
+        "median_severity": 1.8043274635565685,
+        "worst_severity": 61.869989410115366
+      }
+    },
+    "joint_wbase_i0_s1_d1": {
+      "development": {
+        "passed": 19,
+        "total": 72,
+        "failures": {
+          "gate": 20,
+          "current_rmse": 34,
+          "current_max": 32,
+          "gate_max": 20,
+          "timing": 17,
+          "charge": 19,
+          "timing_only": 5
+        },
+        "failed_channels": {
+          "Ca_LVAst": 30,
+          "Im": 17,
+          "NaTa_t": 8,
+          "NaTs2_t": 11,
+          "K_Tst": 6,
+          "SK_E2": 6,
+          "Ca_HVA": 7,
+          "SKv3_1": 4,
+          "Ih": 5,
+          "K_Pst": 8,
+          "Nap_Et2": 4
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.150141300937293
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 16.95252243978657
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9579468164641675
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 10.791143338449764
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.4599819978078208
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.9077035985255435
+          },
+          "slow_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.1252435965088903
+          },
+          "calcium_switch": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.6642464543869573
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8641640345255535
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 29.447028278681497
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 192.24140764027163
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.94485139978074
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 6,
+            "total": 24,
+            "worst_severity": 192.24140764027163
+          },
+          "29": {
+            "passed": 6,
+            "total": 24,
+            "worst_severity": 60.154448291141115
+          },
+          "43": {
+            "passed": 7,
+            "total": 24,
+            "worst_severity": 88.79502236361401
+          }
+        },
+        "median_severity": 1.3718374405532494,
+        "worst_severity": 192.24140764027163
+      },
+      "stress_diagnostic": {
+        "passed": 29,
+        "total": 72,
+        "failures": {
+          "gate": 6,
+          "gate_max": 6,
+          "current_rmse": 30,
+          "timing": 27,
+          "current_max": 21,
+          "charge": 16,
+          "timing_only": 8
+        },
+        "failed_channels": {
+          "NaTa_t": 9,
+          "NaTs2_t": 6,
+          "Im": 23,
+          "K_Tst": 6,
+          "Ca_LVAst": 17,
+          "SK_E2": 3,
+          "Ih": 4,
+          "Ca_HVA": 11,
+          "SKv3_1": 9,
+          "K_Pst": 12,
+          "Nap_Et2": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.6265392303466797
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 28.245354824376
+          },
+          "chirp": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.3393132920609938
+          },
+          "rapid_voltage_train": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.6416956312050601
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.0944006604411265
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.580856926632391
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.8169929186503093
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.2647058562548537
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.9660442670186361
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.1263251656171034
+          },
+          "activation_boundary": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 16.993477317030447
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.7345195299339893
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 11,
+            "total": 24,
+            "worst_severity": 28.245354824376
+          },
+          "29": {
+            "passed": 8,
+            "total": 24,
+            "worst_severity": 10.762943047184212
+          },
+          "43": {
+            "passed": 10,
+            "total": 24,
+            "worst_severity": 12.588342177885938
+          }
+        },
+        "median_severity": 0.967940667824855,
+        "worst_severity": 28.245354824376
+      }
+    },
+    "joint_wbase_i1_s0_d0": {
+      "development": {
+        "passed": 33,
+        "total": 72,
+        "failures": {
+          "gate": 9,
+          "gate_max": 9,
+          "current_rmse": 21,
+          "current_max": 18,
+          "charge": 15,
+          "timing": 17,
+          "timing_only": 9
+        },
+        "failed_channels": {
+          "NaTa_t": 9,
+          "NaTs2_t": 9,
+          "K_Tst": 6,
+          "Ca_LVAst": 11,
+          "Ih": 6,
+          "SK_E2": 6,
+          "Ca_HVA": 3,
+          "Im": 3,
+          "K_Pst": 9,
+          "SKv3_1": 3,
+          "Nap_Et2": 5
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.2533962726593018
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 18.772236068631575
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9773903597622837
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 13.966830688136222
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.1358698209126792
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.43920196582189
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.7618250281779261
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.860606868810952
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.6063878536224365
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 37.89363363082474
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 321.2016027344953
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9235897400573084
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 321.2016027344953
+          },
+          "29": {
+            "passed": 11,
+            "total": 24,
+            "worst_severity": 276.5233297285424
+          },
+          "43": {
+            "passed": 10,
+            "total": 24,
+            "worst_severity": 301.52241028364887
+          }
+        },
+        "median_severity": 0.7709126587295677,
+        "worst_severity": 321.2016027344953
+      },
+      "stress_diagnostic": {
+        "passed": 42,
+        "total": 72,
+        "failures": {
+          "gate": 4,
+          "gate_max": 4,
+          "current_rmse": 23,
+          "timing": 13,
+          "current_max": 14,
+          "charge": 15,
+          "timing_only": 4
+        },
+        "failed_channels": {
+          "NaTa_t": 10,
+          "NaTs2_t": 3,
+          "K_Tst": 6,
+          "Ih": 4,
+          "Ca_LVAst": 6,
+          "SK_E2": 3,
+          "Ca_HVA": 8,
+          "Im": 4,
+          "K_Pst": 15,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.2418746948242188
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 34.97156488043921
+          },
+          "chirp": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.9743176433423297
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6449572229291805
+          },
+          "paired_recovery": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.8758716430520735
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.432496431626535
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.1787140822739581
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.4311774288213533
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6976127624511719
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.6017446517944336
+          },
+          "activation_boundary": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 5.5790110820440555
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 3.4337572328610113
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 34.97156488043921
+          },
+          "29": {
+            "passed": 16,
+            "total": 24,
+            "worst_severity": 22.86125511042842
+          },
+          "43": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 20.01065610944726
+          }
+        },
+        "median_severity": 0.5958329223643881,
+        "worst_severity": 34.97156488043921
+      }
+    },
+    "joint_wbase_i1_s0_d1": {
+      "development": {
+        "passed": 41,
+        "total": 72,
+        "failures": {
+          "current_rmse": 22,
+          "current_max": 16,
+          "charge": 17,
+          "timing": 15,
+          "timing_only": 9
+        },
+        "failed_channels": {
+          "NaTa_t": 9,
+          "NaTs2_t": 9,
+          "K_Tst": 6,
+          "Im": 4,
+          "Ca_LVAst": 12,
+          "Ih": 5,
+          "SK_E2": 6,
+          "Ca_HVA": 3,
+          "SKv3_1": 4,
+          "K_Pst": 8,
+          "Nap_Et2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9008367856343588
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 20.937897048932882
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7636565027026069
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 10.866516474208716
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9396453698476156
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.461128627814864
+          },
+          "slow_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 0.6407690647706795
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6203542571811153
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6385099214059952
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 29.88685743087478
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 232.43900038151418
+          },
+          "seams": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.7501642289928498
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 179.72782059723147
+          },
+          "29": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 181.87728648967263
+          },
+          "43": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 232.43900038151418
+          }
+        },
+        "median_severity": 0.7166254865654085,
+        "worst_severity": 232.43900038151418
+      },
+      "stress_diagnostic": {
+        "passed": 46,
+        "total": 72,
+        "failures": {
+          "current_rmse": 19,
+          "timing": 14,
+          "current_max": 16,
+          "charge": 14,
+          "gate_max": 3,
+          "gate": 3,
+          "timing_only": 7
+        },
+        "failed_channels": {
+          "NaTa_t": 7,
+          "K_Tst": 7,
+          "NaTs2_t": 2,
+          "Ca_LVAst": 5,
+          "Ih": 3,
+          "SK_E2": 3,
+          "SKv3_1": 9,
+          "Ca_HVA": 8,
+          "Im": 7,
+          "Nap_Et2": 1,
+          "K_Pst": 8
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9301841259002686
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 41.48959785243485
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.9900913701251812
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.706548836770042
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9451899160172087
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 7.103983740556802
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6918856646095427
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.49845751025443197
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5852607578737608
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.7457951704661052
+          },
+          "activation_boundary": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 6.951529714822632
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.845118802837258
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 41.48959785243485
+          },
+          "29": {
+            "passed": 17,
+            "total": 24,
+            "worst_severity": 22.294081477499674
+          },
+          "43": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 12.837183186040704
+          }
+        },
+        "median_severity": 0.6583042115228357,
+        "worst_severity": 41.48959785243485
+      }
+    },
+    "joint_wbase_i1_s1_d0": {
+      "development": {
+        "passed": 35,
+        "total": 72,
+        "failures": {
+          "current_rmse": 27,
+          "gate": 3,
+          "gate_max": 3,
+          "timing": 18,
+          "current_max": 18,
+          "charge": 17,
+          "timing_only": 8
+        },
+        "failed_channels": {
+          "Im": 10,
+          "NaTa_t": 8,
+          "NaTs2_t": 9,
+          "K_Tst": 6,
+          "SK_E2": 6,
+          "Ca_LVAst": 6,
+          "SKv3_1": 6,
+          "Ca_HVA": 5,
+          "K_Pst": 7,
+          "Nap_Et2": 5,
+          "Ih": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.2719392160410254
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 12.244427118366813
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9530723094940186
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 13.989194397504493
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9084999561309814
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 6.58215154643581
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.8183916409810384
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.121377944946289
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7888376712799072
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 37.89414554351677
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 303.5901048614118
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.1830760341265059
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 11,
+            "total": 24,
+            "worst_severity": 303.5901048614118
+          },
+          "29": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 203.75677236002159
+          },
+          "43": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 103.95553656449157
+          }
+        },
+        "median_severity": 0.8392542600631714,
+        "worst_severity": 303.5901048614118
+      },
+      "stress_diagnostic": {
+        "passed": 38,
+        "total": 72,
+        "failures": {
+          "gate": 4,
+          "gate_max": 4,
+          "current_rmse": 23,
+          "timing": 11,
+          "current_max": 18,
+          "charge": 15,
+          "timing_only": 5
+        },
+        "failed_channels": {
+          "NaTa_t": 8,
+          "NaTs2_t": 3,
+          "K_Tst": 6,
+          "SK_E2": 3,
+          "Im": 9,
+          "Ca_HVA": 11,
+          "SKv3_1": 9,
+          "K_Pst": 10,
+          "Nap_Et2": 1,
+          "Ca_LVAst": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.133654514948527
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 21.01023265906092
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.4683277796988028
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8161626957204361
+          },
+          "paired_recovery": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.4085916966028778
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 6.766517152012222
+          },
+          "slow_recovery": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.087524523953897
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.3700895816200656
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.1410574118296306
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.404125452041626
+          },
+          "activation_boundary": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 11.656313719409637
+          },
+          "seams": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 3.412758613206551
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 11,
+            "total": 24,
+            "worst_severity": 20.558021342403524
+          },
+          "29": {
+            "passed": 11,
+            "total": 24,
+            "worst_severity": 20.27619848342436
+          },
+          "43": {
+            "passed": 16,
+            "total": 24,
+            "worst_severity": 21.01023265906092
+          }
+        },
+        "median_severity": 0.7941404786948922,
+        "worst_severity": 21.01023265906092
+      }
+    },
+    "joint_wbase_i1_s1_d1": {
+      "development": {
+        "passed": 40,
+        "total": 72,
+        "failures": {
+          "current_rmse": 25,
+          "current_max": 19,
+          "charge": 16,
+          "timing": 15,
+          "timing_only": 7
+        },
+        "failed_channels": {
+          "Ca_LVAst": 16,
+          "NaTa_t": 7,
+          "NaTs2_t": 9,
+          "K_Tst": 6,
+          "Im": 4,
+          "SK_E2": 6,
+          "SKv3_1": 7,
+          "Ca_HVA": 7,
+          "K_Pst": 6,
+          "Nap_Et2": 4,
+          "Ih": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9717880702257514
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 17.526644113042916
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6085717062241616
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 12.881515138987018
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.831681489944458
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 26.752169148480185
+          },
+          "slow_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 0.7434993982315063
+          },
+          "calcium_switch": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.8551298399496928
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.7371743520100912
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 34.979925894667836
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 149.97806506542307
+          },
+          "seams": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.4635905701227765
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 149.97806506542307
+          },
+          "29": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 101.63604964594546
+          },
+          "43": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 96.72272043440873
+          }
+        },
+        "median_severity": 0.8080363273620605,
+        "worst_severity": 149.97806506542307
+      },
+      "stress_diagnostic": {
+        "passed": 38,
+        "total": 72,
+        "failures": {
+          "current_rmse": 23,
+          "current_max": 17,
+          "charge": 16,
+          "timing": 18,
+          "timing_only": 10
+        },
+        "failed_channels": {
+          "NaTs2_t": 3,
+          "K_Tst": 6,
+          "NaTa_t": 5,
+          "Ca_LVAst": 12,
+          "SK_E2": 3,
+          "Ca_HVA": 17,
+          "Im": 6,
+          "SKv3_1": 9,
+          "K_Pst": 6,
+          "Ih": 1
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8987685044606527
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 35.546730435301555
+          },
+          "chirp": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.3744490876587778
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.8205678529701635
+          },
+          "paired_recovery": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.0613457887219124
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 25.6612343465278
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.5977272987365723
+          },
+          "calcium_switch": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.7534019968789398
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6233394145965576
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.9397171513624328
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 9.023018248844352
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.199175122768769
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 25.6612343465278
+          },
+          "29": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 21.622546293780626
+          },
+          "43": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 35.546730435301555
+          }
+        },
+        "median_severity": 0.6940624760084193,
+        "worst_severity": 35.546730435301555
+      }
+    },
+    "joint_wseparate_i0_s0_d0": {
+      "development": {
+        "passed": 13,
+        "total": 72,
+        "failures": {
+          "current_rmse": 47,
+          "gate_max": 24,
+          "timing": 26,
+          "current_max": 36,
+          "gate": 24,
+          "gate_rmse": 4,
+          "charge": 18,
+          "timing_only": 4
+        },
+        "failed_channels": {
+          "Ca_LVAst": 25,
+          "Im": 28,
+          "K_Pst": 17,
+          "NaTs2_t": 9,
+          "Ih": 21,
+          "NaTa_t": 5,
+          "K_Tst": 4,
+          "SK_E2": 6,
+          "Nap_Et2": 10,
+          "SKv3_1": 5,
+          "Ca_HVA": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 2.318958441416423
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.998585415675848
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.191765917042678
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 4.3667699037425605
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.899393399556478
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 9.737605166712667
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.930208097654602
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.7540242550963363
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.23361109455788
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 11.86554871572827
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 192.56635973886245
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 4.492645238300366
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 4,
+            "total": 24,
+            "worst_severity": 192.56635973886245
+          },
+          "29": {
+            "passed": 4,
+            "total": 24,
+            "worst_severity": 44.46031577445148
+          },
+          "43": {
+            "passed": 5,
+            "total": 24,
+            "worst_severity": 34.530600090946805
+          }
+        },
+        "median_severity": 1.768824826587819,
+        "worst_severity": 192.56635973886245
+      },
+      "stress_diagnostic": {
+        "passed": 21,
+        "total": 72,
+        "failures": {
+          "current_rmse": 38,
+          "gate_max": 14,
+          "timing": 25,
+          "current_max": 30,
+          "gate": 14,
+          "charge": 25,
+          "timing_only": 6
+        },
+        "failed_channels": {
+          "Ca_LVAst": 25,
+          "Im": 33,
+          "NaTs2_t": 6,
+          "Ih": 22,
+          "NaTa_t": 4,
+          "K_Tst": 4,
+          "K_Pst": 15,
+          "SKv3_1": 9,
+          "Ca_HVA": 8,
+          "Nap_Et2": 4,
+          "SK_E2": 1
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.202043930689494
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 4.483593292418181
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.500703502939891
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.101371645702062
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 4.715192628868716
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 9.705861576971062
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.9247062684494276
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.351888053831502
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.9696374734242759
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.140075922012329
+          },
+          "activation_boundary": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 10.152200857454009
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 5.57291079256819
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 6,
+            "total": 24,
+            "worst_severity": 10.152200857454009
+          },
+          "29": {
+            "passed": 7,
+            "total": 24,
+            "worst_severity": 9.491458325564627
+          },
+          "43": {
+            "passed": 8,
+            "total": 24,
+            "worst_severity": 9.705861576971062
+          }
+        },
+        "median_severity": 1.3021015314776532,
+        "worst_severity": 10.152200857454009
+      }
+    },
+    "joint_wseparate_i1_s1_d1": {
+      "development": {
+        "passed": 40,
+        "total": 72,
+        "failures": {
+          "current_rmse": 24,
+          "current_max": 18,
+          "charge": 15,
+          "timing": 13,
+          "timing_only": 8
+        },
+        "failed_channels": {
+          "K_Tst": 5,
+          "Ca_LVAst": 17,
+          "NaTa_t": 4,
+          "NaTs2_t": 4,
+          "SK_E2": 6,
+          "Ca_HVA": 3,
+          "Im": 3,
+          "K_Pst": 9,
+          "SKv3_1": 3,
+          "Nap_Et2": 8,
+          "Ih": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.553331991558272
+          },
+          "ramps": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 2.95815994751442
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.0725996835203553
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 4.786813469130277
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.4734800599256956
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 5.561682947951682
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.555179516474406
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.5376907682445693
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5592405796051025
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 12.823280542170837
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 327.1091307772995
+          },
+          "seams": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 3.6246218151634437
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 16,
+            "total": 24,
+            "worst_severity": 12.823280542170837
+          },
+          "29": {
+            "passed": 11,
+            "total": 24,
+            "worst_severity": 131.40029604817417
+          },
+          "43": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 327.1091307772995
+          }
+        },
+        "median_severity": 0.48629320069810344,
+        "worst_severity": 327.1091307772995
+      },
+      "stress_diagnostic": {
+        "passed": 43,
+        "total": 72,
+        "failures": {
+          "current_rmse": 23,
+          "current_max": 10,
+          "charge": 11,
+          "timing": 10,
+          "timing_only": 6
+        },
+        "failed_channels": {
+          "SK_E2": 2,
+          "K_Tst": 6,
+          "NaTa_t": 2,
+          "Ca_LVAst": 12,
+          "NaTs2_t": 1,
+          "Ca_HVA": 10,
+          "Im": 1,
+          "K_Pst": 12,
+          "SKv3_1": 6,
+          "Nap_Et2": 3,
+          "Ih": 1
+        },
+        "families": {
+          "steps": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.0664955120227886
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 5.0447749016246055
+          },
+          "chirp": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 2.2072389188166697
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.45441876117376456
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.7546800133417351
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 3.8681470905103716
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.6300624922061443
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 2.64581665603285
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.5963345368703207
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.41858781144014234
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 11.827208708972343
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 5.329679602049513
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 4.159890377710276
+          },
+          "29": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 11.827208708972343
+          },
+          "43": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 9.967079036103724
+          }
+        },
+        "median_severity": 0.42042210798102386,
+        "worst_severity": 11.827208708972343
+      }
+    },
+    "joint_wwide_i0_s0_d0": {
+      "development": {
+        "passed": 11,
+        "total": 72,
+        "failures": {
+          "gate": 25,
+          "current_max": 40,
+          "gate_max": 25,
+          "current_rmse": 39,
+          "charge": 22,
+          "gate_rmse": 8,
+          "timing": 23,
+          "timing_only": 10
+        },
+        "failed_channels": {
+          "Im": 37,
+          "SKv3_1": 9,
+          "Ca_HVA": 12,
+          "Ca_LVAst": 30,
+          "NaTa_t": 9,
+          "NaTs2_t": 14,
+          "K_Tst": 7,
+          "SK_E2": 6,
+          "Ih": 6,
+          "Nap_Et2": 9,
+          "K_Pst": 17
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 2.529841661453247
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 18.997312449152144
+          },
+          "chirp": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.9762535492579143
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 29.649629917572916
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 2.1515071392059326
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 20.92201247699566
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 0.8367697397867839
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.821502101197359
+          },
+          "channel_block": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 1.837223768234253
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 81.13579612823403
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 347.57291633934165
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 5.265829007594813
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 6,
+            "total": 24,
+            "worst_severity": 347.57291633934165
+          },
+          "29": {
+            "passed": 2,
+            "total": 24,
+            "worst_severity": 188.0544500531959
+          },
+          "43": {
+            "passed": 3,
+            "total": 24,
+            "worst_severity": 333.0190643403076
+          }
+        },
+        "median_severity": 1.831766963005066,
+        "worst_severity": 347.57291633934165
+      },
+      "stress_diagnostic": {
+        "passed": 17,
+        "total": 72,
+        "failures": {
+          "gate": 19,
+          "current_max": 38,
+          "gate_max": 19,
+          "current_rmse": 38,
+          "timing": 29,
+          "charge": 21,
+          "timing_only": 7
+        },
+        "failed_channels": {
+          "Im": 36,
+          "Ca_LVAst": 21,
+          "SKv3_1": 10,
+          "K_Pst": 24,
+          "Ca_HVA": 23,
+          "NaTa_t": 9,
+          "NaTs2_t": 16,
+          "K_Tst": 10,
+          "SK_E2": 4,
+          "Ih": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 2.4200260639190674
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 33.99640376535758
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 3.500844143639992
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_severity": 1.7752356730929653
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 2.1934888542532915
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 20.83686284561009
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.3123319298626674
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.2452929164303495
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 1.9408007462819419
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 1.2787677697963173
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 29.446265706418288
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 8.277966504153378
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 4,
+            "total": 24,
+            "worst_severity": 33.99640376535758
+          },
+          "29": {
+            "passed": 6,
+            "total": 24,
+            "worst_severity": 26.34513235789412
+          },
+          "43": {
+            "passed": 7,
+            "total": 24,
+            "worst_severity": 26.23717989860996
+          }
+        },
+        "median_severity": 1.2620303431133335,
+        "worst_severity": 33.99640376535758
+      }
+    },
+    "joint_wwide_i1_s1_d1": {
+      "development": {
+        "passed": 44,
+        "total": 72,
+        "failures": {
+          "gate": 1,
+          "gate_max": 1,
+          "current_rmse": 20,
+          "current_max": 16,
+          "charge": 16,
+          "timing": 14,
+          "timing_only": 7
+        },
+        "failed_channels": {
+          "NaTa_t": 9,
+          "NaTs2_t": 9,
+          "K_Tst": 6,
+          "Im": 4,
+          "SK_E2": 6,
+          "Ca_HVA": 3,
+          "K_Pst": 3,
+          "SKv3_1": 4,
+          "Ca_LVAst": 5,
+          "Nap_Et2": 5,
+          "Ih": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.0555922985076904
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 10.941194262401064
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.531490301372738
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 13.194368168787454
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.9416083494822185
+          },
+          "same_v_history": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 6.339882352784634
+          },
+          "slow_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_severity": 0.6234208742777507
+          },
+          "calcium_switch": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.7392920703512319
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_severity": 0.6248076756795248
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 35.88441702235466
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 247.91672729993746
+          },
+          "seams": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.2394497547006265
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 15,
+            "total": 24,
+            "worst_severity": 247.91672729993746
+          },
+          "29": {
+            "passed": 13,
+            "total": 24,
+            "worst_severity": 140.57214309963283
+          },
+          "43": {
+            "passed": 16,
+            "total": 24,
+            "worst_severity": 190.16388606155022
+          }
+        },
+        "median_severity": 0.7308689959381405,
+        "worst_severity": 247.91672729993746
+      },
+      "stress_diagnostic": {
+        "passed": 38,
+        "total": 72,
+        "failures": {
+          "gate": 1,
+          "gate_max": 1,
+          "current_rmse": 23,
+          "timing": 18,
+          "current_max": 17,
+          "charge": 13,
+          "timing_only": 9
+        },
+        "failed_channels": {
+          "NaTa_t": 6,
+          "NaTs2_t": 3,
+          "K_Tst": 6,
+          "SK_E2": 3,
+          "Ca_LVAst": 9,
+          "Im": 12,
+          "Ca_HVA": 10,
+          "K_Pst": 9,
+          "SKv3_1": 9,
+          "Nap_Et2": 2
+        },
+        "families": {
+          "steps": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.0481456915537517
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 11.57532886422699
+          },
+          "chirp": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.4188881889698752
+          },
+          "rapid_voltage_train": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.540797417112078
+          },
+          "paired_recovery": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 1.116290799608334
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 6.584499096942128
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 0.9313903601345752
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 1.212670088276133
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_severity": 0.45179029305775964
+          },
+          "reversal": {
+            "passed": 4,
+            "total": 6,
+            "worst_severity": 0.525881846745809
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_severity": 9.976645724274992
+          },
+          "seams": {
+            "passed": 3,
+            "total": 6,
+            "worst_severity": 3.304741271241137
+          }
+        },
+        "seeds": {
+          "17": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 9.729677796769444
+          },
+          "29": {
+            "passed": 12,
+            "total": 24,
+            "worst_severity": 8.273246277282716
+          },
+          "43": {
+            "passed": 14,
+            "total": 24,
+            "worst_severity": 11.57532886422699
+          }
+        },
+        "median_severity": 0.7872308447076041,
+        "worst_severity": 11.57532886422699
+      }
+    }
+  },
+  "budgets": {
+    "30000_60000": {
+      "improved_members": 36,
+      "median_reduction": 0.5828009425235063,
+      "ratios": [
+        0.6197750740586488,
+        0.3912572858519206,
+        0.3893146577723409,
+        0.503080228297426,
+        0.6958919779190815,
+        0.5955382537367135,
+        0.36778753661126823,
+        0.565454991486245,
+        0.4821996120430462,
+        0.15456864501626336,
+        0.06287632734257975,
+        0.18930283146440538,
+        0.7288634502131766,
+        0.1842894761384628,
+        0.6473601251615276,
+        0.880740972726557,
+        0.3261843357252408,
+        0.463137223939914,
+        0.3270325179454468,
+        0.43252042678135016,
+        0.3197501605937102,
+        0.2423498193266547,
+        0.4186207670084162,
+        0.2637986359324288,
+        0.5091584657367217,
+        0.6062661379729988,
+        0.6248678881838357,
+        0.27688815664921557,
+        0.7415021988983066,
+        0.35727740663535135,
+        0.167449256539287,
+        0.19570370364612422,
+        0.16667354181235008,
+        0.4157773479445713,
+        0.4850590800907821,
+        0.5578769289561915
+      ]
+    },
+    "60000_120000": {
+      "improved_members": 32,
+      "median_reduction": 0.24269331537047195,
+      "ratios": [
+        0.4460414047161268,
+        0.9828130543203165,
+        0.8665714334887766,
+        0.6872834037102599,
+        0.6069371161522554,
+        0.6215880333954256,
+        0.6049453463118502,
+        0.850281542101585,
+        0.7312112771938644,
+        0.47751842045907306,
+        1.1271742876755237,
+        0.5870173562325974,
+        0.2799771052640319,
+        1.0594836536043228,
+        0.2946577496408599,
+        0.48082571842930727,
+        0.35729746330572293,
+        0.8275863914330426,
+        0.7766772823595751,
+        1.0597280935723128,
+        0.9080573010247018,
+        0.8002736612660514,
+        0.7200464896399146,
+        0.9218276100309165,
+        0.9436092437431779,
+        0.9275173824325011,
+        0.9579832337227295,
+        0.8836100816637873,
+        0.7886420746120323,
+        1.1761802794750766,
+        0.737936086899481,
+        0.8741681300641797,
+        0.7216691875127498,
+        0.38213170254836076,
+        0.6514768559686454,
+        0.5507849249144344
+      ]
+    },
+    "90000_120000": {
+      "improved_members": 20,
+      "median_reduction": 0.025806155838081712,
+      "ratios": [
+        1.0325529214910947,
+        1.1321503150125294,
+        1.017741203601453,
+        0.7008033082044693,
+        0.7432970187918257,
+        0.7268245283156751,
+        0.823537667493262,
+        0.9789231310674347,
+        0.88046340477865,
+        0.8125929624104276,
+        1.4831070452376047,
+        0.837743701909622,
+        0.5158321860146566,
+        1.3912127673536812,
+        0.6235845838022761,
+        0.6230010142805856,
+        0.8701437432986456,
+        1.0396395272074432,
+        0.9694645572564019,
+        0.9969414963037503,
+        0.8444465885898482,
+        1.2000639352144649,
+        1.1209620214030425,
+        1.5083254432205222,
+        1.1060147935648055,
+        1.1597001179740816,
+        1.1052970825542734,
+        1.5180586038790636,
+        1.107363954254598,
+        1.6016614284477457,
+        0.9651632197266803,
+        1.1931099014621347,
+        0.9486425962376095,
+        0.6573402941675258,
+        0.6271778967053665,
+        0.6235867465604424
+      ]
+    }
+  },
+  "selected_steps": {
+    "90000": 16,
+    "120000": 19,
+    "60000": 1
+  },
+  "supported_contrasts": [
+    {
+      "axis": "information",
+      "control": "base_i0_s0_d0",
+      "treatment": "base_i1_s0_d0",
+      "paired_ratios": [
+        0.4068337870173085,
+        0.4372575326196539,
+        0.29858275426654035
+      ],
+      "worst_ratios": [
+        0.5338888114608903,
+        0.6292283129738312,
+        0.5417344863299379
+      ],
+      "supported": true
+    },
+    {
+      "axis": "information",
+      "control": "base_i0_s1_d0",
+      "treatment": "base_i1_s1_d0",
+      "paired_ratios": [
+        0.472550555672799,
+        0.8477382444991448,
+        0.29061061442673786
+      ],
+      "worst_ratios": [
+        0.6512396305260364,
+        0.8182670744810385,
+        0.18928792451233112
+      ],
+      "supported": true
+    },
+    {
+      "axis": "duration",
+      "control": "base_i0_s0_d0",
+      "treatment": "base_i0_s0_d1",
+      "paired_ratios": [
+        0.81804367759087,
+        0.7211118018835991,
+        0.542637122491214
+      ],
+      "worst_ratios": [
+        0.07885757665236504,
+        0.19122264628231186,
+        0.16958230256376647
+      ],
+      "supported": true
+    }
+  ],
+  "all_contrasts": [
+    {
+      "axis": "information",
+      "control": "base_i0_s0_d0",
+      "treatment": "base_i1_s0_d0",
+      "paired_ratios": [
+        0.4068337870173085,
+        0.4372575326196539,
+        0.29858275426654035
+      ],
+      "worst_ratios": [
+        0.5338888114608903,
+        0.6292283129738312,
+        0.5417344863299379
+      ],
+      "supported": true
+    },
+    {
+      "axis": "information",
+      "control": "base_i0_s0_d1",
+      "treatment": "base_i1_s0_d1",
+      "paired_ratios": [
+        0.4931716820029294,
+        0.5413518650187831,
+        0.4645107382249067
+      ],
+      "worst_ratios": [
+        3.788305523231275,
+        2.164290835420193,
+        2.462608411125884
+      ],
+      "supported": false
+    },
+    {
+      "axis": "information",
+      "control": "base_i0_s1_d0",
+      "treatment": "base_i1_s1_d0",
+      "paired_ratios": [
+        0.472550555672799,
+        0.8477382444991448,
+        0.29061061442673786
+      ],
+      "worst_ratios": [
+        0.6512396305260364,
+        0.8182670744810385,
+        0.18928792451233112
+      ],
+      "supported": true
+    },
+    {
+      "axis": "information",
+      "control": "base_i0_s1_d1",
+      "treatment": "base_i1_s1_d1",
+      "paired_ratios": [
+        0.5913042701164819,
+        0.5718255965654522,
+        0.5425252046165131
+      ],
+      "worst_ratios": [
+        0.7801548423223518,
+        1.6895849356649042,
+        1.089280883767684
+      ],
+      "supported": false
+    },
+    {
+      "axis": "support",
+      "control": "base_i0_s0_d0",
+      "treatment": "base_i0_s1_d0",
+      "paired_ratios": [
+        1.0074289907560179,
+        0.659761663745241,
+        0.860659231032293
+      ],
+      "worst_ratios": [
+        0.7748540491288781,
+        0.5666220284115764,
+        0.9867147087764749
+      ],
+      "supported": false
+    },
+    {
+      "axis": "support",
+      "control": "base_i0_s0_d1",
+      "treatment": "base_i0_s1_d1",
+      "paired_ratios": [
+        0.940031703419541,
+        1.144075427383454,
+        0.883670439233654
+      ],
+      "worst_ratios": [
+        4.052067086427543,
+        0.7158217700464052,
+        0.9407516319543482
+      ],
+      "supported": false
+    },
+    {
+      "axis": "support",
+      "control": "base_i1_s0_d0",
+      "treatment": "base_i1_s1_d0",
+      "paired_ratios": [
+        1.1701612417023508,
+        1.2791207764000587,
+        0.8376796863460606
+      ],
+      "worst_ratios": [
+        0.9451699564287632,
+        0.7368520137524948,
+        0.34476885637355537
+      ],
+      "supported": false
+    },
+    {
+      "axis": "support",
+      "control": "base_i1_s0_d1",
+      "treatment": "base_i1_s1_d1",
+      "paired_ratios": [
+        1.1270816645825648,
+        1.208477620663077,
+        1.0320826762602846
+      ],
+      "worst_ratios": [
+        0.834473286144846,
+        0.5588166153540924,
+        0.4161208759100354
+      ],
+      "supported": false
+    },
+    {
+      "axis": "duration",
+      "control": "base_i0_s0_d0",
+      "treatment": "base_i0_s0_d1",
+      "paired_ratios": [
+        0.81804367759087,
+        0.7211118018835991,
+        0.542637122491214
+      ],
+      "worst_ratios": [
+        0.07885757665236504,
+        0.19122264628231186,
+        0.16958230256376647
+      ],
+      "supported": true
+    },
+    {
+      "axis": "duration",
+      "control": "base_i0_s1_d0",
+      "treatment": "base_i0_s1_d1",
+      "paired_ratios": [
+        0.7633163218186232,
+        1.2504610956749944,
+        0.5571454613937734
+      ],
+      "worst_ratios": [
+        0.4123824237967406,
+        0.24157432339594082,
+        0.1616828313882767
+      ],
+      "supported": false
+    },
+    {
+      "axis": "duration",
+      "control": "base_i1_s0_d0",
+      "treatment": "base_i1_s0_d1",
+      "paired_ratios": [
+        0.9916481602649868,
+        0.8927810036752583,
+        0.8441906531936604
+      ],
+      "worst_ratios": [
+        0.5595483306034253,
+        0.6577285419939721,
+        0.7708846588313406
+      ],
+      "supported": false
+    },
+    {
+      "axis": "duration",
+      "control": "base_i1_s1_d0",
+      "treatment": "base_i1_s1_d1",
+      "paired_ratios": [
+        0.9551405561217486,
+        0.8434745826982257,
+        1.0401046638990499
+      ],
+      "worst_ratios": [
+        0.494014998064208,
+        0.49881065776975925,
+        0.9304239449950242
+      ],
+      "supported": false
+    },
+    {
+      "axis": "architecture",
+      "control": "base_i0_s0_d0",
+      "treatment": "wide_i0_s0_d0",
+      "paired_ratios": [
+        0.9138852001885213,
+        1.1358481240561764,
+        0.737608211535897
+      ],
+      "worst_ratios": [
+        0.5777221832662974,
+        0.4279175448608821,
+        0.5983233935705121
+      ],
+      "supported": false
+    },
+    {
+      "axis": "architecture",
+      "control": "base_i1_s1_d1",
+      "treatment": "wide_i1_s1_d1",
+      "paired_ratios": [
+        0.8649158546536289,
+        0.9731598437961615,
+        0.8751310067276611
+      ],
+      "worst_ratios": [
+        1.6530199078898093,
+        1.3830933373475582,
+        1.9660725546952271
+      ],
+      "supported": false
+    },
+    {
+      "axis": "architecture",
+      "control": "base_i0_s0_d0",
+      "treatment": "separate_i0_s0_d0",
+      "paired_ratios": [
+        0.9306212542115323,
+        1.1401840069301312,
+        0.5598268447659237
+      ],
+      "worst_ratios": [
+        0.3200763136082894,
+        0.10116936432273223,
+        0.062039889125773545
+      ],
+      "supported": false
+    },
+    {
+      "axis": "architecture",
+      "control": "base_i1_s1_d1",
+      "treatment": "separate_i1_s1_d1",
+      "paired_ratios": [
+        0.49565351665191776,
+        0.7397553235056898,
+        0.654608759711764
+      ],
+      "worst_ratios": [
+        0.08550104001259848,
+        1.292851271826424,
+        3.381926493673473
+      ],
+      "supported": false
+    }
+  ],
+  "resident_cost": {
+    "base_i0_s0_d0": {
+      "speedup_per_seed": [
+        8.005609279021764,
+        7.998656387988651,
+        8.001745183675604
+      ],
+      "saving_per_seed": [
+        0.8750875832179645,
+        0.8749790025123488,
+        0.8750272625420006
+      ],
+      "ci95_per_seed": [
+        [
+          0.8750834491006338,
+          0.880234748672163
+        ],
+        [
+          0.8749368042240742,
+          0.8769246985358025
+        ],
+        [
+          0.8749636388437114,
+          0.8769744901710809
+        ]
+      ],
+      "formula_median_ms": [
+        76.29430389404297,
+        76.28326416015625,
+        76.29706954956055
+      ],
+      "candidate_median_ms": [
+        9.530543804168701,
+        9.537503719329834,
+        9.535599708557129
+      ]
+    },
+    "base_i0_s0_d1": {
+      "speedup_per_seed": [
+        8.003033009915951,
+        8.001445550823398,
+        8.0041350743215
+      ],
+      "saving_per_seed": [
+        0.8750473728134038,
+        0.8750225826457972,
+        0.8750645758843285
+      ],
+      "ci95_per_seed": [
+        [
+          0.8750048672971966,
+          0.8770147516884895
+        ],
+        [
+          0.8749699449228237,
+          0.8769833842409692
+        ],
+        [
+          0.8750310300142699,
+          0.8770470978353855
+        ]
+      ],
+      "formula_median_ms": [
+        76.28078079223633,
+        76.27073669433594,
+        76.26995086669922
+      ],
+      "candidate_median_ms": [
+        9.532432079315186,
+        9.53272008895874,
+        9.529343605041504
+      ]
+    },
+    "base_i0_s1_d0": {
+      "speedup_per_seed": [
+        8.001532996162474,
+        8.005076795311439,
+        8.00571164198517
+      ],
+      "saving_per_seed": [
+        0.8750239479220119,
+        0.8750792746137255,
+        0.8750891806555967
+      ],
+      "ci95_per_seed": [
+        [
+          0.8749818124322847,
+          0.8770050707128484
+        ],
+        [
+          0.8750271712508072,
+          0.8770391791959236
+        ],
+        [
+          0.8750435925739652,
+          0.8770208875396409
+        ]
+      ],
+      "formula_median_ms": [
+        76.28124618530273,
+        76.27571487426758,
+        76.27537536621094
+      ],
+      "candidate_median_ms": [
+        9.53163194656372,
+        9.528800010681152,
+        9.52729606628418
+      ]
+    },
+    "base_i0_s1_d1": {
+      "speedup_per_seed": [
+        8.007894325230083,
+        8.005764304374015,
+        8.00954253183422
+      ],
+      "saving_per_seed": [
+        0.8751232272310333,
+        0.8750900023040202,
+        0.875148924386983
+      ],
+      "ci95_per_seed": [
+        [
+          0.8750860685599098,
+          0.8770822842319136
+        ],
+        [
+          0.8750607764481549,
+          0.8770762788445292
+        ],
+        [
+          0.8751150157472068,
+          0.8771030477527698
+        ]
+      ],
+      "formula_median_ms": [
+        76.27571105957031,
+        76.29238510131836,
+        76.2787857055664
+      ],
+      "candidate_median_ms": [
+        9.524303913116455,
+        9.52897596359253,
+        9.523647785186768
+      ]
+    },
+    "base_i1_s0_d0": {
+      "speedup_per_seed": [
+        8.002944406926563,
+        8.006513556891747,
+        8.006205766794329
+      ],
+      "saving_per_seed": [
+        0.8750459892451006,
+        0.8751016915275641,
+        0.8750968899448615
+      ],
+      "ci95_per_seed": [
+        [
+          0.8749858837946652,
+          0.8769967006170378
+        ],
+        [
+          0.8750549703718983,
+          0.8770810315021008
+        ],
+        [
+          0.8750438950452794,
+          0.8770575634321833
+        ]
+      ],
+      "formula_median_ms": [
+        76.28646469116211,
+        76.28115463256836,
+        76.28238296508789
+      ],
+      "candidate_median_ms": [
+        9.534607887268066,
+        9.529583930969238,
+        9.528304100036621
+      ]
+    },
+    "base_i1_s0_d1": {
+      "speedup_per_seed": [
+        8.007417810719609,
+        8.007350821025774,
+        8.0101599061055
+      ],
+      "saving_per_seed": [
+        0.8751157957185167,
+        0.8751147508836676,
+        0.8751585469047742
+      ],
+      "ci95_per_seed": [
+        [
+          0.8750688646511308,
+          0.8770895059294772
+        ],
+        [
+          0.8750683275827569,
+          0.8770813532884676
+        ],
+        [
+          0.8750969459786027,
+          0.8771157223262706
+        ]
+      ],
+      "formula_median_ms": [
+        76.27638244628906,
+        76.28023910522461,
+        76.29323196411133
+      ],
+      "candidate_median_ms": [
+        9.525439739227295,
+        9.526048183441162,
+        9.52344036102295
+      ]
+    },
+    "base_i1_s1_d0": {
+      "speedup_per_seed": [
+        8.008470484991063,
+        8.008546711738544,
+        8.007307420831289
+      ],
+      "saving_per_seed": [
+        0.875132211265278,
+        0.8751333995765296,
+        0.875114074107691
+      ],
+      "ci95_per_seed": [
+        [
+          0.8750748844968181,
+          0.8770645838240468
+        ],
+        [
+          0.8750966773740642,
+          0.8770964053011121
+        ],
+        [
+          0.8750824488745069,
+          0.8770857425075489
+        ]
+      ],
+      "formula_median_ms": [
+        76.29668807983398,
+        76.28987121582031,
+        76.29000091552734
+      ],
+      "candidate_median_ms": [
+        9.528607845306396,
+        9.524288177490234,
+        9.526272296905518
+      ]
+    },
+    "base_i1_s1_d1": {
+      "speedup_per_seed": [
+        8.009257378456535,
+        8.008088062334519,
+        8.00624795880118
+      ],
+      "saving_per_seed": [
+        0.8751444793224658,
+        0.8751262481675688,
+        0.8750975481716047
+      ],
+      "ci95_per_seed": [
+        [
+          0.8750666732287216,
+          0.8771246261332805
+        ],
+        [
+          0.8750664828003953,
+          0.8770784569890738
+        ],
+        [
+          0.8750743953723068,
+          0.877092670699793
+        ]
+      ],
+      "formula_median_ms": [
+        76.29220962524414,
+        76.29814529418945,
+        76.2857437133789
+      ],
+      "candidate_median_ms": [
+        9.526256084442139,
+        9.526639938354492,
+        9.525775909423828
+      ]
+    },
+    "separate_i0_s0_d0": {
+      "speedup_per_seed": [
+        7.846930946783152,
+        7.842875387509295,
+        7.845878648771992
+      ],
+      "saving_per_seed": [
+        0.8725616413254957,
+        0.8724957427855318,
+        0.8725445491577651
+      ],
+      "ci95_per_seed": [
+        [
+          0.8725335723982631,
+          0.8744813284854815
+        ],
+        [
+          0.8724599377247169,
+          0.8744192939875941
+        ],
+        [
+          0.8724793767357908,
+          0.8744455140197734
+        ]
+      ],
+      "formula_median_ms": [
+        76.27550506591797,
+        76.26665496826172,
+        76.27947235107422
+      ],
+      "candidate_median_ms": [
+        9.720367908477783,
+        9.724128246307373,
+        9.722768306732178
+      ]
+    },
+    "separate_i1_s1_d1": {
+      "speedup_per_seed": [
+        7.843073718170553,
+        7.845325269287944,
+        7.843958706205051
+      ],
+      "saving_per_seed": [
+        0.87249896675262,
+        0.872535558986375,
+        0.8725133523152406
+      ],
+      "ci95_per_seed": [
+        [
+          0.8724584783962481,
+          0.8744196939364045
+        ],
+        [
+          0.872490456861029,
+          0.8744535273739281
+        ],
+        [
+          0.8724395222819404,
+          0.8744137025154167
+        ]
+      ],
+      "formula_median_ms": [
+        76.2790412902832,
+        76.2745132446289,
+        76.27159881591797
+      ],
+      "candidate_median_ms": [
+        9.725280284881592,
+        9.721807956695557,
+        9.724976062774658
+      ]
+    },
+    "wide_i0_s0_d0": {
+      "speedup_per_seed": [
+        7.905164598705179,
+        7.908947709110722,
+        7.906296483257963
+      ],
+      "saving_per_seed": [
+        0.8735004201881647,
+        0.8735609291123807,
+        0.8735185294373811
+      ],
+      "ci95_per_seed": [
+        [
+          0.8734862534770799,
+          0.8754873933133204
+        ],
+        [
+          0.873515116884087,
+          0.8755190271566051
+        ],
+        [
+          0.8734477715935263,
+          0.8754754985243783
+        ]
+      ],
+      "formula_median_ms": [
+        76.27776336669922,
+        76.27571105957031,
+        76.28473663330078
+      ],
+      "candidate_median_ms": [
+        9.648719787597656,
+        9.644031524658203,
+        9.649168014526367
+      ]
+    },
+    "wide_i1_s1_d1": {
+      "speedup_per_seed": [
+        7.906486358705599,
+        7.906111645592199,
+        7.907239159456118
+      ],
+      "saving_per_seed": [
+        0.8735215675901251,
+        0.8735155729333386,
+        0.8735336089044878
+      ],
+      "ci95_per_seed": [
+        [
+          0.8734742797052193,
+          0.8754986962104618
+        ],
+        [
+          0.8734765824581965,
+          0.8754834589514863
+        ],
+        [
+          0.8735222161779136,
+          0.8755097672052349
+        ]
+      ],
+      "formula_median_ms": [
+        76.27688217163086,
+        76.2751350402832,
+        76.28499221801758
+      ],
+      "candidate_median_ms": [
+        9.647615909576416,
+        9.647136211395264,
+        9.646848201751709
+      ]
+    }
+  },
+  "oracle_attribution": {
+    "base_h64_c1_r0": {
+      "float32": {
+        "both_Ih": {
+          "passed": 14,
+          "total": 72,
+          "median_severity": 1.602579551786494,
+          "worst_severity": 487.3195392907974,
+          "worst_gate_rmse": 0.006509941071271896
+        },
+        "both_calcium": {
+          "passed": 32,
+          "total": 72,
+          "median_severity": 0.9661154378903282,
+          "worst_severity": 398.1279385038239,
+          "worst_gate_rmse": 0.005224985536187887
+        },
+        "both_potassium": {
+          "passed": 16,
+          "total": 72,
+          "median_severity": 1.5331870326031858,
+          "worst_severity": 487.3195392907974,
+          "worst_gate_rmse": 0.004145162645727396
+        },
+        "both_sodium": {
+          "passed": 14,
+          "total": 72,
+          "median_severity": 1.6460031862648123,
+          "worst_severity": 487.3195392907974,
+          "worst_gate_rmse": 0.006472410634160042
+        },
+        "learned": {
+          "passed": 14,
+          "total": 72,
+          "median_severity": 1.6460031862648123,
+          "worst_severity": 487.3195392907974,
+          "worst_gate_rmse": 0.006509970407932997
+        },
+        "teacher_both": {
+          "passed": 72,
+          "total": 72,
+          "median_severity": 7.245891659698136e-05,
+          "worst_severity": 0.004868237738264725,
+          "worst_gate_rmse": 2.4341188691323623e-05
+        },
+        "teacher_u": {
+          "passed": 27,
+          "total": 72,
+          "median_severity": 0.9634425242741903,
+          "worst_severity": 5.141537963387812,
+          "worst_gate_rmse": 0.005604139994829893
+        },
+        "teacher_z": {
+          "passed": 28,
+          "total": 72,
+          "median_severity": 1.0616725283810973,
+          "worst_severity": 487.11877136394133,
+          "worst_gate_rmse": 0.006608526688069105
+        }
+      },
+      "float64": {
+        "both_Ih": {
+          "passed": 14,
+          "total": 72,
+          "median_severity": 1.6025804069186709,
+          "worst_severity": 487.3193387303586,
+          "worst_gate_rmse": 0.006509918122437288
+        },
+        "both_calcium": {
+          "passed": 32,
+          "total": 72,
+          "median_severity": 0.9661221601920957,
+          "worst_severity": 398.1279738001104,
+          "worst_gate_rmse": 0.005223934471475193
+        },
+        "both_potassium": {
+          "passed": 16,
+          "total": 72,
+          "median_severity": 1.5331875568420341,
+          "worst_severity": 487.3193387303586,
+          "worst_gate_rmse": 0.004145166410192633
+        },
+        "both_sodium": {
+          "passed": 14,
+          "total": 72,
+          "median_severity": 1.645996697289803,
+          "worst_severity": 487.3193387303586,
+          "worst_gate_rmse": 0.006472386160452417
+        },
+        "learned": {
+          "passed": 14,
+          "total": 72,
+          "median_severity": 1.645996697289803,
+          "worst_severity": 487.3193387303586,
+          "worst_gate_rmse": 0.006509947303099949
+        },
+        "teacher_both": {
+          "passed": 72,
+          "total": 72,
+          "median_severity": 6.987772241735791e-06,
+          "worst_severity": 0.003016365288879387,
+          "worst_gate_rmse": 4.0959950312084506e-08
+        },
+        "teacher_u": {
+          "passed": 27,
+          "total": 72,
+          "median_severity": 0.9634499378753141,
+          "worst_severity": 5.141547425462498,
+          "worst_gate_rmse": 0.005604132059528746
+        },
+        "teacher_z": {
+          "passed": 28,
+          "total": 72,
+          "median_severity": 1.0616776832876622,
+          "worst_severity": 487.1185234380186,
+          "worst_gate_rmse": 0.006607489932442152
+        }
+      }
+    },
+    "base_h8_c1_r0": {
+      "float32": {
+        "both_Ih": {
+          "passed": 16,
+          "total": 72,
+          "median_severity": 1.4099683654567912,
+          "worst_severity": 924.5928264178023,
+          "worst_gate_rmse": 0.012279228307306767
+        },
+        "both_calcium": {
+          "passed": 28,
+          "total": 72,
+          "median_severity": 0.8793068804217498,
+          "worst_severity": 240.20570110621122,
+          "worst_gate_rmse": 0.01041320338845253
+        },
+        "both_potassium": {
+          "passed": 19,
+          "total": 72,
+          "median_severity": 1.3777582701598106,
+          "worst_severity": 924.5928264178023,
+          "worst_gate_rmse": 0.006581605412065983
+        },
+        "both_sodium": {
+          "passed": 18,
+          "total": 72,
+          "median_severity": 1.4439625093108839,
+          "worst_severity": 924.5928264178023,
+          "worst_gate_rmse": 0.012240217067301273
+        },
+        "learned": {
+          "passed": 16,
+          "total": 72,
+          "median_severity": 1.4439625093108839,
+          "worst_severity": 924.5928264178023,
+          "worst_gate_rmse": 0.0122794508934021
+        },
+        "teacher_both": {
+          "passed": 72,
+          "total": 72,
+          "median_severity": 7.245891659698136e-05,
+          "worst_severity": 0.004868237738264725,
+          "worst_gate_rmse": 2.4341188691323623e-05
+        },
+        "teacher_u": {
+          "passed": 29,
+          "total": 72,
+          "median_severity": 0.8607773543249636,
+          "worst_severity": 6.818041919574971,
+          "worst_gate_rmse": 0.007488269824534655
+        },
+        "teacher_z": {
+          "passed": 28,
+          "total": 72,
+          "median_severity": 1.541844240727584,
+          "worst_severity": 924.4629468670863,
+          "worst_gate_rmse": 0.012604756280779839
+        }
+      },
+      "float64": {
+        "both_Ih": {
+          "passed": 16,
+          "total": 72,
+          "median_severity": 1.409966140740499,
+          "worst_severity": 924.5928587850971,
+          "worst_gate_rmse": 0.01227820831227592
+        },
+        "both_calcium": {
+          "passed": 28,
+          "total": 72,
+          "median_severity": 0.8792999093587008,
+          "worst_severity": 240.2057238022369,
+          "worst_gate_rmse": 0.010412102715583304
+        },
+        "both_potassium": {
+          "passed": 19,
+          "total": 72,
+          "median_severity": 1.3777579354965672,
+          "worst_severity": 924.5928587850971,
+          "worst_gate_rmse": 0.0065814349626229715
+        },
+        "both_sodium": {
+          "passed": 18,
+          "total": 72,
+          "median_severity": 1.4439589870504013,
+          "worst_severity": 924.5928587850971,
+          "worst_gate_rmse": 0.01223919807047372
+        },
+        "learned": {
+          "passed": 16,
+          "total": 72,
+          "median_severity": 1.4439589870504013,
+          "worst_severity": 924.5928587850971,
+          "worst_gate_rmse": 0.012278430109952563
+        },
+        "teacher_both": {
+          "passed": 72,
+          "total": 72,
+          "median_severity": 6.987772241735791e-06,
+          "worst_severity": 0.003016365288879387,
+          "worst_gate_rmse": 4.0959950312084506e-08
+        },
+        "teacher_u": {
+          "passed": 29,
+          "total": 72,
+          "median_severity": 0.8607790390699641,
+          "worst_severity": 6.8180349917061775,
+          "worst_gate_rmse": 0.007488262817403557
+        },
+        "teacher_z": {
+          "passed": 28,
+          "total": 72,
+          "median_severity": 1.5430908639370933,
+          "worst_severity": 924.4630115146477,
+          "worst_gate_rmse": 0.012603628147794208
+        }
+      }
+    }
+  },
+  "coefficient_loss_weights": [
+    520.0823364257812,
+    563.1605834960938
+  ],
+  "clipping_fractions": [
+    [
+      0.980525,
+      0.9912916666666667,
+      0.9910916666666667,
+      1.0,
+      1.0,
+      1.0,
+      0.9990666666666667,
+      0.999625,
+      0.999625,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    [
+      0.98865,
+      0.9830833333333333,
+      0.9803166666666666,
+      1.0,
+      1.0,
+      1.0
+    ],
+    [
+      0.88295,
+      0.8878916666666666,
+      0.869525,
+      1.0,
+      1.0,
+      1.0
+    ]
+  ],
+  "last_gradient_probe": [
+    {
+      "architecture": "base",
+      "step": 120000,
+      "losses": [
+        [
+          0.049731604754924774,
+          0.00040546507807448506,
+          6.32088485872373e-05,
+          0.0012127100490033627
+        ],
+        [
+          0.0450347401201725,
+          0.0004567380528897047,
+          4.7932102461345494e-05,
+          0.0009693766478449106
+        ],
+        [
+          0.0524611696600914,
+          0.0005181725136935711,
+          4.072675437782891e-05,
+          0.0010185563005506992
+        ],
+        [
+          0.15170004963874817,
+          0.10984964668750763,
+          2.5016083782247733e-06,
+          0.001386416726745665
+        ],
+        [
+          0.08701440691947937,
+          0.07516703009605408,
+          2.3751938442728715e-06,
+          0.001239899778738618
+        ],
+        [
+          0.08959171175956726,
+          0.06214573234319687,
+          2.4234564079961274e-06,
+          0.001252178568392992
+        ],
+        [
+          0.04522744566202164,
+          0.03473721072077751,
+          0.00077637261711061,
+          0.002698163501918316
+        ],
+        [
+          0.05384078994393349,
+          0.027803564444184303,
+          0.0004785509081557393,
+          0.002218815730884671
+        ],
+        [
+          0.04953398182988167,
+          0.03962862864136696,
+          0.0007483598310500383,
+          0.0025771241635084152
+        ],
+        [
+          0.11027451604604721,
+          0.1428314596414566,
+          7.94430343376007e-06,
+          0.0007702835719101131
+        ],
+        [
+          0.1098509356379509,
+          0.1658952683210373,
+          8.386331501242239e-06,
+          0.0007095910841599107
+        ],
+        [
+          0.11037563532590866,
+          0.12363363802433014,
+          1.1980298040725756e-05,
+          0.0007421112968586385
+        ],
+        [
+          0.006801149342209101,
+          9.024621977005154e-05,
+          1.0275849717800156e-06,
+          0.00020169749041087925
+        ],
+        [
+          0.004557997453957796,
+          6.681235390715301e-05,
+          6.607736509067763e-07,
+          0.00014059127715881914
+        ],
+        [
+          0.011780137196183205,
+          0.00010678922990337014,
+          1.767171283972857e-06,
+          0.0001430507836630568
+        ],
+        [
+          0.012302786111831665,
+          0.03721208497881889,
+          1.3410259498414234e-06,
+          0.00035449478309601545
+        ],
+        [
+          0.006487115751951933,
+          0.027747508138418198,
+          8.209535735659301e-07,
+          0.00017279834719374776
+        ],
+        [
+          0.011278284713625908,
+          0.03489106893539429,
+          9.926773145707557e-07,
+          0.00021934369578957558
+        ],
+        [
+          0.010098643600940704,
+          0.040741387754678726,
+          1.2582311228470644e-06,
+          0.00025716135860420763
+        ],
+        [
+          0.006647316738963127,
+          0.029728954657912254,
+          1.5274964653144707e-06,
+          0.00012273619358893484
+        ],
+        [
+          0.010564953088760376,
+          0.029394255951046944,
+          3.861991899611894e-06,
+          0.00012149907706771046
+        ],
+        [
+          0.022023146972060204,
+          0.14478951692581177,
+          1.2992101119380095e-06,
+          0.0002897919330280274
+        ],
+        [
+          0.02366039901971817,
+          0.13769833743572235,
+          1.2237996998010203e-06,
+          0.00027343566762283444
+        ],
+        [
+          0.019114356487989426,
+          0.11557228863239288,
+          2.2461747448687674e-06,
+          0.00026251471717841923
+        ]
+      ],
+      "gradient_term_norms": [
+        [
+          4.3826422691345215,
+          5.232599258422852,
+          5.2388811111450195,
+          5.944174289703369,
+          5.029390335083008,
+          4.211520671844482,
+          5.239607334136963,
+          8.56363296508789,
+          4.703858375549316,
+          3.850856304168701,
+          3.923851251602173,
+          3.659701108932495,
+          2.4396133422851562,
+          2.3074214458465576,
+          3.9205446243286133,
+          2.1545591354370117,
+          2.2474870681762695,
+          2.5057296752929688,
+          1.5445650815963745,
+          1.660764455795288,
+          2.8274147510528564,
+          3.38525128364563,
+          3.1345510482788086,
+          2.490816593170166
+        ],
+        [
+          0.05277402326464653,
+          0.1176372691988945,
+          0.06985179334878922,
+          36.39641189575195,
+          25.61293601989746,
+          20.81814956665039,
+          4.03035831451416,
+          2.1577279567718506,
+          1.5086047649383545,
+          27.571701049804688,
+          30.761993408203125,
+          31.140918731689453,
+          0.027099786326289177,
+          0.019288411363959312,
+          0.05015083774924278,
+          19.633079528808594,
+          19.596084594726562,
+          21.65024185180664,
+          1.7606799602508545,
+          2.4092929363250732,
+          2.2679877281188965,
+          55.01115036010742,
+          47.37959289550781,
+          46.696346282958984
+        ],
+        [
+          0.00423384876921773,
+          0.007421091664582491,
+          0.0014632736565545201,
+          0.001748564071021974,
+          0.0014621778391301632,
+          0.001298165530897677,
+          0.02950098365545273,
+          0.05010322108864784,
+          0.016285257413983345,
+          0.008005164563655853,
+          0.007490447256714106,
+          0.010258720256388187,
+          0.0011615842813625932,
+          0.0008177308482117951,
+          0.0018422789871692657,
+          0.0015013664960861206,
+          0.0012489453656598926,
+          0.0012352869380265474,
+          0.0011443827534094453,
+          0.002822236390784383,
+          0.006800469942390919,
+          0.00198379042558372,
+          0.0013208342716097832,
+          0.002949007088318467
+        ],
+        [
+          0.05993424355983734,
+          0.05302892252802849,
+          0.036040496081113815,
+          0.03590286895632744,
+          0.04045712947845459,
+          0.034701358526945114,
+          0.09476951509714127,
+          0.09007829427719116,
+          0.09989792853593826,
+          0.02708292566239834,
+          0.025461537763476372,
+          0.020275607705116272,
+          0.017973074689507484,
+          0.02302546426653862,
+          0.01881491392850876,
+          0.018980542197823524,
+          0.017418373376131058,
+          0.01904429867863655,
+          0.025120606645941734,
+          0.009783185087144375,
+          0.013130390085279942,
+          0.03114338219165802,
+          0.038154445588588715,
+          0.02767222560942173
+        ]
+      ],
+      "gradient_norm": [
+        2.198357105255127,
+        2.631834030151367,
+        2.6339523792266846,
+        18.532846450805664,
+        13.214963912963867,
+        10.795459747314453,
+        3.533146858215332,
+        5.023195266723633,
+        2.4278769493103027,
+        14.324844360351562,
+        15.669004440307617,
+        15.695333480834961,
+        10.760004043579102,
+        13.375977516174316,
+        11.373822212219238,
+        15.074348449707031,
+        15.489081382751465,
+        16.940399169921875,
+        14.624424934387207,
+        6.478492259979248,
+        9.301358222961426,
+        43.146873474121094,
+        42.9014892578125,
+        35.301204681396484
+      ],
+      "clipping_count": 24,
+      "members": 24
+    },
+    {
+      "architecture": "wide",
+      "step": 120000,
+      "losses": [
+        [
+          0.048235561698675156,
+          0.0003922872128896415,
+          5.815214535687119e-05,
+          0.001103380462154746
+        ],
+        [
+          0.04642602801322937,
+          0.0004452714347280562,
+          8.475081995129585e-05,
+          0.001145338173955679
+        ],
+        [
+          0.043816883116960526,
+          0.0004385535721667111,
+          6.013708843966015e-05,
+          0.0011480951216071844
+        ],
+        [
+          0.00899831298738718,
+          0.12712793052196503,
+          4.2124156607314944e-06,
+          0.0002714182483032346
+        ],
+        [
+          0.015241377055644989,
+          0.1117115318775177,
+          2.4159107852028683e-06,
+          0.00019680062541738153
+        ],
+        [
+          0.009984009899199009,
+          0.11400455981492996,
+          1.4921512274668203e-06,
+          0.000204570620553568
+        ]
+      ],
+      "gradient_term_norms": [
+        [
+          4.8352789878845215,
+          3.25947642326355,
+          3.015606641769409,
+          1.4341412782669067,
+          2.043328046798706,
+          1.539481282234192
+        ],
+        [
+          0.058278877288103104,
+          0.057923294603824615,
+          0.04305076599121094,
+          54.37967300415039,
+          59.52632522583008,
+          73.79061126708984
+        ],
+        [
+          0.008564647287130356,
+          0.014564965851604939,
+          0.00516453105956316,
+          0.0020013905595988035,
+          0.0019179474329575896,
+          0.003943741787225008
+        ],
+        [
+          0.05649309605360031,
+          0.07068309187889099,
+          0.05867130309343338,
+          0.026111453771591187,
+          0.032927390187978745,
+          0.03057732619345188
+        ]
+      ],
+      "gradient_norm": [
+        2.4260971546173096,
+        1.6373300552368164,
+        1.5137965679168701,
+        38.87751007080078,
+        46.01718521118164,
+        52.48509979248047
+      ],
+      "clipping_count": 6,
+      "members": 6
+    },
+    {
+      "architecture": "separate",
+      "step": 120000,
+      "losses": [
+        [
+          0.031576745212078094,
+          0.00031675302307121456,
+          6.451069202739745e-05,
+          0.0007113015744835138
+        ],
+        [
+          0.03416062518954277,
+          0.00014480315439868718,
+          3.8119222153909504e-05,
+          0.0005261287442408502
+        ],
+        [
+          0.0395340695977211,
+          0.00018545857165008783,
+          6.6528664319776e-05,
+          0.0007694306550547481
+        ],
+        [
+          0.017869465053081512,
+          0.07765785604715347,
+          2.9285922664712416e-06,
+          8.742032514419407e-05
+        ],
+        [
+          0.0051522268913686275,
+          0.06212632358074188,
+          1.3547419257520232e-06,
+          0.00014868118159938604
+        ],
+        [
+          0.003089073346927762,
+          0.06560783088207245,
+          7.643437243132212e-07,
+          0.00011821280349977314
+        ]
+      ],
+      "gradient_term_norms": [
+        [
+          2.1318774223327637,
+          2.5747454166412354,
+          2.470041513442993,
+          4.684538841247559,
+          1.7906957864761353,
+          1.1292356252670288
+        ],
+        [
+          0.10432019829750061,
+          0.054954543709754944,
+          0.030027592554688454,
+          17.958927154541016,
+          14.502429962158203,
+          18.36331558227539
+        ],
+        [
+          0.004732649307698011,
+          0.0023757661692798138,
+          0.003552368376404047,
+          0.002109918277710676,
+          0.0010519740171730518,
+          0.0002541978610679507
+        ],
+        [
+          0.03364301472902298,
+          0.012370821088552475,
+          0.028977347537875175,
+          0.006352557800710201,
+          0.007405846379697323,
+          0.009879514575004578
+        ]
+      ],
+      "gradient_norm": [
+        1.082687258720398,
+        1.2905628681182861,
+        1.2354248762130737,
+        11.027679443359375,
+        10.337703704833984,
+        14.064074516296387
+      ],
+      "clipping_count": 6,
+      "members": 6
+    }
+  ],
+  "sources": {
+    "final_report.json": "bd95e692ade1d5284b0ccb115a2733a34e13fc2ca67f689413855b48a2860cd2",
+    "frozen_checkpoint.pt": "b8003fe3abd1f0d056ff26c06e2df6d3eb58e6d9a12df10d2b5e8852d713b575",
+    "recurrence_evaluation.json": "8c7471c67110f5638045ba3254d55f3087993043f4629e1bacd721022327e41c",
+    "resident_cost_benchmark.json": "76bf38888bfa80750e45d0da21efc0109e888018f9374b38a30681ee5f7b6cae",
+    "selection_freeze.json": "7e48f4143f29116cbf5039fecdc7ab99236468c9358a727e7a0b9759d1af65eb",
+    "training_curves.json": "01bffbcd6da621d600632a230370aa47688eb8751754daf6ad3627961ba27e2b"
+  },
+  "limits": "Post-freeze descriptive audit; no independent CUDA replay. Failure categories overlap. Seed-case counts are not independent studies. Cost is one642-site resident core workload; no LUT or operational transfer comparison."
+}

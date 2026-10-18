@@ -364,7 +364,7 @@ def training_graph(torch,cohorts,static,scales,weights,spec):
         backend='single CUDA graph, three member-vectorized architecture cohorts, independent Adam/clipping')
 
 
-def cost_benchmark(torch,cohorts,seeds,device,output):
+def cost_benchmark(torch,cohorts,seeds,device,output,model_factory=None,splitter=None):
     """Matched resident ionic work, including every current on every tick."""
     from .gate_d_compute_audit import _rates
     n,ticks,repetitions=642,80,30
@@ -405,12 +405,12 @@ def cost_benchmark(torch,cohorts,seeds,device,output):
         a,c=torch.cuda.Event(enable_timing=True),torch.cuda.Event(enable_timing=True)
         a.record();graph.replay();c.record();c.synchronize();return float(a.elapsed_time(c))
     baseline,_,_=capture(exact);rows=[]
-    models=split_models(torch,cohorts,seeds,device)
+    models=(splitter or split_models)(torch,cohorts,seeds,device)
     definitions=[d for g in cohorts for d in g['definitions']]
     # Every arm/seed is frozen before timing; architecture timing differences are descriptive.
     for definition,model in zip(definitions,models):
         for j,seed in enumerate(seeds):
-            iso=model_class(torch)(model.architecture,[seed]).to(device)
+            iso=(model_factory or model_class)(torch)(model.architecture,[seed]).to(device)
             iso.load_state_dict({name:(x.clone() if name=='gbar' else x[j:j+1].clone()) for name,x in model.state_dict().items()})
             graph,state,cur=capture(iso);pairs=[]
             for k in range(repetitions):

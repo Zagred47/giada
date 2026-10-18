@@ -1615,7 +1615,7 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prossima milestone concreta — Task39c
+# 🥇 Prossima milestone concreta — Task39d
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
 > i valutatori isolati. Task38 ha completato il tentativo congiunto senza
@@ -1623,11 +1623,14 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 > migliorano alcuni contrasti ma nessun candidato passa tutti i criteri.
 > Task39b è completata con NO-GO scientifico: nessun nuovo braccio supera
 > tutti i criteri; tutti36 migliorano ancora lo score tra30k e60k.
-> Si esegue ora [Task39c](task39c_preregistration_v1.json), sottotask della39:
-> attribuzione sui coefficienti congelati, 8 bracci informazione×supporto×durata,
-> 4 confronti capacità/condivisione e3seed,36 membri vettorizzati.
-> Ancore held fino10s, selezione development con finestre lunghe, soglie37
-> invariate e benchmark del costo residente dopo freeze.
+> Task39c è conclusa: migliore nuovo braccio44/72 casi development, contro16/72
+> in39b; progresso descrittivo, non effetto causale di un unico intervento.
+> Persistono errori di correnti e timing: NO-GO scientifico.
+> Si prepara [Task39d](task39d_preregistration_v1.json), sottotask della39:
+> 8 bracci scala correnti×storia/esposizione×bilanciamento, 4 sidecar
+> eventi/bias lineare appreso, 3seed,36 membri in due coorti vettorizzate.
+> Oracoli sui nuovi checkpoint39c e audit degli attraversamenti prima del fit.
+> Stessi target/update, soglie37 invariate, costo residente misurato dopo freeze.
 > Task40 non è autorizzata dal solo miglioramento della loss media.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
