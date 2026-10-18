@@ -83,4 +83,15 @@ class Task39dTests(unittest.TestCase):
             dict(recurrence_chunk=4,held_ticks=[1,1000],development_windows_per_family=2),'cpu')
         self.assertEqual(score.shape,(6,));self.assertTrue(np.isfinite(score).all())
 
+    def test_float32_timing_report_has_only_json_scalars(self):
+        ref=np.zeros((64,11),dtype=np.float32)
+        ref[8:32]=np.linspace(0,.01,24,dtype=np.float32)[:,None]
+        ref[32:56]=np.linspace(.01,0,24,dtype=np.float32)[:,None]
+        report=t.timing_audit(ref,np.roll(ref,1,axis=0))
+        self.assertEqual(len(report),11)
+        for row in report:
+            self.assertIs(type(row['threshold']),float)
+            self.assertIs(type(row['perturbation_absolute']),float)
+        self.assertEqual(len(json.loads(json.dumps(report,allow_nan=False))),11)
+
 if __name__=='__main__':unittest.main()

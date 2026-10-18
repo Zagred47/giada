@@ -263,11 +263,11 @@ def load_parents(torch,root,spec,device,dtype):
 def timing_audit(reference,prediction,dt=.1):
     out=[]
     for j,channel in enumerate(p.ionic.CHANNELS):
-        r=reference[:,j];a=prediction[:,j];amp=np.abs(r-r[0]).max();thr=.1*amp
+        r=reference[:,j];a=prediction[:,j];amp=float(np.abs(r-r[0]).max());thr=.1*amp
         active=np.flatnonzero(np.abs(r-r[0])>=thr);ap=np.flatnonzero(np.abs(a-r[0])>=thr)
         if not len(active) or amp<1e-6:continue
         indices=sorted(set([int(active[0]),int(active[-1])]+([int(ap[0]),int(ap[-1])] if len(ap) else [])))
-        eps=max(1e-12,float(np.max(np.abs(r)))*np.finfo(np.float32).eps*4)
+        eps=max(1e-12,float(np.max(np.abs(r)))*float(np.finfo(np.float32).eps)*4)
         perturb=[p.event_metrics(r,a+sign*eps,dt,1e-7) for sign in (-1,1)]
         out.append(dict(channel=channel,event=p.event_metrics(r,a,dt,1e-7),threshold=thr,
             crossing_samples=[dict(index=k,reference=float(r[k]),prediction=float(a[k]),
