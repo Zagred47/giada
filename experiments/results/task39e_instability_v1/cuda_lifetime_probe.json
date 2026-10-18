@@ -1,0 +1,12 @@
+{
+  "valid": true,
+  "gpu": "Tesla T4",
+  "session": "giada-task39e-retry2",
+  "causal_factor": "optimizer state lifetime only",
+  "rows": [
+    {"retain": false, "optimizer_state_alive": [false,false,false], "reused_state_allocations": 1, "parameters_finite": false},
+    {"retain": true, "optimizer_state_alive": [true,true,true], "reused_state_allocations": 0, "parameters_finite": true}
+  ],
+  "scope": "Causal CUDA allocator stress reproduces the implementation defect; does not identify exact first failing minibatch of the old run or prove all biological/model errors resolved.",
+  "thresholds_changed": false
+}

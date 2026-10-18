@@ -133,6 +133,14 @@ def optimizer_preflight(torch,g,s,scales,seeds):
     assert error<=1e-5,error
     return dict(valid=True,cohort=g['key'],members=m.a.shape[0],max_abs_error=error)
 
+
+def diagnostic_json(value):
+    """Nonfinite diagnostics are explicit missing values, never passing scores."""
+    if isinstance(value,dict):return {k:diagnostic_json(v) for k,v in value.items()}
+    if isinstance(value,(tuple,list)):return [diagnostic_json(v) for v in value]
+    if isinstance(value,(float,np.floating)) and not np.isfinite(value):return None
+    return value
+
 def checkpoint_scores(torch,cohorts,dev,held,normal,spec,device,quality):
     common,parts=c.selection(torch,cohorts,dev,held,normal,spec,device)
     ranks=[];detail=[];offset=0
@@ -145,6 +153,8 @@ def checkpoint_scores(torch,cohorts,dev,held,normal,spec,device,quality):
                 _,cur=p.readout(block[...,0],gates[member],block[...,38:49],block[...,49:60])
                 for case in range(len(block)):
                     metric=p.evaluate_currents(block[case,:,60:71],cur[case],.1,quality['quality'],block[case,:,20:38],gates[member,case],block[case,0,38:49]==0)
+                    if not metric.get('finite',False) or metric.get('gate') is None or not metric['gate']['finite']:
+                        scores[member].append((1,None));continue
                     errors=[metric['gate']['rmse']/.005,metric['gate']['max_abs']/.03]
                     for cc in metric['channels']:
                         errors += [cc['nrmse']/.01,cc['nmax']/.05,abs(cc['signed_charge_normalized'])/.02,cc['absolute_charge_normalized']/.02]
@@ -153,8 +163,9 @@ def checkpoint_scores(torch,cohorts,dev,held,normal,spec,device,quality):
                         elif ev['status']=='evaluable':errors += [ev['peak_error_ms']/.2,ev['onset_error_ms']/.3,ev['offset_error_ms']/.3]
                     scores[member].append((int(not metric['passed']),max(errors)))
         for member,rr in enumerate(scores):
-            rank=(sum(x[0] for x in rr),max(x[1] for x in rr),float(common[offset+member]))
-            ranks.append(rank);detail.append(dict(cohort=g['key'],member=member,rank=rank,panel_cases=len(rr)))
+            invalid=any(x[1] is None for x in rr) or not np.isfinite(common[offset+member])
+            rank=None if invalid else (sum(x[0] for x in rr),max(x[1] for x in rr),float(common[offset+member]))
+            ranks.append(rank);detail.append(dict(cohort=g['key'],member=member,rank=rank,panel_cases=len(rr),numerically_invalid=bool(invalid),nonfinite_cases=sum(x[1] is None for x in rr),selection_eligible=not invalid))
         offset+=n
     return common,parts,ranks,detail
 
@@ -206,28 +217,32 @@ def run(root,output,device='cuda'):
     p.save_json(output/'execution.json',execution)
     print(f'[GIADA Task39e] preflights passed; projected fit {execution["projected_training_seconds"]/60:.1f}min',flush=True)
     rng=np.random.default_rng(spec['data_seed']+99);best=[None]*count;saved=[None]*count;chosen=[None]*count;common_best=np.full(count,np.inf);common_chosen=[None]*count
-    curves=[];probes=[];start=time.perf_counter();family_exposure=np.zeros((len(families),2),dtype=np.int64)
+    curves=[];probes=[];invalid_members=set();start=time.perf_counter();family_exposure=np.zeros((len(families),2),dtype=np.int64)
     for step in range(spec['checkpoints'][-1]+1):
         if step in spec['checkpoints']:
             # Preserve the actual weights BEFORE any diagnostic/evaluation can fail.
             pending=output/f'checkpoint_{step}.tmp'
             torch.save({g['key']:g['model'].state_dict() for g in cohorts},pending)
             pending.replace(output/f'checkpoint_{step}.pt')
+            torch.save(dict(optimizers=[o.state_dict() for o in graph._giada_optimizers],numpy_rng=rng.bit_generator.state,step=step,clipping_counts=[x.cpu() for x in clips]),output/f'optimizer_{step}.pt')
             p.save_json(output/'checkpoint_phase.json',dict(step=step,phase='before_selection',parameters_finite={g['key']:all(bool(torch.isfinite(x).all()) for x in g['model'].parameters()) for g in cohorts}))
             print(f'[GIADA Task39e] checkpoint_saved {step} before_selection',flush=True)
-            common,parts,ranks,panel=checkpoint_scores(torch,cohorts,dev,held,normal,spec,device,quality);assert np.isfinite(common).all()
+            common,parts,ranks,panel=checkpoint_scores(torch,cohorts,dev,held,normal,spec,device,quality)
             j=0
             for g in cohorts:
                 for k in range(g['model'].a.shape[0]):
+                    if ranks[j] is None:
+                        invalid_members.add(j);j+=1;continue
                     if best[j] is None or ranks[j]<best[j]:
                         best[j]=ranks[j];chosen[j]=step;saved[j]={name:x[k].detach().cpu().clone() for name,x in g['model'].named_parameters()}
                     if common[j]<common_best[j]:common_best[j]=common[j];common_chosen[j]=step
                     j+=1
             curves.append(dict(step=step,common_development_score=common.tolist(),panel=panel,elapsed_seconds=time.perf_counter()-start,clipping_counts=[x.cpu().tolist() for x in clips]))
-            p.save_json(output/'training_curves.json',curves)
+            p.save_json(output/'training_curves.json',diagnostic_json(curves))
+            p.save_json(output/'numerical_health.json',dict(invalid_members=sorted(invalid_members),current_invalid=[j for j,r in enumerate(ranks) if r is None],invalid_checkpoints_are_never_selected=True))
             p.save_json(output/'checkpoint_phase.json',dict(step=step,phase='gradient_probe',common_finite=bool(np.isfinite(common).all())))
             for g,s in zip(cohorts,static):probes.append(gradient_probe(torch,g,s,scales,step)[0])
-            p.save_json(output/'gradient_probes.json',probes)
+            p.save_json(output/'gradient_probes.json',diagnostic_json(probes))
             print(f'[GIADA Task39e] checkpoint {step} median_common={np.median(common):.6g} elapsed={(time.perf_counter()-start)/60:.1f}min',flush=True)
         if step==spec['checkpoints'][-1]:break
         idx=rng.integers(len(data[0]),size=2);extra=rng.random(2)<.5
@@ -279,7 +294,8 @@ def run(root,output,device='cuda'):
     common_summary=old.evaluate(root,common_dir,evaluation,split_models(torch,cohorts,spec['seeds'],device),torch,device,quality)
     p.save_json(output/'common_selection_diagnostic.json',dict(summaries=common_summary,selected_steps=common_chosen,selection_eligible=False,
         limits='Prespecified counterfactual selection of the same saved weights; no refit. Primary rule remains unchanged regardless of diagnostic result.'))
-    passing=[a['name'] for a in defs if summary['joint_w'+a['name']]['all_development_passed']]
+    unstable_arms={defs[j//len(spec['seeds'])]['name'] for j in invalid_members}
+    passing=[a['name'] for a in defs if summary['joint_w'+a['name']]['all_development_passed'] and a['name'] not in unstable_arms]
     execution.update(training_wall_seconds=training,total_wall_seconds=time.perf_counter()-start,peak_cuda_memory_bytes=torch.cuda.max_memory_allocated());p.save_json(output/'execution.json',execution)
-    final=dict(valid=True,task='39e',decision='CANDIDATE_REQUIRES_AUDIT' if passing else 'NO_GO_TASK40_BLOCKED',passing_arms=passing,summaries=summary,thresholds_changed=False,independent_confirmation_accessed=False,speedup_claimed=False,limits=spec['limits'])
+    final=dict(valid=True,task='39e',decision='CANDIDATE_REQUIRES_AUDIT' if passing else 'NO_GO_TASK40_BLOCKED',passing_arms=passing,numerically_unstable_arms=sorted(unstable_arms),invalid_checkpoint_members=sorted(invalid_members),summaries=summary,thresholds_changed=False,independent_confirmation_accessed=False,speedup_claimed=False,limits=spec['limits'])
     p.save_json(output/'final_report.json',final);return final

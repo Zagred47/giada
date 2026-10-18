@@ -1,0 +1,17 @@
+{
+  "valid": false,
+  "technical_failure": true,
+  "scientific_no_go": false,
+  "error": "TypeError(\"'NoneType' object is not subscriptable\")",
+  "traceback": "Traceback (most recent call last):\n  File \"/content/giada_task39e_68b5ed680be9/giada/scripts/run_task39e_tail_support_heads.py\", line 18, in <module>\n    result=run(ROOT,args.output);print('[GIADA Task39e] '+result['decision'],flush=True)\n  File \"/content/giada_task39e_68b5ed680be9/giada/src/giada_teacher/task39e_tail_support_heads.py\", line 218, in run\n    common,parts,ranks,panel=checkpoint_scores(torch,cohorts,dev,held,normal,spec,device,quality);assert np.isfinite(common).all()\n                             ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/content/giada_task39e_68b5ed680be9/giada/src/giada_teacher/task39e_tail_support_heads.py\", line 148, in checkpoint_scores\n    errors=[metric['gate']['rmse']/.005,metric['gate']['max_abs']/.03]\n            ~~~~~~~~~~~~~~^^^^^^^^\nTypeError: 'NoneType' object is not subscriptable\n",
+  "checkpoint_phase": {
+    "step": 60000,
+    "phase": "before_selection",
+    "parameters_finite": {
+      "base_long0": true,
+      "base_long1": false,
+      "split_long0": false,
+      "split_long1": false
+    }
+  }
+}

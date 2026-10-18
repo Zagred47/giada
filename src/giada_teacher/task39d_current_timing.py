@@ -243,8 +243,12 @@ def capture_training(torch,groups,static,scales,spec,objective_fn=None):
     for _ in range(20):graph.replay()
     torch.cuda.synchronize();seconds=(time.perf_counter()-start)/20;reset()
     assert seconds*spec['checkpoints'][-1]<spec['max_projected_training_seconds'],'Fit-only performance preflight exceeded registered runtime cap'
+    # Adam state is allocated during eager warmup, OUTSIDE the private graph
+    # pool. CUDA Graph records addresses, not ownership of those tensors.
+    # Keep optimizers alive for exactly the lifetime of the replayable graph.
+    graph._giada_optimizers=opts
     return graph,clips,dict(valid=True,two_update_max_error=err,seconds_per_update=seconds,
-        projected_training_seconds=seconds*spec['checkpoints'][-1],optimizer_reset=True,backend='two member-vectorized cohorts in one CUDA Graph')
+        projected_training_seconds=seconds*spec['checkpoints'][-1],optimizer_reset=True,optimizer_state_lifetime_retained=True,backend='two member-vectorized cohorts in one CUDA Graph')
 
 
 def load_parents(torch,root,spec,device,dtype):
