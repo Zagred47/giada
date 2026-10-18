@@ -1,0 +1,23 @@
+{
+  "task": "39d",
+  "user_authorized_restart": true,
+  "previous_version": 1,
+  "previous_session": 359728503,
+  "previous_status_observed": "Queued after approximately 32 minutes, zero output",
+  "cancel_status": "CANCEL_ACKNOWLEDGED",
+  "retry_version": 2,
+  "retry_session": 359738493,
+  "retry_status": "COMPLETE_WITH_TECHNICAL_WORKER_FAILURE",
+  "error": "TypeError: Object of type float32 is not JSON serializable",
+  "error_location": "timing_audit diagnostic threshold/epsilon scalars",
+  "training_reached": false,
+  "fix": "Convert diagnostic amplitude and machine epsilon to built-in Python float before JSON serialization",
+  "fix_revision": "57a7b252c66c92e16d953f8a7be735cbb4ddf499",
+  "validation": {"task39d_unit_tests_passed":8,"float32_json_regression_passed":true},
+  "corrected_version": 3,
+  "corrected_session": 359739424,
+  "corrected_source_pin_verified": true,
+  "corrected_status_at_recording": "STARTING",
+  "scientific_thresholds_changed": false,
+  "scientific_no_go_claimed": false
+}
