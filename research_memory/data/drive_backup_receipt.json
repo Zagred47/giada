@@ -1,26 +1,51 @@
 {
+  "format": "sqlite-drive-backup-v1",
+  "sqlite_sha256": "06ed9dcbfcfe7e31845ac684e366a43a5a02a255f978e46db3091198efcbfc39",
+  "sqlite_bytes": 412573696,
+  "snapshot_utc": "2026-10-18_09-22-31Z",
+  "drive_url": "https://drive.google.com/file/d/1fLcC8grsRbmrijVRnACPWnuwmvVjo8O_/view?usp=drivesdk",
+  "drive_folder_url": "https://drive.google.com/drive/folders/1RrwCr0bXY1YnDIIl_uDoKqcPGlFcU-GO",
+  "archive_sha256": "2b9b7e58edfacacd8a2f51cce479edc2256a696cb55d1cddce421fe4a6fead17",
+  "archive_bytes": 51989410,
+  "archive_format": "ZIP_LZMA",
+  "sqlite_member": "giada__research-memory__2026-10-18_09-22-31Z.sqlite",
+  "semantic_records": 140182,
+  "scope": "Task39 results, Task39b preregistration and RUNNING version2 dispatch; scientific results pending.",
   "valid": true,
   "project": "GIADA",
-  "snapshot_utc": "2026-10-18_08-58-28Z",
   "database_folder": "https://drive.google.com/drive/folders/1jGFOFkOeK_xolqj6L6XczljMZHf1CpQ8",
-  "version_folder": "https://drive.google.com/drive/folders/1zs7KiYmBUEaYjR3dVGaFBM2p7f3P2KRI",
-  "archive": "https://drive.google.com/file/d/18QKD4jD1CWh8NPc64mf-CZSuPie2ubpq/view?usp=drivesdk",
-  "readme": "https://drive.google.com/file/d/1KbziJZEs1HEiV7gXX50kY1QOor2GuEa3/view?usp=drivesdk",
-  "manifest": "https://drive.google.com/file/d/16B_y497DSX1wA38s9zqUm9Zms2KgpUDt/view?usp=drivesdk",
-  "schema": "https://drive.google.com/file/d/1mVGQTkjbtJAN2Hs_XshpsBoMGESM-D9d/view?usp=drivesdk",
-  "sqlite_bytes": 412528640,
-  "sqlite_sha256": "8a3f37bb4929dc2b942bc3e6835154d50d5d340cf8a97f0fe6372de88305729c",
-  "archive_bytes": 51580162,
-  "archive_sha256": "8662ceddee670906bc1d41624b57e06e74fcde8883c3d332ff16c56134709670",
+  "files": {
+    "giada__research-memory__2026-10-18_09-22-31Z.sqlite.zip": {
+      "id": "1fLcC8grsRbmrijVRnACPWnuwmvVjo8O_",
+      "url": "https://drive.google.com/file/d/1fLcC8grsRbmrijVRnACPWnuwmvVjo8O_/view?usp=drivesdk",
+      "bytes": 51989410
+    },
+    "README.md": {
+      "id": "1fBojJnFBF1SxD9k8jncuakK21mfLZ-um",
+      "url": "https://drive.google.com/file/d/1fBojJnFBF1SxD9k8jncuakK21mfLZ-um/view?usp=drivesdk",
+      "bytes": 1709
+    },
+    "manifest.json": {
+      "id": "1WEA5bMk0i2CahEeJj9bYFcJnHe3Syb3M",
+      "url": "https://drive.google.com/file/d/1WEA5bMk0i2CahEeJj9bYFcJnHe3Syb3M/view?usp=drivesdk",
+      "bytes": 11287
+    },
+    "schema.sql": {
+      "id": "10UZNTS1HPiaaD4Y2S_REW85WWCBspHHO",
+      "url": "https://drive.google.com/file/d/10UZNTS1HPiaaD4Y2S_REW85WWCBspHHO/view?usp=drivesdk",
+      "bytes": 264736
+    }
+  },
+  "readme": "https://drive.google.com/file/d/1fBojJnFBF1SxD9k8jncuakK21mfLZ-um/view?usp=drivesdk",
+  "manifest": "https://drive.google.com/file/d/1WEA5bMk0i2CahEeJj9bYFcJnHe3Syb3M/view?usp=drivesdk",
+  "schema": "https://drive.google.com/file/d/10UZNTS1HPiaaD4Y2S_REW85WWCBspHHO/view?usp=drivesdk",
   "integrity_check": "ok",
   "foreign_key_errors": [],
-  "semantic_records": 140180,
   "metadata_names_sizes_parents_verified": true,
   "remote_archive_download_sha256_verified": true,
   "single_original_sqlite_member_sha256_verified": true,
-  "transport_exception": "Connector rejects raw412MiB SQLite above100MiB. One ZIP_LZMA archive, no splitting, no record removal; extract original SQLite before use.",
-  "scope": "Task39 results and Task39b preregistration. Dispatch bookkeeping occurs after this snapshot.",
-  "external_dependencies": "Scientific code/checkpoints remain referenced in GitHub/Kaggle, not embedded. Detailed numeric observations are queryable inside SQLite.",
+  "transport_exception": "Connector100MiB limit; one ZIP_LZMA, containing original single SQLite. No splitting, deletion, or lossy transformation.",
+  "external_dependencies": "Scientific source and checkpoints in GitHub/Kaggle; numeric observations queryable inside SQLite.",
   "airtable_accessed": false,
   "sharing_changed": false
 }
