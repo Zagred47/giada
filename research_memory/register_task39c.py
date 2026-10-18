@@ -39,7 +39,7 @@ def main():
             Percorso=path.relative_to(repo).as_posix(),**{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size})
         for d in defs:
             for seed in spec['seeds']:
-                put('runs',f'{d["name"]}-seed{seed}',Nome=f'Task39c {d["name"]} seed{seed}',Stato='In corso',
+                put('runs',f'{d["name"]}-seed{seed}',Nome=f'Task39c {d["name"]} seed{seed}',Stato='In corso',Seed=str(seed),
                     **{'Artefatti prodotti':[artifact],'Configurazione effettiva':json.dumps(dict(arm=d,seed=seed,launch=launch)),
                        'Validità tecnica':'Kaggle dispatch/source verified; CUDA preflights and scientific outcome pending.'})
         put('implementations','worker',Nome='Task39c36-member CUDA worker',Commit=launch['revision'])
@@ -65,7 +65,7 @@ def main():
             armids[d['name']]=put('arms',d['name'],Nome='Task39c '+d['name'],Ruolo='Trattamento',Protocollo=[protocol],
                 Modello=[model],Implementazione=[impl],Partizioni=partitions,**{'Configurazione residua':json.dumps(dict(arm=d,seeds=spec['seeds']))})
             for seed in spec['seeds']:
-                put('runs',f'{d["name"]}-seed{seed}',Nome=f'Task39c {d["name"]} seed{seed}',Stato='Pianificata',Braccio=[armids[d['name']]],
+                put('runs',f'{d["name"]}-seed{seed}',Nome=f'Task39c {d["name"]} seed{seed}',Stato='Pianificata',Seed=str(seed),Braccio=[armids[d['name']]],
                     **{'Configurazione effettiva':json.dumps(dict(arm=d,seed=seed,checkpoints=spec['checkpoints'])),
                        'Hardware e ambiente':'Prospective Kaggle T4; no result claimed.'})
         for axis,a,c in contrast_pairs(defs):
