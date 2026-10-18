@@ -1,0 +1,34 @@
+{
+  "valid": true,
+  "backend": "native CUDA graph forward/backward/Adam",
+  "two_step_error": 0.0,
+  "benchmark_seconds_per_update": 0.05006230830000078,
+  "projected_60k_training_seconds": 3003.738498000047,
+  "state_reset_after_benchmark": true,
+  "members": 36,
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu128",
+  "rapid_output_positions": [
+    16,
+    5,
+    7,
+    0,
+    8,
+    14,
+    4,
+    6
+  ],
+  "parameters_per_member": 1772,
+  "nominal_parameter_count_equal": true,
+  "effective_connectivity_differs": true,
+  "targets_per_update": 1024,
+  "structurally_active_parameters": {
+    "base": 1220,
+    "grouped": 948,
+    "multiscale": 1220
+  },
+  "grouping_source": "32 windows per family, fit only, median teacher fraction; eight faster outputs",
+  "training_wall_seconds": 2909.5211038780003,
+  "total_wall_seconds": 3399.7302823620003,
+  "peak_cuda_memory_bytes": 1160606208
+}

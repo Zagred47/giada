@@ -1,0 +1,2856 @@
+{
+  "valid": true,
+  "rows": 2016,
+  "channel_rows": 22176,
+  "unique_cases": true,
+  "finite": true,
+  "occupancy_violations": 0,
+  "freeze_hash_valid": true,
+  "checkpoint_hash_valid": true,
+  "summaries_recomputed": true,
+  "models": {
+    "frozen_local161_SKcanonical": {
+      "development": {
+        "passed": 53,
+        "total": 72,
+        "failures": {
+          "current_rmse": 13,
+          "current_max": 7,
+          "timing": 8,
+          "charge": 7,
+          "timing_only": 6
+        },
+        "channels": {
+          "K_Tst": 5,
+          "NaTa_t": 4,
+          "NaTs2_t": 4,
+          "Im": 2,
+          "SKv3_1": 3,
+          "K_Pst": 3,
+          "Nap_Et2": 3,
+          "Ih": 5,
+          "Ca_LVAst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00011006161366822198
+          },
+          "ramps": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 5.396807682700455e-05
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 4.959973011864349e-05
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00012398825492709875
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 6.630206189583987e-05
+          },
+          "same_v_history": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.00011987873585894704
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 5.956951281405054e-05
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00010610687604639679
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 6.475486588897184e-05
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 3.45119260600768e-05
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 6.068940638215281e-05
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0001903879310702905
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 56,
+        "total": 72,
+        "failures": {
+          "current_rmse": 13,
+          "current_max": 6,
+          "charge": 3,
+          "timing": 3,
+          "timing_only": 3
+        },
+        "channels": {
+          "K_Tst": 6,
+          "NaTa_t": 1,
+          "SKv3_1": 7,
+          "K_Pst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00018818584794644266
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 4.6403099986491725e-05
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 7.035472663119435e-05
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 7.739510328974575e-05
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 6.264665717026219e-05
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0001092225284082815
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 8.600519504398108e-05
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00010332174133509398
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 6.731508619850501e-05
+          },
+          "reversal": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 3.458514402154833e-05
+          },
+          "activation_boundary": {
+            "passed": 5,
+            "total": 6,
+            "worst_gate_rmse": 7.369858212769032e-05
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00025853340048342943
+          }
+        }
+      }
+    },
+    "joint_wbase_h64_c0_r0": {
+      "development": {
+        "passed": 7,
+        "total": 72,
+        "failures": {
+          "timing": 34,
+          "current_rmse": 51,
+          "current_max": 50,
+          "gate": 37,
+          "charge": 25,
+          "timing_only": 3
+        },
+        "channels": {
+          "Ca_HVA": 31,
+          "Ca_LVAst": 45,
+          "K_Pst": 20,
+          "SKv3_1": 6,
+          "NaTa_t": 16,
+          "NaTs2_t": 20,
+          "Nap_Et2": 19,
+          "K_Tst": 7,
+          "Im": 22,
+          "SK_E2": 6,
+          "Ih": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.005645968019962311
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007679160684347153
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004113887436687946
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.007861120626330376
+          },
+          "paired_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0022852574475109577
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008392486721277237
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002280952874571085
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004289293196052313
+          },
+          "channel_block": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0031685547437518835
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002269995165988803
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003502365667372942
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00523360027000308
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 16,
+        "total": 72,
+        "failures": {
+          "timing": 34,
+          "current_rmse": 47,
+          "gate": 38,
+          "current_max": 43,
+          "charge": 23
+        },
+        "channels": {
+          "Ca_LVAst": 35,
+          "SK_E2": 5,
+          "Ca_HVA": 36,
+          "NaTa_t": 19,
+          "NaTs2_t": 18,
+          "Im": 30,
+          "K_Pst": 22,
+          "K_Tst": 7,
+          "Ih": 11,
+          "Nap_Et2": 14,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003888598643243313
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006641304586082697
+          },
+          "chirp": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0056726280599832535
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.007521474733948708
+          },
+          "paired_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004195029381662607
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0038313777185976505
+          },
+          "slow_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.002300454303622246
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0019617928192019463
+          },
+          "channel_block": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.003516909433528781
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006250197999179363
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003536524483934045
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005134171340614557
+          }
+        }
+      }
+    },
+    "joint_wbase_h64_c0_r1": {
+      "development": {
+        "passed": 8,
+        "total": 72,
+        "failures": {
+          "timing": 27,
+          "current_rmse": 49,
+          "current_max": 46,
+          "gate": 31,
+          "timing_only": 8,
+          "charge": 22
+        },
+        "channels": {
+          "Ca_LVAst": 38,
+          "K_Tst": 10,
+          "SKv3_1": 8,
+          "Ca_HVA": 21,
+          "NaTa_t": 11,
+          "NaTs2_t": 18,
+          "Im": 17,
+          "Nap_Et2": 11,
+          "Ih": 16,
+          "SK_E2": 6,
+          "K_Pst": 21
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004567457363009453
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005393240600824356
+          },
+          "chirp": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0028594450559467077
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0059035769663751125
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0021102027967572212
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007869981229305267
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002042882377281785
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004123845137655735
+          },
+          "channel_block": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.003474881872534752
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0020838298369199038
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0032346826046705246
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00383204803802073
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 18,
+        "total": 72,
+        "failures": {
+          "timing": 38,
+          "current_rmse": 45,
+          "gate": 37,
+          "current_max": 38,
+          "charge": 22
+        },
+        "channels": {
+          "Ca_LVAst": 32,
+          "SK_E2": 6,
+          "Ca_HVA": 30,
+          "Ih": 17,
+          "NaTa_t": 19,
+          "NaTs2_t": 13,
+          "K_Tst": 9,
+          "Im": 27,
+          "K_Pst": 22,
+          "SKv3_1": 9,
+          "Nap_Et2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0032256252598017454
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004627834539860487
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003628397360444069
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.005957968533039093
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004953301511704922
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004526127129793167
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0020330995321273804
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0014729418326169252
+          },
+          "channel_block": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.002666552783921361
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0042612431570887566
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003909990657120943
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00373585126362741
+          }
+        }
+      }
+    },
+    "joint_wbase_h64_c1_r0": {
+      "development": {
+        "passed": 14,
+        "total": 72,
+        "failures": {
+          "current_rmse": 46,
+          "current_max": 42,
+          "gate": 23,
+          "timing": 28,
+          "charge": 23,
+          "timing_only": 6
+        },
+        "channels": {
+          "Ca_LVAst": 42,
+          "Ca_HVA": 26,
+          "NaTa_t": 10,
+          "NaTs2_t": 11,
+          "Im": 22,
+          "K_Tst": 7,
+          "K_Pst": 13,
+          "Nap_Et2": 13,
+          "SK_E2": 6,
+          "SKv3_1": 8,
+          "Ih": 10
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003325550351291895
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006509973201900721
+          },
+          "chirp": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0026142210699617863
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.00345074781216681
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0016089469427242875
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006476676557213068
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001576130511239171
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004485412035137415
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002344441832974553
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0008955392986536026
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002404071856290102
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003390114987269044
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 25,
+        "total": 72,
+        "failures": {
+          "timing": 26,
+          "current_rmse": 40,
+          "current_max": 34,
+          "gate": 20,
+          "charge": 21,
+          "timing_only": 2
+        },
+        "channels": {
+          "Ca_LVAst": 28,
+          "Ca_HVA": 30,
+          "NaTa_t": 12,
+          "NaTs2_t": 13,
+          "Im": 27,
+          "K_Tst": 10,
+          "Ih": 11,
+          "K_Pst": 20,
+          "SK_E2": 4,
+          "SKv3_1": 9,
+          "Nap_Et2": 4
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002626956906169653
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005217638332396746
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003725727554410696
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.004041971638798714
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0021683035884052515
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002871231408789754
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.001897439593449235
+          },
+          "calcium_switch": {
+            "passed": 5,
+            "total": 6,
+            "worst_gate_rmse": 0.0013861444313079119
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.002029106020927429
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.001266572973690927
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0036769500002264977
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003201929619535804
+          }
+        }
+      }
+    },
+    "joint_wbase_h64_c1_r1": {
+      "development": {
+        "passed": 9,
+        "total": 72,
+        "failures": {
+          "current_rmse": 54,
+          "current_max": 46,
+          "gate": 28,
+          "charge": 22,
+          "timing": 21,
+          "timing_only": 3
+        },
+        "channels": {
+          "Ca_LVAst": 37,
+          "Im": 20,
+          "Ca_HVA": 29,
+          "NaTa_t": 14,
+          "NaTs2_t": 10,
+          "K_Tst": 10,
+          "Nap_Et2": 11,
+          "Ih": 15,
+          "SK_E2": 6,
+          "SKv3_1": 5,
+          "K_Pst": 17
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0036641245242208242
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00595134450122714
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0027475617825984955
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.003749833209440112
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002330318558961153
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007013610098510981
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0017158918781206012
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004106603562831879
+          },
+          "channel_block": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.003671124344691634
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.000819074921309948
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0027638606261461973
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003192028496414423
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 15,
+        "total": 72,
+        "failures": {
+          "current_rmse": 44,
+          "current_max": 41,
+          "gate": 24,
+          "timing": 35,
+          "charge": 25,
+          "timing_only": 5
+        },
+        "channels": {
+          "K_Pst": 23,
+          "SK_E2": 7,
+          "Ca_HVA": 31,
+          "Ca_LVAst": 31,
+          "NaTa_t": 14,
+          "NaTs2_t": 8,
+          "Im": 25,
+          "K_Tst": 10,
+          "Ih": 17,
+          "SKv3_1": 9,
+          "Nap_Et2": 5
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002993557834997773
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004812124650925398
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0038032883312553167
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004270309116691351
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.004140155855566263
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004487175960093737
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.001926743658259511
+          },
+          "calcium_switch": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0013021330814808607
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0019318141276016831
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.001279098680242896
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0032372779678553343
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029881009832024574
+          }
+        }
+      }
+    },
+    "joint_wbase_h8_c0_r0": {
+      "development": {
+        "passed": 11,
+        "total": 72,
+        "failures": {
+          "current_rmse": 51,
+          "current_max": 44,
+          "gate": 21,
+          "timing": 33,
+          "timing_only": 5,
+          "charge": 22
+        },
+        "channels": {
+          "Ca_LVAst": 43,
+          "SKv3_1": 7,
+          "Ca_HVA": 30,
+          "NaTa_t": 14,
+          "NaTs2_t": 14,
+          "Ih": 14,
+          "K_Pst": 19,
+          "K_Tst": 9,
+          "Im": 24,
+          "Nap_Et2": 14,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0030537236016243696
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008008256554603577
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002870209515094757
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0030151742976158857
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002107557374984026
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010660484433174133
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029823898803442717
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006774913519620895
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.005190147086977959
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.001131183817051351
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002862280933186412
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004324895795434713
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 22,
+        "total": 72,
+        "failures": {
+          "current_rmse": 41,
+          "timing": 34,
+          "current_max": 35,
+          "charge": 21,
+          "gate": 17,
+          "timing_only": 3
+        },
+        "channels": {
+          "K_Pst": 16,
+          "Ca_LVAst": 33,
+          "Ca_HVA": 27,
+          "NaTa_t": 13,
+          "NaTs2_t": 12,
+          "K_Tst": 8,
+          "Im": 25,
+          "Ih": 16,
+          "SK_E2": 4,
+          "Nap_Et2": 8,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0028302366845309734
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0060837711207568645
+          },
+          "chirp": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.004372466821223497
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0037985651288181543
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.005929527338594198
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005284275859594345
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0028141350485384464
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0016774297691881657
+          },
+          "channel_block": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0021699178032577038
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0018049606587737799
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003901998745277524
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004206069745123386
+          }
+        }
+      }
+    },
+    "joint_wbase_h8_c0_r1": {
+      "development": {
+        "passed": 10,
+        "total": 72,
+        "failures": {
+          "current_rmse": 49,
+          "current_max": 40,
+          "timing": 26,
+          "timing_only": 8,
+          "charge": 20,
+          "gate": 19
+        },
+        "channels": {
+          "Ca_LVAst": 37,
+          "SKv3_1": 6,
+          "K_Pst": 18,
+          "Ca_HVA": 29,
+          "K_Tst": 6,
+          "Im": 23,
+          "NaTs2_t": 10,
+          "NaTa_t": 6,
+          "Nap_Et2": 14,
+          "SK_E2": 7,
+          "Ih": 5
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0026353432331234217
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009641141630709171
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003109205048531294
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002752204891294241
+          },
+          "paired_recovery": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0019403817132115364
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.014826728962361813
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029315603896975517
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007191383745521307
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0035515332128852606
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001076002954505384
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029239675495773554
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004332471173256636
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 18,
+        "total": 72,
+        "failures": {
+          "current_rmse": 44,
+          "current_max": 41,
+          "timing": 36,
+          "charge": 22,
+          "gate": 20,
+          "timing_only": 3
+        },
+        "channels": {
+          "Ca_LVAst": 34,
+          "Ca_HVA": 28,
+          "Im": 28,
+          "K_Tst": 8,
+          "NaTs2_t": 13,
+          "NaTa_t": 8,
+          "SK_E2": 7,
+          "K_Pst": 18,
+          "Ih": 9,
+          "Nap_Et2": 9,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002779137808829546
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0072703915648162365
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004522758070379496
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0035256154369562864
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0049634166061878204
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004322828259319067
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002749077510088682
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0013945649843662977
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002338037360459566
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001473499578423798
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003806233638897538
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004202384501695633
+          }
+        }
+      }
+    },
+    "joint_wbase_h8_c1_r0": {
+      "development": {
+        "passed": 16,
+        "total": 72,
+        "failures": {
+          "current_rmse": 45,
+          "timing": 34,
+          "current_max": 37,
+          "charge": 26,
+          "gate": 18,
+          "timing_only": 10
+        },
+        "channels": {
+          "Ca_HVA": 27,
+          "Ca_LVAst": 35,
+          "K_Pst": 21,
+          "NaTa_t": 9,
+          "NaTs2_t": 11,
+          "Im": 26,
+          "K_Tst": 6,
+          "Ih": 12,
+          "Nap_Et2": 11,
+          "SK_E2": 6,
+          "SKv3_1": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.002601388841867447
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009571093134582043
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0031048825476318598
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0024753138422966003
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.00180705520324409
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.012279454618692398
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001947619835846126
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00814943015575409
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0023965516593307257
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0005937990499660373
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0032674260437488556
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003975685220211744
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 21,
+        "total": 72,
+        "failures": {
+          "timing": 35,
+          "current_rmse": 38,
+          "current_max": 34,
+          "charge": 23,
+          "gate": 14,
+          "timing_only": 6
+        },
+        "channels": {
+          "Ca_LVAst": 32,
+          "Ca_HVA": 24,
+          "NaTa_t": 7,
+          "NaTs2_t": 8,
+          "Im": 26,
+          "K_Tst": 6,
+          "SK_E2": 4,
+          "Ih": 9,
+          "K_Pst": 14,
+          "SKv3_1": 8,
+          "Nap_Et2": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002669011941179633
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007240896578878164
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0046349563635885715
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0032893565949052572
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002646725857630372
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003270487068220973
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0025060996413230896
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0016160090453922749
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.00204705772921443
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0009959667222574353
+          },
+          "activation_boundary": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.003173394128680229
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003957728855311871
+          }
+        }
+      }
+    },
+    "joint_wbase_h8_c1_r1": {
+      "development": {
+        "passed": 11,
+        "total": 72,
+        "failures": {
+          "timing": 30,
+          "current_rmse": 55,
+          "current_max": 39,
+          "gate": 25,
+          "charge": 23,
+          "timing_only": 6
+        },
+        "channels": {
+          "Ca_LVAst": 37,
+          "K_Pst": 19,
+          "K_Tst": 9,
+          "SKv3_1": 5,
+          "Ca_HVA": 30,
+          "Im": 23,
+          "NaTa_t": 9,
+          "NaTs2_t": 8,
+          "Nap_Et2": 11,
+          "Ih": 18,
+          "SK_E2": 7
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.004217191599309444
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009634911082684994
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004353645723313093
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.006382423918694258
+          },
+          "paired_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.003491799347102642
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.013018402270972729
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005018924828618765
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007085851859301329
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.009401295334100723
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0014722200576215982
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0031013572588562965
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004383365623652935
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 18,
+        "total": 72,
+        "failures": {
+          "gate": 21,
+          "timing": 34,
+          "current_rmse": 42,
+          "current_max": 39,
+          "charge": 28,
+          "timing_only": 6
+        },
+        "channels": {
+          "Ca_LVAst": 31,
+          "Ca_HVA": 27,
+          "NaTa_t": 11,
+          "NaTs2_t": 9,
+          "Ih": 18,
+          "K_Tst": 13,
+          "Im": 24,
+          "Nap_Et2": 3,
+          "K_Pst": 21,
+          "SK_E2": 7,
+          "SKv3_1": 8
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.005754120647907257
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007247670087963343
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006265690084546804
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00563396280631423
+          },
+          "paired_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.00808638520538807
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0060975938104093075
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.004184213001281023
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0030733926687389612
+          },
+          "channel_block": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.003009839914739132
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0028276972007006407
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004138626158237457
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003944463096559048
+          }
+        }
+      }
+    },
+    "joint_wgrouped_h64_c1_r1": {
+      "development": {
+        "passed": 10,
+        "total": 72,
+        "failures": {
+          "current_rmse": 45,
+          "current_max": 50,
+          "gate": 32,
+          "timing": 26,
+          "charge": 24,
+          "timing_only": 4
+        },
+        "channels": {
+          "Ca_LVAst": 38,
+          "Im": 18,
+          "SKv3_1": 8,
+          "NaTs2_t": 28,
+          "Ca_HVA": 25,
+          "NaTa_t": 12,
+          "Nap_Et2": 17,
+          "Ih": 11,
+          "K_Pst": 19,
+          "K_Tst": 7,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.003990231081843376
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006414814852178097
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002826347714290023
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003094558836892247
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.001759250066243112
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007540352642536163
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0023414266761392355
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004329267889261246
+          },
+          "channel_block": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.00340416026301682
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0012425780296325684
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0027326750569045544
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0039422111585736275
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 13,
+        "total": 72,
+        "failures": {
+          "current_max": 42,
+          "gate": 29,
+          "timing": 32,
+          "current_rmse": 42,
+          "charge": 24,
+          "timing_only": 2
+        },
+        "channels": {
+          "NaTs2_t": 25,
+          "Ca_LVAst": 32,
+          "Ca_HVA": 28,
+          "NaTa_t": 13,
+          "Nap_Et2": 8,
+          "Im": 24,
+          "K_Pst": 19,
+          "K_Tst": 8,
+          "Ih": 13,
+          "SK_E2": 5,
+          "SKv3_1": 8
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029794741421937943
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005289488937705755
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004072871059179306
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004678066354244947
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0034378257114440203
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0036475076340138912
+          },
+          "slow_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.002341669052839279
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0015516059938818216
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0022845962084829807
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0017026010900735855
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0028277989476919174
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003563985461369157
+          }
+        }
+      }
+    },
+    "joint_wgrouped_h8_c0_r0": {
+      "development": {
+        "passed": 9,
+        "total": 72,
+        "failures": {
+          "timing": 34,
+          "current_rmse": 52,
+          "current_max": 41,
+          "charge": 24,
+          "gate": 21,
+          "timing_only": 6
+        },
+        "channels": {
+          "Ca_LVAst": 39,
+          "K_Pst": 23,
+          "K_Tst": 13,
+          "SKv3_1": 10,
+          "Ca_HVA": 28,
+          "NaTa_t": 12,
+          "NaTs2_t": 15,
+          "Ih": 21,
+          "Im": 26,
+          "Nap_Et2": 14,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002800917951390147
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010456176474690437
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003127724165096879
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.004136919509619474
+          },
+          "paired_recovery": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.002284296089783311
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.012009046040475368
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003393039107322693
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007182032335549593
+          },
+          "channel_block": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0067178294993937016
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0024428940378129482
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0032193255610764027
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004469321575015783
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 15,
+        "total": 72,
+        "failures": {
+          "timing": 37,
+          "current_rmse": 45,
+          "current_max": 40,
+          "charge": 26,
+          "gate": 20,
+          "timing_only": 5
+        },
+        "channels": {
+          "Ca_LVAst": 35,
+          "SKv3_1": 11,
+          "Ca_HVA": 27,
+          "NaTa_t": 12,
+          "NaTs2_t": 15,
+          "Im": 29,
+          "K_Tst": 13,
+          "Ih": 15,
+          "K_Pst": 19,
+          "SK_E2": 4,
+          "Nap_Et2": 5
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003738109255209565
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008085350506007671
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004843117203563452
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.00400230148807168
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.006346879992634058
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004859709180891514
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0032180561684072018
+          },
+          "calcium_switch": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0019818502478301525
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003631708910688758
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0028301849961280823
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005134765524417162
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004496186040341854
+          }
+        }
+      }
+    },
+    "joint_whistorical39_best": {
+      "development": {
+        "passed": 24,
+        "total": 72,
+        "failures": {
+          "current_max": 28,
+          "timing": 22,
+          "charge": 25,
+          "gate": 14,
+          "current_rmse": 35,
+          "timing_only": 10
+        },
+        "channels": {
+          "Ca_HVA": 16,
+          "Ca_LVAst": 28,
+          "NaTa_t": 17,
+          "NaTs2_t": 13,
+          "Ih": 10,
+          "Im": 25,
+          "K_Tst": 6,
+          "SK_E2": 6,
+          "SKv3_1": 6,
+          "Nap_Et2": 8,
+          "K_Pst": 15
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0019912465941160917
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006916051730513573
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002386425854638219
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002056422410532832
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0017389535205438733
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010173280723392963
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001285392208956182
+          },
+          "calcium_switch": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.007928818464279175
+          },
+          "channel_block": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0040320358239114285
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0008539101690985262
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00310897477902472
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0030352151952683926
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 26,
+        "total": 72,
+        "failures": {
+          "timing": 27,
+          "timing_only": 5,
+          "current_max": 27,
+          "charge": 21,
+          "gate": 17,
+          "current_rmse": 34
+        },
+        "channels": {
+          "Ca_LVAst": 25,
+          "Ca_HVA": 23,
+          "NaTa_t": 23,
+          "NaTs2_t": 9,
+          "Im": 26,
+          "K_Tst": 6,
+          "SK_E2": 4,
+          "Ih": 10,
+          "K_Pst": 18,
+          "Nap_Et2": 4,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 5,
+            "total": 6,
+            "worst_gate_rmse": 0.0022085942327976227
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005191835109144449
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003369360463693738
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0030953227542340755
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003789468202739954
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004309389274567366
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0019352356903254986
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0014409635914489627
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_gate_rmse": 0.0017837664345279336
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0013616044307127595
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029242185410112143
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003015829948708415
+          }
+        }
+      }
+    },
+    "joint_wmultiscale_h64_c1_r1": {
+      "development": {
+        "passed": 0,
+        "total": 72,
+        "failures": {
+          "current_rmse": 57,
+          "current_max": 54,
+          "gate": 46,
+          "charge": 21,
+          "timing": 23
+        },
+        "channels": {
+          "Ca_LVAst": 38,
+          "Im": 35,
+          "Ca_HVA": 27,
+          "NaTs2_t": 33,
+          "SKv3_1": 9,
+          "NaTa_t": 17,
+          "Nap_Et2": 10,
+          "K_Tst": 9,
+          "K_Pst": 18,
+          "SK_E2": 6,
+          "Ih": 13
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0049906447529792786
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00568721629679203
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0035083091352134943
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0050965710543096066
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002158968709409237
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005001541692763567
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0020667393691837788
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003047095611691475
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00426118541508913
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0011051021283492446
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0027357067447155714
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029334716964513063
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 6,
+        "total": 72,
+        "failures": {
+          "current_max": 53,
+          "gate": 48,
+          "current_rmse": 45,
+          "timing": 32,
+          "charge": 25
+        },
+        "channels": {
+          "NaTs2_t": 27,
+          "Im": 45,
+          "Ca_HVA": 33,
+          "Ca_LVAst": 33,
+          "NaTa_t": 14,
+          "K_Pst": 25,
+          "Ih": 17,
+          "K_Tst": 11,
+          "SK_E2": 5,
+          "SKv3_1": 9,
+          "Nap_Et2": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004581378772854805
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004308917559683323
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.005279193166643381
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0061784000135958195
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004295045044273138
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0046600522473454475
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002006752882152796
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0015210954006761312
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002437297720462084
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002154878107830882
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0034024897031486034
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002881251974031329
+          }
+        }
+      }
+    },
+    "joint_wmultiscale_h8_c0_r0": {
+      "development": {
+        "passed": 2,
+        "total": 72,
+        "failures": {
+          "current_max": 64,
+          "timing": 38,
+          "charge": 25,
+          "gate": 42,
+          "current_rmse": 57,
+          "timing_only": 3
+        },
+        "channels": {
+          "Ca_LVAst": 48,
+          "Im": 45,
+          "K_Pst": 17,
+          "NaTs2_t": 27,
+          "SKv3_1": 10,
+          "Ca_HVA": 23,
+          "NaTa_t": 13,
+          "Ih": 18,
+          "K_Tst": 6,
+          "Nap_Et2": 11,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008557833731174469
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.01475911308079958
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004745482467114925
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008814841508865356
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0019394647097215056
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009407885372638702
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0030156001448631287
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029605405870825052
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009391866624355316
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0011960293632000685
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003093563951551914
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004293757025152445
+          }
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 8,
+        "total": 72,
+        "failures": {
+          "timing": 40,
+          "current_rmse": 50,
+          "current_max": 53,
+          "charge": 28,
+          "gate": 44,
+          "timing_only": 2
+        },
+        "channels": {
+          "Ca_LVAst": 36,
+          "NaTs2_t": 25,
+          "Im": 49,
+          "Ih": 22,
+          "SKv3_1": 10,
+          "Ca_HVA": 29,
+          "NaTa_t": 14,
+          "K_Tst": 6,
+          "SK_E2": 5,
+          "K_Pst": 15,
+          "Nap_Et2": 8
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.013071093708276749
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010922271758317947
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.01382393017411232
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008114227093756199
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004017746075987816
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004498783033341169
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002703591249883175
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.00171550246886909
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002838649321347475
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0015291249146685004
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006402137689292431
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004142096731811762
+          }
+        }
+      }
+    }
+  },
+  "budgets": {
+    "base_h8_c0_r0": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        18.97366112985714,
+        1.248313146788156,
+        2.7219893551259884
+      ],
+      "score_60k": [
+        1.9320409760559627,
+        0.885028079787582,
+        1.791857431295157
+      ],
+      "ratio_60k_over_30k": [
+        0.1018275262129397,
+        0.7089792189281292,
+        0.6582896541901503
+      ],
+      "gradient_cosine": [
+        -0.07631677389144897,
+        0.7357391715049744,
+        -0.12483299523591995
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0011372834510186497,
+        0.0011515262976773658,
+        0.0017552268943935208
+      ]
+    },
+    "base_h8_c0_r1": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        5.366620839659401,
+        4.930308548120835,
+        15.151714228869906
+      ],
+      "score_60k": [
+        1.2727534040767576,
+        1.2656605558389273,
+        1.688442038020855
+      ],
+      "ratio_60k_over_30k": [
+        0.23716104455732975,
+        0.2567102126542016,
+        0.11143571034383136
+      ],
+      "gradient_cosine": [
+        -0.30520308017730713,
+        0.12689942121505737,
+        -0.2986810505390167
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0015305751737110364,
+        0.0013608539059709478,
+        0.0017910186862858761
+      ]
+    },
+    "base_h8_c1_r0": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        2.290503968688808,
+        1.0087672649931236,
+        0.9688306834372351
+      ],
+      "score_60k": [
+        0.5081853152353742,
+        0.44777517130108857,
+        0.6930486805192735
+      ],
+      "ratio_60k_over_30k": [
+        0.22186615792081923,
+        0.44388352679558934,
+        0.7153455112099286
+      ],
+      "gradient_cosine": [
+        0.15256524085998535,
+        -0.5303574204444885,
+        -0.4804728031158447
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0010069738154420014,
+        0.0009148075759147408,
+        0.001084635040882631
+      ]
+    },
+    "base_h8_c1_r1": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        33.38332906252652,
+        23.058222768662137,
+        3.2380645352341504
+      ],
+      "score_60k": [
+        6.87529089340367,
+        0.5981871428997859,
+        0.8985765940349534
+      ],
+      "ratio_60k_over_30k": [
+        0.20594982844659812,
+        0.025942465249870313,
+        0.2775042264467949
+      ],
+      "gradient_cosine": [
+        0.09498085826635361,
+        -0.41360706090927124,
+        -0.3426873981952667
+      ],
+      "random_state_gate_rmse_mean": [
+        0.002099873550087573,
+        0.001083411127916002,
+        0.001194668519003825
+      ]
+    },
+    "base_h64_c0_r0": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        6.648338831468501,
+        3.0762261612391284,
+        4.727674948510823
+      ],
+      "score_60k": [
+        3.2437088822074354,
+        0.9358997292948406,
+        1.5013302557699892
+      ],
+      "ratio_60k_over_30k": [
+        0.48789764848536715,
+        0.30423632081649443,
+        0.3175620727146005
+      ],
+      "gradient_cosine": [
+        0.6901079416275024,
+        -0.0696694627404213,
+        0.7140800356864929
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0030349986576823085,
+        0.0020014100837720938,
+        0.003938362956944275
+      ]
+    },
+    "base_h64_c0_r1": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        3.6101420684546253,
+        3.330249562260633,
+        3.9815545387597395
+      ],
+      "score_60k": [
+        1.5896003305125437,
+        1.8311573466337974,
+        1.9077829543330707
+      ],
+      "ratio_60k_over_30k": [
+        0.440315173300921,
+        0.549855892899142,
+        0.4791552987058537
+      ],
+      "gradient_cosine": [
+        -0.1899743676185608,
+        0.29860803484916687,
+        0.3157326281070709
+      ],
+      "random_state_gate_rmse_mean": [
+        0.002367602850483763,
+        0.0022011015852380447,
+        0.0029309918783250546
+      ]
+    },
+    "base_h64_c1_r0": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        2.8208546792742206,
+        2.1650830365895737,
+        1.552844848721528
+      ],
+      "score_60k": [
+        0.4593114722034392,
+        0.3417269827874143,
+        0.34559895199568186
+      ],
+      "ratio_60k_over_30k": [
+        0.16282705932289135,
+        0.15783550885221506,
+        0.222558584832359
+      ],
+      "gradient_cosine": [
+        -0.04117501527070999,
+        0.3245839476585388,
+        0.3304794430732727
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0017559840384077713,
+        0.001500732737404241,
+        0.0016858575672087125
+      ]
+    },
+    "base_h64_c1_r1": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        3.5387482990065044,
+        2.5055146185665187,
+        2.7363531718883505
+      ],
+      "score_60k": [
+        1.1219866255460147,
+        0.6631029679506533,
+        0.7165748947443331
+      ],
+      "ratio_60k_over_30k": [
+        0.31705748212185925,
+        0.2646573933502071,
+        0.26187222545174116
+      ],
+      "gradient_cosine": [
+        0.42799457907676697,
+        -0.04666539281606674,
+        0.12244564294815063
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0015193145235043756,
+        0.0015424333395704555,
+        0.0020977160983224824
+      ]
+    },
+    "grouped_h8_c0_r0": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        21.843057208851867,
+        1.4875676571798417,
+        4.465756765552275
+      ],
+      "score_60k": [
+        3.8369707012139473,
+        0.824315087767198,
+        1.4065370237762798
+      ],
+      "ratio_60k_over_30k": [
+        0.1756608822898207,
+        0.5541361993107257,
+        0.31496050896142685
+      ],
+      "gradient_cosine": [
+        0.062333181500434875,
+        0.2370213121175766,
+        -0.20505249500274658
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0020321443782525725,
+        0.001127616583542274,
+        0.001500539466377404
+      ]
+    },
+    "grouped_h64_c1_r1": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        1.9512673205253344,
+        2.3521051573183973,
+        2.843504022731451
+      ],
+      "score_60k": [
+        0.5519029005618805,
+        0.586522278388177,
+        0.57261731286496
+      ],
+      "ratio_60k_over_30k": [
+        0.2828433063765416,
+        0.24936056815455607,
+        0.20137735283205527
+      ],
+      "gradient_cosine": [
+        0.11429159343242645,
+        0.002372879534959793,
+        0.15277361869812012
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0028735687334473267,
+        0.002071940106453162,
+        0.0022688255255047807
+      ]
+    },
+    "multiscale_h8_c0_r0": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        21.540253229747798,
+        1.6783228912949706,
+        3.326783026083585
+      ],
+      "score_60k": [
+        2.564640523688111,
+        1.110918199431601,
+        1.5950456775680668
+      ],
+      "ratio_60k_over_30k": [
+        0.11906269143327702,
+        0.6619216154374394,
+        0.47945587826502023
+      ],
+      "gradient_cosine": [
+        0.13301847875118256,
+        -0.12116481363773346,
+        -0.20724625885486603
+      ],
+      "random_state_gate_rmse_mean": [
+        0.002999719434187556,
+        0.0014514053722191672,
+        0.0027296890250833408
+      ]
+    },
+    "multiscale_h64_c1_r1": {
+      "chosen_steps": [
+        60000,
+        60000,
+        60000
+      ],
+      "score_30k": [
+        2.850897575644642,
+        2.6367407196029053,
+        2.6221385904755947
+      ],
+      "score_60k": [
+        1.0748485432297432,
+        0.5010110394936083,
+        0.8894083138657221
+      ],
+      "ratio_60k_over_30k": [
+        0.37702110114801285,
+        0.19001149250998817,
+        0.3391919546496603
+      ],
+      "gradient_cosine": [
+        -0.07659654319286346,
+        0.042082104831933975,
+        -0.01837402768433094
+      ],
+      "random_state_gate_rmse_mean": [
+        0.0037296306341829677,
+        0.0037117158219738635,
+        0.004435639780600316
+      ]
+    }
+  },
+  "sources": {
+    "final_report.json": "11bee92086d7b67a49a1c989d23062def22a65956d0fb3a8f91c3fcdfe462d22",
+    "frozen_checkpoint.pt": "34d75b87491cc4eafafa9dde96eea2f49d40eaf5c10e255e10c85bfc494e2817",
+    "recurrence_evaluation.json": "36e263ee1edec171eb0e92a096b5575a96d2c1eb1f94614da9c2f4899bc941c6",
+    "selection_freeze.json": "01db1ce03698963a27817fa59072155e097db1d90ae159689c9125674626146b",
+    "training_curves.json": "414ec54aa1338cfddb7c0c75c00e3c65242dea7b6437f65c43fd23c57613b6b2"
+  },
+  "limits": "Post-freeze descriptive audit, no independent CUDA replay. Overlapping failure counts. Same fixed thresholds; no selection from stress."
+}

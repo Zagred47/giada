@@ -1,0 +1,1092 @@
+{
+  "schema": {
+    "claims": [
+      "_record_id",
+      "_created_time",
+      "Nome",
+      "Codice stabile",
+      "Descrizione",
+      "Enunciato",
+      "Tipo",
+      "Stato",
+      "Condizioni di falsificazione",
+      "Limiti"
+    ],
+    "findings": [
+      "_record_id",
+      "_created_time",
+      "Nome",
+      "Codice stabile",
+      "Descrizione",
+      "Risultato",
+      "Incertezza",
+      "Limitazioni",
+      "Esito"
+    ],
+    "lessons": [
+      "_record_id",
+      "_created_time",
+      "Nome",
+      "Codice stabile",
+      "Descrizione",
+      "Lezione",
+      "Condizioni",
+      "Limiti"
+    ],
+    "evidence": [
+      "_record_id",
+      "_created_time",
+      "Nome",
+      "Codice stabile",
+      "Descrizione",
+      "Esito",
+      "Argomentazione",
+      "Limiti e spiegazioni alternative",
+      "Data valutazione"
+    ],
+    "analyses": [
+      "_record_id",
+      "_created_time",
+      "Nome",
+      "Codice stabile",
+      "Descrizione",
+      "Versione",
+      "Commit",
+      "Procedura",
+      "Configurazione",
+      "Origine"
+    ]
+  },
+  "discovery_sql": "SELECT table_key,record_id,stable_code,name FROM v_records\n        WHERE table_key IN ('findings','lessons') AND stable_code LIKE '%giada%'\n        AND (lower(name) LIKE '%identif%' OR lower(name) LIKE '%budget%'\n          OR lower(name) LIKE '%generaliz%' OR lower(name) LIKE '%symmetric%'\n          OR lower(name) LIKE '%precision%' OR lower(name) LIKE '%repair%'\n          OR lower(name) LIKE '%task39%' OR lower(name) LIKE '%ie-p%')",
+  "discovery": [
+    {
+      "table_key": "findings",
+      "record_id": "rec10a5d871ac0d50",
+      "stable_code": "findings-giada-ie-p3-result-v1",
+      "name": "IE-P3 exact vectorization wins; tested learned readouts fail fidelity and cost"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec1c2e5ad21a79e5",
+      "stable_code": "findings-giada-iv-c1-v2-left-continuous-falsified-v1",
+      "name": "Simple left-continuous state timing does not generalize"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec206e9d05ecfe6c",
+      "stable_code": "findings-giada-roadmap-task21-scaling-v1",
+      "name": "Capacita/budget conservati per interrogazione"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec26bc45c36bfe94",
+      "stable_code": "findings-giada-ie-p4-outcome-v1",
+      "name": "IE-P4 internal supervision helps recurrence; LUT is competitive, MLPs not qualified"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec2b0b0f834d80e3",
+      "stable_code": "findings-giada-task39b-architecture-outcome-v1",
+      "name": "Task39b scoped interventions insufficient; dynamic identification remains open"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec2b91c14e9fe143",
+      "stable_code": "findings-giada-roadmap-task24b-precision-v1",
+      "name": "Task24b precision"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec42c77d0965b47b",
+      "stable_code": "findings-giada-task39-learnability-outcome-v1",
+      "name": "Task39 partial repairs, no fully passing candidate"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec6b849324a208d2",
+      "stable_code": "findings-giada-roadmap-task24b-repair-and-sharing-v1",
+      "name": "Task24b repair and sharing"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec72f6b0eb976205",
+      "stable_code": "findings-giada-roadmap-task22-sharing-v1",
+      "name": "Task22 Condivisione non confermata al budget registrato"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec8b0ffa7a14feaa",
+      "stable_code": "findings-giada-roadmap-task25-precision-v1",
+      "name": "Task25 precision"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec8dd1d7596add22",
+      "stable_code": "findings-giada-ie-p7-v4-outcome-v1",
+      "name": "IE-P7 native quality retained; operational speed gate not met"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rec99c73d78c4c759",
+      "stable_code": "findings-giada-ie-p2-opportunity-v1",
+      "name": "IE-P2 block and execution opportunity map"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "reca602a8e915c66b",
+      "stable_code": "findings-giada-ie-p6-outcome-v1",
+      "name": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "reca8d9a4d4f4d660",
+      "stable_code": "findings-giada-ie-p7-phase-fix-diagnosis-v1",
+      "name": "IE-P7 continuous convolution versus native EMS fixed-step phase"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "recb75e85be0193b2",
+      "stable_code": "findings-giada-ie-p5-outcome-v1",
+      "name": "IE-P5 standard refit improves accuracy; balanced loses; tabulation trades memory for graph speed"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "recb8027b2ff9e094",
+      "stable_code": "findings-giada-roadmap-task24b-budget_capacity-v1",
+      "name": "Task24b budget_capacity"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "recd75ca4cb0833e4",
+      "stable_code": "findings-giada-roadmap-task26-budget-v1",
+      "name": "Task26 budget"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rece51f90385f5ce6",
+      "stable_code": "findings-giada-ie-p7-compile-fix-diagnosis-v1",
+      "name": "IE-P7 immutable NumPy area metadata inside compiled frame"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "rece555f52655d09e",
+      "stable_code": "findings-giada-ie-p7-perimeter-clarification-v1",
+      "name": "IE-P7 clarification of existing IE-P6 timing perimeter"
+    },
+    {
+      "table_key": "findings",
+      "record_id": "recf211e9d0cabe06",
+      "stable_code": "findings-giada-task35-local-generalization-v1",
+      "name": "Task35 frozen local surrogate generalizes across independent conductance panels"
+    },
+    {
+      "table_key": "lessons",
+      "record_id": "rec52e05bcb636d01",
+      "stable_code": "lessons-giada-task39b-architecture-conditional-repair-pattern-v1",
+      "name": "Task39b: diagnose information and conditioning before rejecting abstraction"
+    }
+  ],
+  "queries": {
+    "precedent_detail": "SELECT * FROM findings WHERE \"Codice stabile\" = ?",
+    "evidence_chain": "SELECT ec.*, c.\"Codice stabile\" claim_code,c.Stato claim_status,\n            e.Esito evidence_outcome,e.Argomentazione argument\n            FROM v_evidence_chains ec JOIN claims c ON c._record_id=ec.claim_id\n            JOIN evidence e ON e._record_id=ec.assessment_id WHERE ec.finding_id=?",
+    "task39b_cases": "SELECT json_extract(j.value,'$.model') model,\n            json_extract(j.value,'$.role') role, COUNT(*) cases,\n            SUM(json_extract(j.value,'$.metrics.passed')) passed\n            FROM observations o, json_each(o.Descrizione,'$.cases') j\n            WHERE o.\"Codice stabile\" LIKE 'observations-giada-task39b-architecture-result-%'\n            GROUP BY model,role",
+    "task39b_failed_channels": "SELECT json_extract(c.value,'$.channel') channel,\n            COUNT(*) failures, AVG(json_extract(c.value,'$.nrmse')) mean_nrmse,\n            MAX(json_extract(c.value,'$.rmse_ma_cm2')) worst_absolute_rmse_ma_cm2\n            FROM observations o, json_each(o.Descrizione,'$.cases') j,\n            json_each(j.value,'$.metrics.channels') c\n            WHERE o.\"Codice stabile\" LIKE 'observations-giada-task39b-architecture-result-%'\n            AND json_extract(j.value,'$.model')='joint_wbase_h8_c1_r0'\n            AND json_extract(j.value,'$.role')='development'\n            AND json_extract(c.value,'$.passed')=0 GROUP BY channel ORDER BY failures DESC"
+  },
+  "precedent_codes": [
+    "finding-task1b-budget-limited-engineering-go-v1",
+    "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+    "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+    "finding-task3d-voltage-support-conditional-shape-repair-v1",
+    "finding-task3e-full-repair-sealed-generalization-v1",
+    "findings-giada-roadmap-task21-duration-v1",
+    "findings-giada-roadmap-task21-rates-v1",
+    "findings-giada-roadmap-task24b-rate_attribution-v1",
+    "findings-giada-roadmap-task24b-budget_capacity-v1",
+    "findings-giada-roadmap-task24b-repair-and-sharing-v1",
+    "findings-giada-roadmap-task24b-precision-v1",
+    "findings-giada-roadmap-task24b-clipping-v1",
+    "findings-giada-roadmap-task26-gradient_interference-v1",
+    "findings-giada-ie-p5-outcome-v1",
+    "findings-giada-ie-p6-outcome-v1"
+  ],
+  "precedents": [
+    {
+      "_record_id": "recf00b2e0bd0899a",
+      "_created_time": "2026-09-21T10:56:38Z",
+      "Nome": "Task 1b — Gate m limitato dal budget, non da dati o capacita",
+      "Codice stabile": "finding-task1b-budget-limited-engineering-go-v1",
+      "Descrizione": "La matrice fattoriale preregistrata isola il budget di ottimizzazione come causa robusta del limite residuo. Densita dei dati, width e supervisione ausiliaria dei rate non superano la soglia causale del 20% come effetti principali.",
+      "Risultato": "Il vincitore selezionato solo sul development, base-w16-endpoint_only a 50000 step, ottiene fresh macro RMSE 0.0022578625, zero violazioni e rollout RMSE 0.0003801586 a 1000 passi. In-support RMSE 0.0002378306 e OOD-dt 0.0001411297; il residuo e concentrato OOD-voltage (0.0063946271), soprattutto nell'extrapolazione di tau. Gate scientifico 1e-3 non superato; gate ingegneristico 2.5e-3 superato.",
+      "Incertezza": "Una variante non selezionata ha RMSE fresh 0.0018670684 ma non puo sostituire il vincitore senza cherry-picking. Gli effetti dei fattori mostrano interazioni, pur senza effetti principali robusti. Resta da misurare quanto l'errore OOD-voltage venga amplificato nel sistema accoppiato.",
+      "Limitazioni": "Solo gate m di Ca_HVA sotto voltage clamp costante. Nessuna conclusione su traiettorie V variabili, gate h, canale completo o neurone multicompartimentale.",
+      "Esito": "Misto",
+      "evidence_chains": [
+        {
+          "assessment_id": "rec09312da85ba9a3",
+          "assessment": "After39b exploratory precedent: optimization_budget",
+          "claim_id": "rec3db1e047363165",
+          "claim": "After39b: optimization_budget",
+          "finding_id": "recf00b2e0bd0899a",
+          "finding": "Task 1b — Gate m limitato dal budget, non da dati o capacita",
+          "claim_code": "claims-giada-task39b-architecture-residual-optimization_budget-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task1b-budget-limited-engineering-go-v1\", \"finding-task3b-symmetric-rates-stabilize-shared-mh-v1\", \"findings-giada-roadmap-task24b-budget_capacity-v1\"]"
+        }
+      ]
+    },
+    {
+      "_record_id": "rec1ced41bf0f6068",
+      "_created_time": "2026-09-21T14:35:14Z",
+      "Nome": "Task 2b — la debole identificabilità endpoint causava il fallimento physical-tau di h",
+      "Codice stabile": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+      "Descrizione": "Due interventi ortogonali riparano il rollout physical-tau: supervisione esplicita dei rate e loss multi-orizzonte. Il limite della Task 2 non era capacità insufficiente ma identificabilità dell'obiettivo endpoint.",
+      "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694.",
+      "Incertezza": "La selezione development favorisce rate_supervision, mentre multi-horizon è leggermente migliore su alcune metriche fresh; il fresh non può essere usato per cambiare il vincitore. Resta da testare il comportamento con V variabile e nel canale m+h accoppiato.",
+      "Limitazioni": "Ca_HVA.h isolato sotto voltage clamp costante; non prova ancora validità embedded, coupling con m, corrente analitica o traiettorie di voltaggio endogene.",
+      "Esito": "Positivo",
+      "evidence_chains": [
+        {
+          "assessment_id": "reced7aa7b4f7153b",
+          "assessment": "After39b exploratory precedent: dynamic_information",
+          "claim_id": "rec388ccab73285a2",
+          "claim": "After39b: dynamic_information",
+          "finding_id": "rec1ced41bf0f6068",
+          "finding": "Task 2b — la debole identificabilità endpoint causava il fallimento physical-tau di h",
+          "claim_code": "claims-giada-task39b-architecture-residual-dynamic_information-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task2b-h-physical-tau-identifiability-repaired-v1\", \"findings-giada-roadmap-task21-duration-v1\", \"findings-giada-roadmap-task24b-rate_attribution-v1\"]"
+        },
+        {
+          "assessment_id": "rec763a15ebc1917b",
+          "assessment": "Task 2b conferma causale della riparazione physical-tau di h",
+          "claim_id": "rec91943db26378db",
+          "claim": "La loss multi-orizzonte identifica le rate lente di h",
+          "finding_id": "rec1ced41bf0f6068",
+          "finding": "Task 2b — la debole identificabilità endpoint causava il fallimento physical-tau di h",
+          "claim_code": "hypothesis-task2b-h-multihorizon-identifiability-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Sostiene",
+          "argument": "Rate supervision migliora 33.4x il punteggio development rispetto a endpoint-only e supera tutti i gate fresh. La loss multi-orizzonte, intervento ortogonale, produce la stessa riparazione e supera anch'essa il controllo direct-z congelato: convergenza causale a favore dell'ipotesi di debole identificabilità endpoint."
+        }
+      ]
+    },
+    {
+      "_record_id": "recc43b5d2ea5fde7",
+      "_created_time": "2026-09-21T22:25:56Z",
+      "Nome": "Task 3b — i rate simmetrici stabilizzano e dimezzano il budget efficace",
+      "Codice stabile": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+      "Descrizione": "La supervisione simmetrica raggiunge score 0,1022 a 50k con sd 0,0083; la baseline richiede 100k per 0,0978 con sd 0,0246. PCGrad 0,4845 e pretraining 0,1990 non sono riparazioni valide.",
+      "Risultato": "La loss simmetrica migliora del 61,5% a 50k e rende i seed coerenti; la baseline migliora del 63,1% raddoppiando il budget. I due bracci convergono nello stesso regime di score.",
+      "Incertezza": "Tre seed appaiati; nessun fresh aperto; il risultato riguarda development sotto voltage clamp.",
+      "Limitazioni": "Non dimostra ancora generalizzazione fresh, tensione variabile o corrente ionica completa.",
+      "Esito": "Positivo",
+      "evidence_chains": [
+        {
+          "assessment_id": "recbf44a07e4a1438",
+          "assessment": "Task 3b sostiene un limite di budget nella baseline",
+          "claim_id": "rec2d40a038cb114c",
+          "claim": "Il trunk condiviso è limitato principalmente dal budget di training",
+          "finding_id": "recc43b5d2ea5fde7",
+          "finding": "Task 3b — i rate simmetrici stabilizzano e dimezzano il budget efficace",
+          "claim_code": "hypothesis-task3b-training-budget-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Miglioramento 63,1%, superiore alla soglia preregistrata del 20%; dispersione seed ridotta da 0,1963 a 0,0246."
+        },
+        {
+          "assessment_id": "rec09312da85ba9a3",
+          "assessment": "After39b exploratory precedent: optimization_budget",
+          "claim_id": "rec3db1e047363165",
+          "claim": "After39b: optimization_budget",
+          "finding_id": "recc43b5d2ea5fde7",
+          "finding": "Task 3b — i rate simmetrici stabilizzano e dimezzano il budget efficace",
+          "claim_code": "claims-giada-task39b-architecture-residual-optimization_budget-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task1b-budget-limited-engineering-go-v1\", \"finding-task3b-symmetric-rates-stabilize-shared-mh-v1\", \"findings-giada-roadmap-task24b-budget_capacity-v1\"]"
+        },
+        {
+          "assessment_id": "recf154e441bbbce7",
+          "assessment": "Task 3b sostiene la supervisione simmetrica dei rate",
+          "claim_id": "rec7bc759868673a2",
+          "claim": "La loss asimmetrica impoverisce l'identificazione condivisa di m",
+          "finding_id": "recc43b5d2ea5fde7",
+          "finding": "Task 3b — i rate simmetrici stabilizzano e dimezzano il budget efficace",
+          "claim_code": "hypothesis-task3b-objective-information-imbalance-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Miglioramento appaiato 61,5%, superiore alla soglia preregistrata del 20%, e sd fra seed ridotta da 0,1963 a 0,0083."
+        },
+        {
+          "assessment_id": "rec7ca96148287395",
+          "assessment": "Task 3b contraddice il warm-start rate-only registrato",
+          "claim_id": "rec8ebf7a5d718dd9",
+          "claim": "Il trunk condiviso soffre una traiettoria di ottimizzazione sfavorevole",
+          "finding_id": "recc43b5d2ea5fde7",
+          "finding": "Task 3b — i rate simmetrici stabilizzano e dimezzano il budget efficace",
+          "claim_code": "hypothesis-task3b-initialization-path-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "evidence_outcome": "Contraddice",
+          "argument": "Score 0,1990 contro 0,1022: peggioramento relativo del 94,8% rispetto al controllo simmetrico."
+        },
+        {
+          "assessment_id": "rec427b90091118c8",
+          "assessment": "Task 3b contraddice PCGrad come riparazione del trunk condiviso",
+          "claim_id": "rece911fab2b1eb67",
+          "claim": "I gradienti m e h interferiscono nel trunk condiviso",
+          "finding_id": "recc43b5d2ea5fde7",
+          "finding": "Task 3b — i rate simmetrici stabilizzano e dimezzano il budget efficace",
+          "claim_code": "hypothesis-task3b-shared-gradient-interference-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "evidence_outcome": "Contraddice",
+          "argument": "La frazione iniziale di conflitto è 66,7%, ma PCGrad peggiora lo score dell'82,8% e l'interazione peggiora del 45,2%."
+        }
+      ]
+    },
+    {
+      "_record_id": "reca16ba38b5ca234",
+      "_created_time": "2026-09-22T13:41:21Z",
+      "Nome": "Task 3d — supporto in tensione e prior condizionale riparano la cella m+h",
+      "Codice stabile": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+      "Descrizione": "Il supporto bilanciato ed esteso è causale; il prior monotono è efficace solo nel contesto expanded+multihorizon. Topologia independent e capacità wide non sono necessarie a 50k.",
+      "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%.",
+      "Incertezza": "Development-only; interazioni forti; alcuni bracci hanno minimo a 30k e peggiorano a 50k.",
+      "Limitazioni": "Voltage clamp Ca_HVA; nessun nuovo sealed test; non autorizza Task 4.",
+      "Esito": "Positivo",
+      "evidence_chains": [
+        {
+          "assessment_id": "rec38ec1bdb0c23aa",
+          "assessment": "After39b exploratory precedent: local_support",
+          "claim_id": "rec0f0437a57a943e",
+          "claim": "After39b: local_support",
+          "finding_id": "reca16ba38b5ca234",
+          "finding": "Task 3d — supporto in tensione e prior condizionale riparano la cella m+h",
+          "claim_code": "claims-giada-task39b-architecture-residual-local_support-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task3d-voltage-support-conditional-shape-repair-v1\", \"finding-task3e-full-repair-sealed-generalization-v1\"]"
+        },
+        {
+          "assessment_id": "rec0fc253dab978d7",
+          "assessment": "Task 3d supporta supporto esteso più prior monotono condizionale",
+          "claim_id": "rec3b43da20f52430",
+          "claim": "Il fallimento Task 3c è diagnosticabile mediante supporto, orizzonte, forma e topologia",
+          "finding_id": "reca16ba38b5ca234",
+          "finding": "Task 3d — supporto in tensione e prior condizionale riparano la cella m+h",
+          "claim_code": "hypothesis-task3d-factorial-generalization-diagnosis-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Dense→balanced migliora 50,8%; balanced→expanded 88,6%; expanded+multihorizon→full repair 75,5%; baseline→full repair 97,9%. Solo dati, multi-orizzonte o shape isolati non passano."
+        }
+      ]
+    },
+    {
+      "_record_id": "rec7ae0a8fc50124f",
+      "_created_time": "2026-09-22T14:19:43Z",
+      "Nome": "Task 3e — il full-repair shared m+h generalizza sul sealed",
+      "Codice stabile": "finding-task3e-full-repair-sealed-generalization-v1",
+      "Descrizione": "Supporto esteso e prior monotono condizionale riparano il difetto OOD-voltage senza separare il trunk o aumentare capacità.",
+      "Risultato": "Tre seed sealed score 0,3487/0,2777/0,5678; tutti i gate di endpoint, rate, monotonicità e occupazione passano con margine. Nessun retraining e nessuna selezione sealed.",
+      "Incertezza": "Tre seed e un singolo contratto Ca_HVA held-voltage; il sealed è stato consumato e non può essere usato per ulteriore selezione.",
+      "Limitazioni": "Nessuna conclusione ancora su percorsi V variabili, corrente Ca_HVA completa o integrazione nel neurone.",
+      "Esito": "Positivo",
+      "evidence_chains": [
+        {
+          "assessment_id": "rec38ec1bdb0c23aa",
+          "assessment": "After39b exploratory precedent: local_support",
+          "claim_id": "rec0f0437a57a943e",
+          "claim": "After39b: local_support",
+          "finding_id": "rec7ae0a8fc50124f",
+          "finding": "Task 3e — il full-repair shared m+h generalizza sul sealed",
+          "claim_code": "claims-giada-task39b-architecture-residual-local_support-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task3d-voltage-support-conditional-shape-repair-v1\", \"finding-task3e-full-repair-sealed-generalization-v1\"]"
+        }
+      ]
+    },
+    {
+      "_record_id": "rece2ff58de86aed7",
+      "_created_time": "2026-10-04T16:09:27Z",
+      "Nome": "Supporto temporale multiscala decisivo",
+      "Codice stabile": "findings-giada-roadmap-task21-duration-v1",
+      "Descrizione": null,
+      "Risultato": "Short/transition0/3, multiscale/transition3/3. Short/rate2/3, multiscale/rate3/3. Contrasti appaiati a width/budget fissi in paired_duration_contrasts.",
+      "Incertezza": null,
+      "Limitazioni": "Isolated slow h gate, held imposed voltage. Not entire Nap_Et2 m^3*h channel; no current, endogenous voltage, full-neuron, shared-weight or speedup claim. Short vs multiscale duration is intentional information intervention. Long labels exact only at held voltage; simulation rollout remains1ms.",
+      "Esito": "Positivo",
+      "evidence_chains": [
+        {
+          "assessment_id": "rec4328219fababef",
+          "assessment": "Task21 duration_identifiability",
+          "claim_id": "rec2045a980c752ed",
+          "claim": "Task21 duration_identifiability",
+          "finding_id": "rece2ff58de86aed7",
+          "finding": "Supporto temporale multiscala decisivo",
+          "claim_code": "claims-giada-roadmap-task21-duration_identifiability-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Contrasti controllati; nessuna generalizzazione a dinamica endogena o intero canale."
+        },
+        {
+          "assessment_id": "reced7aa7b4f7153b",
+          "assessment": "After39b exploratory precedent: dynamic_information",
+          "claim_id": "rec388ccab73285a2",
+          "claim": "After39b: dynamic_information",
+          "finding_id": "rece2ff58de86aed7",
+          "finding": "Supporto temporale multiscala decisivo",
+          "claim_code": "claims-giada-task39b-architecture-residual-dynamic_information-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task2b-h-physical-tau-identifiability-repaired-v1\", \"findings-giada-roadmap-task21-duration-v1\", \"findings-giada-roadmap-task24b-rate_attribution-v1\"]"
+        }
+      ]
+    },
+    {
+      "_record_id": "rec1c5aad63c1b24d",
+      "_created_time": "2026-10-04T16:09:27Z",
+      "Nome": "Supervisione rate non universalmente superiore",
+      "Codice stabile": "findings-giada-roadmap-task21-rates-v1",
+      "Descrizione": null,
+      "Risultato": "Multiscale/transition passa3/3 con rollout10s RMSE0.000226-0.000499; multiscale/rate0.000738-0.001175. Selezioni width/budget diverse: non attribuire la differenza solo alla loss.",
+      "Incertezza": null,
+      "Limitazioni": "Isolated slow h gate, held imposed voltage. Not entire Nap_Et2 m^3*h channel; no current, endogenous voltage, full-neuron, shared-weight or speedup claim. Short vs multiscale duration is intentional information intervention. Long labels exact only at held voltage; simulation rollout remains1ms.",
+      "Esito": "Misto",
+      "evidence_chains": [
+        {
+          "assessment_id": "rec6a6a253b12eea6",
+          "assessment": "Task21 rate_identifiability",
+          "claim_id": "rec516b53b57c4cef",
+          "claim": "Task21 rate_identifiability",
+          "finding_id": "rec1c5aad63c1b24d",
+          "finding": "Supervisione rate non universalmente superiore",
+          "claim_code": "claims-giada-roadmap-task21-rate_identifiability-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Contrasti controllati; nessuna generalizzazione a dinamica endogena o intero canale."
+        }
+      ]
+    },
+    {
+      "_record_id": "recf159aa29b76c83",
+      "_created_time": "2026-10-04T21:20:24Z",
+      "Nome": "Task24b rate_attribution",
+      "Codice stabile": "findings-giada-roadmap-task24b-rate_attribution-v1",
+      "Descrizione": null,
+      "Risultato": "Old Nap_h: tau replacement most reduces1000ms error; inf replacement most reduces10000ms error. Both analytic rates produce FP32 floor9.38e-6/2.66e-5. Contributions interact; not additive.",
+      "Incertezza": null,
+      "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+      "Esito": "Positivo",
+      "evidence_chains": [
+        {
+          "assessment_id": "reced7aa7b4f7153b",
+          "assessment": "After39b exploratory precedent: dynamic_information",
+          "claim_id": "rec388ccab73285a2",
+          "claim": "After39b: dynamic_information",
+          "finding_id": "recf159aa29b76c83",
+          "finding": "Task24b rate_attribution",
+          "claim_code": "claims-giada-task39b-architecture-residual-dynamic_information-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task2b-h-physical-tau-identifiability-repaired-v1\", \"findings-giada-roadmap-task21-duration-v1\", \"findings-giada-roadmap-task24b-rate_attribution-v1\"]"
+        },
+        {
+          "assessment_id": "rec6304f9cd356e46",
+          "assessment": "Task24b rate_attribution",
+          "claim_id": "reca5305f7455a60f",
+          "claim": "Task24b rate_attribution",
+          "finding_id": "recf159aa29b76c83",
+          "finding": "Task24b rate_attribution",
+          "claim_code": "claims-giada-roadmap-task24b-rate_attribution-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Old Nap_h: tau replacement most reduces1000ms error; inf replacement most reduces10000ms error. Both analytic rates produce FP32 floor9.38e-6/2.66e-5. Contributions interact; not additive."
+        }
+      ]
+    },
+    {
+      "_record_id": "recb8027b2ff9e094",
+      "_created_time": "2026-10-04T21:20:24Z",
+      "Nome": "Task24b budget_capacity",
+      "Codice stabile": "findings-giada-roadmap-task24b-budget_capacity-v1",
+      "Descrizione": null,
+      "Risultato": "Paired60kvs30k median improvement=0.49876750664050684; width32vs16 at60k=0.5107646727314548. Four arms pass3/3. No universal monotone scaling claim.",
+      "Incertezza": null,
+      "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+      "Esito": "Positivo",
+      "evidence_chains": [
+        {
+          "assessment_id": "rec09312da85ba9a3",
+          "assessment": "After39b exploratory precedent: optimization_budget",
+          "claim_id": "rec3db1e047363165",
+          "claim": "After39b: optimization_budget",
+          "finding_id": "recb8027b2ff9e094",
+          "finding": "Task24b budget_capacity",
+          "claim_code": "claims-giada-task39b-architecture-residual-optimization_budget-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task1b-budget-limited-engineering-go-v1\", \"finding-task3b-symmetric-rates-stabilize-shared-mh-v1\", \"findings-giada-roadmap-task24b-budget_capacity-v1\"]"
+        },
+        {
+          "assessment_id": "rec894f5b6d33d5a6",
+          "assessment": "Task24b budget_capacity",
+          "claim_id": "recc3698b3659a7ac",
+          "claim": "Task24b budget_capacity",
+          "finding_id": "recb8027b2ff9e094",
+          "finding": "Task24b budget_capacity",
+          "claim_code": "claims-giada-roadmap-task24b-budget_capacity-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Paired60kvs30k median improvement=0.49876750664050684; width32vs16 at60k=0.5107646727314548. Four arms pass3/3. No universal monotone scaling claim."
+        }
+      ]
+    },
+    {
+      "_record_id": "rec6b849324a208d2",
+      "_created_time": "2026-10-04T21:20:24Z",
+      "Nome": "Task24b repair and sharing",
+      "Codice stabile": "findings-giada-roadmap-task24b-repair-and-sharing-v1",
+      "Descrizione": null,
+      "Risultato": "Primary decay_channel1116params passes3/3 fresh conjunction. Frozen conditioned420passes3/3 (62.37% fewer); shared_heads1516passes but no compression gain. Original Task24 NO-GO remains unchanged. No measured runtime acceleration.",
+      "Incertezza": null,
+      "Limitazioni": null,
+      "Esito": "Positivo",
+      "evidence_chains": [
+        {
+          "assessment_id": "recadd5d2348d85c2",
+          "assessment": "After39b exploratory precedent: shared_capacity",
+          "claim_id": "recd7a437e9c4ac2b",
+          "claim": "After39b: shared_capacity",
+          "finding_id": "rec6b849324a208d2",
+          "finding": "Task24b repair and sharing",
+          "claim_code": "claims-giada-task39b-architecture-residual-shared_capacity-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-roadmap-task26-gradient_interference-v1\", \"findings-giada-roadmap-task24b-repair-and-sharing-v1\"]"
+        }
+      ]
+    },
+    {
+      "_record_id": "rec2b91c14e9fe143",
+      "_created_time": "2026-10-04T21:20:24Z",
+      "Nome": "Task24b precision",
+      "Codice stabile": "findings-giada-roadmap-task24b-precision-v1",
+      "Descrizione": null,
+      "Risultato": "Identical learned rates castFP64 do not reduce old error by50%; rates dominate. Exact-rate FP64 floor~1e-14, FP32 floor~1e-5, far below old~.002 error.",
+      "Incertezza": null,
+      "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+      "Esito": "Negativo",
+      "evidence_chains": [
+        {
+          "assessment_id": "rec8224cbe14db30a",
+          "assessment": "Task24b precision",
+          "claim_id": "rec2927ae925de80e",
+          "claim": "Task24b precision",
+          "finding_id": "rec2b91c14e9fe143",
+          "finding": "Task24b precision",
+          "claim_code": "claims-giada-roadmap-task24b-precision-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "evidence_outcome": "Contraddice",
+          "argument": "Identical learned rates castFP64 do not reduce old error by50%; rates dominate. Exact-rate FP64 floor~1e-14, FP32 floor~1e-5, far below old~.002 error."
+        },
+        {
+          "assessment_id": "recd383ade919ec42",
+          "assessment": "After39b exploratory precedent: numerical_timing",
+          "claim_id": "rec8937c721b304df",
+          "claim": "After39b: numerical_timing",
+          "finding_id": "rec2b91c14e9fe143",
+          "finding": "Task24b precision",
+          "claim_code": "claims-giada-task39b-architecture-residual-numerical_timing-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-roadmap-task24b-precision-v1\", \"findings-giada-roadmap-task24b-clipping-v1\"]"
+        }
+      ]
+    },
+    {
+      "_record_id": "rec828f6ca9dc3900",
+      "_created_time": "2026-10-04T21:20:24Z",
+      "Nome": "Task24b clipping",
+      "Codice stabile": "findings-giada-roadmap-task24b-clipping-v1",
+      "Descrizione": null,
+      "Risultato": "No gradient clipping activation: all bundle/channel frequencies zero. Matched clipped variants are identical. Proposed clipping-coupling explanation unsupported in this run.",
+      "Incertezza": null,
+      "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+      "Esito": "Negativo",
+      "evidence_chains": [
+        {
+          "assessment_id": "recc06449329163cb",
+          "assessment": "Task24b clipping",
+          "claim_id": "rec4eaf6587735dd8",
+          "claim": "Task24b clipping",
+          "finding_id": "rec828f6ca9dc3900",
+          "finding": "Task24b clipping",
+          "claim_code": "claims-giada-roadmap-task24b-clipping-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "evidence_outcome": "Contraddice",
+          "argument": "No gradient clipping activation: all bundle/channel frequencies zero. Matched clipped variants are identical. Proposed clipping-coupling explanation unsupported in this run."
+        },
+        {
+          "assessment_id": "recd383ade919ec42",
+          "assessment": "After39b exploratory precedent: numerical_timing",
+          "claim_id": "rec8937c721b304df",
+          "claim": "After39b: numerical_timing",
+          "finding_id": "rec828f6ca9dc3900",
+          "finding": "Task24b clipping",
+          "claim_code": "claims-giada-task39b-architecture-residual-numerical_timing-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-roadmap-task24b-precision-v1\", \"findings-giada-roadmap-task24b-clipping-v1\"]"
+        }
+      ]
+    },
+    {
+      "_record_id": "rec7ed57c0566d498",
+      "_created_time": "2026-10-05T09:50:45Z",
+      "Nome": "Task26 gradient_interference",
+      "Codice stabile": "findings-giada-roadmap-task26-gradient_interference-v1",
+      "Descrizione": null,
+      "Risultato": "94/300 off-diagonal shared-trunk gradient cosine values are negative across fixed probes. This is a local conflict diagnostic, not a causal failure attribution.",
+      "Incertezza": null,
+      "Limitazioni": "Cinque canali voltaggio-dipendenti; dieci stati m/h espliciti; V imposto; corrente analitica economica mantenuta. Nessun CaDynamics/SK_E2, calciumfeedback, voltaggioautonomo, temperaturaOOD, sinapsi o neuronecompleto. Task27 targetcorrenti eTask28 blocco completo restano separate.",
+      "Esito": "Misto",
+      "evidence_chains": [
+        {
+          "assessment_id": "recbe4dabd9be12c8",
+          "assessment": "Task26 gradient_interference",
+          "claim_id": "rec2eb564827295f1",
+          "claim": "Task26 gradient_interference",
+          "finding_id": "rec7ed57c0566d498",
+          "finding": "Task26 gradient_interference",
+          "claim_code": "claims-giada-roadmap-task26-gradient_interference-v1",
+          "claim_status": "Indeterminata",
+          "evidence_outcome": "Indeterminata",
+          "argument": "94/300 off-diagonal shared-trunk gradient cosine values are negative across fixed probes. This is a local conflict diagnostic, not a causal failure attribution."
+        },
+        {
+          "assessment_id": "recadd5d2348d85c2",
+          "assessment": "After39b exploratory precedent: shared_capacity",
+          "claim_id": "recd7a437e9c4ac2b",
+          "claim": "After39b: shared_capacity",
+          "finding_id": "rec7ed57c0566d498",
+          "finding": "Task26 gradient_interference",
+          "claim_code": "claims-giada-task39b-architecture-residual-shared_capacity-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-roadmap-task26-gradient_interference-v1\", \"findings-giada-roadmap-task24b-repair-and-sharing-v1\"]"
+        }
+      ]
+    },
+    {
+      "_record_id": "recb75e85be0193b2",
+      "_created_time": "2026-10-16T09:45:48Z",
+      "Nome": "IE-P5 standard refit improves accuracy; balanced loses; tabulation trades memory for graph speed",
+      "Codice stabile": "findings-giada-ie-p5-outcome-v1",
+      "Descrizione": null,
+      "Risultato": "# IE-P5 â€” Accuracy repair and inference deployment\n\nKaggle v1 completed successfully at scientific revision\n`5825ea21be144342e16102f42b84bc79f2c789ba`. All 138 timing preflights passed,\nwith zero CUDA Graph failures. Local audit independently replayed all 23 maps;\nmaximum CPU/GPU forced-path metric discrepancy was 5.96e-7.\n\n## Accuracy\n\nThe standard refit reduced historical closed-loop voltage RMSE by\n4.08x / 4.84x / 3.48x for seeds 17/29/43, to 0.00958 / 0.00826 / 0.00912 mV.\nFresh gate RMSE was 0.000628 / 0.000749 / 0.000581. All standard refits passed\nimposed-path gate criteria. However, fresh maximum gate errors remained\n0.01168 / 0.01364 / 0.01041 (limit 0.01); calcium maxima remained\n5.047e-6 / 5.182e-6 / 6.107e-6 mM (limit 5e-6). Seed43 also failed historical\nvoltage maximum (0.11471 mV versus 0.1). No learned candidate passed joint quality.\n\nThe balanced-loss package was worse than standard in all three seeds on fresh\ngate RMSE, imposed-path RMSE and historical voltage RMSE. This contradicts the\nregistered package, not each extra term separately. Development selected 30k\nsteps for standard and 10k for balanced. Gains against old frozen checkpoints\nconflate additional budget, new data and identically reset Adam moments;\nthey do not establish that budget alone caused the improvement.\n\n## Execution\n\nAll six 0.25mV neural tables passed sampled conversion tolerance (maximum map\ndelta 2.16e-5â€“2.32e-5, limit 5e-5); all 1mV tables failed it\n(3.45e-4â€“3.71e-4). Fine tables largely preserve neural bias, not repair it.\nAt batch642, CUDA Graph fine deployment saves about 16.5â€“17.3% versus formula\nand about 37% versus its MLP. Ordinary compiled deployment remains slower than\nformula. Fine tables occupy 87,176 bytes versus 9,420 bytes of network weights\nand scales: about 9.25x memory. This is tabulation of learned predictions,\nnot a new neural architecture, parameter compression or direct MLP speedup.\nThe analytic LUT passes quality and saves about 17.0% in the same graph backend.\nThese are resident-core measurements, not end-to-end simulation speedups.\n\n## Attribution and limits\n\nOracle coefficient interventions apply ONLY to the old frozen IE-P4 models.\nReplacing z with exact coefficients reduces their historical voltage RMSE\n4.00â€“7.37x. Replacing the calcium coefficient group strongly reduces calcium\nerror. Replacing u alone does not repair it and worsens calcium maxima in all\nthree seeds; compensation and nonlinear interaction remain possible.\nThese interventions neither identify a unique cause nor attribute errors in\nthe new refits, which were not subjected to these swaps. Oracles are not\nselection/cost eligible. Opened Task35 traces are diagnostic, not a fresh native\nconfirmation. No operational candidate is promoted and no new run is launched.\n\nRaw results, checkpoints, per-family probes, timing blocks, selection freeze\nand independent audit are retained in `results/ie_p5_kaggle_v1/`.\n",
+      "Incertezza": null,
+      "Limitazioni": "No automatic promotion or new native/morphology confirmation. Fixed-input resident timing excludes host RNG,events,transfers. Outside voltage domain not covered; tables hold boundary coefficients, denseMLP sees actualV. Tabulation cannot repair model bias by itself and its compiler error is measured separately. More training does not remove denseMLP inference cost. No OpenEvolve or custom kernels. Budget/data/Adam-reset confounded versus parent; balanced terms not separately ablated; oracle swaps only old frozen models; no end-to-end speed claim.",
+      "Esito": "Misto",
+      "evidence_chains": [
+        {
+          "assessment_id": "rec6b2067124e28a0",
+          "assessment": "IE-P5 result H_accuracy",
+          "claim_id": "rec366dc125772505",
+          "claim": "IE-P5 H_accuracy",
+          "finding_id": "recb75e85be0193b2",
+          "finding": "IE-P5 standard refit improves accuracy; balanced loses; tabulation trades memory for graph speed",
+          "claim_code": "claims-giada-ie-p5-H_accuracy-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "evidence_outcome": "Contraddice",
+          "argument": "Balanced package loses in all three paired seeds; not each term separately."
+        },
+        {
+          "assessment_id": "rec1496a89279036c",
+          "assessment": "IE-P5 result H_localization",
+          "claim_id": "rec4bb63da225297b",
+          "claim": "IE-P5 H_localization",
+          "finding_id": "recb75e85be0193b2",
+          "finding": "IE-P5 standard refit improves accuracy; balanced loses; tabulation trades memory for graph speed",
+          "claim_code": "claims-giada-ie-p5-H_localization-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Conditional old-frozen z and calcium-group oracle response; not unique attribution and not tested on new refits."
+        },
+        {
+          "assessment_id": "rec2f286a11395199",
+          "assessment": "After39b exploratory precedent: loss_conditioning",
+          "claim_id": "rec99c21e6f2f368c",
+          "claim": "After39b: loss_conditioning",
+          "finding_id": "recb75e85be0193b2",
+          "finding": "IE-P5 standard refit improves accuracy; balanced loses; tabulation trades memory for graph speed",
+          "claim_code": "claims-giada-task39b-architecture-residual-loss_conditioning-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-ie-p5-outcome-v1\", \"findings-giada-ie-p6-outcome-v1\"]"
+        },
+        {
+          "assessment_id": "rec9b056f3528b3c1",
+          "assessment": "IE-P5 result H_representation",
+          "claim_id": "reca0ff61d6da79de",
+          "claim": "IE-P5 H_representation",
+          "finding_id": "recb75e85be0193b2",
+          "finding": "IE-P5 standard refit improves accuracy; balanced loses; tabulation trades memory for graph speed",
+          "claim_code": "claims-giada-ie-p5-H_representation-v1",
+          "claim_status": "Indeterminata",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Fine tables preserve predictions and improve graph cost with 9.25x memory, but no learned candidate passes quality; coarse tables fail conversion."
+        }
+      ]
+    },
+    {
+      "_record_id": "reca602a8e915c66b",
+      "_created_time": "2026-10-16T10:29:21Z",
+      "Nome": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+      "Codice stabile": "findings-giada-ie-p6-outcome-v1",
+      "Descrizione": null,
+      "Risultato": "# 🔬 IE-P6 — audited result\n\nKaggle v1 COMPLETE; scientific revision `c5b3819eeaa6b8e4522129ee309e468cb4fa2d8a`\nverified in worker revision file, final report and setup log. About9.5minutes\nnotebook runtime,30ktraining steps.210timing cells and210numeric preflights,\nzero graph failures. Read-only local audit replayed all35maps on CPU with maximum\npath-metric discrepancy1.17e-6. Regenerated path float64 discrepancy2.84e-14mV\n(cross-platform elementary math); saved paths used for CPU replay.\n\n## ✅ Main result: learned local maps\n\nAll six learned piecewise-linear coefficient operators pass ALL registered\nquality gates and the batch642 CUDA Graph resident-cost criterion (median\nsaved fraction>=10%, paired interval lower bound>0). No automatic promotion.\n\n| Map | Fresh gate RMSE | Path gate RMSE | Historical V RMSE mV | Graph saving vs formula |\n| --- | --- | --- | --- | --- |\n| local81 seed17 | 4.02e-5 | 8.67e-5 | 0.000713 | 10.12% |\n| local81 seed29 | 3.97e-5 | 9.22e-5 | 0.001115 | 10.05% |\n| local81 seed43 | 3.98e-5 | 8.69e-5 | 0.001010 | 10.63% |\n| local161 seed17 | 1.92e-5 | 5.12e-5 | 0.001007 | 10.59% |\n| local161 seed29 | 2.16e-5 | 4.26e-5 | 0.001312 | 10.49% |\n| local161 seed43 | 1.95e-5 | 6.83e-5 | 0.000979 | 10.70% |\n\nLocal81 occupies11,084bytes,local16121,964bytes including scale, versus9,420bytes\nfor MLP64 and87,176bytes for fine table deployment. This is NOT a reduction in\nparameters versus MLP64. It is a local learned numerical coefficient table,\ninitialized from neural predictions and optimized against analytic teacher\ntargets, not a dense neural-network speedup. Initialization projection error\nis separately retained. First selected local161 checkpoints are1k/10k/1k;\nlocal813k/30k/30k. More updates are not monotonically better: dev scores can\ndeteriorate, especially local161. Freeze before fresh prevented fresh selection.\n\nThe analytic .25mV LUT still passes quality and saves25.32% in the SAME graph\nbenchmark. Thus learned local maps do not dominate the best numerical baseline;\nthey provide a smaller-memory cost/quality tradeoff. Ordinary compiled local\ncosts are near parity with formula, with intervals spanning parity, not a\nconfirmed speed advantage. The two local resolutions have similar costs.\nHistorical error below formula in one case is compatible with error cancellation,\nnot proof of greater physical accuracy than the analytic equations.\n\n## 🧪 Factorial matrix\n\nStandard continuation A reduces joint fresh gate/path score versus its P5parent\n30.2%,34.7%,12.1% for17/29/43. A passes all quality gates2/3; seed17 still fails\nhistorical V maximum (0.1111mV versus0.1). Continuation is useful but does not\nisolate additional updates from new training data/optimizer reset/LR change.\n\nTargeted B improves the registered worst-case joint score versus A by\n21.9%,25.3%,24.2% (median24.2%,consistent3/3). However, fresh gate RMSE and path\nRMSE worsen slightly3/3, historical V RMSE improves only1/3, and B passes joint\nquality1/3. This supports targeted worst-case coverage, NOT universal accuracy.\n\nTemporal C worsens the joint score versus A3/3; D worsens versus B3/3. Factorial\ninteractions are positive0.0823/0.1080/0.0505 (lower score is better), contrary\nto the proposed complementarity. C passes quality1/3; D0/3. This rejects the\ntested8step normalized temporal objective/weight, not all recurrent supervision.\nAll12dense members remain slower than formula in graph mode. Fine tabulation\npasses conversion12/12 and retains the respective quality classifications;\nthat is deployment of each learned function, not repair of its bias.\n\n## 🔍 Attribution and objective probes\n\nOn the NEW P5standard parents, exact z swaps reduce historical V RMSE to\n0.002013/0.001297/0.001243mV and Ca maxima to1.45e-7/2.75e-7/1.36e-7mM.\nExact calcium-group coefficients also strongly reduce Ca error. Exact u alone\ndoes not reliably repair the integrated error. These are conditional oracles,\nnot deployable candidates or a unique mechanism proof.\n\nThe old balanced logit term has gradient norm about84x/219x/169x the base\nobjective at these probes; cosine is near zero (-.0375,.0108,.0466).\nConstant400 gradients are positively aligned (.335–.451). This is stronger\nevidence for scale imbalance than for a universal conflicting-gradient account.\nIt is not a causal ablation of the P5training trajectory.\n\n## 🔒 Scope\n\nSame17V-dependent gates and explicit18state; SK,calcium,readout,synapses,solver\nand dt0.1ms unchanged. New fresh gate/path tests only after freeze; historical\nTask35 already opened and diagnostic. One T4/run, no fresh native confirmation,\nfull-neuron proof, end-to-end speed claim or operational promotion. Archive\nincludes all curves,35map outputs,210timing cells,18oracle interventions\nand checkpoints, including unsuccessful branches.\n",
+      "Incertezza": null,
+      "Limitazioni": "No automatic promotion; no new native confirmation; Task35 opened diagnostic only. Fixed resident timing excludes host RNG/events/transfers. No end-to-end speedup claim, OpenEvolve, custom kernels or hardware change. New tests may guide later work only after reporting all arms. Outside voltage domain unqualified. No promise of success. Local maps are learned tables, not dense neural speedup or fewer weights. Analytic LUT remains faster; one device/run and opened historical traces. Budget/data/reset/LR not individually isolated.",
+      "Esito": "Misto",
+      "evidence_chains": [
+        {
+          "assessment_id": "recc86073121d4b3d",
+          "assessment": "IE-P6 result H_temporal",
+          "claim_id": "rec1fc7e30faefb89",
+          "claim": "IE-P6 H_temporal",
+          "finding_id": "reca602a8e915c66b",
+          "finding": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+          "claim_code": "claims-giada-ie-p6-H_temporal-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "evidence_outcome": "Contraddice",
+          "argument": "C worse than A3/3 and D worse than B3/3 on joint fresh gate/path score. Scope is tested8step objective/weight, not recurrent learning generally."
+        },
+        {
+          "assessment_id": "reca5a9e8ff03efc3",
+          "assessment": "IE-P6 result H_attribution",
+          "claim_id": "rec337ab86886d801",
+          "claim": "IE-P6 H_attribution",
+          "finding_id": "reca602a8e915c66b",
+          "finding": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+          "claim_code": "claims-giada-ie-p6-H_attribution-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "On new P5parents exact z swaps strongly improve V/Ca3/3; calcium-group correction also helps Ca. Conditional oracle evidence, not unique attribution or inference candidate."
+        },
+        {
+          "assessment_id": "rec2f286a11395199",
+          "assessment": "After39b exploratory precedent: loss_conditioning",
+          "claim_id": "rec99c21e6f2f368c",
+          "claim": "After39b: loss_conditioning",
+          "finding_id": "reca602a8e915c66b",
+          "finding": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+          "claim_code": "claims-giada-task39b-architecture-residual-loss_conditioning-v1",
+          "claim_status": "Aperta",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-ie-p5-outcome-v1\", \"findings-giada-ie-p6-outcome-v1\"]"
+        },
+        {
+          "assessment_id": "recfee374692f8915",
+          "assessment": "IE-P6 result H_conflict",
+          "claim_id": "reca06979e33f507c",
+          "claim": "IE-P6 H_conflict",
+          "finding_id": "reca602a8e915c66b",
+          "finding": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+          "claim_code": "claims-giada-ie-p6-H_conflict-v1",
+          "claim_status": "Indeterminata",
+          "evidence_outcome": "Indeterminata",
+          "argument": "Logit gradient84–219xbase and near-orthogonal; negativecosine only1/3. Scale imbalance plausible, not causal proof that conflicting gradients caused P5failure."
+        },
+        {
+          "assessment_id": "rec48e4468bb34611",
+          "assessment": "IE-P6 result H_interaction",
+          "claim_id": "recaa200b9b8f6a9c",
+          "claim": "IE-P6 H_interaction",
+          "finding_id": "reca602a8e915c66b",
+          "finding": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+          "claim_code": "claims-giada-ie-p6-H_interaction-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "evidence_outcome": "Contraddice",
+          "argument": "Positive interactions0.0823/0.1080/0.0505 for lower-is-better score: no proposed complementarity."
+        },
+        {
+          "assessment_id": "rec0027168d30b25e",
+          "assessment": "IE-P6 result H_optimization",
+          "claim_id": "recd19d0acf41dcc1",
+          "claim": "IE-P6 H_optimization",
+          "finding_id": "reca602a8e915c66b",
+          "finding": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+          "claim_code": "claims-giada-ie-p6-H_optimization-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Acontinuation improves fresh joint score3/3 by12.1–34.7%, quality2/3; not isolated budget cause; later local checkpoints can degrade."
+        },
+        {
+          "assessment_id": "rec1b240cd0596c40",
+          "assessment": "IE-P6 result H_coverage",
+          "claim_id": "recd70ea70c19cc0f",
+          "claim": "IE-P6 H_coverage",
+          "finding_id": "reca602a8e915c66b",
+          "finding": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+          "claim_code": "claims-giada-ie-p6-H_coverage-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "B-A registered joint worst-case score improves21.9–25.3%,median24.2%,direction3/3. Mean gate/path errors worsen3/3 and historicalV improves1/3; NOT universal accuracy improvement, quality1/3."
+        },
+        {
+          "assessment_id": "rec54663e2ebdba8d",
+          "assessment": "IE-P6 result H_representation",
+          "claim_id": "recdd588561c31a8b",
+          "claim": "IE-P6 H_representation",
+          "finding_id": "reca602a8e915c66b",
+          "finding": "IE-P6 learned local maps pass scoped quality and graph cost; temporal objective fails",
+          "claim_code": "claims-giada-ie-p6-H_representation-v1",
+          "claim_status": "Supportata nel dominio",
+          "evidence_outcome": "Sostiene",
+          "argument": "Six local learned maps pass ALL quality and registered10%median graph-cost criterion.11,084/21,964bytes vs9,420MLP. Analytic LUT remains faster25.3%; no ordinary-backend or end-to-end speed advantage claimed."
+        }
+      ]
+    }
+  ],
+  "task39b_cases": [
+    {
+      "model": "frozen_local161_SKcanonical",
+      "role": "development",
+      "cases": 72,
+      "passed": 53
+    },
+    {
+      "model": "frozen_local161_SKcanonical",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 56
+    },
+    {
+      "model": "joint_wbase_h64_c0_r0",
+      "role": "development",
+      "cases": 72,
+      "passed": 7
+    },
+    {
+      "model": "joint_wbase_h64_c0_r0",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 16
+    },
+    {
+      "model": "joint_wbase_h64_c0_r1",
+      "role": "development",
+      "cases": 72,
+      "passed": 8
+    },
+    {
+      "model": "joint_wbase_h64_c0_r1",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 18
+    },
+    {
+      "model": "joint_wbase_h64_c1_r0",
+      "role": "development",
+      "cases": 72,
+      "passed": 14
+    },
+    {
+      "model": "joint_wbase_h64_c1_r0",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 25
+    },
+    {
+      "model": "joint_wbase_h64_c1_r1",
+      "role": "development",
+      "cases": 72,
+      "passed": 9
+    },
+    {
+      "model": "joint_wbase_h64_c1_r1",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 15
+    },
+    {
+      "model": "joint_wbase_h8_c0_r0",
+      "role": "development",
+      "cases": 72,
+      "passed": 11
+    },
+    {
+      "model": "joint_wbase_h8_c0_r0",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 22
+    },
+    {
+      "model": "joint_wbase_h8_c0_r1",
+      "role": "development",
+      "cases": 72,
+      "passed": 10
+    },
+    {
+      "model": "joint_wbase_h8_c0_r1",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 18
+    },
+    {
+      "model": "joint_wbase_h8_c1_r0",
+      "role": "development",
+      "cases": 72,
+      "passed": 16
+    },
+    {
+      "model": "joint_wbase_h8_c1_r0",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 21
+    },
+    {
+      "model": "joint_wbase_h8_c1_r1",
+      "role": "development",
+      "cases": 72,
+      "passed": 11
+    },
+    {
+      "model": "joint_wbase_h8_c1_r1",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 18
+    },
+    {
+      "model": "joint_wgrouped_h64_c1_r1",
+      "role": "development",
+      "cases": 72,
+      "passed": 10
+    },
+    {
+      "model": "joint_wgrouped_h64_c1_r1",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 13
+    },
+    {
+      "model": "joint_wgrouped_h8_c0_r0",
+      "role": "development",
+      "cases": 72,
+      "passed": 9
+    },
+    {
+      "model": "joint_wgrouped_h8_c0_r0",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 15
+    },
+    {
+      "model": "joint_whistorical39_best",
+      "role": "development",
+      "cases": 72,
+      "passed": 24
+    },
+    {
+      "model": "joint_whistorical39_best",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 26
+    },
+    {
+      "model": "joint_wmultiscale_h64_c1_r1",
+      "role": "development",
+      "cases": 72,
+      "passed": 0
+    },
+    {
+      "model": "joint_wmultiscale_h64_c1_r1",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 6
+    },
+    {
+      "model": "joint_wmultiscale_h8_c0_r0",
+      "role": "development",
+      "cases": 72,
+      "passed": 2
+    },
+    {
+      "model": "joint_wmultiscale_h8_c0_r0",
+      "role": "stress_diagnostic",
+      "cases": 72,
+      "passed": 8
+    }
+  ],
+  "task39b_failed_channels": [
+    {
+      "channel": "Ca_LVAst",
+      "failures": 35,
+      "mean_nrmse": 0.5602415801528214,
+      "worst_absolute_rmse_ma_cm2": 4.0744061672579964e-06
+    },
+    {
+      "channel": "Ca_HVA",
+      "failures": 27,
+      "mean_nrmse": 0.02614627155147429,
+      "worst_absolute_rmse_ma_cm2": 6.485814796929542e-05
+    },
+    {
+      "channel": "Im",
+      "failures": 26,
+      "mean_nrmse": 0.05028260466817331,
+      "worst_absolute_rmse_ma_cm2": 5.1252368349562864e-05
+    },
+    {
+      "channel": "K_Pst",
+      "failures": 21,
+      "mean_nrmse": 0.04144146816288955,
+      "worst_absolute_rmse_ma_cm2": 1.740153173972872e-06
+    },
+    {
+      "channel": "Ih",
+      "failures": 12,
+      "mean_nrmse": 0.09930338344441571,
+      "worst_absolute_rmse_ma_cm2": 7.860665213341191e-07
+    },
+    {
+      "channel": "Nap_Et2",
+      "failures": 11,
+      "mean_nrmse": 0.012683652860700324,
+      "worst_absolute_rmse_ma_cm2": 8.537399311362435e-07
+    },
+    {
+      "channel": "NaTs2_t",
+      "failures": 11,
+      "mean_nrmse": 0.08324035197836184,
+      "worst_absolute_rmse_ma_cm2": 1.0596548629020902e-06
+    },
+    {
+      "channel": "NaTa_t",
+      "failures": 9,
+      "mean_nrmse": 0.5250552095669836,
+      "worst_absolute_rmse_ma_cm2": 3.20054716517277e-07
+    },
+    {
+      "channel": "SKv3_1",
+      "failures": 6,
+      "mean_nrmse": 0.0685682883077888,
+      "worst_absolute_rmse_ma_cm2": 2.11457158437627e-07
+    },
+    {
+      "channel": "SK_E2",
+      "failures": 6,
+      "mean_nrmse": 0.3659044980349777,
+      "worst_absolute_rmse_ma_cm2": 1.222557046410757e-07
+    },
+    {
+      "channel": "K_Tst",
+      "failures": 6,
+      "mean_nrmse": 0.19409569670203772,
+      "worst_absolute_rmse_ma_cm2": 3.620561077842969e-08
+    }
+  ],
+  "limits": "Read-only exploratory retrieval; selected precedents are analogies, not causal proof for Task39b. Legacy records may lack giada in stable code, so exact reconciled codes are included."
+}

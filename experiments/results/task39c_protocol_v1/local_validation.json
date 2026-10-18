@@ -1,0 +1,19 @@
+{
+  "valid": true,
+  "task": "39c",
+  "cpu_tests": {
+    "tests.test_task39c_dynamic_identification": {"passed": 7, "failed": 0},
+    "tests.test_task39b_architecture_diagnosis": {"passed": 8, "failed": 0}
+  },
+  "frozen_parent_oracle_cpu": {
+    "families": ["steps", "same_v_history", "slow_recovery", "seams"],
+    "precisions": ["float32", "float64"],
+    "arms": ["base_h8_c1_r0", "base_h64_c1_r0"],
+    "seed_count": 3,
+    "teacher_both_floor_passed": true,
+    "report": "cpu_oracle_check/oracle_preflight.json"
+  },
+  "cuda_preflights": "Pending inside Kaggle before training",
+  "new_training_performed": false,
+  "independent_confirmation_accessed": false
+}
