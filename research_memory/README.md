@@ -5,14 +5,23 @@ Mirror della [base Airtable](https://airtable.com/app9dZ7ghujkFJIo5), nel worksp
 ## Già utilizzabile
 
 Il file `data/research_memory.sqlite` è il database reale operativo. Non è uno stub.
-Git conserva la sua copia lossless `data/research_memory.sqlite.gz` e il relativo
-manifest SHA-256, per evitare il limite di 100 MiB per singolo file. Il mirror
-ricostruisce automaticamente il DB verificato solo se il file operativo manca;
-non sovrascrive mai un database locale esistente. Dopo un pull su una checkout
+Per decisione dell'utente del18 ottobre2026 il database resta un file unico
+SQLite, archiviato su Google Drive secondo la guida ClickUp
+`Procedura agenti — Database reali su Drive`. Nessuna suddivisione in parti.
+Il manifest `data/research_memory.sqlite.manifest.json` conserva SHA256, byte
+e riferimenti alla versione Drive verificata. Il vecchio gzip e' solo locale:
+non puo' piu' essere pushato perche' supera100MiB. I vecchi commit restano recuperabili.
+Su una nuova checkout scaricare il file SQLite indicato dal manifest, verificarne
+SHA256 e integrita', quindi posizionarlo in `data/research_memory.sqlite`.
+Per il limite100MiB del connettore Drive il trasporto puo' essere un archivio
+unico ZIP_LZMA: estrarre l'unico SQLite originale con Python zipfile o7-Zip,
+poi verificare SHA256 del DB (distinto dal checksum dell'archivio).
+Il mirror non sovrascrive mai un database locale esistente. Dopo un pull su una checkout
 già attiva, riconciliare esplicitamente eventuali differenze: non sostituire il DB.
 Per versionare una modifica: verificare il mirror, esportare lo snapshot JSON,
-poi eseguire `python -m research_memory.packed_database` e committare gzip,
-manifest e snapshot insieme. Lo snapshot JSON leggibile resta locale; Git conserva
+poi creare il backup SQLite consistente su Drive e committare il manifest
+Drive e lo snapshot JSON insieme. Non eseguire packed_database per il nuovo
+flusso: e' conservato solo per il recupero storico. Il JSON leggibile resta locale; Git conserva
 `data/airtable_snapshot.json.gz` con manifest SHA-256, ripristinato solo se manca.
 Eseguire anche `python -m research_memory.packed_snapshot` prima del commit.
 La compressione non rimuove record né relazioni e conserva ogni byte dell'export.
@@ -161,8 +170,9 @@ Non serve un token per SQL, test, import/export o workflow via connettore. Le cr
 
 ## Git e recupero
 
-- Snapshot lossless SQLite (gzip + manifest SHA-256) e snapshot JSON vanno
-  aggiornati nello stesso commit; il JSON fornisce diff ispezionabili. Il file
+- Il riferimento al backup unico SQLite su Drive (manifest SHA256 + receipt)
+  e lo snapshot JSON vanno aggiornati insieme; dichiarare eventuali differenze
+  temporali fra backup e nuove registrazioni. Il file
   SQLite operativo resta locale, preservato anche quando Git ne rimuove il tracking.
 - Non fare merge binari del DB: in caso di conflitto, riconciliare la outbox e rigenerare/importare lo snapshot corrente verificato, preservando gli intenti pendenti.
 - Nessun polling, automazione o sync in background è stato attivato. Modifiche manuali su Airtable diventano locali al prossimo pull/import.

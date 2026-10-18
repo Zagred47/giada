@@ -1,0 +1,409 @@
+{
+  "valid": true,
+  "task": 39,
+  "decision": "NO_GO_TASK40_BLOCKED",
+  "passing_arms": [],
+  "summaries": {
+    "frozen_local161_SKcanonical": {
+      "all_development_passed": false,
+      "passed_cases": 53,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0001903879310702905
+    },
+    "joint_wfactorized_expanded_fr": {
+      "all_development_passed": false,
+      "passed_cases": 24,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.010173280723392963
+    },
+    "joint_wfactorized_expanded_tf": {
+      "all_development_passed": false,
+      "passed_cases": 10,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.2285691201686859
+    },
+    "joint_wfactorized_fit_fr": {
+      "all_development_passed": false,
+      "passed_cases": 20,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.009194986894726753
+    },
+    "joint_wfactorized_fit_tf": {
+      "all_development_passed": false,
+      "passed_cases": 11,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.22857765853405
+    },
+    "joint_whistorical38_w32": {
+      "all_development_passed": false,
+      "passed_cases": 0,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.009583242237567902
+    },
+    "joint_whistorical38_w64": {
+      "all_development_passed": false,
+      "passed_cases": 1,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.01641210727393627
+    },
+    "joint_wjoint_expanded_fr": {
+      "all_development_passed": false,
+      "passed_cases": 11,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.008482472971081734
+    },
+    "joint_wjoint_expanded_tf": {
+      "all_development_passed": false,
+      "passed_cases": 16,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.007249301765114069
+    },
+    "joint_wjoint_fit_fr": {
+      "all_development_passed": false,
+      "passed_cases": 0,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.011259824968874454
+    },
+    "joint_wjoint_fit_fr_relative": {
+      "all_development_passed": false,
+      "passed_cases": 5,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.012113467790186405
+    },
+    "joint_wjoint_fit_tf": {
+      "all_development_passed": false,
+      "passed_cases": 4,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.020279699936509132
+    },
+    "joint_wjoint_fit_tf_gate_only": {
+      "all_development_passed": false,
+      "passed_cases": 0,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.014822179451584816
+    }
+  },
+  "planned_contrasts": [
+    {
+      "factor": "coverage",
+      "control": "joint_fit_tf",
+      "treatment": "joint_expanded_tf",
+      "paired_seed_ratios": [
+        0.8390434454842138,
+        0.6098594353641735,
+        0.7013059192820258
+      ],
+      "worst_ratios": [
+        1.139657347377358,
+        1.2790371646848324,
+        0.5693560873374591
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "coverage",
+      "control": "joint_fit_fr",
+      "treatment": "joint_expanded_fr",
+      "paired_seed_ratios": [
+        0.4216976216968199,
+        0.643198199768428,
+        0.35654095094596394
+      ],
+      "worst_ratios": [
+        0.4207414830215016,
+        2.6158949440608894,
+        0.5122739424161894
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "coverage",
+      "control": "factorized_fit_tf",
+      "treatment": "factorized_expanded_tf",
+      "paired_seed_ratios": [
+        1.1177719356679563,
+        1.0344202861592462,
+        1.0000016690071012
+      ],
+      "worst_ratios": [
+        1.0457094258265134,
+        0.9586669768067769,
+        1.108698888582909
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "coverage",
+      "control": "factorized_fit_fr",
+      "treatment": "factorized_expanded_fr",
+      "paired_seed_ratios": [
+        0.8288980623045392,
+        0.7835991794518222,
+        0.8554680391584881
+      ],
+      "worst_ratios": [
+        0.7889298749381176,
+        0.5466492357312578,
+        1.1582508262667848
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "mode",
+      "control": "joint_fit_tf",
+      "treatment": "joint_fit_fr",
+      "paired_seed_ratios": [
+        1.1988493502228958,
+        1.1653083624091143,
+        1.6433319420861427
+      ],
+      "worst_ratios": [
+        1.435389088543976,
+        1.2844695890434916,
+        0.6887778127578745
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "mode",
+      "control": "joint_expanded_tf",
+      "treatment": "joint_expanded_fr",
+      "paired_seed_ratios": [
+        0.6025336619726741,
+        1.2290114695512804,
+        0.8354629801943094
+      ],
+      "worst_ratios": [
+        0.5299204495251715,
+        2.627005372910165,
+        0.6197227595129676
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "mode",
+      "control": "factorized_fit_tf",
+      "treatment": "factorized_fit_fr",
+      "paired_seed_ratios": [
+        0.7883145320754369,
+        0.6487336892503578,
+        0.033939151338885996
+      ],
+      "worst_ratios": [
+        0.9053925988296881,
+        0.6899553369881343,
+        0.6075264550754049
+      ],
+      "supported_in_this_suite": true
+    },
+    {
+      "factor": "mode",
+      "control": "factorized_expanded_tf",
+      "treatment": "factorized_expanded_fr",
+      "paired_seed_ratios": [
+        0.5845847147104853,
+        0.4914319579586001,
+        0.029033810788943598
+      ],
+      "worst_ratios": [
+        0.6830685964220298,
+        0.3934250024023565,
+        0.6346791052252398
+      ],
+      "supported_in_this_suite": true
+    },
+    {
+      "factor": "bias",
+      "control": "joint_fit_tf",
+      "treatment": "factorized_fit_tf",
+      "paired_seed_ratios": [
+        0.7258294353477189,
+        0.6745814397043377,
+        12.208497767001102
+      ],
+      "worst_ratios": [
+        4.48297351237069,
+        4.445998686954624,
+        1.6981445087480103
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "bias",
+      "control": "joint_fit_fr",
+      "treatment": "factorized_fit_fr",
+      "paired_seed_ratios": [
+        0.47727589090850553,
+        0.37554326408032135,
+        0.2521377712701834
+      ],
+      "worst_ratios": [
+        2.827700914855884,
+        2.388176838496341,
+        1.4978236733187351
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "bias",
+      "control": "joint_expanded_tf",
+      "treatment": "factorized_expanded_tf",
+      "paired_seed_ratios": [
+        0.9669484664708746,
+        1.1441992784451884,
+        17.408263366105984
+      ],
+      "worst_ratios": [
+        4.113418536198313,
+        3.332375506977505,
+        3.3067722842948872
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "bias",
+      "control": "joint_expanded_fr",
+      "treatment": "factorized_expanded_fr",
+      "paired_seed_ratios": [
+        0.9381439230481586,
+        0.4575189944374027,
+        0.6049678282789605
+      ],
+      "worst_ratios": [
+        5.302205318807719,
+        0.4990624896917606,
+        3.3865776952088615
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "current_supervision",
+      "control": "joint_fit_tf_gate_only",
+      "treatment": "joint_fit_tf",
+      "paired_seed_ratios": [
+        1.1665254421716993,
+        0.9514819853625203,
+        0.997152816655387
+      ],
+      "worst_ratios": [
+        1.2647024988259499,
+        0.6493214059911966,
+        0.8456460891196302
+      ],
+      "supported_in_this_suite": false
+    },
+    {
+      "factor": "small_currents",
+      "control": "joint_fit_fr",
+      "treatment": "joint_fit_fr_relative",
+      "paired_seed_ratios": [
+        0.6642492893467932,
+        0.7670829351964439,
+        0.5986079846715859
+      ],
+      "worst_ratios": [
+        0.1584267288654524,
+        0.16874798975681157,
+        0.2437813556302576
+      ],
+      "supported_in_this_suite": true
+    }
+  ],
+  "budget_contrasts": [
+    {
+      "arm": "joint_fit_tf",
+      "ratios_60k_over_30k": [
+        0.22675806539613072,
+        0.5080995471990732,
+        0.3843380326390477
+      ],
+      "short_budget_support": true
+    },
+    {
+      "arm": "joint_fit_fr",
+      "ratios_60k_over_30k": [
+        0.3751408455026375,
+        0.45391733079065294,
+        1.017352231918697
+      ],
+      "short_budget_support": false
+    },
+    {
+      "arm": "joint_expanded_tf",
+      "ratios_60k_over_30k": [
+        0.26289269840823726,
+        0.42745653778312265,
+        0.5212177431825633
+      ],
+      "short_budget_support": true
+    },
+    {
+      "arm": "joint_expanded_fr",
+      "ratios_60k_over_30k": [
+        0.2002640964286215,
+        0.6836659321103574,
+        0.4749366901257769
+      ],
+      "short_budget_support": true
+    },
+    {
+      "arm": "factorized_fit_tf",
+      "ratios_60k_over_30k": [
+        0.3209796706405989,
+        0.4452967252420285,
+        0.9991276704734696
+      ],
+      "short_budget_support": true
+    },
+    {
+      "arm": "factorized_fit_fr",
+      "ratios_60k_over_30k": [
+        0.5380636863651873,
+        0.6766635991672646,
+        0.6986586511464205
+      ],
+      "short_budget_support": true
+    },
+    {
+      "arm": "factorized_expanded_tf",
+      "ratios_60k_over_30k": [
+        0.2677767277951134,
+        0.34783208977717106,
+        0.9943893344975046
+      ],
+      "short_budget_support": true
+    },
+    {
+      "arm": "factorized_expanded_fr",
+      "ratios_60k_over_30k": [
+        0.6369424891013291,
+        0.6458225852285417,
+        0.6719954693646396
+      ],
+      "short_budget_support": true
+    },
+    {
+      "arm": "joint_fit_tf_gate_only",
+      "ratios_60k_over_30k": [
+        0.30048141906482295,
+        0.49078523854346273,
+        0.3388829430141343
+      ],
+      "short_budget_support": true
+    },
+    {
+      "arm": "joint_fit_fr_relative",
+      "ratios_60k_over_30k": [
+        0.736326631278217,
+        0.5809512495211956,
+        0.4913535448051098
+      ],
+      "short_budget_support": true
+    }
+  ],
+  "independent_confirmation_accessed": false,
+  "task40_preparation_eligible": false,
+  "speedup_claimed": false,
+  "thresholds_changed": false,
+  "limits": "Existing development/stress are open diagnostics; no independent confirmation generated or accessed. No autonomous V/Ca, no emergent spike/bifurcation claim, no speedup claim. Task40 remains blocked on quality failure. Data diversity, optimizer budget, supervision and representation are not interchangeable explanations. 60k is a bounded diagnostic budget, not a promise to solve every rare regime."
+}

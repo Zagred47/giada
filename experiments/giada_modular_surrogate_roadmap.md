@@ -1615,12 +1615,15 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Prossima milestone concreta — Task39
+# 🥇 Prossima milestone concreta — Task39b
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
 > i valutatori isolati. Task38 ha completato il tentativo congiunto senza
-> superare la qualità ricorrente. Eseguire la diagnosi fattoriale Task39,
-> con preflight GPU, budget appaiati e freeze prima delle valutazioni lunghe.
+> superare la qualità ricorrente. Task39 è terminata con NO-GO scientifico:
+> migliorano alcuni contrasti ma nessun candidato passa tutti i criteri.
+> Eseguire ora [Task39b](task39b_design_v1.md): 8 bracci training + 4 ancore
+> architetturali, 36 membri appaiati, senza diminuire il livello di astrazione.
+> Preflight GPU, budget appaiati e freeze prima delle valutazioni lunghe.
 > Task40 non è autorizzata dal solo miglioramento della loss media.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.

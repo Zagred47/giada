@@ -36,6 +36,10 @@ def restore_if_missing(database):
     if not archive.exists() and not manifest.exists():
         return False
     info = json.loads(manifest.read_text(encoding='utf-8'))
+    if info['format'] == 'sqlite-drive-backup-v1':
+        raise FileNotFoundError('SQLite backup is on Drive. Download the archive from '
+            + info['drive_url'] + ', extract the single original SQLite to ' + str(database) + ' and verify SHA256 ' + info['sqlite_sha256']
+            + '. See research_memory/README.md. Existing databases are never replaced.')
     if info['format'] != 'sqlite-gzip-lossless-v1' or digest(archive) != info['compressed_sha256']:
         raise ValueError('Packed SQLite archive hash mismatch; no database restored')
     with tempfile.TemporaryDirectory(dir=database.parent) as directory:
@@ -65,6 +69,8 @@ def restore_if_missing(database):
 def pack(database):
     database = Path(database)
     archive, manifest = paths(database)
+    if manifest.exists() and json.loads(manifest.read_text(encoding='utf-8')).get('format') == 'sqlite-drive-backup-v1':
+        raise ValueError('This database uses a single-file Drive backup; do not overwrite its manifest with a Git gzip. Use prepare_drive_backup.')
     with tempfile.TemporaryDirectory(dir=database.parent) as directory:
         backup = Path(directory) / 'snapshot.sqlite'
         with closing(sqlite3.connect(database.resolve().as_uri() + '?mode=ro', uri=True)) as source:

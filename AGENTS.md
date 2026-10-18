@@ -1,7 +1,9 @@
 # Memoria di ricerca condivisa
 
 La base `Scientific Modeling & Experimentation Lab` (`app9dZ7ghujkFJIo5`) ha un
-mirror SQLite versionato in `research_memory/data/research_memory.sqlite`.
+mirror SQLite operativo in `research_memory/data/research_memory.sqlite`.
+Dal18 ottobre2026 il backup resta un unico SQLite in archivio lossless su
+Drive, non parti Git; posizione e SHA256 sono nel manifest versionato.
 Leggere `research_memory/README.md` prima di modificarne schema o record.
 
 Per i pattern di interrogazione consultare `research_memory/queries/QUERY_REVIEW.md`:

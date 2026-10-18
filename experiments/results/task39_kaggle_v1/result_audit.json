@@ -1,0 +1,4446 @@
+{
+  "valid": true,
+  "rows": 1872,
+  "channel_rows": 20592,
+  "unique_cases": true,
+  "finite": true,
+  "occupancy_violations": 0,
+  "freeze_hash_valid": true,
+  "summaries_recomputed": true,
+  "sources": {
+    "budget_contrasts.json": "b8380359f2e6c77ffd7d3891e9c00334fe399d056751afe6b7fe2ebedca2a16f",
+    "current_strata.json": "8fd4887d5dbcf5324ae0feb319d00e8b49bf57eb4025f767b66e64b4e47d665c",
+    "execution.json": "458237d67a22f425c949fc6056f41e5f466e11d84a8b0c6c43fcc9ae9f55b23f",
+    "exposure.json": "9e501e996491ac0c649e32f07ddf09c9aac4ab7c9b278cd4db596baab915feff",
+    "final_report.json": "091d3bd88ff10e57a35106bf3a25117e752a5231b31fb34536c7d047bc214a18",
+    "internal_probes.json": "f6e7d02e7c2225c1f3f0a3fa6c9b1715e77edfa5318a2adf74a75fb4f1df9e40",
+    "matched_history_probes.json": "b9da08014929c768e741216a977fde078ac7805da5561f3ced3f651a5c2adf66",
+    "optimizer_preflight.json": "142ab51bcb93638a918748f53d44605a1b455fc156d59634b1f4bcf9aec021bb",
+    "paired_contrasts.json": "c425c7339daf9435c929019de826f1758f5631dd68c61a1983b6d29c500ec7fb",
+    "phase_preflight.json": "9ea84aead2867e780afa37083e048f8843e4d987970511327c7f43fe2d12b025",
+    "preregistration.json": "84192b88db0415e8819f1c460425ab3bb2544ca28f3e3fc44f7a2f303de111f4",
+    "recurrence_evaluation.json": "36904206a1ca788d1469431bba688f75fb8f7f47cb674e61416dcdebd17e679d",
+    "recurrence_preflight.json": "6cb62e70f624c02554768998d4956f2799c7939a3ef2468d821e1fc92cc45bd7",
+    "revision.json": "300755b9da6fbf2a28b55097fc0862a371bee0e35cfc27e07a2042a4f9c2ae45",
+    "selection_freeze.json": "351fa4e8cb222f2c598a0edef82a3123cabce64c64e88998c57703a358f8617d",
+    "training_curves.json": "0ee43c48106993cc8aac4ca8b372a25fa66839abc01e6c3ae0415b62cc8a3663",
+    "window_support.json": "69a710aa1d8c4fe5b0554fa1972d99c39dce5d4c4f000faeedb8b1e699c5b5ee"
+  },
+  "models": {
+    "frozen_local161_SKcanonical": {
+      "development": {
+        "passed": 53,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 13,
+          "current_max": 7,
+          "timing": 8,
+          "charge": 7,
+          "timing_only": 6
+        },
+        "failed_channel_counts": {
+          "K_Tst": 5,
+          "NaTa_t": 4,
+          "NaTs2_t": 4,
+          "Im": 2,
+          "SKv3_1": 3,
+          "K_Pst": 3,
+          "Nap_Et2": 3,
+          "Ih": 5,
+          "Ca_LVAst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00011006161366822198
+          },
+          "ramps": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 5.396807682700455e-05
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 4.959973011864349e-05
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00012398825492709875
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 6.630206189583987e-05
+          },
+          "same_v_history": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.00011987873585894704
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 5.956951281405054e-05
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00010610687604639679
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 6.475486588897184e-05
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 3.45119260600768e-05
+          },
+          "activation_boundary": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 6.068940638215281e-05
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0001903879310702905
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "seams",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.0001903879310702905,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": true,
+              "scale_ma_cm2": 0.0009336505318060517,
+              "rmse_ma_cm2": 1.370524633726713e-06,
+              "max_abs_ma_cm2": 2.4740471808963735e-06,
+              "nrmse": 0.0014679203696007894,
+              "nmax": 0.0026498642657125484,
+              "signed_charge_error_ma_ms_cm2": 9.885077486839031e-05,
+              "absolute_charge_error_ma_ms_cm2": 9.885077486839031e-05,
+              "signed_charge_normalized": 0.001323444559366889,
+              "absolute_charge_normalized": 0.001323444559366889,
+              "reference_signed_charge_ma_ms_cm2": 0.023192251101136208,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.0001455277670174837,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": true,
+              "scale_ma_cm2": 8.516896195942536e-05,
+              "rmse_ma_cm2": 1.537039877164528e-07,
+              "max_abs_ma_cm2": 3.0999692023238714e-07,
+              "nrmse": 0.0018046948580831318,
+              "nmax": 0.003639787466002817,
+              "signed_charge_error_ma_ms_cm2": 1.0133091823208365e-05,
+              "absolute_charge_error_ma_ms_cm2": 1.0133091823208365e-05,
+              "signed_charge_normalized": 0.0014872043411144821,
+              "absolute_charge_normalized": 0.0014872043411144821,
+              "reference_signed_charge_ma_ms_cm2": 0.0024380062241107225,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "rapid_voltage_train",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.00012398825492709875,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": true,
+              "scale_ma_cm2": 0.002204518998041749,
+              "rmse_ma_cm2": 3.761983132948918e-07,
+              "max_abs_ma_cm2": 1.9868020896568906e-06,
+              "nrmse": 0.0001706487055131141,
+              "nmax": 0.0009012406295530889,
+              "signed_charge_error_ma_ms_cm2": 2.0796310544397972e-05,
+              "absolute_charge_error_ma_ms_cm2": 2.0796310544397972e-05,
+              "signed_charge_normalized": 9.433490910206478e-05,
+              "absolute_charge_normalized": 9.433490910206478e-05,
+              "reference_signed_charge_ma_ms_cm2": 0.021280601620674133,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 56,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 13,
+          "current_max": 6,
+          "charge": 3,
+          "timing": 3,
+          "timing_only": 3
+        },
+        "failed_channel_counts": {
+          "K_Tst": 6,
+          "NaTa_t": 1,
+          "SKv3_1": 7,
+          "K_Pst": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00018818584794644266
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 4.6403099986491725e-05
+          },
+          "chirp": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 7.035472663119435e-05
+          },
+          "rapid_voltage_train": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 7.739510328974575e-05
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 6.264665717026219e-05
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0001092225284082815
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 8.600519504398108e-05
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00010332174133509398
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 6.731508619850501e-05
+          },
+          "reversal": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 3.458514402154833e-05
+          },
+          "activation_boundary": {
+            "passed": 5,
+            "total": 6,
+            "worst_gate_rmse": 7.369858212769032e-05
+          },
+          "seams": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.00025853340048342943
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "seams",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.00025853340048342943,
+            "worst_channel": {
+              "channel": "Ih",
+              "passed": true,
+              "scale_ma_cm2": 3.8476383679153514e-07,
+              "rmse_ma_cm2": 5.661294304511092e-10,
+              "max_abs_ma_cm2": 1.1064005021833932e-09,
+              "nrmse": 0.0014713686067067623,
+              "nmax": 0.002875531420544703,
+              "signed_charge_error_ma_ms_cm2": 2.117646852092859e-08,
+              "absolute_charge_error_ma_ms_cm2": 3.8992891759820786e-08,
+              "signed_charge_normalized": 0.0006879697077049759,
+              "absolute_charge_normalized": 0.0012667800733660453,
+              "reference_signed_charge_ma_ms_cm2": 6.8271751842985395e-06,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "steps",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.00018818584794644266,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": true,
+              "scale_ma_cm2": 0.0010310900397598743,
+              "rmse_ma_cm2": 8.204576722333075e-07,
+              "max_abs_ma_cm2": 2.111524500079498e-06,
+              "nrmse": 0.0007957187448192013,
+              "nmax": 0.0020478565582606545,
+              "signed_charge_error_ma_ms_cm2": 3.7215648131557845e-05,
+              "absolute_charge_error_ma_ms_cm2": 3.713501242148909e-05,
+              "signed_charge_normalized": 0.0004511687473509193,
+              "absolute_charge_normalized": 0.0004501911931733112,
+              "reference_signed_charge_ma_ms_cm2": 0.03409503772854805,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.0001666077005211264,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": true,
+              "scale_ma_cm2": 0.00020368656259961426,
+              "rmse_ma_cm2": 3.5856876413370106e-07,
+              "max_abs_ma_cm2": 6.492192372148354e-07,
+              "nrmse": 0.0017603947926527585,
+              "nmax": 0.0031873444616521054,
+              "signed_charge_error_ma_ms_cm2": 2.3981879557955375e-05,
+              "absolute_charge_error_ma_ms_cm2": 2.3981879557955375e-05,
+              "signed_charge_normalized": 0.001471739221356274,
+              "absolute_charge_normalized": 0.001471739221356274,
+              "reference_signed_charge_ma_ms_cm2": 0.005660622380673885,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wfactorized_expanded_fr": {
+      "development": {
+        "passed": 24,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "gate": 14,
+          "charge": 25,
+          "timing": 22,
+          "current_rmse": 35,
+          "current_max": 28,
+          "timing_only": 10
+        },
+        "failed_channel_counts": {
+          "Ca_HVA": 16,
+          "Ca_LVAst": 28,
+          "NaTa_t": 17,
+          "NaTs2_t": 13,
+          "Ih": 10,
+          "Im": 25,
+          "K_Tst": 6,
+          "SK_E2": 6,
+          "SKv3_1": 6,
+          "Nap_Et2": 8,
+          "K_Pst": 15
+        },
+        "families": {
+          "steps": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0019912465941160917
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006916051730513573
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002386425854638219
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002056422410532832
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0017389535205438733
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010173280723392963
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001285392208956182
+          },
+          "calcium_switch": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.007928818464279175
+          },
+          "channel_block": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0040320358239114285
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0008539101690985262
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00310897477902472
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0030352151952683926
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.010173280723392963,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 4.7750522077359475e-05,
+              "max_abs_ma_cm2": 8.045594854586696e-05,
+              "nrmse": 0.0598173778628887,
+              "nmax": 0.1007876702937064,
+              "signed_charge_error_ma_ms_cm2": 0.09594892657889847,
+              "absolute_charge_error_ma_ms_cm2": 0.09594892657889847,
+              "signed_charge_normalized": 0.04006527364508425,
+              "absolute_charge_normalized": 0.04006527364508425,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.6000000000000001,
+                "offset_error_ms": 0.9
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 17,
+            "case": 0,
+            "gate_rmse": 0.009842260740697384,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 4.5813965766451155e-05,
+              "max_abs_ma_cm2": 7.705365774656739e-05,
+              "nrmse": 0.05739144165187313,
+              "nmax": 0.09652559931547874,
+              "signed_charge_error_ma_ms_cm2": 0.09402742651170003,
+              "absolute_charge_error_ma_ms_cm2": 0.09402742651170003,
+              "signed_charge_normalized": 0.03926291525766821,
+              "absolute_charge_normalized": 0.03926291525766821,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.5,
+                "offset_error_ms": 0.7000000000000001
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.00977759063243866,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 4.613819969553028e-05,
+              "max_abs_ma_cm2": 7.802121942235242e-05,
+              "nrmse": 0.057797611524116076,
+              "nmax": 0.09773766988242077,
+              "signed_charge_error_ma_ms_cm2": 0.08505572012215457,
+              "absolute_charge_error_ma_ms_cm2": 0.08505572012215457,
+              "signed_charge_normalized": 0.035516611006270786,
+              "absolute_charge_normalized": 0.035516611006270786,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.5,
+                "offset_error_ms": 1.2000000000000002
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 26,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "timing": 27,
+          "timing_only": 5,
+          "gate": 17,
+          "charge": 21,
+          "current_rmse": 34,
+          "current_max": 27
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 25,
+          "Ca_HVA": 23,
+          "NaTa_t": 23,
+          "NaTs2_t": 9,
+          "Im": 26,
+          "K_Tst": 6,
+          "SK_E2": 4,
+          "Ih": 10,
+          "K_Pst": 18,
+          "Nap_Et2": 4,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 5,
+            "total": 6,
+            "worst_gate_rmse": 0.0022085942327976227
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005191835109144449
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003369360463693738
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0030953227542340755
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003789468202739954
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004309389274567366
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0019352356903254986
+          },
+          "calcium_switch": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0014409635914489627
+          },
+          "channel_block": {
+            "passed": 5,
+            "total": 6,
+            "worst_gate_rmse": 0.0017837664345279336
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0013616044307127595
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0029242185410112143
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003015829948708415
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "ramps",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.005191835109144449,
+            "worst_channel": {
+              "channel": "K_Tst",
+              "passed": false,
+              "scale_ma_cm2": 2.427196932330844e-07,
+              "rmse_ma_cm2": 7.586064297312298e-08,
+              "max_abs_ma_cm2": 1.610011886011137e-07,
+              "nrmse": 0.31254424378442913,
+              "nmax": 0.6633214901376124,
+              "signed_charge_error_ma_ms_cm2": 9.909055841614554e-06,
+              "absolute_charge_error_ma_ms_cm2": 9.909055841614554e-06,
+              "signed_charge_normalized": 0.20412550574851657,
+              "absolute_charge_normalized": 0.20412550574851657,
+              "reference_signed_charge_ma_ms_cm2": 1.8442491636960767e-05,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "ramps",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.0050699650309979916,
+            "worst_channel": {
+              "channel": "K_Tst",
+              "passed": false,
+              "scale_ma_cm2": 2.427196932330844e-07,
+              "rmse_ma_cm2": 6.049091095822585e-08,
+              "max_abs_ma_cm2": 1.2910955508601497e-07,
+              "nrmse": 0.24922127311744852,
+              "nmax": 0.5319286349049177,
+              "signed_charge_error_ma_ms_cm2": 8.083744400714916e-06,
+              "absolute_charge_error_ma_ms_cm2": 8.083744400714916e-06,
+              "signed_charge_normalized": 0.1665242824859091,
+              "absolute_charge_normalized": 0.1665242824859091,
+              "reference_signed_charge_ma_ms_cm2": 1.8442491636960767e-05,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "ramps",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.004895110614597797,
+            "worst_channel": {
+              "channel": "K_Tst",
+              "passed": false,
+              "scale_ma_cm2": 2.427196932330844e-07,
+              "rmse_ma_cm2": 5.7505909663594244e-08,
+              "max_abs_ma_cm2": 1.2185942045693321e-07,
+              "nrmse": 0.23692313094830406,
+              "nmax": 0.5020582336510754,
+              "signed_charge_error_ma_ms_cm2": 7.825527311657567e-06,
+              "absolute_charge_error_ma_ms_cm2": 7.825527311657567e-06,
+              "signed_charge_normalized": 0.16120503767194982,
+              "absolute_charge_normalized": 0.16120503767194982,
+              "reference_signed_charge_ma_ms_cm2": 1.8442491636960767e-05,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wfactorized_expanded_tf": {
+      "development": {
+        "passed": 10,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 60,
+          "gate": 43,
+          "timing": 42,
+          "current_max": 45,
+          "charge": 40
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 36,
+          "Im": 48,
+          "Ca_HVA": 23,
+          "NaTa_t": 18,
+          "NaTs2_t": 13,
+          "Ih": 16,
+          "K_Tst": 10,
+          "SK_E2": 6,
+          "Nap_Et2": 8,
+          "K_Pst": 18,
+          "SKv3_1": 5
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.12612469494342804
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.13689100742340088
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.13705506920814514
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.21860291063785553
+          },
+          "paired_recovery": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.2285691201686859
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.13854855298995972
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.21039161086082458
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.16515548527240753
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.1578294336795807
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0010882292408496141
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.06078985333442688
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.11119398474693298
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "paired_recovery",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.2285691201686859,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.003005224745720625,
+              "rmse_ma_cm2": 0.0002832122801709942,
+              "max_abs_ma_cm2": 0.002282266947219452,
+              "nrmse": 0.09423996676930148,
+              "nmax": 0.759433034241233,
+              "signed_charge_error_ma_ms_cm2": 0.16621914842300656,
+              "absolute_charge_error_ma_ms_cm2": 0.16621914842300656,
+              "signed_charge_normalized": 0.09218342883453644,
+              "absolute_charge_normalized": 0.09218342883453644,
+              "reference_signed_charge_ma_ms_cm2": 0.023302357643842697,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "rapid_voltage_train",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.21860291063785553,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0009753187769092619,
+              "rmse_ma_cm2": 0.0005120137581852971,
+              "max_abs_ma_cm2": 0.0019417205156082285,
+              "nrmse": 0.5249706765698123,
+              "nmax": 1.990857308993319,
+              "signed_charge_error_ma_ms_cm2": 0.029464247176031095,
+              "absolute_charge_error_ma_ms_cm2": 0.029464247176031095,
+              "signed_charge_normalized": 0.3020986363016548,
+              "absolute_charge_normalized": 0.3020986363016548,
+              "reference_signed_charge_ma_ms_cm2": 0.0070434450171887875,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 19.900000000000002,
+                "offset_error_ms": 30.8
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "slow_recovery",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.21039161086082458,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0017048362642526627,
+              "rmse_ma_cm2": 1.726119040599401e-05,
+              "max_abs_ma_cm2": 2.1574981990823625e-05,
+              "nrmse": 0.010124837656219543,
+              "nmax": 0.012655163691207203,
+              "signed_charge_error_ma_ms_cm2": 0.14904754777831186,
+              "absolute_charge_error_ma_ms_cm2": 0.14904754777831186,
+              "signed_charge_normalized": 0.00874263119116102,
+              "absolute_charge_normalized": 0.00874263119116102,
+              "reference_signed_charge_ma_ms_cm2": 3.408346176147461,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 12,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "timing": 45,
+          "timing_only": 6,
+          "gate": 45,
+          "charge": 41,
+          "current_rmse": 48,
+          "current_max": 50
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 30,
+          "Im": 51,
+          "Ca_HVA": 27,
+          "NaTa_t": 22,
+          "NaTs2_t": 12,
+          "K_Pst": 22,
+          "K_Tst": 9,
+          "Ih": 12,
+          "SK_E2": 4,
+          "Nap_Et2": 4,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.14708112180233002
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.1272735446691513
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.13423429429531097
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.1866840273141861
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.2249976396560669
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007468262687325478
+          },
+          "slow_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.20270617306232452
+          },
+          "calcium_switch": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.16608479619026184
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.13855677843093872
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0015638982877135277
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.10718900710344315
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.16531597077846527
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "paired_recovery",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.2249976396560669,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 9.489436342846602e-05,
+              "rmse_ma_cm2": 0.00010148984017681224,
+              "max_abs_ma_cm2": 0.0008589333667394658,
+              "nrmse": 1.0695033562590688,
+              "nmax": 9.051468767024854,
+              "signed_charge_error_ma_ms_cm2": 0.020583851934316236,
+              "absolute_charge_error_ma_ms_cm2": 0.03316733739550869,
+              "signed_charge_normalized": 0.3615222097626117,
+              "absolute_charge_normalized": 0.5825308666924967,
+              "reference_signed_charge_ma_ms_cm2": 0.0003692980099003762,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 3.8000000000000003,
+                "onset_error_ms": 124.4,
+                "offset_error_ms": 455.6
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "paired_recovery",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.209456205368042,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0008065483416430652,
+              "rmse_ma_cm2": 0.0003761360716935118,
+              "max_abs_ma_cm2": 0.002061175575052502,
+              "nrmse": 0.4663527928496682,
+              "nmax": 2.5555511909596946,
+              "signed_charge_error_ma_ms_cm2": 0.20509628565716442,
+              "absolute_charge_error_ma_ms_cm2": 0.20509628565716442,
+              "signed_charge_normalized": 0.42381482027856426,
+              "absolute_charge_normalized": 0.42381482027856426,
+              "reference_signed_charge_ma_ms_cm2": 0.006723808590322733,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 120.60000000000001,
+                "offset_error_ms": 452.1
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "slow_recovery",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.20270617306232452,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0027295006439089775,
+              "rmse_ma_cm2": 0.0003538603639415257,
+              "max_abs_ma_cm2": 0.0003930686445410094,
+              "nrmse": 0.1296428944727247,
+              "nmax": 0.1440075295157605,
+              "signed_charge_error_ma_ms_cm2": 2.9635040570837736,
+              "absolute_charge_error_ma_ms_cm2": 2.9635040570837736,
+              "signed_charge_normalized": 0.10857312429170064,
+              "absolute_charge_normalized": 0.10857312429170064,
+              "reference_signed_charge_ma_ms_cm2": 5.453486919403076,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wfactorized_fit_fr": {
+      "development": {
+        "passed": 20,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 43,
+          "timing": 26,
+          "gate": 13,
+          "charge": 28,
+          "current_max": 32,
+          "timing_only": 4
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 32,
+          "Im": 26,
+          "Ca_HVA": 20,
+          "NaTa_t": 19,
+          "NaTs2_t": 11,
+          "Ih": 15,
+          "K_Tst": 6,
+          "SK_E2": 6,
+          "Nap_Et2": 7,
+          "K_Pst": 12,
+          "SKv3_1": 4
+        },
+        "families": {
+          "steps": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0026695693377405405
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0071088410913944244
+          },
+          "chirp": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0027854826766997576
+          },
+          "rapid_voltage_train": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0031085191294550896
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002528733341023326
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008484477177262306
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001780862919986248
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.009194986894726753
+          },
+          "channel_block": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.0026709025260061026
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0009594383300282061
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0037850639782845974
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00412058737128973
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "calcium_switch",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.009194986894726753,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.00020310358377173543,
+              "rmse_ma_cm2": 8.194106065121377e-06,
+              "max_abs_ma_cm2": 1.4273647531885591e-05,
+              "nrmse": 0.04034446814257393,
+              "nmax": 0.07027767441035158,
+              "signed_charge_error_ma_ms_cm2": 0.0024428430753313767,
+              "absolute_charge_error_ma_ms_cm2": 0.0024428430753313767,
+              "signed_charge_normalized": 0.024055144579540305,
+              "absolute_charge_normalized": 0.024055144579540305,
+              "reference_signed_charge_ma_ms_cm2": 0.04518412426114082,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.008484477177262306,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 3.864854785429651e-05,
+              "max_abs_ma_cm2": 6.545062003867588e-05,
+              "nrmse": 0.0484152777870577,
+              "nmax": 0.0819904013587767,
+              "signed_charge_error_ma_ms_cm2": 0.06553684694426486,
+              "absolute_charge_error_ma_ms_cm2": 0.06553684694426486,
+              "signed_charge_normalized": 0.027366139468975554,
+              "absolute_charge_normalized": 0.027366139468975554,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.5,
+                "offset_error_ms": 1.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "calcium_switch",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.008364862762391567,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.00020310358377173543,
+              "rmse_ma_cm2": 7.449279493525222e-06,
+              "max_abs_ma_cm2": 1.3007424654715817e-05,
+              "nrmse": 0.03667724298699395,
+              "nmax": 0.0640433044713511,
+              "signed_charge_error_ma_ms_cm2": 0.0022064303761847657,
+              "absolute_charge_error_ma_ms_cm2": 0.0022064303761847657,
+              "signed_charge_normalized": 0.021727143360044093,
+              "absolute_charge_normalized": 0.021727143360044093,
+              "reference_signed_charge_ma_ms_cm2": 0.04518412426114082,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 22,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 39,
+          "timing": 32,
+          "gate": 19,
+          "charge": 23,
+          "current_max": 31,
+          "timing_only": 5
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 31,
+          "K_Pst": 20,
+          "Ca_HVA": 27,
+          "NaTa_t": 24,
+          "NaTs2_t": 9,
+          "K_Tst": 11,
+          "Im": 27,
+          "Ih": 12,
+          "SK_E2": 4,
+          "Nap_Et2": 6,
+          "SKv3_1": 8
+        },
+        "families": {
+          "steps": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0031062844209372997
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005640002433210611
+          },
+          "chirp": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0036652465350925922
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.003387963632121682
+          },
+          "paired_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.002590967109426856
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005588226020336151
+          },
+          "slow_recovery": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.003359247697517276
+          },
+          "calcium_switch": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0014657373540103436
+          },
+          "channel_block": {
+            "passed": 4,
+            "total": 6,
+            "worst_gate_rmse": 0.0020077484659850597
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0015418954426422715
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008269762620329857
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004037847276777029
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "activation_boundary",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.008269762620329857,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 1.7007898350129835e-05,
+              "rmse_ma_cm2": 9.133155109705198e-06,
+              "max_abs_ma_cm2": 1.0017434908647831e-05,
+              "nrmse": 0.5369949256332118,
+              "nmax": 0.5889872283115661,
+              "signed_charge_error_ma_ms_cm2": 0.002691076080310929,
+              "absolute_charge_error_ma_ms_cm2": 0.002691076080310929,
+              "signed_charge_normalized": 0.5274169377267979,
+              "absolute_charge_normalized": 0.5274169377267979,
+              "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 5.9,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 17,
+            "case": 0,
+            "gate_rmse": 0.007414963562041521,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 1.7007898350129835e-05,
+              "rmse_ma_cm2": 8.169366832082162e-06,
+              "max_abs_ma_cm2": 8.936371733981605e-06,
+              "nrmse": 0.48032782557286385,
+              "nmax": 0.5254248085221762,
+              "signed_charge_error_ma_ms_cm2": 0.002406958348420218,
+              "absolute_charge_error_ma_ms_cm2": 0.002406958348420218,
+              "signed_charge_normalized": 0.4717334491758657,
+              "absolute_charge_normalized": 0.4717334491758657,
+              "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 4.4,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.0074000051245093346,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 8.943607826950029e-05,
+              "rmse_ma_cm2": 4.678956302785209e-06,
+              "max_abs_ma_cm2": 6.583168213049657e-06,
+              "nrmse": 0.052316206091751666,
+              "nmax": 0.07360752327726634,
+              "signed_charge_error_ma_ms_cm2": 0.0012502747656236387,
+              "absolute_charge_error_ma_ms_cm2": 0.0012502747656236387,
+              "signed_charge_normalized": 0.04659844816302165,
+              "absolute_charge_normalized": 0.04659844816302165,
+              "reference_signed_charge_ma_ms_cm2": 0.00515926256775856,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.4,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wfactorized_fit_tf": {
+      "development": {
+        "passed": 11,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 58,
+          "gate": 40,
+          "timing": 44,
+          "current_max": 44,
+          "charge": 39,
+          "timing_only": 1
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 33,
+          "Im": 46,
+          "Ca_HVA": 22,
+          "NaTa_t": 18,
+          "NaTs2_t": 12,
+          "K_Tst": 8,
+          "Ih": 18,
+          "K_Pst": 18,
+          "SK_E2": 6,
+          "SKv3_1": 7,
+          "Nap_Et2": 10
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.12613140046596527
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.13949033617973328
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.1381472498178482
+          },
+          "rapid_voltage_train": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.21863436698913574
+          },
+          "paired_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.22857765853405
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.1563364416360855
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.21040846407413483
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.16516272723674774
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.15781955420970917
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0012612981954589486
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.06074914708733559
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.11250057071447372
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "paired_recovery",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.22857765853405,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.003005224745720625,
+              "rmse_ma_cm2": 0.0002832314831633374,
+              "max_abs_ma_cm2": 0.0022822484967684274,
+              "nrmse": 0.09424635663826904,
+              "nmax": 0.7594268947832603,
+              "signed_charge_error_ma_ms_cm2": 0.1662233077932156,
+              "absolute_charge_error_ma_ms_cm2": 0.1662233077932156,
+              "signed_charge_normalized": 0.09218573557843661,
+              "absolute_charge_normalized": 0.09218573557843661,
+              "reference_signed_charge_ma_ms_cm2": 0.023302357643842697,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "rapid_voltage_train",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.21863436698913574,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0009753187769092619,
+              "rmse_ma_cm2": 0.0005120998784162383,
+              "max_abs_ma_cm2": 0.001941841006586654,
+              "nrmse": 0.5250589761421984,
+              "nmax": 1.990980849092493,
+              "signed_charge_error_ma_ms_cm2": 0.029468242984047766,
+              "absolute_charge_error_ma_ms_cm2": 0.029468242984047766,
+              "signed_charge_normalized": 0.3021396055531532,
+              "absolute_charge_normalized": 0.3021396055531532,
+              "reference_signed_charge_ma_ms_cm2": 0.0070434450171887875,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 19.900000000000002,
+                "offset_error_ms": 30.8
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "slow_recovery",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.21040846407413483,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0017048362642526627,
+              "rmse_ma_cm2": 1.7254550157008564e-05,
+              "max_abs_ma_cm2": 1.9257076770248306e-05,
+              "nrmse": 0.01012094270799215,
+              "nmax": 0.011295557921915686,
+              "signed_charge_error_ma_ms_cm2": 0.1493250056383852,
+              "absolute_charge_error_ma_ms_cm2": 0.1493250056383852,
+              "signed_charge_normalized": 0.008758905942252362,
+              "absolute_charge_normalized": 0.008758905942252362,
+              "reference_signed_charge_ma_ms_cm2": 3.408346176147461,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 9,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 53,
+          "timing": 46,
+          "gate": 42,
+          "charge": 38,
+          "current_max": 49,
+          "timing_only": 5
+        },
+        "failed_channel_counts": {
+          "K_Pst": 29,
+          "Ca_LVAst": 31,
+          "Im": 47,
+          "Ca_HVA": 29,
+          "NaTa_t": 22,
+          "NaTs2_t": 14,
+          "K_Tst": 14,
+          "Ih": 18,
+          "SK_E2": 4,
+          "Nap_Et2": 8,
+          "SKv3_1": 12
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.14709995687007904
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.12923479080200195
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.1373218446969986
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.18669340014457703
+          },
+          "paired_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.22945666313171387
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007680488750338554
+          },
+          "slow_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.20388615131378174
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.16609787940979004
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.13856592774391174
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0021710782311856747
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.1073288545012474
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.17135116457939148
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "paired_recovery",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.22945666313171387,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 9.489436342846602e-05,
+              "rmse_ma_cm2": 0.00010304940875924335,
+              "max_abs_ma_cm2": 0.00085925231767688,
+              "nrmse": 1.0859381425423105,
+              "nmax": 9.054829882752815,
+              "signed_charge_error_ma_ms_cm2": 0.021032619049775766,
+              "absolute_charge_error_ma_ms_cm2": 0.03379879158018198,
+              "signed_charge_normalized": 0.36940408142426956,
+              "absolute_charge_normalized": 0.5936213425146691,
+              "reference_signed_charge_ma_ms_cm2": 0.0003692980099003762,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 3.7,
+                "onset_error_ms": 124.4,
+                "offset_error_ms": 455.6
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "paired_recovery",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.21059119701385498,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0008065483416430652,
+              "rmse_ma_cm2": 0.0003781298628693129,
+              "max_abs_ma_cm2": 0.0020702002788669993,
+              "nrmse": 0.46882479740644334,
+              "nmax": 2.5667404816054513,
+              "signed_charge_error_ma_ms_cm2": 0.2061975604700965,
+              "absolute_charge_error_ma_ms_cm2": 0.2061975604700965,
+              "signed_charge_normalized": 0.42609051525486785,
+              "absolute_charge_normalized": 0.42609051525486785,
+              "reference_signed_charge_ma_ms_cm2": 0.006723808590322733,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 120.60000000000001,
+                "offset_error_ms": 452.1
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "slow_recovery",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.20388615131378174,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0027295006439089775,
+              "rmse_ma_cm2": 0.00035518534025223627,
+              "max_abs_ma_cm2": 0.0003953670078715798,
+              "nrmse": 0.1301283225724276,
+              "nmax": 0.14484957486779196,
+              "signed_charge_error_ma_ms_cm2": 3.0127314979130695,
+              "absolute_charge_error_ma_ms_cm2": 3.0127314979130695,
+              "signed_charge_normalized": 0.11037665718685813,
+              "absolute_charge_normalized": 0.11037665718685813,
+              "reference_signed_charge_ma_ms_cm2": 5.453486919403076,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_whistorical38_w32": {
+      "development": {
+        "passed": 0,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 51,
+          "current_max": 64,
+          "gate": 55,
+          "timing": 51,
+          "charge": 24,
+          "timing_only": 2
+        },
+        "failed_channel_counts": {
+          "NaTa_t": 40,
+          "Ih": 36,
+          "K_Pst": 19,
+          "K_Tst": 26,
+          "SKv3_1": 10,
+          "Ca_HVA": 29,
+          "Ca_LVAst": 42,
+          "Nap_Et2": 36,
+          "Im": 27,
+          "NaTs2_t": 32,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004609675146639347
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006095210090279579
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0034684333950281143
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005266082007437944
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0028445583302527666
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0063144853338599205
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0018523470498621464
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004405072890222073
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0034586915280669928
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0023545417934656143
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004815385211259127
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009583242237567902
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "seams",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.009583242237567902,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.3942036932567134e-05,
+              "rmse_ma_cm2": 2.9074423338513723e-06,
+              "max_abs_ma_cm2": 7.534203975938767e-05,
+              "nrmse": 0.12143671576650718,
+              "nmax": 3.1468517057086203,
+              "signed_charge_error_ma_ms_cm2": 2.2993257421427736e-05,
+              "absolute_charge_error_ma_ms_cm2": 2.2993257421427736e-05,
+              "signed_charge_normalized": 0.012004648030235921,
+              "absolute_charge_normalized": 0.012004648030235921,
+              "reference_signed_charge_ma_ms_cm2": -0.0004937308840453625,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 4.2,
+                "onset_error_ms": 0.1,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.008402303792536259,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.3942036932567134e-05,
+              "rmse_ma_cm2": 1.1477942516185643e-06,
+              "max_abs_ma_cm2": 3.070927386144196e-05,
+              "nrmse": 0.047940543022773396,
+              "nmax": 1.2826508432818302,
+              "signed_charge_error_ma_ms_cm2": 4.961393681376204e-06,
+              "absolute_charge_error_ma_ms_cm2": 4.961393681376204e-06,
+              "signed_charge_normalized": 0.002590315229927068,
+              "absolute_charge_normalized": 0.002590315229927068,
+              "reference_signed_charge_ma_ms_cm2": -0.0004937308840453625,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 4.2,
+                "onset_error_ms": 0.1,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.0063144853338599205,
+            "worst_channel": {
+              "channel": "Ca_HVA",
+              "passed": false,
+              "scale_ma_cm2": 0.0006769907777197659,
+              "rmse_ma_cm2": 3.0905480336410664e-05,
+              "max_abs_ma_cm2": 7.589171617714376e-05,
+              "nrmse": 0.04565125752599795,
+              "nmax": 0.11210155097350298,
+              "signed_charge_error_ma_ms_cm2": 0.05601693264456503,
+              "absolute_charge_error_ma_ms_cm2": 0.05601693264456503,
+              "signed_charge_normalized": 0.02758133837398092,
+              "absolute_charge_normalized": 0.02758133837398092,
+              "reference_signed_charge_ma_ms_cm2": -0.48201391100883484,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.4,
+                "offset_error_ms": 0.1
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 0,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 53,
+          "gate": 61,
+          "current_max": 64,
+          "timing": 54,
+          "charge": 35,
+          "timing_only": 3
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 39,
+          "Nap_Et2": 42,
+          "Ih": 40,
+          "NaTa_t": 46,
+          "NaTs2_t": 44,
+          "Im": 32,
+          "K_Tst": 28,
+          "Ca_HVA": 32,
+          "K_Pst": 25,
+          "SK_E2": 3,
+          "SKv3_1": 13
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0038924994878470898
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008448262698948383
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004650511778891087
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0073736743070185184
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004656758159399033
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00602737907320261
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0025696593802422285
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0027037302497774363
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006501974072307348
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0022037113085389137
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.01004079170525074
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007037407252937555
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "activation_boundary",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.01004079170525074,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 2.0660080711620993e-05,
+              "max_abs_ma_cm2": 7.14447546736996e-05,
+              "nrmse": 0.05951192031786812,
+              "nmax": 0.20579854486624843,
+              "signed_charge_error_ma_ms_cm2": 0.005571148417014235,
+              "absolute_charge_error_ma_ms_cm2": 0.005571148417014235,
+              "signed_charge_normalized": 0.05349281325314195,
+              "absolute_charge_normalized": 0.05349281325314195,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "ramps",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.008448262698948383,
+            "worst_channel": {
+              "channel": "K_Tst",
+              "passed": false,
+              "scale_ma_cm2": 2.427196932330844e-07,
+              "rmse_ma_cm2": 3.459684480534428e-08,
+              "max_abs_ma_cm2": 1.097300103467525e-07,
+              "nrmse": 0.14253826850432294,
+              "nmax": 0.452085320664024,
+              "signed_charge_error_ma_ms_cm2": 2.295200221510738e-06,
+              "absolute_charge_error_ma_ms_cm2": 2.295200221510738e-06,
+              "signed_charge_normalized": 0.0472808826086551,
+              "absolute_charge_normalized": 0.0472808826086551,
+              "reference_signed_charge_ma_ms_cm2": 1.8442491636960767e-05,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "rapid_voltage_train",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.0073736743070185184,
+            "worst_channel": {
+              "channel": "Ih",
+              "passed": false,
+              "scale_ma_cm2": 3.168183320667595e-05,
+              "rmse_ma_cm2": 7.69725233586991e-07,
+              "max_abs_ma_cm2": 1.0385341899679314e-06,
+              "nrmse": 0.024295476482238273,
+              "nmax": 0.03278011670578119,
+              "signed_charge_error_ma_ms_cm2": 6.537705101458186e-05,
+              "absolute_charge_error_ma_ms_cm2": 7.55766639345729e-05,
+              "signed_charge_normalized": 0.020635500915288398,
+              "absolute_charge_normalized": 0.023854889347157543,
+              "reference_signed_charge_ma_ms_cm2": -0.0011615481926128268,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 2.4000000000000004,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_whistorical38_w64": {
+      "development": {
+        "passed": 1,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 62,
+          "timing": 53,
+          "current_max": 66,
+          "gate": 56,
+          "charge": 26
+        },
+        "failed_channel_counts": {
+          "Ih": 45,
+          "K_Pst": 32,
+          "Ca_HVA": 30,
+          "Ca_LVAst": 50,
+          "Nap_Et2": 40,
+          "K_Tst": 29,
+          "Im": 32,
+          "NaTa_t": 36,
+          "NaTs2_t": 34,
+          "SK_E2": 6,
+          "SKv3_1": 12
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010475406423211098
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010644583031535149
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0048628742806613445
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009571000933647156
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00433126138523221
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.01641210727393627
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0026673709508031607
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004777738358825445
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0045255194418132305
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0032770419493317604
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009797243401408195
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.013185826130211353
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.01641210727393627,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 7.960251834153194e-05,
+              "max_abs_ma_cm2": 0.0001390929545454075,
+              "nrmse": 0.09971857293536536,
+              "nmax": 0.1742426147012367,
+              "signed_charge_error_ma_ms_cm2": 0.14326503563774182,
+              "absolute_charge_error_ma_ms_cm2": 0.14326503563774182,
+              "signed_charge_normalized": 0.05982300231234307,
+              "absolute_charge_normalized": 0.05982300231234307,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 1.0,
+                "offset_error_ms": 0.1
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.013185826130211353,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.3942036932567134e-05,
+              "rmse_ma_cm2": 1.8397367451559675e-06,
+              "max_abs_ma_cm2": 3.483804903966528e-05,
+              "nrmse": 0.07684127922522195,
+              "nmax": 1.4550996282307482,
+              "signed_charge_error_ma_ms_cm2": 2.3696670116925005e-05,
+              "absolute_charge_error_ma_ms_cm2": 2.3696670116925005e-05,
+              "signed_charge_normalized": 0.012371895770504973,
+              "absolute_charge_normalized": 0.012371895770504973,
+              "reference_signed_charge_ma_ms_cm2": -0.0004937308840453625,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 4.2,
+                "onset_error_ms": 0.1,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.011307843029499054,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.3942036932567134e-05,
+              "rmse_ma_cm2": 1.208423828097778e-06,
+              "max_abs_ma_cm2": 2.311581610130723e-05,
+              "nrmse": 0.050472891320872564,
+              "nmax": 0.9654907878729384,
+              "signed_charge_error_ma_ms_cm2": 5.64374711925942e-06,
+              "absolute_charge_error_ma_ms_cm2": 5.64374711925942e-06,
+              "signed_charge_normalized": 0.0029465680523904003,
+              "absolute_charge_normalized": 0.0029465680523904003,
+              "reference_signed_charge_ma_ms_cm2": -0.0004937308840453625,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 4.2,
+                "onset_error_ms": 0.1,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 0,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 53,
+          "gate": 65,
+          "timing": 60,
+          "current_max": 65,
+          "charge": 31
+        },
+        "failed_channel_counts": {
+          "Ih": 44,
+          "Ca_LVAst": 46,
+          "Nap_Et2": 49,
+          "K_Pst": 35,
+          "SKv3_1": 16,
+          "NaTa_t": 43,
+          "NaTs2_t": 42,
+          "Im": 41,
+          "K_Tst": 32,
+          "Ca_HVA": 31,
+          "SK_E2": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007899688556790352
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.012102041393518448
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00488478597253561
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009561337530612946
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003688742173835635
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00500136986374855
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0023496646899729967
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003404017770662904
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010346946306526661
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0035221490543335676
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.012014241889119148
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.01229799073189497
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "seams",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.01229799073189497,
+            "worst_channel": {
+              "channel": "Ih",
+              "passed": false,
+              "scale_ma_cm2": 7.130395715648774e-06,
+              "rmse_ma_cm2": 1.3218512467508813e-06,
+              "max_abs_ma_cm2": 4.933216226658081e-06,
+              "nrmse": 0.1853825929814626,
+              "nmax": 0.6918572858209485,
+              "signed_charge_error_ma_ms_cm2": 4.617673812340285e-05,
+              "absolute_charge_error_ma_ms_cm2": 7.523097123420978e-05,
+              "signed_charge_normalized": 0.08095052003924168,
+              "absolute_charge_normalized": 0.13188428832265328,
+              "reference_signed_charge_ma_ms_cm2": 7.95835949247703e-05,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 1.4000000000000001,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "ramps",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.012102041393518448,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 5.2522267651511356e-05,
+              "rmse_ma_cm2": 6.996791659902474e-06,
+              "max_abs_ma_cm2": 0.0003063231397942404,
+              "nrmse": 0.13321571921316572,
+              "nmax": 5.832252747096037,
+              "signed_charge_error_ma_ms_cm2": 8.642666305050455e-05,
+              "absolute_charge_error_ma_ms_cm2": 8.642666305050455e-05,
+              "signed_charge_normalized": 0.008227621124654857,
+              "absolute_charge_normalized": 0.008227621124654857,
+              "reference_signed_charge_ma_ms_cm2": -0.00025076299789361656,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.012014241889119148,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 8.943607826950029e-05,
+              "rmse_ma_cm2": 7.505392548992077e-06,
+              "max_abs_ma_cm2": 2.1019881553081337e-05,
+              "nrmse": 0.08391907040440508,
+              "nmax": 0.2350268701378154,
+              "signed_charge_error_ma_ms_cm2": 0.0016519939885833185,
+              "absolute_charge_error_ma_ms_cm2": 0.0016519939885833185,
+              "signed_charge_normalized": 0.06157075097346737,
+              "absolute_charge_normalized": 0.06157075097346737,
+              "reference_signed_charge_ma_ms_cm2": 0.00515926256775856,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 2.8000000000000003,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wjoint_expanded_fr": {
+      "development": {
+        "passed": 11,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 42,
+          "timing": 37,
+          "timing_only": 10,
+          "gate": 23,
+          "current_max": 40,
+          "charge": 22
+        },
+        "failed_channel_counts": {
+          "K_Pst": 20,
+          "Ca_LVAst": 29,
+          "Im": 17,
+          "NaTa_t": 22,
+          "NaTs2_t": 22,
+          "K_Tst": 9,
+          "Ca_HVA": 17,
+          "Ih": 24,
+          "Nap_Et2": 21,
+          "SK_E2": 6,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0034083842765539885
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005711452104151249
+          },
+          "chirp": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0020976446103304625
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0027977556455880404
+          },
+          "paired_recovery": {
+            "passed": 6,
+            "total": 6,
+            "worst_gate_rmse": 0.001834989176131785
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008482472971081734
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0023352643474936485
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0032963845878839493
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0023895457852631807
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0011717715533450246
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0026564106810837984
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004691150039434433
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.008482472971081734,
+            "worst_channel": {
+              "channel": "Ca_LVAst",
+              "passed": false,
+              "scale_ma_cm2": 9.73940495896386e-06,
+              "rmse_ma_cm2": 6.023456151480941e-07,
+              "max_abs_ma_cm2": 1.097487328673575e-06,
+              "nrmse": 0.061846243963160505,
+              "nmax": 0.11268525472528794,
+              "signed_charge_error_ma_ms_cm2": 0.0011592518697734417,
+              "absolute_charge_error_ma_ms_cm2": 0.0011592518697734417,
+              "signed_charge_normalized": 0.0396756560974099,
+              "absolute_charge_normalized": 0.0396756560974099,
+              "reference_signed_charge_ma_ms_cm2": -0.000660289020743221,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 2.1
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 17,
+            "case": 0,
+            "gate_rmse": 0.005936232395470142,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 2.4982834441996697e-05,
+              "max_abs_ma_cm2": 4.7014853359831645e-05,
+              "nrmse": 0.03129615306575816,
+              "nmax": 0.05889580105610581,
+              "signed_charge_error_ma_ms_cm2": 0.04532448154397999,
+              "absolute_charge_error_ma_ms_cm2": 0.04532448154397999,
+              "signed_charge_normalized": 0.018926087249002074,
+              "absolute_charge_normalized": 0.018926087249002074,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.2,
+                "offset_error_ms": 1.1
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "ramps",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.005711452104151249,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.872154936994775e-06,
+              "rmse_ma_cm2": 1.4069213970034063e-07,
+              "max_abs_ma_cm2": 3.078099919430585e-07,
+              "nrmse": 0.04898487121573991,
+              "nmax": 0.10717039947194829,
+              "signed_charge_error_ma_ms_cm2": 1.5365566954136615e-05,
+              "absolute_charge_error_ma_ms_cm2": 1.5365566954136615e-05,
+              "signed_charge_normalized": 0.026749196390515057,
+              "absolute_charge_normalized": 0.026749196390515057,
+              "reference_signed_charge_ma_ms_cm2": -0.0001819931057980284,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 7,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 38,
+          "gate": 33,
+          "timing": 32,
+          "current_max": 50,
+          "charge": 24,
+          "timing_only": 5
+        },
+        "failed_channel_counts": {
+          "SKv3_1": 9,
+          "Ih": 24,
+          "NaTa_t": 38,
+          "NaTs2_t": 31,
+          "K_Tst": 14,
+          "Ca_HVA": 23,
+          "Ca_LVAst": 20,
+          "K_Pst": 22,
+          "Nap_Et2": 29,
+          "SK_E2": 3,
+          "Im": 13
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0021351806353777647
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0047830273397266865
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002958646509796381
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0029137281235307455
+          },
+          "paired_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0027563844341784716
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005055269692093134
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002270108787342906
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0022441784385591745
+          },
+          "channel_block": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.00332106021232903
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001721009612083435
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004727083258330822
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003485753433778882
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.005055269692093134,
+            "worst_channel": {
+              "channel": "Ca_HVA",
+              "passed": false,
+              "scale_ma_cm2": 1.0000000116860974e-07,
+              "rmse_ma_cm2": 3.475053115403202e-08,
+              "max_abs_ma_cm2": 4.665253756249712e-08,
+              "nrmse": 0.34750530747933933,
+              "nmax": 0.46652537017311024,
+              "signed_charge_error_ma_ms_cm2": 8.058409113577403e-05,
+              "absolute_charge_error_ma_ms_cm2": 8.058409113577403e-05,
+              "signed_charge_normalized": 0.26861362436078473,
+              "absolute_charge_normalized": 0.26861362436078473,
+              "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "ramps",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.0047830273397266865,
+            "worst_channel": {
+              "channel": "K_Tst",
+              "passed": false,
+              "scale_ma_cm2": 2.427196932330844e-07,
+              "rmse_ma_cm2": 6.974459388384697e-08,
+              "max_abs_ma_cm2": 1.5737258903178815e-07,
+              "nrmse": 0.28734625095653465,
+              "nmax": 0.6483717366957233,
+              "signed_charge_error_ma_ms_cm2": 8.82591330390224e-06,
+              "absolute_charge_error_ma_ms_cm2": 8.82591330390224e-06,
+              "signed_charge_normalized": 0.18181288365391418,
+              "absolute_charge_normalized": 0.18181288365391418,
+              "reference_signed_charge_ma_ms_cm2": 1.8442491636960767e-05,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 17,
+            "case": 0,
+            "gate_rmse": 0.004727083258330822,
+            "worst_channel": {
+              "channel": "Ca_HVA",
+              "passed": false,
+              "scale_ma_cm2": 1.2724352700388408e-06,
+              "rmse_ma_cm2": 1.7983297931094961e-06,
+              "max_abs_ma_cm2": 2.3202439636553318e-06,
+              "nrmse": 1.4132976627208726,
+              "nmax": 1.8234671879100828,
+              "signed_charge_error_ma_ms_cm2": 0.0005292476390320125,
+              "absolute_charge_error_ma_ms_cm2": 0.0005292476390320125,
+              "signed_charge_normalized": 1.3864428498655939,
+              "absolute_charge_normalized": 1.3864428498655939,
+              "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 56.400000000000006,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wjoint_expanded_tf": {
+      "development": {
+        "passed": 16,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 46,
+          "gate": 17,
+          "timing": 34,
+          "current_max": 41,
+          "timing_only": 4,
+          "charge": 26
+        },
+        "failed_channel_counts": {
+          "Ih": 26,
+          "Im": 20,
+          "Ca_LVAst": 34,
+          "NaTa_t": 20,
+          "NaTs2_t": 20,
+          "Nap_Et2": 18,
+          "K_Tst": 8,
+          "Ca_HVA": 17,
+          "SK_E2": 6,
+          "K_Pst": 15,
+          "SKv3_1": 5
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.005395994056016207
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006872656289488077
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.003603588789701462
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.002640269696712494
+          },
+          "paired_recovery": {
+            "passed": 5,
+            "total": 6,
+            "worst_gate_rmse": 0.0018597410526126623
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007249301765114069
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.001989826327189803
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.00448609096929431
+          },
+          "channel_block": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0028901826590299606
+          },
+          "reversal": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0008390769944526255
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004167762119323015
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0058236331678926945
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "same_v_history",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.007249301765114069,
+            "worst_channel": {
+              "channel": "Ca_HVA",
+              "passed": false,
+              "scale_ma_cm2": 0.0006769907777197659,
+              "rmse_ma_cm2": 3.003294988865238e-05,
+              "max_abs_ma_cm2": 7.67565853642127e-05,
+              "nrmse": 0.044362420991625746,
+              "nmax": 0.11337907086820817,
+              "signed_charge_error_ma_ms_cm2": 0.05395988074485739,
+              "absolute_charge_error_ma_ms_cm2": 0.05395988074485739,
+              "signed_charge_normalized": 0.02656849740215035,
+              "absolute_charge_normalized": 0.02656849740215035,
+              "reference_signed_charge_ma_ms_cm2": -0.48201391100883484,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 8.0,
+                "onset_error_ms": 0.2,
+                "offset_error_ms": 0.2
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "ramps",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.006872656289488077,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.872154936994775e-06,
+              "rmse_ma_cm2": 9.740730814981022e-08,
+              "max_abs_ma_cm2": 2.3547345677867778e-07,
+              "nrmse": 0.03391436405298194,
+              "nmax": 0.08198494229738906,
+              "signed_charge_error_ma_ms_cm2": 1.3005441488202396e-05,
+              "absolute_charge_error_ma_ms_cm2": 1.3005441488202396e-05,
+              "signed_charge_normalized": 0.022640564422494274,
+              "absolute_charge_normalized": 0.022640564422494274,
+              "reference_signed_charge_ma_ms_cm2": -0.0001819931057980284,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "ramps",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.00658452371135354,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.872154936994775e-06,
+              "rmse_ma_cm2": 1.5102039081476062e-07,
+              "max_abs_ma_cm2": 4.3542599034249453e-07,
+              "nrmse": 0.05258086493508527,
+              "nmax": 0.1516025423050799,
+              "signed_charge_error_ma_ms_cm2": 1.7866352905243343e-05,
+              "absolute_charge_error_ma_ms_cm2": 1.7866352905243343e-05,
+              "signed_charge_normalized": 0.03110269761415763,
+              "absolute_charge_normalized": 0.03110269761415763,
+              "reference_signed_charge_ma_ms_cm2": -0.0001819931057980284,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 9,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 40,
+          "current_max": 43,
+          "timing": 36,
+          "timing_only": 6,
+          "gate": 32,
+          "charge": 26
+        },
+        "failed_channel_counts": {
+          "Ih": 31,
+          "NaTa_t": 23,
+          "NaTs2_t": 17,
+          "Im": 23,
+          "K_Tst": 10,
+          "Ca_LVAst": 23,
+          "Nap_Et2": 20,
+          "SK_E2": 2,
+          "Ca_HVA": 19,
+          "K_Pst": 20,
+          "SKv3_1": 9
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.00283748097717762
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005029270425438881
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.003736749291419983
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0027098653372377157
+          },
+          "paired_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0038506421260535717
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00507739931344986
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0024681193754076958
+          },
+          "calcium_switch": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0019687232561409473
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004391077905893326
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0016802276950329542
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006745558697730303
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0035391594283282757
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "activation_boundary",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.006745558697730303,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 9.073313552491408e-06,
+              "max_abs_ma_cm2": 6.165329958723833e-05,
+              "nrmse": 0.026135924669992996,
+              "nmax": 0.17759399411762997,
+              "signed_charge_error_ma_ms_cm2": 0.0007737665692057836,
+              "absolute_charge_error_ma_ms_cm2": 0.0007737665692057836,
+              "signed_charge_normalized": 0.007429518564187167,
+              "absolute_charge_normalized": 0.007429518564187167,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.6000000000000001,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.0065383464097976685,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 8.943607826950029e-05,
+              "rmse_ma_cm2": 3.119991776876585e-06,
+              "max_abs_ma_cm2": 7.090576154726381e-06,
+              "nrmse": 0.03488515862105475,
+              "nmax": 0.07928093775936983,
+              "signed_charge_error_ma_ms_cm2": 0.0007967962846389502,
+              "absolute_charge_error_ma_ms_cm2": 0.0007967962846389502,
+              "signed_charge_normalized": 0.029697048510545727,
+              "absolute_charge_normalized": 0.029697048510545727,
+              "reference_signed_charge_ma_ms_cm2": 0.00515926256775856,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 1.6,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.005466152913868427,
+            "worst_channel": {
+              "channel": "Ca_HVA",
+              "passed": false,
+              "scale_ma_cm2": 1.2724352700388408e-06,
+              "rmse_ma_cm2": 3.127960178302886e-06,
+              "max_abs_ma_cm2": 3.7721616900133287e-06,
+              "nrmse": 2.4582469945268066,
+              "nmax": 2.96452148005783,
+              "signed_charge_error_ma_ms_cm2": 0.0009265993460192096,
+              "absolute_charge_error_ma_ms_cm2": 0.0009265993460192096,
+              "signed_charge_normalized": 2.4273647027091667,
+              "absolute_charge_normalized": 2.4273647027091667,
+              "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 1.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wjoint_fit_fr": {
+      "development": {
+        "passed": 0,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 57,
+          "current_max": 68,
+          "gate": 55,
+          "timing": 54,
+          "charge": 34,
+          "timing_only": 2
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 39,
+          "Nap_Et2": 41,
+          "Ih": 40,
+          "Im": 33,
+          "SKv3_1": 17,
+          "NaTs2_t": 39,
+          "K_Tst": 24,
+          "Ca_HVA": 32,
+          "NaTa_t": 46,
+          "K_Pst": 24,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0054558077827095985
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008056764490902424
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003469183575361967
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005532392766326666
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0038023630622774363
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.011132202111184597
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0038410278502851725
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00677168695256114
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004253983963280916
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0018028492340818048
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004280911758542061
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.011259824968874454
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "seams",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.011259824968874454,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.3942036932567134e-05,
+              "rmse_ma_cm2": 2.6358927673617036e-06,
+              "max_abs_ma_cm2": 6.089710815200825e-05,
+              "nrmse": 0.11009475821901489,
+              "nmax": 2.543522438108556,
+              "signed_charge_error_ma_ms_cm2": 2.0027245138231396e-05,
+              "absolute_charge_error_ma_ms_cm2": 2.0027245138231396e-05,
+              "signed_charge_normalized": 0.010456110001868246,
+              "absolute_charge_normalized": 0.010456110001868246,
+              "reference_signed_charge_ma_ms_cm2": -0.0004937308840453625,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 4.2,
+                "onset_error_ms": 0.1,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.011132202111184597,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 4.9692895780499546e-05,
+              "max_abs_ma_cm2": 9.258870610352157e-05,
+              "nrmse": 0.062250601557562346,
+              "nmax": 0.11598645162156863,
+              "signed_charge_error_ma_ms_cm2": 0.09392658453388367,
+              "absolute_charge_error_ma_ms_cm2": 0.09392658453388367,
+              "signed_charge_normalized": 0.03922080679872978,
+              "absolute_charge_normalized": 0.03922080679872978,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 2.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.010186351835727692,
+            "worst_channel": {
+              "channel": "Ca_HVA",
+              "passed": false,
+              "scale_ma_cm2": 0.0006769907777197659,
+              "rmse_ma_cm2": 4.095151207923751e-05,
+              "max_abs_ma_cm2": 9.377213803222616e-05,
+              "nrmse": 0.06049050212643962,
+              "nmax": 0.1385131690391243,
+              "signed_charge_error_ma_ms_cm2": 0.07463184486063616,
+              "absolute_charge_error_ma_ms_cm2": 0.07463184486063616,
+              "signed_charge_normalized": 0.03674685616288095,
+              "absolute_charge_normalized": 0.03674685616288095,
+              "reference_signed_charge_ma_ms_cm2": -0.48201391100883484,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 4.3,
+                "onset_error_ms": 0.5,
+                "offset_error_ms": 0.1
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 1,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 56,
+          "current_max": 65,
+          "timing": 55,
+          "timing_only": 1,
+          "gate": 61,
+          "charge": 32
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 34,
+          "Ih": 42,
+          "SKv3_1": 17,
+          "NaTa_t": 47,
+          "Nap_Et2": 43,
+          "K_Pst": 32,
+          "K_Tst": 31,
+          "NaTs2_t": 40,
+          "Im": 32,
+          "Ca_HVA": 29,
+          "SK_E2": 3
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0026455987244844437
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007763825822621584
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005083740688860416
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005005666520446539
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004326594062149525
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006427330430597067
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003698113840073347
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0036978411953896284
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006483790930360556
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004568041767925024
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009269663132727146
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007389504928141832
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "activation_boundary",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.009269663132727146,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 1.0738268697679312e-05,
+              "max_abs_ma_cm2": 3.421110868561086e-05,
+              "nrmse": 0.03093187291996829,
+              "nmax": 0.09854602227854786,
+              "signed_charge_error_ma_ms_cm2": 0.002855600772456533,
+              "absolute_charge_error_ma_ms_cm2": 0.002855600772456533,
+              "signed_charge_normalized": 0.027418784676429647,
+              "absolute_charge_normalized": 0.027418784676429647,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.4,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.008670307695865631,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 8.943607826950029e-05,
+              "rmse_ma_cm2": 2.962494270409837e-06,
+              "max_abs_ma_cm2": 6.669050424742503e-06,
+              "nrmse": 0.03312415221833485,
+              "nmax": 0.0745677868907273,
+              "signed_charge_error_ma_ms_cm2": 0.0007045238211549172,
+              "absolute_charge_error_ma_ms_cm2": 0.0007045238211549172,
+              "signed_charge_normalized": 0.026258001570819443,
+              "absolute_charge_normalized": 0.026258001570819443,
+              "reference_signed_charge_ma_ms_cm2": 0.00515926256775856,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 1.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.008629580028355122,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 1.4925342940975556e-05,
+              "max_abs_ma_cm2": 5.081120256070386e-05,
+              "nrmse": 0.04299285332997625,
+              "nmax": 0.14636304089300003,
+              "signed_charge_error_ma_ms_cm2": 0.0041945964308799846,
+              "absolute_charge_error_ma_ms_cm2": 0.0041945964308799846,
+              "signed_charge_normalized": 0.04027549559873542,
+              "absolute_charge_normalized": 0.04027549559873542,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wjoint_fit_fr_relative": {
+      "development": {
+        "passed": 5,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 52,
+          "timing": 41,
+          "gate": 44,
+          "current_max": 56,
+          "charge": 20,
+          "timing_only": 3
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 31,
+          "Im": 24,
+          "Ih": 26,
+          "K_Tst": 23,
+          "SKv3_1": 13,
+          "NaTa_t": 40,
+          "NaTs2_t": 33,
+          "Ca_HVA": 25,
+          "Nap_Et2": 33,
+          "K_Pst": 12,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0035200086422264576
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007334369234740734
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003506820648908615
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004216684959828854
+          },
+          "paired_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.002745044184848666
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.011508137919008732
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0037210844457149506
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.00435502827167511
+          },
+          "channel_block": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0034932419657707214
+          },
+          "reversal": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.0018965208437293768
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0034439621958881617
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.012113467790186405
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "seams",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.012113467790186405,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0009336505318060517,
+              "rmse_ma_cm2": 5.2062490328333366e-05,
+              "max_abs_ma_cm2": 0.00022136626771752195,
+              "nrmse": 0.05576228851669349,
+              "nmax": 0.23709756506999624,
+              "signed_charge_error_ma_ms_cm2": 0.0023620179710265804,
+              "absolute_charge_error_ma_ms_cm2": 0.0023620179710265804,
+              "signed_charge_normalized": 0.03162342264938142,
+              "absolute_charge_normalized": 0.03162342264938142,
+              "reference_signed_charge_ma_ms_cm2": 0.023192251101136208,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.4,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.011508137919008732,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 5.2780858068741765e-05,
+              "max_abs_ma_cm2": 9.492725691005299e-05,
+              "nrmse": 0.06611891124269804,
+              "nmax": 0.11891596885321747,
+              "signed_charge_error_ma_ms_cm2": 0.09221583897697277,
+              "absolute_charge_error_ma_ms_cm2": 0.09221583897697277,
+              "signed_charge_normalized": 0.03850645290944088,
+              "absolute_charge_normalized": 0.03850645290944088,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 3.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.007693397346884012,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 2.88152767848567e-05,
+              "max_abs_ma_cm2": 5.6211889060715694e-05,
+              "nrmse": 0.03609707757479692,
+              "nmax": 0.07041698524016532,
+              "signed_charge_error_ma_ms_cm2": 0.05135729076776324,
+              "absolute_charge_error_ma_ms_cm2": 0.05135729076776324,
+              "signed_charge_normalized": 0.021445199875036784,
+              "absolute_charge_normalized": 0.021445199875036784,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.9,
+                "offset_error_ms": 1.3
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 2,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 51,
+          "current_max": 62,
+          "gate": 50,
+          "timing": 42,
+          "charge": 26,
+          "timing_only": 1
+        },
+        "failed_channel_counts": {
+          "Nap_Et2": 37,
+          "SKv3_1": 15,
+          "Ih": 33,
+          "Ca_LVAst": 23,
+          "NaTs2_t": 36,
+          "NaTa_t": 44,
+          "K_Tst": 28,
+          "Ca_HVA": 30,
+          "Im": 28,
+          "SK_E2": 2,
+          "K_Pst": 22
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.00280534359626472
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005812451709061861
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00373420980758965
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00547816464677453
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003532078582793474
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0044260346330702305
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003787099849432707
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.002688433974981308
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00505530321970582
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0017320129554718733
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.007816997356712818
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005540951620787382
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "activation_boundary",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.007816997356712818,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 8.943607826950029e-05,
+              "rmse_ma_cm2": 3.935684042594991e-06,
+              "max_abs_ma_cm2": 9.567235162001802e-06,
+              "nrmse": 0.04400555255492624,
+              "nmax": 0.10697288328288031,
+              "signed_charge_error_ma_ms_cm2": 0.0009584729094706886,
+              "absolute_charge_error_ma_ms_cm2": 0.0009584729094706886,
+              "signed_charge_normalized": 0.03572282782605189,
+              "absolute_charge_normalized": 0.03572282782605189,
+              "reference_signed_charge_ma_ms_cm2": 0.00515926256775856,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.8,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 17,
+            "case": 1,
+            "gate_rmse": 0.006851153448224068,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 8.943607826950029e-05,
+              "rmse_ma_cm2": 3.6946070878589415e-06,
+              "max_abs_ma_cm2": 1.0194293574929392e-05,
+              "nrmse": 0.04131003012817575,
+              "nmax": 0.11398413003095503,
+              "signed_charge_error_ma_ms_cm2": 0.0007001915287136219,
+              "absolute_charge_error_ma_ms_cm2": 0.0007001915287136219,
+              "signed_charge_normalized": 0.026096534579480107,
+              "absolute_charge_normalized": 0.026096534579480107,
+              "reference_signed_charge_ma_ms_cm2": 0.00515926256775856,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.7000000000000001,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.006574688479304314,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 1.1820719057729773e-05,
+              "max_abs_ma_cm2": 2.2490529926018116e-05,
+              "nrmse": 0.03404990040856064,
+              "nmax": 0.06478457870258741,
+              "signed_charge_error_ma_ms_cm2": 0.003039475491601639,
+              "absolute_charge_error_ma_ms_cm2": 0.003039475491601639,
+              "signed_charge_normalized": 0.029184305046191145,
+              "absolute_charge_normalized": 0.029184305046191145,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wjoint_fit_tf": {
+      "development": {
+        "passed": 4,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 54,
+          "timing": 46,
+          "gate": 51,
+          "charge": 28,
+          "current_max": 59,
+          "timing_only": 2
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 40,
+          "Im": 34,
+          "Ih": 37,
+          "K_Pst": 27,
+          "SKv3_1": 10,
+          "K_Tst": 21,
+          "NaTa_t": 29,
+          "NaTs2_t": 30,
+          "Nap_Et2": 35,
+          "Ca_HVA": 22,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005087846424430609
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.01093784999102354
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004880952183157206
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005035658832639456
+          },
+          "paired_recovery": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.00510659534484148
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.020279699936509132
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003153722733259201
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004381901118904352
+          },
+          "channel_block": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.003240360412746668
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0016711110947653651
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004558374173939228
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.013553879223763943
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "same_v_history",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.020279699936509132,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 8.968386018562295e-05,
+              "max_abs_ma_cm2": 0.0001689919267376101,
+              "nrmse": 0.11234753295963429,
+              "nmax": 0.21169724429534909,
+              "signed_charge_error_ma_ms_cm2": 0.16901315970123973,
+              "absolute_charge_error_ma_ms_cm2": 0.16901315970123973,
+              "signed_charge_normalized": 0.07057461437548451,
+              "absolute_charge_normalized": 0.07057461437548451,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.1,
+                "offset_error_ms": 0.9
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.013553879223763943,
+            "worst_channel": {
+              "channel": "NaTs2_t",
+              "passed": false,
+              "scale_ma_cm2": 2.3942036932567134e-05,
+              "rmse_ma_cm2": 9.725823025964162e-07,
+              "max_abs_ma_cm2": 5.680427268702149e-06,
+              "nrmse": 0.04062237082566112,
+              "nmax": 0.23725747665919572,
+              "signed_charge_error_ma_ms_cm2": 3.198853424087513e-05,
+              "absolute_charge_error_ma_ms_cm2": 3.198853424087513e-05,
+              "signed_charge_normalized": 0.0167010305467633,
+              "absolute_charge_normalized": 0.0167010305467633,
+              "reference_signed_charge_ma_ms_cm2": -0.0004937308840453625,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.1,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.013401716016232967,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 6.077959884900933e-05,
+              "max_abs_ma_cm2": 0.0001226677071248574,
+              "nrmse": 0.07613898387992313,
+              "nmax": 0.1536666044566841,
+              "signed_charge_error_ma_ms_cm2": 0.1167293037864087,
+              "absolute_charge_error_ma_ms_cm2": 0.1167293037864087,
+              "signed_charge_normalized": 0.048742509847203096,
+              "absolute_charge_normalized": 0.048742509847203096,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 22.6,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 3.8000000000000003
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 8,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "timing": 47,
+          "timing_only": 2,
+          "current_rmse": 52,
+          "current_max": 58,
+          "gate": 50,
+          "charge": 33
+        },
+        "failed_channel_counts": {
+          "Ih": 41,
+          "Ca_LVAst": 35,
+          "NaTa_t": 39,
+          "NaTs2_t": 35,
+          "Nap_Et2": 44,
+          "K_Pst": 26,
+          "K_Tst": 21,
+          "Ca_HVA": 29,
+          "Im": 35,
+          "SK_E2": 2,
+          "SKv3_1": 10
+        },
+        "families": {
+          "steps": {
+            "passed": 3,
+            "total": 6,
+            "worst_gate_rmse": 0.0029475372284650803
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.00786907784640789
+          },
+          "chirp": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.006819708272814751
+          },
+          "rapid_voltage_train": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.005654601845890284
+          },
+          "paired_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.005132528021931648
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005888629704713821
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0033005825243890285
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0036011484917253256
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006501794792711735
+          },
+          "reversal": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.0030788967851549387
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.017161168158054352
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.010501330718398094
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "activation_boundary",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.017161168158054352,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 4.94490077595682e-05,
+              "max_abs_ma_cm2": 6.818845369974027e-05,
+              "nrmse": 0.14243920198868246,
+              "nmax": 0.19641868198970794,
+              "signed_charge_error_ma_ms_cm2": 0.014245749288136211,
+              "absolute_charge_error_ma_ms_cm2": 0.014245749288136211,
+              "signed_charge_normalized": 0.13678422279939081,
+              "absolute_charge_normalized": 0.13678422279939081,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.7000000000000001,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.015442688018083572,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 3.3441588775159304e-05,
+              "max_abs_ma_cm2": 0.00013617037374730255,
+              "nrmse": 0.09632939939923614,
+              "nmax": 0.39224243821784993,
+              "signed_charge_error_ma_ms_cm2": 0.009121314104174062,
+              "absolute_charge_error_ma_ms_cm2": 0.009121314104174062,
+              "signed_charge_normalized": 0.08758064145405188,
+              "absolute_charge_normalized": 0.08758064145405188,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.5,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.010501330718398094,
+            "worst_channel": {
+              "channel": "Ca_LVAst",
+              "passed": false,
+              "scale_ma_cm2": 2.215322865595226e-06,
+              "rmse_ma_cm2": 2.386413817203279e-07,
+              "max_abs_ma_cm2": 4.240882131138785e-07,
+              "nrmse": 0.10772307072098418,
+              "nmax": 0.19143404318175172,
+              "signed_charge_error_ma_ms_cm2": 1.5922147681271635e-05,
+              "absolute_charge_error_ma_ms_cm2": 1.5922147681271635e-05,
+              "signed_charge_normalized": 0.08984101288004179,
+              "absolute_charge_normalized": 0.08984101288004179,
+              "reference_signed_charge_ma_ms_cm2": -0.0001230536581715569,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 35.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    },
+    "joint_wjoint_fit_tf_gate_only": {
+      "development": {
+        "passed": 0,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 60,
+          "current_max": 60,
+          "gate": 47,
+          "timing": 50,
+          "charge": 29,
+          "timing_only": 4
+        },
+        "failed_channel_counts": {
+          "Ca_LVAst": 43,
+          "NaTa_t": 35,
+          "Ih": 42,
+          "Im": 32,
+          "K_Pst": 31,
+          "SKv3_1": 10,
+          "K_Tst": 19,
+          "Ca_HVA": 26,
+          "NaTs2_t": 31,
+          "Nap_Et2": 33,
+          "SK_E2": 6
+        },
+        "families": {
+          "steps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005087157711386681
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008838947862386703
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004510904662311077
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0039699566550552845
+          },
+          "paired_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.004022983368486166
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.014822179451584816
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0026934670750051737
+          },
+          "calcium_switch": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0037097521126270294
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0030717276968061924
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0017524778377264738
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.003928266000002623
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.009778494946658611
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "same_v_history",
+            "seed": 43,
+            "case": 0,
+            "gate_rmse": 0.014822179451584816,
+            "worst_channel": {
+              "channel": "Ih",
+              "passed": false,
+              "scale_ma_cm2": 2.4986634343804326e-06,
+              "rmse_ma_cm2": 2.0530127159226465e-07,
+              "max_abs_ma_cm2": 2.2484281231949186e-07,
+              "nrmse": 0.08216443590097641,
+              "nmax": 0.08998523339548681,
+              "signed_charge_error_ma_ms_cm2": 0.00016690353442672944,
+              "absolute_charge_error_ma_ms_cm2": 0.0006120371813663697,
+              "signed_charge_normalized": 0.02226570787127008,
+              "absolute_charge_normalized": 0.08164860698406405,
+              "reference_signed_charge_ma_ms_cm2": -0.0009239863720722497,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "same_v_history",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.014420374296605587,
+            "worst_channel": {
+              "channel": "Im",
+              "passed": false,
+              "scale_ma_cm2": 0.0007982717361301184,
+              "rmse_ma_cm2": 5.969589731304056e-05,
+              "max_abs_ma_cm2": 0.00010005001536597202,
+              "nrmse": 0.07478142418324343,
+              "nmax": 0.1253332804327972,
+              "signed_charge_error_ma_ms_cm2": 0.11823221889413156,
+              "absolute_charge_error_ma_ms_cm2": 0.11823221889413156,
+              "signed_charge_normalized": 0.04937008023494215,
+              "absolute_charge_normalized": 0.04937008023494215,
+              "reference_signed_charge_ma_ms_cm2": 0.9474148154258728,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.2,
+                "offset_error_ms": 2.1
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.009778494946658611,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.00013834479614160955,
+              "rmse_ma_cm2": 4.62386457590122e-06,
+              "max_abs_ma_cm2": 3.0130398000249414e-05,
+              "nrmse": 0.033422757522214554,
+              "nmax": 0.21779205897566237,
+              "signed_charge_error_ma_ms_cm2": 0.00013465968749578445,
+              "absolute_charge_error_ma_ms_cm2": 0.00013465968749578445,
+              "signed_charge_normalized": 0.01216703533360858,
+              "absolute_charge_normalized": 0.01216703533360858,
+              "reference_signed_charge_ma_ms_cm2": -0.004192448686808348,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.0,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      },
+      "stress_diagnostic": {
+        "passed": 4,
+        "total": 72,
+        "overlapping_failure_counts": {
+          "current_rmse": 49,
+          "current_max": 60,
+          "gate": 53,
+          "timing": 46,
+          "charge": 33,
+          "timing_only": 2
+        },
+        "failed_channel_counts": {
+          "Ih": 42,
+          "Ca_LVAst": 34,
+          "Im": 34,
+          "NaTa_t": 41,
+          "NaTs2_t": 41,
+          "Nap_Et2": 42,
+          "K_Tst": 21,
+          "Ca_HVA": 30,
+          "K_Pst": 27,
+          "SK_E2": 2,
+          "SKv3_1": 10
+        },
+        "families": {
+          "steps": {
+            "passed": 2,
+            "total": 6,
+            "worst_gate_rmse": 0.004027488175779581
+          },
+          "ramps": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006763049867004156
+          },
+          "chirp": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.005645238794386387
+          },
+          "rapid_voltage_train": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006319072563201189
+          },
+          "paired_recovery": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.004078880418092012
+          },
+          "same_v_history": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006977261509746313
+          },
+          "slow_recovery": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0028108740225434303
+          },
+          "calcium_switch": {
+            "passed": 1,
+            "total": 6,
+            "worst_gate_rmse": 0.002810368314385414
+          },
+          "channel_block": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.006615741644054651
+          },
+          "reversal": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.0021974947303533554
+          },
+          "activation_boundary": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.015718573704361916
+          },
+          "seams": {
+            "passed": 0,
+            "total": 6,
+            "worst_gate_rmse": 0.008771251887083054
+          }
+        },
+        "worst_gate_cases": [
+          {
+            "family": "activation_boundary",
+            "seed": 29,
+            "case": 1,
+            "gate_rmse": 0.015718573704361916,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 2.9542708427143343e-05,
+              "max_abs_ma_cm2": 7.607352521182478e-05,
+              "nrmse": 0.08509856928590002,
+              "nmax": 0.21913184337943648,
+              "signed_charge_error_ma_ms_cm2": 0.008389473885052942,
+              "absolute_charge_error_ma_ms_cm2": 0.008389473885052942,
+              "signed_charge_normalized": 0.08055368951483827,
+              "absolute_charge_normalized": 0.08055368951483827,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.30000000000000004,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "activation_boundary",
+            "seed": 43,
+            "case": 1,
+            "gate_rmse": 0.01449673529714346,
+            "worst_channel": {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 0.0003471586969681084,
+              "rmse_ma_cm2": 4.508849858400608e-05,
+              "max_abs_ma_cm2": 6.076301779205174e-05,
+              "nrmse": 0.12987863757349025,
+              "nmax": 0.17502951336873382,
+              "signed_charge_error_ma_ms_cm2": 0.013168764031664906,
+              "absolute_charge_error_ma_ms_cm2": 0.013168764031664906,
+              "signed_charge_normalized": 0.12644327208537587,
+              "absolute_charge_normalized": 0.12644327208537587,
+              "reference_signed_charge_ma_ms_cm2": -0.06067526340484619,
+              "event": {
+                "status": "evaluable",
+                "peak_error_ms": 0.0,
+                "onset_error_ms": 0.2,
+                "offset_error_ms": 0.0
+              },
+              "blocked_current_passed": true
+            }
+          },
+          {
+            "family": "seams",
+            "seed": 29,
+            "case": 0,
+            "gate_rmse": 0.008771251887083054,
+            "worst_channel": {
+              "channel": "SK_E2",
+              "passed": false,
+              "scale_ma_cm2": 1.0000000116860974e-07,
+              "rmse_ma_cm2": 6.080996923529505e-09,
+              "max_abs_ma_cm2": 9.894890889007559e-09,
+              "nrmse": 0.06080996852466383,
+              "nmax": 0.09894890773374901,
+              "signed_charge_error_ma_ms_cm2": 4.1413975756535753e-07,
+              "absolute_charge_error_ma_ms_cm2": 4.1413975756535753e-07,
+              "signed_charge_normalized": 0.05176746982636975,
+              "absolute_charge_normalized": 0.05176746982636975,
+              "reference_signed_charge_ma_ms_cm2": 1.5915865958504583e-07,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          }
+        ]
+      }
+    }
+  },
+  "limits": "Post-freeze diagnostics; counts overlap. No retuning on stress, no independent confirmation, no autonomous V/Ca or speedup evidence."
+}
