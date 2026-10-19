@@ -80,7 +80,7 @@ def censored_logit_error(torch,raw,target,epsilon=1e-6):
     err=torch.where(target<=epsilon,torch.relu(err),torch.where(target>=1-epsilon,-torch.relu(-err),err))
     return (err/6).square()
 
-def terms(torch,g,s,scales,short=64):
+def terms(torch,g,s,scales,short=64,return_trajectory=False):
     model=g['model'];batch,anchor,ticks=s['batch'],s['anchor'],s['ticks'];gs,cs,us,zs=scales
     flags=g['flags'];tail=flags[:,0].bool()
     # Every sequence starts once; no hidden teacher resets inside either horizon.
@@ -101,7 +101,8 @@ def terms(torch,g,s,scales,short=64):
     censored=censored_logit_error(torch,ru,anchor[...,71:89]).mean((1,2))
     inf=torch.where(tail,.5*(ordinary+censored),ordinary)
     rate=((torch.nn.functional.logsigmoid(rz)-anchor[...,89:107].clamp_min(1e-30).log())/zs).square().mean((1,2))
-    return torch.stack((variable,held,inf,rate),-1)
+    result=torch.stack((variable,held,inf,rate),-1)
+    return (result,current,ref) if return_trajectory else result
 
 def objective(torch,g,s,scales,short=64):return (terms(torch,g,s,scales,short)*s['weights']).sum(-1)
 

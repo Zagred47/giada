@@ -11,12 +11,13 @@ import traceback
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('request',type=Path);args=parser.parse_args()
-    request=json.loads(args.request.read_text());revision=request['revision']
+    request=json.loads(args.request.read_text());revision=request['revision'];task=request.get('task','39e')
+    assert task in ('39e','39f')
     assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
-    root=Path('/content')/('giada_task39e_'+revision[:12]);root.mkdir(exist_ok=False)
+    root=Path('/content')/('giada_task'+task+'_'+revision[:12]);root.mkdir(exist_ok=False)
     status=root/'job_status.json';output=root/'artifacts';repo=root/'giada';started=time.time()
     def save(**fields):
-        data=dict(task='39e',revision=revision,started_unix=started,elapsed_seconds=time.time()-started,manager_pid=__import__('os').getpid(),**fields)
+        data=dict(task=task,revision=revision,started_unix=started,elapsed_seconds=time.time()-started,manager_pid=__import__('os').getpid(),**fields)
         tmp=status.with_suffix('.tmp');tmp.write_text(json.dumps(data,indent=2));tmp.replace(status)
     def publish(label):
         # Publish immutable archives atomically; a console supervisor copies them
@@ -34,7 +35,7 @@ def main():
             subprocess.run(['git','fetch','--depth','1','origin',revision],cwd=repo,stdout=log,stderr=subprocess.STDOUT,check=True)
             subprocess.run(['git','checkout','--detach','FETCH_HEAD'],cwd=repo,stdout=log,stderr=subprocess.STDOUT,check=True)
         assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()==revision
-        worker_source=repo/'scripts/run_task39e_tail_support_heads.py'
+        worker_source=repo/('scripts/run_task39f_temporal_recovery.py' if task=='39f' else 'scripts/run_task39e_tail_support_heads.py')
         assert hashlib.sha256(worker_source.read_bytes()).hexdigest()==request['worker_sha256']
         save(state='running',phase='scientific_worker');print('[GIADA console] pinned checkout verified; starting worker',flush=True)
         with (root/'process.log').open('w') as log:
@@ -54,7 +55,7 @@ def main():
         if code:print('[GIADA failure] '+json.dumps(report),flush=True)
         publish('final')
         save(state='running',phase='archive',worker_exit_code=code)
-        archive=Path(shutil.make_archive(str(root/'giada_task39e_result'),'zip',output))
+        archive=Path(shutil.make_archive(str(root/('giada_task'+task+'_result')),'zip',output))
         save(state='finished',phase='done',worker_exit_code=code,report=report_path.as_posix(),scientific_valid=report.get('valid',False),
              decision=report.get('decision'),technical_failure=bool(code or report.get('technical_failure')),archive=archive.as_posix(),archive_sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
         print('[GIADA console] '+json.dumps(json.loads(status.read_text())),flush=True)

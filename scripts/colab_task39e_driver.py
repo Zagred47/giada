@@ -12,13 +12,14 @@ import subprocess
 import sys
 import time
 
-request_path=Path('/content/giada_task39e_launch.json')
+import os
+request_path=Path(os.environ.get('GIADA_COLAB_REQUEST','/content/giada_task39e_launch.json'))
 request=json.loads(request_path.read_text())
 manager=Path('/content/task39e_console_manager.py')
 assert hashlib.sha256(manager.read_bytes()).hexdigest()==request['manager_sha256']
 proc=subprocess.Popen([sys.executable,'-u',str(manager),str(request_path)],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
 selector=selectors.DefaultSelector();selector.register(proc.stdout,selectors.EVENT_READ)
-status=Path('/content')/('giada_task39e_'+request['revision'][:12])/'job_status.json';start=time.monotonic()
+status=Path('/content')/('giada_task'+request.get('task','39e')+'_'+request['revision'][:12])/'job_status.json';start=time.monotonic()
 while True:
     events=selector.select(timeout=5)
     if events:

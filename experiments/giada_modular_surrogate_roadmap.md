@@ -1652,6 +1652,18 @@ Task40 resta bloccata. Task39f è proposta, non preregistrata né avviata:
 audit congelato u/z e crossing, poi matrice obiettivo temporale×supporto
 transizioni×capacità con soglie invariate e mini scaling laws.
 
+**Task39f autorizzata19 ottobre2026:** [protocollo](task39f_preregistration_v1.json)
+e [notebook](../notebooks/giada_task39f_temporal_recovery.ipynb).
+Otto bracci/24 modelli:loss temporale×copertura transizioni/recuperi FIT×larghezza.
+Tutti conservano l'obiettivo delle code39e; la copertura di controllo era già
+parzialmente arricchita di eventi, non uniforme pura. Stesse soglie37 e regola
+di selezione39e, budget180k con checkpoint intermedi; nessuna promozione40
+dal solo miglioramento. Prima del fit, oracoli sui due riferimenti congelati39e:
+u/z/both/reset stato,FP32/64 e diagnostica crossing; non selezionabili.
+La rete larga costa più parametri:valutare qualità e costo residente separatamente.
+Esecuzione e backup esterni sono attestati dalle ricevute console, non dalla
+presente autorizzazione. Airtable resta congelato.
+
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
 titoli coerenti, precede la loro esecuzione. Airtable resta congelato.

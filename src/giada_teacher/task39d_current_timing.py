@@ -281,11 +281,12 @@ def timing_audit(reference,prediction,dt=.1):
     return out
 
 
-def oracle_audit(torch,root,output,spec,quality,device):
+def oracle_audit(torch,root,output,spec,quality,device,parent_loader=None,timing_fn=None):
     rows=[];floors=[];timings=[]
     for dtype,precision in ((torch.float32,'float32'),(torch.float64,'float64')):
-        models=load_parents(torch,root,spec,device,dtype)
-        modes=['learned','teacher_u','teacher_z','teacher_both']+([f'gate_{g}' for g in range(18)] if precision=='float32' else [])
+        models=(parent_loader or load_parents)(torch,root,spec,device,dtype)
+        modes=['learned','teacher_u','teacher_z','teacher_both']+([f'gate_{g}' for g in range(18)] if precision=='float32' and spec.get('oracle_single_gates',True) else [])
+        if spec.get('oracle_state_reset',False):modes.append('teacher_state_reset')
         for family in quality['families']:
             with np.load(root/spec['dataset']/f'development__{family}.npz') as zz:a={k:zz[k] for k in zz.files}
             shape=a['voltage'].shape;lus=[];lzs=[]
@@ -308,7 +309,9 @@ def oracle_audit(torch,root,output,spec,quality,device):
                     gate=int(mode.split('_')[1]);u,z=lu.copy(),lz.copy();u[...,gate]=eu[...,gate];z[...,gate]=ez[...,gate]
                 state=np.broadcast_to(a['initial_gates'],(6,*a['initial_gates'].shape)).astype(npdtype).copy()
                 pred=np.empty((shape[0],6,shape[1],18),dtype=npdtype)
-                for tick in range(shape[0]):state=state+z[:,tick]*(u[:,tick]-state);pred[tick]=state
+                for tick in range(shape[0]):
+                    if mode=='teacher_state_reset' and tick:state=np.broadcast_to(a['gate_targets'][tick-1],state.shape).astype(npdtype).copy()
+                    state=state+z[:,tick]*(u[:,tick]-state);pred[tick]=state
                 for j in range(6):
                     _,cur=p.readout(a['voltage'],pred[:,j],a['multipliers'],a['reversals'])
                     for case in range(shape[1]):
@@ -317,7 +320,7 @@ def oracle_audit(torch,root,output,spec,quality,device):
                         if mode=='teacher_both' and precision=='float64':
                             floors.append(dict(passed=metric['passed'],gate_max=float(np.abs(pred[:,j,case]-a['gate_targets'][:,case]).max()),current_max=float(np.abs(cur[:,case]-a['current_targets'][:,case]).max())))
                         if mode=='learned':
-                            events=timing_audit(a['current_targets'][:,case],cur[:,case]);timings.append(dict(parent=row['parent_arm'],seed=row['seed'],family=family,case=case,precision=precision,channels=events))
+                            events=(timing_fn or timing_audit)(a['current_targets'][:,case],cur[:,case]);timings.append(dict(parent=row['parent_arm'],seed=row['seed'],family=family,case=case,precision=precision,channels=events))
                             failed=any(e['event']['status']=='missing_event' or (e['event']['status']=='evaluable' and (e['event']['peak_error_ms']>.2+1e-9 or max(e['event']['onset_error_ms'],e['event']['offset_error_ms'])>.3+1e-9)) for e in events)
                             if failed:np.savez_compressed(output/f'timing__{row["parent_arm"]}__{precision}__{family}__{case}__{row["seed"]}.npz',reference=a['current_targets'][:,case],prediction=cur[:,case],time_ms=np.arange(shape[0])*.1)
             p.save_json(output/'frozen_oracle_attribution.json',rows);p.save_json(output/'timing_audit.json',timings)

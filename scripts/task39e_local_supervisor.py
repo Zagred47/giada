@@ -15,11 +15,11 @@ def cli(repo, *args, **kwargs):
     return subprocess.run(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),*map(str,args)],cwd=repo,**kwargs)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--attach',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
     repo=Path(__file__).resolve().parents[1];dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=a.attach)
-    remote='/content/giada_task39e_'+a.revision[:12];seen=set();started=time.time()
+    remote='/content/giada_task'+a.task+'_'+a.revision[:12];seen=set();started=time.time()
     with (dest/'console.log').open('a',encoding='utf-8') as log:
-        driver=None if a.attach else subprocess.Popen(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',a.session,'-f','scripts/colab_task39e_driver.py'],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
+        driver=None if a.attach else subprocess.Popen(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',a.session,'-f','scripts/colab_task'+a.task+'_driver.py'],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
         def download(name,target):
             r=cli(repo,'download','-s',a.session,remote+'/'+name,target,capture_output=True,text=True,encoding='utf-8',errors='replace')
             return r.returncode==0 and target.exists() and 'not found' not in (r.stdout+r.stderr).lower()
@@ -35,6 +35,10 @@ def main():
                         assert hashlib.sha256(target.read_bytes()).hexdigest()==receipt['sha256'],'External recovery SHA mismatch'
                         with zipfile.ZipFile(target) as z:assert z.testzip() is None
                         seen.add(receipt['sha256']);(dest/'external_backup_receipt.json').write_text(json.dumps(dict(valid=True,remote=receipt,local=str(target),verified_at=time.time(),runtime_independent=True),indent=2))
+            # Re-read after a completed driver: the pre-poll status may still
+            # say running although the final bundle has already been copied.
+            if driver is not None and driver.poll() is not None:
+                got=download('job_status.json',dest/'job_status.json')
             if got:
                 state=json.loads((dest/'job_status.json').read_text())
                 if state.get('state')=='finished':
@@ -44,6 +48,7 @@ def main():
                         target=dest/Path(state['archive']).name
                         assert download(target.name,target),'Final archive download failed'
                         assert hashlib.sha256(target.read_bytes()).hexdigest()==state['archive_sha256']
+                        with zipfile.ZipFile(target) as z:assert z.testzip() is None
                     break
             if driver is not None and driver.poll() is not None:
                 if time.time()-started>120:break
