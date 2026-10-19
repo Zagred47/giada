@@ -12,7 +12,7 @@ import traceback
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('request',type=Path);args=parser.parse_args()
     request=json.loads(args.request.read_text());revision=request['revision'];task=request.get('task','39e')
-    assert task in ('39e','39f')
+    assert task in ('39e','39f','39g')
     assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
     root=Path('/content')/('giada_task'+task+'_'+revision[:12]);root.mkdir(exist_ok=False)
     status=root/'job_status.json';output=root/'artifacts';repo=root/'giada';started=time.time()
@@ -35,7 +35,8 @@ def main():
             subprocess.run(['git','fetch','--depth','1','origin',revision],cwd=repo,stdout=log,stderr=subprocess.STDOUT,check=True)
             subprocess.run(['git','checkout','--detach','FETCH_HEAD'],cwd=repo,stdout=log,stderr=subprocess.STDOUT,check=True)
         assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()==revision
-        worker_source=repo/('scripts/run_task39f_temporal_recovery.py' if task=='39f' else 'scripts/run_task39e_tail_support_heads.py')
+        workers={'39e':'run_task39e_tail_support_heads.py','39f':'run_task39f_temporal_recovery.py','39g':'run_task39g_objective_horizon.py'}
+        worker_source=repo/'scripts'/workers[task]
         assert hashlib.sha256(worker_source.read_bytes()).hexdigest()==request['worker_sha256']
         save(state='running',phase='scientific_worker');print('[GIADA console] pinned checkout verified; starting worker',flush=True)
         with (root/'process.log').open('w') as log:

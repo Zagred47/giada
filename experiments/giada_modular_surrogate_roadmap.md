@@ -1680,6 +1680,17 @@ nuovo supporto FIT indipendente, più oracoli congelati sul vincitore39f.
 La39g è una proposta, non ancora preregistrata o avviata; soglie37 invariate.
 La velocità7.87–7.89× riguarda soltanto il nucleo residente, non l'intero neurone.
 
+**Task39g autorizzata19 ottobre2026:** [protocollo](task39g_preregistration_v1.json),
+[notebook unico](../notebooks/giada_task39g_objective_horizon.ipynb).
+Dieci bracci/30modelli dalla stessa rete39f larga congelata; Adam resettato.
+Loss vecchia completa/precisione, pesi1/.01, loss allineata all'episodio,
+64/256tick a512target/update, estensione FIT indipendente.11contrasti condividono
+i controlli. Budget120k con checkpoint intermedi; selezione39e e soglie37 identiche.
+Oracoli sui riferimenti39f e probe di saturazione/gradienti precedono e accompagnano
+il fit. La nuova copertura è una generazione FIT, non una nuova conferma.
+Esecuzione console con checkpoint/log esterni e verifica SHA256/CRC; il lancio
+effettivo viene attestato dalle ricevute, non dalla sola presente autorizzazione.
+
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
 titoli coerenti, precede la loro esecuzione. Airtable resta congelato.
