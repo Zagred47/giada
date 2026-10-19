@@ -1,0 +1,81 @@
+{
+  "status": "Post-hoc Task39h result analysis and proposed39i contrasts; next training experiment not preregistered or launched",
+  "outcome": "Task39h technically valid at120000updates.21 checkpoint/Adam/frozen files finite,1872 primary and1872 counterfactual cases retained. H8 passes65/72 vs frozen39g A0/A6 61/72;4 gains,0 losses vs A0 on development. H8 stress61/72 vs A0 62/72.0/14 registered contrasts supported. NO_GO_TASK40_BLOCKED;thresholds and selection unchanged.",
+  "findings": [
+    "H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.",
+    "H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.",
+    "H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.",
+    "39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.",
+    "Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.",
+    "H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.",
+    "H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.",
+    "At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.",
+    "Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.",
+    "Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim."
+  ],
+  "hypotheses": [
+    {
+      "id": "coupled_equilibrium_relaxation",
+      "priority": "high; directly localized on frozenH8",
+      "statement": "The remaining slow-tail errors require jointly reducing equilibrium u bias and accumulated relaxation z bias; relative importance differs by channel and seed.",
+      "falsifier": "A paired u/z objective factorial fails to improve the preregistered full-trace timing and coefficient probes,despite reducing the intended FIT coefficient errors;or one factor alone consistently matches the combined factor.",
+      "test": "I0-I3 2x2:original objective,additional balanced relative/logit-u objective,additional accumulated-relaxation objective,both. Coefficient labels offline only;all gates receive the same rule. Probe signed bias,tail state,offset and gained/lost cases."
+    },
+    {
+      "id": "tail_information_exposure",
+      "priority": "medium;39h support benefit conditional",
+      "statement": "Constant-input recovery FIT does not sufficiently constrain paths entering and leaving slow tails; variable-history composition or rare calcium coverage is missing.",
+      "falsifier": "Matched independent recovery-history/calcium enrichment gives no benefit over equal-count baseline at equal target-tick/Adam budget and comparable coefficient errors.",
+      "test": "I3 vsI4 replaces matched fraction ofFIT with independent paired histories and stratified calcium/relaxation regimes. Full held/variable history coverage logs;no copied development traces. Save early/late checkpoints along one path."
+    },
+    {
+      "id": "learned_feature_interference",
+      "priority": "medium;z-only result cannot isolate representation capacity",
+      "statement": "Frozen shared voltage features and shared gradients impede independent u/z refinement for slow channels; a small learned channel adapter may improve learnability without lowering abstraction.",
+      "falsifier": "Channel adapters do not beat parameter-matched generic added capacity under the same data,objective,initial function and paired seeds,or added heads receive negligible useful gradients.",
+      "test": "I3 baseline,I5 channel-group residual adapters,I6 generic adapter with same added parameter budget. Function-preserving zero residual initialization;output remains learned bounded u/z;measure per-head gradients and inference cost."
+    },
+    {
+      "id": "sk_equilibrium_weighting",
+      "priority": "high localization,objective cause still unproven",
+      "statement": "SK_E2 low-occupancy equilibrium accuracy is underweighted by current losses,so small absolute gate errors exceed relative current tolerance.",
+      "falsifier": "A bounded relative/logit equilibrium loss improves FIT SK targets but does not improve independent development calcium/current bins or reversal residual,at matched budgets.",
+      "test": "SK2x2 sharingI3: I7 adds SK-specific relative equilibrium loss, I8 adds learned monotone-calcium head, I9 combines both. Diagnose calcium quantiles,u signed relative bias,z,head gradient conflict."
+    },
+    {
+      "id": "sk_learned_shape",
+      "priority": "medium;current head already calcium-only",
+      "statement": "A bounded monotone learned calcium-to-equilibrium map may constrain SK_E2 more effectively than the existing unconstrained SiLU head at comparable capacity.",
+      "falsifier": "Matched-capacity monotone head fails to improve beyond the objective-only treatment or introduces regressions elsewhere;pre-fit functional mismatch accounts for any apparent gain.",
+      "test": "I3/I7/I8/I9 factorial. Keep z learned;no analytic Hill law or fixed tau. Architecture transfer gets FIT-only functional matching,with matched distillation control and transfer error reported before training."
+    },
+    {
+      "id": "budget_selection_mismatch",
+      "priority": "high diagnostic priority,not proven",
+      "statement": "Early useful correction followed by drift/forgetting or development-panel/full-trace mismatch explains why H8 selects1000-3000 despite120000updates.",
+      "falsifier": "Fixed checkpoints show continued full-trace improvement aligned with panel rank across seeds without old-case regressions or coefficient drift.",
+      "test": "All arms save100/300/1000/3000/10000/30000/60000/120000;fixed retrospective full-development panels at specified budgets are NONSELECTABLE,with primary selection unchanged. Track old/new FIT loss,full72 timing,and frozen parent comparisons. No stress-based switching."
+    }
+  ],
+  "proposed_experiment": {
+    "name": "Proposed Task39i: coupled equilibrium/relaxation and SK precision",
+    "status": "Proposal only; implementation,preregistration and launch require next user go-ahead",
+    "shared": "Single notebook;10arms x3seeds;H8 initializer and frozen39gA0/A6 plusH8 comparators. Same information,18bounded states,learned kinetics,dt0.1ms,current readout andTask37 thresholds. Same primary selection;full72/72 plusaudit required. No independent confirmation accessed.",
+    "arms": {
+      "I0": "H8 original continuation control",
+      "I1": "I0 + balanced relative/logit-u loss",
+      "I2": "I0 + accumulated-relaxation composition loss",
+      "I3": "I1+I2",
+      "I4": "I3 + matched independent history/calcium FIT",
+      "I5": "I3 + zero-init channel residual adapters",
+      "I6": "I3 + matched-parameter generic residual adapter",
+      "I7": "I3 + SK relative equilibrium objective",
+      "I8": "I3 + learned monotone SK equilibrium head",
+      "I9": "I3 + both SK interventions"
+    },
+    "loss_detail": "Existing held long-horizon/rate supervision is retained. Proposed relaxation objective penalizes signed cumulative log(1-z) and induced state error on independent FIT recovery histories at multiple durations;compare against existing pointwise log_z objective. Use expm1/log1p numerics and finite-gradient toy tests. u relative/logit term uses FIT-calibrated floors and bounded weighting;these are training loss constants,never evaluation thresholds.",
+    "causal_contrasts": "u/z factorial4edges;I3/I4 support;I3/I5 andI3/I6 capacity plusI5/I6bias;SKfactorial4edges. Preregister all success/effect criteria before execution,report seed-level severity,timing,current,old-case regressions separately. Prefer vectorization within compatible shapes;architecture transfer assessed with matched controls.",
+    "diagnostics": "FrozenH8 u/z/both/reset attribution already completed on7residuals;next extend to full72 and signed recovery-phase/sensitivity,including other passing cases. Track e_next=(1-z_hat)e + z_hat*delta_u + delta_z*(u_teacher-x_teacher),especially cancellation between equilibrium and rate terms. SK calcium-grid support and sensitivity to raw model precision;diagnostic only.",
+    "scope": "All inference kinetics stay learned. Architecture changes add inductive bias only,not canonical equations. No new membrane/synapse/multicompartment model. No threshold relaxation. Quantitative/qualitative failure families preserved;speed measured on equal workloads and quality-qualified only after passes."
+  }
+}
