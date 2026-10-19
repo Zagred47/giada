@@ -1,0 +1,61 @@
+{
+  "task": "39i",
+  "revision": "cf16e9748b027cee9aed3802ffce87ed47fb7e0f",
+  "session": "giada-task39i-reserve",
+  "backend": "gpu-t4-s-kkb-usw1b0-ygrd50y4nra0",
+  "account_profile": "reserve",
+  "account": "cinziamrg48@gmail.com",
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "job_status": {
+    "task": "39i",
+    "revision": "cf16e9748b027cee9aed3802ffce87ed47fb7e0f",
+    "started_unix": 1792442056.3429627,
+    "elapsed_seconds": 258.0938572883606,
+    "manager_pid": 9800,
+    "state": "running",
+    "phase": "scientific_worker",
+    "worker_pid": 9980,
+    "last_progress": "[GIADA Task38] recurrence development/same_v_history complete"
+  },
+  "execution": {
+    "valid": true,
+    "two_update_max_error": 0.0,
+    "seconds_per_update": 0.05749403489999168,
+    "projected_training_seconds": 6899.284187999001,
+    "optimizer_state_lifetime_retained": true,
+    "optimizer_reset": true,
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "members": 36,
+    "backend": "five vectorized cohorts in one CUDA Graph",
+    "parameters": {
+      "plain": {
+        "stored": 2404,
+        "active": 2404
+      },
+      "channel": {
+        "stored": 2654,
+        "active": 2654
+      },
+      "generic": {
+        "stored": 2654,
+        "active": 2654
+      },
+      "monotone": {
+        "stored": 2421,
+        "active": 2404
+      },
+      "transfer": {
+        "stored": 2404,
+        "active": 2404
+      }
+    },
+    "training_affine_accumulation": "float64;FP32parameters/states/Adam",
+    "evaluation_inference_dtype": "float32",
+    "thresholds_changed": false
+  },
+  "external_destination": "artifacts/task39i_reserve_retry2_external",
+  "thresholds_changed": false,
+  "scientific_result_claimed": false
+}
