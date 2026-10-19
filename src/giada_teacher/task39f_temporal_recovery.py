@@ -205,6 +205,7 @@ def run(root,output,device='cuda'):
     p.save_json(output/'execution.json',execution)
     print(f'[GIADA Task39f] preflights passed; projected fit {execution["projected_training_seconds"]/60:.1f}min',flush=True)
     rng=np.random.default_rng(spec['data_seed']+99);best=[None]*count;saved=[None]*count;chosen=[None]*count
+    common_best=np.full(count,np.inf);common_chosen=[None]*count
     curves=[];probes=[];invalid=set();start=time.perf_counter();exposure=np.zeros((2,len(families),2),dtype=np.int64)
     for step in range(spec['checkpoints'][-1]+1):
         if step in spec['checkpoints']:
@@ -219,6 +220,7 @@ def run(root,output,device='cuda'):
                     if ranks[j] is None:invalid.add(j);j+=1;continue
                     if best[j] is None or ranks[j]<best[j]:
                         best[j]=ranks[j];chosen[j]=step;saved[j]={name:v[k].detach().cpu().clone() for name,v in g['model'].named_parameters()}
+                    if common[j]<common_best[j]:common_best[j]=common[j];common_chosen[j]=step
                     j+=1
             assert all(v is not None for v in saved),'Initial finite selection preflight failed'
             curves.append(dict(step=step,common_development_score=common.tolist(),panel=panel,elapsed_seconds=time.perf_counter()-start,clipping_counts=[x.cpu().tolist() for x in clips]))
@@ -242,7 +244,7 @@ def run(root,output,device='cuda'):
                 for name,v in g['model'].named_parameters():v[k].copy_(saved[j][name])
                 j+=1
     torch.save({g['key']:g['model'].state_dict() for g in cohorts},output/'frozen_checkpoint.pt')
-    freeze=dict(arms=defs,seeds=spec['seeds'],chosen_steps=chosen,ranks=best,development_only=True,stress_used_for_selection=False,independent_confirmation_accessed=False,checkpoint_sha256=p.digest(output/'frozen_checkpoint.pt'))
+    freeze=dict(arms=defs,seeds=spec['seeds'],chosen_steps=chosen,ranks=best,common_rule_steps=common_chosen,development_only=True,stress_used_for_selection=False,independent_confirmation_accessed=False,checkpoint_sha256=p.digest(output/'frozen_checkpoint.pt'))
     freeze['freeze_sha256']=hashlib.sha256(json.dumps(freeze,sort_keys=True).encode()).hexdigest();p.save_json(output/'selection_freeze.json',freeze)
     p.save_json(output/'exposure.json',dict(coverage_family_role_ticks=exposure.tolist(),variable_targets_per_member=512*spec['checkpoints'][-1],anchor_targets_per_member=64*spec['checkpoints'][-1]))
     base=json.loads((root/old.CONFIG).read_text());evaluation=dict(spec,architectures=[a['name'] for a in defs]+['frozen39e_'+n for n in spec['oracle_parent_arms']])
@@ -261,6 +263,16 @@ def run(root,output,device='cuda'):
         contrasts.append(dict(axis=axis,control=a,treatment=z,paired_ratios=ratios,worst_ratios=worst,supported=bool(np.median(ratios)<=.8 and max(ratios)<1 and max(worst)<=1.05)))
     p.save_json(output/'paired_contrasts.json',dict(scores=scores,contrasts=contrasts))
     c.cost_benchmark(torch,cohorts,spec['seeds'],device,output,model_factory=model_class,splitter=split_models,task_label='39f')
+    common_dir=output/'common_selection_diagnostic';common_dir.mkdir()
+    checkpoints={step:torch.load(output/f'checkpoint_{step}.pt',map_location=device,weights_only=True) for step in set(common_chosen)}
+    j=0
+    with torch.no_grad():
+        for g in cohorts:
+            for k in range(g['model'].a.shape[0]):
+                for name,v in g['model'].named_parameters():v[k].copy_(checkpoints[common_chosen[j]][g['key']][name][k])
+                j+=1
+    common_summary=old.evaluate(root,common_dir,evaluation,split_models(torch,cohorts,spec['seeds'],device)+load_parents(torch,root,spec,device,torch.float32),torch,device,quality)
+    p.save_json(output/'common_selection_diagnostic.json',dict(summaries=common_summary,selected_steps=common_chosen,selection_eligible=False,limits='Same saved trajectories;diagnostic old selection rule cannot replace primary freeze.'))
     unstable={defs[j//3]['name'] for j in invalid};passing=[a['name'] for a in defs if summary['joint_w'+a['name']]['all_development_passed'] and a['name'] not in unstable]
     execution.update(training_wall_seconds=training,total_wall_seconds=time.perf_counter()-start,peak_cuda_memory_bytes=torch.cuda.max_memory_allocated());p.save_json(output/'execution.json',execution)
     final=dict(valid=True,task='39f',decision='CANDIDATE_REQUIRES_AUDIT' if passing else 'NO_GO_TASK40_BLOCKED',passing_arms=passing,numerically_unstable_arms=sorted(unstable),summaries=summary,thresholds_changed=False,independent_confirmation_accessed=False,speedup_claimed=False,limits=spec['limits'])
