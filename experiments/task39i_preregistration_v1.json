@@ -1,0 +1,100 @@
+{
+  "task": "39i",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dataset": "experiments/results/task37_playground_v2",
+  "normalizers": "experiments/results/task38_kaggle_v2/fit_normalizers.json",
+  "parent": "experiments/results/task39h_colab_v1",
+  "parent_sha256": "daa5bb9e83c2ad00a35dbb917d1e3b48ce087f0d4d0b8bd37e2c03e4be8ee097",
+  "oracle_parent_arms": [
+    "H8"
+  ],
+  "floor_gate_atol": 2e-05,
+  "floor_current_atol": 2e-07,
+  "data_seed": 99591,
+  "windows_per_family": 512,
+  "sequence_length": 64,
+  "batch_sequences": 8,
+  "anchor_batch": 64,
+  "held_ticks": [
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000
+  ],
+  "development_windows_per_family": 2,
+  "development_anchor_nodes": 96,
+  "development_long_ticks": 20000,
+  "checkpoints": [
+    0,
+    100,
+    300,
+    1000,
+    3000,
+    10000,
+    30000,
+    60000,
+    90000,
+    120000
+  ],
+  "learning_rate": 0.001,
+  "recurrence_chunk": 32,
+  "numeric_atol": 1e-05,
+  "architecture": "H8 initializer per seed;18bounded states and learned u/z,dt0.1ms,current readout unchanged. Plain active2404parameters;channel and generic adapters+250each;monotone SK replaces17active u-head parameters with17learned positive-slope parameters,keeps learned z. No analytic kinetics restored.",
+  "matrix": "12arms x3seeds: I0-I3 u/relaxation loss2x2;I4 independent FIT history;I5 channel residual adapter;I6 parameter-matched generic adapter;I3/I7/I8/I9 SKobjective/learned-monotone-shape2x2,withI10/I11 matched function-transfer controls.14paired edges. All within one notebook and one pinned execution.",
+  "training": "120000warm updates,LR.0001,independent reset Adam eps1e-8,per-member norm1clipping,512variable target ticks/update as8x64 plus64held anchors. Shared sampled indices,roles50/50 and50%original/50%recovery FIT. Every arm uses the same39h independent constant recovery pool;I4 replaces only that half by independent variable-history FIT of equal count. Run RNG data_seed+399. Early checkpoints and fixed full-trace diagnostics do not alter current primary selection.",
+  "loss": "Retain original4H8terms/scales/calibration unchanged. Relative-u adds half censored logit error plus half squared bounded relative error:relative=(sigmoid(raw)-u*)/min(clamp(u*,1e-6,1-1e-6),1-clamp(...));bound5tanh(relative/5). Composition compares signed cumulative log(1-z) on64-tick variable FIT histories,clamped below-20,normalized by abs(target cumulative)floor.01,plus induced expm1-decay difference. Teacher log-decay computed offline and appended as18loss-only columns. SKloss applies relative-u term togate16only. Additional multiplier perseed=.1main combined gradient norm/new-term gradient norm oninitial originalFIT I0,clamp[1e-4,1e4],then frozen across all treatments;factorial terms keep same weights when combined.",
+  "selection": "PRIMARY prospective lexicographic development-panel rank: number of failed case windows, worst threshold-normalized gate/current/charge/event error (missing_event=100 penalty for ranking only), previous common global score as tie breaker. Panel: 2x512 windows per12families plus two2x20k-tail blocks; canonical quality thresholds unchanged, panel not full-trace qualification. Held nodes/durations contribute common tie-breaker. Earliest minimum. Save every checkpoint and old-score-selected steps; after primary freeze independently reconstruct old-selection weights from same checkpoints and evaluate as NONSELECTABLE counterfactual diagnostic. No posthoc switching rule, no stress/fresh selection.",
+  "quality": "All Task37 thresholds, occupancy, per-channel current, blocking, charge and onset/peak/offset/missing-event rules unchanged. Full72/72 development plus audit before Task40; any failure blocks promotion. Independent confirmation unopened.",
+  "contrasts": "14paired edges listed in code;existing severity rule median ratio<=.8,all3<1,worst<=1.05 unchanged. Report timing separately,severity alone excludes it. Record full72passed,7residual trajectories and any new failure,stressdescriptive only. Shape claims require matchedtransfer preflight and inspection ofI3/I10,I7/I11;capacity claim requires equal250addedparameters. No arm chosen by stress.",
+  "oracles": "Frozen current39h H8 full72development cases:learned,u,z,both,state-reset inFP32/FP64 with unchangedfloor;phase diagnostics retained. All oracle interventions are nonselectable. Compare original39gA0/A6 andH8 frozen references in every final and fixed-budget evaluation. Coefficient diagnostic histories never enter candidate inputs.",
+  "preflights": "All scientific inputs/freeze/quality hashes;zero-init adapter equivalence;positive monotone finite bounded outputs;FIT-only function-transfer tolerance with untouched z;finite zero/one u andfast/slow z toy gradients;offline decay label audit;isolated/vectorized Adam for all36members <=1e-5;frozen slices exact;FP64training/FP32deployment <=1e-5;CUDA graph two-step parity andreset,optimizer lifetime retention;4htraining projection. Worker writes failure receipt distinctly from scientific NO-GO. Save weight/Adam/RNG checkpoint before selection;external PC supervisor SHA/CRC verifies immutable backups.",
+  "cost": "After primaryfreeze,matched resident FP32ionic-core batch642x80ticks,30paired repetitions vscanonical formulas for everyarm/seed. Active parameter counts and shape mismatch retained. No quality-qualified/end-to-end acceleration claim unless quality and appropriate later audit pass.",
+  "limits": "Subtask39i oforiginalroadmap,Task40 remains blocked untilfull72/72 plusaudit. Development-informed hypothesis testing,not independent confirmation. All thresholds/primaryselection/inputs/abstraction preserved. Monotonicity is learned architectural bias,not canonicalHillkinetics. Remaining function-transfer mismatch and shared comparator dependence limit attribution. No autonomous membrane/Ca ormulticompartment claim.",
+  "short_ticks": 64,
+  "max_projected_training_seconds": 14400,
+  "oracle_single_gates": false,
+  "oracle_state_reset": true,
+  "quality_config_sha256": "0d63cc7131008417cc3bcebadac2bd83762b3f44c02d3e0703c2a83c51a192b2",
+  "expanded_seeds": {
+    "fit": 140701,
+    "fit_extra": 140801
+  },
+  "numerical_amendment": "Retain established39g numerics for all arms:FP64 affine training accumulation,FP32 parameters/states/losses/Adam;FP32 deployment and selection. No new numerical treatment or tolerance change.",
+  "expanded_support": "Retain exact39h constant-recovery FIT seeds140701/140801. Add independent variable-history FIT seeds150701/150801,36histories/role,20000ticks. IndependentV[-100,60],logCa[-7,-2],random six boundaries,held or ramp histories,balanced calcium bins;random initial18gates,multipliers[.25,4],reversal+/-5. Canonical recurrent labels offline only;6144windows/role,256ticks sampled exactly as original q.windows;50%replacement onlyI4. Source hashes,assignments and whole-input signatures verified disjoint from all original roles. No evaluation histories copied.",
+  "update_masks": "z-head-only freezes a,b,sa,sb and u output columns exactly; c[:,:,17:],d[:,17:],sc[:,:,1],sd[:,1] train. Mask BEFORE independent per-member norm1 clipping and Adam. Zero moments for frozen slices; no weight decay. Both weights and u(V,Ca) must remain bitwise unchanged in restricted members. Same total inference parameter count; fewer trainable parameters is the tested intervention, not a capacity-matched architecture claim.",
+  "recovery_ticks": 20000,
+  "recovery_nodes": 2048,
+  "rate_bin_edges": [
+    -6.0,
+    -5.0,
+    -4.0,
+    -3.0,
+    -2.0,
+    -1.0,
+    -0.3
+  ],
+  "rate_bin_temperature": 0.001,
+  "full_trace_checkpoints": [
+    0,
+    1000,
+    3000,
+    30000,
+    120000
+  ],
+  "history_seeds": {
+    "fit": 150701,
+    "fit_extra": 150801
+  },
+  "transfer_steps": 3000,
+  "transfer_atol": 0.001,
+  "adapters": "I5:10voltage-channel groups,4SiLU features/group with packed34u/zoutputs;40input weights+40bias+136output weights+34bias=250parameters. I6:6globalSiLUfeatures,6+6+204+34=250. Output weights/bias zero-initialized;exact H8 function atstep0;all base weights train. SK remains calcium-only. Probe useful adapter gradients,full metric regressions and inference cost.",
+  "sk_transfer": "I8/I9 monotone logit calcium curve:16positive learned slopes on17fixed log-calcium knots[-7,-2],learned intercept;17active parameters replace original16output weights+1bias. Positive slopes continue outside domain;sigmoid bounds u;z unchanged. FIT-only3000Adam steps LR.001 match frozen H8 SK-u function,all other weights frozen. ThenI10/I11 original17parameter output head gets same3000step budget matching transferred monotone function,other weights frozen. On4097FIT-domain grid require original-head vsmonotone maxu discrepancy<=.001 or stop technically. Record perseed original-to-transfer discrepancy and full-trace step0 changes. I3/I10 andI7/I11 quantify transfer alone;I10/I8 andI11/I9 isolate shape with residual mismatch limitation. No development-driven transfer adjustment.",
+  "diagnostics": "Atfixed checkpoints0/1000/3000/30000/120000 evaluate all candidate development/stress fulltraces retrospectively,NONSELECTABLE. Same primary checkpoint ranking as39h. Keep signed u/log_z bias,term gradient norms/cosines,old/new data exposure,gained/lost cases,perchannel current/timing/charge and parameters/Adam finite checks. Error-budget identity e_next=(1-z_hat)e+z_hat*delta_u+delta_z*(u_teacher-x_teacher) motivates probes;no reset in candidate rollout."
+}

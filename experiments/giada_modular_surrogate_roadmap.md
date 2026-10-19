@@ -1615,7 +1615,23 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Stato corrente — Task39g conclusa; Task39h autorizzata
+# 🥇 Stato corrente — Task39h conclusa; Task39i autorizzata
+
+**Task39h:** H8 supera65/72development contro61/72del riferimento39g,
+con4casi recuperati e0persi;stress61/72contro62/72. Restano6errori di timing
+nel rilassamento lento(K_Pst eNap_Et2) e1errore relativo di correnteSK_E2.
+I probe congelati suH8 correggono2/7con il solo equilibrio,2/7con la sola
+velocita,7/7con entrambi. EsitoNO_GO_TASK40_BLOCKED;nessuna soglia modificata.
+
+**Task39i autorizzata:** [protocollo](task39i_preregistration_v1.json),
+[notebook unico](../notebooks/giada_task39i_coupled_relaxation.ipynb).
+12bracci x3seed: loss equilibrio/rilassamento2x2,dati indipendenti,
+adattatori percanale controcapacita generica appaiata,precisioneSKcontro
+testa monotona appresa e relativi controlli di trasferimento. SoglieTask37,
+selezione primaria e livello di astrazione conservati. Diagnostica delle
+tracce complete a budget fissi nonselezionabile. Task40 resta subordinata
+al superamento completo e all'audit previsto. Le sezioni seguenti39g/39h
+restano il percorso storico,non nuovi passaggi da ripetere.
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
 > i valutatori isolati. Task38 ha completato il tentativo congiunto senza
