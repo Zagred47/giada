@@ -1615,7 +1615,7 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Stato corrente — Task39g conclusa; proposta Task39h
+# 🥇 Stato corrente — Task39g conclusa; Task39h autorizzata
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
 > i valutatori isolati. Task38 ha completato il tentativo congiunto senza
@@ -1705,6 +1705,17 @@ LR conservativo, aggiornamento delle sole teste z, obiettivo sui bin FIT di
 rilassamento difficili e supporto indipendente mirato. Otto bracci fattoriali
 più due controlli di supporto, da preregistrare; nessun lancio autorizzato qui.
 L'architettura e il livello di astrazione in inferenza restano invariati.
+
+**Task39h autorizzata19 ottobre2026:** [protocollo](task39h_preregistration_v1.json),
+[notebook unico](../notebooks/giada_task39h_relaxation_identification.ipynb).
+Otto bracci incrociano LR.001/.0001, aggiornamento completo/sole teste z,
+loss originale/con ausiliario sui bin di rilassamento FIT. Due bracci aggiungono
+supporto FIT di recupero indipendente con controlli appaiati:30modelli,14contrasti.
+Stesso A0 congelato per seed, A6 come confronto congelato;120k aggiornamenti,
+checkpoint precoci100/300/1000 e successivi, selezione e soglie invariate.
+Oracoli sui nuoviA0/A6 e attribuzione gate/fase/reset precedono il training.
+Esecuzione console Colab con log/checkpoint esterni verificati SHA256/CRC.
+Il lancio effettivo è attestato separatamente dalle ricevute, non da questo testo.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e

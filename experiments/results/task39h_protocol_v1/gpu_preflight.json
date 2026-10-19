@@ -1,0 +1,40 @@
+{
+  "valid": true,
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "training_updates": 0,
+  "optimizer_updates_rolled_back": true,
+  "parity": [
+    {
+      "valid": true,
+      "members": 12,
+      "max_abs_error": 5.960464477539063e-08,
+      "frozen_parameter_error": 0.0,
+      "frozen_u_output_error": 0.0
+    },
+    {
+      "valid": true,
+      "members": 18,
+      "max_abs_error": 1.4901161193847656e-08,
+      "frozen_parameter_error": 0.0,
+      "frozen_u_output_error": 0.0
+    }
+  ],
+  "capture": {
+    "valid": true,
+    "two_update_max_error": 0.0,
+    "seconds_per_update": 0.019663836550000723,
+    "projected_training_seconds": 2359.660386000087,
+    "optimizer_reset": true,
+    "optimizer_state_lifetime_retained": true,
+    "backend": "two member-vectorized cohorts in one CUDA Graph"
+  },
+  "auxiliary_weights": [
+    628.8351516781631,
+    5893.905199514815,
+    686.0028128372021
+  ],
+  "parent_revision": "f22ae19da0ed238ce977df975b8957f28506c295",
+  "source_sha256": "6ff59a3f2d6255b61cc1caa0b57b5a49ff0bae92f3339996a243d8971967a2ac",
+  "config_sha256": "283b17e7706284645cfeaaa24fe0c7d688dfb41efe8501cc7a645e2b6d2717a4"
+}

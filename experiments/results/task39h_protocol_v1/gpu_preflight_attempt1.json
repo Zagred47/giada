@@ -1,0 +1,14 @@
+{
+  "valid": false,
+  "technical_failure": true,
+  "scientific_no_go": false,
+  "training_updates": 0,
+  "source_sha256": "f65ba7aac4a0387bb0768c124ebdc0ac5edb410fec83c13bf3b0dca866619b3d",
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "isolated_vectorized_update_max_error": [5.960464477539063e-8,1.4901161193847656e-8],
+  "frozen_parameter_and_u_error": 0.0,
+  "error": "Cannot copy between CPU and CUDA tensors during CUDA graph capture unless the CPU tensor is pinned",
+  "cause": "torch.tensor(RATE_EDGES,device=cuda) inside bin_loss creates a CPU-to-device constant copy during capture",
+  "correction": "Cache the immutable per-device rate edges during eager warmup and retain their lifetime for graph replay; scientific bin loss unchanged. Repeat all GPU preflights in an isolated subprocess."
+}
