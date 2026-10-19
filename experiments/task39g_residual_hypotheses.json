@@ -1,0 +1,65 @@
+{
+  "status": "Post-hoc analysis and Task39h proposal only; not preregistered or launched",
+  "outcome": "Task39g technically valid at120000 updates; all15 saved parameter/Adam/frozen files finite. NO_GO_TASK40_BLOCKED with unchanged thresholds. A0 andA6 pass61/72 vs frozen39f60/72. A0 gains3 and loses2; A6 gains1 and loses0. A0 residual11=9 timing and2 current-RMSE. Zero of11 registered contrasts supported in full.",
+  "findings": [
+    "All original frozen39f base/wide metrics exactly reproduced on development and stress. A0 stress62/72; A6 stress61/72; parent59/72. These are descriptive development/stress results, not independent confirmation.",
+    "A0 residual timing: Im same_v_history case1 seed43 onset0.4ms; K_Pst slow_recovery case0 seeds17/29/43 offsets1.8/2.7/1.9ms; Nap_Et2 slow_recovery case1 offsets3.0/1.2/5.6ms; Nap_Et2 calcium_switch case0 seeds29/43 peaks1.2ms. Current failures: SK_E2 reversal case0 seed17 NRMSE0.0118254; NaTs2_t activation_boundary case0 seed17 NRMSE0.0181145 (limit0.01).",
+    "All72 A0 gate checks pass. Slow-recovery current NRMSE is only0.0000815-0.0006428, yet offsets fail. Low waveform error is not sufficient for accurate dynamical timing.",
+    "Frozen39f wide oracle60 learned ->61 teacher_u ->67 teacher_z ->72 both ->72 state_reset; FP64 inference alone stays60. These interventions concern the parent, not newA0/A6. Repeating them on current candidates is mandatory before attributing the11 residuals to z.",
+    "Weighted auxiliary/main gradient median is7.23 for old full weight,0.276 at0.01weight,0.029 for aligned low-weight64tick loss. Lower dominance is measured but did not yield selected gains. A1-A4,A7,A9 retain step0 for every seed;23/30 members retain step0 overall. This suggests unsuccessful fine-tuning, not nonfinite divergence.",
+    "Longer256tick recurrence and independent FIT expansion did not satisfy preregistered superiority contrasts. They do not establish that data or budget can never help. A8 stress62 is nonselectable and cannot justify switching models.",
+    "Common alternative selection gives A0 62/72 but is explicitly diagnostic/nonselectable. Primary remains61. On frozen39f wide,6/10 failed channel events change pass under grid-phase probes,0/10 under tiny perturbations; precision alone no benefit. Sensitivity does not authorize changing the timing thresholds.",
+    "The code already supervises u and normalized log_z across all18 gates, has stratified V/logCa anchors and long held-input compositions. Next work must test tail/distribution of this existing objective, not claim rate supervision or long anchors are new.",
+    "Candidate deployment architecture unchanged at2404 parameters,18 bounded states,learned u/z; FP64 affine training common to all arms, FP32 inference. Resident benchmark is not an end-to-end quality-qualified speedup."
+  ],
+  "hypotheses": [
+    {
+      "id": "relaxation_bias_accumulation",
+      "priority": "high; directly supported only on39f parent",
+      "statement": "Small systematic errors in learned relaxation z accumulate over shallow recovery tails; equilibrium u error contributes separately.",
+      "test": "FrozenA0 andA6 per-gate/per-channel u-only,z-only,both and teacher-state-reset oracles; repeat with corrections restricted to rise, plateau or recovery and reset intervals1/8/64 ticks. Record signed crossing shifts, log_z bias and state error growth. Oracles diagnostic only.",
+      "falsifier": "Current-candidate z correction does not preferentially recover timing or both/reset fail the reference floor; then z accumulation is insufficient or the contract needs investigation."
+    },
+    {
+      "id": "warm_finetuning_step_interference",
+      "priority": "high",
+      "statement": "LR0.001 and joint shared-feature updates damage already-good coefficients faster than they refine residual slow dynamics, causing step0 selection.",
+      "test": "Factorial LR0.001 versus0.0001 and all-parameter versus z-output-head-only updates from identical A0 weights with reset Adam; record coefficient drift, clipping and per-term gradient cosines. Check early steps100/300/1000 in addition to normal checkpoints.",
+      "falsifier": "LowerLR and z-only updates do not improve optimization/passing cases or preservation despite measured smaller coefficient drift; this mechanism is not sufficient. z-only failure is conditional on the frozen feature basis."
+    },
+    {
+      "id": "mean_loss_hides_rare_rate_error",
+      "priority": "medium-high",
+      "statement": "Mean normalized log_z loss can hide localized signed errors in slow, current-sensitive regimes even though every gate is supervised.",
+      "test": "Keep original mean loss and add a fixed FIT-only worst-bin relaxation auxiliary: partition by gate and preregistered log_z bins, aggregate squared normalized rate errors within bins, use smooth maximum with fixed temperature. Compare auxiliary off/on with matched batches; equal total initial main/aux gradient calibration. Inspect all gates, not only failing development channels.",
+      "falsifier": "Worst-bin FIT/independent rate-grid error decreases but current timing does not, or no improvement at matched optimization budget. In the former case rate approximation quality is not the sole bottleneck."
+    },
+    {
+      "id": "rare_recovery_support",
+      "priority": "medium",
+      "statement": "Previous independent support expansion may not specifically cover the small-z, long-relaxation regimes that determine offsets.",
+      "test": "Two paired sidecars replace a fixed fraction of training anchors/windows by independent FIT recovery-grid samples spanning all gates, log-spaced durations and initial displacement; compare to identical low-LR all-parameter arms with/without worst-bin objective. Same counts,updates and no copied development paths.",
+      "falsifier": "Coverage audit confirms more occupied slow-regime bins and fitting improves, but held-out timing remains unchanged; missing support in those bins is insufficient. New cases remain training data, not independent confirmation."
+    },
+    {
+      "id": "event_conditioning_and_other_currents",
+      "priority": "medium for conditioning; low for pureprecision",
+      "statement": "Shallow crossings or near-degenerate peaks amplify tiny shape errors, while SK/NaTs current errors may have different causes from recovery.",
+      "test": "OnA0/A6 retain exact primary event rules and add signed onset/offset, slope, excursion identities, peak runner-up gaps, perturbation/phase probes and current/gate sensitivity. Route teacher coefficient probes separately for SK andNaTs; no rounding or relaxed eligibility.",
+      "falsifier": "Timing events are well conditioned and per-gate corrections remove failure without ambiguity, or current errors follow a different identified source. Diagnostic phase changes never count as primary passes."
+    }
+  ],
+  "proposed_experiment": {
+    "name": "Proposed Task39h: localized relaxation error and conservative fine-tuning",
+    "stage0": "Same notebook: fixed frozen39f,A0,A6 controls; current-candidate oracles and signed relaxation/conditioning diagnostics, computed before or alongside training without changing predeclared arms based on development outcomes.",
+    "arms": [
+      "Eight arms = LR{0.001,0.0001} x update{all parameters,z-output-head only} x rate objective{original mean,original mean plus FIT worst-bin auxiliary}. All useA0 per-seed frozen weights,64ticks,existingFIT,no temporal event loss.",
+      "Two paired support sidecars = lowLR,all-parameter,original/augmented objective with independent recovery-grid FIT replacing a fixed sample fraction. Compare against the two exact corresponding arms in the eight-arm matrix.",
+      "FrozenA6 is a robustness comparator, not a second training search; no choosing the parent or an arm from stress performance."
+    ],
+    "fairness": "A0 is a declared research starting point, not a promoted winner overA6.30 members,3seeds,compatible vectorization,independent Adam/clipping,identical initial weights and streams wherever support matches.512 variable target ticks and64anchors/update;120000 update ceiling with early and30k/60k/120k snapshots. Equal inference architecture and abstraction. z-only freezes trunk,u output and all non-z slices; unit-test u invariance and matched initialization. Auxiliary hyperparameters/bins and newFIT distributions require fixed preregistration and FIT-only calibration before execution.",
+    "contrasts": "Each factorial edge changes one factor; support has two isolated matched contrasts. Report interactions and worst-seed/channel changes, not just total passes. A0continuation with originalLR/all/originalobjective controls extra budget. No posthoc best-of-seed ensembles.",
+    "evaluation": "Task37 primary thresholds and selection unchanged.72development cases,complete stress diagnostic but never selection,all11 channel metrics,gate checks,recurrence and physical constraints. Check technical health and external backups. No Task40 authorization or independent confirmation until full gate.",
+    "status": "Proposal only. User approval and implementation/preregistration required before launch; no run launched by this registration."
+  }
+}

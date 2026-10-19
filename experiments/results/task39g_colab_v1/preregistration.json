@@ -1,0 +1,70 @@
+{
+  "task": "39g",
+  "version": "v1-technical-amendment1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dataset": "experiments/results/task37_playground_v2",
+  "normalizers": "experiments/results/task38_kaggle_v2/fit_normalizers.json",
+  "parent": "experiments/results/task39f_colab_v1",
+  "parent_sha256": "f41bc17da6ed03fca5ec2a65ebd777d2e76e0e8830685c86ec0fb077fd3e160f",
+  "oracle_parent_arms": [
+    "wide_t0_s0",
+    "base_t0_s0"
+  ],
+  "floor_gate_atol": 2e-05,
+  "floor_current_atol": 2e-07,
+  "data_seed": 99591,
+  "windows_per_family": 512,
+  "sequence_length": 64,
+  "batch_sequences": 8,
+  "anchor_batch": 64,
+  "held_ticks": [
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000
+  ],
+  "development_windows_per_family": 2,
+  "development_anchor_nodes": 96,
+  "development_long_ticks": 20000,
+  "checkpoints": [
+    0,
+    3000,
+    10000,
+    30000,
+    60000,
+    90000,
+    120000
+  ],
+  "learning_rate": 0.001,
+  "recurrence_chunk": 32,
+  "numeric_atol": 1e-05,
+  "architecture": "All30members use the frozen39f wide_t0_s0 per-seed weights:2404parameters,18bounded states, learned u/z and unchanged algebraic readout atdt0.1ms. Independent reset Adam for every member. No change of inference abstraction.",
+  "matrix": "10arms x3seeds: A0 none/64;A1 oldfull1/64;A2 oldfull.01/64;A3 oldprecision1/64;A4 oldprecision.01/64;A5 episode-aligned.01/64;A6 none/256;A7 episode-aligned.01/256;A8 none/256/expanded;A9 episode-aligned.01/256/expanded.11prespecified paired contrasts share controls. Two horizon cohorts in one CUDA graph.",
+  "training": "Warm continuation only. Equal512target ticks/update:two256tick source windows reshaped8x64 or2x256. Same initial frozen39f weights per seed across10arms, Adam moments and steps reset tozero. LR.001; fixed120000updates with0/3k/10k/30k/60k/90k/120k checkpoints. Same original512window/family FIT+FIT_EXTRA pools and64common stratified anchors, six unchanged held durations. New run RNG seed data_seed+199; data_seed and development panel unchanged from39f. Shared role50/50, indices/family/RNG where source identical. Expanded arms use50%old/50%new windows; equal target and update budgets, not equal FLOPs or wall time.",
+  "loss": "Same39f tail-aware four main terms and frozen per-seed39f initial FIT weights, copied exactly. Old precision and old.25*derivative split algebraically; A1/2 use both;A3/4 omit derivative. Old auxiliary multiplier remains39f value(~50); low multiplier exactly.01of it, no online reweighting. Aligned loss uses FULL FIT episode baseline B,scale S=max|I|>=1e-7,excursion amplitude A,eligibility identical to Task37 event eligibility, and full-episode |excursion| first-difference slope/S/.1ms. Near crossing weight exp(-((|I-B|/S-.1A/S)/max(.05A/S,.001))^2)*eligible. Residual=(pred-ref)/S; local time error=residual/max(slope,.001)/.3, bounded5*tanh(error/5), squared. Plus.25*peakband*(5*tanh(residual/.05/5))^2, peakband exp(-((|I-B|/S-A/S)/max(.1A/S,.001))^2)*eligible. Mean over fixed label count; no off-event precision term. All55metadata fields are offline loss labels only, never passed to candidate raw/forward. Aligned loss is an alignment/shape package, not exact event timing or a separately isolated pure alignment effect.",
+  "selection": "PRIMARY prospective lexicographic development-panel rank: number of failed case windows, worst threshold-normalized gate/current/charge/event error (missing_event=100 penalty for ranking only), previous common global score as tie breaker. Panel: 2x512 windows per12families plus two2x20k-tail blocks; canonical quality thresholds unchanged, panel not full-trace qualification. Held nodes/durations contribute common tie-breaker. Earliest minimum. Save every checkpoint and old-score-selected steps; after primary freeze independently reconstruct old-selection weights from same checkpoints and evaluate as NONSELECTABLE counterfactual diagnostic. No posthoc switching rule, no stress/fresh selection.",
+  "quality": "All Task37 thresholds, occupancy, per-channel current, blocking, charge and onset/peak/offset/missing-event rules unchanged. Full72/72 development plus audit before Task40; any failure blocks promotion. Independent confirmation unopened.",
+  "contrasts": "11edges in contrast_pairs: A1/A2,A3/A4 weight; A1/A3,A2/A4 derivative; A4/A5 alignment-package; A0/A6,A5/A7 horizon; A6/A8,A7/A9 independent support; A0/A5,A6/A7 aligned auxiliary. Registered severity criteria unchanged:median ratio<=.8,all3ratios<1,worst ratios<=1.05. Severity excludes timing, so report timing failure counts and full event metrics separately; strict quality still includes timing. Report gained/lost cases, per seed/family/channel and budget, no stress-based selection. Warm continuation cannot explain original cold-start phase in isolation.",
+  "oracles": "Before training: frozen39f wide_t0_s0 and base_t0_s0, FP32/64, learned/teacher_u/teacher_z/both/teacher pre-state reset, all12development families and3seeds. Same signed crossing/slope/perturbation/grid phase diagnostics and raw timing failure traces as39f. Teacher-both FP64 must pass unchanged floor. Oracles never selectable.",
+  "preflights": "Parent freeze/weight/config/dataset hashes; identical per-seed initialization; decomposition of old loss and gradients; synthetic known time shifts, attenuation, offsets, flat/reversal/multiple excursions; metadata and same-window parity; expanded role/disjointness checks. Isolated/vectorized independent Adam/clipping on all30members; recurrence and held-composition preflight; CUDA graph two-step parity/reset/finite check with retained optimizer ownership. Fixed4h fit projection cap. A preflight failure is technical, not a scientific NO-GO. Preserve failed artifacts and do not alter thresholds or budget automatically.",
+  "cost": "After freeze measure each arm/seed at batch642,80ticks, same dt/readout/input workload and CUDA graph backend as competitive vectorized canonical formula.30paired repetitions with state reset, individual currents computed every tick. Report operational separately if measured; this notebook benchmarks resident ionic core only. No speed claim from training throughput and no promotion from speed alone.",
+  "limits": "Teacher-forced ionic operator, warm continuation on development-informed research, not independent confirmation. Task39g remains subtask39; Task40 blocked until full72/72 and audit. Same Task37 quality and39e primary selection. Oracles diagnostic-only. Primary frozen comparison with old selection reconstructed from same checkpoints is nonselectable. No autonomous V/Ca, multicompartment or end-to-end speed claim. Expanded raw data regenerable from pinned recipe; logs,checkpoints,optimizer/RNG and metadata externally backed up with SHA/CRC receipts.",
+  "short_ticks": 64,
+  "max_projected_training_seconds": 14400,
+  "oracle_single_gates": false,
+  "oracle_state_reset": true,
+  "quality_config_sha256": "0d63cc7131008417cc3bcebadac2bd83762b3f44c02d3e0703c2a83c51a192b2",
+  "expanded_seeds": {
+    "fit": 139701,
+    "fit_extra": 139801
+  },
+  "expanded_trajectories_per_family": 12,
+  "numerical_amendment": "Attempt1 at8f8fa55 stopped before training: isolated/vectorized Adam update error0.00193721 > unchanged1e-5. T4 paired probe measured FP32 gradient-order sensitivity; FP64 affine accumulation alone reduced first-step error below1.2e-10 across18short-cohort members. Amend ALL arms equally:FP32 parameters,states,losses,Adam remain; only affine forward/backward accumulation usesFP64 in training. No optimizer epsilon/LR change. Primary selection uses copied standard FP32 inference models; full evaluation and cost also FP32. This changes training numerics versus39f, common to all prospective39g contrasts. Repeat all30-member parity and CUDA capture preflights; never relax tolerance. Original attempt/archive retained separately.",
+  "expanded_support": "Teacher make_paths and recurrent_reference with NEW FIT seeds139701/139801,12trajectories/family/role, same prespecified Task37 domains and12families. This exposes all11reversal-channel indices through j%11, alternating equilibrium/off-equilibrium and paired histories; no hand-copied failing development traces. Verify disjoint input signatures versus every original role. Stored float32 targets from float64 teacher. Raw expanded NPZ in separate runtime cache; complete config,input signatures,metadata and file hashes are in external checkpoint bundles for deterministic regeneration. No expansion of development/stress/confirmation."
+}

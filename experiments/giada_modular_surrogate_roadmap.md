@@ -1615,7 +1615,7 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Stato corrente — Task39f conclusa; proposta Task39g
+# 🥇 Stato corrente — Task39g conclusa; proposta Task39h
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
 > i valutatori isolati. Task38 ha completato il tentativo congiunto senza
@@ -1690,6 +1690,21 @@ Oracoli sui riferimenti39f e probe di saturazione/gradienti precedono e accompag
 il fit. La nuova copertura è una generazione FIT, non una nuova conferma.
 Esecuzione console con checkpoint/log esterni e verifica SHA256/CRC; il lancio
 effettivo viene attestato dalle ricevute, non dalla sola presente autorizzazione.
+
+**Task39g conclusa19 ottobre2026:** [audit completo](results/task39g_colab_v1/result_audit.json),
+120k aggiornamenti,15 file di parametri/Adam/freeze verificati finiti, archivio
+finale esterno con SHA256 e CRC verificati. A0 eA6:61/72 development contro60/72
+del39f congelato; A0 recupera3 casi ma ne perde2, A6 ne recupera1 senza perderne.
+Restano11 fallimenti inA0:9 timing (6 nel rilassamento) e2 errore di corrente.
+Nessuno degli11 contrasti supera tutti i criteri preregistrati.23/30 membri
+selezionano step0: non confondere un checkpoint iniziale conservato con un fit
+nuovo riuscito. Soglie e selezione primaria invariate; Task40 bloccata.
+
+[Ipotesi/proposta39h](task39g_residual_hypotheses.json): oracoli sui nuoviA0/A6,
+LR conservativo, aggiornamento delle sole teste z, obiettivo sui bin FIT di
+rilassamento difficili e supporto indipendente mirato. Otto bracci fattoriali
+più due controlli di supporto, da preregistrare; nessun lancio autorizzato qui.
+L'architettura e il livello di astrazione in inferenza restano invariati.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
