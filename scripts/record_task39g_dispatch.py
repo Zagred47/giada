@@ -3,7 +3,7 @@ import hashlib,io,json,os,re,subprocess,zipfile
 from pathlib import Path
 import torch
 ROOT=Path(__file__).resolve().parents[1]
-DEST=ROOT/'artifacts/task39g_reserve_external'
+DEST=ROOT/'artifacts/task39g_reserve_retry2_external'
 OUT=ROOT/'experiments/results/task39g_protocol_v1'
 
 def main():

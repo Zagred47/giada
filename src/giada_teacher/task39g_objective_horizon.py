@@ -9,6 +9,24 @@ from . import task39f_temporal_recovery as f
 e,d,c,b,q,old,p=f.e,f.d,f.c,f.b,f.q,f.old,f.p
 CONFIG='experiments/task39g_preregistration_v1.json'
 
+def model_class(torch):
+    """Same FP32 parameters/map; high-precision affine accumulation in training."""
+    class Training(f.model_class(torch)):
+        def raw(self,v,ca):
+            vv=((v+40)/80).double();cc=((ca.clamp_min(1e-9).log10()+4.5)/2.5).double()
+            raw=torch.bmm(torch.nn.functional.silu(torch.bmm(vv[...,None],self.a.double())+self.b.double()),self.c.double())+self.d.double()[:,None]
+            sk=torch.bmm(torch.nn.functional.silu(torch.bmm(cc[...,None],self.sa.double())+self.sb.double()),self.sc.double())+self.sd.double()[:,None]
+            raw=raw.to(v.dtype);sk=sk.to(v.dtype)
+            return torch.cat((raw[...,:16],sk[...,0:1],raw[...,16:17]),-1),torch.cat((raw[...,17:33],sk[...,1:2],raw[...,33:34]),-1)
+    return Training
+
+def evaluation_groups(torch,cohorts,seeds,device):
+    definitions=[a for group in cohorts for a in group['definitions']]
+    m=f.model_class(torch)('wide',seeds*len(definitions)).to(device)
+    states=[group['model'].state_dict() for group in cohorts]
+    m.load_state_dict({k:states[0][k].clone() if k=='gbar' else torch.cat([s[k] for s in states],0) for k in states[0]})
+    return [dict(key='common_fp32_evaluation',model=m,definitions=definitions,flags=torch.cat([group['flags'] for group in cohorts]))]
+
 def arms():
     return [dict(name=f'A{i}',architecture='wide',horizon=64 if i<6 else 256,
         loss=['none','full','full','precision','precision','aligned','none','aligned','none','aligned'][i],
@@ -39,7 +57,7 @@ def groups(torch,root,spec,device):
     result=[]
     for horizon in (64,256):
         aa=[a for a in arms() if a['horizon']==horizon];n=len(aa)*len(spec['seeds'])
-        model=f.model_class(torch)('wide',spec['seeds']*len(aa)).to(device)
+        model=model_class(torch)('wide',spec['seeds']*len(aa)).to(device)
         model.load_state_dict({k:v.clone() if k=='gbar' else v.repeat(len(aa),*([1]*(v.ndim-1))) for k,v in parent.state_dict().items()})
         result.append(dict(key=f'h{horizon}',model=model,definitions=aa,flags=torch.ones(n,4,device=device)))
     return result
@@ -105,7 +123,7 @@ def optimizer_preflight(torch,g,s,scales,seeds):
     model=g['model'];initial={k:v.detach().clone() for k,v in model.named_parameters()}
     opt=torch.optim.Adam(model.parameters(),lr=.001);objective(torch,g,s,scales).sum().backward();old.clip(torch,model);opt.step();error=0.
     for j in range(model.a.shape[0]):
-        iso=f.model_class(torch)('wide',[seeds[j%len(seeds)]]).to(s['batch'].device)
+        iso=model_class(torch)('wide',[seeds[j%len(seeds)]]).to(s['batch'].device)
         with torch.no_grad():
             for k,v in iso.named_parameters():v.copy_(initial[k][j:j+1])
         gg=dict(g,model=iso,flags=g['flags'][j:j+1]);ss={k:v[j:j+1] for k,v in s.items()}
@@ -217,6 +235,14 @@ def run(root,output,device='cuda'):
     scales=[torch.tensor(v,device=device,dtype=torch.float32) for v in (normal['gate'],normal['current'],us,zs)]
     dev,held=development(root,spec,quality)
     pools=[[torch.tensor(a,device=device) for a in aa] for aa in data];at=torch.tensor(anchors,device=device);cohorts=groups(torch,root,spec,device);defs=[a for g in cohorts for a in g['definitions']];count=30;static=[]
+    map_error=0.
+    with torch.no_grad():
+        deployed=evaluation_groups(torch,cohorts,spec['seeds'],device)[0]['model'];n=count
+        v=torch.linspace(-95,55,7,device=device)[None].expand(n,-1);ca=torch.logspace(-7,-2,7,device=device)[None].expand(n,-1);state=torch.full((n,7,18),.4,device=device)
+        trained=torch.cat([group['model'](v[:group['model'].a.shape[0]],ca[:group['model'].a.shape[0]],state[:group['model'].a.shape[0]]) for group in cohorts])
+        map_error=float((trained-deployed(v,ca,state)).abs().max())
+    assert map_error<=spec['numeric_atol'],map_error
+    p.save_json(output/'training_deployment_preflight.json',dict(valid=True,one_step_max_error=map_error,atol=spec['numeric_atol'],training_affine_accumulation='float64',inference='standard float32;used for selection and full evaluation'))
     for g in cohorts:
         n=g['model'].a.shape[0];h=g['definitions'][0]['horizon'];weights=[]
         for a in g['definitions']:
@@ -229,7 +255,7 @@ def run(root,output,device='cuda'):
     p.save_json(output/'optimizer_preflight.json',[optimizer_preflight(torch,g,s,scales,spec['seeds']) for g,s in zip(cohorts,static)])
     old.recurrence_preflight(output,spec,f.split_models(torch,cohorts,spec['seeds'],device),torch,device)
     graph,clips,execution=d.capture_training(torch,cohorts,static,scales,spec,objective_fn=objective)
-    execution.update(gpu=torch.cuda.get_device_name(),torch=torch.__version__,numpy=np.__version__,members=count,backend='two horizon-vectorized cohorts in one CUDA graph',parameters_per_member=2404,thresholds_changed=False)
+    execution.update(gpu=torch.cuda.get_device_name(),torch=torch.__version__,numpy=np.__version__,members=count,backend='two horizon-vectorized cohorts in one CUDA graph',parameters_per_member=2404,training_affine_accumulation='float64;outputs/parameters/states/Adam float32',evaluation_inference_dtype='float32',thresholds_changed=False)
     p.save_json(output/'execution.json',execution);print(f'[GIADA Task39g] preflights passed; projected fit {execution["projected_training_seconds"]/60:.1f}min',flush=True)
     fixed=[{k:v.clone() for k,v in s.items()} for s in static];fixed_probes=[]
     rng=np.random.default_rng(spec['data_seed']+199);best=[None]*count;saved=[None]*count;chosen=[None]*count;common_best=np.full(count,np.inf);common_chosen=[None]*count;curves=[];probes=[];invalid=set();start=time.perf_counter();exposure=np.zeros((2,len(families),2),dtype=np.int64)
@@ -239,7 +265,7 @@ def run(root,output,device='cuda'):
             tmp=output/f'optimizer_{step}.tmp';torch.save(dict(optimizers=[o.state_dict() for o in graph._giada_optimizers],numpy_rng=rng.bit_generator.state,step=step,clipping_counts=[x.cpu() for x in clips]),tmp);tmp.replace(output/f'optimizer_{step}.pt')
             p.save_json(output/'checkpoint_phase.json',dict(step=step,phase='before_selection',parameters_finite={g['key']:all(bool(torch.isfinite(v).all()) for v in g['model'].parameters()) for g in cohorts}))
             print(f'[GIADA Task39g] checkpoint_saved {step} before_selection',flush=True)
-            common,parts,ranks,panel=e.checkpoint_scores(torch,cohorts,dev,held,normal,spec,device,quality);j=0
+            common,parts,ranks,panel=e.checkpoint_scores(torch,evaluation_groups(torch,cohorts,spec['seeds'],device),dev,held,normal,spec,device,quality);j=0
             for g in cohorts:
                 for k in range(g['model'].a.shape[0]):
                     if ranks[j] is None:invalid.add(j);j+=1;continue

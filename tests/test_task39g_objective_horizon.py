@@ -49,6 +49,11 @@ class Task39gTests(unittest.TestCase):
                 for name,value in cohort['model'].named_parameters():
                     self.assertTrue(torch.equal(value[j],dict(parent.named_parameters())[name][j%3]))
             self.assertEqual(sum(v.numel() for v in cohort['model'].parameters())//cohort['model'].a.shape[0],2404)
+        deployed=g.evaluation_groups(torch,cohorts,spec['seeds'],'cpu')[0];n=30
+        v=torch.linspace(-95,55,7)[None].expand(n,-1);ca=torch.logspace(-7,-2,7)[None].expand(n,-1);x=torch.full((n,7,18),.4)
+        first=torch.cat([group['model'](v[:group['model'].a.shape[0]],ca[:group['model'].a.shape[0]],x[:group['model'].a.shape[0]]) for group in cohorts]);second=deployed['model'](v,ca,x)
+        self.assertEqual(first.dtype,torch.float32);self.assertTrue(all(t.dtype==torch.float32 for group in cohorts for t in group['model'].parameters()))
+        self.assertTrue(torch.allclose(first,second,atol=1e-5,rtol=0))
 
     def test_independent_optimizer_every_loss_and_horizon_cohort(self):
         spec=json.loads((ROOT/g.CONFIG).read_text());cohorts=g.groups(torch,ROOT,spec,'cpu')

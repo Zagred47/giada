@@ -1,6 +1,6 @@
 {
   "task": "39g",
-  "version": "v1",
+  "version": "v1-technical-amendment1",
   "seeds": [
     17,
     29,
@@ -65,5 +65,6 @@
     "fit_extra": 139801
   },
   "expanded_trajectories_per_family": 12,
+  "numerical_amendment": "Attempt1 at8f8fa55 stopped before training: isolated/vectorized Adam update error0.00193721 > unchanged1e-5. T4 paired probe measured FP32 gradient-order sensitivity; FP64 affine accumulation alone reduced first-step error below1.2e-10 across18short-cohort members. Amend ALL arms equally:FP32 parameters,states,losses,Adam remain; only affine forward/backward accumulation usesFP64 in training. No optimizer epsilon/LR change. Primary selection uses copied standard FP32 inference models; full evaluation and cost also FP32. This changes training numerics versus39f, common to all prospective39g contrasts. Repeat all30-member parity and CUDA capture preflights; never relax tolerance. Original attempt/archive retained separately.",
   "expanded_support": "Teacher make_paths and recurrent_reference with NEW FIT seeds139701/139801,12trajectories/family/role, same prespecified Task37 domains and12families. This exposes all11reversal-channel indices through j%11, alternating equilibrium/off-equilibrium and paired histories; no hand-copied failing development traces. Verify disjoint input signatures versus every original role. Stored float32 targets from float64 teacher. Raw expanded NPZ in separate runtime cache; complete config,input signatures,metadata and file hashes are in external checkpoint bundles for deterministic regeneration. No expansion of development/stress/confirmation."
 }

@@ -1,5 +1,5 @@
 # Explicit single dispatch through official Colab CLI; no automatic retry loop.
-param([string]$Session='giada-task39g',[ValidateSet('primary','reserve')][string]$Profile='primary',[string]$ExpectedEmail='')
+param([string]$Session='giada-task39g',[ValidateSet('primary','reserve')][string]$Profile='primary',[string]$ExpectedEmail='',[switch]$ReuseSession,[string]$Destination='')
 $ErrorActionPreference='Stop'
 $repo=Split-Path $PSScriptRoot -Parent
 Set-Location -LiteralPath $repo
@@ -18,9 +18,13 @@ if ((Get-FileHash "$PSScriptRoot/task39e_console_manager.py" -Algorithm SHA256).
 if ($LASTEXITCODE -ne 0) {throw 'Cannot inspect Colab assignments'}
 $existing=& "$PSScriptRoot/colab.ps1" status -s $Session 2>$null
 $missingPattern="Session '"+[regex]::Escape($Session)+"' not found"
-if (($existing -join "`n") -notmatch $missingPattern) {throw 'Named session exists or status is ambiguous; inspect before dispatch'}
-& "$PSScriptRoot/colab.ps1" new -s $Session --gpu T4
-if ($LASTEXITCODE -ne 0) {throw 'Colab T4 allocation failed; no experiment started'}
+if ($ReuseSession) {
+    if (($existing -join "`n") -notmatch 'Status:\s*IDLE') {throw 'Reuse requires a verified IDLE session'}
+} else {
+    if (($existing -join "`n") -notmatch $missingPattern) {throw 'Named session exists or status is ambiguous; inspect before dispatch'}
+    & "$PSScriptRoot/colab.ps1" new -s $Session --gpu T4
+    if ($LASTEXITCODE -ne 0) {throw 'Colab T4 allocation failed; no experiment started'}
+}
 & "$PSScriptRoot/colab.ps1" exec -s $Session -f scripts/colab_smoke_test.py
 if ($LASTEXITCODE -ne 0) {throw 'GPU console smoke failed'}
 $transfers=@(
@@ -33,5 +37,6 @@ foreach ($pair in $transfers) {
     if ($LASTEXITCODE -ne 0) {throw "Upload failed: $($pair[0])"}
 }
 $python='C:/Users/belli/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'
-& $python scripts/task39e_local_supervisor.py --task 39g --session $Session --revision $request.revision --destination "artifacts/task39g_${Profile}_external"
+if (-not $Destination) {$Destination="artifacts/task39g_${Profile}_external"}
+& $python scripts/task39e_local_supervisor.py --task 39g --session $Session --revision $request.revision --destination $Destination
 exit $LASTEXITCODE
