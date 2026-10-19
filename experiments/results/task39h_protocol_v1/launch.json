@@ -1,0 +1,41 @@
+{
+  "task": "39h",
+  "revision": "0757d428dff7321ad1638f3fa69d656439a3f2ff",
+  "session": "giada-task39h",
+  "backend": "gpu-t4-s-kkb-ass1c2-20ujnh9hcrzic",
+  "account_profile": "primary",
+  "account": "bellialessandro39@gmail.com",
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "job_status": {
+    "task": "39h",
+    "revision": "0757d428dff7321ad1638f3fa69d656439a3f2ff",
+    "started_unix": 1792429051.5458324,
+    "elapsed_seconds": 348.2441279888153,
+    "manager_pid": 2088,
+    "state": "running",
+    "phase": "scientific_worker",
+    "worker_pid": 2249,
+    "last_progress": "[GIADA Task39h] checkpoint_saved 3000 before_selection"
+  },
+  "execution": {
+    "valid": true,
+    "two_update_max_error": 0.0,
+    "seconds_per_update": 0.01933773835000352,
+    "projected_training_seconds": 2320.5286020004223,
+    "optimizer_reset": true,
+    "optimizer_state_lifetime_retained": true,
+    "backend": "two learning-rate cohorts;masked independent Adam in one CUDA graph",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "numpy": "2.1.3",
+    "members": 30,
+    "parameters_per_member": 2404,
+    "training_affine_accumulation": "float64;outputs/parameters/states/Adam float32",
+    "evaluation_inference_dtype": "float32",
+    "thresholds_changed": false
+  },
+  "external_destination": "artifacts/task39h_primary_external",
+  "thresholds_changed": false,
+  "scientific_result_claimed": false
+}

@@ -17,10 +17,12 @@ def main():
     if args.launch:
         launch=json.loads((folder/'launch.json').read_text());backup=json.loads((folder/'external_recovery_verified.json').read_text());assert backup['valid']
         paths=[folder/n for n in ('launch.json','external_recovery_verified.json','dispatch_request.json')]
+        paths += [folder/n for n in ('gpu_preflight.json','gpu_preflight_attempt1.json','residual_preflight.json')]
+        paths += [repo/'research_memory/register_task39h.py']
         arts=[]
         for path in paths:
             rel=path.relative_to(repo).as_posix()
-            arts.append(put('artifacts','dispatch-'+rel,Nome='Task39h dispatch '+path.name,Tipo='Report',Versione='v1',Percorso=rel,**{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size}))
+            arts.append(put('artifacts','dispatch-'+rel,Nome='Task39h dispatch '+path.name,Tipo='Codice' if path.suffix=='.py' else 'Report',Versione='v1',Percorso=rel,**{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size}))
         for a in arms():
             for seed in spec['seeds']:
                 put('runs',f'{a["name"]}-{seed}',Nome=f'Task39h {a["name"]} seed{seed}',Stato='In corso',Seed=str(seed),
@@ -30,6 +32,16 @@ def main():
         put('experiments','suite',Nome='Task39h relaxation and conservative optimization',Stato='In corso')
         put('actions','execute',Nome='Execute Task39h on Colab console',Stato='In corso',Descrizione=json.dumps(launch))
         put('implementations','worker',Nome='Task39h CUDA console worker',Commit=launch['revision'],**{'Ambiente':json.dumps(launch)})
+        diagnostic={n:json.loads((folder/n).read_text()) for n in ('gpu_preflight.json','gpu_preflight_attempt1.json','residual_preflight.json')}
+        observation=put('observations','gpu-preflight',Nome='Task39h all30 masked Adam and CUDA graph checks',Numerosità=30,
+            Descrizione=json.dumps(dict(**diagnostic,scientific_training_updates=0,note='30members are numerical parity probes,not independent scientific repetitions.')),
+            **{'Artefatti dettagliati':arts})
+        finding=put('findings','gpu-preflight',Nome='Task39h immutable CUDA constants must outlive capture',Esito='Misto',
+            Esperimenti=[ref('experiments-giada-task39h-temporal-suite-v1')],Osservazioni=[observation],
+            **{'Risultato':'Initial GPU update parity passed; capture rejected a CPU-to-CUDA constant copy. Per-device immutable edge caching passed the repeated isolated GPU test with exact two-step replay and zero frozen-u drift. No threshold/objective/architecture change.',
+            'Limitazioni':'Technical preflight,zero scientific training updates. Actual run quality pending.'})
+        put('lessons','gpu-capture',Nome='Allocate immutable loss constants before CUDA graph capture',Lezione=diagnostic['gpu_preflight_attempt1.json']['correction'],Risultati=[finding],
+            Limiti='Validated on30members,TeslaT4,PyTorch2.11.0+cu130; repeat parity on a changed backend.')
     if not args.launch:
         assert json.loads((folder/'local_validation.json').read_text())['valid']
         paths=[CONFIG,'src/giada_teacher/task39g_objective_horizon.py','src/giada_teacher/task39f_temporal_recovery.py','src/giada_teacher/task37_ionic_playground.py','scripts/launch_task39h_console.ps1','scripts/record_task39h_dispatch.py','scripts/probe_task39h_gpu.py','src/giada_teacher/task39h_relaxation_identification.py','src/giada_teacher/task39e_tail_support_heads.py','src/giada_teacher/task39d_current_timing.py','scripts/run_task39h_relaxation_identification.py','scripts/build_task39h_protocol.py','scripts/validate_task39h.py','tests/test_task39h_relaxation_identification.py','notebooks/giada_task39h_relaxation_identification.ipynb','scripts/colab_task39h_driver.py','scripts/colab_task39e_driver.py','scripts/task39e_console_manager.py','scripts/task39e_local_supervisor.py','experiments/giada_modular_surrogate_roadmap.md','experiments/results/task39h_protocol_v1/local_validation.json','research_memory/register_task39h.py']
