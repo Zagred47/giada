@@ -57,6 +57,21 @@ class Task39iTests(unittest.TestCase):
         self.assertEqual(len(i.arms()),12);self.assertEqual(len(i.contrast_pairs()),14)
         self.assertIn(('channel_bias_matched_capacity','I6','I5'),i.contrast_pairs())
         self.assertIn(('sk_shape_matched_transfer','I10','I8'),i.contrast_pairs())
+    def test_actual_parent_weight_recipe_and_sampler(self):
+        cal=np.asarray(json.loads((ROOT/self.spec['parent']/'fit_loss_calibration.json').read_text())['parent_weights'])
+        self.assertEqual(cal.shape,(3,3))
+        weights=i.initial_weights(torch,i.arms(),cal,'cpu');self.assertEqual(weights.shape,(36,7))
+        np.testing.assert_array_equal(weights[:3,2:4].numpy(),cal[:,:2].astype('float32'))
+        self.assertTrue((weights[:,4:]==0).all())
+        x,_=i.q.windows(ROOT/self.spec['dataset'],'fit',['steps'],4,256,17);data=torch.tensor(i.labelled(x))
+        pools=[[data,data.clone()] for _ in range(3)];anchors=[torch.tensor(i.c.anchor_pool(x,17,True)) for _ in range(3)]
+        cohorts=i.groups(torch,ROOT,self.spec,'cpu');static=[]
+        for group in cohorts:
+            n=group['model'].a.shape[0];static.append(dict(batch=torch.zeros(n,8,64,89),anchor=torch.zeros(n,64,107),ticks=torch.zeros(n,64,1)))
+        i.sample_static(torch,cohorts,static,pools,anchors,self.spec,np.random.default_rng(17),'cpu')
+        self.assertTrue(all(torch.isfinite(s['batch']).all() for s in static))
+        reference=static[0]['batch'][0]
+        self.assertTrue(all(torch.equal(s['batch'][0],reference) for s in static))
     def test_oracle_supports_one_and_two_parents(self):
         quality=json.loads((ROOT/i.p.CONFIG).read_text());quality['families']={'toy':{}}
         with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as t:

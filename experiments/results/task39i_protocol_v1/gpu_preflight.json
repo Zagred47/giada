@@ -1,9 +1,52 @@
 {
   "valid": true,
+  "training_updates": 0,
+  "numerical_updates_rolled_back": 2,
+  "finite": true,
   "gpu": "Tesla T4",
   "torch": "2.11.0+cu130",
-  "training_updates": 0,
-  "optimizer_updates_rolled_back": true,
+  "capture": {
+    "valid": true,
+    "two_update_max_error": 0.0,
+    "seconds_per_update": 0.05826376605000405,
+    "projected_training_seconds": 6991.651926000486,
+    "optimizer_state_lifetime_retained": true,
+    "optimizer_reset": true,
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "members": 36,
+    "backend": "five vectorized cohorts in one CUDA Graph",
+    "parameters": {
+      "plain": {
+        "stored": 2404,
+        "active": 2404
+      },
+      "channel": {
+        "stored": 2654,
+        "active": 2654
+      },
+      "generic": {
+        "stored": 2654,
+        "active": 2654
+      },
+      "monotone": {
+        "stored": 2421,
+        "active": 2404
+      },
+      "transfer": {
+        "stored": 2404,
+        "active": 2404
+      }
+    },
+    "training_affine_accumulation": "float64;FP32parameters/states/Adam",
+    "evaluation_inference_dtype": "float32",
+    "thresholds_changed": false
+  },
+  "full_data_path": true,
+  "selection_members": 36,
+  "source_sha256": "030ffd3e9b6f8442698dc458c7022e71993d04943957340f0adf1ace5c2f32a2",
+  "oracle_source_sha256": "1c91595c6d3f66e37528652554350cb93c3c058483e6a23b61898f3fd7f510b6",
+  "config_sha256": "5694e26216b24ef14ac7c6d9a1d7fb4939801b828813f7e62e57b4b3e5e39509",
   "parity": [
     {
       "valid": true,
@@ -15,7 +58,7 @@
     {
       "valid": true,
       "members": 3,
-      "max_abs_error": 3.725290298461914e-09,
+      "max_abs_error": 1.1641532182693481e-10,
       "frozen_parameter_error": 0.0,
       "independent_moments_and_clipping": true
     },
@@ -29,7 +72,7 @@
     {
       "valid": true,
       "members": 6,
-      "max_abs_error": 4.656612873077393e-10,
+      "max_abs_error": 3.725290298461914e-09,
       "frozen_parameter_error": 0.0,
       "independent_moments_and_clipping": true
     },
@@ -41,14 +84,6 @@
       "independent_moments_and_clipping": true
     }
   ],
-  "capture": {
-    "valid": true,
-    "two_update_max_error": 0.0,
-    "seconds_per_update": 0.05728782189999606,
-    "projected_training_seconds": 6874.538627999527,
-    "optimizer_state_lifetime_retained": true,
-    "optimizer_reset": true
-  },
   "sk_transfer": {
     "valid": true,
     "FIT_only": true,
@@ -101,13 +136,5 @@
       }
     ],
     "limits": "Residual transfer mismatch retained explicitly. I3/I10 andI7/I11 quantify transfer effect; I10/I8 andI11/I9 compare learned shapes."
-  },
-  "synthetic": {
-    "valid": true,
-    "saturated_u_loss_finite": true,
-    "exact_composition_loss": 0.0,
-    "perturbed_composition_loss": 0.0007585202110931277
-  },
-  "source_sha256": "557b5bf2ca07ccce824b0e69e2046f22b941a96c0cc6dbcd25f6446808fa32da",
-  "config_sha256": "5694e26216b24ef14ac7c6d9a1d7fb4939801b828813f7e62e57b4b3e5e39509"
+  }
 }

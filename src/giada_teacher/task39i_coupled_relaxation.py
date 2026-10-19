@@ -192,6 +192,32 @@ def terms(torch,group,s,scales):
 def objective(torch,group,s,scales):return (terms(torch,group,s,scales)*s['weights']).sum(-1)
 
 
+def initial_weights(torch,definitions,calib,device):
+    # Historical parent_weights has a third,obsolete temporal coefficient.
+    # H8 uses only its first two entries for u and log_z.
+    values=[[.5,.5,float(calib[j,0]),float(calib[j,1]),0.,0.,0.]
+            for a in definitions for j in range(3)]
+    result=torch.tensor(values,device=device,dtype=torch.float32)
+    assert result.shape==(len(definitions)*3,len(TERMS))
+    return result
+
+
+def sample_static(torch,cohorts,static,pools,anchors,spec,rng,device):
+    ix=rng.integers(pools[0][0].shape[0],size=2);role=rng.random(2)<.5;replacement=rng.random(2)<.5
+    ti=torch.tensor(ix,device=device);role_t=torch.tensor(role,device=device)[:,None,None];replace_t=torch.tensor(replacement,device=device)[:,None,None]
+    batches=[torch.where(role_t,pool[1][ti],pool[0][ti]) for pool in pools]
+    ai=rng.integers(len(anchors[0]),size=64);which=rng.random(64)<.5;di=rng.integers(len(spec['held_ticks']),size=64)
+    tt=torch.tensor(np.asarray(spec['held_ticks'])[di],device=device,dtype=torch.float32)[None,:,None]
+    for group,s in zip(cohorts,static):
+        hist=torch.tensor([a['history'] for a in group['definitions'] for _ in spec['seeds']],device=device).bool()
+        recovery=torch.where(hist[:,None,None,None],batches[2][None],batches[1][None])
+        s['batch'].copy_(torch.where(replace_t[None],recovery,batches[0][None]).reshape(s['batch'].shape))
+        old_a=anchors[0][ai];const_a=anchors[1][ai % len(anchors[1])];hist_a=anchors[2][ai % len(anchors[2])]
+        extra_a=torch.where(hist[:,None,None],hist_a[None],const_a[None])
+        s['anchor'].copy_(torch.where(torch.tensor(which,device=device)[None,:,None],extra_a,old_a[None]));s['ticks'].copy_(tt)
+    return role,replacement
+
+
 def gradient_probe(torch,group,s,scales,step):
     values=terms(torch,group,s,scales);grads=[]
     for j in range(len(TERMS)):
@@ -333,7 +359,7 @@ def synthetic_preflight(torch,device):
     return dict(valid=True,saturated_u_loss_finite=True,exact_composition_loss=float(exact),perturbed_composition_loss=float(harmed))
 
 
-def run(root,output,device='cuda'):
+def run(root,output,device='cuda',preflight_only=False):
     import torch
     assert device=='cuda' and torch.cuda.is_available()
     torch.set_num_threads(1);torch.use_deterministic_algorithms(True);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
@@ -362,9 +388,8 @@ def run(root,output,device='cuda'):
         with torch.no_grad():
             v=torch.linspace(-95,55,7,device=device)[None].expand(n,-1);ca=torch.logspace(-7,-2,7,device=device)[None].expand(n,-1);state=torch.full((n,7,18),.4,device=device)
             map_error=max(map_error,float((group['model'](v,ca,state)-deployed['model'](v,ca,state)).abs().max()))
-        weights=[[.5,.5,*calib[j],0.,0.,0.] for a in group['definitions'] for j in range(3)]
         static.append(dict(batch=pools[0][0][:2].reshape(8,64,89)[None].expand(n,-1,-1,-1).clone(),
-            anchor=anchors[0][:64][None].expand(n,-1,-1).clone(),ticks=torch.full((n,64,1),1000.,device=device),weights=torch.tensor(weights,device=device,dtype=torch.float32)))
+            anchor=anchors[0][:64][None].expand(n,-1,-1).clone(),ticks=torch.full((n,64,1),1000.,device=device),weights=initial_weights(torch,group['definitions'],calib,device)))
     assert map_error<=spec['numeric_atol'];p.save_json(output/'training_deployment_preflight.json',dict(valid=True,one_step_max_error=map_error,atol=spec['numeric_atol']))
     probe=gradient_probe(torch,cohorts[0],static[0],scales,0);norm=np.asarray(probe['term_norms'])[:3];cos=np.asarray(probe['cosines'])[:3]
     main=np.asarray(static[0]['weights'].cpu())[:3,:4]*norm[:,:4]
@@ -387,6 +412,25 @@ def run(root,output,device='cuda'):
         training_affine_accumulation='float64;FP32parameters/states/Adam',evaluation_inference_dtype='float32',thresholds_changed=False)
     p.save_json(output/'execution.json',execution);print(f'[GIADA Task39i] preflights passed;projected fit {execution["projected_training_seconds"]/60:.1f}min',flush=True)
     dev,held=h.development(root,spec,quality);fixed=[{k:v.clone() for k,v in s.items()} for s in static]
+    if preflight_only:
+        initial=[{k:v.detach().clone() for k,v in x['model'].named_parameters()} for x in cohorts]
+        trial=np.random.default_rng(spec['data_seed']+399)
+        for _ in range(2):sample_static(torch,cohorts,static,pools,anchors,spec,trial,device);graph.replay()
+        torch.cuda.synchronize();finite=all(bool(torch.isfinite(v).all()) for x in cohorts for v in x['model'].parameters());assert finite
+        with torch.no_grad():
+            for group,state,opt in zip(cohorts,initial,graph._giada_optimizers):
+                for k,v in group['model'].named_parameters():v.copy_(state[k]);v.grad.zero_()
+                for st in opt.state.values():
+                    for value in st.values():
+                        if torch.is_tensor(value):value.zero_()
+            for clip in clips:clip.zero_()
+        common,parts,ranks,panel=e.checkpoint_scores(torch,evaluation_groups(torch,cohorts,spec['seeds'],device),dev,held,normal,spec,device,quality)
+        assert len(ranks)==36 and all(rank is not None for rank in ranks)
+        report=dict(valid=True,training_updates=0,numerical_updates_rolled_back=2,finite=True,
+            gpu=execution['gpu'],torch=execution['torch'],capture=execution,full_data_path=True,selection_members=len(ranks),
+            source_sha256=p.digest(root/'src/giada_teacher/task39i_coupled_relaxation.py'),
+            oracle_source_sha256=p.digest(root/'src/giada_teacher/task39d_current_timing.py'),config_sha256=p.digest(root/CONFIG))
+        p.save_json(output/'full_preflight_report.json',report);return report
     rng=np.random.default_rng(spec['data_seed']+399);best=[None]*count;saved=[None]*count;chosen=[None]*count;curves=[];probes=[];invalid=set();start=time.perf_counter();exposure=np.zeros((3,2),dtype=np.int64)
     baseline=json.loads((root/old.CONFIG).read_text());compare_spec=json.loads((root/h.CONFIG).read_text())
     def evaluation_spec():
@@ -418,18 +462,7 @@ def run(root,output,device='cuda'):
                 p.save_json(folder/'diagnostic_only.json',dict(step=step,selection_eligible=False,summaries=summary))
             print(f'[GIADA Task39i] checkpoint {step} median_common={np.median(common):.6g} elapsed={(time.perf_counter()-start)/60:.1f}min',flush=True)
         if step==spec['checkpoints'][-1]:break
-        ix=rng.integers(pools[0][0].shape[0],size=2);role=rng.random(2)<.5;replacement=rng.random(2)<.5
-        ti=torch.tensor(ix,device=device);role_t=torch.tensor(role,device=device)[:,None,None];replace_t=torch.tensor(replacement,device=device)[:,None,None]
-        batches=[torch.where(role_t,pool[1][ti],pool[0][ti]) for pool in pools]
-        ai=rng.integers(len(at),size=64);which=rng.random(64)<.5;di=rng.integers(len(spec['held_ticks']),size=64)
-        tt=torch.tensor(np.asarray(spec['held_ticks'])[di],device=device,dtype=torch.float32)[None,:,None]
-        for group,s in zip(cohorts,static):
-            hist=torch.tensor([a['history'] for a in group['definitions'] for _ in spec['seeds']],device=device).bool()
-            recovery=torch.where(hist[:,None,None,None],batches[2][None],batches[1][None])
-            s['batch'].copy_(torch.where(replace_t[None],recovery,batches[0][None]).reshape(s['batch'].shape))
-            old_a=anchors[0][ai];const_a=anchors[1][ai % len(constant_at)];hist_a=anchors[2][ai % len(history_at)]
-            extra_a=torch.where(hist[:,None,None],hist_a[None],const_a[None])
-            s['anchor'].copy_(torch.where(torch.tensor(which,device=device)[None,:,None],extra_a,old_a[None]));s['ticks'].copy_(tt)
+        role,replacement=sample_static(torch,cohorts,static,pools,anchors,spec,rng,device)
         graph.replay();np.add.at(exposure[0],role[~replacement].astype(int),256);np.add.at(exposure[1],role[replacement].astype(int),256);np.add.at(exposure[2],role[replacement].astype(int),256)
         if (step+1)%2000==0:print(f'[GIADA Task39i] update {step+1}/{spec["checkpoints"][-1]} elapsed={(time.perf_counter()-start)/60:.1f}min',flush=True)
     training=time.perf_counter()-start;j=0

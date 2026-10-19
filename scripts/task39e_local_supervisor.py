@@ -23,7 +23,7 @@ def main():
         def download(name,target):
             r=cli(repo,'download','-s',a.session,remote+'/'+name,target,capture_output=True,text=True,encoding='utf-8',errors='replace')
             return r.returncode==0 and target.exists() and 'not found' not in (r.stdout+r.stderr).lower()
-        finished=False
+        finished=False;console_disconnected=False
         while True:
             download('process.log',dest/'process.log')
             got=download('job_status.json',dest/'job_status.json')
@@ -51,7 +51,14 @@ def main():
                         with zipfile.ZipFile(target) as z:assert z.testzip() is None
                     break
             if driver is not None and driver.poll() is not None:
-                if time.time()-started>120:break
+                if got and state.get('state')=='running':
+                    # The CLI can lose its shell reply while the independent
+                    # manager/worker is still running. Keep Contents recovery
+                    # alive; never launch a second scientific worker here.
+                    if not console_disconnected:
+                        print(json.dumps(dict(console_disconnected=True,driver_exit=driver.poll(),continued_external_recovery=True)),flush=True)
+                        console_disconnected=True
+                elif time.time()-started>120:break
             print(json.dumps(dict(recovery_poll=True,bundles=len(seen),state=state.get('phase') if got else 'unavailable')),flush=True)
             time.sleep(30)
         (dest/'supervisor_receipt.json').write_text(json.dumps(dict(finished=finished,driver_exit=driver.poll() if driver else None,external_bundles=len(seen),elapsed_seconds=time.time()-started,session=a.session,revision=a.revision),indent=2))

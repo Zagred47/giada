@@ -67,10 +67,10 @@ def main():
     else:
         launch=json.loads((folder/'launch.json').read_text());backup=json.loads((folder/'external_recovery_verified.json').read_text());assert backup['valid']
         arts=[]
-        for name in ('launch.json','external_recovery_verified.json','dispatch_request.json','gpu_preflight.json','host_launcher_receipt.json','attempt1_failure.json','attempt1_dispatch_request.json','local_validation.json'):
+        for name in ('launch.json','external_recovery_verified.json','dispatch_request.json','gpu_preflight.json','gpu_preflight_initial.json','host_launcher_receipt.json','attempt1_failure.json','attempt2_failure.json','attempt1_dispatch_request.json','attempt2_dispatch_request.json','local_validation.json','runtime_smoke.json'):
             path=folder/name;rel=path.relative_to(repo).as_posix();arts.append(put('artifacts','dispatch-'+name,Nome='Task39i dispatch '+name,Tipo='Report',Versione='v1',Percorso=rel,
                 **{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size}))
-        for rel in ('src/giada_teacher/task39d_current_timing.py','tests/test_task39i_coupled_relaxation.py','scripts/record_task39i_dispatch.py','research_memory/register_task39i.py'):
+        for rel in ('src/giada_teacher/task39d_current_timing.py','src/giada_teacher/task39i_coupled_relaxation.py','tests/test_task39i_coupled_relaxation.py','scripts/probe_task39i_full_driver.py','scripts/probe_task39i_full_gpu.py','scripts/task39e_local_supervisor.py','scripts/record_task39i_dispatch.py','research_memory/register_task39i.py'):
             path=repo/rel;arts.append(put('artifacts','dispatch-'+rel,Nome='Task39i effective '+path.name,Tipo='Codice',Versione='v1-audit-fix',Percorso=rel,
                 **{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size}))
         for a in arms():
@@ -82,7 +82,7 @@ def main():
         put('implementations','worker',Nome='Task39i CUDA console worker',Commit=launch['revision'],**{'Ambiente':json.dumps(launch)})
         put('observations','gpu-preflight',Nome='Task39i isolated optimizer andCUDAgraph parity',Numerosità=36,Descrizione=json.dumps(json.loads((folder/'gpu_preflight.json').read_text())),**{'Artefatti dettagliati':arts})
         put('observations','technical-prelaunch',Nome='Task39i pretraining technical attempts and correction',Numerosità=0,
-            Descrizione=json.dumps(dict(host=json.loads((folder/'host_launcher_receipt.json').read_text()),audit=json.loads((folder/'attempt1_failure.json').read_text()))),
+            Descrizione=json.dumps(dict(host=json.loads((folder/'host_launcher_receipt.json').read_text()),audit=json.loads((folder/'attempt1_failure.json').read_text()),calibration=json.loads((folder/'attempt2_failure.json').read_text()))),
             **{'Artefatti dettagliati':arts})
     print(json.dumps(dict(stage='staged',records=len(ids),launch=args.launch)),flush=True)
     m.commit_batch();write_json(ROOT/'data/airtable_snapshot.json',m.export_snapshot());verification=m.verify();assert verification['valid']
