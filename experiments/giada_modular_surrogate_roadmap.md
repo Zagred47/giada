@@ -1615,7 +1615,7 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Stato corrente — Task39e conclusa; proposta Task39f
+# 🥇 Stato corrente — Task39f conclusa; proposta Task39g
 
 > Task36 ha fissato il contratto; Task37 ha implementato il playground e
 > i valutatori isolati. Task38 ha completato il tentativo congiunto senza
@@ -1648,7 +1648,7 @@ Il confronto storico non isola un intervento: cambiano budget, selezione e
 correzione della proprietà degli stati Adam nel CUDA Graph.
 [Audit completo](results/task39e_colab_v1/result_audit.json) e
 [ipotesi/proposta39f](task39e_residual_hypotheses.json) conservano dettagli e limiti.
-Task40 resta bloccata. Task39f è proposta, non preregistrata né avviata:
+In quel momento Task40 restava bloccata e Task39f era proposta:
 audit congelato u/z e crossing, poi matrice obiettivo temporale×supporto
 transizioni×capacità con soglie invariate e mini scaling laws.
 
@@ -1663,6 +1663,22 @@ u/z/both/reset stato,FP32/64 e diagnostica crossing; non selezionabili.
 La rete larga costa più parametri:valutare qualità e costo residente separatamente.
 Esecuzione e backup esterni sono attestati dalle ricevute console, non dalla
 presente autorizzazione. Airtable resta congelato.
+
+**Task39f conclusa19 ottobre2026:** esecuzione Colab valida,180k aggiornamenti,
+17 file di pesi/stati Adam verificati finiti, archivio finale esterno SHA256/CRC
+verificato. [Audit completo](results/task39f_colab_v1/result_audit.json).
+Il migliore `wide_t0_s0` passa60/72 contro56/72 del riferimento39e riprodotto
+esattamente;9 casi recuperati e5 persi. Restano12 fallimenti:10 solo timing,
+2 RMSE corrente. Tutti72 controlli sui gate passano; slow_recovery resta0/6.
+La loss temporale testata degrada a0–2/72, senza NaN. I probe mostrano forte
+dominanza del gradiente ausiliario dopo la calibrazione iniziale; causa da
+isolare con interventi, non conclusione causale già dimostrata. Nessuno dei12
+contrasti soddisfa tutti i criteri registrati. Task40 resta bloccata.
+[Ipotesi e matrice proposta39g](task39f_residual_hypotheses.json):
+peso/composizione della loss, allineamento all'evento, orizzonte ricorrente e
+nuovo supporto FIT indipendente, più oracoli congelati sul vincitore39f.
+La39g è una proposta, non ancora preregistrata o avviata; soglie37 invariate.
+La velocità7.87–7.89× riguarda soltanto il nucleo residente, non l'intero neurone.
 
 Questo aggiornamento pianifica i sei blocchi; non avvia training o run Kaggle.
 La registrazione dei nuovi protocolli nel mirror SQLite, con numerazione e
