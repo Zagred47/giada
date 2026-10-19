@@ -285,6 +285,9 @@ def oracle_audit(torch,root,output,spec,quality,device,parent_loader=None,timing
     rows=[];floors=[];timings=[]
     for dtype,precision in ((torch.float32,'float32'),(torch.float64,'float64')):
         models=(parent_loader or load_parents)(torch,root,spec,device,dtype)
+        seed_count=len(spec['seeds']);members=len(models)*seed_count
+        assert models and len(models)==len(spec['oracle_parent_arms'])
+        assert all(m.a.shape[0]==seed_count for m in models)
         modes=['learned','teacher_u','teacher_z','teacher_both']+([f'gate_{g}' for g in range(18)] if precision=='float32' and spec.get('oracle_single_gates',True) else [])
         if spec.get('oracle_state_reset',False):modes.append('teacher_state_reset')
         for family in quality['families']:
@@ -294,9 +297,9 @@ def oracle_audit(torch,root,output,spec,quality,device,parent_loader=None,timing
                 for m in models:
                     uu=[];zz=[]
                     for start in range(0,shape[0],2048):
-                        v=torch.as_tensor(a['voltage'][start:start+2048].reshape(-1),device=device,dtype=dtype)[None].expand(3,-1)
-                        ca=torch.as_tensor(a['bridge_ca'][start:start+2048].reshape(-1),device=device,dtype=dtype)[None].expand(3,-1)
-                        u,z,_=m.coefficients(v,ca);uu.append(u.reshape(3,-1,shape[1],18).cpu().numpy());zz.append(z.reshape(3,-1,shape[1],18).cpu().numpy())
+                        v=torch.as_tensor(a['voltage'][start:start+2048].reshape(-1),device=device,dtype=dtype)[None].expand(seed_count,-1)
+                        ca=torch.as_tensor(a['bridge_ca'][start:start+2048].reshape(-1),device=device,dtype=dtype)[None].expand(seed_count,-1)
+                        u,z,_=m.coefficients(v,ca);uu.append(u.reshape(seed_count,-1,shape[1],18).cpu().numpy());zz.append(z.reshape(seed_count,-1,shape[1],18).cpu().numpy())
                     lus.append(np.concatenate(uu,1));lzs.append(np.concatenate(zz,1))
             lu,lz=np.concatenate(lus),np.concatenate(lzs);npdtype=np.float32 if precision=='float32' else np.float64
             eu,ez=p.coefficients(a['voltage'].astype(float),a['bridge_ca'].astype(float),.1);eu=eu.astype(npdtype);ez=ez.astype(npdtype)
@@ -307,16 +310,16 @@ def oracle_audit(torch,root,output,spec,quality,device,parent_loader=None,timing
                 elif mode=='teacher_both':u,z=np.broadcast_to(eu,lu.shape),np.broadcast_to(ez,lz.shape)
                 elif mode.startswith('gate_'):
                     gate=int(mode.split('_')[1]);u,z=lu.copy(),lz.copy();u[...,gate]=eu[...,gate];z[...,gate]=ez[...,gate]
-                state=np.broadcast_to(a['initial_gates'],(6,*a['initial_gates'].shape)).astype(npdtype).copy()
-                pred=np.empty((shape[0],6,shape[1],18),dtype=npdtype)
+                state=np.broadcast_to(a['initial_gates'],(members,*a['initial_gates'].shape)).astype(npdtype).copy()
+                pred=np.empty((shape[0],members,shape[1],18),dtype=npdtype)
                 for tick in range(shape[0]):
                     if mode=='teacher_state_reset' and tick:state=np.broadcast_to(a['gate_targets'][tick-1],state.shape).astype(npdtype).copy()
                     state=state+z[:,tick]*(u[:,tick]-state);pred[tick]=state
-                for j in range(6):
+                for j in range(members):
                     _,cur=p.readout(a['voltage'],pred[:,j],a['multipliers'],a['reversals'])
                     for case in range(shape[1]):
                         metric=p.evaluate_currents(a['current_targets'][:,case],cur[:,case],.1,quality['quality'],a['gate_targets'][:,case],pred[:,j,case],a['multipliers'][case]==0)
-                        row=dict(parent_arm=spec['oracle_parent_arms'][j//3],seed=spec['seeds'][j%3],family=family,case=case,precision=precision,intervention=mode,metrics=metric,selection_eligible=False);rows.append(row)
+                        row=dict(parent_arm=spec['oracle_parent_arms'][j//seed_count],seed=spec['seeds'][j%seed_count],family=family,case=case,precision=precision,intervention=mode,metrics=metric,selection_eligible=False);rows.append(row)
                         if mode=='teacher_both' and precision=='float64':
                             floors.append(dict(passed=metric['passed'],gate_max=float(np.abs(pred[:,j,case]-a['gate_targets'][:,case]).max()),current_max=float(np.abs(cur[:,case]-a['current_targets'][:,case]).max())))
                         if mode=='learned':

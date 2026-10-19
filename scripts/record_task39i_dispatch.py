@@ -1,5 +1,5 @@
 """Verify actual39i console identity and an OFF-VM weight/Adam checkpoint."""
-import hashlib,io,json,os,re,subprocess,zipfile
+import argparse,hashlib,io,json,os,re,subprocess,zipfile
 from pathlib import Path
 import torch
 ROOT=Path(__file__).resolve().parents[1]
@@ -7,6 +7,8 @@ DEST=ROOT/'artifacts/task39i_primary_external'
 OUT=ROOT/'experiments/results/task39i_protocol_v1'
 
 def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--profile',choices=['primary','reserve'],default='primary');parser.add_argument('--session',default='giada-task39i');parser.add_argument('--destination',default='artifacts/task39i_primary_external');args=parser.parse_args()
+    DEST=ROOT/args.destination
     backup=json.loads((DEST/'external_backup_receipt.json').read_text());status=json.loads((DEST/'job_status.json').read_text());request=json.loads((OUT/'dispatch_request.json').read_text())
     assert status['state']=='running' and status['revision']==request['revision']
     archive=Path(backup['local']);assert backup['valid'] and backup['runtime_independent'];sha=hashlib.sha256(archive.read_bytes()).hexdigest();assert sha==backup['remote']['sha256']
@@ -26,13 +28,13 @@ def main():
             walk(obj);finite[name]=dict(tensors=len(tensors),finite=bool(tensors) and all(bool(torch.isfinite(t).all()) for t in tensors));assert finite[name]['finite']
         assert json.loads(z.read('preregistration.json'))==json.loads((ROOT/'experiments/task39i_preregistration_v1.json').read_text())
         assert json.loads(z.read('oracle_preflight.json'))['valid'] and json.loads(z.read('synthetic_loss_preflight.json'))['valid']
-    env=dict(os.environ,GIADA_COLAB_PROFILE='primary');session='giada-task39i'
+    env=dict(os.environ,GIADA_COLAB_PROFILE=args.profile);session=args.session
     def cli(*args):return subprocess.check_output(['powershell.exe','-NoProfile','-File',str(ROOT/'scripts/colab.ps1'),*args],cwd=ROOT,env=env,text=True,encoding='utf-8',errors='replace')
-    identity=cli('whoami');email=re.search(r'Email:\s*(\S+)',identity).group(1);assert email=='bellialessandro39@gmail.com'
+    identity=cli('whoami');email=re.search(r'Email:\s*(\S+)',identity).group(1);assert email=={'primary':'bellialessandro39@gmail.com','reserve':'cinziamrg48@gmail.com'}[args.profile]
     raw=cli('status','-s',session);match=re.search(r'\['+re.escape(session)+r'\]\s+(\S+)',raw);assert match,raw
     def save(name,data):(OUT/name).write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8')
     save('external_recovery_verified.json',dict(valid=True,archive=archive.relative_to(ROOT).as_posix(),sha256=sha,bytes=archive.stat().st_size,runtime_independent=True,zip_crc_valid=True,checkpoint_step=step,numerical_verification=finite,original_receipt=backup))
-    save('launch.json',dict(task='39i',revision=request['revision'],session=session,backend=match.group(1),account_profile='primary',account=email,gpu=execution['gpu'],torch=execution['torch'],job_status=status,execution=execution,external_destination=DEST.relative_to(ROOT).as_posix(),thresholds_changed=False,scientific_result_claimed=False))
+    save('launch.json',dict(task='39i',revision=request['revision'],session=session,backend=match.group(1),account_profile=args.profile,account=email,gpu=execution['gpu'],torch=execution['torch'],job_status=status,execution=execution,external_destination=DEST.relative_to(ROOT).as_posix(),thresholds_changed=False,scientific_result_claimed=False))
     print(json.dumps(dict(valid=True,step=step,gpu=execution['gpu'],finite=finite,projected_training_minutes=execution['projected_training_seconds']/60)),flush=True)
 
 if __name__=='__main__':main()

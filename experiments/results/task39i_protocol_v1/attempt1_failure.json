@@ -1,0 +1,14 @@
+{
+  "technical_failure": true,
+  "scientific_no_go": false,
+  "scientific_training_updates": 0,
+  "revision": "a7f72deacd2655191357c085126b2a61c1c2bd0f",
+  "archive": "artifacts/task39i_reserve_external/giada_task39i_result.zip",
+  "archive_sha256": "ba623bdd5e7c5254a67dbd6edcadc46f29519fa0742c57af0a476ba541f7bd95",
+  "archive_CRC_verified": true,
+  "error": "Initial oracle allocated six members for a single three-seed H8 parent; (3,2,18) and (6,2,18) broadcast mismatch",
+  "correction": "Derive oracle member count from actual parent models and registered seeds; preserve all numerical operations and thresholds",
+  "regression": "Full oracle path tested with both one and two parent groups; eight local tests pass",
+  "quality_thresholds_changed": false,
+  "config_sha256": "5694e26216b24ef14ac7c6d9a1d7fb4939801b828813f7e62e57b4b3e5e39509"
+}

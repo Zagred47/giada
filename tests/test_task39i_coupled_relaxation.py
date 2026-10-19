@@ -57,4 +57,20 @@ class Task39iTests(unittest.TestCase):
         self.assertEqual(len(i.arms()),12);self.assertEqual(len(i.contrast_pairs()),14)
         self.assertIn(('channel_bias_matched_capacity','I6','I5'),i.contrast_pairs())
         self.assertIn(('sk_shape_matched_transfer','I10','I8'),i.contrast_pairs())
+    def test_oracle_supports_one_and_two_parents(self):
+        quality=json.loads((ROOT/i.p.CONFIG).read_text());quality['families']={'toy':{}}
+        with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as t:
+            root=Path(t);dataset=root/'dataset';dataset.mkdir()
+            v=np.full((32,2),-55.);ca=np.full_like(v,1e-4);initial=np.full((2,18),.4)
+            mult=np.ones((2,11));rev=np.broadcast_to(i.p.ionic.REVERSALS,(2,11)).copy()
+            gates,current,source=i.p.recurrent_reference(v,ca,initial,mult,rev,.1)
+            np.savez_compressed(dataset/'development__toy.npz',voltage=v.astype('float32'),bridge_ca=ca.astype('float32'),
+                initial_gates=initial.astype('float32'),multipliers=mult,reversals=rev,gate_targets=gates.astype('float32'),current_targets=current.astype('float32'))
+            for count in (1,2):
+                spec=dict(self.spec,dataset='dataset',oracle_parent_arms=[f'parent{j}' for j in range(count)],oracle_single_gates=False,oracle_state_reset=True)
+                output=root/f'out{count}';output.mkdir()
+                def loader(torch_,root_,spec_,device,dtype):return [i.load_parents(torch_,ROOT,self.spec,device,dtype)[0] for _ in range(count)]
+                i.d.oracle_audit(torch,root,output,spec,quality,'cpu',parent_loader=loader)
+                report=json.loads((output/'oracle_preflight.json').read_text())
+                self.assertTrue(report['valid']);self.assertEqual(report['rows'],count*3*2*5*2)
 if __name__=='__main__':unittest.main()
