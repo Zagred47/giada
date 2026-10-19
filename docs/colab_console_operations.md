@@ -100,3 +100,28 @@ checkpoint_phase identifies whether selection or gradient diagnostics failed.
 No automatic scientific restart, threshold relaxation or inference of GO from
 driver exit is permitted. A retry without full Adam/RNG state restarts from
 the registered initialization rather than pretending to resume the trajectory.
+
+## Explicit reserve account
+
+The user authorized the reserve account `cinziamrg48@gmail.com` on19 October2026.
+`GIADA_COLAB_PROFILE=reserve` selects a separate official-CLI OAuth,session,
+settings and history store under `~/.config/colab-cli-reserve` in WSL.
+The default `primary` profile remains unchanged. No credential contents are
+read/copied by the wrapper or stored in this repository. Google consent is
+completed by the human account owner through the official remote OAuth flow.
+
+Set the profile on every standalone inspection command; the launch script
+passes it to the long-running supervisor and all its console children:
+
+```powershell
+$env:GIADA_COLAB_PROFILE='reserve'
+.\scripts\colab.ps1 whoami
+.\scripts\colab.ps1 status -s giada-task39f-reserve
+.\scripts\launch_task39f_console.ps1 -Profile reserve -ExpectedEmail cinziamrg48@gmail.com -Session giada-task39f-reserve
+```
+
+The launcher refuses an existing named session; inspect/attach instead of
+duplicating a running experiment. Reserve backups use
+`artifacts/task39f_reserve_external`. A0-unit balance alone does not establish
+GPU unavailability:the reserve T4 was actually assigned and passed CUDA smoke.
+Assignment success and verified external copies remain required evidence.

@@ -19,5 +19,8 @@ $forwarded = @($ColabArguments | ForEach-Object {
 })
 if ($forwarded.Count -eq 0) { $forwarded = @('--help') }
 # Explicit OAuth2 avoids silently selecting unrelated ambient GCP credentials.
-& wsl.exe --distribution Ubuntu --cd $linuxCwd --exec $linuxPython $linuxAdapter @forwarded
+$accountProfile=$env:GIADA_COLAB_PROFILE
+if (-not $accountProfile) { $accountProfile='primary' }
+if ($accountProfile -notin @('primary','reserve')) {throw 'Unknown Colab account profile'}
+& wsl.exe --distribution Ubuntu --cd $linuxCwd --exec env "GIADA_COLAB_PROFILE=$accountProfile" $linuxPython $linuxAdapter @forwarded
 exit $LASTEXITCODE

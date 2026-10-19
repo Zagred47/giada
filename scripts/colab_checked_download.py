@@ -9,8 +9,10 @@ from pathlib import Path
 import json
 from colab_cli.common import state
 from colab_cli.contents import ContentsClient
+from colab_profile_cli import configure_profile
 
 def main():
+    configure_profile()
     p=argparse.ArgumentParser();p.add_argument('-s','--session',required=True);p.add_argument('remote');p.add_argument('local',type=Path);a=p.parse_args()
     c=ContentsClient(state.get_session(a.session))
     d=c._request('GET',a.remote,params={'content':'1','format':'base64'})

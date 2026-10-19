@@ -17,13 +17,18 @@ def main():
     if args.launch:
         launch=json.loads((folder/'launch.json').read_text());backup=json.loads((folder/'external_recovery_verified.json').read_text());assert backup['valid']
         art=[]
-        for name in ('launch.json','external_recovery_verified.json'):
-            p=folder/name;art.append(put('artifacts',name,Nome='Task39f '+name,Tipo='Report',Percorso=p.relative_to(repo).as_posix(),Versione='v1',**{'SHA-256':hashlib.sha256(p.read_bytes()).hexdigest(),'Dimensione byte':p.stat().st_size}))
+        paths=[folder/n for n in ('launch.json','external_recovery_verified.json','dispatch_request.json','local_validation.json')]
+        paths += [repo/rel for rel in ('src/giada_teacher/task39f_temporal_recovery.py','scripts/colab_profile_cli.py','scripts/colab.ps1','scripts/colab_checked_exec.py','scripts/colab_checked_download.py','scripts/launch_task39f_console.ps1','scripts/record_task39f_dispatch.py','docs/colab_console_operations.md','research_memory/register_task39f.py')]
+        for path in paths:
+            rel=path.relative_to(repo).as_posix()
+            art.append(put('artifacts','dispatch-'+rel,Nome='Task39f dispatch '+path.name,Tipo='Codice' if path.suffix in ('.py','.ps1') else 'Report',Percorso=rel,Versione='reserve dispatch v1',**{'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size}))
         for a in arms():
             for seed in spec['seeds']:
                 put('runs',f'{a["name"]}-{seed}',Nome=f'Task39f {a["name"]} seed{seed}',Stato='In corso',
                     **{'Configurazione effettiva':json.dumps(dict(arm=a,seed=seed,launch=launch)),'Validità tecnica':'Console launched; externally verified recovery. Scientific result pending.','Artefatti prodotti':art})
         put('actions','execute',Nome='Execute Task39f on Colab console',Stato='In corso',Descrizione=json.dumps(launch))
+        put('experiments','suite',Nome='Task39f temporal recovery/support/capacity',Stato='In corso')
+        put('implementations','worker',Nome='Task39f CUDA console worker',Commit=launch['revision'],**{'Ambiente':json.dumps(dict(profile=launch['account_profile'],account=launch['account'],gpu=launch['gpu'],session=launch['session']))})
     else:
         assert json.loads((folder/'local_validation.json').read_text())['valid']
         paths=[CONFIG,'src/giada_teacher/task39f_temporal_recovery.py','src/giada_teacher/task39e_tail_support_heads.py','src/giada_teacher/task39d_current_timing.py','scripts/run_task39f_temporal_recovery.py','scripts/build_task39f_protocol.py','scripts/validate_task39f.py','tests/test_task39f_temporal_recovery.py','notebooks/giada_task39f_temporal_recovery.ipynb','scripts/colab_task39f_driver.py','scripts/colab_task39e_driver.py','scripts/task39e_console_manager.py','scripts/task39e_local_supervisor.py','experiments/giada_modular_surrogate_roadmap.md','experiments/results/task39f_protocol_v1/local_validation.json','research_memory/register_task39f.py']

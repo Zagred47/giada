@@ -1,0 +1,41 @@
+{
+  "task": "39f",
+  "revision": "431f26cf8c62305f3e043694079cbfb2068d5000",
+  "session": "giada-task39f-reserve",
+  "backend": "gpu-t4-s-kkb-usw4a1-bk1b6qc2quya",
+  "account_profile": "reserve",
+  "account": "cinziamrg48@gmail.com",
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "job_status": {
+    "task": "39f",
+    "revision": "431f26cf8c62305f3e043694079cbfb2068d5000",
+    "started_unix": 1792408034.962732,
+    "elapsed_seconds": 192.27423977851868,
+    "manager_pid": 1069,
+    "state": "running",
+    "phase": "scientific_worker",
+    "worker_pid": 1230,
+    "last_progress": "[GIADA Task39f] update 4000/180000 elapsed=1.2min"
+  },
+  "execution": {
+    "valid": true,
+    "two_update_max_error": 0.0,
+    "seconds_per_update": 0.014770091049999223,
+    "projected_training_seconds": 2658.61638899986,
+    "optimizer_reset": true,
+    "optimizer_state_lifetime_retained": true,
+    "backend": "two vectorized width cohorts in one CUDA Graph",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "members": 24,
+    "parameters_per_member": {
+      "base": 1220,
+      "wide": 2404
+    },
+    "thresholds_changed": false
+  },
+  "external_destination": "artifacts/task39f_reserve_external",
+  "thresholds_changed": false,
+  "scientific_result_claimed": false
+}

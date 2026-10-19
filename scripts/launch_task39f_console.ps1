@@ -1,12 +1,17 @@
 # Explicit single dispatch through official Colab CLI; no automatic retry loop.
-param([string]$Session='giada-task39f')
+param([string]$Session='giada-task39f',[ValidateSet('primary','reserve')][string]$Profile='primary',[string]$ExpectedEmail='')
 $ErrorActionPreference='Stop'
 $repo=Split-Path $PSScriptRoot -Parent
 Set-Location -LiteralPath $repo
+$env:GIADA_COLAB_PROFILE=$Profile
+if (-not $ExpectedEmail) {
+    if ($Profile -eq 'primary') {$ExpectedEmail='bellialessandro39@gmail.com'}
+    else {throw 'Provide the verified reserve account email before dispatch'}
+}
 $requestPath=Join-Path $repo 'experiments/results/task39f_protocol_v1/dispatch_request.json'
 $request=Get-Content -LiteralPath $requestPath -Raw | ConvertFrom-Json
 $identity=& "$PSScriptRoot/colab.ps1" whoami
-if ($LASTEXITCODE -ne 0 -or ($identity -join "`n") -notmatch 'bellialessandro39@gmail.com') {throw 'Primary Colab identity not verified'}
+if ($LASTEXITCODE -ne 0 -or ($identity -join "`n") -notmatch ('Email:\s*'+[regex]::Escape($ExpectedEmail)+'(\s|$)')) {throw 'Requested Colab identity not verified'}
 if ((Get-FileHash "$PSScriptRoot/run_task39f_temporal_recovery.py" -Algorithm SHA256).Hash.ToLowerInvariant() -ne $request.worker_sha256) {throw 'Worker hash changed'}
 if ((Get-FileHash "$PSScriptRoot/task39e_console_manager.py" -Algorithm SHA256).Hash.ToLowerInvariant() -ne $request.manager_sha256) {throw 'Manager hash changed'}
 & "$PSScriptRoot/colab.ps1" sessions
@@ -28,5 +33,5 @@ foreach ($pair in $transfers) {
     if ($LASTEXITCODE -ne 0) {throw "Upload failed: $($pair[0])"}
 }
 $python='C:/Users/belli/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'
-& $python scripts/task39e_local_supervisor.py --task 39f --session $Session --revision $request.revision --destination artifacts/task39f_external
+& $python scripts/task39e_local_supervisor.py --task 39f --session $Session --revision $request.revision --destination "artifacts/task39f_${Profile}_external"
 exit $LASTEXITCODE
