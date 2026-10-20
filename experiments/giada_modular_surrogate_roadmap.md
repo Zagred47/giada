@@ -1615,7 +1615,30 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Stato corrente — Task39i recuperata; Task39j autorizzata
+# 🥇 Stato corrente — Task 39j verificata; GO alla preparazione della Task 40
+
+**Audit 39j (20 ottobre 2026):** J1–J7 superano 72/72 casi development, contro 66/72
+di I3 congelato. J1 arriva a 70/72 stress contro 62/72; J4 arriva a 69/72.
+Il replay CPU indipendente di J1 riproduce tutti i 144 pass/fail della GPU;
+hash, scelta dei checkpoint, soglie, allineamento e canali congelati verificati.
+Vedi [audit](results/task39j_audited_v1/audit.json) e
+[attribuzione e limiti](results/task39j_audited_v1/attribution_audit.json).
+
+**Decisione:** preparare Task 40 con J1 congelato, tre seed e controlli I3/formule.
+I tre modelli sono valutati separatamente, senza media delle predizioni.
+Non è un'autorizzazione al deployment, al trasferimento spaziale o alla Task 41.
+Restano due fallimenti stress ereditati (Ca_LVAst timing, Ca_HVA nRMSE), da
+includere esplicitamente nel reinserimento. Nessuna soglia cambia.
+J1 è il pacchetto sufficiente più semplice: 256 pesi correttivi appresi,
+parent congelato, supervisione dei coefficienti; loss temporale aggiuntiva,
+full batch e copertura sensibile non sono necessari per questi 72/72.
+La superiorità universale della località non è provata (J4 passa); 0/8 contrasti
+superano il criterio registrato sulla severità, che non include il timing.
+L'inferenza attuale accumula la correzione affine in FP64 e restituisce FP32:
+preservare questa semantica e misurarne il costo, senza rivendicare speedup.
+24 traiettorie per ruolo × 3 seed non sono 72 protocolli indipendenti.
+
+## Stato storico precedente alla conclusione 39j
 
 **Task39i:** recupero completato dai checkpoint, senza rifare il training.
 I3 supera66/72development contro65/72diH8 e62/72stress contro61/72.

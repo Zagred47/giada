@@ -14,7 +14,8 @@ non puo' piu' essere pushato perche' supera100MiB. I vecchi commit restano recup
 Su una nuova checkout scaricare il file SQLite indicato dal manifest, verificarne
 SHA256 e integrita', quindi posizionarlo in `data/research_memory.sqlite`.
 Per il limite100MiB del connettore Drive il trasporto puo' essere un archivio
-unico ZIP_LZMA: estrarre l'unico SQLite originale con Python zipfile o7-Zip,
+unico ZIP_LZMA oppure7z_LZMA2: estrarre l'unico SQLite originale con7-Zip
+(Python zipfile è utilizzabile soltanto perZIP),
 poi verificare SHA256 del DB (distinto dal checksum dell'archivio).
 Il mirror non sovrascrive mai un database locale esistente. Dopo un pull su una checkout
 già attiva, riconciliare esplicitamente eventuali differenze: non sostituire il DB.
