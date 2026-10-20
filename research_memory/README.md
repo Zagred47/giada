@@ -22,7 +22,10 @@ Per versionare una modifica: verificare il mirror, esportare lo snapshot JSON,
 poi creare il backup SQLite consistente su Drive e committare il manifest
 Drive e lo snapshot JSON insieme. Non eseguire packed_database per il nuovo
 flusso: e' conservato solo per il recupero storico. Il JSON leggibile resta locale; Git conserva
-`data/airtable_snapshot.json.gz` con manifest SHA-256, ripristinato solo se manca.
+`data/airtable_snapshot.json.xz` con manifest SHA-256, ripristinato solo se manca.
+Dal20 ottobre2026 XZ sostituisce gzip perché l'export gzip completo supera100MiB.
+Il ripristino resta compatibile con i vecchi manifest gzip. Nessun record,
+relazione o byte JSON viene rimosso; il SQLite su Drive resta un file unico.
 Eseguire anche `python -m research_memory.packed_snapshot` prima del commit.
 La compressione non rimuove record né relazioni e conserva ogni byte dell'export.
 Richiede soltanto Python >= 3.10 con SQLite/JSON1, senza pip, server o servizi persistenti.

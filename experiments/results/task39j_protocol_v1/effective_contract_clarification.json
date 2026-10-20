@@ -1,0 +1,21 @@
+{
+  "task": "39j",
+  "scientific_revision": "d6290f0fc2cfe8d3842e0e633c7d18588c5bca14",
+  "kind": "documentary clarification, not a run amendment",
+  "reason": "The preregistration builder retained unused narrative and scalar fields from 39i. They must not be interpreted as procedures executed by 39j.",
+  "authoritative_implementation": "src/giada_teacher/task39j_atomic_relaxation.py at the pinned scientific revision",
+  "effective_updates": 10000,
+  "effective_learning_rate_field": "lr",
+  "effective_learning_rate": 0.0001,
+  "effective_checkpoints": [0, 100, 300, 1000, 3000, 10000],
+  "effective_design_fields": ["matrix", "architecture", "objective", "support", "optimization", "paired_edges", "limits"],
+  "unused_inherited_narrative_fields": ["training", "oracles", "cost", "adapters"],
+  "unused_inherited_learning_rate_field": "learning_rate",
+  "parent": "Recovered 39i I3, not H8; H8 is an earlier lineage reference",
+  "timing_and_quality": "Existing full development/stress evaluation remains unchanged. No new speed benchmark or 39i oracle suite is executed by this worker.",
+  "parallelism": "Three seeds vectorized per arm; eight arm updates are enqueued sequentially in a single GPU worker. Not simultaneous independent GPU streams.",
+  "thresholds_changed": false,
+  "running_code_changed": false,
+  "selection_changed": false,
+  "scientific_result_used_for_clarification": false
+}
