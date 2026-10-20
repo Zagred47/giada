@@ -15,7 +15,7 @@ def cli(repo, *args, **kwargs):
     return subprocess.run(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),*map(str,args)],cwd=repo,**kwargs)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j','40'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
     repo=Path(__file__).resolve().parents[1];dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=a.attach)
     remote='/content/giada_task'+a.task+'_'+a.revision[:12];seen=set();started=time.time()
     with (dest/'console.log').open('a',encoding='utf-8') as log:

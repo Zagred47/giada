@@ -1638,6 +1638,24 @@ L'inferenza attuale accumula la correzione affine in FP64 e restituisce FP32:
 preservare questa semantica e misurarne il costo, senza rivendicare speedup.
 24 traiettorie per ruolo × 3 seed non sono 72 protocolli indipendenti.
 
+## 🧪 Task 40 — protocollo congelato (21 ottobre 2026)
+
+[Notebook](../notebooks/giada_task40_causal_reinsertion.ipynb) e
+[preregistrazione](task40_preregistration_v1.json): J1 contro I3, tre seed,
+V/Ca imposti contro autonomi, sostituzioni per famiglia e congiunte.
+32 fixture native Task35 già aperte + 56 interventi appaiati; nessun training.
+I due stress noti sono riprodotti integralmente e non vengono cancellati da
+un eventuale successo sul dominio causale. Calcio e SK rispettano la fase
+nuovo calcio → SK, senza consultare futuri teacher nel braccio autonomo.
+Soglie Task37 e Task35 invariate. Prima del giudizio sui modelli si richiedono
+i controlli di ricostruzione numerica e di equivalenza GPU.
+I costi locali ionic/core sono diagnostici: il confronto competitivo completo
+con LUT e compilazione resta necessario prima di una rivendicazione di speedup.
+Un eventuale GO autorizza la preparazione della conferma indipendente Task41,
+non il deployment né una pretesa di qualità universale.
+Lo stato effettivo del lancio è nella ricevuta `results/task40_protocol_v1/launch.json`
+quando presente; la preregistrazione non attesta un'esecuzione.
+
 ## Stato storico precedente alla conclusione 39j
 
 **Task39i:** recupero completato dai checkpoint, senza rifare il training.
