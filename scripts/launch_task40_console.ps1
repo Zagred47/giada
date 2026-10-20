@@ -8,7 +8,8 @@ if ($LASTEXITCODE -ne 0 -or ($identity -join "`n") -notmatch 'Email:\s*belliales
 $status=& "$PSScriptRoot/colab.ps1" status -s $Session
 if ($LASTEXITCODE -ne 0 -or ($status -join "`n") -notmatch 'Status:\s*IDLE') {throw 'Session is not verified IDLE'}
 $request=Get-Content experiments/results/task40_protocol_v1/dispatch_request.json -Raw | ConvertFrom-Json
-$managerHash=(Get-FileHash -LiteralPath "$PSScriptRoot/task39e_console_manager.py" -Algorithm SHA256).Hash.ToLowerInvariant()
+$sha=[System.Security.Cryptography.SHA256]::Create()
+try {$managerHash=([System.BitConverter]::ToString($sha.ComputeHash([System.IO.File]::ReadAllBytes("$PSScriptRoot/task39e_console_manager.py")))).Replace('-','').ToLowerInvariant()} finally {$sha.Dispose()}
 if ($managerHash -ne $request.manager_sha256) {throw 'Manager changed'}
 foreach ($pair in @(@('scripts/task39e_console_manager.py','/content/task39e_console_manager.py'),@('scripts/colab_task39e_driver.py','/content/colab_task39e_driver.py'),@('experiments/results/task40_protocol_v1/dispatch_request.json','/content/giada_task40_launch.json'))) {
     & "$PSScriptRoot/colab.ps1" upload -s $Session $pair[0] $pair[1]
