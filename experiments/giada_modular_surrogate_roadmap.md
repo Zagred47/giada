@@ -1656,6 +1656,16 @@ non il deployment né una pretesa di qualità universale.
 Lo stato effettivo del lancio è nella ricevuta `results/task40_protocol_v1/launch.json`
 quando presente; la preregistrazione non attesta un'esecuzione.
 
+**Esecuzione completata:** commit `77734ff`, nessun errore tecnico;
+[ricevuta finale](results/task40_protocol_v1/completion_backup_receipt.json).
+J1 supera 264/264 casi×seed sia imposti sia autonomi, ma 22/168 confronti
+differenziali agli interventi falliscono: `CAUSAL_REINSERTION_NO_GO`.
+Task41 non autorizzata. Il dettaglio richiede ancora audit; non modificare
+soglie o candidati per reinterpretare il risultato. Archivio finale verificato
+sia fuori dalla VM sia dopo download da Drive; GPU rilasciata.
+Importazione delle osservazioni scientifiche dettagliate nel DB da completare
+con l'audit; la registrazione del protocollo/lancio non va confusa con essa.
+
 ## Stato storico precedente alla conclusione 39j
 
 **Task39i:** recupero completato dai checkpoint, senza rifare il training.

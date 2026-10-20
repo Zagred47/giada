@@ -26,7 +26,7 @@ for name in ('I3','J1'):
     for family in t.FAMILIES:
         for mode in ('imposed','autonomous'):
             for seed in (17,29,43):
-                m.local_upsert('runs',{'Codice stabile':f'runs-giada-task40-causal-{name}-{family}-{mode}-{seed}-v1','Stato':'In corso',
+                m.local_upsert('runs',{'Codice stabile':f'runs-giada-task40-causal-{name}-{family}-{mode}-{seed}-v1','Stato':'Completata' if status['state']=='finished' else 'In corso',
                     'Artefatti prodotti':arts,'Hardware e ambiente':json.dumps(launch),'Validità tecnica':'GPU graph parity passed; immutable recovery verified outside VM. Scientific audit pending.'})
 m.local_upsert('experiments',{'Codice stabile':'experiments-giada-task40-causal-suite-v1','Stato':'In corso'})
 m.local_upsert('actions',{'Codice stabile':'actions-giada-task40-causal-execute-v1','Stato':'In corso','Descrizione':json.dumps(launch)})
