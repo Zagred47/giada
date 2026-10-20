@@ -1,0 +1,53 @@
+{
+  "valid": true,
+  "FIT_only": true,
+  "teacher_labels_used": false,
+  "steps_each": 3000,
+  "trainable_sk_u_parameters_each": 17,
+  "matching_atol": 0.001,
+  "rows": [
+    {
+      "seed": 17,
+      "arm": "I8",
+      "original_to_monotone_max_u": 9.891390800476074e-05,
+      "matched_transfer_max_u": 9.620189666748047e-05,
+      "monotone": true
+    },
+    {
+      "seed": 29,
+      "arm": "I8",
+      "original_to_monotone_max_u": 9.822845458984375e-05,
+      "matched_transfer_max_u": 9.161233901977539e-05,
+      "monotone": true
+    },
+    {
+      "seed": 43,
+      "arm": "I8",
+      "original_to_monotone_max_u": 7.802248001098633e-05,
+      "matched_transfer_max_u": 7.587671279907227e-05,
+      "monotone": true
+    },
+    {
+      "seed": 17,
+      "arm": "I9",
+      "original_to_monotone_max_u": 9.891390800476074e-05,
+      "matched_transfer_max_u": 9.620189666748047e-05,
+      "monotone": true
+    },
+    {
+      "seed": 29,
+      "arm": "I9",
+      "original_to_monotone_max_u": 0.00010126829147338867,
+      "matched_transfer_max_u": 9.310245513916016e-05,
+      "monotone": true
+    },
+    {
+      "seed": 43,
+      "arm": "I9",
+      "original_to_monotone_max_u": 7.641315460205078e-05,
+      "matched_transfer_max_u": 7.534027099609375e-05,
+      "monotone": true
+    }
+  ],
+  "limits": "Residual transfer mismatch retained explicitly. I3/I10 andI7/I11 quantify transfer effect; I10/I8 andI11/I9 compare learned shapes."
+}

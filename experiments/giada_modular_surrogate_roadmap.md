@@ -1615,7 +1615,23 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Stato corrente — Task39h conclusa; Task39i autorizzata
+# 🥇 Stato corrente — Task39i recuperata; Task39j autorizzata
+
+**Task39i:** recupero completato dai checkpoint, senza rifare il training.
+I3 supera66/72development contro65/72diH8 e62/72stress contro61/72.
+Restano due rilassamenti a voltaggio costante per tre seed:K_Pst eNap_Et2.
+Tutti14contrasti preregistrati restano non supportati; nessuna promozione.
+I checkpoint e gli stati Adam recuperati sono finiti. La valutazione CPU
+riproduce tutti144esiti pass/fail del riferimentoH8; nessuno speedup GPU rivendicato.
+
+**Task39j autorizzata:** [protocollo](task39j_preregistration_v1.json),
+[notebook unico](../notebooks/giada_task39j_atomic_relaxation.ipynb).
+Playground atomico indipendente, correzione congiunta u/z locale controglobale,
+loss di rilassamento completo, copertura informativa, raffinamento deterministico
+e controlli di interferenza. Otto bracci pertre seed, parentI3 congelato salvo
+controllo esplicitoJ8. Stesse soglie, stesso livello di astrazione e stessa
+selezione. Fullbatch e minibatch hanno esposizioni diverse, da rendicontare.
+Task40 resta bloccata fino72/72e audit. Le sezioni sottostanti sono storiche.
 
 **Task39h:** H8 supera65/72development contro61/72del riferimento39g,
 con4casi recuperati e0persi;stress61/72contro62/72. Restano6errori di timing
@@ -1623,7 +1639,7 @@ nel rilassamento lento(K_Pst eNap_Et2) e1errore relativo di correnteSK_E2.
 I probe congelati suH8 correggono2/7con il solo equilibrio,2/7con la sola
 velocita,7/7con entrambi. EsitoNO_GO_TASK40_BLOCKED;nessuna soglia modificata.
 
-**Task39i autorizzata:** [protocollo](task39i_preregistration_v1.json),
+**Protocollo storico Task39i:** [protocollo](task39i_preregistration_v1.json),
 [notebook unico](../notebooks/giada_task39i_coupled_relaxation.ipynb).
 12bracci x3seed: loss equilibrio/rilassamento2x2,dati indipendenti,
 adattatori percanale controcapacita generica appaiata,precisioneSKcontro

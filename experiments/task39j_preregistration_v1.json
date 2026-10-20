@@ -1,0 +1,221 @@
+{
+  "task": "39j",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dataset": "experiments/results/task37_playground_v2",
+  "normalizers": "experiments/results/task38_kaggle_v2/fit_normalizers.json",
+  "parent": "experiments/results/task39i_recovered_v1",
+  "parent_sha256": "416f657fc0042d9723e6a4f16ccd0c5d34d083533c9f2239f5dbe2119ad61b6a",
+  "oracle_parent_arms": [
+    "H8"
+  ],
+  "floor_gate_atol": 2e-05,
+  "floor_current_atol": 2e-07,
+  "data_seed": 99591,
+  "windows_per_family": 512,
+  "sequence_length": 64,
+  "batch_sequences": 8,
+  "anchor_batch": 64,
+  "held_ticks": [
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000
+  ],
+  "development_windows_per_family": 2,
+  "development_anchor_nodes": 96,
+  "development_long_ticks": 20000,
+  "checkpoints": [
+    0,
+    100,
+    300,
+    1000,
+    3000,
+    10000
+  ],
+  "learning_rate": 0.001,
+  "recurrence_chunk": 32,
+  "numeric_atol": 1e-05,
+  "architecture": "Frozen I3 exceptJ8;256zero-initialized correction weights/member for joint u/z ofNap_Et2,K_Pst.32local hat features vs32global Fourier features with same parameter count. Correction bounded0.1in logit space.18states,learned recurrent map,cheap currentreadout retained. No teacher kinetics at inference.",
+  "matrix": [
+    {
+      "name": "J1",
+      "basis": "local",
+      "relaxation": false,
+      "support": "uniform",
+      "full_batch": false,
+      "parent_trainable": false,
+      "channel_clip": false
+    },
+    {
+      "name": "J2",
+      "basis": "local",
+      "relaxation": true,
+      "support": "uniform",
+      "full_batch": false,
+      "parent_trainable": false,
+      "channel_clip": false
+    },
+    {
+      "name": "J3",
+      "basis": "local",
+      "relaxation": true,
+      "support": "uniform",
+      "full_batch": true,
+      "parent_trainable": false,
+      "channel_clip": false
+    },
+    {
+      "name": "J4",
+      "basis": "global",
+      "relaxation": true,
+      "support": "uniform",
+      "full_batch": false,
+      "parent_trainable": false,
+      "channel_clip": false
+    },
+    {
+      "name": "J5",
+      "basis": "local",
+      "relaxation": true,
+      "support": "sensitive",
+      "full_batch": false,
+      "parent_trainable": false,
+      "channel_clip": false
+    },
+    {
+      "name": "J6",
+      "basis": "local",
+      "relaxation": true,
+      "support": "sensitive",
+      "full_batch": true,
+      "parent_trainable": false,
+      "channel_clip": false
+    },
+    {
+      "name": "J7",
+      "basis": "local",
+      "relaxation": true,
+      "support": "uniform",
+      "full_batch": false,
+      "parent_trainable": false,
+      "channel_clip": true
+    },
+    {
+      "name": "J8",
+      "basis": "local",
+      "relaxation": true,
+      "support": "uniform",
+      "full_batch": false,
+      "parent_trainable": true,
+      "channel_clip": false
+    }
+  ],
+  "training": "120000warm updates,LR.0001,independent reset Adam eps1e-8,per-member norm1clipping,512variable target ticks/update as8x64 plus64held anchors. Shared sampled indices,roles50/50 and50%original/50%recovery FIT. Every arm uses the same39h independent constant recovery pool;I4 replaces only that half by independent variable-history FIT of equal count. Run RNG data_seed+399. Early checkpoints and fixed full-trace diagnostics do not alter current primary selection.",
+  "loss": "Retain original4H8terms/scales/calibration unchanged. Relative-u adds half censored logit error plus half squared bounded relative error:relative=(sigmoid(raw)-u*)/min(clamp(u*,1e-6,1-1e-6),1-clamp(...));bound5tanh(relative/5). Composition compares signed cumulative log(1-z) on64-tick variable FIT histories,clamped below-20,normalized by abs(target cumulative)floor.01,plus induced expm1-decay difference. Teacher log-decay computed offline and appended as18loss-only columns. SKloss applies relative-u term togate16only. Additional multiplier perseed=.1main combined gradient norm/new-term gradient norm oninitial originalFIT I0,clamp[1e-4,1e4],then frozen across all treatments;factorial terms keep same weights when combined.",
+  "selection": "PRIMARY prospective lexicographic development-panel rank: number of failed case windows, worst threshold-normalized gate/current/charge/event error (missing_event=100 penalty for ranking only), previous common global score as tie breaker. Panel: 2x512 windows per12families plus two2x20k-tail blocks; canonical quality thresholds unchanged, panel not full-trace qualification. Held nodes/durations contribute common tie-breaker. Earliest minimum. Save every checkpoint and old-score-selected steps; after primary freeze independently reconstruct old-selection weights from same checkpoints and evaluate as NONSELECTABLE counterfactual diagnostic. No posthoc switching rule, no stress/fresh selection.",
+  "quality": "All Task37 thresholds, occupancy, per-channel current, blocking, charge and onset/peak/offset/missing-event rules unchanged. Full72/72 development plus audit before Task40; any failure blocks promotion. Independent confirmation unopened.",
+  "contrasts": "14paired edges listed in code;existing severity rule median ratio<=.8,all3<1,worst<=1.05 unchanged. Report timing separately,severity alone excludes it. Record full72passed,7residual trajectories and any new failure,stressdescriptive only. Shape claims require matchedtransfer preflight and inspection ofI3/I10,I7/I11;capacity claim requires equal250addedparameters. No arm chosen by stress.",
+  "oracles": "Frozen current39h H8 full72development cases:learned,u,z,both,state-reset inFP32/FP64 with unchangedfloor;phase diagnostics retained. All oracle interventions are nonselectable. Compare original39gA0/A6 andH8 frozen references in every final and fixed-budget evaluation. Coefficient diagnostic histories never enter candidate inputs.",
+  "preflights": "Zero-init exactI3;finite gradients inclslownear-zerooccupancy;canonicalpowerschecked;isolated/vectorizedAdamparity;unrelatedchannelsunchanged;actualCUDA2updates;recurrenceparity;input/checkpointhashes. Savebeforeselection,externalconsolebackup. No scientific NO-GO ontechnicalfailure.",
+  "cost": "After primaryfreeze,matched resident FP32ionic-core batch642x80ticks,30paired repetitions vscanonical formulas for everyarm/seed. Active parameter counts and shape mismatch retained. No quality-qualified/end-to-end acceleration claim unless quality and appropriate later audit pass.",
+  "limits": "39j remains withinTask39;Task40blocked until72/72andaudit. Development-informed hypotheses,not independent confirmation. No timestep/threshold relaxation. Frozenparentprotectsunrelatedchannels exceptexplicitJ8. Atomic held-input loss composes learnedcoefficients onlyduringtraining,finalinferenceusesordinaryFP32serialrecurrence. Same-levelabstraction;no restoredcanonicalrates. No definitive attributionfrom onecontrast;fixedbatchcomputeandbasisconditioningare reported.",
+  "short_ticks": 64,
+  "max_projected_training_seconds": 14400,
+  "oracle_single_gates": false,
+  "oracle_state_reset": true,
+  "quality_config_sha256": "0d63cc7131008417cc3bcebadac2bd83762b3f44c02d3e0703c2a83c51a192b2",
+  "expanded_seeds": {
+    "fit": 140701,
+    "fit_extra": 140801
+  },
+  "numerical_amendment": "Retain established39g numerics for all arms:FP64 affine training accumulation,FP32 parameters/states/losses/Adam;FP32 deployment and selection. No new numerical treatment or tolerance change.",
+  "expanded_support": "Retain exact39h constant-recovery FIT seeds140701/140801. Add independent variable-history FIT seeds150701/150801,36histories/role,20000ticks. IndependentV[-100,60],logCa[-7,-2],random six boundaries,held or ramp histories,balanced calcium bins;random initial18gates,multipliers[.25,4],reversal+/-5. Canonical recurrent labels offline only;6144windows/role,256ticks sampled exactly as original q.windows;50%replacement onlyI4. Source hashes,assignments and whole-input signatures verified disjoint from all original roles. No evaluation histories copied.",
+  "update_masks": "z-head-only freezes a,b,sa,sb and u output columns exactly; c[:,:,17:],d[:,17:],sc[:,:,1],sd[:,1] train. Mask BEFORE independent per-member norm1 clipping and Adam. Zero moments for frozen slices; no weight decay. Both weights and u(V,Ca) must remain bitwise unchanged in restricted members. Same total inference parameter count; fewer trainable parameters is the tested intervention, not a capacity-matched architecture claim.",
+  "recovery_ticks": 20000,
+  "recovery_nodes": 2048,
+  "rate_bin_edges": [
+    -6.0,
+    -5.0,
+    -4.0,
+    -3.0,
+    -2.0,
+    -1.0,
+    -0.3
+  ],
+  "rate_bin_temperature": 0.001,
+  "full_trace_checkpoints": [
+    0,
+    1000,
+    3000,
+    30000,
+    120000
+  ],
+  "history_seeds": {
+    "fit": 150701,
+    "fit_extra": 150801
+  },
+  "transfer_steps": 3000,
+  "transfer_atol": 0.001,
+  "adapters": "I5:10voltage-channel groups,4SiLU features/group with packed34u/zoutputs;40input weights+40bias+136output weights+34bias=250parameters. I6:6globalSiLUfeatures,6+6+204+34=250. Output weights/bias zero-initialized;exact H8 function atstep0;all base weights train. SK remains calcium-only. Probe useful adapter gradients,full metric regressions and inference cost.",
+  "sk_transfer": "I8/I9 monotone logit calcium curve:16positive learned slopes on17fixed log-calcium knots[-7,-2],learned intercept;17active parameters replace original16output weights+1bias. Positive slopes continue outside domain;sigmoid bounds u;z unchanged. FIT-only3000Adam steps LR.001 match frozen H8 SK-u function,all other weights frozen. ThenI10/I11 original17parameter output head gets same3000step budget matching transferred monotone function,other weights frozen. On4097FIT-domain grid require original-head vsmonotone maxu discrepancy<=.001 or stop technically. Record perseed original-to-transfer discrepancy and full-trace step0 changes. I3/I10 andI7/I11 quantify transfer alone;I10/I8 andI11/I9 isolate shape with residual mismatch limitation. No development-driven transfer adjustment.",
+  "diagnostics": "Atfixed checkpoints0/1000/3000/30000/120000 evaluate all candidate development/stress fulltraces retrospectively,NONSELECTABLE. Same primary checkpoint ranking as39h. Keep signed u/log_z bias,term gradient norms/cosines,old/new data exposure,gained/lost cases,perchannel current/timing/charge and parameters/Adam finite checks. Error-budget identity e_next=(1-z_hat)e+z_hat*delta_u+delta_z*(u_teacher-x_teacher) motivates probes;no reset in candidate rollout.",
+  "anchors": 1024,
+  "batch": 128,
+  "lr": 0.0001,
+  "fit_seed": 390701,
+  "holdout_seed": 390702,
+  "stream_seed": 390703,
+  "paired_edges": [
+    [
+      "objective",
+      "J1",
+      "J2"
+    ],
+    [
+      "deterministic_refinement",
+      "J2",
+      "J3"
+    ],
+    [
+      "locality",
+      "J4",
+      "J2"
+    ],
+    [
+      "coverage",
+      "J2",
+      "J5"
+    ],
+    [
+      "refinement_covered",
+      "J5",
+      "J6"
+    ],
+    [
+      "coverage_fixed",
+      "J3",
+      "J6"
+    ],
+    [
+      "optimizer_interference",
+      "J2",
+      "J7"
+    ],
+    [
+      "parent_interference",
+      "J2",
+      "J8"
+    ]
+  ],
+  "objective": "Coefficient logit-u/log-z precision plus bounded full held-relaxation shape/slow-slope current-opening loss.65logarithmic nodes from0.1to10000ms,shared first-tick origin,never local chunk origins. Auxiliary gradient calibrated to0.1ofcoefficient norm onFIT only and frozen. All arms have same all-gate coefficient preservation loss. Task37 actual discrete event metrics remain the qualification criteria.",
+  "support": "Independent1024anchors:uniformV[-100,60],logCa[-7,-2],initialgates[0,1];sensitive treatment replaceshalf withV[-20,20] andloguniformgates[1e-4,1].Equalanchorcount,newseed,no evaluation V/state copied. Independent256atomic holdout anchors,diagnostic only,not selection. Same FIT RNG stream acrossarms andseeds.",
+  "optimization": "J1/J2objective;J2/J3fixedfullbatchAdam vsstochastic128batch;J4/J2basis;J2/J5support;J5/J6fixedrefinementundernewcoverage;J2/J7perchannelvspermembergradientclipping;J2/J8parentfrozenvsunfrozen.24members,paired3seeds. Fullbatchhas8xexamples/update:reportexposureandwalltime,not a pureequalcompute optimizerclaim. J7is optimizercoupling control,not proof of representational independence. No LBFGS claim;deterministicAdam isfirst controlled refinement.",
+  "external_backup": "Existing console manager and local supervisor: checkpoint/Adam/RNG beforeselection,immutableSHAverifiedZIPoutsideVM;finalZIPalsoDrive."
+}

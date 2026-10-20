@@ -1,0 +1,2300 @@
+{
+  "task": "39i exploratory plateau diagnosis",
+  "db_access": "read-only",
+  "training_performed": false,
+  "thresholds_changed": false,
+  "queries": [
+    {
+      "name": "localized_and_dynamic_precedents",
+      "sql": "\n        SELECT * FROM findings\n        WHERE \"Codice stabile\" LIKE '%task18b%'\n           OR \"Codice stabile\" LIKE '%task18c%'\n           OR \"Codice stabile\" LIKE '%task18d%'\n           OR \"Codice stabile\" LIKE '%task24b%'\n           OR \"Codice stabile\" IN (\n              'finding-task2b-h-physical-tau-identifiability-repaired-v1',\n              'finding-task3b-symmetric-rates-stabilize-shared-mh-v1',\n              'finding-task3d-voltage-support-conditional-shape-repair-v1',\n              'finding-task3e-full-repair-sealed-generalization-v1',\n              'findings-giada-roadmap-task21-duration-v1',\n              'findings-giada-roadmap-task26-gradient_interference-v1')\n        ORDER BY \"_created_time\", \"Codice stabile\"\n    ",
+      "parameters": [],
+      "rows": [
+        {
+          "_record_id": "rec1ced41bf0f6068",
+          "_created_time": "2026-09-21T14:35:14Z",
+          "Nome": "Task 2b — la debole identificabilità endpoint causava il fallimento physical-tau di h",
+          "Codice stabile": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+          "Descrizione": "Due interventi ortogonali riparano il rollout physical-tau: supervisione esplicita dei rate e loss multi-orizzonte. Il limite della Task 2 non era capacità insufficiente ma identificabilità dell'obiettivo endpoint.",
+          "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694.",
+          "Incertezza": "La selezione development favorisce rate_supervision, mentre multi-horizon è leggermente migliore su alcune metriche fresh; il fresh non può essere usato per cambiare il vincitore. Resta da testare il comportamento con V variabile e nel canale m+h accoppiato.",
+          "Limitazioni": "Ca_HVA.h isolato sotto voltage clamp costante; non prova ancora validità embedded, coupling con m, corrente analitica o traiettorie di voltaggio endogene.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "recc43b5d2ea5fde7",
+          "_created_time": "2026-09-21T22:25:56Z",
+          "Nome": "Task 3b — i rate simmetrici stabilizzano e dimezzano il budget efficace",
+          "Codice stabile": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+          "Descrizione": "La supervisione simmetrica raggiunge score 0,1022 a 50k con sd 0,0083; la baseline richiede 100k per 0,0978 con sd 0,0246. PCGrad 0,4845 e pretraining 0,1990 non sono riparazioni valide.",
+          "Risultato": "La loss simmetrica migliora del 61,5% a 50k e rende i seed coerenti; la baseline migliora del 63,1% raddoppiando il budget. I due bracci convergono nello stesso regime di score.",
+          "Incertezza": "Tre seed appaiati; nessun fresh aperto; il risultato riguarda development sotto voltage clamp.",
+          "Limitazioni": "Non dimostra ancora generalizzazione fresh, tensione variabile o corrente ionica completa.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "reca16ba38b5ca234",
+          "_created_time": "2026-09-22T13:41:21Z",
+          "Nome": "Task 3d — supporto in tensione e prior condizionale riparano la cella m+h",
+          "Codice stabile": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+          "Descrizione": "Il supporto bilanciato ed esteso è causale; il prior monotono è efficace solo nel contesto expanded+multihorizon. Topologia independent e capacità wide non sono necessarie a 50k.",
+          "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%.",
+          "Incertezza": "Development-only; interazioni forti; alcuni bracci hanno minimo a 30k e peggiorano a 50k.",
+          "Limitazioni": "Voltage clamp Ca_HVA; nessun nuovo sealed test; non autorizza Task 4.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "rec7ae0a8fc50124f",
+          "_created_time": "2026-09-22T14:19:43Z",
+          "Nome": "Task 3e — il full-repair shared m+h generalizza sul sealed",
+          "Codice stabile": "finding-task3e-full-repair-sealed-generalization-v1",
+          "Descrizione": "Supporto esteso e prior monotono condizionale riparano il difetto OOD-voltage senza separare il trunk o aumentare capacità.",
+          "Risultato": "Tre seed sealed score 0,3487/0,2777/0,5678; tutti i gate di endpoint, rate, monotonicità e occupazione passano con margine. Nessun retraining e nessuna selezione sealed.",
+          "Incertezza": "Tre seed e un singolo contratto Ca_HVA held-voltage; il sealed è stato consumato e non può essere usato per ulteriore selezione.",
+          "Limitazioni": "Nessuna conclusione ancora su percorsi V variabili, corrente Ca_HVA completa o integrazione nel neurone.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "recf0acede8568e37",
+          "_created_time": "2026-10-04T13:03:46Z",
+          "Nome": "Task18b RMSE/coda risolti; massimo locale mTau resta",
+          "Codice stabile": "findings-giada-task18b-partial-v1",
+          "Descrizione": null,
+          "Risultato": "3/3seed RMSEuniform<.001 e coda passa; massimo uniform.0141–.0158>.01. Probe: tutti massimi m aV−60.284, dt25; tauoracle abbatte errori<.0008.",
+          "Incertezza": null,
+          "Limitazioni": "Fresh18b ora consumato per diagnosi. Contrasti fattoriali misti; winner non prova ogni intervento utile. No embedded transfer.",
+          "Esito": "Misto"
+        },
+        {
+          "_record_id": "rec20a8960662b913",
+          "_created_time": "2026-10-04T13:27:04Z",
+          "Nome": "Task18c RMSE/coda risolti; massimo locale mTau resta",
+          "Codice stabile": "findings-giada-task18c-partial-v1",
+          "Descrizione": null,
+          "Risultato": "3/3uniform e coda passano; kink2/3. Seed17 max.010521>.01. Probe tutti m aV−59.931 dt25; tauoracle errore<.000258. Parent appaiato migliora uniform/coda/kink; OOD negativo peggiora e resta diagnostico.",
+          "Incertezza": null,
+          "Limitazioni": "Fresh18c consumed for diagnosis; three seeds and finite samples. Parent quantified separately; OOD negative worsens. No embedded substitution.",
+          "Esito": "Misto"
+        },
+        {
+          "_record_id": "rec00202827f10332",
+          "_created_time": "2026-10-04T13:31:52Z",
+          "Nome": "Task18c matched parent comparison",
+          "Codice stabile": "findings-giada-task18c-baseline-v1",
+          "Descrizione": null,
+          "Risultato": "Refit improves mean and max in uniform/tail/kink in all3seeds. Negative extrapolation RMSE worsens in all3seeds; not a universal improvement.",
+          "Incertezza": null,
+          "Limitazioni": null,
+          "Esito": "Misto"
+        },
+        {
+          "_record_id": "rec02cb2c6e5d7bbc",
+          "_created_time": "2026-10-04T13:57:54Z",
+          "Nome": "Task18d struttura locale utile oltre continuazione smooth",
+          "Codice stabile": "findings-giada-task18d-architecture-v1",
+          "Descrizione": null,
+          "Risultato": "A30k feature e split riducono RMSE e massimo kink/state_extrema rispetto smooth in tutti3seed, con pesi iniziali, dati e minibatch appaiati. Feature vince score peggiore-seed:1.86858 vs split2.13877 e smooth2.68769. Split utile localmente ma non selezionato. Budget crescente non migliora tutte le metriche monotonicamente.",
+          "Incertezza": null,
+          "Limitazioni": "Confronto sul development usato per selezione; fresh conferma solo winner. Capacità1252/1284/1285 entro3%, non uguale. Nessuna prova di superiorità universale o limite assoluto smooth.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "recfa145b10de538e",
+          "_created_time": "2026-10-04T13:57:54Z",
+          "Nome": "Task18d K_Pst confermato 3/3 seed",
+          "Codice stabile": "findings-giada-task18d-confirmation-v1",
+          "Descrizione": null,
+          "Risultato": "Feature |V+60|/100 selezionata a30k. Tutti3seed passano tutti4domini richiesti e tutte6metriche. Peggior gateRMSE .000819319759; massimo .007357536854<.01; margine descrittivo<.008 passato. Training9modelli158.73674242s suT4. Nessuna violazione occupazione.",
+          "Incertezza": null,
+          "Limitazioni": "Canale isolato a V costante; griglia finita;3seed. Non prova sostituzione nel neurone completo, accuratezza con V variabile o speedup hardware. .008 è margine descrittivo preregistrato, non nuova soglia.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "rec80fcbd138a15fc",
+          "_created_time": "2026-10-04T13:57:54Z",
+          "Nome": "Task18d confronto appaiato con parent18c e OOD",
+          "Codice stabile": "findings-giada-task18d-matched-parent-v1",
+          "Descrizione": null,
+          "Risultato": "Kink e state_extrema migliorano RMSE/massimo in tutti3seed. In-support RMSE seed43 peggiora .000380826→.000521909; coda seed43 peggiora .000372188→.000819320 e max .00266746→.00505057, entro soglie. OOD[-155,-135] RMSE migliora tutti3 ma resta .01233–.01381, massimo .14976–.15898: estrapolazione non risolta.",
+          "Incertezza": null,
+          "Limitazioni": "Parent e winner valutati sulle identiche tuplefresh18d; confronto col parent include trainingaggiuntivo e cambiamento struttura. OOD escluso dalla promozione già in preregistrazione.",
+          "Esito": "Misto"
+        },
+        {
+          "_record_id": "rec5b8ed2186f2b23",
+          "_created_time": "2026-10-04T13:57:54Z",
+          "Nome": "Task18d controllo degli stati iniziali estremi",
+          "Codice stabile": "findings-giada-task18d-state-extrema-v1",
+          "Descrizione": null,
+          "Risultato": "Grigliafresh405tensioni×7dt×2stati=5670tuple;3/3seed passano. Per update HH a V,dt fissati errore di ciascun gate affine nello stato iniziale:0/1 delimitano errore assoluto per x in[0,1].",
+          "Incertezza": null,
+          "Limitazioni": "La proprietà riguarda ciascun gate a V/dt fissati; non estende il bound a tensioni non campionate, corrente polinomiale, o rollout accoppiato.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "rece2ff58de86aed7",
+          "_created_time": "2026-10-04T16:09:27Z",
+          "Nome": "Supporto temporale multiscala decisivo",
+          "Codice stabile": "findings-giada-roadmap-task21-duration-v1",
+          "Descrizione": null,
+          "Risultato": "Short/transition0/3, multiscale/transition3/3. Short/rate2/3, multiscale/rate3/3. Contrasti appaiati a width/budget fissi in paired_duration_contrasts.",
+          "Incertezza": null,
+          "Limitazioni": "Isolated slow h gate, held imposed voltage. Not entire Nap_Et2 m^3*h channel; no current, endogenous voltage, full-neuron, shared-weight or speedup claim. Short vs multiscale duration is intentional information intervention. Long labels exact only at held voltage; simulation rollout remains1ms.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "rec10b30dfa2dba93",
+          "_created_time": "2026-10-04T21:20:24Z",
+          "Nome": "Task24b annealing",
+          "Codice stabile": "findings-giada-roadmap-task24b-annealing-v1",
+          "Descrizione": null,
+          "Risultato": "Late schedule paired median at60k=0.4375285794392705. Small decay w16 passes3/3; constant w32 also passes. Schedule not sole sufficient explanation; budget matters.",
+          "Incertezza": null,
+          "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "recb8027b2ff9e094",
+          "_created_time": "2026-10-04T21:20:24Z",
+          "Nome": "Task24b budget_capacity",
+          "Codice stabile": "findings-giada-roadmap-task24b-budget_capacity-v1",
+          "Descrizione": null,
+          "Risultato": "Paired60kvs30k median improvement=0.49876750664050684; width32vs16 at60k=0.5107646727314548. Four arms pass3/3. No universal monotone scaling claim.",
+          "Incertezza": null,
+          "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "rec828f6ca9dc3900",
+          "_created_time": "2026-10-04T21:20:24Z",
+          "Nome": "Task24b clipping",
+          "Codice stabile": "findings-giada-roadmap-task24b-clipping-v1",
+          "Descrizione": null,
+          "Risultato": "No gradient clipping activation: all bundle/channel frequencies zero. Matched clipped variants are identical. Proposed clipping-coupling explanation unsupported in this run.",
+          "Incertezza": null,
+          "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+          "Esito": "Negativo"
+        },
+        {
+          "_record_id": "rec2b91c14e9fe143",
+          "_created_time": "2026-10-04T21:20:24Z",
+          "Nome": "Task24b precision",
+          "Codice stabile": "findings-giada-roadmap-task24b-precision-v1",
+          "Descrizione": null,
+          "Risultato": "Identical learned rates castFP64 do not reduce old error by50%; rates dominate. Exact-rate FP64 floor~1e-14, FP32 floor~1e-5, far below old~.002 error.",
+          "Incertezza": null,
+          "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+          "Esito": "Negativo"
+        },
+        {
+          "_record_id": "recf159aa29b76c83",
+          "_created_time": "2026-10-04T21:20:24Z",
+          "Nome": "Task24b rate_attribution",
+          "Codice stabile": "findings-giada-roadmap-task24b-rate_attribution-v1",
+          "Descrizione": null,
+          "Risultato": "Old Nap_h: tau replacement most reduces1000ms error; inf replacement most reduces10000ms error. Both analytic rates produce FP32 floor9.38e-6/2.66e-5. Contributions interact; not additive.",
+          "Incertezza": null,
+          "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "rec6b849324a208d2",
+          "_created_time": "2026-10-04T21:20:24Z",
+          "Nome": "Task24b repair and sharing",
+          "Codice stabile": "findings-giada-roadmap-task24b-repair-and-sharing-v1",
+          "Descrizione": null,
+          "Risultato": "Primary decay_channel1116params passes3/3 fresh conjunction. Frozen conditioned420passes3/3 (62.37% fewer); shared_heads1516passes but no compression gain. Original Task24 NO-GO remains unchanged. No measured runtime acceleration.",
+          "Incertezza": null,
+          "Limitazioni": null,
+          "Esito": "Positivo"
+        },
+        {
+          "_record_id": "recb8878eff743504",
+          "_created_time": "2026-10-04T21:20:24Z",
+          "Nome": "Task24b selection",
+          "Codice stabile": "findings-giada-roadmap-task24b-selection-v1",
+          "Descrizione": null,
+          "Risultato": "Held-aware and one-step-only development selections are identical for all4arms at60k. This run provides no checkpoint-choice change attributable to added held-aware selection. Primary rule confirmed3/3; selection mismatch remains an unproven explanation, not a repair attribution.",
+          "Incertezza": null,
+          "Limitazioni": "Diagnostic dependent onTask24, not independent replication of all hypotheses. V imposed, six explicit gate states. No endogenousvoltage/fullneuron/runtime speedup claim. Newfresh/seamsnodes disjoint frompreviousfresh where possible, fixed physical endpoint/seams intentionally repeated. No threshold adaptation. Oracle attribution andprecision probes notselectable.",
+          "Esito": "Misto"
+        },
+        {
+          "_record_id": "rec7ed57c0566d498",
+          "_created_time": "2026-10-05T09:50:45Z",
+          "Nome": "Task26 gradient_interference",
+          "Codice stabile": "findings-giada-roadmap-task26-gradient_interference-v1",
+          "Descrizione": null,
+          "Risultato": "94/300 off-diagonal shared-trunk gradient cosine values are negative across fixed probes. This is a local conflict diagnostic, not a causal failure attribution.",
+          "Incertezza": null,
+          "Limitazioni": "Cinque canali voltaggio-dipendenti; dieci stati m/h espliciti; V imposto; corrente analitica economica mantenuta. Nessun CaDynamics/SK_E2, calciumfeedback, voltaggioautonomo, temperaturaOOD, sinapsi o neuronecompleto. Task27 targetcorrenti eTask28 blocco completo restano separate.",
+          "Esito": "Misto"
+        }
+      ]
+    },
+    {
+      "name": "precedents_evidence_chains",
+      "sql": "\n        SELECT c.\"Codice stabile\" claim_code,c.Stato claim_status,\n               c.Enunciato claim,e.\"Codice stabile\" evidence_code,\n               e.Esito assessment,e.Argomentazione argument,\n               e.\"Limiti e spiegazioni alternative\" alternatives,\n               f.\"Codice stabile\" finding_code\n        FROM v_evidence_chains ec\n        JOIN claims c ON c._record_id=ec.claim_id\n        JOIN evidence e ON e._record_id=ec.assessment_id\n        JOIN findings f ON f._record_id=ec.finding_id\n        WHERE ec.finding_id IN (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+      "parameters": [
+        "rec1ced41bf0f6068",
+        "recc43b5d2ea5fde7",
+        "reca16ba38b5ca234",
+        "rec7ae0a8fc50124f",
+        "recf0acede8568e37",
+        "rec20a8960662b913",
+        "rec00202827f10332",
+        "rec02cb2c6e5d7bbc",
+        "recfa145b10de538e",
+        "rec80fcbd138a15fc",
+        "rec5b8ed2186f2b23",
+        "rece2ff58de86aed7",
+        "rec10b30dfa2dba93",
+        "recb8027b2ff9e094",
+        "rec828f6ca9dc3900",
+        "rec2b91c14e9fe143",
+        "recf159aa29b76c83",
+        "rec6b849324a208d2",
+        "recb8878eff743504",
+        "rec7ed57c0566d498"
+      ],
+      "rows": [
+        {
+          "claim_code": "claims-giada-task18d-budget-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "Paired checkpoints distinguish architectural benefit from further optimization of the smooth parent.",
+          "evidence_code": "evidence-giada-task18d-budget-v1",
+          "assessment": "Sostiene",
+          "argument": "Checkpoint appaiati separano contributo struttura e continuazione; piùpassi non garantiscono miglioramento monotono.",
+          "alternatives": "Tre seed, capacità entro3% non identica; selection suldevelopment; nessuna universalità.",
+          "finding_code": "findings-giada-task18d-architecture-v1"
+        },
+        {
+          "claim_code": "claims-giada-task18d-branch_heads-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "Two independently learned mTau output heads selected by V<-60 improve worst-case accuracy around the canonical branch change.",
+          "evidence_code": "evidence-giada-task18d-branch_heads-v1",
+          "assessment": "Sostiene",
+          "argument": "Beneficio locale development3/3; non vince la selezione globale; nessuna confermafresh separata.",
+          "alternatives": "Tre seed, capacità entro3% non identica; selection suldevelopment; nessuna universalità.",
+          "finding_code": "findings-giada-task18d-architecture-v1"
+        },
+        {
+          "claim_code": "claims-giada-task18d-cusp_feature-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "An added absolute-voltage distance from-60mV reduces the local mTau error beyond continued smooth-MLP optimization.",
+          "evidence_code": "evidence-giada-task18d-cusp_feature-v1",
+          "assessment": "Sostiene",
+          "argument": "Beneficio locale vs smooth a pari budget in3/3; freshwinner passa.",
+          "alternatives": "Tre seed, capacità entro3% non identica; selection suldevelopment; nessuna universalità.",
+          "finding_code": "findings-giada-task18d-architecture-v1"
+        },
+        {
+          "claim_code": "claims-giada-roadmap-task24b-annealing-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "Late cosine learning-rate decay improves worst-seed development score >=10% at fixed clipping,width,budget; confirmation requires 3/3 fresh conjunction unchanged thresholds.",
+          "evidence_code": "evidence-giada-roadmap-task24b-annealing-v1",
+          "assessment": "Sostiene",
+          "argument": "Late schedule paired median at60k=0.4375285794392705. Small decay w16 passes3/3; constant w32 also passes. Schedule not sole sufficient explanation; budget matters.",
+          "alternatives": null,
+          "finding_code": "findings-giada-roadmap-task24b-annealing-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-history_exposure-v1",
+          "claim_status": "Aperta",
+          "claim": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-history_exposure-v1",
+          "assessment": "Indeterminata",
+          "argument": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Verified targeted fit-only history coverage has no consistent benefit under matched target-tick and budget comparisons. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task2b-h-physical-tau-identifiability-repaired-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-current_objective-v1",
+          "claim_status": "Aperta",
+          "claim": "Global current scaling underweights weak-regime errors required by local strict evaluation.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-current_objective-v1",
+          "assessment": "Indeterminata",
+          "argument": "Global current scaling underweights weak-regime errors required by local strict evaluation. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Matched local-scale objective fails to improve weak-regime current/charge errors without strong-regime regressions. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task2b-h-physical-tau-identifiability-repaired-v1"
+        },
+        {
+          "claim_code": "hypothesis-task2b-h-multihorizon-identifiability-v1",
+          "claim_status": "Aperta",
+          "claim": "Almeno un intervento identificante porta physical-tau sotto le soglie fresh di endpoint, rate e rollout senza violazioni fisiche.",
+          "evidence_code": "evidence-task2b-h-identifiability-repair-v1",
+          "assessment": "Sostiene",
+          "argument": "Rate supervision migliora 33.4x il punteggio development rispetto a endpoint-only e supera tutti i gate fresh. La loss multi-orizzonte, intervento ortogonale, produce la stessa riparazione e supera anch'essa il controllo direct-z congelato: convergenza causale a favore dell'ipotesi di debole identificabilità endpoint.",
+          "alternatives": "Il risultato vale per h isolato a V costante. Le differenze fini tra rate supervision e multi-horizon sul fresh non sono selettive. Capacità e ottimizzazione non sono escluse universalmente, ma non spiegano il contrasto appaiato osservato.",
+          "finding_code": "finding-task2b-h-physical-tau-identifiability-repaired-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-event_objective-v1",
+          "claim_status": "Aperta",
+          "claim": "Pointwise objectives fail to prioritize charge and event-boundary accuracy.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-event_objective-v1",
+          "assessment": "Indeterminata",
+          "argument": "Pointwise objectives fail to prioritize charge and event-boundary accuracy. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "A fit-only charge/event objective package gives no consistent benefit at equal exposure under the unchanged original evaluator. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task2b-h-physical-tau-identifiability-repaired-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-conditioning-v1",
+          "claim_status": "Aperta",
+          "claim": "Fixed initial auxiliary weights and gradient interaction hinder late optimization.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-conditioning-v1",
+          "assessment": "Indeterminata",
+          "argument": "Fixed initial auxiliary weights and gradient interaction hinder late optimization. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Fit-only phase calibration changes gradients but fails to improve paired strict outcomes; clipping alone is not causal evidence. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task2b-h-physical-tau-identifiability-repaired-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-tail_bias-v1",
+          "claim_status": "Aperta",
+          "claim": "A learnable linear logit component helps approximate tail coefficients at the same abstraction.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-tail_bias-v1",
+          "assessment": "Indeterminata",
+          "argument": "A learnable linear logit component helps approximate tail coefficients at the same abstraction. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Parameter-matched architecture control fails on targeted tails or introduces unacceptable regressions/cost. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task2b-h-physical-tau-identifiability-repaired-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-dynamic_information-v1",
+          "claim_status": "Aperta",
+          "claim": "Short state targets underweight equilibrium/relaxation errors, especially small fractions.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-dynamic_information-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task2b-h-physical-tau-identifiability-repaired-v1\", \"findings-giada-roadmap-task21-duration-v1\", \"findings-giada-roadmap-task24b-rate_attribution-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "finding-task2b-h-physical-tau-identifiability-repaired-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+          "claim_status": "Aperta",
+          "claim": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+          "assessment": "Indeterminata",
+          "argument": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Frozen new-candidate FP64, exact swaps and trace perturbation audit show stable crossings and unchanged errors. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task2b-h-physical-tau-identifiability-repaired-v1"
+        },
+        {
+          "claim_code": "claims-giada-roadmap-task24b-precision-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "claim": "FP64 repeated held-V updates reduce the same frozen-model error >=50% if FP32 accumulation dominates; separate exact-rate FP32 solver floor from learned-rate error.",
+          "evidence_code": "evidence-giada-roadmap-task24b-precision-v1",
+          "assessment": "Contraddice",
+          "argument": "Identical learned rates castFP64 do not reduce old error by50%; rates dominate. Exact-rate FP64 floor~1e-14, FP32 floor~1e-5, far below old~.002 error.",
+          "alternatives": null,
+          "finding_code": "findings-giada-roadmap-task24b-precision-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-numerical_timing-v1",
+          "claim_status": "Aperta",
+          "claim": "A minority of failures arise from precision or timing/selection sensitivity rather than broad dynamic error.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-numerical_timing-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-roadmap-task24b-precision-v1\", \"findings-giada-roadmap-task24b-clipping-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "findings-giada-roadmap-task24b-precision-v1"
+        },
+        {
+          "claim_code": "claims-giada-task18d-state_extrema-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "The error at initial occupancy0or1 bounds all initial states at each fixed voltage and dt; dense critical-region probes expose rare maxima.",
+          "evidence_code": "evidence-giada-task18d-state_extrema-v1",
+          "assessment": "Sostiene",
+          "argument": "Proprietà affine e controllogrid; dominio e limiti espliciti.",
+          "alternatives": "Tre seed, capacità entro3% non identica; selection suldevelopment; nessuna universalità.",
+          "finding_code": "findings-giada-task18d-state-extrema-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-shared_capacity-v1",
+          "claim_status": "Aperta",
+          "claim": "Shared function capacity or interference limits some gates after information repair.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-shared_capacity-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-roadmap-task26-gradient_interference-v1\", \"findings-giada-roadmap-task24b-repair-and-sharing-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "findings-giada-roadmap-task24b-repair-and-sharing-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-local_support-v1",
+          "claim_status": "Aperta",
+          "claim": "Rare or local V/Ca/state support is insufficient at fixed sampled windows.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-local_support-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task3d-voltage-support-conditional-shape-repair-v1\", \"finding-task3e-full-repair-sealed-generalization-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "finding-task3e-full-repair-sealed-generalization-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-history_exposure-v1",
+          "claim_status": "Aperta",
+          "claim": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-history_exposure-v1",
+          "assessment": "Indeterminata",
+          "argument": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Verified targeted fit-only history coverage has no consistent benefit under matched target-tick and budget comparisons. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task26-gradient_interference-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-current_objective-v1",
+          "claim_status": "Aperta",
+          "claim": "Global current scaling underweights weak-regime errors required by local strict evaluation.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-current_objective-v1",
+          "assessment": "Indeterminata",
+          "argument": "Global current scaling underweights weak-regime errors required by local strict evaluation. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Matched local-scale objective fails to improve weak-regime current/charge errors without strong-regime regressions. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task26-gradient_interference-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-event_objective-v1",
+          "claim_status": "Aperta",
+          "claim": "Pointwise objectives fail to prioritize charge and event-boundary accuracy.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-event_objective-v1",
+          "assessment": "Indeterminata",
+          "argument": "Pointwise objectives fail to prioritize charge and event-boundary accuracy. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "A fit-only charge/event objective package gives no consistent benefit at equal exposure under the unchanged original evaluator. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task26-gradient_interference-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-shared_capacity-v1",
+          "claim_status": "Aperta",
+          "claim": "Shared function capacity or interference limits some gates after information repair.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-shared_capacity-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-roadmap-task26-gradient_interference-v1\", \"findings-giada-roadmap-task24b-repair-and-sharing-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "findings-giada-roadmap-task26-gradient_interference-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-conditioning-v1",
+          "claim_status": "Aperta",
+          "claim": "Fixed initial auxiliary weights and gradient interaction hinder late optimization.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-conditioning-v1",
+          "assessment": "Indeterminata",
+          "argument": "Fixed initial auxiliary weights and gradient interaction hinder late optimization. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Fit-only phase calibration changes gradients but fails to improve paired strict outcomes; clipping alone is not causal evidence. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task26-gradient_interference-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-tail_bias-v1",
+          "claim_status": "Aperta",
+          "claim": "A learnable linear logit component helps approximate tail coefficients at the same abstraction.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-tail_bias-v1",
+          "assessment": "Indeterminata",
+          "argument": "A learnable linear logit component helps approximate tail coefficients at the same abstraction. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Parameter-matched architecture control fails on targeted tails or introduces unacceptable regressions/cost. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task26-gradient_interference-v1"
+        },
+        {
+          "claim_code": "claims-giada-roadmap-task26-gradient_interference-v1",
+          "claim_status": "Indeterminata",
+          "claim": "Coseno negativo tra gradienti dei task sul trunk condiviso Ã¨ un probe di conflitto locale; non dimostra da solo la causa di un fallimento. Probe a minibatch e checkpoint fissi, mai usato per selezione.",
+          "evidence_code": "evidence-giada-roadmap-task26-gradient_interference-v1",
+          "assessment": "Indeterminata",
+          "argument": "94/300 off-diagonal shared-trunk gradient cosine values are negative across fixed probes. This is a local conflict diagnostic, not a causal failure attribution.",
+          "alternatives": null,
+          "finding_code": "findings-giada-roadmap-task26-gradient_interference-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+          "claim_status": "Aperta",
+          "claim": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+          "assessment": "Indeterminata",
+          "argument": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Frozen new-candidate FP64, exact swaps and trace perturbation audit show stable crossings and unchanged errors. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task26-gradient_interference-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-history_exposure-v1",
+          "claim_status": "Aperta",
+          "claim": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-history_exposure-v1",
+          "assessment": "Indeterminata",
+          "argument": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Verified targeted fit-only history coverage has no consistent benefit under matched target-tick and budget comparisons. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task24b-clipping-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-current_objective-v1",
+          "claim_status": "Aperta",
+          "claim": "Global current scaling underweights weak-regime errors required by local strict evaluation.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-current_objective-v1",
+          "assessment": "Indeterminata",
+          "argument": "Global current scaling underweights weak-regime errors required by local strict evaluation. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Matched local-scale objective fails to improve weak-regime current/charge errors without strong-regime regressions. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task24b-clipping-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-event_objective-v1",
+          "claim_status": "Aperta",
+          "claim": "Pointwise objectives fail to prioritize charge and event-boundary accuracy.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-event_objective-v1",
+          "assessment": "Indeterminata",
+          "argument": "Pointwise objectives fail to prioritize charge and event-boundary accuracy. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "A fit-only charge/event objective package gives no consistent benefit at equal exposure under the unchanged original evaluator. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task24b-clipping-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-conditioning-v1",
+          "claim_status": "Aperta",
+          "claim": "Fixed initial auxiliary weights and gradient interaction hinder late optimization.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-conditioning-v1",
+          "assessment": "Indeterminata",
+          "argument": "Fixed initial auxiliary weights and gradient interaction hinder late optimization. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Fit-only phase calibration changes gradients but fails to improve paired strict outcomes; clipping alone is not causal evidence. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task24b-clipping-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-tail_bias-v1",
+          "claim_status": "Aperta",
+          "claim": "A learnable linear logit component helps approximate tail coefficients at the same abstraction.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-tail_bias-v1",
+          "assessment": "Indeterminata",
+          "argument": "A learnable linear logit component helps approximate tail coefficients at the same abstraction. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Parameter-matched architecture control fails on targeted tails or introduces unacceptable regressions/cost. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task24b-clipping-v1"
+        },
+        {
+          "claim_code": "claims-giada-roadmap-task24b-clipping-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "claim": "Per-channel gradient clipping removes coupling in independent models and improves worst-seed development score >=10% vs bundle clipping at fixed schedule,width,budget. An effect is not assumed: record clipping frequency and channel norms.",
+          "evidence_code": "evidence-giada-roadmap-task24b-clipping-v1",
+          "assessment": "Contraddice",
+          "argument": "No gradient clipping activation: all bundle/channel frequencies zero. Matched clipped variants are identical. Proposed clipping-coupling explanation unsupported in this run.",
+          "alternatives": null,
+          "finding_code": "findings-giada-roadmap-task24b-clipping-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-numerical_timing-v1",
+          "claim_status": "Aperta",
+          "claim": "A minority of failures arise from precision or timing/selection sensitivity rather than broad dynamic error.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-numerical_timing-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"findings-giada-roadmap-task24b-precision-v1\", \"findings-giada-roadmap-task24b-clipping-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "findings-giada-roadmap-task24b-clipping-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+          "claim_status": "Aperta",
+          "claim": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+          "assessment": "Indeterminata",
+          "argument": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Frozen new-candidate FP64, exact swaps and trace perturbation audit show stable crossings and unchanged errors. Historical findings are scoped analogies, not proof.",
+          "finding_code": "findings-giada-roadmap-task24b-clipping-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-history_exposure-v1",
+          "claim_status": "Aperta",
+          "claim": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-history_exposure-v1",
+          "assessment": "Indeterminata",
+          "argument": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Verified targeted fit-only history coverage has no consistent benefit under matched target-tick and budget comparisons. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task3d-voltage-support-conditional-shape-repair-v1"
+        },
+        {
+          "claim_code": "hypothesis-task3d-factorial-generalization-diagnosis-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "Almeno uno dei contrasti su supporto, orizzonte temporale, prior di forma o topologia riduce di almeno il 20% lo score development di stress rispetto al controllo appropriato.",
+          "evidence_code": "evidence-task3d-support-shape-interaction-v1",
+          "assessment": "Sostiene",
+          "argument": "Dense→balanced migliora 50,8%; balanced→expanded 88,6%; expanded+multihorizon→full repair 75,5%; baseline→full repair 97,9%. Solo dati, multi-orizzonte o shape isolati non passano.",
+          "alternatives": "Il prior di forma mostra un'interazione e non un effetto principale; serve nuova conferma sealed per distinguere generalizzazione autentica da selezione development.",
+          "finding_code": "finding-task3d-voltage-support-conditional-shape-repair-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-current_objective-v1",
+          "claim_status": "Aperta",
+          "claim": "Global current scaling underweights weak-regime errors required by local strict evaluation.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-current_objective-v1",
+          "assessment": "Indeterminata",
+          "argument": "Global current scaling underweights weak-regime errors required by local strict evaluation. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Matched local-scale objective fails to improve weak-regime current/charge errors without strong-regime regressions. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task3d-voltage-support-conditional-shape-repair-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-local_support-v1",
+          "claim_status": "Aperta",
+          "claim": "Rare or local V/Ca/state support is insufficient at fixed sampled windows.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-local_support-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task3d-voltage-support-conditional-shape-repair-v1\", \"finding-task3e-full-repair-sealed-generalization-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "finding-task3d-voltage-support-conditional-shape-repair-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-event_objective-v1",
+          "claim_status": "Aperta",
+          "claim": "Pointwise objectives fail to prioritize charge and event-boundary accuracy.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-event_objective-v1",
+          "assessment": "Indeterminata",
+          "argument": "Pointwise objectives fail to prioritize charge and event-boundary accuracy. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "A fit-only charge/event objective package gives no consistent benefit at equal exposure under the unchanged original evaluator. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task3d-voltage-support-conditional-shape-repair-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-conditioning-v1",
+          "claim_status": "Aperta",
+          "claim": "Fixed initial auxiliary weights and gradient interaction hinder late optimization.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-conditioning-v1",
+          "assessment": "Indeterminata",
+          "argument": "Fixed initial auxiliary weights and gradient interaction hinder late optimization. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Fit-only phase calibration changes gradients but fails to improve paired strict outcomes; clipping alone is not causal evidence. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task3d-voltage-support-conditional-shape-repair-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-tail_bias-v1",
+          "claim_status": "Aperta",
+          "claim": "A learnable linear logit component helps approximate tail coefficients at the same abstraction.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-tail_bias-v1",
+          "assessment": "Indeterminata",
+          "argument": "A learnable linear logit component helps approximate tail coefficients at the same abstraction. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Parameter-matched architecture control fails on targeted tails or introduces unacceptable regressions/cost. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task3d-voltage-support-conditional-shape-repair-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+          "claim_status": "Aperta",
+          "claim": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift.",
+          "evidence_code": "evidence-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+          "assessment": "Indeterminata",
+          "argument": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift. See residual_diagnosis.json and detailed result document.",
+          "alternatives": "Frozen new-candidate FP64, exact swaps and trace perturbation audit show stable crossings and unchanged errors. Historical findings are scoped analogies, not proof.",
+          "finding_code": "finding-task3d-voltage-support-conditional-shape-repair-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-optimization_budget-v1",
+          "claim_status": "Aperta",
+          "claim": "Residual error can be reduced by further optimization; all36 selection scores still improve at60k.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-optimization_budget-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task1b-budget-limited-engineering-go-v1\", \"finding-task3b-symmetric-rates-stabilize-shared-mh-v1\", \"findings-giada-roadmap-task24b-budget_capacity-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "findings-giada-roadmap-task24b-budget_capacity-v1"
+        },
+        {
+          "claim_code": "claims-giada-roadmap-task24b-budget_capacity-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "60k vs30k andwidth32vs16 paired contrasts isolate budget andcapacity; report heterogeneity without universal scaling claims.",
+          "evidence_code": "evidence-giada-roadmap-task24b-budget_capacity-v1",
+          "assessment": "Sostiene",
+          "argument": "Paired60kvs30k median improvement=0.49876750664050684; width32vs16 at60k=0.5107646727314548. Four arms pass3/3. No universal monotone scaling claim.",
+          "alternatives": null,
+          "finding_code": "findings-giada-roadmap-task24b-budget_capacity-v1"
+        },
+        {
+          "claim_code": "claims-giada-roadmap-task24b-selection-v1",
+          "claim_status": "Indeterminata",
+          "claim": "Adding disjoint development long-held probes to checkpoint selection can reveal a one-step/long-held mismatch. Compare original one-step rule and held-aware rule on development only; primary confirmation uses registered held-aware rule.",
+          "evidence_code": "evidence-giada-roadmap-task24b-selection-v1",
+          "assessment": "Indeterminata",
+          "argument": "Held-aware and one-step-only development selections are identical for all4arms at60k. This run provides no checkpoint-choice change attributable to added held-aware selection. Primary rule confirmed3/3; selection mismatch remains an unproven explanation, not a repair attribution.",
+          "alternatives": null,
+          "finding_code": "findings-giada-roadmap-task24b-selection-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-optimization_budget-v1",
+          "claim_status": "Aperta",
+          "claim": "Residual error can be reduced by further optimization; all36 selection scores still improve at60k.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-optimization_budget-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task1b-budget-limited-engineering-go-v1\", \"finding-task3b-symmetric-rates-stabilize-shared-mh-v1\", \"findings-giada-roadmap-task24b-budget_capacity-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1"
+        },
+        {
+          "claim_code": "hypothesis-task3b-shared-gradient-interference-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "claim": "La baseline mostra conflitto su almeno il 25% dei minibatch iniziali e PCGrad migliora lo score di almeno il 20%.",
+          "evidence_code": "evidence-task3b-gradient-interference-v1",
+          "assessment": "Contraddice",
+          "argument": "La frazione iniziale di conflitto è 66,7%, ma PCGrad peggiora lo score dell'82,8% e l'interazione peggiora del 45,2%.",
+          "alternatives": "Non nega che i gradienti possano essere negativi; nega che questa misura identifichi la causa operativa correggibile con il PCGrad registrato.",
+          "finding_code": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1"
+        },
+        {
+          "claim_code": "hypothesis-task3b-initialization-path-v1",
+          "claim_status": "Contraddetta nel dominio",
+          "claim": "Il pretraining rate-only migliora di almeno il 20% rispetto alla supervisione simmetrica senza warm-start.",
+          "evidence_code": "evidence-task3b-initialization-path-v1",
+          "assessment": "Contraddice",
+          "argument": "Score 0,1990 contro 0,1022: peggioramento relativo del 94,8% rispetto al controllo simmetrico.",
+          "alternatives": "Valuta una sola traiettoria meccanicisticamente motivata, non tutte le inizializzazioni possibili.",
+          "finding_code": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1"
+        },
+        {
+          "claim_code": "hypothesis-task3b-training-budget-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "Prolungare la baseline a 100k migliora lo score medio di almeno il 20% rispetto a 50k.",
+          "evidence_code": "evidence-task3b-training-budget-v1",
+          "assessment": "Sostiene",
+          "argument": "Miglioramento 63,1%, superiore alla soglia preregistrata del 20%; dispersione seed ridotta da 0,1963 a 0,0246.",
+          "alternatives": "Un seed peggiora fra 50k e 100k; il training lungo costa il doppio e resta meno stabile della loss simmetrica 50k.",
+          "finding_code": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1"
+        },
+        {
+          "claim_code": "hypothesis-task3b-objective-information-imbalance-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "Aggiungere supervisione simmetrica m_inf e log(tau_m) migliora di almeno il 20% lo score development condiviso a 50k.",
+          "evidence_code": "evidence-task3b-objective-information-imbalance-v1",
+          "assessment": "Sostiene",
+          "argument": "Miglioramento appaiato 61,5%, superiore alla soglia preregistrata del 20%, e sd fra seed ridotta da 0,1963 a 0,0083.",
+          "alternatives": "La baseline a 100k raggiunge 0,0978: il rate target accelera e condiziona, non aggiunge informazione asintoticamente indispensabile.",
+          "finding_code": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1"
+        },
+        {
+          "claim_code": "claims-giada-roadmap-task21-duration_identifiability-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "Longer training durations expose slow kinetics better than short-only transitions, holding V/state/initialization/minibatch streams fixed; paired development score reduction>=10% at30k supports practical benefit.",
+          "evidence_code": "evidence-giada-roadmap-task21-duration_identifiability-v1",
+          "assessment": "Sostiene",
+          "argument": "Contrasti controllati; nessuna generalizzazione a dinamica endogena o intero canale.",
+          "alternatives": "Isolated slow h gate, held imposed voltage. Not entire Nap_Et2 m^3*h channel; no current, endogenous voltage, full-neuron, shared-weight or speedup claim. Short vs multiscale duration is intentional information intervention. Long labels exact only at held voltage; simulation rollout remains1ms.",
+          "finding_code": "findings-giada-roadmap-task21-duration-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-dynamic_information-v1",
+          "claim_status": "Aperta",
+          "claim": "Short state targets underweight equilibrium/relaxation errors, especially small fractions.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-dynamic_information-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task2b-h-physical-tau-identifiability-repaired-v1\", \"findings-giada-roadmap-task21-duration-v1\", \"findings-giada-roadmap-task24b-rate_attribution-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "findings-giada-roadmap-task21-duration-v1"
+        },
+        {
+          "claim_code": "claims-giada-roadmap-task24b-rate_attribution-v1",
+          "claim_status": "Supportata nel dominio",
+          "claim": "Frozen independent Nap_h long-held error can be decomposed by analytic inf replacement,analytic tau replacement,andboth; diagnostic oracle probes never eligible for selection.",
+          "evidence_code": "evidence-giada-roadmap-task24b-rate_attribution-v1",
+          "assessment": "Sostiene",
+          "argument": "Old Nap_h: tau replacement most reduces1000ms error; inf replacement most reduces10000ms error. Both analytic rates produce FP32 floor9.38e-6/2.66e-5. Contributions interact; not additive.",
+          "alternatives": null,
+          "finding_code": "findings-giada-roadmap-task24b-rate_attribution-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39b-architecture-residual-dynamic_information-v1",
+          "claim_status": "Aperta",
+          "claim": "Short state targets underweight equilibrium/relaxation errors, especially small fractions.",
+          "evidence_code": "evidence-giada-task39b-architecture-residual-dynamic_information-v1",
+          "assessment": "Indeterminata",
+          "argument": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task2b-h-physical-tau-identifiability-repaired-v1\", \"findings-giada-roadmap-task21-duration-v1\", \"findings-giada-roadmap-task24b-rate_attribution-v1\"]",
+          "alternatives": "Historical domains differ. These links do not assert that the current causal explanation has been demonstrated. Current hypothesis remains open.",
+          "finding_code": "findings-giada-roadmap-task24b-rate_attribution-v1"
+        }
+      ]
+    },
+    {
+      "name": "loss_and_optimization_lessons",
+      "sql": "\n        SELECT * FROM lessons WHERE \"Codice stabile\" IN (\n          'lesson-gradient-conflict-requires-interventional-benefit-v1',\n          'lesson-causal-rate-supervision-identifies-physical-cell-v1',\n          'lesson-parameter-matched-seed-variance-localizes-optimization-v1',\n          'lessons-giada-task39f-result-temporal-v1',\n          'lessons-giada-task39g-temporal-numerical-preflight-v1')\n    ",
+      "parameters": [],
+      "rows": [
+        {
+          "_record_id": "recad5107191f9b03",
+          "_created_time": "2026-09-21T16:16:43Z",
+          "Nome": "Supervisionare quantità fisiche causali può rendere identificabile l'obiettivo",
+          "Codice stabile": "lesson-causal-rate-supervision-identifies-physical-cell-v1",
+          "Descrizione": "Regola progettuale emersa dalla matrice 2x2 della Task 2b.",
+          "Lezione": "Quando il teacher espone quantità fisiche semanticamente corrette, una loss ausiliaria su tali quantità può eliminare soluzioni endpoint-equivalenti ma dinamicamente errate. Per h, supervisionare h_inf e log(tau_h) ha riparato il rollout senza aumentare capacità. Una loss multi-orizzonte ha confermato indipendentemente la diagnosi. Combinare tutte le loss non è automaticamente migliore: i gradienti possono essere ridondanti o conflittuali.",
+          "Condizioni": "Le variabili supervisionate devono essere causali, disponibili senza informazione futura e coerenti con il contratto deployment. Pesi e criteri di selezione devono essere preregistrati; il fresh non deve scegliere fra obiettivi.",
+          "Limiti": "Non implica che ogni stato interno del teacher debba essere supervisionato né che rate supervision sia sempre preferibile. Nel sistema embedded disponibilità, costo e osservabilità delle variabili devono essere rivalutati."
+        },
+        {
+          "_record_id": "recb6be41cbe56680",
+          "_created_time": "2026-09-21T19:07:55Z",
+          "Nome": "Un controllo parameter-matched e la dispersione tra seed separano capacità e ottimizzazione",
+          "Codice stabile": "lesson-parameter-matched-seed-variance-localizes-optimization-v1",
+          "Descrizione": "Lezione trasferibile dalla Task 3 sulla condivisione m+h.",
+          "Lezione": "Se un modello condiviso con almeno la stessa capacità parametrica fallisce in media ma un seed raggiunge o supera il controllo indipendente, la famiglia è espressiva ma il protocollo non la ottimizza affidabilmente. Aumentare width non è la prossima mossa informativa; servono contrasti su gradient conflict, inizializzazione e traiettoria di ottimizzazione.",
+          "Condizioni": "Confronti appaiati su dati, minibatch, budget e metriche; capacità realmente misurata; più seed; checkpoint lungo la stessa traiettoria.",
+          "Limiti": "Non identifica da solo quale meccanismo di ottimizzazione sia causale e non autorizza la scelta post hoc del seed migliore."
+        },
+        {
+          "_record_id": "recc92a514dc89dd2",
+          "_created_time": "2026-10-19T12:57:54Z",
+          "Nome": "Initial gradient calibration can fail during learning",
+          "Codice stabile": "lessons-giada-task39f-result-temporal-v1",
+          "Descrizione": null,
+          "Lezione": "[\"Frozen39e evaluation reproduces original metrics exactly on both development and stress. Base control reproduces56/72. Wide improves descriptive case count but strict width contrast fails its median-effect and worst-seed guards.\", \"Ten timing failures: Im same_v_history case0 seed43 offset0.4ms; K_Pst slow_recovery case0 all seeds offset2.0/2.6/4.8ms; Nap_Et2 slow_recovery case1 all seeds offset13.0/11.2/1.2ms; Nap_Et2 calcium_switch case0 all seeds peak1.2ms. Two current RMSE failures: SK_E2 reversal case0 seed17 normalized0.0134423; K_Tst activation_boundary case0 seed29 normalized0.0155954.\", \"Temporal treatment collapses to0-2/72 with finite parameters. At120k base_t1_s0 temporal gradient norm is239.5/73.4/473.1 times the combined other gradient across seeds. These are sampled FIT probes, not a causal intervention.\", \"Fixed temporal weights49.88-56.75 are calibrated on initial FIT gradients. Temporal precision term is bounded by tanh but derivative term is unbounded. Band weights are0.5-1, so off-event flat regions still contribute. Window baseline and10% excursion are local to6.4ms chunks, unlike full-trajectory evaluation. These are source-code facts, not proof of the cause of failure.\", \"Frozen39e oracle: learned56;teacher_u62;teacher_z61;both72. Timing failures10->9 with teacher_u and10->5 with teacher_z. FP64 alone remains56. Repeat these interventions on39f before attributing new residuals to the same cause.\", \"Recovery sampling changes windows in the same FIT/FIT_EXTRA corpus; it does not test independent data expansion. Held anchors supervise long constant-input composition, but variable-input backpropagation spans64ticks=6.4ms. Therefore short temporal credit assignment remains a candidate even with long held anchors.\", \"All72 gate checks pass in best model, yet timing fails. Broader network improves current error but does not resolve timing. Resident-core speed is7.87-7.89x, versus8.01-8.03x base; no end-to-end or quality-qualified speed claim.\"]",
+          "Condizioni": null,
+          "Limiti": "Post-hoc development analysis:72 cases=24 protocols x3 seeds. All thresholds unchanged. No independent confirmation. Oracles and timing traces concern frozen39e parents, not the new39f winner. Gradient diagnostics are sampled FIT batches, not causal interventions. Severity excludes timing; pass/fail includes timing. Width changes parameters, compute and initialization. No end-to-end speed claim."
+        },
+        {
+          "_record_id": "recdcec1292cd5735",
+          "_created_time": "2026-09-21T22:28:16Z",
+          "Nome": "Un conflitto di gradienti osservato non implica che la gradient surgery aiuti",
+          "Codice stabile": "lesson-gradient-conflict-requires-interventional-benefit-v1",
+          "Descrizione": "Nella Task 3b il 66,7% dei minibatch iniziali aveva coseno negativo, ma PCGrad ha peggiorato lo score dell'82,8%. La geometria è diagnostica, non causale: una tecnica di correzione va accettata soltanto se migliora nel confronto appaiato.",
+          "Lezione": "Non promuovere una riparazione dalla sola presenza del suo biomarcatore. Richiedere beneficio causale appaiato dell'intervento.",
+          "Condizioni": "Obiettivi multi-task con parametri condivisi e misure di coseno dei gradienti.",
+          "Limiti": "Non dimostra che ogni variante di gradient surgery fallirà; vale per PCGrad e configurazione registrati."
+        },
+        {
+          "_record_id": "rece59ef861232bd8",
+          "_created_time": "2026-10-19T14:13:17Z",
+          "Nome": "Warm near-canceling gradients need GPU update parity",
+          "Codice stabile": "lessons-giada-task39g-temporal-numerical-preflight-v1",
+          "Descrizione": null,
+          "Lezione": "Attempt1 at8f8fa55 stopped before training: isolated/vectorized Adam update error0.00193721 > unchanged1e-5. T4 paired probe measured FP32 gradient-order sensitivity; FP64 affine accumulation alone reduced first-step error below1.2e-10 across18short-cohort members. Amend ALL arms equally:FP32 parameters,states,losses,Adam remain; only affine forward/backward accumulation usesFP64 in training. No optimizer epsilon/LR change. Primary selection uses copied standard FP32 inference models; full evaluation and cost also FP32. This changes training numerics versus39f, common to all prospective39g contrasts. Repeat all30-member parity and CUDA capture preflights; never relax tolerance. Original attempt/archive retained separately.",
+          "Condizioni": null,
+          "Limiti": "Inference remains FP32 and quality is evaluated there; training precision is an execution amendment common to all arms."
+        }
+      ]
+    },
+    {
+      "name": "recent_claims_and_evidence",
+      "sql": "\n        SELECT c.\"Codice stabile\" claim_code,c.Stato claim_status,\n               c.Enunciato claim,e.Esito assessment,\n               e.Argomentazione argument,f.\"Codice stabile\" finding_code\n        FROM claims c LEFT JOIN v_evidence_chains ec ON ec.claim_id=c._record_id\n        LEFT JOIN evidence e ON e._record_id=ec.assessment_id\n        LEFT JOIN findings f ON f._record_id=ec.finding_id\n        WHERE c.\"Codice stabile\" LIKE '%task39g%residual%'\n           OR c.\"Codice stabile\" LIKE '%task39h%residual%'\n        ORDER BY c.\"Codice stabile\",e.\"Codice stabile\"\n    ",
+      "parameters": [],
+      "rows": [
+        {
+          "claim_code": "claims-giada-task39g-result-residual-event_conditioning_and_other_currents-v1",
+          "claim_status": "Aperta",
+          "claim": "Shallow crossings or near-degenerate peaks amplify tiny shape errors, while SK/NaTs current errors may have different causes from recovery.",
+          "assessment": "Indeterminata",
+          "argument": "[\"All original frozen39f base/wide metrics exactly reproduced on development and stress. A0 stress62/72; A6 stress61/72; parent59/72. These are descriptive development/stress results, not independent confirmation.\", \"A0 residual timing: Im same_v_history case1 seed43 onset0.4ms; K_Pst slow_recovery case0 seeds17/29/43 offsets1.8/2.7/1.9ms; Nap_Et2 slow_recovery case1 offsets3.0/1.2/5.6ms; Nap_Et2 calcium_switch case0 seeds29/43 peaks1.2ms. Current failures: SK_E2 reversal case0 seed17 NRMSE0.0118254; NaTs2_t activation_boundary case0 seed17 NRMSE0.0181145 (limit0.01).\", \"All72 A0 gate checks pass. Slow-recovery current NRMSE is only0.0000815-0.0006428, yet offsets fail. Low waveform error is not sufficient for accurate dynamical timing.\", \"Frozen39f wide oracle60 learned ->61 teacher_u ->67 teacher_z ->72 both ->72 state_reset; FP64 inference alone stays60. These interventions concern the parent, not newA0/A6. Repeating them on current candidates is mandatory before attributing the11 residuals to z.\", \"Weighted auxiliary/main gradient median is7.23 for old full weight,0.276 at0.01weight,0.029 for aligned low-weight64tick loss. Lower dominance is measured but did not yield selected gains. A1-A4,A7,A9 retain step0 for every seed;23/30 members retain step0 overall. This suggests unsuccessful fine-tuning, not nonfinite divergence.\", \"Longer256tick recurrence and independent FIT expansion did not satisfy preregistered superiority contrasts. They do not establish that data or budget can never help. A8 stress62 is nonselectable and cannot justify switching models.\", \"Common alternative selection gives A0 62/72 but is explicitly diagnostic/nonselectable. Primary remains61. On frozen39f wide,6/10 failed channel events change pass under grid-phase probes,0/10 under tiny perturbations; precision alone no benefit. Sensitivity does not authorize changing the timing thresholds.\", \"The code already supervises u and normalized log_z across all18 gates, has stratified V/logCa anchors and long held-input compositions. Next work must test tail/distribution of this existing objective, not claim rate supervision or long anchors are new.\", \"Candidate deployment architecture unchanged at2404 parameters,18 bounded states,learned u/z; FP64 affine training common to all arms, FP32 inference. Resident benchmark is not an end-to-end quality-qualified speedup.\"]",
+          "finding_code": "findings-giada-task39g-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-event_conditioning_and_other_currents-v1",
+          "claim_status": "Aperta",
+          "claim": "Shallow crossings or near-degenerate peaks amplify tiny shape errors, while SK/NaTs current errors may have different causes from recovery.",
+          "assessment": "Indeterminata",
+          "argument": "{\"findings\": [\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"], \"contrasts\": {\"scores\": {\"H0\": {\"17\": {\"median\": 0.4365037520120004, \"worst\": 1.0052801824944793, \"passed\": 20, \"timing_failed\": 3}, \"29\": {\"median\": 0.28292786236152756, \"worst\": 0.5127251148223877, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30524956438314377, \"worst\": 0.7802688179580175, \"passed\": 21, \"timing_failed\": 3}}, \"H1\": {\"17\": {\"median\": 0.3395875888449863, \"worst\": 0.9354491186725422, \"passed\": 21, \"timing_failed\": 3}, \"29\": {\"median\": 0.31607637716712333, \"worst\": 0.5753250312869032, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H2\": {\"17\": {\"median\": 0.43348677516577105, \"worst\": 1.8110211579335167, \"passed\": 19, \"timing_failed\": 3}, \"29\": {\"median\": 0.3990367534715924, \"worst\": 0.9107623517219651, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.36584101854260864, \"worst\": 0.8447493974809761, \"passed\": 20, \"timing_failed\": 4}}, \"H3\": {\"17\": {\"median\": 0.3352816505602906, \"worst\": 1.812020020934536, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.43325713181691544, \"worst\": 0.9615674458114688, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3307039539019267, \"worst\": 0.846493135999775, \"passed\": 20, \"timing_failed\": 4}}, \"H4\": {\"17\": {\"median\": 0.324803339834625, \"worst\": 0.9368401122807294, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.31374135471994247, \"worst\": 0.8740570736765794, \"passed\": 21, \"timing_failed\": 3}}, \"H5\": {\"17\": {\"median\": 0.3355828996939276, \"worst\": 0.9252970716895309, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30482061712741415, \"worst\": 0.725357975891658, \"passed\": 21, \"timing_failed\": 3}}, \"H6\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3182123104731242, \"worst\": 0.8783023580228165, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H7\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3303073707693912, \"worst\": 0.7655792923010828, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H8\": {\"17\": {\"median\": 0.3414170187174368, \"worst\": 1.5089416949485257, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.2810130516688029, \"worst\": 0.6417803527912247, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.24815432030927032, \"worst\": 0.8653265324802005, \"passed\": 22, \"timing_failed\": 2}}, \"H9\": {\"17\": {\"median\": 0.31862109899520874, \"worst\": 1.5033680218477994, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.27037493310773203, \"worst\": 0.8620443344486319, \"passed\": 22, \"timing_failed\": 2}}}, \"contrasts\": [{\"axis\": \"learning_rate\", \"control\": \"H0\", \"treatment\": \"H4\", \"paired_ratios\": [0.7441020571701649, 1.2485230590554062, 1.027819172662733], \"worst_ratios\": [0.9319194077377272, 1.6739413025317798, 1.1201999279735515], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H1\", \"treatment\": \"H5\", \"paired_ratios\": [0.9882071981350098, 1.117584184473384, 0.9107328812842067], \"worst_ratios\": [0.9891474086827751, 1.4918032414246565, 0.8559788009180586], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H2\", \"treatment\": \"H6\", \"paired_ratios\": [0.9074691197432503, 0.7974511312672302, 0.9148732381059053], \"worst_ratios\": [1.0002366394334952, 0.9643595350227456, 1.0031398680242254], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H3\", \"treatment\": \"H7\", \"paired_ratios\": [1.173269881076553, 0.762381843281397, 1.012077882096616], \"worst_ratios\": [0.9996852661816263, 0.7961784642729963, 1.001073444147615], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H0\", \"treatment\": \"H2\", \"paired_ratios\": [0.9930883140584175, 1.4103833752566226, 1.1984980855973035], \"worst_ratios\": [1.8015088623747564, 1.7763170271802675, 1.0826389290958798], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H1\", \"treatment\": \"H3\", \"paired_ratios\": [0.9873200952386358, 1.3707355661946021, 0.9880662523010625], \"worst_ratios\": [1.9370588787404064, 1.6713464450879318, 0.9989277068991386], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H4\", \"treatment\": \"H6\", \"paired_ratios\": [1.2111201272755123, 0.900833837197857, 1.0667964303424498], \"worst_ratios\": [1.9335740359626774, 1.0233383092905834, 0.9695039656142271], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H5\", \"treatment\": \"H7\", \"paired_ratios\": [1.1722166494145132, 0.9350739945369173, 1.0980167956491473], \"worst_ratios\": [1.957695287683977, 0.8920010420727108, 1.1682532311868883], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H0\", \"treatment\": \"H1\", \"paired_ratios\": [0.7779717523153165, 1.117162426241493, 1.0964738244341334], \"worst_ratios\": [0.9305357202519801, 1.1220925495061824, 1.0860382724511297], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H2\", \"treatment\": \"H3\", \"paired_ratios\": [0.7734530088768555, 1.0857574598019057, 0.9039553717058394], \"worst_ratios\": [1.0005515468423125, 1.0557830415293816, 1.002064208064544], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H4\", \"treatment\": \"H5\", \"paired_ratios\": [1.033187958796209, 1.0, 0.9715665867494857], \"worst_ratios\": [0.987678750685539, 1.0, 0.8298748419717688], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H6\", \"treatment\": \"H7\", \"paired_ratios\": [1.0, 1.0380094040933987, 1.0], \"worst_ratios\": [1.0, 0.8716580176609233, 1.0], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H4\", \"treatment\": \"H8\", \"paired_ratios\": [1.05114996320934, 0.7955256830293741, 0.7909518989958539], \"worst_ratios\": [1.6106715277967976, 0.7477589182838387, 0.9900114746973498], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H5\", \"treatment\": \"H9\", \"paired_ratios\": [0.9494557061334499, 1.0, 0.8869968693578101], \"worst_ratios\": [1.6247409268276938, 1.0, 1.1884398643152025], \"supported\": false}]}}",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-mean_loss_hides_rare_rate_error-v1",
+          "claim_status": "Aperta",
+          "claim": "Mean normalized log_z loss can hide localized signed errors in slow, current-sensitive regimes even though every gate is supervised.",
+          "assessment": "Indeterminata",
+          "argument": "[\"All original frozen39f base/wide metrics exactly reproduced on development and stress. A0 stress62/72; A6 stress61/72; parent59/72. These are descriptive development/stress results, not independent confirmation.\", \"A0 residual timing: Im same_v_history case1 seed43 onset0.4ms; K_Pst slow_recovery case0 seeds17/29/43 offsets1.8/2.7/1.9ms; Nap_Et2 slow_recovery case1 offsets3.0/1.2/5.6ms; Nap_Et2 calcium_switch case0 seeds29/43 peaks1.2ms. Current failures: SK_E2 reversal case0 seed17 NRMSE0.0118254; NaTs2_t activation_boundary case0 seed17 NRMSE0.0181145 (limit0.01).\", \"All72 A0 gate checks pass. Slow-recovery current NRMSE is only0.0000815-0.0006428, yet offsets fail. Low waveform error is not sufficient for accurate dynamical timing.\", \"Frozen39f wide oracle60 learned ->61 teacher_u ->67 teacher_z ->72 both ->72 state_reset; FP64 inference alone stays60. These interventions concern the parent, not newA0/A6. Repeating them on current candidates is mandatory before attributing the11 residuals to z.\", \"Weighted auxiliary/main gradient median is7.23 for old full weight,0.276 at0.01weight,0.029 for aligned low-weight64tick loss. Lower dominance is measured but did not yield selected gains. A1-A4,A7,A9 retain step0 for every seed;23/30 members retain step0 overall. This suggests unsuccessful fine-tuning, not nonfinite divergence.\", \"Longer256tick recurrence and independent FIT expansion did not satisfy preregistered superiority contrasts. They do not establish that data or budget can never help. A8 stress62 is nonselectable and cannot justify switching models.\", \"Common alternative selection gives A0 62/72 but is explicitly diagnostic/nonselectable. Primary remains61. On frozen39f wide,6/10 failed channel events change pass under grid-phase probes,0/10 under tiny perturbations; precision alone no benefit. Sensitivity does not authorize changing the timing thresholds.\", \"The code already supervises u and normalized log_z across all18 gates, has stratified V/logCa anchors and long held-input compositions. Next work must test tail/distribution of this existing objective, not claim rate supervision or long anchors are new.\", \"Candidate deployment architecture unchanged at2404 parameters,18 bounded states,learned u/z; FP64 affine training common to all arms, FP32 inference. Resident benchmark is not an end-to-end quality-qualified speedup.\"]",
+          "finding_code": "findings-giada-task39g-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-mean_loss_hides_rare_rate_error-v1",
+          "claim_status": "Aperta",
+          "claim": "Mean normalized log_z loss can hide localized signed errors in slow, current-sensitive regimes even though every gate is supervised.",
+          "assessment": "Indeterminata",
+          "argument": "{\"findings\": [\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"], \"contrasts\": {\"scores\": {\"H0\": {\"17\": {\"median\": 0.4365037520120004, \"worst\": 1.0052801824944793, \"passed\": 20, \"timing_failed\": 3}, \"29\": {\"median\": 0.28292786236152756, \"worst\": 0.5127251148223877, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30524956438314377, \"worst\": 0.7802688179580175, \"passed\": 21, \"timing_failed\": 3}}, \"H1\": {\"17\": {\"median\": 0.3395875888449863, \"worst\": 0.9354491186725422, \"passed\": 21, \"timing_failed\": 3}, \"29\": {\"median\": 0.31607637716712333, \"worst\": 0.5753250312869032, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H2\": {\"17\": {\"median\": 0.43348677516577105, \"worst\": 1.8110211579335167, \"passed\": 19, \"timing_failed\": 3}, \"29\": {\"median\": 0.3990367534715924, \"worst\": 0.9107623517219651, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.36584101854260864, \"worst\": 0.8447493974809761, \"passed\": 20, \"timing_failed\": 4}}, \"H3\": {\"17\": {\"median\": 0.3352816505602906, \"worst\": 1.812020020934536, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.43325713181691544, \"worst\": 0.9615674458114688, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3307039539019267, \"worst\": 0.846493135999775, \"passed\": 20, \"timing_failed\": 4}}, \"H4\": {\"17\": {\"median\": 0.324803339834625, \"worst\": 0.9368401122807294, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.31374135471994247, \"worst\": 0.8740570736765794, \"passed\": 21, \"timing_failed\": 3}}, \"H5\": {\"17\": {\"median\": 0.3355828996939276, \"worst\": 0.9252970716895309, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30482061712741415, \"worst\": 0.725357975891658, \"passed\": 21, \"timing_failed\": 3}}, \"H6\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3182123104731242, \"worst\": 0.8783023580228165, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H7\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3303073707693912, \"worst\": 0.7655792923010828, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H8\": {\"17\": {\"median\": 0.3414170187174368, \"worst\": 1.5089416949485257, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.2810130516688029, \"worst\": 0.6417803527912247, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.24815432030927032, \"worst\": 0.8653265324802005, \"passed\": 22, \"timing_failed\": 2}}, \"H9\": {\"17\": {\"median\": 0.31862109899520874, \"worst\": 1.5033680218477994, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.27037493310773203, \"worst\": 0.8620443344486319, \"passed\": 22, \"timing_failed\": 2}}}, \"contrasts\": [{\"axis\": \"learning_rate\", \"control\": \"H0\", \"treatment\": \"H4\", \"paired_ratios\": [0.7441020571701649, 1.2485230590554062, 1.027819172662733], \"worst_ratios\": [0.9319194077377272, 1.6739413025317798, 1.1201999279735515], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H1\", \"treatment\": \"H5\", \"paired_ratios\": [0.9882071981350098, 1.117584184473384, 0.9107328812842067], \"worst_ratios\": [0.9891474086827751, 1.4918032414246565, 0.8559788009180586], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H2\", \"treatment\": \"H6\", \"paired_ratios\": [0.9074691197432503, 0.7974511312672302, 0.9148732381059053], \"worst_ratios\": [1.0002366394334952, 0.9643595350227456, 1.0031398680242254], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H3\", \"treatment\": \"H7\", \"paired_ratios\": [1.173269881076553, 0.762381843281397, 1.012077882096616], \"worst_ratios\": [0.9996852661816263, 0.7961784642729963, 1.001073444147615], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H0\", \"treatment\": \"H2\", \"paired_ratios\": [0.9930883140584175, 1.4103833752566226, 1.1984980855973035], \"worst_ratios\": [1.8015088623747564, 1.7763170271802675, 1.0826389290958798], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H1\", \"treatment\": \"H3\", \"paired_ratios\": [0.9873200952386358, 1.3707355661946021, 0.9880662523010625], \"worst_ratios\": [1.9370588787404064, 1.6713464450879318, 0.9989277068991386], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H4\", \"treatment\": \"H6\", \"paired_ratios\": [1.2111201272755123, 0.900833837197857, 1.0667964303424498], \"worst_ratios\": [1.9335740359626774, 1.0233383092905834, 0.9695039656142271], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H5\", \"treatment\": \"H7\", \"paired_ratios\": [1.1722166494145132, 0.9350739945369173, 1.0980167956491473], \"worst_ratios\": [1.957695287683977, 0.8920010420727108, 1.1682532311868883], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H0\", \"treatment\": \"H1\", \"paired_ratios\": [0.7779717523153165, 1.117162426241493, 1.0964738244341334], \"worst_ratios\": [0.9305357202519801, 1.1220925495061824, 1.0860382724511297], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H2\", \"treatment\": \"H3\", \"paired_ratios\": [0.7734530088768555, 1.0857574598019057, 0.9039553717058394], \"worst_ratios\": [1.0005515468423125, 1.0557830415293816, 1.002064208064544], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H4\", \"treatment\": \"H5\", \"paired_ratios\": [1.033187958796209, 1.0, 0.9715665867494857], \"worst_ratios\": [0.987678750685539, 1.0, 0.8298748419717688], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H6\", \"treatment\": \"H7\", \"paired_ratios\": [1.0, 1.0380094040933987, 1.0], \"worst_ratios\": [1.0, 0.8716580176609233, 1.0], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H4\", \"treatment\": \"H8\", \"paired_ratios\": [1.05114996320934, 0.7955256830293741, 0.7909518989958539], \"worst_ratios\": [1.6106715277967976, 0.7477589182838387, 0.9900114746973498], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H5\", \"treatment\": \"H9\", \"paired_ratios\": [0.9494557061334499, 1.0, 0.8869968693578101], \"worst_ratios\": [1.6247409268276938, 1.0, 1.1884398643152025], \"supported\": false}]}}",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-rare_recovery_support-v1",
+          "claim_status": "Aperta",
+          "claim": "Previous independent support expansion may not specifically cover the small-z, long-relaxation regimes that determine offsets.",
+          "assessment": "Indeterminata",
+          "argument": "[\"All original frozen39f base/wide metrics exactly reproduced on development and stress. A0 stress62/72; A6 stress61/72; parent59/72. These are descriptive development/stress results, not independent confirmation.\", \"A0 residual timing: Im same_v_history case1 seed43 onset0.4ms; K_Pst slow_recovery case0 seeds17/29/43 offsets1.8/2.7/1.9ms; Nap_Et2 slow_recovery case1 offsets3.0/1.2/5.6ms; Nap_Et2 calcium_switch case0 seeds29/43 peaks1.2ms. Current failures: SK_E2 reversal case0 seed17 NRMSE0.0118254; NaTs2_t activation_boundary case0 seed17 NRMSE0.0181145 (limit0.01).\", \"All72 A0 gate checks pass. Slow-recovery current NRMSE is only0.0000815-0.0006428, yet offsets fail. Low waveform error is not sufficient for accurate dynamical timing.\", \"Frozen39f wide oracle60 learned ->61 teacher_u ->67 teacher_z ->72 both ->72 state_reset; FP64 inference alone stays60. These interventions concern the parent, not newA0/A6. Repeating them on current candidates is mandatory before attributing the11 residuals to z.\", \"Weighted auxiliary/main gradient median is7.23 for old full weight,0.276 at0.01weight,0.029 for aligned low-weight64tick loss. Lower dominance is measured but did not yield selected gains. A1-A4,A7,A9 retain step0 for every seed;23/30 members retain step0 overall. This suggests unsuccessful fine-tuning, not nonfinite divergence.\", \"Longer256tick recurrence and independent FIT expansion did not satisfy preregistered superiority contrasts. They do not establish that data or budget can never help. A8 stress62 is nonselectable and cannot justify switching models.\", \"Common alternative selection gives A0 62/72 but is explicitly diagnostic/nonselectable. Primary remains61. On frozen39f wide,6/10 failed channel events change pass under grid-phase probes,0/10 under tiny perturbations; precision alone no benefit. Sensitivity does not authorize changing the timing thresholds.\", \"The code already supervises u and normalized log_z across all18 gates, has stratified V/logCa anchors and long held-input compositions. Next work must test tail/distribution of this existing objective, not claim rate supervision or long anchors are new.\", \"Candidate deployment architecture unchanged at2404 parameters,18 bounded states,learned u/z; FP64 affine training common to all arms, FP32 inference. Resident benchmark is not an end-to-end quality-qualified speedup.\"]",
+          "finding_code": "findings-giada-task39g-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-rare_recovery_support-v1",
+          "claim_status": "Aperta",
+          "claim": "Previous independent support expansion may not specifically cover the small-z, long-relaxation regimes that determine offsets.",
+          "assessment": "Indeterminata",
+          "argument": "{\"findings\": [\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"], \"contrasts\": {\"scores\": {\"H0\": {\"17\": {\"median\": 0.4365037520120004, \"worst\": 1.0052801824944793, \"passed\": 20, \"timing_failed\": 3}, \"29\": {\"median\": 0.28292786236152756, \"worst\": 0.5127251148223877, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30524956438314377, \"worst\": 0.7802688179580175, \"passed\": 21, \"timing_failed\": 3}}, \"H1\": {\"17\": {\"median\": 0.3395875888449863, \"worst\": 0.9354491186725422, \"passed\": 21, \"timing_failed\": 3}, \"29\": {\"median\": 0.31607637716712333, \"worst\": 0.5753250312869032, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H2\": {\"17\": {\"median\": 0.43348677516577105, \"worst\": 1.8110211579335167, \"passed\": 19, \"timing_failed\": 3}, \"29\": {\"median\": 0.3990367534715924, \"worst\": 0.9107623517219651, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.36584101854260864, \"worst\": 0.8447493974809761, \"passed\": 20, \"timing_failed\": 4}}, \"H3\": {\"17\": {\"median\": 0.3352816505602906, \"worst\": 1.812020020934536, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.43325713181691544, \"worst\": 0.9615674458114688, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3307039539019267, \"worst\": 0.846493135999775, \"passed\": 20, \"timing_failed\": 4}}, \"H4\": {\"17\": {\"median\": 0.324803339834625, \"worst\": 0.9368401122807294, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.31374135471994247, \"worst\": 0.8740570736765794, \"passed\": 21, \"timing_failed\": 3}}, \"H5\": {\"17\": {\"median\": 0.3355828996939276, \"worst\": 0.9252970716895309, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30482061712741415, \"worst\": 0.725357975891658, \"passed\": 21, \"timing_failed\": 3}}, \"H6\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3182123104731242, \"worst\": 0.8783023580228165, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H7\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3303073707693912, \"worst\": 0.7655792923010828, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H8\": {\"17\": {\"median\": 0.3414170187174368, \"worst\": 1.5089416949485257, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.2810130516688029, \"worst\": 0.6417803527912247, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.24815432030927032, \"worst\": 0.8653265324802005, \"passed\": 22, \"timing_failed\": 2}}, \"H9\": {\"17\": {\"median\": 0.31862109899520874, \"worst\": 1.5033680218477994, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.27037493310773203, \"worst\": 0.8620443344486319, \"passed\": 22, \"timing_failed\": 2}}}, \"contrasts\": [{\"axis\": \"learning_rate\", \"control\": \"H0\", \"treatment\": \"H4\", \"paired_ratios\": [0.7441020571701649, 1.2485230590554062, 1.027819172662733], \"worst_ratios\": [0.9319194077377272, 1.6739413025317798, 1.1201999279735515], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H1\", \"treatment\": \"H5\", \"paired_ratios\": [0.9882071981350098, 1.117584184473384, 0.9107328812842067], \"worst_ratios\": [0.9891474086827751, 1.4918032414246565, 0.8559788009180586], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H2\", \"treatment\": \"H6\", \"paired_ratios\": [0.9074691197432503, 0.7974511312672302, 0.9148732381059053], \"worst_ratios\": [1.0002366394334952, 0.9643595350227456, 1.0031398680242254], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H3\", \"treatment\": \"H7\", \"paired_ratios\": [1.173269881076553, 0.762381843281397, 1.012077882096616], \"worst_ratios\": [0.9996852661816263, 0.7961784642729963, 1.001073444147615], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H0\", \"treatment\": \"H2\", \"paired_ratios\": [0.9930883140584175, 1.4103833752566226, 1.1984980855973035], \"worst_ratios\": [1.8015088623747564, 1.7763170271802675, 1.0826389290958798], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H1\", \"treatment\": \"H3\", \"paired_ratios\": [0.9873200952386358, 1.3707355661946021, 0.9880662523010625], \"worst_ratios\": [1.9370588787404064, 1.6713464450879318, 0.9989277068991386], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H4\", \"treatment\": \"H6\", \"paired_ratios\": [1.2111201272755123, 0.900833837197857, 1.0667964303424498], \"worst_ratios\": [1.9335740359626774, 1.0233383092905834, 0.9695039656142271], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H5\", \"treatment\": \"H7\", \"paired_ratios\": [1.1722166494145132, 0.9350739945369173, 1.0980167956491473], \"worst_ratios\": [1.957695287683977, 0.8920010420727108, 1.1682532311868883], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H0\", \"treatment\": \"H1\", \"paired_ratios\": [0.7779717523153165, 1.117162426241493, 1.0964738244341334], \"worst_ratios\": [0.9305357202519801, 1.1220925495061824, 1.0860382724511297], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H2\", \"treatment\": \"H3\", \"paired_ratios\": [0.7734530088768555, 1.0857574598019057, 0.9039553717058394], \"worst_ratios\": [1.0005515468423125, 1.0557830415293816, 1.002064208064544], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H4\", \"treatment\": \"H5\", \"paired_ratios\": [1.033187958796209, 1.0, 0.9715665867494857], \"worst_ratios\": [0.987678750685539, 1.0, 0.8298748419717688], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H6\", \"treatment\": \"H7\", \"paired_ratios\": [1.0, 1.0380094040933987, 1.0], \"worst_ratios\": [1.0, 0.8716580176609233, 1.0], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H4\", \"treatment\": \"H8\", \"paired_ratios\": [1.05114996320934, 0.7955256830293741, 0.7909518989958539], \"worst_ratios\": [1.6106715277967976, 0.7477589182838387, 0.9900114746973498], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H5\", \"treatment\": \"H9\", \"paired_ratios\": [0.9494557061334499, 1.0, 0.8869968693578101], \"worst_ratios\": [1.6247409268276938, 1.0, 1.1884398643152025], \"supported\": false}]}}",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-relaxation_bias_accumulation-v1",
+          "claim_status": "Aperta",
+          "claim": "Small systematic errors in learned relaxation z accumulate over shallow recovery tails; equilibrium u error contributes separately.",
+          "assessment": "Indeterminata",
+          "argument": "[\"All original frozen39f base/wide metrics exactly reproduced on development and stress. A0 stress62/72; A6 stress61/72; parent59/72. These are descriptive development/stress results, not independent confirmation.\", \"A0 residual timing: Im same_v_history case1 seed43 onset0.4ms; K_Pst slow_recovery case0 seeds17/29/43 offsets1.8/2.7/1.9ms; Nap_Et2 slow_recovery case1 offsets3.0/1.2/5.6ms; Nap_Et2 calcium_switch case0 seeds29/43 peaks1.2ms. Current failures: SK_E2 reversal case0 seed17 NRMSE0.0118254; NaTs2_t activation_boundary case0 seed17 NRMSE0.0181145 (limit0.01).\", \"All72 A0 gate checks pass. Slow-recovery current NRMSE is only0.0000815-0.0006428, yet offsets fail. Low waveform error is not sufficient for accurate dynamical timing.\", \"Frozen39f wide oracle60 learned ->61 teacher_u ->67 teacher_z ->72 both ->72 state_reset; FP64 inference alone stays60. These interventions concern the parent, not newA0/A6. Repeating them on current candidates is mandatory before attributing the11 residuals to z.\", \"Weighted auxiliary/main gradient median is7.23 for old full weight,0.276 at0.01weight,0.029 for aligned low-weight64tick loss. Lower dominance is measured but did not yield selected gains. A1-A4,A7,A9 retain step0 for every seed;23/30 members retain step0 overall. This suggests unsuccessful fine-tuning, not nonfinite divergence.\", \"Longer256tick recurrence and independent FIT expansion did not satisfy preregistered superiority contrasts. They do not establish that data or budget can never help. A8 stress62 is nonselectable and cannot justify switching models.\", \"Common alternative selection gives A0 62/72 but is explicitly diagnostic/nonselectable. Primary remains61. On frozen39f wide,6/10 failed channel events change pass under grid-phase probes,0/10 under tiny perturbations; precision alone no benefit. Sensitivity does not authorize changing the timing thresholds.\", \"The code already supervises u and normalized log_z across all18 gates, has stratified V/logCa anchors and long held-input compositions. Next work must test tail/distribution of this existing objective, not claim rate supervision or long anchors are new.\", \"Candidate deployment architecture unchanged at2404 parameters,18 bounded states,learned u/z; FP64 affine training common to all arms, FP32 inference. Resident benchmark is not an end-to-end quality-qualified speedup.\"]",
+          "finding_code": "findings-giada-task39g-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-relaxation_bias_accumulation-v1",
+          "claim_status": "Aperta",
+          "claim": "Small systematic errors in learned relaxation z accumulate over shallow recovery tails; equilibrium u error contributes separately.",
+          "assessment": "Indeterminata",
+          "argument": "{\"findings\": [\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"], \"contrasts\": {\"scores\": {\"H0\": {\"17\": {\"median\": 0.4365037520120004, \"worst\": 1.0052801824944793, \"passed\": 20, \"timing_failed\": 3}, \"29\": {\"median\": 0.28292786236152756, \"worst\": 0.5127251148223877, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30524956438314377, \"worst\": 0.7802688179580175, \"passed\": 21, \"timing_failed\": 3}}, \"H1\": {\"17\": {\"median\": 0.3395875888449863, \"worst\": 0.9354491186725422, \"passed\": 21, \"timing_failed\": 3}, \"29\": {\"median\": 0.31607637716712333, \"worst\": 0.5753250312869032, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H2\": {\"17\": {\"median\": 0.43348677516577105, \"worst\": 1.8110211579335167, \"passed\": 19, \"timing_failed\": 3}, \"29\": {\"median\": 0.3990367534715924, \"worst\": 0.9107623517219651, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.36584101854260864, \"worst\": 0.8447493974809761, \"passed\": 20, \"timing_failed\": 4}}, \"H3\": {\"17\": {\"median\": 0.3352816505602906, \"worst\": 1.812020020934536, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.43325713181691544, \"worst\": 0.9615674458114688, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3307039539019267, \"worst\": 0.846493135999775, \"passed\": 20, \"timing_failed\": 4}}, \"H4\": {\"17\": {\"median\": 0.324803339834625, \"worst\": 0.9368401122807294, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.31374135471994247, \"worst\": 0.8740570736765794, \"passed\": 21, \"timing_failed\": 3}}, \"H5\": {\"17\": {\"median\": 0.3355828996939276, \"worst\": 0.9252970716895309, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30482061712741415, \"worst\": 0.725357975891658, \"passed\": 21, \"timing_failed\": 3}}, \"H6\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3182123104731242, \"worst\": 0.8783023580228165, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H7\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3303073707693912, \"worst\": 0.7655792923010828, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H8\": {\"17\": {\"median\": 0.3414170187174368, \"worst\": 1.5089416949485257, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.2810130516688029, \"worst\": 0.6417803527912247, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.24815432030927032, \"worst\": 0.8653265324802005, \"passed\": 22, \"timing_failed\": 2}}, \"H9\": {\"17\": {\"median\": 0.31862109899520874, \"worst\": 1.5033680218477994, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.27037493310773203, \"worst\": 0.8620443344486319, \"passed\": 22, \"timing_failed\": 2}}}, \"contrasts\": [{\"axis\": \"learning_rate\", \"control\": \"H0\", \"treatment\": \"H4\", \"paired_ratios\": [0.7441020571701649, 1.2485230590554062, 1.027819172662733], \"worst_ratios\": [0.9319194077377272, 1.6739413025317798, 1.1201999279735515], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H1\", \"treatment\": \"H5\", \"paired_ratios\": [0.9882071981350098, 1.117584184473384, 0.9107328812842067], \"worst_ratios\": [0.9891474086827751, 1.4918032414246565, 0.8559788009180586], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H2\", \"treatment\": \"H6\", \"paired_ratios\": [0.9074691197432503, 0.7974511312672302, 0.9148732381059053], \"worst_ratios\": [1.0002366394334952, 0.9643595350227456, 1.0031398680242254], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H3\", \"treatment\": \"H7\", \"paired_ratios\": [1.173269881076553, 0.762381843281397, 1.012077882096616], \"worst_ratios\": [0.9996852661816263, 0.7961784642729963, 1.001073444147615], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H0\", \"treatment\": \"H2\", \"paired_ratios\": [0.9930883140584175, 1.4103833752566226, 1.1984980855973035], \"worst_ratios\": [1.8015088623747564, 1.7763170271802675, 1.0826389290958798], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H1\", \"treatment\": \"H3\", \"paired_ratios\": [0.9873200952386358, 1.3707355661946021, 0.9880662523010625], \"worst_ratios\": [1.9370588787404064, 1.6713464450879318, 0.9989277068991386], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H4\", \"treatment\": \"H6\", \"paired_ratios\": [1.2111201272755123, 0.900833837197857, 1.0667964303424498], \"worst_ratios\": [1.9335740359626774, 1.0233383092905834, 0.9695039656142271], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H5\", \"treatment\": \"H7\", \"paired_ratios\": [1.1722166494145132, 0.9350739945369173, 1.0980167956491473], \"worst_ratios\": [1.957695287683977, 0.8920010420727108, 1.1682532311868883], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H0\", \"treatment\": \"H1\", \"paired_ratios\": [0.7779717523153165, 1.117162426241493, 1.0964738244341334], \"worst_ratios\": [0.9305357202519801, 1.1220925495061824, 1.0860382724511297], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H2\", \"treatment\": \"H3\", \"paired_ratios\": [0.7734530088768555, 1.0857574598019057, 0.9039553717058394], \"worst_ratios\": [1.0005515468423125, 1.0557830415293816, 1.002064208064544], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H4\", \"treatment\": \"H5\", \"paired_ratios\": [1.033187958796209, 1.0, 0.9715665867494857], \"worst_ratios\": [0.987678750685539, 1.0, 0.8298748419717688], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H6\", \"treatment\": \"H7\", \"paired_ratios\": [1.0, 1.0380094040933987, 1.0], \"worst_ratios\": [1.0, 0.8716580176609233, 1.0], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H4\", \"treatment\": \"H8\", \"paired_ratios\": [1.05114996320934, 0.7955256830293741, 0.7909518989958539], \"worst_ratios\": [1.6106715277967976, 0.7477589182838387, 0.9900114746973498], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H5\", \"treatment\": \"H9\", \"paired_ratios\": [0.9494557061334499, 1.0, 0.8869968693578101], \"worst_ratios\": [1.6247409268276938, 1.0, 1.1884398643152025], \"supported\": false}]}}",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-warm_finetuning_step_interference-v1",
+          "claim_status": "Aperta",
+          "claim": "LR0.001 and joint shared-feature updates damage already-good coefficients faster than they refine residual slow dynamics, causing step0 selection.",
+          "assessment": "Indeterminata",
+          "argument": "[\"All original frozen39f base/wide metrics exactly reproduced on development and stress. A0 stress62/72; A6 stress61/72; parent59/72. These are descriptive development/stress results, not independent confirmation.\", \"A0 residual timing: Im same_v_history case1 seed43 onset0.4ms; K_Pst slow_recovery case0 seeds17/29/43 offsets1.8/2.7/1.9ms; Nap_Et2 slow_recovery case1 offsets3.0/1.2/5.6ms; Nap_Et2 calcium_switch case0 seeds29/43 peaks1.2ms. Current failures: SK_E2 reversal case0 seed17 NRMSE0.0118254; NaTs2_t activation_boundary case0 seed17 NRMSE0.0181145 (limit0.01).\", \"All72 A0 gate checks pass. Slow-recovery current NRMSE is only0.0000815-0.0006428, yet offsets fail. Low waveform error is not sufficient for accurate dynamical timing.\", \"Frozen39f wide oracle60 learned ->61 teacher_u ->67 teacher_z ->72 both ->72 state_reset; FP64 inference alone stays60. These interventions concern the parent, not newA0/A6. Repeating them on current candidates is mandatory before attributing the11 residuals to z.\", \"Weighted auxiliary/main gradient median is7.23 for old full weight,0.276 at0.01weight,0.029 for aligned low-weight64tick loss. Lower dominance is measured but did not yield selected gains. A1-A4,A7,A9 retain step0 for every seed;23/30 members retain step0 overall. This suggests unsuccessful fine-tuning, not nonfinite divergence.\", \"Longer256tick recurrence and independent FIT expansion did not satisfy preregistered superiority contrasts. They do not establish that data or budget can never help. A8 stress62 is nonselectable and cannot justify switching models.\", \"Common alternative selection gives A0 62/72 but is explicitly diagnostic/nonselectable. Primary remains61. On frozen39f wide,6/10 failed channel events change pass under grid-phase probes,0/10 under tiny perturbations; precision alone no benefit. Sensitivity does not authorize changing the timing thresholds.\", \"The code already supervises u and normalized log_z across all18 gates, has stratified V/logCa anchors and long held-input compositions. Next work must test tail/distribution of this existing objective, not claim rate supervision or long anchors are new.\", \"Candidate deployment architecture unchanged at2404 parameters,18 bounded states,learned u/z; FP64 affine training common to all arms, FP32 inference. Resident benchmark is not an end-to-end quality-qualified speedup.\"]",
+          "finding_code": "findings-giada-task39g-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39g-result-residual-warm_finetuning_step_interference-v1",
+          "claim_status": "Aperta",
+          "claim": "LR0.001 and joint shared-feature updates damage already-good coefficients faster than they refine residual slow dynamics, causing step0 selection.",
+          "assessment": "Indeterminata",
+          "argument": "{\"findings\": [\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"], \"contrasts\": {\"scores\": {\"H0\": {\"17\": {\"median\": 0.4365037520120004, \"worst\": 1.0052801824944793, \"passed\": 20, \"timing_failed\": 3}, \"29\": {\"median\": 0.28292786236152756, \"worst\": 0.5127251148223877, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30524956438314377, \"worst\": 0.7802688179580175, \"passed\": 21, \"timing_failed\": 3}}, \"H1\": {\"17\": {\"median\": 0.3395875888449863, \"worst\": 0.9354491186725422, \"passed\": 21, \"timing_failed\": 3}, \"29\": {\"median\": 0.31607637716712333, \"worst\": 0.5753250312869032, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H2\": {\"17\": {\"median\": 0.43348677516577105, \"worst\": 1.8110211579335167, \"passed\": 19, \"timing_failed\": 3}, \"29\": {\"median\": 0.3990367534715924, \"worst\": 0.9107623517219651, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.36584101854260864, \"worst\": 0.8447493974809761, \"passed\": 20, \"timing_failed\": 4}}, \"H3\": {\"17\": {\"median\": 0.3352816505602906, \"worst\": 1.812020020934536, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.43325713181691544, \"worst\": 0.9615674458114688, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3307039539019267, \"worst\": 0.846493135999775, \"passed\": 20, \"timing_failed\": 4}}, \"H4\": {\"17\": {\"median\": 0.324803339834625, \"worst\": 0.9368401122807294, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.31374135471994247, \"worst\": 0.8740570736765794, \"passed\": 21, \"timing_failed\": 3}}, \"H5\": {\"17\": {\"median\": 0.3355828996939276, \"worst\": 0.9252970716895309, \"passed\": 22, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.30482061712741415, \"worst\": 0.725357975891658, \"passed\": 21, \"timing_failed\": 3}}, \"H6\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3182123104731242, \"worst\": 0.8783023580228165, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H7\": {\"17\": {\"median\": 0.3933758622800225, \"worst\": 1.8114497169543777, \"passed\": 20, \"timing_failed\": 2}, \"29\": {\"median\": 0.3303073707693912, \"worst\": 0.7655792923010828, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.3346981572660389, \"worst\": 0.8474017991026104, \"passed\": 20, \"timing_failed\": 4}}, \"H8\": {\"17\": {\"median\": 0.3414170187174368, \"worst\": 1.5089416949485257, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.2810130516688029, \"worst\": 0.6417803527912247, \"passed\": 22, \"timing_failed\": 2}, \"43\": {\"median\": 0.24815432030927032, \"worst\": 0.8653265324802005, \"passed\": 22, \"timing_failed\": 2}}, \"H9\": {\"17\": {\"median\": 0.31862109899520874, \"worst\": 1.5033680218477994, \"passed\": 21, \"timing_failed\": 2}, \"29\": {\"median\": 0.3532419602076213, \"worst\": 0.858271746546544, \"passed\": 21, \"timing_failed\": 3}, \"43\": {\"median\": 0.27037493310773203, \"worst\": 0.8620443344486319, \"passed\": 22, \"timing_failed\": 2}}}, \"contrasts\": [{\"axis\": \"learning_rate\", \"control\": \"H0\", \"treatment\": \"H4\", \"paired_ratios\": [0.7441020571701649, 1.2485230590554062, 1.027819172662733], \"worst_ratios\": [0.9319194077377272, 1.6739413025317798, 1.1201999279735515], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H1\", \"treatment\": \"H5\", \"paired_ratios\": [0.9882071981350098, 1.117584184473384, 0.9107328812842067], \"worst_ratios\": [0.9891474086827751, 1.4918032414246565, 0.8559788009180586], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H2\", \"treatment\": \"H6\", \"paired_ratios\": [0.9074691197432503, 0.7974511312672302, 0.9148732381059053], \"worst_ratios\": [1.0002366394334952, 0.9643595350227456, 1.0031398680242254], \"supported\": false}, {\"axis\": \"learning_rate\", \"control\": \"H3\", \"treatment\": \"H7\", \"paired_ratios\": [1.173269881076553, 0.762381843281397, 1.012077882096616], \"worst_ratios\": [0.9996852661816263, 0.7961784642729963, 1.001073444147615], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H0\", \"treatment\": \"H2\", \"paired_ratios\": [0.9930883140584175, 1.4103833752566226, 1.1984980855973035], \"worst_ratios\": [1.8015088623747564, 1.7763170271802675, 1.0826389290958798], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H1\", \"treatment\": \"H3\", \"paired_ratios\": [0.9873200952386358, 1.3707355661946021, 0.9880662523010625], \"worst_ratios\": [1.9370588787404064, 1.6713464450879318, 0.9989277068991386], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H4\", \"treatment\": \"H6\", \"paired_ratios\": [1.2111201272755123, 0.900833837197857, 1.0667964303424498], \"worst_ratios\": [1.9335740359626774, 1.0233383092905834, 0.9695039656142271], \"supported\": false}, {\"axis\": \"z_only\", \"control\": \"H5\", \"treatment\": \"H7\", \"paired_ratios\": [1.1722166494145132, 0.9350739945369173, 1.0980167956491473], \"worst_ratios\": [1.957695287683977, 0.8920010420727108, 1.1682532311868883], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H0\", \"treatment\": \"H1\", \"paired_ratios\": [0.7779717523153165, 1.117162426241493, 1.0964738244341334], \"worst_ratios\": [0.9305357202519801, 1.1220925495061824, 1.0860382724511297], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H2\", \"treatment\": \"H3\", \"paired_ratios\": [0.7734530088768555, 1.0857574598019057, 0.9039553717058394], \"worst_ratios\": [1.0005515468423125, 1.0557830415293816, 1.002064208064544], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H4\", \"treatment\": \"H5\", \"paired_ratios\": [1.033187958796209, 1.0, 0.9715665867494857], \"worst_ratios\": [0.987678750685539, 1.0, 0.8298748419717688], \"supported\": false}, {\"axis\": \"auxiliary\", \"control\": \"H6\", \"treatment\": \"H7\", \"paired_ratios\": [1.0, 1.0380094040933987, 1.0], \"worst_ratios\": [1.0, 0.8716580176609233, 1.0], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H4\", \"treatment\": \"H8\", \"paired_ratios\": [1.05114996320934, 0.7955256830293741, 0.7909518989958539], \"worst_ratios\": [1.6106715277967976, 0.7477589182838387, 0.9900114746973498], \"supported\": false}, {\"axis\": \"recovery_support\", \"control\": \"H5\", \"treatment\": \"H9\", \"paired_ratios\": [0.9494557061334499, 1.0, 0.8869968693578101], \"worst_ratios\": [1.6247409268276938, 1.0, 1.1884398643152025], \"supported\": false}]}}",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39h-result-residual-budget_selection_mismatch-v1",
+          "claim_status": "Aperta",
+          "claim": "Early useful correction followed by drift/forgetting or development-panel/full-trace mismatch explains why H8 selects1000-3000 despite120000updates.",
+          "assessment": "Indeterminata",
+          "argument": "[\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"]",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39h-result-residual-coupled_equilibrium_relaxation-v1",
+          "claim_status": "Aperta",
+          "claim": "The remaining slow-tail errors require jointly reducing equilibrium u bias and accumulated relaxation z bias; relative importance differs by channel and seed.",
+          "assessment": "Indeterminata",
+          "argument": "[\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"]",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39h-result-residual-learned_feature_interference-v1",
+          "claim_status": "Aperta",
+          "claim": "Frozen shared voltage features and shared gradients impede independent u/z refinement for slow channels; a small learned channel adapter may improve learnability without lowering abstraction.",
+          "assessment": "Indeterminata",
+          "argument": "[\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"]",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39h-result-residual-sk_equilibrium_weighting-v1",
+          "claim_status": "Aperta",
+          "claim": "SK_E2 low-occupancy equilibrium accuracy is underweighted by current losses,so small absolute gate errors exceed relative current tolerance.",
+          "assessment": "Indeterminata",
+          "argument": "[\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"]",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39h-result-residual-sk_learned_shape-v1",
+          "claim_status": "Aperta",
+          "claim": "A bounded monotone learned calcium-to-equilibrium map may constrain SK_E2 more effectively than the existing unconstrained SiLU head at comparable capacity.",
+          "assessment": "Indeterminata",
+          "argument": "[\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"]",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        },
+        {
+          "claim_code": "claims-giada-task39h-result-residual-tail_information_exposure-v1",
+          "claim_status": "Aperta",
+          "claim": "Constant-input recovery FIT does not sufficiently constrain paths entering and leaving slow tails; variable-history composition or rare calcium coverage is missing.",
+          "assessment": "Indeterminata",
+          "argument": "[\"H8 residual7=6slow-recovery timing cases (K_Pst3,Nap_Et2 3) andSK_E2 reversal case0 seed17 current-NRMSE0.0150894>0.01. All72 H8 gate checks pass. K_Pst offsets1.2/1.5/1.7ms;Nap_Et2 3.9/0.6/3.0ms;limit0.3ms. Waveform errors alone hide failed timing.\", \"H8 gains same_v_history case1 seed43,calcium_switch case0 seeds29/43,activation_boundary case0 seed17;loses no previously passing development case. SK_E2 NRMSE worsens from0.0118254 to0.0150894; improved case count is not uniformly improved accuracy.\", \"H8 selected checkpoints1000/1000/3000;H9 1000/0/300. H4/H5 each64;z-head-only H2/H3/H6/H7 each61. Original continued H0 62,auxiliary H1 63. More updates and restricted-z tuning are not sufficient under this objective and fixed feature basis.\", \"39h parent oracles on39g A0:61 learned,65 teacher_u,64 teacher_z,72both,72reset;FP64 alone remains61. A6:61,62,68,72,72. On A0 K_Pst gate13(z) andNap_Et2 gate9(z/u) matter most;SK_E2 gate16 u fixes the residual, z does not.\", \"Additional post-hoc frozen H8 CPU probes on the7 failures reproduce all event metrics and pass/fail with max channel-NRMSE discrepancy<1e-5. Teacher_u repairs2/7;teacher_z2/7;both7/7;reset8ticks7/7;reset64ticks4/7. These are diagnostic interventions,not eligible candidates or new confirmation.\", \"H8 K_Pst z_gate13 fixes seeds17/43;seed29 improves offset1.5->0.5ms but still fails. Nap_Et2 z_gate9 improves seeds17/43 to0.5ms but still fails;seed29 is fixed byu_gate9. Thus combined equilibrium/rate residuals differ across seeds; a z-only universal fix is contradicted for these cases.\", \"H8 SK_E2 u_gate16 fixes the residual;z_gate16 does not. Its head already uses only calcium with16hidden units: calcium-only input is not a new proposal. Test relative low-occupancy accuracy,calcium coverage and learned shape/gradient interference;do not restore canonical kinetics.\", \"At step0 the new auxiliary/main gradient ratio is~1 in all-parameter arms;no general win followed. The broad hypothesis of initial auxiliary gradient dominance alone is weakened. Five of9 failed parent timing events change pass under grid-phase diagnostic,none under tiny perturbations;FP64 alone no benefit. This does not justify threshold edits.\", \"Read-only SQLite query found related earlier claims on equilibrium-vs-rate (39e), rate/equilibrium accumulation (39f),tail-relative objective and head interference (39d),and39g relaxation/support. Their scope is preserved;39h provides new current-parent localization rather than a claim that these issues are newly discovered.\", \"Resident ionic-core benchmark around7.87x on thisT4 is preserved as a scoped timing observation. Candidate quality does not pass;no quality-qualified end-to-end speed claim.\"]",
+          "finding_code": "findings-giada-task39h-result-outcome-v1"
+        }
+      ]
+    },
+    {
+      "name": "39g_39h_observed_case_counts",
+      "sql": "\n        SELECT CASE WHEN o.\"Codice stabile\" LIKE '%task39g%' THEN '39g'\n                    ELSE '39h' END task,\n               json_extract(j.value,'$.model') model,\n               json_extract(j.value,'$.role') role,\n               COUNT(*) cases,SUM(json_extract(j.value,'$.metrics.passed')) passed\n        FROM observations o,json_each(o.Descrizione,'$.cases') j\n        WHERE (o.\"Codice stabile\" LIKE 'observations-giada-task39g-result-primary-%'\n            OR o.\"Codice stabile\" LIKE 'observations-giada-task39h-result-primary-%')\n        GROUP BY task,model,role ORDER BY task,role,passed DESC\n    ",
+      "parameters": [],
+      "rows": [
+        {
+          "task": "39g",
+          "model": "joint_wA0",
+          "role": "development",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA6",
+          "role": "development",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA1",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA2",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA3",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA4",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA5",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA7",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA8",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA9",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wfrozen39f_wide_t0_s0",
+          "role": "development",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wfrozen39f_base_t0_s0",
+          "role": "development",
+          "cases": 72,
+          "passed": 56
+        },
+        {
+          "task": "39g",
+          "model": "frozen_local161_SKcanonical",
+          "role": "development",
+          "cases": 72,
+          "passed": 53
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA0",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 62
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA8",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 62
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA6",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA5",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA1",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 59
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA2",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 59
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA3",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 59
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA4",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 59
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA7",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 59
+        },
+        {
+          "task": "39g",
+          "model": "joint_wA9",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 59
+        },
+        {
+          "task": "39g",
+          "model": "joint_wfrozen39f_wide_t0_s0",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 59
+        },
+        {
+          "task": "39g",
+          "model": "frozen_local161_SKcanonical",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 56
+        },
+        {
+          "task": "39g",
+          "model": "joint_wfrozen39f_base_t0_s0",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 53
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH8",
+          "role": "development",
+          "cases": 72,
+          "passed": 65
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH4",
+          "role": "development",
+          "cases": 72,
+          "passed": 64
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH5",
+          "role": "development",
+          "cases": 72,
+          "passed": 64
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH9",
+          "role": "development",
+          "cases": 72,
+          "passed": 64
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH1",
+          "role": "development",
+          "cases": 72,
+          "passed": 63
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH0",
+          "role": "development",
+          "cases": 72,
+          "passed": 62
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH2",
+          "role": "development",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH3",
+          "role": "development",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH6",
+          "role": "development",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH7",
+          "role": "development",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39h",
+          "model": "joint_wfrozen39g_A0",
+          "role": "development",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39h",
+          "model": "joint_wfrozen39g_A6",
+          "role": "development",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39h",
+          "model": "frozen_local161_SKcanonical",
+          "role": "development",
+          "cases": 72,
+          "passed": 53
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH1",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 63
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH2",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 63
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH3",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 63
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH5",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 63
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH6",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 63
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH7",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 63
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH9",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 62
+        },
+        {
+          "task": "39h",
+          "model": "joint_wfrozen39g_A0",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 62
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH8",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39h",
+          "model": "joint_wfrozen39g_A6",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 61
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH0",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39h",
+          "model": "joint_wH4",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 60
+        },
+        {
+          "task": "39h",
+          "model": "frozen_local161_SKcanonical",
+          "role": "stress_diagnostic",
+          "cases": 72,
+          "passed": 56
+        }
+      ]
+    },
+    {
+      "name": "39h_H8_failed_channels",
+      "sql": "\n        SELECT json_extract(j.value,'$.family') family,\n               json_extract(j.value,'$.case') case_index,\n               json_extract(j.value,'$.seed') seed,\n               json_extract(c.value,'$.channel') channel,\n               json_extract(c.value,'$.nrmse') nrmse,\n               json_extract(c.value,'$.event.offset_error_ms') offset_error_ms\n        FROM observations o,json_each(o.Descrizione,'$.cases') j,\n             json_each(j.value,'$.metrics.channels') c\n        WHERE o.\"Codice stabile\" LIKE\n             'observations-giada-task39h-result-primary-joint_wH8-development-%'\n          AND json_extract(c.value,'$.passed')=0\n        ORDER BY family,case_index,seed,channel\n    ",
+      "parameters": [],
+      "rows": [
+        {
+          "family": "reversal",
+          "case_index": 0,
+          "seed": 17,
+          "channel": "SK_E2",
+          "nrmse": 0.015089416949485257,
+          "offset_error_ms": null
+        },
+        {
+          "family": "slow_recovery",
+          "case_index": 0,
+          "seed": 17,
+          "channel": "K_Pst",
+          "nrmse": 0.0003361564012265445,
+          "offset_error_ms": 1.2000000000000002
+        },
+        {
+          "family": "slow_recovery",
+          "case_index": 0,
+          "seed": 29,
+          "channel": "K_Pst",
+          "nrmse": 0.00036046596236861847,
+          "offset_error_ms": 1.5
+        },
+        {
+          "family": "slow_recovery",
+          "case_index": 0,
+          "seed": 43,
+          "channel": "K_Pst",
+          "nrmse": 0.0002769940393769687,
+          "offset_error_ms": 1.7000000000000002
+        },
+        {
+          "family": "slow_recovery",
+          "case_index": 1,
+          "seed": 17,
+          "channel": "Nap_Et2",
+          "nrmse": 0.000349878465907459,
+          "offset_error_ms": 3.9000000000000004
+        },
+        {
+          "family": "slow_recovery",
+          "case_index": 1,
+          "seed": 29,
+          "channel": "Nap_Et2",
+          "nrmse": 4.572439263463284e-05,
+          "offset_error_ms": 0.6000000000000001
+        },
+        {
+          "family": "slow_recovery",
+          "case_index": 1,
+          "seed": 43,
+          "channel": "Nap_Et2",
+          "nrmse": 0.0002510909286421817,
+          "offset_error_ms": 3.0
+        }
+      ]
+    },
+    {
+      "name": "39i_registration_boundary",
+      "sql": "\n        SELECT 'findings' kind,\"Codice stabile\" code FROM findings\n        WHERE \"Codice stabile\" LIKE '%task39i%'\n        UNION ALL SELECT 'experiments',\"Codice stabile\" FROM experiments\n        WHERE \"Codice stabile\" LIKE '%task39i%'\n    ",
+      "parameters": [],
+      "rows": [
+        {
+          "kind": "experiments",
+          "code": "experiments-giada-task39i-temporal-suite-v1"
+        }
+      ]
+    }
+  ],
+  "current_I3_residuals": [
+    {
+      "family": "slow_recovery",
+      "case": 0,
+      "seed": 17,
+      "channel": "K_Pst",
+      "nrmse": 0.00013197251915170766,
+      "event": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 0.7000000000000001
+      }
+    },
+    {
+      "family": "slow_recovery",
+      "case": 1,
+      "seed": 17,
+      "channel": "Nap_Et2",
+      "nrmse": 0.00028941916879875385,
+      "event": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 3.5
+      }
+    },
+    {
+      "family": "slow_recovery",
+      "case": 0,
+      "seed": 29,
+      "channel": "K_Pst",
+      "nrmse": 0.0003604837989983274,
+      "event": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 1.5
+      }
+    },
+    {
+      "family": "slow_recovery",
+      "case": 1,
+      "seed": 29,
+      "channel": "Nap_Et2",
+      "nrmse": 4.582785879544288e-05,
+      "event": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 0.6000000000000001
+      }
+    },
+    {
+      "family": "slow_recovery",
+      "case": 0,
+      "seed": 43,
+      "channel": "K_Pst",
+      "nrmse": 0.0002769475461636136,
+      "event": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 1.7000000000000002
+      }
+    },
+    {
+      "family": "slow_recovery",
+      "case": 1,
+      "seed": 43,
+      "channel": "Nap_Et2",
+      "nrmse": 0.0002509191310303615,
+      "event": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 3.0
+      }
+    }
+  ],
+  "frozen_I3_coefficient_probe": [
+    {
+      "model": "I3",
+      "case": 0,
+      "channel": "K_Pst",
+      "gate": 12,
+      "voltage_mv": -4.634765625,
+      "initial": 0.06394767761230469,
+      "u_reference": 0.629584842458877,
+      "u_prediction": [
+        0.6294310688972473,
+        0.6288474202156067,
+        0.6295014023780823
+      ],
+      "tau_reference_ms": 4.252574516444465,
+      "tau_prediction_ms": [
+        4.24632707866906,
+        4.2307398133189,
+        4.245497155438696
+      ],
+      "relative_z_error": [
+        0.0014540010617691834,
+        0.005100213556350708,
+        0.0016474719258623427
+      ]
+    },
+    {
+      "model": "I3",
+      "case": 0,
+      "channel": "K_Pst",
+      "gate": 13,
+      "voltage_mv": -4.634765625,
+      "initial": 0.13117477297782898,
+      "u_reference": 0.004510441966164479,
+      "u_prediction": [
+        0.004515023436397314,
+        0.004514952655881643,
+        0.004505859687924385
+      ],
+      "tau_reference_ms": 172.3875225364235,
+      "tau_prediction_ms": [
+        172.1580254875759,
+        172.0282453210527,
+        171.7974744887117
+      ],
+      "relative_z_error": [
+        0.001332673290358466,
+        0.0020878710989331584,
+        0.0034335565082312947
+      ]
+    },
+    {
+      "model": "I3",
+      "case": 1,
+      "channel": "Nap_Et2",
+      "gate": 8,
+      "voltage_mv": 4.590357303619385,
+      "initial": 0.07928381115198135,
+      "u_reference": 0.999996013872527,
+      "u_prediction": [
+        0.9999960660934448,
+        0.9999960660934448,
+        0.9999960660934448
+      ],
+      "tau_reference_ms": 0.26176939074984856,
+      "tau_prediction_ms": [
+        0.26222299550555805,
+        0.26231568135967276,
+        0.26263688988002787
+      ],
+      "relative_z_error": [
+        -0.0014208855370788642,
+        -0.001710728198283773,
+        -0.002713914196651235
+      ]
+    },
+    {
+      "model": "I3",
+      "case": 1,
+      "channel": "Nap_Et2",
+      "gate": 9,
+      "voltage_mv": 4.590357303619385,
+      "initial": 0.23331378400325775,
+      "u_reference": 0.004777562775230929,
+      "u_prediction": [
+        0.004767525941133499,
+        0.0048085362650454044,
+        0.004802458919584751
+      ],
+      "tau_reference_ms": 706.4297262473283,
+      "tau_prediction_ms": [
+        704.8723653274487,
+        706.4442824752691,
+        707.6633580642421
+      ],
+      "relative_z_error": [
+        0.0022092658585715075,
+        -2.0603461702739523e-05,
+        -0.0017431235382908694
+      ]
+    }
+  ],
+  "selection_and_optimization": {
+    "chosen_step_counts": {
+      "0": 23,
+      "60000": 7,
+      "3000": 1,
+      "1000": 3,
+      "30000": 2
+    },
+    "common_score_improved": 35,
+    "members": 36,
+    "worse_worst_panel_ratio": 36,
+    "example_initial_I0_seed17": {
+      "cohort": "plain",
+      "member": 0,
+      "rank": [
+        5,
+        4.333333333333334,
+        0.4263679823480888
+      ],
+      "panel_cases": 28,
+      "numerically_invalid": false,
+      "nonfinite_cases": 0,
+      "selection_eligible": true
+    },
+    "example_final_I0_seed17": {
+      "cohort": "plain",
+      "member": 0,
+      "rank": [
+        5,
+        35.0,
+        0.323263571613599
+      ],
+      "panel_cases": 28,
+      "numerically_invalid": false,
+      "nonfinite_cases": 0,
+      "selection_eligible": true
+    },
+    "clipping_at_90000": [
+      [
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0
+      ],
+      [
+        90000.0,
+        90000.0,
+        90000.0
+      ],
+      [
+        90000.0,
+        90000.0,
+        90000.0
+      ],
+      [
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0
+      ],
+      [
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0,
+        90000.0
+      ]
+    ]
+  },
+  "frozen_H8_attribution": {
+    "H8/float32/learned": {
+      "cases": 72,
+      "passed": 65
+    },
+    "H8/float32/teacher_u": {
+      "cases": 72,
+      "passed": 67
+    },
+    "H8/float32/teacher_z": {
+      "cases": 72,
+      "passed": 67
+    },
+    "H8/float32/teacher_both": {
+      "cases": 72,
+      "passed": 72
+    },
+    "H8/float32/teacher_state_reset": {
+      "cases": 72,
+      "passed": 72
+    },
+    "H8/float64/learned": {
+      "cases": 72,
+      "passed": 65
+    },
+    "H8/float64/teacher_u": {
+      "cases": 72,
+      "passed": 67
+    },
+    "H8/float64/teacher_z": {
+      "cases": 72,
+      "passed": 67
+    },
+    "H8/float64/teacher_both": {
+      "cases": 72,
+      "passed": 72
+    },
+    "H8/float64/teacher_state_reset": {
+      "cases": 72,
+      "passed": 72
+    }
+  },
+  "frozen_H8_timing_localization": [
+    {
+      "parent": "H8",
+      "seed": 17,
+      "case": 0,
+      "channel": "K_Pst",
+      "crossing": {
+        "kind": "offset",
+        "reference_index": 4593,
+        "prediction_index": 4581,
+        "signed_shift_ms": -1.2000000000000002,
+        "reference_slope": -1.8974333215737715e-08,
+        "amplitude_residual": -2.2148557523341877e-08,
+        "linear_shift_prediction_ms": -1.1672904271002995
+      },
+      "offset_reference_ms": 459.3,
+      "first_voltage_change_ms": 2000.0,
+      "imposed_voltage_at_crossing_mv": -4.634765625,
+      "later_voltage_mv": -84.42134094238281,
+      "reference_excursions": 1,
+      "prediction_excursions": 1,
+      "allowable_local_current_error_linear_estimate": 5.692299964721315e-09
+    },
+    {
+      "parent": "H8",
+      "seed": 17,
+      "case": 1,
+      "channel": "Nap_Et2",
+      "crossing": {
+        "kind": "offset",
+        "reference_index": 14523,
+        "prediction_index": 14484,
+        "signed_shift_ms": -3.9000000000000004,
+        "reference_slope": -5.7480065152049065e-08,
+        "amplitude_residual": -2.2295597431144977e-07,
+        "linear_shift_prediction_ms": -3.8788399721133886
+      },
+      "offset_reference_ms": 1452.3000000000002,
+      "first_voltage_change_ms": 2000.0,
+      "imposed_voltage_at_crossing_mv": 4.590357303619385,
+      "later_voltage_mv": -79.67941284179688,
+      "reference_excursions": 1,
+      "prediction_excursions": 1,
+      "allowable_local_current_error_linear_estimate": 1.724401954561472e-08
+    },
+    {
+      "parent": "H8",
+      "seed": 29,
+      "case": 0,
+      "channel": "K_Pst",
+      "crossing": {
+        "kind": "offset",
+        "reference_index": 4593,
+        "prediction_index": 4578,
+        "signed_shift_ms": -1.5,
+        "reference_slope": -1.8974333215737715e-08,
+        "amplitude_residual": -2.8151480537274023e-08,
+        "linear_shift_prediction_ms": -1.4836611235394868
+      },
+      "offset_reference_ms": 459.3,
+      "first_voltage_change_ms": 2000.0,
+      "imposed_voltage_at_crossing_mv": -4.634765625,
+      "later_voltage_mv": -84.42134094238281,
+      "reference_excursions": 1,
+      "prediction_excursions": 1,
+      "allowable_local_current_error_linear_estimate": 5.692299964721315e-09
+    },
+    {
+      "parent": "H8",
+      "seed": 29,
+      "case": 1,
+      "channel": "Nap_Et2",
+      "crossing": {
+        "kind": "offset",
+        "reference_index": 14523,
+        "prediction_index": 14529,
+        "signed_shift_ms": 0.6000000000000001,
+        "reference_slope": -5.7480065152049065e-08,
+        "amplitude_residual": 3.923979347431327e-08,
+        "linear_shift_prediction_ms": 0.6826678670338013
+      },
+      "offset_reference_ms": 1452.3000000000002,
+      "first_voltage_change_ms": 2000.0,
+      "imposed_voltage_at_crossing_mv": 4.590357303619385,
+      "later_voltage_mv": -79.67941284179688,
+      "reference_excursions": 1,
+      "prediction_excursions": 1,
+      "allowable_local_current_error_linear_estimate": 1.724401954561472e-08
+    },
+    {
+      "parent": "H8",
+      "seed": 43,
+      "case": 0,
+      "channel": "K_Pst",
+      "crossing": {
+        "kind": "offset",
+        "reference_index": 4593,
+        "prediction_index": 4576,
+        "signed_shift_ms": -1.7000000000000002,
+        "reference_slope": -1.8974333215737715e-08,
+        "amplitude_residual": -3.270706019929193e-08,
+        "linear_shift_prediction_ms": -1.7237528100415145
+      },
+      "offset_reference_ms": 459.3,
+      "first_voltage_change_ms": 2000.0,
+      "imposed_voltage_at_crossing_mv": -4.634765625,
+      "later_voltage_mv": -84.42134094238281,
+      "reference_excursions": 1,
+      "prediction_excursions": 1,
+      "allowable_local_current_error_linear_estimate": 5.692299964721315e-09
+    },
+    {
+      "parent": "H8",
+      "seed": 43,
+      "case": 1,
+      "channel": "Nap_Et2",
+      "crossing": {
+        "kind": "offset",
+        "reference_index": 14523,
+        "prediction_index": 14553,
+        "signed_shift_ms": 3.0,
+        "reference_slope": -5.7480065152049065e-08,
+        "amplitude_residual": 1.7590580078203434e-07,
+        "linear_shift_prediction_ms": 3.060292299890749
+      },
+      "offset_reference_ms": 1452.3000000000002,
+      "first_voltage_change_ms": 2000.0,
+      "imposed_voltage_at_crossing_mv": 4.590357303619385,
+      "later_voltage_mv": -79.67941284179688,
+      "reference_excursions": 1,
+      "prediction_excursions": 1,
+      "allowable_local_current_error_linear_estimate": 1.724401954561472e-08
+    }
+  ],
+  "fixed_fit_gradient_probes": [
+    {
+      "step": 0,
+      "arm": "I0",
+      "terms": [
+        "variable",
+        "held",
+        "u",
+        "log_z",
+        "relative_u",
+        "composition",
+        "sk_relative_u"
+      ],
+      "weighted_norms": [
+        [
+          7.187474157360616,
+          14.740681236806056,
+          0.8048084768615212,
+          8.07528155230016,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          3.9400120882516836,
+          7.92327585780672,
+          0.7286162701155324,
+          6.952101412048244,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          2.900022776569982,
+          14.598760523090528,
+          0.6247107128594062,
+          7.065450772075044,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "variable_held_cosine": [
+        0.07098205289807749,
+        0.20894650184193064,
+        -0.02171295381395972
+      ],
+      "u_logz_cosine": [
+        0.05476278298485276,
+        0.04655283504444779,
+        0.056223844614884416
+      ]
+    },
+    {
+      "step": 0,
+      "arm": "I3",
+      "terms": [
+        "variable",
+        "held",
+        "u",
+        "log_z",
+        "relative_u",
+        "composition",
+        "sk_relative_u"
+      ],
+      "weighted_norms": [
+        [
+          7.187474157360616,
+          14.740681236806056,
+          0.8048084768615212,
+          8.07528155230016,
+          2.097074740012908,
+          2.0970747261820777,
+          0.0
+        ],
+        [
+          3.9400120882516836,
+          7.92327585780672,
+          0.7286162701155324,
+          6.952101412048244,
+          1.3127203615953924,
+          1.3127203456470211,
+          0.0
+        ],
+        [
+          2.900022776569982,
+          14.598760523090528,
+          0.6247107128594062,
+          7.065450772075044,
+          2.041239376666917,
+          2.0412394163333607,
+          0.0
+        ]
+      ],
+      "variable_held_cosine": [
+        0.07098205289807749,
+        0.20894650184193064,
+        -0.02171295381395972
+      ],
+      "u_logz_cosine": [
+        0.05476278298485276,
+        0.04655283504444779,
+        0.056223844614884416
+      ]
+    },
+    {
+      "step": 0,
+      "arm": "I4",
+      "terms": [
+        "variable",
+        "held",
+        "u",
+        "log_z",
+        "relative_u",
+        "composition",
+        "sk_relative_u"
+      ],
+      "weighted_norms": [
+        [
+          7.187474157360616,
+          14.740681236806056,
+          0.8048084768615212,
+          8.07528155230016,
+          2.097074740012908,
+          2.0970747261820777,
+          0.0
+        ],
+        [
+          3.9400120882516836,
+          7.92327585780672,
+          0.7286162701155324,
+          6.952101412048244,
+          1.3127203615953924,
+          1.3127203456470211,
+          0.0
+        ],
+        [
+          2.900022776569982,
+          14.598760523090528,
+          0.6247107128594062,
+          7.065450772075044,
+          2.041239376666917,
+          2.0412394163333607,
+          0.0
+        ]
+      ],
+      "variable_held_cosine": [
+        0.07098205289807749,
+        0.20894650184193064,
+        -0.02171295381395972
+      ],
+      "u_logz_cosine": [
+        0.05476278298485276,
+        0.04655283504444779,
+        0.056223844614884416
+      ]
+    },
+    {
+      "step": 0,
+      "arm": "I7",
+      "terms": [
+        "variable",
+        "held",
+        "u",
+        "log_z",
+        "relative_u",
+        "composition",
+        "sk_relative_u"
+      ],
+      "weighted_norms": [
+        [
+          7.187474157360616,
+          14.740681236806056,
+          0.8048084768615212,
+          8.07528155230016,
+          2.097074740012908,
+          2.0970747261820777,
+          2.0970747815811532
+        ],
+        [
+          3.9400120882516836,
+          7.92327585780672,
+          0.7286162701155324,
+          6.952101412048244,
+          1.3127203615953924,
+          1.3127203456470211,
+          1.3127204218967718
+        ],
+        [
+          2.900022776569982,
+          14.598760523090528,
+          0.6247107128594062,
+          7.065450772075044,
+          2.041239376666917,
+          2.0412394163333607,
+          2.0412393984024946
+        ]
+      ],
+      "variable_held_cosine": [
+        0.07098205289807749,
+        0.20894650184193064,
+        -0.02171295381395972
+      ],
+      "u_logz_cosine": [
+        0.05476278298485276,
+        0.04655283504444779,
+        0.056223844614884416
+      ]
+    },
+    {
+      "step": 90000,
+      "arm": "I0",
+      "terms": [
+        "variable",
+        "held",
+        "u",
+        "log_z",
+        "relative_u",
+        "composition",
+        "sk_relative_u"
+      ],
+      "weighted_norms": [
+        [
+          4.838451234390443,
+          29.26836059033088,
+          0.1321227881567052,
+          7.247846275916734,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          3.0037434537509933,
+          14.015195410148344,
+          0.40748253493252085,
+          5.873483655198634,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          3.922681612476453,
+          9.581424788072189,
+          0.35103477548079404,
+          4.9617476201137025,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "variable_held_cosine": [
+        0.003781859943216393,
+        0.003206073954989801,
+        -0.028038714061687682
+      ],
+      "u_logz_cosine": [
+        -0.0017931353401161982,
+        -0.005831120662996529,
+        -0.01794461750626592
+      ]
+    },
+    {
+      "step": 90000,
+      "arm": "I3",
+      "terms": [
+        "variable",
+        "held",
+        "u",
+        "log_z",
+        "relative_u",
+        "composition",
+        "sk_relative_u"
+      ],
+      "weighted_norms": [
+        [
+          4.998217476895955,
+          29.209769683935605,
+          0.08430483919489128,
+          7.770494584126876,
+          1.65922027799686,
+          2.1778298400943,
+          0.0
+        ],
+        [
+          2.906138219155391,
+          12.079890537952476,
+          0.4100831815214128,
+          6.066477743382665,
+          0.9649178789189665,
+          1.1231555017541413,
+          0.0
+        ],
+        [
+          3.9030352725910915,
+          10.572722898003597,
+          0.28001044871960934,
+          5.348494634103889,
+          1.6724809886310876,
+          2.44889281020922,
+          0.0
+        ]
+      ],
+      "variable_held_cosine": [
+        0.0094185904202971,
+        -0.003029394673959288,
+        -0.03910799667508606
+      ],
+      "u_logz_cosine": [
+        -0.004394409335827315,
+        -0.009459015537055037,
+        -0.04405674025511297
+      ]
+    },
+    {
+      "step": 90000,
+      "arm": "I4",
+      "terms": [
+        "variable",
+        "held",
+        "u",
+        "log_z",
+        "relative_u",
+        "composition",
+        "sk_relative_u"
+      ],
+      "weighted_norms": [
+        [
+          6.841674307152253,
+          16.926901938470685,
+          0.9271951619286716,
+          9.293780081889462,
+          1.4533322982373618,
+          2.9321504042197963,
+          0.0
+        ],
+        [
+          3.867425266852037,
+          13.816728497350658,
+          1.2026290931597856,
+          7.778918966435279,
+          0.732771587007369,
+          1.5141395081338862,
+          0.0
+        ],
+        [
+          5.2029811420598415,
+          8.402647502383411,
+          0.34171452007843317,
+          9.00682583183577,
+          1.164361031406006,
+          3.588228585237655,
+          0.0
+        ]
+      ],
+      "variable_held_cosine": [
+        0.0644808065979328,
+        0.060796914535394465,
+        0.07528178604858084
+      ],
+      "u_logz_cosine": [
+        -0.01863302466530148,
+        -0.021708848187263038,
+        -0.018505205808138008
+      ]
+    },
+    {
+      "step": 90000,
+      "arm": "I7",
+      "terms": [
+        "variable",
+        "held",
+        "u",
+        "log_z",
+        "relative_u",
+        "composition",
+        "sk_relative_u"
+      ],
+      "weighted_norms": [
+        [
+          5.015979603564001,
+          26.50256066944178,
+          0.09510350604072527,
+          7.609405754324357,
+          1.6043083389950983,
+          2.173855369605744,
+          0.9666093662559148
+        ],
+        [
+          3.0935264261301456,
+          7.925425284928289,
+          0.9626086918697394,
+          7.044068828202641,
+          0.9659065195008185,
+          1.1413228421361818,
+          8.927432559217426
+        ],
+        [
+          3.9685499558818083,
+          7.68717437620061,
+          0.30407585939738474,
+          5.607121500545098,
+          1.7985790279632157,
+          2.460708245517884,
+          1.3295163225242408
+        ]
+      ],
+      "variable_held_cosine": [
+        0.010230629317253746,
+        0.039259572163537315,
+        -0.055960203609418724
+      ],
+      "u_logz_cosine": [
+        -0.0057106713857601335,
+        -0.01764616866034309,
+        -0.03601415039572593
+      ]
+    }
+  ],
+  "limits": [
+    "Historical analogies do not establish the present cause.",
+    "39i results are read from recovered artifacts, not yet registered in SQLite.",
+    "H8 timing/oracles concern the parent, not newly trained I3 seed17.",
+    "Development-informed exploratory analysis; no independent confirmation.",
+    "Gradient probes are fixed sampled batches, not causal interventions.",
+    "Local crossing linearization is diagnostic, not an altered event metric."
+  ]
+}
