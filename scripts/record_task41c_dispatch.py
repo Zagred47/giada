@@ -18,9 +18,10 @@ def main():
         contract=json.loads(z.read('candidate_contract.json'));assert not contract['fresh_accessed'] and not contract['training_performed']
     launch=dict(valid=True,launched=True,session='giada-task41c-primary',revision=request['revision'],status=status,external_backup=backup,
         DBbackup='localonly',thresholds_changed=False,result_pending_audit=True)
+    if (folder/'launcher_note.json').exists():launch['launcher_history']=json.loads((folder/'launcher_note.json').read_text())
     write_json(folder/'launch.json',launch)
     m=ValidatedBatchMirror();arts=[]
-    paths=[folder/'dispatch_request.json',folder/'launch.json',folder/'gpu_preflight.json',ROOT/'scripts/record_task41c_dispatch.py',ROOT/'scripts/prepare_task41c_dispatch.py',ROOT/'scripts/task41c_gpu_probe.py',ROOT/'scripts/prepare_task41c_preflight.py']
+    paths=[folder/'dispatch_request.json',folder/'launch.json',folder/'gpu_preflight.json',folder/'launcher_note.json',ROOT/'scripts/record_task41c_dispatch.py',ROOT/'scripts/prepare_task41c_dispatch.py',ROOT/'scripts/task41c_gpu_probe.py',ROOT/'scripts/prepare_task41c_preflight.py',ROOT/'scripts/launch_task41c_console.ps1']
     for path in paths:
         arts.append(m.local_upsert('artifacts',{'Codice stabile':'artifacts-giada-task41c-dispatch-'+path.name+'-v1','Nome':'Task41c '+path.name,
             'Tipo':'Codice' if path.suffix=='.py' else 'Report','Versione':'v1','Percorso':path.relative_to(ROOT).as_posix(),
