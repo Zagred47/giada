@@ -4,10 +4,13 @@
   "cause": "Windows Start-Process split the unquoted script path at GIADA NEW; PowerShell rejected -File before reading the launcher.",
   "second_attempt_started_scientific_worker": false,
   "second_cause": "The background Windows PowerShell environment did not expose Get-FileHash; replaced with the SHA256 .NET API already used by Task41b.",
+  "third_attempt_started_scientific_worker": false,
+  "third_cause": "Colab released the idle preflight runtime while SQLite verification completed; sessions/status confirmed no active session. Reallocate primary T4 and repeat worker preflight before fresh data.",
   "action": "Quoted the full script path and used the established .NET SHA256 check; same pinned scientific revision, no scientific worker restart.",
   "training_performed": false,
   "thresholds_changed": false,
   "first_log": "artifacts/task41c_launcher.log",
   "second_log": "artifacts/task41c_launcher_attempt2.log",
-  "retry_log": "artifacts/task41c_launcher_attempt3.log"
+  "third_log": "artifacts/task41c_launcher_attempt3.log",
+  "retry_log": "artifacts/task41c_launcher_attempt4.log"
 }
