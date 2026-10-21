@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "technical_failure": true,
+  "scientific_no_go": false,
+  "error": "CalledProcessError(1, ['/usr/bin/python3', '-u', '/content/giada_task41_ac24e4a44226/giada/scripts/run_task41_independent_confirmation.py', '/content/giada_task41_ac24e4a44226/artifacts', '--phase', 'native'])",
+  "traceback": "Traceback (most recent call last):\n  File \"/content/giada_task41_ac24e4a44226/giada/scripts/run_task41_independent_confirmation.py\", line 32, in main\n    for phase in ('native','model'):subprocess.run([sys.executable,'-u',str(Path(__file__)),str(output),'--phase',phase],cwd=ROOT,check=True)\n                                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/subprocess.py\", line 577, in run\n    raise CalledProcessError(retcode, process.args,\n                             output=stdout, stderr=stderr)\nsubprocess.CalledProcessError: Command '['/usr/bin/python3', '-u', '/content/giada_task41_ac24e4a44226/giada/scripts/run_task41_independent_confirmation.py', '/content/giada_task41_ac24e4a44226/artifacts', '--phase', 'native']' returned non-zero exit status 1.\n",
+  "inner_failure": {
+    "valid": false,
+    "technical_failure": true,
+    "scientific_no_go": false,
+    "error": "RuntimeError('Fresh native/interface floor failed; frozen model not judged')",
+    "traceback": "Traceback (most recent call last):\n  File \"/content/giada_task41_ac24e4a44226/giada/scripts/run_task41_independent_confirmation.py\", line 19, in main\n    if args.phase=='native':c.native(ROOT,teacher,output);return\n                            ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^\n  File \"/content/giada_task41_ac24e4a44226/giada/src/giada_teacher/task41_independent_confirmation.py\", line 111, in native\n    if not report['valid']:raise RuntimeError('Fresh native/interface floor failed; frozen model not judged')\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Fresh native/interface floor failed; frozen model not judged\n",
+    "inner_failure": null
+  }
+}

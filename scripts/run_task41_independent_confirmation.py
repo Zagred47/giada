@@ -29,7 +29,7 @@ def main():
             subprocess.run(['git','sparse-checkout','set','L5PC_NEURON_simulation/mods'],cwd=teacher,check=True)
         subprocess.run(['git','checkout','--detach',spec['teacher_revision']],cwd=teacher,check=True)
         subprocess.run([sys.executable,'-m','pip','install','--quiet','neuron=='+spec['neuron_version']],check=True)
-        for phase in ('native','model'):subprocess.run([sys.executable,'-u',str(Path(__file__)),str(output),'--phase',phase],cwd=ROOT,check=True)
+        for phase in ('smoke','native','model'):subprocess.run([sys.executable,'-u',str(Path(__file__)),str(output),'--phase',phase],cwd=ROOT,check=True)
     except BaseException as exc:
         prior=json.loads((output/'failure_report.json').read_text()) if (output/'failure_report.json').exists() else None
         c.p.save_json(output/'failure_report.json',dict(valid=False,technical_failure=True,scientific_no_go=False,error=repr(exc),traceback=traceback.format_exc(),inner_failure=prior))

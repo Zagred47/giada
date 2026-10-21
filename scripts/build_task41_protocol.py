@@ -23,7 +23,7 @@ spec=dict(task='41',version='v1',candidate='B6',checkpoint=paths[0],model_seeds=
     calibration_seed=104003,stress_seeds=[104143,104159,104173],initial_voltages_mv=[-77.,-56.],
     dt_ms=.1,duration_ms=40.,stress_duration_ms=1200.,panels=panels,protocols=list(schedules)[:-1],schedules_ms=schedules,
     interventions=old['interventions'],current_quality=old['current_quality'],compartment_gates=old['compartment_gates'],
-    neuron_version=teacher['neuron_version'],teacher_revision=teacher['teacher_revision'],
+    neuron_version=teacher['neuron_version'],teacher_revision=teacher['teacher_revision'],receptor_time_semantics='ems_fixed_step',
     sources={path:p.digest(ROOT/path) for path in paths},
     cost=dict(batches=[1,642,4096],ticks=80,repetitions=30,minimum_paired_saving=old['cost']['minimum_paired_saving'],
         baselines=['resident formula CUDA Graph','0.01mV voltage LUT plus canonical calcium-dependent SK'],

@@ -61,7 +61,8 @@ def load_b6(torch,root,device):
     return model
 
 def calibration_config(spec,cfg):
-    return {**cfg,'schedules_ms':spec['schedules_ms'],'duration_ms':spec['duration_ms']}
+    return {**cfg,'schedules_ms':spec['schedules_ms'],'duration_ms':spec['duration_ms'],
+            'receptor_time_semantics':spec['receptor_time_semantics']}
 
 def native(root,teacher,output):
     import neuron

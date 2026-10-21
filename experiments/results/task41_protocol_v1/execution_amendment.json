@@ -1,0 +1,14 @@
+{
+  "valid": true,
+  "first_attempt_technical_failure": true,
+  "B6_judged": false,
+  "new_confirmation_labels_used_for_tuning": false,
+  "cause": "Task41 omitted ems_fixed_step synaptic age flag; continuous event age differs on off-grid events.",
+  "evidence": "Four already opened protocols: shadow current errors ~0.004nA -> <1.3e-16nA; receptor state ~0.0667 -> <3.2e-15; same native trajectory and RNG.",
+  "change": "Explicit existing EMS fixed-step semantics passed through calibration_config. Add isolated GPU smoke before native phase. Same B6, all seeds, inputs, protocols, thresholds and evaluation gates.",
+  "original_revision": "ac24e4a442267bed254521874c2dd16466e0c7d4",
+  "first_archive_sha256": "2d61f09d6aaf064257234629a74f24f3c3a39b36fbb93720125b350d53aa6b2d",
+  "model_checkpoint_sha256": "f4aeecb646ae5b93ad69d80bcc4daba9a4c3c91aeb06e6bf006da0629f305811",
+  "thresholds_changed": false,
+  "scientific_retry_tuning": false
+}

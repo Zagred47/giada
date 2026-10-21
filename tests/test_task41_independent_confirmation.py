@@ -12,6 +12,7 @@ class Task41Tests(unittest.TestCase):
         self.assertEqual(self.spec['current_quality'],json.loads((ROOT/c.t.CONFIG).read_text())['current_quality'])
         self.assertFalse(set(self.spec['native_seeds'])&{85317,85329,17,29,43,self.spec['calibration_seed']})
     def test_factorial_and_interventions(self):
+        self.assertEqual(c.calibration_config(self.spec,self.cfg)['receptor_time_semantics'],'ems_fixed_step')
         rows=c.design(self.spec);self.assertEqual(len(rows),176)
         self.assertEqual(sum(r['intervention']=='none' for r in rows),64)
         for row in rows:
