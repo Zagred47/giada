@@ -1236,6 +1236,12 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     B6/formula/LUT e costo appaiato nello stesso notebook. Nessuntraining,
     selezione o soglia modificata. Backup esperimento sulPC; DBsolo locale.
     Anche un eventuale GO richiede audit prima della Task42.
+    **Esito automatico41c (21 ottobre2026): NO-GO scientifico valido.**
+    P110 passa528/528traiettorie in entrambe le modalità e336/336risposte
+    imposte, ma334/336risposte autonome e31/36stress nuovi. Floor tecnici
+    superati; nessuntraining, selezione o soglia modificata. Backup finale
+    verificato sulPC. Report in `results/task41c_completed_v1`; audit causale
+    dettagliato ancora da eseguire. Task42 non autorizzata.
 
 ### ✅ Uscita del blocco 1
 
