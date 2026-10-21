@@ -1,0 +1,80 @@
+{
+  "valid": true,
+  "archive_sha256": "3e7a0d6430a0b3f44a517e0f932787b7dc7e42ca05d4765191d85bc752c4f597",
+  "crc_valid": true,
+  "source_checkpoint_verified": true,
+  "thresholds_changed": false,
+  "training_performed": false,
+  "scientific_verdict_unchanged": true,
+  "task42_authorized": false,
+  "response_failure_count": 2,
+  "stress_failure_count": 5,
+  "all_saved_arrays_finite": true,
+  "cpu_gpu_max_abs": {
+    "voltage": 3.0517578125e-05,
+    "calcium": 0.0,
+    "gates": 1.4603137969970703e-06,
+    "current": 1.1496013030409813e-09
+  },
+  "costs": [
+    {
+      "batch_per_seed": 1,
+      "scope": "ionic",
+      "P110": {
+        "formula": 0.592240630511679,
+        "LUT_control": -1.0382907816897586,
+        "B6": -0.18871881325460083
+      }
+    },
+    {
+      "batch_per_seed": 1,
+      "scope": "integrated",
+      "P110": {
+        "formula": 0.3956451948155679,
+        "LUT_control": -0.25811478216895667,
+        "B6": -0.06768060681485633
+      }
+    },
+    {
+      "batch_per_seed": 642,
+      "scope": "ionic",
+      "P110": {
+        "formula": 0.36032815633342835,
+        "LUT_control": -1.956050061117601,
+        "B6": -0.35265708566634035
+      }
+    },
+    {
+      "batch_per_seed": 642,
+      "scope": "integrated",
+      "P110": {
+        "formula": 0.23584641426632846,
+        "LUT_control": -0.5843815145765664,
+        "B6": -0.172895806997309
+      }
+    },
+    {
+      "batch_per_seed": 4096,
+      "scope": "ionic",
+      "P110": {
+        "formula": -0.7495389213716371,
+        "LUT_control": -4.18812118007952,
+        "B6": -0.5968802672139114
+      }
+    },
+    {
+      "batch_per_seed": 4096,
+      "scope": "integrated",
+      "P110": {
+        "formula": -0.5040429468532253,
+        "LUT_control": -1.6974360253723302,
+        "B6": -0.4093581156711774
+      }
+    }
+  ],
+  "limitations": [
+    "CPU posthoc oracles are not selectable candidates.",
+    "No gradient training,threshold change,or test reopening as fresh confirmation.",
+    "Original CUDA metric reports remain authoritative;CPU parity reported separately."
+  ]
+}

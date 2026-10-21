@@ -1,0 +1,291 @@
+{
+  "task": "41d",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dt_ms": 0.1,
+  "arms": [
+    {
+      "name": "C00",
+      "panel": "Ca",
+      "gate": 0,
+      "support": "uniform",
+      "basis": 32,
+      "shape": "linear",
+      "paired": false,
+      "feedback": false
+    },
+    {
+      "name": "C01",
+      "panel": "Ca",
+      "gate": 0,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "linear",
+      "paired": false,
+      "feedback": false
+    },
+    {
+      "name": "C10",
+      "panel": "Ca",
+      "gate": 0,
+      "support": "sensitive",
+      "basis": 32,
+      "shape": "linear",
+      "paired": false,
+      "feedback": false
+    },
+    {
+      "name": "C11",
+      "panel": "Ca",
+      "gate": 0,
+      "support": "sensitive",
+      "basis": 64,
+      "shape": "linear",
+      "paired": false,
+      "feedback": false
+    },
+    {
+      "name": "N000",
+      "panel": "Nap",
+      "gate": 8,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "linear",
+      "paired": false,
+      "feedback": false
+    },
+    {
+      "name": "N001",
+      "panel": "Nap",
+      "gate": 8,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "linear",
+      "paired": false,
+      "feedback": true
+    },
+    {
+      "name": "N010",
+      "panel": "Nap",
+      "gate": 8,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "linear",
+      "paired": true,
+      "feedback": false
+    },
+    {
+      "name": "N011",
+      "panel": "Nap",
+      "gate": 8,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "linear",
+      "paired": true,
+      "feedback": true
+    },
+    {
+      "name": "N100",
+      "panel": "Nap",
+      "gate": 8,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "smooth",
+      "paired": false,
+      "feedback": false
+    },
+    {
+      "name": "N101",
+      "panel": "Nap",
+      "gate": 8,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "smooth",
+      "paired": false,
+      "feedback": true
+    },
+    {
+      "name": "N110",
+      "panel": "Nap",
+      "gate": 8,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "smooth",
+      "paired": true,
+      "feedback": false
+    },
+    {
+      "name": "N111",
+      "panel": "Nap",
+      "gate": 8,
+      "support": "uniform",
+      "basis": 64,
+      "shape": "smooth",
+      "paired": true,
+      "feedback": true
+    }
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "cost": {
+    "batches": [
+      1,
+      642,
+      4096
+    ],
+    "ticks": 80,
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "baselines": [
+      "resident formula CUDA Graph",
+      "0.01mV voltage LUT plus canonical calcium-dependent SK"
+    ],
+    "timing": "Same active native initial states at10ms,80resident future input ticks,no hosttransfer,alternatingorder;CUDAandwalltimes;pairedbootstrap uncertainty"
+  },
+  "fit_seed": 141101,
+  "selection_seed": 141103,
+  "development_seed": 141107,
+  "stream_seed": 141109,
+  "anchors": 4096,
+  "selection_anchors": 512,
+  "batch": 64,
+  "lr": 0.001,
+  "checkpoints": [
+    0,
+    1000,
+    3000,
+    10000,
+    30000,
+    60000
+  ],
+  "targets": [
+    {
+      "coefficient": "u",
+      "gate": 8
+    },
+    {
+      "coefficient": "z",
+      "gate": 7
+    },
+    {
+      "coefficient": "z",
+      "gate": 11
+    }
+  ],
+  "sources": {
+    "src/giada_teacher/task41d_precision_response.py": "40d05e5e63f23c40498d30d8bddcff3f4f0374a9bc49aa066a72dc91dbd08729",
+    "src/giada_teacher/task41d_evaluation.py": "552092b3a0bd97d7e46935f8d32ae33b61f39d29304d0fab6a32fdd968803cec",
+    "scripts/run_task41d_precision_response.py": "e0a885e4469bcbe25db335c30d429c57ab7d4c510e2c730befb5a055ba639443",
+    "experiments/task41c_preregistration_v1.json": "5e957f698b7858012b395ffd4d224810a133ad8ac0446b8f1386d4e314fa0547",
+    "src/giada_teacher/task41c_frozen_confirmation.py": "1bc97ececbb51a52c6ae3788cc46deebf1bdd15f3c6163ad6fa67c6dd7de1f8c",
+    "experiments/results/task41c_protocol_v1/P110_frozen.pt": "f83dd019d0f38c2a595da8565f9632765de95418b6103861b3159a61f3a693a6",
+    "scripts/run_task41c_frozen_confirmation.py": "70d13f61eeab9cac746482fb47e6ef34390a1ac9159d4f7bf261af2b2943b506",
+    "src/giada_teacher/task41b_local_precision.py": "6b53a1f53678a4174c483540e78a4db910a15ae1517caac3b6ab10aafd0ae604",
+    "src/giada_teacher/task41b_evaluation.py": "8bdbc0d98c16261cb9e131c8f9e208cd86ccec11098dd79cda501fe8c63b5cc3",
+    "src/giada_teacher/task41_independent_confirmation.py": "9c36f607f7fa81634a23ee7ac69afe24688694f43b52ca12acd714a9c68f1220",
+    "experiments/task41b_preregistration_v1.json": "6370c149c2b6ba1eb532128105dbbdae60d0b4e825012c5b1fe07d891592f82b",
+    "experiments/task41_preregistration_v1.json": "fab4ef77d32674515c6cc6efdd87550210ff6dad81ad8132d865d7fac206de42"
+  },
+  "opened_inputs_sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb",
+  "opened_members": {
+    "native_shadow_traces.npz": "8d2563aeeb4084835a3ff1da205d35ba28c31ae6d46aa19d10c6af2075fade0c",
+    "reference_traces.npz": "e056da661b26f055cc0e583e75019b3cd68661e2b64bbd6f13ac71465bee2e3a",
+    "fresh_stress_traces.npz": "061c10676151bccdf9be6e5f2536705ff693de4a5bda3e347aa56c0cdcef4f19",
+    "cases.json": "8e7cd4fbab498d0439fe3541427ef0c7bed42e14b3350bdc320c9c266d4ad340",
+    "causal_results.json": "a7cbe053e6518d73c5ab37400f5693bbe31fa128c1266d2e1f986b680d6921d9",
+    "fresh_stress_results.json": "61a81cd2c399bdbeee779618d066245c63f080f20086f230b3d5f0ddd0fd4dbe"
+  },
+  "opened_origin_archive_sha256": "3d02cdb451a73fc033fe896d84d822ca1552d9d3b48343db65db6b1dccc3ee92",
+  "hypotheses": [
+    "Ca_HVA.m equilibrium precision improves with sensitivity-stratified FIT at fixed anchor count.",
+    "Ca_HVA local32vs64basis distinguishes capacity from exposure;budget checkpoints distinguish optimization.",
+    "A smooth learned Nap.m correction protects small-pair response fidelity better than a linear local basis at64parameters.",
+    "Paired secant supervision adds information about local response beyond coefficient point error.",
+    "Short causal compartment response supervision improves autonomous perturbation fidelity,conditional on shape/secant factors.",
+    "Independent Ca/Nap repairs compose without losing prior learned functions;quality and speed are separately evaluated."
+  ],
+  "training": "24independent correction tensors vectorized with independent Adam moments and per-member norm1clipping. ParentB6 frozen;96/192newweights perseed,zero initialization;onlyu_gate8,z_gate7,z_gate11canchange. FP64affine accumulation,FP32addedlogits and deployedstates.",
+  "data": "4096anchors for each support. Uniform and canonical-sensitivity stratified supports share pilot/random stream and equal counts. BroadV[-100,60],Ca[1e-7,1e-2];no Task41exactinputs copied. Independent three-stage held/recovery/pulse levels,initialstates anddurations. Nested timehorizons0.1,1,8,40,400,1200ms.",
+  "objective": "Common normalized logit-u/log-z MSE on3targetfunctions. Treatment adds bounded current residual scaled by canonical FIT slope*0.3ms withscale*1e-5floor. These are FIT surrogate weights,not altered evaluation thresholds. Initial uniformFIT gradient ratio0.1calibrated perseed andsharedacrossarms;allgradients clipped independently.",
+  "selection": "Onlynewdevelopmentandselectionfeedback. Perseed checkpoint:failedcases,worstcompleteseverity,response loss,atomicloss;earliestexactties. Ca/Napnomineesbyworstseedrankbeforeopenedregressions. Parent,Caonly,Naponly,combined composition frozenbeforetest. No choosinga modelby41/41cpasscount.",
+  "negative_controls": "FrozenB6 exactzeroinitialization andbitwiseparentpreservation; untouchedcoefficients exact; no-canonical-fallback guard; formulaFP32/64 floors; actualT4optimizerisolation andeager/graphinferencepreflight. No extra learnedarchitecture sidecar without a new preregistration.",
+  "contrasts": "All12conditional contrasts ofsupport,resolution,objective;perseedfailedcounts,worstcompleteincludingtiming,andatomicerror. Mini budgetcurves alongsameoptimizertrajectory. A cause is only supported if matched effect improves all3seeds and medianworstseverityratio<=0.8,withnoincreasedfailedcasecount;reportdescriptiveeffectsotherwise.",
+  "regression": "OpenedTask41 native176cases x3seeds inbothmodes,112interventions x3seeds per mode,and12old41stresshistories x3seeds. ReproduceB6 passflags. Also all old40b native/syntheticcoupled cases,interventions and39j recurrence development/stress. Allopened,notnewconfirmation.",
+  "qualification": "Every unchanged per-channel current,charge,timing,gate,physical,andpairedresponse gate onallopened41/41c,40b,39jregressions plusnewdevelopment. Noaveragingfailedseed. Newindependentconfirmationrequiredafterrepair;Task42neverautomatic.",
+  "execution": "One notebook invokes same isolated worker as console. No NEURON regeneration needed: originalnativeinputs memberSHAverified. Checkpoint beforeselectionwithoptimizer+RNG;out-of-VM supervisor verifies SHA/CRC of each recoverybundle. Fullnative/gpu evaluation onlyafterfreeze.",
+  "limits": [
+    "Opened repair,not independent confirmation;allprior41/41b/41care nowregressionfixtures.",
+    "Level1 retained:all18states learned;canonicalratesonlyFITlabels/formulacontrols,notcandidateinference.",
+    "4tickfeedbacktrainingisashortcontrolledtest,notprooflongcreditassignmentadequacy.",
+    "SupportallocationchangesFITexamplesbutnototherRNGstreams;shape activeparametercounts matched,compute maydiffer.",
+    "12stresshistories x3modelseeds are36checks,not36independentprotocols.",
+    "Qualityandcostseparate;oneGPU;noTask42authorization.",
+    "ExternalrunbackupsPC;DBbackupstrictlylocal."
+  ],
+  "new_seeds": {
+    "fit": 341101,
+    "selection": 341103,
+    "development": 341107,
+    "stream": 341109,
+    "feedback": 341113,
+    "selection_feedback": 341127,
+    "feedback_stream": 341139
+  },
+  "feedback_anchors": 1024,
+  "selection_feedback_anchors": 64,
+  "feedback_batch": 8,
+  "feedback_ticks": 4,
+  "feedback_every": 64,
+  "computational_parity_atol": 1e-05,
+  "opened41c_sha256": "372c868c55cf7e15a0b50f6abf1025651362c85212570497698be5dcc6151cb8",
+  "opened41c_members": {
+    "cases.json": "6daff32ba1a568a73d86eb68584839e71f5f21280f557947cc22a37fdc9aaccb",
+    "native_shadow_traces.npz": "150fad971c8ff262420d2824a86472c4623e01fb2c11310bd42799d87f027a53",
+    "fresh_stress_traces.npz": "456b4c03405d066614ce5f6d280b3adfab62a1eb9579a915a42164f4ec7eecd7",
+    "causal_results.json": "7159704b0ffd565007aa6c98d9c77588e7fc56aae228a35d9e21999705eb5e09"
+  },
+  "training_policy": "Only one extra learned equilibrium function per arm:Ca u0 orNap u8. P110(z7/z11 included) frozen.36members=12arms x3originalseeds,independentAdamandclipping. Ca supports sharepilotandseparateRNGstreams;Nap sameFIT/minibatches,64activeweights perseed. Updatesmatched,actualfeedbackcomputecostreported.",
+  "objectives": "Pointlogiterror plusoptionalpairedsigmoidsecant error. Optional4tick causal compartment response loss,withinitialstates and exogenousinputs only;canonicalteacher labels generated beforetraining. AuxweightsFITgradientcalibrated0.1basegradient,diagnosticgradientsatcheckpoints;noeventthresholdchanges.",
+  "contrast_rule": "Onefactoratfixedothers;all3developmentworstseverityratios<1,median<=0.8,andnofailedcasecountincrease. Descriptivefullcurvesalsoretained. Trainingeffectsnotclaimedfromopenedpanelnomination."
+}

@@ -1241,7 +1241,18 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     imposte, ma334/336risposte autonome e31/36stress nuovi. Floor tecnici
     superati; nessuntraining, selezione o soglia modificata. Backup finale
     verificato sulPC. Report in `results/task41c_completed_v1`; audit causale
-    dettagliato ancora da eseguire. Task42 non autorizzata.
+    dettagliato in `results/task41c_audited_v1`: i cinque stress dipendono
+    soprattutto dall'equilibrio Ca_HVA.m; le due risposte Nap autonome mostrano
+    un compromesso della correzione u8. Task42 non autorizzata.
+  - **Task41d — Precisione locale e risposta causale:** quattro bracci
+    Ca_HVA (supporto uniforme/sensibile ×32/64 coefficienti) e otto bracci
+    Nap (base lineare/liscia ×supervisione puntuale/appaiata ×feedback).
+    Nuovi FIT/development, tre seed originali, checkpoint0/1k/3k/10k/30k/60k;
+    36 membri con Adam e clipping indipendenti. P110 congelata salvo le nuove
+    correzioni apprese su u0 o u8. Selezione prima delle regressioni aperte,
+    poi quattro controlli di composizione. Soglie invariate; ogni riparazione
+    richiede successiva conferma indipendente. Notebook unico,
+    `giada_task41d_precision_response.ipynb`; backup esterni PC, DB locale.
 
 ### ✅ Uscita del blocco 1
 

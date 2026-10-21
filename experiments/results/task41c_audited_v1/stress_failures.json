@@ -1,0 +1,642 @@
+[
+  {
+    "index": 10,
+    "model_seed": 17,
+    "input_seed": 241173,
+    "family": "slow_boundary_return",
+    "case": 0,
+    "panel": "mixed_diagonal",
+    "original": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.000539934059773881,
+          "rmse_ma_cm2": 4.7402231468084886e-08,
+          "max_abs_ma_cm2": 4.014871810598423e-07,
+          "nrmse": 8.77926306185175e-05,
+          "nmax": 0.0007435855801132108,
+          "signed_charge_error_ma_ms_cm2": 2.2313562009421743e-05,
+          "absolute_charge_error_ma_ms_cm2": 2.2313562009421743e-05,
+          "signed_charge_normalized": 3.443871463792963e-05,
+          "absolute_charge_normalized": 3.443871463792963e-05,
+          "reference_signed_charge_ma_ms_cm2": -0.05783303622557761,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.5
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 0.00019201083119010066,
+        "max_abs": 0.0036283334037270354,
+        "passed": true
+      }
+    },
+    "B6_Ca_HVA_identical": true,
+    "cpu_replay": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.000539934059773881,
+          "rmse_ma_cm2": 4.7395600332622613e-08,
+          "max_abs_ma_cm2": 4.014871810598423e-07,
+          "nrmse": 8.778034923833369e-05,
+          "nmax": 0.0007435855801132108,
+          "signed_charge_error_ma_ms_cm2": 2.230440641541443e-05,
+          "absolute_charge_error_ma_ms_cm2": 2.230440641541443e-05,
+          "signed_charge_normalized": 3.442458390930704e-05,
+          "absolute_charge_normalized": 3.442458390930704e-05,
+          "reference_signed_charge_ma_ms_cm2": -0.05783303622557761,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.5
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 0.0001920150256073847,
+        "max_abs": 0.0036283036014046477,
+        "passed": true
+      }
+    },
+    "event": {
+      "metrics": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 0.5
+      },
+      "reference_base": -4.323847431730793e-07,
+      "reference_transient_amplitude": 0.0005395016750307079,
+      "threshold": 5.39501675030708e-05,
+      "reference_active_intervals": [
+        [
+          1.3,
+          157.4,
+          1562
+        ]
+      ],
+      "predicted_active_intervals": [
+        [
+          1.3,
+          157.9,
+          1567
+        ]
+      ],
+      "reference_offset_ms": 157.4,
+      "predicted_offset_ms": 157.9,
+      "absolute_residual_at_reference_offset": 4.232549220438073e-08,
+      "reference_threshold_slope_per_ms": -8.751239611426144e-08,
+      "linearized_offset_shift_ms": 0.48365139207385,
+      "threshold_near_margin_min": 4.2304986216969696e-09,
+      "prediction_max_abs_error": 4.014871810598423e-07
+    },
+    "rest_voltage": -37.4415283203125,
+    "calcium_mM": 4.969495421391912e-05,
+    "initial_voltage_mv": -95,
+    "coefficient_at_rest": {
+      "0": {
+        "u_reference": 0.2758803656374554,
+        "u_learned": 0.27598801255226135,
+        "z_reference": 0.01414915542191146,
+        "z_learned": 0.014168775640428066,
+        "state_reference_at_offset": 0.275880378264037,
+        "state_learned_at_offset": 0.2759890556335449
+      },
+      "1": {
+        "u_reference": 0.27013864607549914,
+        "u_learned": 0.27013179659843445,
+        "z_reference": 0.0002757820569997357,
+        "z_learned": 0.0002757937472779304,
+        "state_reference_at_offset": 0.6483906064417303,
+        "state_learned_at_offset": 0.6483842730522156
+      }
+    }
+  },
+  {
+    "index": 11,
+    "model_seed": 17,
+    "input_seed": 241173,
+    "family": "slow_boundary_return",
+    "case": 1,
+    "panel": "low_mixed",
+    "original": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.00017023527935911348,
+          "rmse_ma_cm2": 1.8923339129216122e-08,
+          "max_abs_ma_cm2": 1.1429422239707583e-07,
+          "nrmse": 0.00011115991468077013,
+          "nmax": 0.0006713897543879298,
+          "signed_charge_error_ma_ms_cm2": 1.5003986286191944e-05,
+          "absolute_charge_error_ma_ms_cm2": 1.5003986286191944e-05,
+          "signed_charge_normalized": 7.344730159477718e-05,
+          "absolute_charge_normalized": 7.344730159477718e-05,
+          "reference_signed_charge_ma_ms_cm2": -0.02854059644370976,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 3.8000000000000003
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 0.00018607292031480325,
+        "max_abs": 0.0006106123928874552,
+        "passed": true
+      }
+    },
+    "B6_Ca_HVA_identical": true,
+    "cpu_replay": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.00017023527935911348,
+          "rmse_ma_cm2": 1.8920170525942723e-08,
+          "max_abs_ma_cm2": 1.1429422239707583e-07,
+          "nrmse": 0.00011114130159842123,
+          "nmax": 0.0006713897543879298,
+          "signed_charge_error_ma_ms_cm2": 1.4999733786721845e-05,
+          "absolute_charge_error_ma_ms_cm2": 1.4999733786721845e-05,
+          "signed_charge_normalized": 7.342648481947806e-05,
+          "absolute_charge_normalized": 7.342648481947806e-05,
+          "reference_signed_charge_ma_ms_cm2": -0.02854059644370976,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 3.8000000000000003
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 0.00018606532528243064,
+        "max_abs": 0.0006106123928874552,
+        "passed": true
+      }
+    },
+    "event": {
+      "metrics": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 3.8000000000000003
+      },
+      "reference_base": -4.398705622892045e-06,
+      "reference_transient_amplitude": 0.00016583657373622144,
+      "threshold": 1.6583657373622144e-05,
+      "reference_active_intervals": [
+        [
+          1.0,
+          162.20000000000002,
+          1613
+        ]
+      ],
+      "predicted_active_intervals": [
+        [
+          1.0,
+          166.0,
+          1651
+        ]
+      ],
+      "reference_offset_ms": 162.20000000000002,
+      "predicted_offset_ms": 166.0,
+      "absolute_residual_at_reference_offset": 1.6355371649982126e-08,
+      "reference_threshold_slope_per_ms": -4.3039170823119355e-09,
+      "linearized_offset_shift_ms": 3.800113091676132,
+      "threshold_near_margin_min": 2.1442083700219054e-10,
+      "prediction_max_abs_error": 1.1429422239707583e-07
+    },
+    "rest_voltage": -37.4415283203125,
+    "calcium_mM": 4.969495421391912e-05,
+    "initial_voltage_mv": -42,
+    "coefficient_at_rest": {
+      "0": {
+        "u_reference": 0.2758803656374554,
+        "u_learned": 0.27598801255226135,
+        "z_reference": 0.01414915542191146,
+        "z_learned": 0.014168775640428066,
+        "state_reference_at_offset": 0.27588037200905535,
+        "state_learned_at_offset": 0.2759890556335449
+      },
+      "1": {
+        "u_reference": 0.27013864607549914,
+        "u_learned": 0.27013179659843445,
+        "z_reference": 0.0002757820569997357,
+        "z_learned": 0.0002757937472779304,
+        "state_reference_at_offset": 0.29184125282074846,
+        "state_learned_at_offset": 0.29183873534202576
+      }
+    }
+  },
+  {
+    "index": 10,
+    "model_seed": 29,
+    "input_seed": 241173,
+    "family": "slow_boundary_return",
+    "case": 0,
+    "panel": "mixed_diagonal",
+    "original": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.000539934059773881,
+          "rmse_ma_cm2": 4.038320990829989e-08,
+          "max_abs_ma_cm2": 3.1418772130612123e-07,
+          "nrmse": 7.479285512236804e-05,
+          "nmax": 0.0005819001702498634,
+          "signed_charge_error_ma_ms_cm2": 2.3117147923584842e-05,
+          "absolute_charge_error_ma_ms_cm2": 2.3117147923584842e-05,
+          "signed_charge_normalized": 3.5678967806528955e-05,
+          "absolute_charge_normalized": 3.5678967806528955e-05,
+          "reference_signed_charge_ma_ms_cm2": -0.05783303622557761,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.5
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 6.987444154084604e-05,
+        "max_abs": 0.0028162797233071135,
+        "passed": true
+      }
+    },
+    "B6_Ca_HVA_identical": true,
+    "cpu_replay": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.000539934059773881,
+          "rmse_ma_cm2": 4.038293494271792e-08,
+          "max_abs_ma_cm2": 3.142182818679064e-07,
+          "nrmse": 7.479234586465965e-05,
+          "nmax": 0.0005819567707943779,
+          "signed_charge_error_ma_ms_cm2": 2.3112368879907304e-05,
+          "absolute_charge_error_ma_ms_cm2": 2.3112368879907304e-05,
+          "signed_charge_normalized": 3.567159183843454e-05,
+          "absolute_charge_normalized": 3.567159183843454e-05,
+          "reference_signed_charge_ma_ms_cm2": -0.05783303622557761,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.5
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 6.98933114201918e-05,
+        "max_abs": 0.0028161903163399504,
+        "passed": true
+      }
+    },
+    "event": {
+      "metrics": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 0.5
+      },
+      "reference_base": -4.323847431730793e-07,
+      "reference_transient_amplitude": 0.0005395016750307079,
+      "threshold": 5.39501675030708e-05,
+      "reference_active_intervals": [
+        [
+          1.3,
+          157.4,
+          1562
+        ]
+      ],
+      "predicted_active_intervals": [
+        [
+          1.3,
+          157.9,
+          1567
+        ]
+      ],
+      "reference_offset_ms": 157.4,
+      "predicted_offset_ms": 157.9,
+      "absolute_residual_at_reference_offset": 4.120055567096288e-08,
+      "reference_threshold_slope_per_ms": -8.751239611426144e-08,
+      "linearized_offset_shift_ms": 0.47079679565817123,
+      "threshold_near_margin_min": 4.2304986216969696e-09,
+      "prediction_max_abs_error": 3.142182818679064e-07
+    },
+    "rest_voltage": -37.4415283203125,
+    "calcium_mM": 4.969495421391912e-05,
+    "initial_voltage_mv": -95,
+    "coefficient_at_rest": {
+      "0": {
+        "u_reference": 0.2758803656374554,
+        "u_learned": 0.2759860157966614,
+        "z_reference": 0.01414915542191146,
+        "z_learned": 0.014169241301715374,
+        "state_reference_at_offset": 0.275880378264037,
+        "state_learned_at_offset": 0.27598705887794495
+      },
+      "1": {
+        "u_reference": 0.27013864607549914,
+        "u_learned": 0.2701287567615509,
+        "z_reference": 0.0002757820569997357,
+        "z_learned": 0.0002758008486125618,
+        "state_reference_at_offset": 0.6483906064417303,
+        "state_learned_at_offset": 0.6483802199363708
+      }
+    }
+  },
+  {
+    "index": 11,
+    "model_seed": 29,
+    "input_seed": 241173,
+    "family": "slow_boundary_return",
+    "case": 1,
+    "panel": "low_mixed",
+    "original": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.00017023527935911348,
+          "rmse_ma_cm2": 1.7183997034470687e-08,
+          "max_abs_ma_cm2": 8.866303246652567e-08,
+          "nrmse": 0.00010094263127574648,
+          "nmax": 0.0005208264279902281,
+          "signed_charge_error_ma_ms_cm2": 1.5096934686775881e-05,
+          "absolute_charge_error_ma_ms_cm2": 1.5096934686775881e-05,
+          "signed_charge_normalized": 7.390230129153924e-05,
+          "absolute_charge_normalized": 7.390230129153924e-05,
+          "reference_signed_charge_ma_ms_cm2": -0.02854059644370976,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 3.7
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 6.044115462716207e-05,
+        "max_abs": 0.00032553746517638427,
+        "passed": true
+      }
+    },
+    "B6_Ca_HVA_identical": true,
+    "cpu_replay": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.00017023527935911348,
+          "rmse_ma_cm2": 1.717860071714788e-08,
+          "max_abs_ma_cm2": 8.86892272338282e-08,
+          "nrmse": 0.00010091093210420504,
+          "nmax": 0.0005209803018958083,
+          "signed_charge_error_ma_ms_cm2": 1.5087392137925355e-05,
+          "absolute_charge_error_ma_ms_cm2": 1.5087392137925355e-05,
+          "signed_charge_normalized": 7.385558874128527e-05,
+          "absolute_charge_normalized": 7.385558874128527e-05,
+          "reference_signed_charge_ma_ms_cm2": -0.02854059644370976,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 3.7
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 6.044495321856591e-05,
+        "max_abs": 0.0003254778605316089,
+        "passed": true
+      }
+    },
+    "event": {
+      "metrics": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 3.7
+      },
+      "reference_base": -4.398705622892045e-06,
+      "reference_transient_amplitude": 0.00016583657373622144,
+      "threshold": 1.6583657373622144e-05,
+      "reference_active_intervals": [
+        [
+          1.0,
+          162.20000000000002,
+          1613
+        ]
+      ],
+      "predicted_active_intervals": [
+        [
+          1.0,
+          165.9,
+          1650
+        ]
+      ],
+      "reference_offset_ms": 162.20000000000002,
+      "predicted_offset_ms": 165.9,
+      "absolute_residual_at_reference_offset": 1.5999943318778986e-08,
+      "reference_threshold_slope_per_ms": -4.3039170823119355e-09,
+      "linearized_offset_shift_ms": 3.717530568731193,
+      "threshold_near_margin_min": 2.1442083700219054e-10,
+      "prediction_max_abs_error": 8.86892272338282e-08
+    },
+    "rest_voltage": -37.4415283203125,
+    "calcium_mM": 4.969495421391912e-05,
+    "initial_voltage_mv": -42,
+    "coefficient_at_rest": {
+      "0": {
+        "u_reference": 0.2758803656374554,
+        "u_learned": 0.2759860157966614,
+        "z_reference": 0.01414915542191146,
+        "z_learned": 0.014169241301715374,
+        "state_reference_at_offset": 0.27588037200905535,
+        "state_learned_at_offset": 0.27598705887794495
+      },
+      "1": {
+        "u_reference": 0.27013864607549914,
+        "u_learned": 0.2701287567615509,
+        "z_reference": 0.0002757820569997357,
+        "z_learned": 0.0002758008486125618,
+        "state_reference_at_offset": 0.29184125282074846,
+        "state_learned_at_offset": 0.29183802008628845
+      }
+    }
+  },
+  {
+    "index": 11,
+    "model_seed": 43,
+    "input_seed": 241173,
+    "family": "slow_boundary_return",
+    "case": 1,
+    "panel": "low_mixed",
+    "original": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.00017023527935911348,
+          "rmse_ma_cm2": 1.0836859666000787e-08,
+          "max_abs_ma_cm2": 1.1078552511798552e-07,
+          "nrmse": 6.365813071649087e-05,
+          "nmax": 0.0006507788839954969,
+          "signed_charge_error_ma_ms_cm2": 1.5812847888092137e-06,
+          "absolute_charge_error_ma_ms_cm2": 1.5812847888092137e-06,
+          "signed_charge_normalized": 7.74068294755692e-06,
+          "absolute_charge_normalized": 7.74068294755692e-06,
+          "reference_signed_charge_ma_ms_cm2": -0.02854059644370976,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.8
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 7.60767550637279e-05,
+        "max_abs": 0.0003731250620297999,
+        "passed": true
+      }
+    },
+    "B6_Ca_HVA_identical": true,
+    "cpu_replay": {
+      "passed": false,
+      "failed": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 0.00017023527935911348,
+          "rmse_ma_cm2": 1.0833474253816603e-08,
+          "max_abs_ma_cm2": 1.1074623296699108e-07,
+          "nrmse": 6.363824405024326e-05,
+          "nmax": 0.0006505480731368877,
+          "signed_charge_error_ma_ms_cm2": 1.5771703995927933e-06,
+          "absolute_charge_error_ma_ms_cm2": 1.5771703995927933e-06,
+          "signed_charge_normalized": 7.720542247619406e-06,
+          "absolute_charge_normalized": 7.720542247619406e-06,
+          "reference_signed_charge_ma_ms_cm2": -0.02854059644370976,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.8
+          },
+          "blocked_current_passed": true
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 7.606615707600356e-05,
+        "max_abs": 0.0003730952597074122,
+        "passed": true
+      }
+    },
+    "event": {
+      "metrics": {
+        "status": "evaluable",
+        "peak_error_ms": 0.0,
+        "onset_error_ms": 0.0,
+        "offset_error_ms": 0.8
+      },
+      "reference_base": -4.398705622892045e-06,
+      "reference_transient_amplitude": 0.00016583657373622144,
+      "threshold": 1.6583657373622144e-05,
+      "reference_active_intervals": [
+        [
+          1.0,
+          162.20000000000002,
+          1613
+        ]
+      ],
+      "predicted_active_intervals": [
+        [
+          1.0,
+          163.0,
+          1621
+        ]
+      ],
+      "reference_offset_ms": 162.20000000000002,
+      "predicted_offset_ms": 163.0,
+      "absolute_residual_at_reference_offset": 3.336489359982383e-09,
+      "reference_threshold_slope_per_ms": -4.3039170823119355e-09,
+      "linearized_offset_shift_ms": 0.7752215705303785,
+      "threshold_near_margin_min": 2.1442083700219054e-10,
+      "prediction_max_abs_error": 1.1074623296699108e-07
+    },
+    "rest_voltage": -37.4415283203125,
+    "calcium_mM": 4.969495421391912e-05,
+    "initial_voltage_mv": -42,
+    "coefficient_at_rest": {
+      "0": {
+        "u_reference": 0.2758803656374554,
+        "u_learned": 0.27590060234069824,
+        "z_reference": 0.01414915542191146,
+        "z_learned": 0.014165107160806656,
+        "state_reference_at_offset": 0.27588037200905535,
+        "state_learned_at_offset": 0.2759016454219818
+      },
+      "1": {
+        "u_reference": 0.27013864607549914,
+        "u_learned": 0.2701418399810791,
+        "z_reference": 0.0002757820569997357,
+        "z_learned": 0.0002757693000603467,
+        "state_reference_at_offset": 0.29184125282074846,
+        "state_learned_at_offset": 0.29184263944625854
+      }
+    }
+  }
+]

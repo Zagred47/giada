@@ -12,7 +12,7 @@ import traceback
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('request',type=Path);args=parser.parse_args()
     request=json.loads(args.request.read_text());revision=request['revision'];task=request.get('task','39e')
-    assert task in ('39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c')
+    assert task in ('39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d')
     assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
     root=Path('/content')/('giada_task'+task+'_'+revision[:12]);root.mkdir(exist_ok=False)
     status=root/'job_status.json';output=root/'artifacts';repo=root/'giada';started=time.time()
@@ -41,18 +41,22 @@ def main():
         workers['41']='run_task41_independent_confirmation.py'
         workers['41b']='run_task41b_local_precision.py'
         workers['41c']='run_task41c_frozen_confirmation.py'
+        workers['41d']='run_task41d_precision_response.py'
         worker_source=repo/'scripts'/workers[task]
         assert hashlib.sha256(worker_source.read_bytes()).hexdigest()==request['worker_sha256']
         save(state='running',phase='scientific_worker');print('[GIADA console] pinned checkout verified; starting worker',flush=True)
         with (root/'process.log').open('w') as log:
             worker=subprocess.Popen([sys.executable,'-u',str(worker_source),str(output)],cwd=repo,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
+            last_publish=0.
             for line in worker.stdout:
                 log.write(line);log.flush()
                 print(line.rstrip(),flush=True)
                 if '[GIADA Task' in line:
                     save(state='running',phase='scientific_worker',worker_pid=worker.pid,last_progress=line.rstrip())
-                    if 'checkpoint_saved ' in line or 'checkpoint ' in line or 'preflights passed' in line:
+                    checkpoint='checkpoint_saved ' in line or 'checkpoint ' in line or 'preflights passed' in line
+                    if checkpoint and (task!='41d' or 'checkpoint_saved ' in line or 'preflights passed' in line or time.time()-last_publish>=120):
                         publish(str(int(time.time()*1000)))
+                        last_publish=time.time()
             code=worker.wait()
         output.mkdir(exist_ok=True);shutil.copy2(root/'process.log',output/'process.log')
         report_path=output/('final_report.json' if (output/'final_report.json').exists() else 'failure_report.json')
