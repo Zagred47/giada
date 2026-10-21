@@ -1195,6 +1195,20 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
   Registrare GO, controllo accurato ma lento o NO-GO motivato, per dominio.
   Autorizzare il trasferimento spaziale soltanto con controllo locale valido.
 
+  **Aggiornamento audit Task40b (21 ottobre2026):** B6 è la candidata
+  congelata per preparare Task41:72/72development,72/72stress e168/168
+  risposte differenziali autonome, contro146/168 diJ1/Task40. Entrambe
+  le modalità conservano264/264traiettorie. B1–B5 chiudono il dominio
+  causale ma non lo stress Ca_HVA; B6 corregge insieme equilibrio e
+  rilassamento dei quattro gate del calcio (256pesi attivi aggiuntivi/seed).
+  Confermati anche i due stress originali e il replay CPU indipendente.
+  Questo è un **GO alla preparazione della conferma**, non una conferma
+  già acquisita né un GO multicompartimentale. Conservare tutti e tre i seed
+  congelati; nuovi protocolli/seed, pannelli parametrici, soglie invariate e
+  costo ionico/integrato appaiato sono obbligatori. Nessuno speedup B6 è
+  dimostrato; «accurato ma lento» resta un esito legittimo della Task41.
+  Audit completo: `results/task40b_audited_v1/AUDIT.md` e file JSON associati.
+
 ### ✅ Uscita del blocco 1
 
 Operatore e interfaccia congelati, errore attribuibile e costo misurato.

@@ -1,0 +1,184 @@
+{
+  "valid": true,
+  "task": "40b",
+  "decision": "CANDIDATE_REQUIRES_AUDIT",
+  "passing_arms": [
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6"
+  ],
+  "development": {
+    "frozen_local161_SKcanonical": {
+      "all_development_passed": false,
+      "passed_cases": 53,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0001903879310702905
+    },
+    "joint_wB0": {
+      "all_development_passed": true,
+      "passed_cases": 72,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0011070417240262032
+    },
+    "joint_wB1": {
+      "all_development_passed": true,
+      "passed_cases": 72,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.000984921702183783
+    },
+    "joint_wB2": {
+      "all_development_passed": true,
+      "passed_cases": 72,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0009847218170762062
+    },
+    "joint_wB3": {
+      "all_development_passed": true,
+      "passed_cases": 72,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0009849142516031861
+    },
+    "joint_wB4": {
+      "all_development_passed": true,
+      "passed_cases": 72,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0009848552290350199
+    },
+    "joint_wB5": {
+      "all_development_passed": true,
+      "passed_cases": 72,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0009847052861005068
+    },
+    "joint_wB6": {
+      "all_development_passed": true,
+      "passed_cases": 72,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.0009842206491157413
+    },
+    "joint_wB7": {
+      "all_development_passed": true,
+      "passed_cases": 72,
+      "total_cases": 72,
+      "worst_gate_rmse": 0.000987557228654623
+    }
+  },
+  "causal_summary": {
+    "B0/imposed": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 148,
+      "intervention_total": 168
+    },
+    "B1/imposed": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B2/imposed": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B3/imposed": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B4/imposed": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B5/imposed": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B6/imposed": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B7/imposed": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 165,
+      "intervention_total": 168
+    },
+    "B0/autonomous": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 146,
+      "intervention_total": 168
+    },
+    "B1/autonomous": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B2/autonomous": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B3/autonomous": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B4/autonomous": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B5/autonomous": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B6/autonomous": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 168,
+      "intervention_total": 168
+    },
+    "B7/autonomous": {
+      "trajectory_passed": 264,
+      "total": 264,
+      "intervention_passed": 165,
+      "intervention_total": 168
+    }
+  },
+  "thresholds_changed": false,
+  "independent_confirmation": false,
+  "task41_authorized": false,
+  "stress_used_for_selection": false,
+  "elapsed_seconds": 616.4472450520002,
+  "limitations": [
+    "Historical opened native fixtures; not new independent data.",
+    "Intervention references are calibrated formula, not fresh NEURON replays.",
+    "Presynaptic shadow conductances are fixed exogenous input; NMDA voltage block recomputed causally.",
+    "No training, no model selection, no threshold relaxation.",
+    "Full morphology, new seed confirmation and exhaustive bifurcation/burst coverage remain outside this diagnostic.",
+    "Both stress failures remain unresolved unless reproduced differently and audited.",
+    "No claimed acceleration from this restricted baseline.",
+    "Posthoc-informed repair on opened diagnostic domains; independentTask41 still required.",
+    "No training on stress or historical failed trajectories.",
+    "Atomic sensitivity objective is a FIT surrogate, not the registered current evaluator."
+  ]
+}

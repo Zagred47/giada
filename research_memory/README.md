@@ -2,6 +2,14 @@
 
 Mirror della [base Airtable](https://airtable.com/app9dZ7ghujkFJIo5), nel workspace **My First Workspace**.
 
+**21 ottobre2026, dopo l'audit Task40b:** l'utente ha autorizzato la
+conservazione locale del nuovo backup, rinviando il caricamento Drive.
+`data/local_backup_receipt.json` e il manifest SQLite indicano l'archivio
+unico completo verificato e il suo SHA256. La ricevuta Drive conserva
+l'ultima copia remota precedente, che non include il nuovo audit40b.
+Lo snapshot JSON XZ in Git include invece tutti i171446record aggiornati.
+Non ripristinare la vecchia copia Drive come se fosse la versione corrente.
+
 ## Già utilizzabile
 
 Il file `data/research_memory.sqlite` è il database reale operativo. Non è uno stub.

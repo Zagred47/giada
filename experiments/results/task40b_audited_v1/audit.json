@@ -1,0 +1,876 @@
+{
+  "valid": true,
+  "thresholds_changed": false,
+  "training_performed": false,
+  "post_hoc": true,
+  "archive_sha256": "8a0df5c1c165d7dd083f6454d254179e2ded0cf5ce7c75fe44e73a551171f4db",
+  "frozen_sha256": "f4aeecb646ae5b93ad69d80bcc4daba9a4c3c91aeb06e6bf006da0629f305811",
+  "checkpoint_checks": {
+    "0": {
+      "parameters_and_adam_finite": true,
+      "optimizer_step": 0.0
+    },
+    "1000": {
+      "parameters_and_adam_finite": true,
+      "optimizer_step": 1000.0
+    },
+    "3000": {
+      "parameters_and_adam_finite": true,
+      "optimizer_step": 3000.0
+    },
+    "10000": {
+      "parameters_and_adam_finite": true,
+      "optimizer_step": 10000.0
+    },
+    "30000": {
+      "parameters_and_adam_finite": true,
+      "optimizer_step": 30000.0
+    }
+  },
+  "selection": [
+    {
+      "arm": "B1",
+      "seed": 17,
+      "chosen": 3000,
+      "selection_score": 0.5300745497982011,
+      "active_weights": 128
+    },
+    {
+      "arm": "B1",
+      "seed": 29,
+      "chosen": 3000,
+      "selection_score": 0.5274101706189164,
+      "active_weights": 128
+    },
+    {
+      "arm": "B1",
+      "seed": 43,
+      "chosen": 10000,
+      "selection_score": 0.5296985638311896,
+      "active_weights": 128
+    },
+    {
+      "arm": "B2",
+      "seed": 17,
+      "chosen": 10000,
+      "selection_score": 0.528881760250971,
+      "active_weights": 128
+    },
+    {
+      "arm": "B2",
+      "seed": 29,
+      "chosen": 10000,
+      "selection_score": 0.5269438236210925,
+      "active_weights": 128
+    },
+    {
+      "arm": "B2",
+      "seed": 43,
+      "chosen": 10000,
+      "selection_score": 0.5294303659673929,
+      "active_weights": 128
+    },
+    {
+      "arm": "B3",
+      "seed": 17,
+      "chosen": 1000,
+      "selection_score": 0.5282591902692739,
+      "active_weights": 128
+    },
+    {
+      "arm": "B3",
+      "seed": 29,
+      "chosen": 1000,
+      "selection_score": 0.5261299573522865,
+      "active_weights": 128
+    },
+    {
+      "arm": "B3",
+      "seed": 43,
+      "chosen": 1000,
+      "selection_score": 0.5301257624106853,
+      "active_weights": 128
+    },
+    {
+      "arm": "B4",
+      "seed": 17,
+      "chosen": 1000,
+      "selection_score": 0.5290689632939729,
+      "active_weights": 128
+    },
+    {
+      "arm": "B4",
+      "seed": 29,
+      "chosen": 30000,
+      "selection_score": 0.5260467773436536,
+      "active_weights": 128
+    },
+    {
+      "arm": "B4",
+      "seed": 43,
+      "chosen": 30000,
+      "selection_score": 0.5299465981639312,
+      "active_weights": 128
+    },
+    {
+      "arm": "B5",
+      "seed": 17,
+      "chosen": 1000,
+      "selection_score": 0.5065120118676381,
+      "active_weights": 256
+    },
+    {
+      "arm": "B5",
+      "seed": 29,
+      "chosen": 1000,
+      "selection_score": 0.5068369781174624,
+      "active_weights": 256
+    },
+    {
+      "arm": "B5",
+      "seed": 43,
+      "chosen": 10000,
+      "selection_score": 0.5075556759912465,
+      "active_weights": 256
+    },
+    {
+      "arm": "B6",
+      "seed": 17,
+      "chosen": 3000,
+      "selection_score": 0.5111436766720661,
+      "active_weights": 256
+    },
+    {
+      "arm": "B6",
+      "seed": 29,
+      "chosen": 3000,
+      "selection_score": 0.5087849648507745,
+      "active_weights": 256
+    },
+    {
+      "arm": "B6",
+      "seed": 43,
+      "chosen": 10000,
+      "selection_score": 0.5091073451077334,
+      "active_weights": 256
+    },
+    {
+      "arm": "B7",
+      "seed": 17,
+      "chosen": 10000,
+      "selection_score": 0.5747997201418444,
+      "active_weights": 64
+    },
+    {
+      "arm": "B7",
+      "seed": 29,
+      "chosen": 10000,
+      "selection_score": 0.5724031610464888,
+      "active_weights": 64
+    },
+    {
+      "arm": "B7",
+      "seed": 43,
+      "chosen": 10000,
+      "selection_score": 0.5436509735019237,
+      "active_weights": 64
+    }
+  ],
+  "selection_cpu_max_error": 4.2945860724619145e-05,
+  "label_recipe_max_errors": {
+    "fit_atomic.npz": {
+      "v": 0.0,
+      "ca": 0.0,
+      "u": 2.220446049250313e-16,
+      "z": 1.1102230246251565e-16,
+      "initial": 0.0
+    },
+    "selection_atomic.npz": {
+      "v": 0.0,
+      "ca": 0.0,
+      "u": 2.220446049250313e-16,
+      "z": 1.1102230246251565e-16,
+      "initial": 0.0
+    }
+  },
+  "parent_bitwise_unchanged": true,
+  "inactive_weights_zero": true,
+  "all_saved_parameters_and_traces_finite": true,
+  "baseline_task40_reproduced": true,
+  "recurrence_scalar_checks": 1296,
+  "causal_scalar_cases": 4224,
+  "intervention_scalar_cases": 2688,
+  "autonomous_trajectories_recomputed": 2112,
+  "autonomous_interventions_recomputed": 1344,
+  "subtraction64_verdict_changes": [],
+  "imposed_trace_recomputed": false,
+  "imposed_audit_scope": "Stored scalar components and baseline flags; imposed raw traces were not saved",
+  "summaries": {
+    "B0": {
+      "development": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 70,
+        "total": 72,
+        "per_seed": {
+          "17": 23,
+          "29": 23,
+          "43": 24
+        }
+      },
+      "imposed": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 148,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.029011761769652367,
+        "worst_voltage_rmse_mv": 0.0004898661863990128,
+        "worst_calcium_rmse_mM": 1.2830189355383936e-08,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {
+          "Ca_LVAst": 17,
+          "Ca_HVA": 3
+        }
+      },
+      "autonomous": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 146,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.02893584966659546,
+        "worst_voltage_rmse_mv": 0.01332913339138031,
+        "worst_calcium_rmse_mM": 6.947806241441867e-07,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {
+          "Ca_LVAst": 18,
+          "Ca_HVA": 4
+        }
+      }
+    },
+    "B1": {
+      "development": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 71,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 23,
+          "43": 24
+        }
+      },
+      "imposed": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008395063690841198,
+        "worst_voltage_rmse_mv": 0.00023094250354915857,
+        "worst_calcium_rmse_mM": 1.6812661263188033e-09,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      },
+      "autonomous": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008114553987979889,
+        "worst_voltage_rmse_mv": 0.012090622447431087,
+        "worst_calcium_rmse_mM": 3.9316518041232484e-07,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      }
+    },
+    "B2": {
+      "development": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 71,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 23,
+          "43": 24
+        }
+      },
+      "imposed": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008395063690841198,
+        "worst_voltage_rmse_mv": 0.00022872946283314377,
+        "worst_calcium_rmse_mM": 1.974647112490402e-09,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      },
+      "autonomous": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.00811000820249319,
+        "worst_voltage_rmse_mv": 0.011967233382165432,
+        "worst_calcium_rmse_mM": 4.008923895071348e-07,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      }
+    },
+    "B3": {
+      "development": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 71,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 23,
+          "43": 24
+        }
+      },
+      "imposed": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008395063690841198,
+        "worst_voltage_rmse_mv": 0.00023083628911990672,
+        "worst_calcium_rmse_mM": 1.7780368288811133e-09,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      },
+      "autonomous": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008121886290609837,
+        "worst_voltage_rmse_mv": 0.012067832984030247,
+        "worst_calcium_rmse_mM": 4.2051468085446686e-07,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      }
+    },
+    "B4": {
+      "development": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 71,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 23,
+          "43": 24
+        }
+      },
+      "imposed": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008395063690841198,
+        "worst_voltage_rmse_mv": 0.0002287144452566281,
+        "worst_calcium_rmse_mM": 1.7126958740121268e-09,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      },
+      "autonomous": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008116129785776138,
+        "worst_voltage_rmse_mv": 0.011967630125582218,
+        "worst_calcium_rmse_mM": 4.2477859096834436e-07,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      }
+    },
+    "B5": {
+      "development": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 71,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 23,
+          "43": 24
+        }
+      },
+      "imposed": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008395063690841198,
+        "worst_voltage_rmse_mv": 0.00022895065194461495,
+        "worst_calcium_rmse_mM": 1.890924972158814e-09,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      },
+      "autonomous": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008107841946184635,
+        "worst_voltage_rmse_mv": 0.011958885937929153,
+        "worst_calcium_rmse_mM": 3.917922981599986e-07,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      }
+    },
+    "B6": {
+      "development": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "imposed": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008395063690841198,
+        "worst_voltage_rmse_mv": 0.0002444077981635928,
+        "worst_calcium_rmse_mM": 8.255856553951446e-10,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      },
+      "autonomous": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 168,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.008129584603011608,
+        "worst_voltage_rmse_mv": 0.012858783826231956,
+        "worst_calcium_rmse_mM": 3.2295702112605795e-07,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {}
+      }
+    },
+    "B7": {
+      "development": {
+        "passed": 72,
+        "total": 72,
+        "per_seed": {
+          "17": 24,
+          "29": 24,
+          "43": 24
+        }
+      },
+      "stress_diagnostic": {
+        "passed": 70,
+        "total": 72,
+        "per_seed": {
+          "17": 23,
+          "29": 23,
+          "43": 24
+        }
+      },
+      "imposed": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 165,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.013756358996033669,
+        "worst_voltage_rmse_mv": 0.00022813999385107309,
+        "worst_calcium_rmse_mM": 2.297850354437969e-09,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {
+          "Ca_LVAst": 3
+        }
+      },
+      "autonomous": {
+        "trajectory_passed": 264,
+        "trajectory_total": 264,
+        "differential_passed": 165,
+        "differential_total": 168,
+        "max_differential_nrmse": 0.013772347941994667,
+        "worst_voltage_rmse_mv": 0.011977922171354294,
+        "worst_calcium_rmse_mM": 2.806672227961826e-07,
+        "spike_count_failures": 0,
+        "worst_spike_timing_ms": 0,
+        "voltage_domain_exits": 0,
+        "calcium_domain_exits": 0,
+        "failing_channels": {
+          "Ca_LVAst": 3
+        }
+      }
+    }
+  },
+  "paired_contrasts": [
+    {
+      "axis": "paired_objective",
+      "control": "B1",
+      "treatment": "B2",
+      "domain": "development",
+      "ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "worst_ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "paired_objective",
+      "control": "B1",
+      "treatment": "B2",
+      "domain": "causal",
+      "ratios": [
+        0.9623249074274975,
+        1.0750546562830237,
+        1.1290676310347947
+      ],
+      "worst_ratios": [
+        0.9999458212973045,
+        0.9994397984789513,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "paired_objective_dense",
+      "control": "B3",
+      "treatment": "B4",
+      "domain": "development",
+      "ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "worst_ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "paired_objective_dense",
+      "control": "B3",
+      "treatment": "B4",
+      "domain": "causal",
+      "ratios": [
+        0.9553081143348708,
+        1.1702679109100123,
+        1.0108046612900248
+      ],
+      "worst_ratios": [
+        0.9994802737269238,
+        0.9992912354805615,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "coverage",
+      "control": "B1",
+      "treatment": "B3",
+      "domain": "development",
+      "ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "worst_ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "coverage",
+      "control": "B1",
+      "treatment": "B3",
+      "domain": "causal",
+      "ratios": [
+        1.0371837887372908,
+        0.9492095951202216,
+        1.048713941263773
+      ],
+      "worst_ratios": [
+        0.9998909194083662,
+        1.0009035989705422,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "coverage_paired",
+      "control": "B2",
+      "treatment": "B4",
+      "domain": "development",
+      "ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "worst_ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "coverage_paired",
+      "control": "B2",
+      "treatment": "B4",
+      "domain": "causal",
+      "ratios": [
+        1.0296211620314613,
+        1.0332772602815818,
+        0.9388675319809848
+      ],
+      "worst_ratios": [
+        0.9994253973988113,
+        1.000754818383669,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "capacity",
+      "control": "B1",
+      "treatment": "B5",
+      "domain": "development",
+      "ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "worst_ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "capacity",
+      "control": "B1",
+      "treatment": "B5",
+      "domain": "causal",
+      "ratios": [
+        0.9491292280044087,
+        1.101805233397119,
+        1.1290676310347947
+      ],
+      "worst_ratios": [
+        0.9995125122067812,
+        0.9991728390980951,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "joint_u_z_package",
+      "control": "B1",
+      "treatment": "B6",
+      "domain": "development",
+      "ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "worst_ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "joint_u_z_package",
+      "control": "B1",
+      "treatment": "B6",
+      "domain": "causal",
+      "ratios": [
+        0.9223869332492092,
+        1.148854182066421,
+        0.9923661861854717
+      ],
+      "worst_ratios": [
+        1.0000448375470583,
+        1.0018523032878928,
+        0.8224526174077307
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "m_only_restriction",
+      "control": "B1",
+      "treatment": "B7",
+      "domain": "development",
+      "ratios": [
+        1.0358184824292664,
+        1.0,
+        1.1314963583069784
+      ],
+      "worst_ratios": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    },
+    {
+      "axis": "m_only_restriction",
+      "control": "B1",
+      "treatment": "B7",
+      "domain": "causal",
+      "ratios": [
+        1.0140720696763081,
+        1.0742928144116624,
+        0.9961889559383823
+      ],
+      "worst_ratios": [
+        1.7824065179329698,
+        1.4675434319728735,
+        1.3410447699376884
+      ],
+      "supported": false,
+      "severity_excludes_timing": true
+    }
+  ],
+  "cpu_recurrence_pending": false,
+  "task41_preparation_authorized": true,
+  "independent_confirmation": false,
+  "cpu_recurrence_pass_fail_mismatches": [],
+  "cpu_B6_passed": {
+    "development": 72,
+    "stress_diagnostic": 72
+  },
+  "preferred_arm": "B6",
+  "selection_reason": "Only registered package passing all opened development,stress,causal trajectory and response gates across all three seeds",
+  "task41_executed": false,
+  "canonical_fallback_added": false,
+  "limitations": [
+    "Post-hoc package nomination uses opened stress; Task41 must use new protocols/seeds and freeze B6 before access",
+    "B6 has256 active Ca correction weights versus B1 128; not a capacity-matched proof of unique equilibrium causation",
+    "No competitive speedup established for B6; Task41 must measure matched ionic and integrated cost",
+    "Historical32native episodes plus56formula intervention cases do not establish whole-morphology validity"
+  ]
+}

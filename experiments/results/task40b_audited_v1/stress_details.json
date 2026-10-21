@@ -1,0 +1,4284 @@
+{
+  "original_two_cases": [
+    {
+      "arm": "B0",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 5.524332884831024e-11,
+            "max_abs_ma_cm2": 2.039757454965155e-10,
+            "nrmse": 0.0005524332820273132,
+            "nmax": 0.002039757431128351,
+            "signed_charge_error_ma_ms_cm2": 1.260247675752677e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.260247675752677e-07,
+            "signed_charge_normalized": 0.00042008253863137605,
+            "absolute_charge_normalized": 0.00042008253863137605,
+            "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": false,
+            "scale_ma_cm2": 3.1979777759261196e-06,
+            "rmse_ma_cm2": 2.8263617028856037e-09,
+            "max_abs_ma_cm2": 2.7344422335640755e-08,
+            "nrmse": 0.0008837965429785085,
+            "nmax": 0.008550535448208966,
+            "signed_charge_error_ma_ms_cm2": 1.766817152324579e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.766817152324579e-06,
+            "signed_charge_normalized": 0.0001841598406713693,
+            "absolute_charge_normalized": 0.0001841598406713693,
+            "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.5
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 6.928524953764281e-07,
+            "rmse_ma_cm2": 8.364566188697344e-10,
+            "max_abs_ma_cm2": 2.2912223051343963e-09,
+            "nrmse": 0.0012072650736651902,
+            "nmax": 0.0033069409728972263,
+            "signed_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "signed_charge_normalized": 0.0009280910370069962,
+            "absolute_charge_normalized": 0.0009280910370069962,
+            "reference_signed_charge_ma_ms_cm2": -0.0002523479925002903,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 2.0126647321279524e-11,
+            "max_abs_ma_cm2": 8.185594259181998e-11,
+            "nrmse": 0.00020126647086077566,
+            "nmax": 0.0008185594163524347,
+            "signed_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "signed_charge_normalized": 0.00015533279289662815,
+            "absolute_charge_normalized": 0.00015533279289662815,
+            "reference_signed_charge_ma_ms_cm2": -6.023329478921369e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 1.7712227418087423e-05,
+            "rmse_ma_cm2": 9.715976551957842e-10,
+            "max_abs_ma_cm2": 1.3074187217185592e-09,
+            "nrmse": 5.485462851519201e-05,
+            "nmax": 7.381447239004201e-05,
+            "signed_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "signed_charge_normalized": 4.244448021750022e-05,
+            "absolute_charge_normalized": 4.244448021750022e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.02240060828626156,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 0.00012620021880138665,
+            "rmse_ma_cm2": 2.1778834196008827e-07,
+            "max_abs_ma_cm2": 3.878287911706431e-07,
+            "nrmse": 0.0017257366431578268,
+            "nmax": 0.0030731229696281774,
+            "signed_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "absolute_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "signed_charge_normalized": 0.0010348326821695646,
+            "absolute_charge_normalized": 0.0010348326821695646,
+            "reference_signed_charge_ma_ms_cm2": -0.14457140862941742,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 8.513336069881916e-06,
+            "rmse_ma_cm2": 6.511127163082235e-09,
+            "max_abs_ma_cm2": 1.928179784864729e-08,
+            "nrmse": 0.0007648150043221009,
+            "nmax": 0.002264893302739632,
+            "signed_charge_error_ma_ms_cm2": 1.3974247807792387e-05,
+            "absolute_charge_error_ma_ms_cm2": 1.3988379953635146e-05,
+            "signed_charge_normalized": 0.0005471512453522829,
+            "absolute_charge_normalized": 0.0005477045789773708,
+            "reference_signed_charge_ma_ms_cm2": 0.015207195654511452,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.094037192066025e-07,
+            "rmse_ma_cm2": 1.9670799332008828e-10,
+            "max_abs_ma_cm2": 2.0016711101750756e-09,
+            "nrmse": 0.0003861534297913282,
+            "nmax": 0.0039294395284209605,
+            "signed_charge_error_ma_ms_cm2": 1.2585120328559e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2611604903552423e-07,
+            "signed_charge_normalized": 8.235197182801065e-05,
+            "absolute_charge_normalized": 8.252527624757867e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.0004892502329312265,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 4.131365890705421e-12,
+            "max_abs_ma_cm2": 1.2901612137239243e-11,
+            "nrmse": 4.1313658424258775e-05,
+            "nmax": 0.00012901611986469749,
+            "signed_charge_error_ma_ms_cm2": 9.53795961757426e-09,
+            "absolute_charge_error_ma_ms_cm2": 9.555959795904232e-09,
+            "signed_charge_normalized": 3.1793197215155284e-05,
+            "absolute_charge_normalized": 3.185319780673867e-05,
+            "reference_signed_charge_ma_ms_cm2": 3.920192284567747e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1.8807484593708068e-05,
+            "rmse_ma_cm2": 2.2701166704654757e-11,
+            "max_abs_ma_cm2": 9.147541611550191e-10,
+            "nrmse": 1.2070283291498374e-06,
+            "nmax": 4.863777272273e-05,
+            "signed_charge_error_ma_ms_cm2": 2.0181202848547727e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.471286689450728e-09,
+            "signed_charge_normalized": 3.57680349609504e-08,
+            "absolute_charge_normalized": 6.152314339226046e-08,
+            "reference_signed_charge_ma_ms_cm2": -1.9712602806976065e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 4.363998868939234e-07,
+            "rmse_ma_cm2": 4.2647776930056337e-10,
+            "max_abs_ma_cm2": 5.515781269405348e-10,
+            "nrmse": 0.0009772637026467155,
+            "nmax": 0.0012639282078333995,
+            "signed_charge_error_ma_ms_cm2": 9.906252054522412e-07,
+            "absolute_charge_error_ma_ms_cm2": 9.910896205526697e-07,
+            "signed_charge_normalized": 0.0007566647587204102,
+            "absolute_charge_normalized": 0.0007570194908006941,
+            "reference_signed_charge_ma_ms_cm2": 0.0007843903149478137,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.0001345286436844617,
+          "max_abs": 0.004619508981704712,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0004917605551028907,
+          "8": 0.0005850434093961972,
+          "40": 0.0005633575655590146,
+          "100": 0.00036362290550681696,
+          "500": 0.0006771683946712122,
+          "1000": 0.0008070095704604819,
+          "3000": 0.0008121946186743369
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.1795069611338433e-07,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B0",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": false,
+            "scale_ma_cm2": 1.2724352700388408e-06,
+            "rmse_ma_cm2": 1.5000729042600178e-08,
+            "max_abs_ma_cm2": 1.9477371430868672e-08,
+            "nrmse": 0.011788991861363828,
+            "nmax": 0.01530716091379181,
+            "signed_charge_error_ma_ms_cm2": 4.385486805176443e-06,
+            "absolute_charge_error_ma_ms_cm2": 4.385486805176443e-06,
+            "signed_charge_normalized": 0.011488434479060545,
+            "absolute_charge_normalized": 0.011488434479060545,
+            "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 6.856346885797393e-07,
+            "rmse_ma_cm2": 2.378155926764463e-09,
+            "max_abs_ma_cm2": 7.103746507272508e-09,
+            "nrmse": 0.0034685466858316396,
+            "nmax": 0.010360832999840763,
+            "signed_charge_error_ma_ms_cm2": 6.122057716792201e-07,
+            "absolute_charge_error_ma_ms_cm2": 6.122057716792201e-07,
+            "signed_charge_normalized": 0.002976345793727637,
+            "absolute_charge_normalized": 0.002976345793727637,
+            "reference_signed_charge_ma_ms_cm2": -7.321673911064863e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 1.8539708435127977e-06,
+            "rmse_ma_cm2": 2.712503058464628e-10,
+            "max_abs_ma_cm2": 2.5531955299767914e-09,
+            "nrmse": 0.00014630775170795742,
+            "nmax": 0.0013771497749873686,
+            "signed_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "signed_charge_normalized": 9.617865966304995e-05,
+            "absolute_charge_normalized": 9.617865966304995e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00012536218855530024,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 2.1052134968613245e-07,
+            "rmse_ma_cm2": 6.796167484383685e-11,
+            "max_abs_ma_cm2": 6.281966487523748e-10,
+            "nrmse": 0.0003228255706376637,
+            "nmax": 0.0029840044712280108,
+            "signed_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "signed_charge_normalized": 0.00017544663984752243,
+            "absolute_charge_normalized": 0.00017544663984752243,
+            "reference_signed_charge_ma_ms_cm2": -1.859384610725101e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 0.0011996595421805978,
+            "rmse_ma_cm2": 2.7243555718063115e-08,
+            "max_abs_ma_cm2": 1.3808305528877941e-07,
+            "nrmse": 2.2709406094118198e-05,
+            "nmax": 0.00011510186885004769,
+            "signed_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "signed_charge_normalized": 5.132745474290824e-06,
+            "absolute_charge_normalized": 5.132745474290824e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.31792011857032776,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 2.4218852558988146e-06,
+            "rmse_ma_cm2": 2.6567787714059557e-10,
+            "max_abs_ma_cm2": 6.411494810451747e-10,
+            "nrmse": 0.00010969878795599534,
+            "nmax": 0.0002647315678905812,
+            "signed_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "absolute_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "signed_charge_normalized": 3.2235155155892006e-05,
+            "absolute_charge_normalized": 3.2235155155892006e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00020052211766596884,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 1.7007898350129835e-05,
+            "rmse_ma_cm2": 6.6786332523064e-09,
+            "max_abs_ma_cm2": 1.697226152757031e-08,
+            "nrmse": 0.00039267833772392086,
+            "nmax": 0.0009979046898196417,
+            "signed_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "signed_charge_normalized": 5.543441408643973e-05,
+            "absolute_charge_normalized": 5.543441408643973e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.1733729682090072e-11,
+            "max_abs_ma_cm2": 3.766849871893409e-11,
+            "nrmse": 0.00011733729544968565,
+            "nmax": 0.00037668498278736344,
+            "signed_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "absolute_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "signed_charge_normalized": 3.317315853845301e-05,
+            "absolute_charge_normalized": 3.317315853845301e-05,
+            "reference_signed_charge_ma_ms_cm2": 2.2637641450273804e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.9022695723574106e-11,
+            "max_abs_ma_cm2": 7.703270274770222e-11,
+            "nrmse": 0.00019022695501273032,
+            "nmax": 0.0007703270184749055,
+            "signed_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "signed_charge_normalized": 0.00011863860146341637,
+            "absolute_charge_normalized": 0.00011863860146341637,
+            "reference_signed_charge_ma_ms_cm2": 4.322270797274541e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 0.0001381353649776429,
+            "rmse_ma_cm2": 3.7391573687458385e-09,
+            "max_abs_ma_cm2": 3.797306980223838e-09,
+            "nrmse": 2.706879132183868e-05,
+            "nmax": 2.748975239496728e-05,
+            "signed_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "signed_charge_normalized": 2.704829638233844e-05,
+            "absolute_charge_normalized": 2.704829638233844e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.04060974344611168,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.7069246496248525e-06,
+            "rmse_ma_cm2": 3.600685177309299e-09,
+            "max_abs_ma_cm2": 3.9088128821088646e-09,
+            "nrmse": 0.002109457601482676,
+            "nmax": 0.0022899738913302018,
+            "signed_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "signed_charge_normalized": 0.0021025079265238455,
+            "absolute_charge_normalized": 0.0021025079265238455,
+            "reference_signed_charge_ma_ms_cm2": 0.00048053805949166417,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 7.020754856057465e-05,
+          "max_abs": 0.0014052093029022217,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0006231252840060178,
+          "8": 0.0020827809407100717,
+          "40": 0.0041368359395281135,
+          "100": 0.004035367225283738
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 3.3933195432016306e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B1",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "metrics": {
+        "passed": true,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 5.499732784328694e-11,
+            "max_abs_ma_cm2": 1.0352372827242537e-10,
+            "nrmse": 0.0005499732720058282,
+            "nmax": 0.00103523727062637,
+            "signed_charge_error_ma_ms_cm2": 1.2605786629871553e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2605786629871553e-07,
+            "signed_charge_normalized": 0.0004201928677042944,
+            "absolute_charge_normalized": 0.0004201928677042944,
+            "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 3.1979777759261196e-06,
+            "rmse_ma_cm2": 8.060325156225741e-10,
+            "max_abs_ma_cm2": 8.541496072507049e-09,
+            "nrmse": 0.00025204443936110554,
+            "nmax": 0.0026709053880255534,
+            "signed_charge_error_ma_ms_cm2": 7.6513347161366e-07,
+            "absolute_charge_error_ma_ms_cm2": 7.6513347161366e-07,
+            "signed_charge_normalized": 7.975180569153014e-05,
+            "absolute_charge_normalized": 7.975180569153014e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 6.928524953764281e-07,
+            "rmse_ma_cm2": 8.364566188697344e-10,
+            "max_abs_ma_cm2": 2.2912223051343963e-09,
+            "nrmse": 0.0012072650736651902,
+            "nmax": 0.0033069409728972263,
+            "signed_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "signed_charge_normalized": 0.0009280910370069962,
+            "absolute_charge_normalized": 0.0009280910370069962,
+            "reference_signed_charge_ma_ms_cm2": -0.0002523479925002903,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 2.0126647321279524e-11,
+            "max_abs_ma_cm2": 8.185594259181998e-11,
+            "nrmse": 0.00020126647086077566,
+            "nmax": 0.0008185594163524347,
+            "signed_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "signed_charge_normalized": 0.00015533279289662815,
+            "absolute_charge_normalized": 0.00015533279289662815,
+            "reference_signed_charge_ma_ms_cm2": -6.023329478921369e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 1.7712227418087423e-05,
+            "rmse_ma_cm2": 9.715976551957842e-10,
+            "max_abs_ma_cm2": 1.3074187217185592e-09,
+            "nrmse": 5.485462851519201e-05,
+            "nmax": 7.381447239004201e-05,
+            "signed_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "signed_charge_normalized": 4.244448021750022e-05,
+            "absolute_charge_normalized": 4.244448021750022e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.02240060828626156,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 0.00012620021880138665,
+            "rmse_ma_cm2": 2.1778834196008827e-07,
+            "max_abs_ma_cm2": 3.878287911706431e-07,
+            "nrmse": 0.0017257366431578268,
+            "nmax": 0.0030731229696281774,
+            "signed_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "absolute_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "signed_charge_normalized": 0.0010348326821695646,
+            "absolute_charge_normalized": 0.0010348326821695646,
+            "reference_signed_charge_ma_ms_cm2": -0.14457140862941742,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 8.513336069881916e-06,
+            "rmse_ma_cm2": 6.511127163082235e-09,
+            "max_abs_ma_cm2": 1.928179784864729e-08,
+            "nrmse": 0.0007648150043221009,
+            "nmax": 0.002264893302739632,
+            "signed_charge_error_ma_ms_cm2": 1.3974247807792387e-05,
+            "absolute_charge_error_ma_ms_cm2": 1.3988379953635146e-05,
+            "signed_charge_normalized": 0.0005471512453522829,
+            "absolute_charge_normalized": 0.0005477045789773708,
+            "reference_signed_charge_ma_ms_cm2": 0.015207195654511452,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.094037192066025e-07,
+            "rmse_ma_cm2": 1.9670799332008828e-10,
+            "max_abs_ma_cm2": 2.0016711101750756e-09,
+            "nrmse": 0.0003861534297913282,
+            "nmax": 0.0039294395284209605,
+            "signed_charge_error_ma_ms_cm2": 1.2585120328559e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2611604903552423e-07,
+            "signed_charge_normalized": 8.235197182801065e-05,
+            "absolute_charge_normalized": 8.252527624757867e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.0004892502329312265,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 4.131365890705421e-12,
+            "max_abs_ma_cm2": 1.2901612137239243e-11,
+            "nrmse": 4.1313658424258775e-05,
+            "nmax": 0.00012901611986469749,
+            "signed_charge_error_ma_ms_cm2": 9.53795961757426e-09,
+            "absolute_charge_error_ma_ms_cm2": 9.555959795904232e-09,
+            "signed_charge_normalized": 3.1793197215155284e-05,
+            "absolute_charge_normalized": 3.185319780673867e-05,
+            "reference_signed_charge_ma_ms_cm2": 3.920192284567747e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1.8807484593708068e-05,
+            "rmse_ma_cm2": 2.2701166704654757e-11,
+            "max_abs_ma_cm2": 9.147541611550191e-10,
+            "nrmse": 1.2070283291498374e-06,
+            "nmax": 4.863777272273e-05,
+            "signed_charge_error_ma_ms_cm2": 2.0181202848547727e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.471286689450728e-09,
+            "signed_charge_normalized": 3.57680349609504e-08,
+            "absolute_charge_normalized": 6.152314339226046e-08,
+            "reference_signed_charge_ma_ms_cm2": -1.9712602806976065e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 4.363998868939234e-07,
+            "rmse_ma_cm2": 4.2647776930056337e-10,
+            "max_abs_ma_cm2": 5.515781269405348e-10,
+            "nrmse": 0.0009772637026467155,
+            "nmax": 0.0012639282078333995,
+            "signed_charge_error_ma_ms_cm2": 9.906252054522412e-07,
+            "absolute_charge_error_ma_ms_cm2": 9.910896205526697e-07,
+            "signed_charge_normalized": 0.0007566647587204102,
+            "absolute_charge_normalized": 0.0007570194908006941,
+            "reference_signed_charge_ma_ms_cm2": 0.0007843903149478137,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.0001259149721590802,
+          "max_abs": 0.004619508981704712,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0002273336389370231,
+          "8": 0.00015640654789531404,
+          "40": 0.00015278793031787085,
+          "100": 0.000120856075601977,
+          "500": 0.0006595710344319515,
+          "1000": 0.0007996892547576436,
+          "3000": 0.0007708306749275102
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.1789190431861748e-07,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B1",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": false,
+            "scale_ma_cm2": 1.2724352700388408e-06,
+            "rmse_ma_cm2": 1.5334576397834665e-08,
+            "max_abs_ma_cm2": 2.0386329785376053e-08,
+            "nrmse": 0.012051360693079955,
+            "nmax": 0.016021506370814263,
+            "signed_charge_error_ma_ms_cm2": 4.498954895694003e-06,
+            "absolute_charge_error_ma_ms_cm2": 4.498954895694003e-06,
+            "signed_charge_normalized": 0.011785681006364316,
+            "absolute_charge_normalized": 0.011785681006364316,
+            "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 6.856346885797393e-07,
+            "rmse_ma_cm2": 1.4586526390082027e-09,
+            "max_abs_ma_cm2": 1.7288163140505109e-09,
+            "nrmse": 0.0021274487176687843,
+            "nmax": 0.0025214831496225406,
+            "signed_charge_error_ma_ms_cm2": 4.119768948180681e-07,
+            "absolute_charge_error_ma_ms_cm2": 4.119768948180681e-07,
+            "signed_charge_normalized": 0.002002897971120757,
+            "absolute_charge_normalized": 0.002002897971120757,
+            "reference_signed_charge_ma_ms_cm2": -7.321673911064863e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 1.8539708435127977e-06,
+            "rmse_ma_cm2": 2.712503058464628e-10,
+            "max_abs_ma_cm2": 2.5531955299767914e-09,
+            "nrmse": 0.00014630775170795742,
+            "nmax": 0.0013771497749873686,
+            "signed_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "signed_charge_normalized": 9.617865966304995e-05,
+            "absolute_charge_normalized": 9.617865966304995e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00012536218855530024,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 2.1052134968613245e-07,
+            "rmse_ma_cm2": 6.796167484383685e-11,
+            "max_abs_ma_cm2": 6.281966487523748e-10,
+            "nrmse": 0.0003228255706376637,
+            "nmax": 0.0029840044712280108,
+            "signed_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "signed_charge_normalized": 0.00017544663984752243,
+            "absolute_charge_normalized": 0.00017544663984752243,
+            "reference_signed_charge_ma_ms_cm2": -1.859384610725101e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 0.0011996595421805978,
+            "rmse_ma_cm2": 2.7243555718063115e-08,
+            "max_abs_ma_cm2": 1.3808305528877941e-07,
+            "nrmse": 2.2709406094118198e-05,
+            "nmax": 0.00011510186885004769,
+            "signed_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "signed_charge_normalized": 5.132745474290824e-06,
+            "absolute_charge_normalized": 5.132745474290824e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.31792011857032776,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 2.4218852558988146e-06,
+            "rmse_ma_cm2": 2.6567787714059557e-10,
+            "max_abs_ma_cm2": 6.411494810451747e-10,
+            "nrmse": 0.00010969878795599534,
+            "nmax": 0.0002647315678905812,
+            "signed_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "absolute_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "signed_charge_normalized": 3.2235155155892006e-05,
+            "absolute_charge_normalized": 3.2235155155892006e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00020052211766596884,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 1.7007898350129835e-05,
+            "rmse_ma_cm2": 6.6786332523064e-09,
+            "max_abs_ma_cm2": 1.697226152757031e-08,
+            "nrmse": 0.00039267833772392086,
+            "nmax": 0.0009979046898196417,
+            "signed_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "signed_charge_normalized": 5.543441408643973e-05,
+            "absolute_charge_normalized": 5.543441408643973e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.1733729682090072e-11,
+            "max_abs_ma_cm2": 3.766849871893409e-11,
+            "nrmse": 0.00011733729544968565,
+            "nmax": 0.00037668498278736344,
+            "signed_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "absolute_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "signed_charge_normalized": 3.317315853845301e-05,
+            "absolute_charge_normalized": 3.317315853845301e-05,
+            "reference_signed_charge_ma_ms_cm2": 2.2637641450273804e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.9022695723574106e-11,
+            "max_abs_ma_cm2": 7.703270274770222e-11,
+            "nrmse": 0.00019022695501273032,
+            "nmax": 0.0007703270184749055,
+            "signed_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "signed_charge_normalized": 0.00011863860146341637,
+            "absolute_charge_normalized": 0.00011863860146341637,
+            "reference_signed_charge_ma_ms_cm2": 4.322270797274541e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 0.0001381353649776429,
+            "rmse_ma_cm2": 3.7391573687458385e-09,
+            "max_abs_ma_cm2": 3.797306980223838e-09,
+            "nrmse": 2.706879132183868e-05,
+            "nmax": 2.748975239496728e-05,
+            "signed_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "signed_charge_normalized": 2.704829638233844e-05,
+            "absolute_charge_normalized": 2.704829638233844e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.04060974344611168,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.7069246496248525e-06,
+            "rmse_ma_cm2": 3.600685177309299e-09,
+            "max_abs_ma_cm2": 3.9088128821088646e-09,
+            "nrmse": 0.002109457601482676,
+            "nmax": 0.0022899738913302018,
+            "signed_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "signed_charge_normalized": 0.0021025079265238455,
+            "absolute_charge_normalized": 0.0021025079265238455,
+            "reference_signed_charge_ma_ms_cm2": 0.00048053805949166417,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 6.375525845214725e-05,
+          "max_abs": 0.0014052093029022217,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0006050124574390001,
+          "8": 0.0019197177176416712,
+          "40": 0.003969849690828288,
+          "100": 0.003964580011412841
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 3.286711082836964e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B2",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "metrics": {
+        "passed": true,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 5.4892708006292366e-11,
+            "max_abs_ma_cm2": 1.034882980814467e-10,
+            "nrmse": 0.0005489270736481084,
+            "nmax": 0.0010348829687207236,
+            "signed_charge_error_ma_ms_cm2": 1.2582348092659565e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2582348092659565e-07,
+            "signed_charge_normalized": 0.000419411583167671,
+            "absolute_charge_normalized": 0.000419411583167671,
+            "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 3.1979777759261196e-06,
+            "rmse_ma_cm2": 7.926856365180285e-10,
+            "max_abs_ma_cm2": 8.309538777561917e-09,
+            "nrmse": 0.00024787090219489423,
+            "nmax": 0.0025983728968083626,
+            "signed_charge_error_ma_ms_cm2": 7.458430217023217e-07,
+            "absolute_charge_error_ma_ms_cm2": 7.458430217023217e-07,
+            "signed_charge_normalized": 7.774111308676882e-05,
+            "absolute_charge_normalized": 7.774111308676882e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 6.928524953764281e-07,
+            "rmse_ma_cm2": 8.364566188697344e-10,
+            "max_abs_ma_cm2": 2.2912223051343963e-09,
+            "nrmse": 0.0012072650736651902,
+            "nmax": 0.0033069409728972263,
+            "signed_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "signed_charge_normalized": 0.0009280910370069962,
+            "absolute_charge_normalized": 0.0009280910370069962,
+            "reference_signed_charge_ma_ms_cm2": -0.0002523479925002903,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 2.0126647321279524e-11,
+            "max_abs_ma_cm2": 8.185594259181998e-11,
+            "nrmse": 0.00020126647086077566,
+            "nmax": 0.0008185594163524347,
+            "signed_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "signed_charge_normalized": 0.00015533279289662815,
+            "absolute_charge_normalized": 0.00015533279289662815,
+            "reference_signed_charge_ma_ms_cm2": -6.023329478921369e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 1.7712227418087423e-05,
+            "rmse_ma_cm2": 9.715976551957842e-10,
+            "max_abs_ma_cm2": 1.3074187217185592e-09,
+            "nrmse": 5.485462851519201e-05,
+            "nmax": 7.381447239004201e-05,
+            "signed_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "signed_charge_normalized": 4.244448021750022e-05,
+            "absolute_charge_normalized": 4.244448021750022e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.02240060828626156,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 0.00012620021880138665,
+            "rmse_ma_cm2": 2.1778834196008827e-07,
+            "max_abs_ma_cm2": 3.878287911706431e-07,
+            "nrmse": 0.0017257366431578268,
+            "nmax": 0.0030731229696281774,
+            "signed_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "absolute_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "signed_charge_normalized": 0.0010348326821695646,
+            "absolute_charge_normalized": 0.0010348326821695646,
+            "reference_signed_charge_ma_ms_cm2": -0.14457140862941742,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 8.513336069881916e-06,
+            "rmse_ma_cm2": 6.511127163082235e-09,
+            "max_abs_ma_cm2": 1.928179784864729e-08,
+            "nrmse": 0.0007648150043221009,
+            "nmax": 0.002264893302739632,
+            "signed_charge_error_ma_ms_cm2": 1.3974247807792387e-05,
+            "absolute_charge_error_ma_ms_cm2": 1.3988379953635146e-05,
+            "signed_charge_normalized": 0.0005471512453522829,
+            "absolute_charge_normalized": 0.0005477045789773708,
+            "reference_signed_charge_ma_ms_cm2": 0.015207195654511452,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.094037192066025e-07,
+            "rmse_ma_cm2": 1.9670799332008828e-10,
+            "max_abs_ma_cm2": 2.0016711101750756e-09,
+            "nrmse": 0.0003861534297913282,
+            "nmax": 0.0039294395284209605,
+            "signed_charge_error_ma_ms_cm2": 1.2585120328559e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2611604903552423e-07,
+            "signed_charge_normalized": 8.235197182801065e-05,
+            "absolute_charge_normalized": 8.252527624757867e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.0004892502329312265,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 4.131365890705421e-12,
+            "max_abs_ma_cm2": 1.2901612137239243e-11,
+            "nrmse": 4.1313658424258775e-05,
+            "nmax": 0.00012901611986469749,
+            "signed_charge_error_ma_ms_cm2": 9.53795961757426e-09,
+            "absolute_charge_error_ma_ms_cm2": 9.555959795904232e-09,
+            "signed_charge_normalized": 3.1793197215155284e-05,
+            "absolute_charge_normalized": 3.185319780673867e-05,
+            "reference_signed_charge_ma_ms_cm2": 3.920192284567747e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1.8807484593708068e-05,
+            "rmse_ma_cm2": 2.2701166704654757e-11,
+            "max_abs_ma_cm2": 9.147541611550191e-10,
+            "nrmse": 1.2070283291498374e-06,
+            "nmax": 4.863777272273e-05,
+            "signed_charge_error_ma_ms_cm2": 2.0181202848547727e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.471286689450728e-09,
+            "signed_charge_normalized": 3.57680349609504e-08,
+            "absolute_charge_normalized": 6.152314339226046e-08,
+            "reference_signed_charge_ma_ms_cm2": -1.9712602806976065e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 4.363998868939234e-07,
+            "rmse_ma_cm2": 4.2647776930056337e-10,
+            "max_abs_ma_cm2": 5.515781269405348e-10,
+            "nrmse": 0.0009772637026467155,
+            "nmax": 0.0012639282078333995,
+            "signed_charge_error_ma_ms_cm2": 9.906252054522412e-07,
+            "absolute_charge_error_ma_ms_cm2": 9.910896205526697e-07,
+            "signed_charge_normalized": 0.0007566647587204102,
+            "absolute_charge_normalized": 0.0007570194908006941,
+            "reference_signed_charge_ma_ms_cm2": 0.0007843903149478137,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.00012574094580486417,
+          "max_abs": 0.004619508981704712,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.00022247827229217613,
+          "8": 0.0001887488825789317,
+          "40": 0.0001561321178487232,
+          "100": 0.00012255351936173316,
+          "500": 0.0006596336743081596,
+          "1000": 0.0007997150877560457,
+          "3000": 0.0007706398251102984
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.1789207973997558e-07,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B2",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": false,
+            "scale_ma_cm2": 1.2724352700388408e-06,
+            "rmse_ma_cm2": 1.534035956175847e-08,
+            "max_abs_ma_cm2": 2.0455905487156475e-08,
+            "nrmse": 0.01205590565034417,
+            "nmax": 0.016076185538720617,
+            "signed_charge_error_ma_ms_cm2": 4.500312066586611e-06,
+            "absolute_charge_error_ma_ms_cm2": 4.500312066586611e-06,
+            "signed_charge_normalized": 0.01178923631722701,
+            "absolute_charge_normalized": 0.01178923631722701,
+            "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 6.856346885797393e-07,
+            "rmse_ma_cm2": 1.4574937083783948e-09,
+            "max_abs_ma_cm2": 1.7250605615675212e-09,
+            "nrmse": 0.0021257584142913275,
+            "nmax": 0.002516005374729369,
+            "signed_charge_error_ma_ms_cm2": 4.062136714146628e-07,
+            "absolute_charge_error_ma_ms_cm2": 4.062136714146628e-07,
+            "signed_charge_normalized": 0.0019748790491690986,
+            "absolute_charge_normalized": 0.0019748790491690986,
+            "reference_signed_charge_ma_ms_cm2": -7.321673911064863e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 1.8539708435127977e-06,
+            "rmse_ma_cm2": 2.712503058464628e-10,
+            "max_abs_ma_cm2": 2.5531955299767914e-09,
+            "nrmse": 0.00014630775170795742,
+            "nmax": 0.0013771497749873686,
+            "signed_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "signed_charge_normalized": 9.617865966304995e-05,
+            "absolute_charge_normalized": 9.617865966304995e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00012536218855530024,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 2.1052134968613245e-07,
+            "rmse_ma_cm2": 6.796167484383685e-11,
+            "max_abs_ma_cm2": 6.281966487523748e-10,
+            "nrmse": 0.0003228255706376637,
+            "nmax": 0.0029840044712280108,
+            "signed_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "signed_charge_normalized": 0.00017544663984752243,
+            "absolute_charge_normalized": 0.00017544663984752243,
+            "reference_signed_charge_ma_ms_cm2": -1.859384610725101e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 0.0011996595421805978,
+            "rmse_ma_cm2": 2.7243555718063115e-08,
+            "max_abs_ma_cm2": 1.3808305528877941e-07,
+            "nrmse": 2.2709406094118198e-05,
+            "nmax": 0.00011510186885004769,
+            "signed_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "signed_charge_normalized": 5.132745474290824e-06,
+            "absolute_charge_normalized": 5.132745474290824e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.31792011857032776,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 2.4218852558988146e-06,
+            "rmse_ma_cm2": 2.6567787714059557e-10,
+            "max_abs_ma_cm2": 6.411494810451747e-10,
+            "nrmse": 0.00010969878795599534,
+            "nmax": 0.0002647315678905812,
+            "signed_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "absolute_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "signed_charge_normalized": 3.2235155155892006e-05,
+            "absolute_charge_normalized": 3.2235155155892006e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00020052211766596884,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 1.7007898350129835e-05,
+            "rmse_ma_cm2": 6.6786332523064e-09,
+            "max_abs_ma_cm2": 1.697226152757031e-08,
+            "nrmse": 0.00039267833772392086,
+            "nmax": 0.0009979046898196417,
+            "signed_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "signed_charge_normalized": 5.543441408643973e-05,
+            "absolute_charge_normalized": 5.543441408643973e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.1733729682090072e-11,
+            "max_abs_ma_cm2": 3.766849871893409e-11,
+            "nrmse": 0.00011733729544968565,
+            "nmax": 0.00037668498278736344,
+            "signed_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "absolute_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "signed_charge_normalized": 3.317315853845301e-05,
+            "absolute_charge_normalized": 3.317315853845301e-05,
+            "reference_signed_charge_ma_ms_cm2": 2.2637641450273804e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.9022695723574106e-11,
+            "max_abs_ma_cm2": 7.703270274770222e-11,
+            "nrmse": 0.00019022695501273032,
+            "nmax": 0.0007703270184749055,
+            "signed_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "signed_charge_normalized": 0.00011863860146341637,
+            "absolute_charge_normalized": 0.00011863860146341637,
+            "reference_signed_charge_ma_ms_cm2": 4.322270797274541e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 0.0001381353649776429,
+            "rmse_ma_cm2": 3.7391573687458385e-09,
+            "max_abs_ma_cm2": 3.797306980223838e-09,
+            "nrmse": 2.706879132183868e-05,
+            "nmax": 2.748975239496728e-05,
+            "signed_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "signed_charge_normalized": 2.704829638233844e-05,
+            "absolute_charge_normalized": 2.704829638233844e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.04060974344611168,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.7069246496248525e-06,
+            "rmse_ma_cm2": 3.600685177309299e-09,
+            "max_abs_ma_cm2": 3.9088128821088646e-09,
+            "nrmse": 0.002109457601482676,
+            "nmax": 0.0022899738913302018,
+            "signed_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "signed_charge_normalized": 0.0021025079265238455,
+            "absolute_charge_normalized": 0.0021025079265238455,
+            "reference_signed_charge_ma_ms_cm2": 0.00048053805949166417,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 6.385725282598287e-05,
+          "max_abs": 0.0014052093029022217,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0006057219767942429,
+          "8": 0.001962318364927686,
+          "40": 0.003986096824152637,
+          "100": 0.003970653767008393
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 3.28324169800027e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B3",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "metrics": {
+        "passed": true,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 5.484287924208425e-11,
+            "max_abs_ma_cm2": 1.0329992869000745e-10,
+            "nrmse": 0.0005484287860118503,
+            "nmax": 0.0010329992748283443,
+            "signed_charge_error_ma_ms_cm2": 1.257270879043222e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.257270879043222e-07,
+            "signed_charge_normalized": 0.0004190902731086868,
+            "absolute_charge_normalized": 0.0004190902731086868,
+            "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 3.1979777759261196e-06,
+            "rmse_ma_cm2": 7.059704152801088e-10,
+            "max_abs_ma_cm2": 7.457152616899106e-09,
+            "nrmse": 0.00022075525996288794,
+            "nmax": 0.002331833783535143,
+            "signed_charge_error_ma_ms_cm2": 7.010293450334267e-07,
+            "absolute_charge_error_ma_ms_cm2": 7.010293450334267e-07,
+            "signed_charge_normalized": 7.307006971118659e-05,
+            "absolute_charge_normalized": 7.307006971118659e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 6.928524953764281e-07,
+            "rmse_ma_cm2": 8.364566188697344e-10,
+            "max_abs_ma_cm2": 2.2912223051343963e-09,
+            "nrmse": 0.0012072650736651902,
+            "nmax": 0.0033069409728972263,
+            "signed_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "signed_charge_normalized": 0.0009280910370069962,
+            "absolute_charge_normalized": 0.0009280910370069962,
+            "reference_signed_charge_ma_ms_cm2": -0.0002523479925002903,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 2.0126647321279524e-11,
+            "max_abs_ma_cm2": 8.185594259181998e-11,
+            "nrmse": 0.00020126647086077566,
+            "nmax": 0.0008185594163524347,
+            "signed_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "signed_charge_normalized": 0.00015533279289662815,
+            "absolute_charge_normalized": 0.00015533279289662815,
+            "reference_signed_charge_ma_ms_cm2": -6.023329478921369e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 1.7712227418087423e-05,
+            "rmse_ma_cm2": 9.715976551957842e-10,
+            "max_abs_ma_cm2": 1.3074187217185592e-09,
+            "nrmse": 5.485462851519201e-05,
+            "nmax": 7.381447239004201e-05,
+            "signed_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "signed_charge_normalized": 4.244448021750022e-05,
+            "absolute_charge_normalized": 4.244448021750022e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.02240060828626156,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 0.00012620021880138665,
+            "rmse_ma_cm2": 2.1778834196008827e-07,
+            "max_abs_ma_cm2": 3.878287911706431e-07,
+            "nrmse": 0.0017257366431578268,
+            "nmax": 0.0030731229696281774,
+            "signed_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "absolute_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "signed_charge_normalized": 0.0010348326821695646,
+            "absolute_charge_normalized": 0.0010348326821695646,
+            "reference_signed_charge_ma_ms_cm2": -0.14457140862941742,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 8.513336069881916e-06,
+            "rmse_ma_cm2": 6.511127163082235e-09,
+            "max_abs_ma_cm2": 1.928179784864729e-08,
+            "nrmse": 0.0007648150043221009,
+            "nmax": 0.002264893302739632,
+            "signed_charge_error_ma_ms_cm2": 1.3974247807792387e-05,
+            "absolute_charge_error_ma_ms_cm2": 1.3988379953635146e-05,
+            "signed_charge_normalized": 0.0005471512453522829,
+            "absolute_charge_normalized": 0.0005477045789773708,
+            "reference_signed_charge_ma_ms_cm2": 0.015207195654511452,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.094037192066025e-07,
+            "rmse_ma_cm2": 1.9670799332008828e-10,
+            "max_abs_ma_cm2": 2.0016711101750756e-09,
+            "nrmse": 0.0003861534297913282,
+            "nmax": 0.0039294395284209605,
+            "signed_charge_error_ma_ms_cm2": 1.2585120328559e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2611604903552423e-07,
+            "signed_charge_normalized": 8.235197182801065e-05,
+            "absolute_charge_normalized": 8.252527624757867e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.0004892502329312265,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 4.131365890705421e-12,
+            "max_abs_ma_cm2": 1.2901612137239243e-11,
+            "nrmse": 4.1313658424258775e-05,
+            "nmax": 0.00012901611986469749,
+            "signed_charge_error_ma_ms_cm2": 9.53795961757426e-09,
+            "absolute_charge_error_ma_ms_cm2": 9.555959795904232e-09,
+            "signed_charge_normalized": 3.1793197215155284e-05,
+            "absolute_charge_normalized": 3.185319780673867e-05,
+            "reference_signed_charge_ma_ms_cm2": 3.920192284567747e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1.8807484593708068e-05,
+            "rmse_ma_cm2": 2.2701166704654757e-11,
+            "max_abs_ma_cm2": 9.147541611550191e-10,
+            "nrmse": 1.2070283291498374e-06,
+            "nmax": 4.863777272273e-05,
+            "signed_charge_error_ma_ms_cm2": 2.0181202848547727e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.471286689450728e-09,
+            "signed_charge_normalized": 3.57680349609504e-08,
+            "absolute_charge_normalized": 6.152314339226046e-08,
+            "reference_signed_charge_ma_ms_cm2": -1.9712602806976065e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 4.363998868939234e-07,
+            "rmse_ma_cm2": 4.2647776930056337e-10,
+            "max_abs_ma_cm2": 5.515781269405348e-10,
+            "nrmse": 0.0009772637026467155,
+            "nmax": 0.0012639282078333995,
+            "signed_charge_error_ma_ms_cm2": 9.906252054522412e-07,
+            "absolute_charge_error_ma_ms_cm2": 9.910896205526697e-07,
+            "signed_charge_normalized": 0.0007566647587204102,
+            "absolute_charge_normalized": 0.0007570194908006941,
+            "reference_signed_charge_ma_ms_cm2": 0.0007843903149478137,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.00012546095240395516,
+          "max_abs": 0.004619508981704712,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0002085221943562635,
+          "8": 0.0001694701629195354,
+          "40": 0.00015249475476606408,
+          "100": 0.00012070756917422634,
+          "500": 0.0006595655954571922,
+          "1000": 0.0007996870117736179,
+          "3000": 0.0007698576752937266
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.1788847661609892e-07,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B3",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": false,
+            "scale_ma_cm2": 1.2724352700388408e-06,
+            "rmse_ma_cm2": 1.532905503661503e-08,
+            "max_abs_ma_cm2": 2.03667571982892e-08,
+            "nrmse": 0.012047021485145656,
+            "nmax": 0.016006124380431162,
+            "signed_charge_error_ma_ms_cm2": 4.4974042644992215e-06,
+            "absolute_charge_error_ma_ms_cm2": 4.4974042644992215e-06,
+            "signed_charge_normalized": 0.011781618897487085,
+            "absolute_charge_normalized": 0.011781618897487085,
+            "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 6.856346885797393e-07,
+            "rmse_ma_cm2": 1.4608667363273711e-09,
+            "max_abs_ma_cm2": 1.7274385705349237e-09,
+            "nrmse": 0.0021306779844431287,
+            "nmax": 0.0025194737070745837,
+            "signed_charge_error_ma_ms_cm2": 4.107628502715848e-07,
+            "absolute_charge_error_ma_ms_cm2": 4.107628502715848e-07,
+            "signed_charge_normalized": 0.001996995680507891,
+            "absolute_charge_normalized": 0.001996995680507891,
+            "reference_signed_charge_ma_ms_cm2": -7.321673911064863e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 1.8539708435127977e-06,
+            "rmse_ma_cm2": 2.712503058464628e-10,
+            "max_abs_ma_cm2": 2.5531955299767914e-09,
+            "nrmse": 0.00014630775170795742,
+            "nmax": 0.0013771497749873686,
+            "signed_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "signed_charge_normalized": 9.617865966304995e-05,
+            "absolute_charge_normalized": 9.617865966304995e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00012536218855530024,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 2.1052134968613245e-07,
+            "rmse_ma_cm2": 6.796167484383685e-11,
+            "max_abs_ma_cm2": 6.281966487523748e-10,
+            "nrmse": 0.0003228255706376637,
+            "nmax": 0.0029840044712280108,
+            "signed_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "signed_charge_normalized": 0.00017544663984752243,
+            "absolute_charge_normalized": 0.00017544663984752243,
+            "reference_signed_charge_ma_ms_cm2": -1.859384610725101e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 0.0011996595421805978,
+            "rmse_ma_cm2": 2.7243555718063115e-08,
+            "max_abs_ma_cm2": 1.3808305528877941e-07,
+            "nrmse": 2.2709406094118198e-05,
+            "nmax": 0.00011510186885004769,
+            "signed_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "signed_charge_normalized": 5.132745474290824e-06,
+            "absolute_charge_normalized": 5.132745474290824e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.31792011857032776,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 2.4218852558988146e-06,
+            "rmse_ma_cm2": 2.6567787714059557e-10,
+            "max_abs_ma_cm2": 6.411494810451747e-10,
+            "nrmse": 0.00010969878795599534,
+            "nmax": 0.0002647315678905812,
+            "signed_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "absolute_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "signed_charge_normalized": 3.2235155155892006e-05,
+            "absolute_charge_normalized": 3.2235155155892006e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00020052211766596884,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 1.7007898350129835e-05,
+            "rmse_ma_cm2": 6.6786332523064e-09,
+            "max_abs_ma_cm2": 1.697226152757031e-08,
+            "nrmse": 0.00039267833772392086,
+            "nmax": 0.0009979046898196417,
+            "signed_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "signed_charge_normalized": 5.543441408643973e-05,
+            "absolute_charge_normalized": 5.543441408643973e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.1733729682090072e-11,
+            "max_abs_ma_cm2": 3.766849871893409e-11,
+            "nrmse": 0.00011733729544968565,
+            "nmax": 0.00037668498278736344,
+            "signed_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "absolute_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "signed_charge_normalized": 3.317315853845301e-05,
+            "absolute_charge_normalized": 3.317315853845301e-05,
+            "reference_signed_charge_ma_ms_cm2": 2.2637641450273804e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.9022695723574106e-11,
+            "max_abs_ma_cm2": 7.703270274770222e-11,
+            "nrmse": 0.00019022695501273032,
+            "nmax": 0.0007703270184749055,
+            "signed_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "signed_charge_normalized": 0.00011863860146341637,
+            "absolute_charge_normalized": 0.00011863860146341637,
+            "reference_signed_charge_ma_ms_cm2": 4.322270797274541e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 0.0001381353649776429,
+            "rmse_ma_cm2": 3.7391573687458385e-09,
+            "max_abs_ma_cm2": 3.797306980223838e-09,
+            "nrmse": 2.706879132183868e-05,
+            "nmax": 2.748975239496728e-05,
+            "signed_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "signed_charge_normalized": 2.704829638233844e-05,
+            "absolute_charge_normalized": 2.704829638233844e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.04060974344611168,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.7069246496248525e-06,
+            "rmse_ma_cm2": 3.600685177309299e-09,
+            "max_abs_ma_cm2": 3.9088128821088646e-09,
+            "nrmse": 0.002109457601482676,
+            "nmax": 0.0022899738913302018,
+            "signed_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "signed_charge_normalized": 0.0021025079265238455,
+            "absolute_charge_normalized": 0.0021025079265238455,
+            "reference_signed_charge_ma_ms_cm2": 0.00048053805949166417,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 6.380993727361783e-05,
+          "max_abs": 0.0014052093029022217,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0006050332532390092,
+          "8": 0.0019133282767199466,
+          "40": 0.003966336386294571,
+          "100": 0.003962943090265419
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 3.28659710147269e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B4",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "metrics": {
+        "passed": true,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 5.508997696859455e-11,
+            "max_abs_ma_cm2": 1.034856816508695e-10,
+            "nrmse": 0.0005508997632480772,
+            "nmax": 0.0010348568044152575,
+            "signed_charge_error_ma_ms_cm2": 1.2629109951055431e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2629109951055431e-07,
+            "signed_charge_normalized": 0.0004209703117068284,
+            "absolute_charge_normalized": 0.0004209703117068284,
+            "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 3.1979777759261196e-06,
+            "rmse_ma_cm2": 6.847557764933723e-10,
+            "max_abs_ma_cm2": 7.152026611474724e-09,
+            "nrmse": 0.00021412149316612125,
+            "nmax": 0.002236421611592823,
+            "signed_charge_error_ma_ms_cm2": 6.850837306887383e-07,
+            "absolute_charge_error_ma_ms_cm2": 6.850837306887383e-07,
+            "signed_charge_normalized": 7.140801781563125e-05,
+            "absolute_charge_normalized": 7.140801781563125e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 6.928524953764281e-07,
+            "rmse_ma_cm2": 8.364566188697344e-10,
+            "max_abs_ma_cm2": 2.2912223051343963e-09,
+            "nrmse": 0.0012072650736651902,
+            "nmax": 0.0033069409728972263,
+            "signed_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "signed_charge_normalized": 0.0009280910370069962,
+            "absolute_charge_normalized": 0.0009280910370069962,
+            "reference_signed_charge_ma_ms_cm2": -0.0002523479925002903,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 2.0126647321279524e-11,
+            "max_abs_ma_cm2": 8.185594259181998e-11,
+            "nrmse": 0.00020126647086077566,
+            "nmax": 0.0008185594163524347,
+            "signed_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "signed_charge_normalized": 0.00015533279289662815,
+            "absolute_charge_normalized": 0.00015533279289662815,
+            "reference_signed_charge_ma_ms_cm2": -6.023329478921369e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 1.7712227418087423e-05,
+            "rmse_ma_cm2": 9.715976551957842e-10,
+            "max_abs_ma_cm2": 1.3074187217185592e-09,
+            "nrmse": 5.485462851519201e-05,
+            "nmax": 7.381447239004201e-05,
+            "signed_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "signed_charge_normalized": 4.244448021750022e-05,
+            "absolute_charge_normalized": 4.244448021750022e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.02240060828626156,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 0.00012620021880138665,
+            "rmse_ma_cm2": 2.1778834196008827e-07,
+            "max_abs_ma_cm2": 3.878287911706431e-07,
+            "nrmse": 0.0017257366431578268,
+            "nmax": 0.0030731229696281774,
+            "signed_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "absolute_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "signed_charge_normalized": 0.0010348326821695646,
+            "absolute_charge_normalized": 0.0010348326821695646,
+            "reference_signed_charge_ma_ms_cm2": -0.14457140862941742,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 8.513336069881916e-06,
+            "rmse_ma_cm2": 6.511127163082235e-09,
+            "max_abs_ma_cm2": 1.928179784864729e-08,
+            "nrmse": 0.0007648150043221009,
+            "nmax": 0.002264893302739632,
+            "signed_charge_error_ma_ms_cm2": 1.3974247807792387e-05,
+            "absolute_charge_error_ma_ms_cm2": 1.3988379953635146e-05,
+            "signed_charge_normalized": 0.0005471512453522829,
+            "absolute_charge_normalized": 0.0005477045789773708,
+            "reference_signed_charge_ma_ms_cm2": 0.015207195654511452,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.094037192066025e-07,
+            "rmse_ma_cm2": 1.9670799332008828e-10,
+            "max_abs_ma_cm2": 2.0016711101750756e-09,
+            "nrmse": 0.0003861534297913282,
+            "nmax": 0.0039294395284209605,
+            "signed_charge_error_ma_ms_cm2": 1.2585120328559e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2611604903552423e-07,
+            "signed_charge_normalized": 8.235197182801065e-05,
+            "absolute_charge_normalized": 8.252527624757867e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.0004892502329312265,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 4.131365890705421e-12,
+            "max_abs_ma_cm2": 1.2901612137239243e-11,
+            "nrmse": 4.1313658424258775e-05,
+            "nmax": 0.00012901611986469749,
+            "signed_charge_error_ma_ms_cm2": 9.53795961757426e-09,
+            "absolute_charge_error_ma_ms_cm2": 9.555959795904232e-09,
+            "signed_charge_normalized": 3.1793197215155284e-05,
+            "absolute_charge_normalized": 3.185319780673867e-05,
+            "reference_signed_charge_ma_ms_cm2": 3.920192284567747e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1.8807484593708068e-05,
+            "rmse_ma_cm2": 2.2701166704654757e-11,
+            "max_abs_ma_cm2": 9.147541611550191e-10,
+            "nrmse": 1.2070283291498374e-06,
+            "nmax": 4.863777272273e-05,
+            "signed_charge_error_ma_ms_cm2": 2.0181202848547727e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.471286689450728e-09,
+            "signed_charge_normalized": 3.57680349609504e-08,
+            "absolute_charge_normalized": 6.152314339226046e-08,
+            "reference_signed_charge_ma_ms_cm2": -1.9712602806976065e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 4.363998868939234e-07,
+            "rmse_ma_cm2": 4.2647776930056337e-10,
+            "max_abs_ma_cm2": 5.515781269405348e-10,
+            "nrmse": 0.0009772637026467155,
+            "nmax": 0.0012639282078333995,
+            "signed_charge_error_ma_ms_cm2": 9.906252054522412e-07,
+            "absolute_charge_error_ma_ms_cm2": 9.910896205526697e-07,
+            "signed_charge_normalized": 0.0007566647587204102,
+            "absolute_charge_normalized": 0.0007570194908006941,
+            "reference_signed_charge_ma_ms_cm2": 0.0007843903149478137,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.00012562223128043115,
+          "max_abs": 0.004619508981704712,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.00020869384983721026,
+          "8": 0.00019101820276539664,
+          "40": 0.00016028226821463416,
+          "100": 0.00012467806244466007,
+          "500": 0.0006597132976609076,
+          "1000": 0.0007997479271616356,
+          "3000": 0.0007698477291676248
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.1788766257684714e-07,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B4",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": false,
+            "scale_ma_cm2": 1.2724352700388408e-06,
+            "rmse_ma_cm2": 1.533688691396746e-08,
+            "max_abs_ma_cm2": 2.038375845296654e-08,
+            "nrmse": 0.012053176515218181,
+            "nmax": 0.016019485574574124,
+            "signed_charge_error_ma_ms_cm2": 4.4996692125170425e-06,
+            "absolute_charge_error_ma_ms_cm2": 4.4996692125170425e-06,
+            "signed_charge_normalized": 0.011787552265447601,
+            "absolute_charge_normalized": 0.011787552265447601,
+            "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 6.856346885797393e-07,
+            "rmse_ma_cm2": 1.470104147916219e-09,
+            "max_abs_ma_cm2": 1.7325122593040057e-09,
+            "nrmse": 0.0021441507735868383,
+            "nmax": 0.0025268736955138967,
+            "signed_charge_error_ma_ms_cm2": 4.20527948709569e-07,
+            "absolute_charge_error_ma_ms_cm2": 4.20527948709569e-07,
+            "signed_charge_normalized": 0.0020444704202208356,
+            "absolute_charge_normalized": 0.0020444704202208356,
+            "reference_signed_charge_ma_ms_cm2": -7.321673911064863e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 1.8539708435127977e-06,
+            "rmse_ma_cm2": 2.712503058464628e-10,
+            "max_abs_ma_cm2": 2.5531955299767914e-09,
+            "nrmse": 0.00014630775170795742,
+            "nmax": 0.0013771497749873686,
+            "signed_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "signed_charge_normalized": 9.617865966304995e-05,
+            "absolute_charge_normalized": 9.617865966304995e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00012536218855530024,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 2.1052134968613245e-07,
+            "rmse_ma_cm2": 6.796167484383685e-11,
+            "max_abs_ma_cm2": 6.281966487523748e-10,
+            "nrmse": 0.0003228255706376637,
+            "nmax": 0.0029840044712280108,
+            "signed_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "signed_charge_normalized": 0.00017544663984752243,
+            "absolute_charge_normalized": 0.00017544663984752243,
+            "reference_signed_charge_ma_ms_cm2": -1.859384610725101e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 0.0011996595421805978,
+            "rmse_ma_cm2": 2.7243555718063115e-08,
+            "max_abs_ma_cm2": 1.3808305528877941e-07,
+            "nrmse": 2.2709406094118198e-05,
+            "nmax": 0.00011510186885004769,
+            "signed_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "signed_charge_normalized": 5.132745474290824e-06,
+            "absolute_charge_normalized": 5.132745474290824e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.31792011857032776,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 2.4218852558988146e-06,
+            "rmse_ma_cm2": 2.6567787714059557e-10,
+            "max_abs_ma_cm2": 6.411494810451747e-10,
+            "nrmse": 0.00010969878795599534,
+            "nmax": 0.0002647315678905812,
+            "signed_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "absolute_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "signed_charge_normalized": 3.2235155155892006e-05,
+            "absolute_charge_normalized": 3.2235155155892006e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00020052211766596884,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 1.7007898350129835e-05,
+            "rmse_ma_cm2": 6.6786332523064e-09,
+            "max_abs_ma_cm2": 1.697226152757031e-08,
+            "nrmse": 0.00039267833772392086,
+            "nmax": 0.0009979046898196417,
+            "signed_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "signed_charge_normalized": 5.543441408643973e-05,
+            "absolute_charge_normalized": 5.543441408643973e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.1733729682090072e-11,
+            "max_abs_ma_cm2": 3.766849871893409e-11,
+            "nrmse": 0.00011733729544968565,
+            "nmax": 0.00037668498278736344,
+            "signed_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "absolute_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "signed_charge_normalized": 3.317315853845301e-05,
+            "absolute_charge_normalized": 3.317315853845301e-05,
+            "reference_signed_charge_ma_ms_cm2": 2.2637641450273804e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.9022695723574106e-11,
+            "max_abs_ma_cm2": 7.703270274770222e-11,
+            "nrmse": 0.00019022695501273032,
+            "nmax": 0.0007703270184749055,
+            "signed_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "signed_charge_normalized": 0.00011863860146341637,
+            "absolute_charge_normalized": 0.00011863860146341637,
+            "reference_signed_charge_ma_ms_cm2": 4.322270797274541e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 0.0001381353649776429,
+            "rmse_ma_cm2": 3.7391573687458385e-09,
+            "max_abs_ma_cm2": 3.797306980223838e-09,
+            "nrmse": 2.706879132183868e-05,
+            "nmax": 2.748975239496728e-05,
+            "signed_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "signed_charge_normalized": 2.704829638233844e-05,
+            "absolute_charge_normalized": 2.704829638233844e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.04060974344611168,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.7069246496248525e-06,
+            "rmse_ma_cm2": 3.600685177309299e-09,
+            "max_abs_ma_cm2": 3.9088128821088646e-09,
+            "nrmse": 0.002109457601482676,
+            "nmax": 0.0022899738913302018,
+            "signed_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "signed_charge_normalized": 0.0021025079265238455,
+            "absolute_charge_normalized": 0.0021025079265238455,
+            "reference_signed_charge_ma_ms_cm2": 0.00048053805949166417,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 6.372294592438266e-05,
+          "max_abs": 0.0014052093029022217,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0006048770584026381,
+          "8": 0.0019138530377528446,
+          "40": 0.003972223488059344,
+          "100": 0.003966928958084386
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 3.28740541392274e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B5",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "metrics": {
+        "passed": true,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 5.509503383476472e-11,
+            "max_abs_ma_cm2": 1.032553914889994e-10,
+            "nrmse": 0.000550950331909188,
+            "nmax": 0.0010325539028234684,
+            "signed_charge_error_ma_ms_cm2": 1.2629784552819741e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2629784552819741e-07,
+            "signed_charge_normalized": 0.00042099279843123944,
+            "absolute_charge_normalized": 0.00042099279843123944,
+            "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 3.1979777759261196e-06,
+            "rmse_ma_cm2": 7.836981362210681e-10,
+            "max_abs_ma_cm2": 8.57781660214027e-09,
+            "nrmse": 0.00024506053235285935,
+            "nmax": 0.0026822627307521467,
+            "signed_charge_error_ma_ms_cm2": 7.317494389705072e-07,
+            "absolute_charge_error_ma_ms_cm2": 7.317494389705072e-07,
+            "signed_charge_normalized": 7.627210315160862e-05,
+            "absolute_charge_normalized": 7.627210315160862e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 6.928524953764281e-07,
+            "rmse_ma_cm2": 8.364566188697344e-10,
+            "max_abs_ma_cm2": 2.2912223051343963e-09,
+            "nrmse": 0.0012072650736651902,
+            "nmax": 0.0033069409728972263,
+            "signed_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "signed_charge_normalized": 0.0009280910370069962,
+            "absolute_charge_normalized": 0.0009280910370069962,
+            "reference_signed_charge_ma_ms_cm2": -0.0002523479925002903,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 2.0126647321279524e-11,
+            "max_abs_ma_cm2": 8.185594259181998e-11,
+            "nrmse": 0.00020126647086077566,
+            "nmax": 0.0008185594163524347,
+            "signed_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "signed_charge_normalized": 0.00015533279289662815,
+            "absolute_charge_normalized": 0.00015533279289662815,
+            "reference_signed_charge_ma_ms_cm2": -6.023329478921369e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 1.7712227418087423e-05,
+            "rmse_ma_cm2": 9.715976551957842e-10,
+            "max_abs_ma_cm2": 1.3074187217185592e-09,
+            "nrmse": 5.485462851519201e-05,
+            "nmax": 7.381447239004201e-05,
+            "signed_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "signed_charge_normalized": 4.244448021750022e-05,
+            "absolute_charge_normalized": 4.244448021750022e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.02240060828626156,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 0.00012620021880138665,
+            "rmse_ma_cm2": 2.1778834196008827e-07,
+            "max_abs_ma_cm2": 3.878287911706431e-07,
+            "nrmse": 0.0017257366431578268,
+            "nmax": 0.0030731229696281774,
+            "signed_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "absolute_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "signed_charge_normalized": 0.0010348326821695646,
+            "absolute_charge_normalized": 0.0010348326821695646,
+            "reference_signed_charge_ma_ms_cm2": -0.14457140862941742,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 8.513336069881916e-06,
+            "rmse_ma_cm2": 6.511127163082235e-09,
+            "max_abs_ma_cm2": 1.928179784864729e-08,
+            "nrmse": 0.0007648150043221009,
+            "nmax": 0.002264893302739632,
+            "signed_charge_error_ma_ms_cm2": 1.3974247807792387e-05,
+            "absolute_charge_error_ma_ms_cm2": 1.3988379953635146e-05,
+            "signed_charge_normalized": 0.0005471512453522829,
+            "absolute_charge_normalized": 0.0005477045789773708,
+            "reference_signed_charge_ma_ms_cm2": 0.015207195654511452,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.094037192066025e-07,
+            "rmse_ma_cm2": 1.9670799332008828e-10,
+            "max_abs_ma_cm2": 2.0016711101750756e-09,
+            "nrmse": 0.0003861534297913282,
+            "nmax": 0.0039294395284209605,
+            "signed_charge_error_ma_ms_cm2": 1.2585120328559e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2611604903552423e-07,
+            "signed_charge_normalized": 8.235197182801065e-05,
+            "absolute_charge_normalized": 8.252527624757867e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.0004892502329312265,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 4.131365890705421e-12,
+            "max_abs_ma_cm2": 1.2901612137239243e-11,
+            "nrmse": 4.1313658424258775e-05,
+            "nmax": 0.00012901611986469749,
+            "signed_charge_error_ma_ms_cm2": 9.53795961757426e-09,
+            "absolute_charge_error_ma_ms_cm2": 9.555959795904232e-09,
+            "signed_charge_normalized": 3.1793197215155284e-05,
+            "absolute_charge_normalized": 3.185319780673867e-05,
+            "reference_signed_charge_ma_ms_cm2": 3.920192284567747e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1.8807484593708068e-05,
+            "rmse_ma_cm2": 2.2701166704654757e-11,
+            "max_abs_ma_cm2": 9.147541611550191e-10,
+            "nrmse": 1.2070283291498374e-06,
+            "nmax": 4.863777272273e-05,
+            "signed_charge_error_ma_ms_cm2": 2.0181202848547727e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.471286689450728e-09,
+            "signed_charge_normalized": 3.57680349609504e-08,
+            "absolute_charge_normalized": 6.152314339226046e-08,
+            "reference_signed_charge_ma_ms_cm2": -1.9712602806976065e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 4.363998868939234e-07,
+            "rmse_ma_cm2": 4.2647776930056337e-10,
+            "max_abs_ma_cm2": 5.515781269405348e-10,
+            "nrmse": 0.0009772637026467155,
+            "nmax": 0.0012639282078333995,
+            "signed_charge_error_ma_ms_cm2": 9.906252054522412e-07,
+            "absolute_charge_error_ma_ms_cm2": 9.910896205526697e-07,
+            "signed_charge_normalized": 0.0007566647587204102,
+            "absolute_charge_normalized": 0.0007570194908006941,
+            "reference_signed_charge_ma_ms_cm2": 0.0007843903149478137,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.000125361344544217,
+          "max_abs": 0.004619508981704712,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.00019846413699231157,
+          "8": 0.000132959923443409,
+          "40": 0.00014595999838294734,
+          "100": 0.00011743162608743276,
+          "500": 0.000659447305416117,
+          "1000": 0.0007996382330493628,
+          "3000": 0.0007706893700928627
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.178925700921031e-07,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B5",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": false,
+            "scale_ma_cm2": 1.2724352700388408e-06,
+            "rmse_ma_cm2": 1.5304219061506864e-08,
+            "max_abs_ma_cm2": 2.020449164398149e-08,
+            "nrmse": 0.012027503026570229,
+            "nmax": 0.01587860075850047,
+            "signed_charge_error_ma_ms_cm2": 4.490610623396044e-06,
+            "absolute_charge_error_ma_ms_cm2": 4.490610623396044e-06,
+            "signed_charge_normalized": 0.011763821944912477,
+            "absolute_charge_normalized": 0.011763821944912477,
+            "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 6.856346885797393e-07,
+            "rmse_ma_cm2": 1.485458586089961e-09,
+            "max_abs_ma_cm2": 1.7402814710980213e-09,
+            "nrmse": 0.002166545262123508,
+            "nmax": 0.0025382051113880108,
+            "signed_charge_error_ma_ms_cm2": 4.323391183061486e-07,
+            "absolute_charge_error_ma_ms_cm2": 4.323391183061486e-07,
+            "signed_charge_normalized": 0.0021018924939320313,
+            "absolute_charge_normalized": 0.0021018924939320313,
+            "reference_signed_charge_ma_ms_cm2": -7.321673911064863e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 1.8539708435127977e-06,
+            "rmse_ma_cm2": 2.712503058464628e-10,
+            "max_abs_ma_cm2": 2.5531955299767914e-09,
+            "nrmse": 0.00014630775170795742,
+            "nmax": 0.0013771497749873686,
+            "signed_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "signed_charge_normalized": 9.617865966304995e-05,
+            "absolute_charge_normalized": 9.617865966304995e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00012536218855530024,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 2.1052134968613245e-07,
+            "rmse_ma_cm2": 6.796167484383685e-11,
+            "max_abs_ma_cm2": 6.281966487523748e-10,
+            "nrmse": 0.0003228255706376637,
+            "nmax": 0.0029840044712280108,
+            "signed_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "signed_charge_normalized": 0.00017544663984752243,
+            "absolute_charge_normalized": 0.00017544663984752243,
+            "reference_signed_charge_ma_ms_cm2": -1.859384610725101e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 0.0011996595421805978,
+            "rmse_ma_cm2": 2.7243555718063115e-08,
+            "max_abs_ma_cm2": 1.3808305528877941e-07,
+            "nrmse": 2.2709406094118198e-05,
+            "nmax": 0.00011510186885004769,
+            "signed_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "signed_charge_normalized": 5.132745474290824e-06,
+            "absolute_charge_normalized": 5.132745474290824e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.31792011857032776,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 2.4218852558988146e-06,
+            "rmse_ma_cm2": 2.6567787714059557e-10,
+            "max_abs_ma_cm2": 6.411494810451747e-10,
+            "nrmse": 0.00010969878795599534,
+            "nmax": 0.0002647315678905812,
+            "signed_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "absolute_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "signed_charge_normalized": 3.2235155155892006e-05,
+            "absolute_charge_normalized": 3.2235155155892006e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00020052211766596884,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 1.7007898350129835e-05,
+            "rmse_ma_cm2": 6.6786332523064e-09,
+            "max_abs_ma_cm2": 1.697226152757031e-08,
+            "nrmse": 0.00039267833772392086,
+            "nmax": 0.0009979046898196417,
+            "signed_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "signed_charge_normalized": 5.543441408643973e-05,
+            "absolute_charge_normalized": 5.543441408643973e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.1733729682090072e-11,
+            "max_abs_ma_cm2": 3.766849871893409e-11,
+            "nrmse": 0.00011733729544968565,
+            "nmax": 0.00037668498278736344,
+            "signed_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "absolute_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "signed_charge_normalized": 3.317315853845301e-05,
+            "absolute_charge_normalized": 3.317315853845301e-05,
+            "reference_signed_charge_ma_ms_cm2": 2.2637641450273804e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.9022695723574106e-11,
+            "max_abs_ma_cm2": 7.703270274770222e-11,
+            "nrmse": 0.00019022695501273032,
+            "nmax": 0.0007703270184749055,
+            "signed_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "signed_charge_normalized": 0.00011863860146341637,
+            "absolute_charge_normalized": 0.00011863860146341637,
+            "reference_signed_charge_ma_ms_cm2": 4.322270797274541e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 0.0001381353649776429,
+            "rmse_ma_cm2": 3.7391573687458385e-09,
+            "max_abs_ma_cm2": 3.797306980223838e-09,
+            "nrmse": 2.706879132183868e-05,
+            "nmax": 2.748975239496728e-05,
+            "signed_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "signed_charge_normalized": 2.704829638233844e-05,
+            "absolute_charge_normalized": 2.704829638233844e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.04060974344611168,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.7069246496248525e-06,
+            "rmse_ma_cm2": 3.600685177309299e-09,
+            "max_abs_ma_cm2": 3.9088128821088646e-09,
+            "nrmse": 0.002109457601482676,
+            "nmax": 0.0022899738913302018,
+            "signed_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "signed_charge_normalized": 0.0021025079265238455,
+            "absolute_charge_normalized": 0.0021025079265238455,
+            "reference_signed_charge_ma_ms_cm2": 0.00048053805949166417,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 6.353664502967149e-05,
+          "max_abs": 0.0014052093029022217,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0006034602111009494,
+          "8": 0.0018078179324646727,
+          "40": 0.003934759971731847,
+          "100": 0.003951142417810583
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 3.295298766089907e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B6",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "metrics": {
+        "passed": true,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 5.013352719289384e-13,
+            "max_abs_ma_cm2": 3.143684534988825e-11,
+            "nrmse": 5.013352660702856e-06,
+            "nmax": 0.0003143684498251422,
+            "signed_charge_error_ma_ms_cm2": 1.864408784551177e-10,
+            "absolute_charge_error_ma_ms_cm2": 1.864408784551177e-10,
+            "signed_charge_normalized": 6.214695653321725e-07,
+            "absolute_charge_normalized": 6.214695653321725e-07,
+            "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 3.1979777759261196e-06,
+            "rmse_ma_cm2": 1.4971732929166115e-10,
+            "max_abs_ma_cm2": 1.6578809384659341e-09,
+            "nrmse": 4.6816250700273767e-05,
+            "nmax": 0.0005184154033046147,
+            "signed_charge_error_ma_ms_cm2": 1.1264339912897538e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.1264339912897538e-07,
+            "signed_charge_normalized": 1.1741107679984952e-05,
+            "absolute_charge_normalized": 1.1741107679984952e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 6.928524953764281e-07,
+            "rmse_ma_cm2": 8.364566188697344e-10,
+            "max_abs_ma_cm2": 2.2912223051343963e-09,
+            "nrmse": 0.0012072650736651902,
+            "nmax": 0.0033069409728972263,
+            "signed_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "signed_charge_normalized": 0.0009280910370069962,
+            "absolute_charge_normalized": 0.0009280910370069962,
+            "reference_signed_charge_ma_ms_cm2": -0.0002523479925002903,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 2.0126647321279524e-11,
+            "max_abs_ma_cm2": 8.185594259181998e-11,
+            "nrmse": 0.00020126647086077566,
+            "nmax": 0.0008185594163524347,
+            "signed_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "signed_charge_normalized": 0.00015533279289662815,
+            "absolute_charge_normalized": 0.00015533279289662815,
+            "reference_signed_charge_ma_ms_cm2": -6.023329478921369e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 1.7712227418087423e-05,
+            "rmse_ma_cm2": 9.715976551957842e-10,
+            "max_abs_ma_cm2": 1.3074187217185592e-09,
+            "nrmse": 5.485462851519201e-05,
+            "nmax": 7.381447239004201e-05,
+            "signed_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "signed_charge_normalized": 4.244448021750022e-05,
+            "absolute_charge_normalized": 4.244448021750022e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.02240060828626156,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 0.00012620021880138665,
+            "rmse_ma_cm2": 2.1778834196008827e-07,
+            "max_abs_ma_cm2": 3.878287911706431e-07,
+            "nrmse": 0.0017257366431578268,
+            "nmax": 0.0030731229696281774,
+            "signed_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "absolute_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "signed_charge_normalized": 0.0010348326821695646,
+            "absolute_charge_normalized": 0.0010348326821695646,
+            "reference_signed_charge_ma_ms_cm2": -0.14457140862941742,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 8.513336069881916e-06,
+            "rmse_ma_cm2": 6.511127163082235e-09,
+            "max_abs_ma_cm2": 1.928179784864729e-08,
+            "nrmse": 0.0007648150043221009,
+            "nmax": 0.002264893302739632,
+            "signed_charge_error_ma_ms_cm2": 1.3974247807792387e-05,
+            "absolute_charge_error_ma_ms_cm2": 1.3988379953635146e-05,
+            "signed_charge_normalized": 0.0005471512453522829,
+            "absolute_charge_normalized": 0.0005477045789773708,
+            "reference_signed_charge_ma_ms_cm2": 0.015207195654511452,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.094037192066025e-07,
+            "rmse_ma_cm2": 1.9670799332008828e-10,
+            "max_abs_ma_cm2": 2.0016711101750756e-09,
+            "nrmse": 0.0003861534297913282,
+            "nmax": 0.0039294395284209605,
+            "signed_charge_error_ma_ms_cm2": 1.2585120328559e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2611604903552423e-07,
+            "signed_charge_normalized": 8.235197182801065e-05,
+            "absolute_charge_normalized": 8.252527624757867e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.0004892502329312265,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 4.131365890705421e-12,
+            "max_abs_ma_cm2": 1.2901612137239243e-11,
+            "nrmse": 4.1313658424258775e-05,
+            "nmax": 0.00012901611986469749,
+            "signed_charge_error_ma_ms_cm2": 9.53795961757426e-09,
+            "absolute_charge_error_ma_ms_cm2": 9.555959795904232e-09,
+            "signed_charge_normalized": 3.1793197215155284e-05,
+            "absolute_charge_normalized": 3.185319780673867e-05,
+            "reference_signed_charge_ma_ms_cm2": 3.920192284567747e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1.8807484593708068e-05,
+            "rmse_ma_cm2": 2.2701166704654757e-11,
+            "max_abs_ma_cm2": 9.147541611550191e-10,
+            "nrmse": 1.2070283291498374e-06,
+            "nmax": 4.863777272273e-05,
+            "signed_charge_error_ma_ms_cm2": 2.0181202848547727e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.471286689450728e-09,
+            "signed_charge_normalized": 3.57680349609504e-08,
+            "absolute_charge_normalized": 6.152314339226046e-08,
+            "reference_signed_charge_ma_ms_cm2": -1.9712602806976065e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 4.363998868939234e-07,
+            "rmse_ma_cm2": 4.2647776930056337e-10,
+            "max_abs_ma_cm2": 5.515781269405348e-10,
+            "nrmse": 0.0009772637026467155,
+            "nmax": 0.0012639282078333995,
+            "signed_charge_error_ma_ms_cm2": 9.906252054522412e-07,
+            "absolute_charge_error_ma_ms_cm2": 9.910896205526697e-07,
+            "signed_charge_normalized": 0.0007566647587204102,
+            "absolute_charge_normalized": 0.0007570194908006941,
+            "reference_signed_charge_ma_ms_cm2": 0.0007843903149478137,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.00010195343202212825,
+          "max_abs": 0.004619508981704712,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.00020639186597011123,
+          "8": 0.00011873612439952242,
+          "40": 0.00015719284617754278,
+          "100": 0.0001230950566789932,
+          "500": 0.0006596538408973902,
+          "1000": 0.0007997234048855176,
+          "3000": 0.0007490720998919607
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.1786350670076836e-07,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B6",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "metrics": {
+        "passed": true,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.2724352700388408e-06,
+            "rmse_ma_cm2": 1.8454161753273107e-09,
+            "max_abs_ma_cm2": 3.0721711034654724e-09,
+            "nrmse": 0.0014503025959591482,
+            "nmax": 0.0024144026622051236,
+            "signed_charge_error_ma_ms_cm2": 4.874507404364593e-07,
+            "absolute_charge_error_ma_ms_cm2": 4.874507404364593e-07,
+            "signed_charge_normalized": 0.0012769496619312072,
+            "absolute_charge_normalized": 0.0012769496619312072,
+            "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 6.856346885797393e-07,
+            "rmse_ma_cm2": 8.398103848336379e-11,
+            "max_abs_ma_cm2": 2.932982427031665e-10,
+            "nrmse": 0.0001224865659252548,
+            "nmax": 0.00042777625984869626,
+            "signed_charge_error_ma_ms_cm2": 4.955677054818985e-09,
+            "absolute_charge_error_ma_ms_cm2": 4.955677054818985e-09,
+            "signed_charge_normalized": 2.409289366339321e-05,
+            "absolute_charge_normalized": 2.409289366339321e-05,
+            "reference_signed_charge_ma_ms_cm2": -7.321673911064863e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 1.8539708435127977e-06,
+            "rmse_ma_cm2": 2.712503058464628e-10,
+            "max_abs_ma_cm2": 2.5531955299767914e-09,
+            "nrmse": 0.00014630775170795742,
+            "nmax": 0.0013771497749873686,
+            "signed_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "signed_charge_normalized": 9.617865966304995e-05,
+            "absolute_charge_normalized": 9.617865966304995e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00012536218855530024,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 2.1052134968613245e-07,
+            "rmse_ma_cm2": 6.796167484383685e-11,
+            "max_abs_ma_cm2": 6.281966487523748e-10,
+            "nrmse": 0.0003228255706376637,
+            "nmax": 0.0029840044712280108,
+            "signed_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "signed_charge_normalized": 0.00017544663984752243,
+            "absolute_charge_normalized": 0.00017544663984752243,
+            "reference_signed_charge_ma_ms_cm2": -1.859384610725101e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 0.0011996595421805978,
+            "rmse_ma_cm2": 2.7243555718063115e-08,
+            "max_abs_ma_cm2": 1.3808305528877941e-07,
+            "nrmse": 2.2709406094118198e-05,
+            "nmax": 0.00011510186885004769,
+            "signed_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "signed_charge_normalized": 5.132745474290824e-06,
+            "absolute_charge_normalized": 5.132745474290824e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.31792011857032776,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 2.4218852558988146e-06,
+            "rmse_ma_cm2": 2.6567787714059557e-10,
+            "max_abs_ma_cm2": 6.411494810451747e-10,
+            "nrmse": 0.00010969878795599534,
+            "nmax": 0.0002647315678905812,
+            "signed_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "absolute_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "signed_charge_normalized": 3.2235155155892006e-05,
+            "absolute_charge_normalized": 3.2235155155892006e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00020052211766596884,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 1.7007898350129835e-05,
+            "rmse_ma_cm2": 6.6786332523064e-09,
+            "max_abs_ma_cm2": 1.697226152757031e-08,
+            "nrmse": 0.00039267833772392086,
+            "nmax": 0.0009979046898196417,
+            "signed_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "signed_charge_normalized": 5.543441408643973e-05,
+            "absolute_charge_normalized": 5.543441408643973e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.1733729682090072e-11,
+            "max_abs_ma_cm2": 3.766849871893409e-11,
+            "nrmse": 0.00011733729544968565,
+            "nmax": 0.00037668498278736344,
+            "signed_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "absolute_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "signed_charge_normalized": 3.317315853845301e-05,
+            "absolute_charge_normalized": 3.317315853845301e-05,
+            "reference_signed_charge_ma_ms_cm2": 2.2637641450273804e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.9022695723574106e-11,
+            "max_abs_ma_cm2": 7.703270274770222e-11,
+            "nrmse": 0.00019022695501273032,
+            "nmax": 0.0007703270184749055,
+            "signed_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "signed_charge_normalized": 0.00011863860146341637,
+            "absolute_charge_normalized": 0.00011863860146341637,
+            "reference_signed_charge_ma_ms_cm2": 4.322270797274541e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 0.0001381353649776429,
+            "rmse_ma_cm2": 3.7391573687458385e-09,
+            "max_abs_ma_cm2": 3.797306980223838e-09,
+            "nrmse": 2.706879132183868e-05,
+            "nmax": 2.748975239496728e-05,
+            "signed_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "signed_charge_normalized": 2.704829638233844e-05,
+            "absolute_charge_normalized": 2.704829638233844e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.04060974344611168,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.7069246496248525e-06,
+            "rmse_ma_cm2": 3.600685177309299e-09,
+            "max_abs_ma_cm2": 3.9088128821088646e-09,
+            "nrmse": 0.002109457601482676,
+            "nmax": 0.0022899738913302018,
+            "signed_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "signed_charge_normalized": 0.0021025079265238455,
+            "absolute_charge_normalized": 0.0021025079265238455,
+            "reference_signed_charge_ma_ms_cm2": 0.00048053805949166417,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 5.040562245994806e-05,
+          "max_abs": 0.0014052093029022217,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0005988928610640077,
+          "8": 0.0008324406113424746,
+          "40": 0.0009063091125817656,
+          "100": 0.000845668330690625
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.9176825310315822e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B7",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 5.460193082588722e-11,
+            "max_abs_ma_cm2": 1.0255252037558495e-10,
+            "nrmse": 0.0005460193018780375,
+            "nmax": 0.0010255251917714622,
+            "signed_charge_error_ma_ms_cm2": 1.252121950713997e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.252121950713997e-07,
+            "signed_charge_normalized": 0.0004173739637471329,
+            "absolute_charge_normalized": 0.0004173739637471329,
+            "reference_signed_charge_ma_ms_cm2": -2.024778223130852e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": false,
+            "scale_ma_cm2": 3.1979777759261196e-06,
+            "rmse_ma_cm2": 3.2827793644453118e-09,
+            "max_abs_ma_cm2": 3.192486107746152e-08,
+            "nrmse": 0.0010265172538588495,
+            "nmax": 0.00998282768497859,
+            "signed_charge_error_ma_ms_cm2": 1.8579268231173452e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8579268231173452e-06,
+            "signed_charge_normalized": 0.00019365643313694873,
+            "absolute_charge_normalized": 0.00019365643313694873,
+            "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.5
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 6.928524953764281e-07,
+            "rmse_ma_cm2": 8.364566188697344e-10,
+            "max_abs_ma_cm2": 2.2912223051343963e-09,
+            "nrmse": 0.0012072650736651902,
+            "nmax": 0.0033069409728972263,
+            "signed_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.9290904807740006e-06,
+            "signed_charge_normalized": 0.0009280910370069962,
+            "absolute_charge_normalized": 0.0009280910370069962,
+            "reference_signed_charge_ma_ms_cm2": -0.0002523479925002903,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 2.0126647321279524e-11,
+            "max_abs_ma_cm2": 8.185594259181998e-11,
+            "nrmse": 0.00020126647086077566,
+            "nmax": 0.0008185594163524347,
+            "signed_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.659984008236198e-08,
+            "signed_charge_normalized": 0.00015533279289662815,
+            "absolute_charge_normalized": 0.00015533279289662815,
+            "reference_signed_charge_ma_ms_cm2": -6.023329478921369e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 1.7712227418087423e-05,
+            "rmse_ma_cm2": 9.715976551957842e-10,
+            "max_abs_ma_cm2": 1.3074187217185592e-09,
+            "nrmse": 5.485462851519201e-05,
+            "nmax": 7.381447239004201e-05,
+            "signed_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.255358932882455e-06,
+            "signed_charge_normalized": 4.244448021750022e-05,
+            "absolute_charge_normalized": 4.244448021750022e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.02240060828626156,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 0.00012620021880138665,
+            "rmse_ma_cm2": 2.1778834196008827e-07,
+            "max_abs_ma_cm2": 3.878287911706431e-07,
+            "nrmse": 0.0017257366431578268,
+            "nmax": 0.0030731229696281774,
+            "signed_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "absolute_charge_error_ma_ms_cm2": 0.000391788333340443,
+            "signed_charge_normalized": 0.0010348326821695646,
+            "absolute_charge_normalized": 0.0010348326821695646,
+            "reference_signed_charge_ma_ms_cm2": -0.14457140862941742,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 8.513336069881916e-06,
+            "rmse_ma_cm2": 6.511127163082235e-09,
+            "max_abs_ma_cm2": 1.928179784864729e-08,
+            "nrmse": 0.0007648150043221009,
+            "nmax": 0.002264893302739632,
+            "signed_charge_error_ma_ms_cm2": 1.3974247807792387e-05,
+            "absolute_charge_error_ma_ms_cm2": 1.3988379953635146e-05,
+            "signed_charge_normalized": 0.0005471512453522829,
+            "absolute_charge_normalized": 0.0005477045789773708,
+            "reference_signed_charge_ma_ms_cm2": 0.015207195654511452,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.094037192066025e-07,
+            "rmse_ma_cm2": 1.9670799332008828e-10,
+            "max_abs_ma_cm2": 2.0016711101750756e-09,
+            "nrmse": 0.0003861534297913282,
+            "nmax": 0.0039294395284209605,
+            "signed_charge_error_ma_ms_cm2": 1.2585120328559e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.2611604903552423e-07,
+            "signed_charge_normalized": 8.235197182801065e-05,
+            "absolute_charge_normalized": 8.252527624757867e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.0004892502329312265,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 4.131365890705421e-12,
+            "max_abs_ma_cm2": 1.2901612137239243e-11,
+            "nrmse": 4.1313658424258775e-05,
+            "nmax": 0.00012901611986469749,
+            "signed_charge_error_ma_ms_cm2": 9.53795961757426e-09,
+            "absolute_charge_error_ma_ms_cm2": 9.555959795904232e-09,
+            "signed_charge_normalized": 3.1793197215155284e-05,
+            "absolute_charge_normalized": 3.185319780673867e-05,
+            "reference_signed_charge_ma_ms_cm2": 3.920192284567747e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1.8807484593708068e-05,
+            "rmse_ma_cm2": 2.2701166704654757e-11,
+            "max_abs_ma_cm2": 9.147541611550191e-10,
+            "nrmse": 1.2070283291498374e-06,
+            "nmax": 4.863777272273e-05,
+            "signed_charge_error_ma_ms_cm2": 2.0181202848547727e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.471286689450728e-09,
+            "signed_charge_normalized": 3.57680349609504e-08,
+            "absolute_charge_normalized": 6.152314339226046e-08,
+            "reference_signed_charge_ma_ms_cm2": -1.9712602806976065e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 4.363998868939234e-07,
+            "rmse_ma_cm2": 4.2647776930056337e-10,
+            "max_abs_ma_cm2": 5.515781269405348e-10,
+            "nrmse": 0.0009772637026467155,
+            "nmax": 0.0012639282078333995,
+            "signed_charge_error_ma_ms_cm2": 9.906252054522412e-07,
+            "absolute_charge_error_ma_ms_cm2": 9.910896205526697e-07,
+            "signed_charge_normalized": 0.0007566647587204102,
+            "absolute_charge_normalized": 0.0007570194908006941,
+            "reference_signed_charge_ma_ms_cm2": 0.0007843903149478137,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.00013447391393128783,
+          "max_abs": 0.004619508981704712,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.00038625422160047743,
+          "8": 0.000660325895208381,
+          "40": 0.0003392328929795885,
+          "100": 0.0002264951434902178,
+          "500": 0.0006651110593470868,
+          "1000": 0.0008019802304776099,
+          "3000": 0.0008269251353747538
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 2.1801205223637845e-07,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "arm": "B7",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": false,
+            "scale_ma_cm2": 1.2724352700388408e-06,
+            "rmse_ma_cm2": 1.5386931832789293e-08,
+            "max_abs_ma_cm2": 2.047581122559016e-08,
+            "nrmse": 0.012092506546379849,
+            "nmax": 0.01609182935094619,
+            "signed_charge_error_ma_ms_cm2": 4.5142691343799334e-06,
+            "absolute_charge_error_ma_ms_cm2": 4.5142691343799334e-06,
+            "signed_charge_normalized": 0.011825798930680574,
+            "absolute_charge_normalized": 0.011825798930680574,
+            "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 6.856346885797393e-07,
+            "rmse_ma_cm2": 1.7458544148732164e-09,
+            "max_abs_ma_cm2": 3.0536911084837045e-09,
+            "nrmse": 0.0025463332645693196,
+            "nmax": 0.0044538165284625335,
+            "signed_charge_error_ma_ms_cm2": 5.026875697653685e-07,
+            "absolute_charge_error_ma_ms_cm2": 5.026875697653685e-07,
+            "signed_charge_normalized": 0.0024439038360034903,
+            "absolute_charge_normalized": 0.0024439038360034903,
+            "reference_signed_charge_ma_ms_cm2": -7.321673911064863e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 1.8539708435127977e-06,
+            "rmse_ma_cm2": 2.712503058464628e-10,
+            "max_abs_ma_cm2": 2.5531955299767914e-09,
+            "nrmse": 0.00014630775170795742,
+            "nmax": 0.0013771497749873686,
+            "signed_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.3493729409978464e-08,
+            "signed_charge_normalized": 9.617865966304995e-05,
+            "absolute_charge_normalized": 9.617865966304995e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00012536218855530024,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 2.1052134968613245e-07,
+            "rmse_ma_cm2": 6.796167484383685e-11,
+            "max_abs_ma_cm2": 6.281966487523748e-10,
+            "nrmse": 0.0003228255706376637,
+            "nmax": 0.0029840044712280108,
+            "signed_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1080578776254526e-08,
+            "signed_charge_normalized": 0.00017544663984752243,
+            "absolute_charge_normalized": 0.00017544663984752243,
+            "reference_signed_charge_ma_ms_cm2": -1.859384610725101e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": true,
+            "scale_ma_cm2": 0.0011996595421805978,
+            "rmse_ma_cm2": 2.7243555718063115e-08,
+            "max_abs_ma_cm2": 1.3808305528877941e-07,
+            "nrmse": 2.2709406094118198e-05,
+            "nmax": 0.00011510186885004769,
+            "signed_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.8472640707723996e-06,
+            "signed_charge_normalized": 5.132745474290824e-06,
+            "absolute_charge_normalized": 5.132745474290824e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.31792011857032776,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 2.4218852558988146e-06,
+            "rmse_ma_cm2": 2.6567787714059557e-10,
+            "max_abs_ma_cm2": 6.411494810451747e-10,
+            "nrmse": 0.00010969878795599534,
+            "nmax": 0.0002647315678905812,
+            "signed_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "absolute_charge_error_ma_ms_cm2": 2.342095491899533e-08,
+            "signed_charge_normalized": 3.2235155155892006e-05,
+            "absolute_charge_normalized": 3.2235155155892006e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00020052211766596884,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 1.7007898350129835e-05,
+            "rmse_ma_cm2": 6.6786332523064e-09,
+            "max_abs_ma_cm2": 1.697226152757031e-08,
+            "nrmse": 0.00039267833772392086,
+            "nmax": 0.0009979046898196417,
+            "signed_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.8284686194765947e-07,
+            "signed_charge_normalized": 5.543441408643973e-05,
+            "absolute_charge_normalized": 5.543441408643973e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.004510476719588041,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.1733729682090072e-11,
+            "max_abs_ma_cm2": 3.766849871893409e-11,
+            "nrmse": 0.00011733729544968565,
+            "nmax": 0.00037668498278736344,
+            "signed_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "absolute_charge_error_ma_ms_cm2": 9.951947913544801e-10,
+            "signed_charge_normalized": 3.317315853845301e-05,
+            "absolute_charge_normalized": 3.317315853845301e-05,
+            "reference_signed_charge_ma_ms_cm2": 2.2637641450273804e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 1.0000000116860974e-07,
+            "rmse_ma_cm2": 1.9022695723574106e-11,
+            "max_abs_ma_cm2": 7.703270274770222e-11,
+            "nrmse": 0.00019022695501273032,
+            "nmax": 0.0007703270184749055,
+            "signed_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "absolute_charge_error_ma_ms_cm2": 3.5591581697929574e-09,
+            "signed_charge_normalized": 0.00011863860146341637,
+            "absolute_charge_normalized": 0.00011863860146341637,
+            "reference_signed_charge_ma_ms_cm2": 4.322270797274541e-06,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 0.0001381353649776429,
+            "rmse_ma_cm2": 3.7391573687458385e-09,
+            "max_abs_ma_cm2": 3.797306980223838e-09,
+            "nrmse": 2.706879132183868e-05,
+            "nmax": 2.748975239496728e-05,
+            "signed_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.1208978972858419e-06,
+            "signed_charge_normalized": 2.704829638233844e-05,
+            "absolute_charge_normalized": 2.704829638233844e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.04060974344611168,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.7069246496248525e-06,
+            "rmse_ma_cm2": 3.600685177309299e-09,
+            "max_abs_ma_cm2": 3.9088128821088646e-09,
+            "nrmse": 0.002109457601482676,
+            "nmax": 0.0022899738913302018,
+            "signed_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.0766468238133932e-06,
+            "signed_charge_normalized": 0.0021025079265238455,
+            "absolute_charge_normalized": 0.0021025079265238455,
+            "reference_signed_charge_ma_ms_cm2": 0.00048053805949166417,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 6.455353286582977e-05,
+          "max_abs": 0.0014052093029022217,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0006056434725366076,
+          "8": 0.0019522688100134264,
+          "40": 0.004102398349209841,
+          "100": 0.00404299027923868
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 3.28454861986418e-08,
+        "causal_behavior_validated": false
+      }
+    }
+  ],
+  "remaining": [
+    {
+      "arm": "B0",
+      "role": "stress_diagnostic",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "channels": [
+        {
+          "channel": "Ca_LVAst",
+          "passed": false,
+          "scale_ma_cm2": 3.1979777759261196e-06,
+          "rmse_ma_cm2": 2.8263617028856037e-09,
+          "max_abs_ma_cm2": 2.7344422335640755e-08,
+          "nrmse": 0.0008837965429785085,
+          "nmax": 0.008550535448208966,
+          "signed_charge_error_ma_ms_cm2": 1.766817152324579e-06,
+          "absolute_charge_error_ma_ms_cm2": 1.766817152324579e-06,
+          "signed_charge_normalized": 0.0001841598406713693,
+          "absolute_charge_normalized": 0.0001841598406713693,
+          "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.5
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    },
+    {
+      "arm": "B0",
+      "role": "stress_diagnostic",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 1.2724352700388408e-06,
+          "rmse_ma_cm2": 1.5000729042600178e-08,
+          "max_abs_ma_cm2": 1.9477371430868672e-08,
+          "nrmse": 0.011788991861363828,
+          "nmax": 0.01530716091379181,
+          "signed_charge_error_ma_ms_cm2": 4.385486805176443e-06,
+          "absolute_charge_error_ma_ms_cm2": 4.385486805176443e-06,
+          "signed_charge_normalized": 0.011488434479060545,
+          "absolute_charge_normalized": 0.011488434479060545,
+          "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.0
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    },
+    {
+      "arm": "B1",
+      "role": "stress_diagnostic",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 1.2724352700388408e-06,
+          "rmse_ma_cm2": 1.5334576397834665e-08,
+          "max_abs_ma_cm2": 2.0386329785376053e-08,
+          "nrmse": 0.012051360693079955,
+          "nmax": 0.016021506370814263,
+          "signed_charge_error_ma_ms_cm2": 4.498954895694003e-06,
+          "absolute_charge_error_ma_ms_cm2": 4.498954895694003e-06,
+          "signed_charge_normalized": 0.011785681006364316,
+          "absolute_charge_normalized": 0.011785681006364316,
+          "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.0
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    },
+    {
+      "arm": "B2",
+      "role": "stress_diagnostic",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 1.2724352700388408e-06,
+          "rmse_ma_cm2": 1.534035956175847e-08,
+          "max_abs_ma_cm2": 2.0455905487156475e-08,
+          "nrmse": 0.01205590565034417,
+          "nmax": 0.016076185538720617,
+          "signed_charge_error_ma_ms_cm2": 4.500312066586611e-06,
+          "absolute_charge_error_ma_ms_cm2": 4.500312066586611e-06,
+          "signed_charge_normalized": 0.01178923631722701,
+          "absolute_charge_normalized": 0.01178923631722701,
+          "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.0
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    },
+    {
+      "arm": "B3",
+      "role": "stress_diagnostic",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 1.2724352700388408e-06,
+          "rmse_ma_cm2": 1.532905503661503e-08,
+          "max_abs_ma_cm2": 2.03667571982892e-08,
+          "nrmse": 0.012047021485145656,
+          "nmax": 0.016006124380431162,
+          "signed_charge_error_ma_ms_cm2": 4.4974042644992215e-06,
+          "absolute_charge_error_ma_ms_cm2": 4.4974042644992215e-06,
+          "signed_charge_normalized": 0.011781618897487085,
+          "absolute_charge_normalized": 0.011781618897487085,
+          "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.0
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    },
+    {
+      "arm": "B4",
+      "role": "stress_diagnostic",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 1.2724352700388408e-06,
+          "rmse_ma_cm2": 1.533688691396746e-08,
+          "max_abs_ma_cm2": 2.038375845296654e-08,
+          "nrmse": 0.012053176515218181,
+          "nmax": 0.016019485574574124,
+          "signed_charge_error_ma_ms_cm2": 4.4996692125170425e-06,
+          "absolute_charge_error_ma_ms_cm2": 4.4996692125170425e-06,
+          "signed_charge_normalized": 0.011787552265447601,
+          "absolute_charge_normalized": 0.011787552265447601,
+          "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.0
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    },
+    {
+      "arm": "B5",
+      "role": "stress_diagnostic",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 1.2724352700388408e-06,
+          "rmse_ma_cm2": 1.5304219061506864e-08,
+          "max_abs_ma_cm2": 2.020449164398149e-08,
+          "nrmse": 0.012027503026570229,
+          "nmax": 0.01587860075850047,
+          "signed_charge_error_ma_ms_cm2": 4.490610623396044e-06,
+          "absolute_charge_error_ma_ms_cm2": 4.490610623396044e-06,
+          "signed_charge_normalized": 0.011763821944912477,
+          "absolute_charge_normalized": 0.011763821944912477,
+          "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.0
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    },
+    {
+      "arm": "B7",
+      "role": "stress_diagnostic",
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "channels": [
+        {
+          "channel": "Ca_LVAst",
+          "passed": false,
+          "scale_ma_cm2": 3.1979777759261196e-06,
+          "rmse_ma_cm2": 3.2827793644453118e-09,
+          "max_abs_ma_cm2": 3.192486107746152e-08,
+          "nrmse": 0.0010265172538588495,
+          "nmax": 0.00998282768497859,
+          "signed_charge_error_ma_ms_cm2": 1.8579268231173452e-06,
+          "absolute_charge_error_ma_ms_cm2": 1.8579268231173452e-06,
+          "signed_charge_normalized": 0.00019365643313694873,
+          "absolute_charge_normalized": 0.00019365643313694873,
+          "reference_signed_charge_ma_ms_cm2": -0.0002696565061341971,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.5
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    },
+    {
+      "arm": "B7",
+      "role": "stress_diagnostic",
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channels": [
+        {
+          "channel": "Ca_HVA",
+          "passed": false,
+          "scale_ma_cm2": 1.2724352700388408e-06,
+          "rmse_ma_cm2": 1.5386931832789293e-08,
+          "max_abs_ma_cm2": 2.047581122559016e-08,
+          "nrmse": 0.012092506546379849,
+          "nmax": 0.01609182935094619,
+          "signed_charge_error_ma_ms_cm2": 4.5142691343799334e-06,
+          "absolute_charge_error_ma_ms_cm2": 4.5142691343799334e-06,
+          "signed_charge_normalized": 0.011825798930680574,
+          "absolute_charge_normalized": 0.011825798930680574,
+          "reference_signed_charge_ma_ms_cm2": -0.00028295419178903103,
+          "event": {
+            "status": "evaluable",
+            "peak_error_ms": 0.0,
+            "onset_error_ms": 0.0,
+            "offset_error_ms": 0.0
+          },
+          "blocked_current_passed": true
+        }
+      ]
+    }
+  ]
+}

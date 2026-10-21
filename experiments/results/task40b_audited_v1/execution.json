@@ -1,0 +1,21 @@
+{
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "training_members": 21,
+  "backend": "Vectorized eager training; independent Adam states and per-member clipping; frozen-parent coefficients precomputed",
+  "tf32": false,
+  "seconds_per_update": 0.004949645650003731,
+  "projected_training_seconds": 148.48936950011193,
+  "trainable_parameters_per_member": {
+    "B1": 128,
+    "B2": 128,
+    "B3": 128,
+    "B4": 128,
+    "B5": 256,
+    "B6": 256,
+    "B7": 64
+  },
+  "physical_padded_parameters": 512,
+  "exposure_per_member_per_update": 128,
+  "thresholds_changed": false
+}
