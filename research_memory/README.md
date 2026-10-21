@@ -2,13 +2,18 @@
 
 Mirror della [base Airtable](https://airtable.com/app9dZ7ghujkFJIo5), nel workspace **My First Workspace**.
 
-**21 ottobre2026, dopo l'audit Task40b:** l'utente ha autorizzato la
-conservazione locale del nuovo backup, rinviando il caricamento Drive.
+**21 ottobre2026, Task41:** l'utente ha richiesto la
+conservazione locale del nuovo backup, senza caricamento Drive.
 `data/local_backup_receipt.json` e il manifest SQLite indicano l'archivio
 unico completo verificato e il suo SHA256. La ricevuta Drive conserva
 l'ultima copia remota precedente, che non include il nuovo audit40b.
-Lo snapshot JSON XZ in Git include invece tutti i171446record aggiornati.
+Lo snapshot JSON XZ in Git include tutti i record aggiornati; il conteggio
+esatto è nel manifest e nella ricevuta locale più recente.
 Non ripristinare la vecchia copia Drive come se fosse la versione corrente.
+Per Task41 il backup è direttamente un singolo SQLite verificato, non compresso:
+`python -m research_memory.prepare_drive_backup` (il nome è storico; scrive solo
+in locale), poi `python -m research_memory.record_local_backup --raw-sqlite`.
+Non serve estrarlo: copiarlo nella destinazione e verificarne lo SHA256.
 
 ## Già utilizzabile
 

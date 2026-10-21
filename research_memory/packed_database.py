@@ -38,7 +38,7 @@ def restore_if_missing(database):
     info = json.loads(manifest.read_text(encoding='utf-8'))
     if info['format'] == 'sqlite-local-backup-v1':
         raise FileNotFoundError('Latest verified SQLite backup is local at '
-            + info['local_archive'] + '. Extract its single original SQLite to '
+            + info['local_archive'] + ('. Copy the verified SQLite file to ' if info.get('archive_format')=='SQLite3' else '. Extract its single original SQLite to ')
             + str(database) + ' and verify SHA256 ' + info['sqlite_sha256']
             + '. Drive upload was explicitly deferred; the older Drive copy does not include this snapshot. Existing databases are never replaced.')
     if info['format'] == 'sqlite-drive-backup-v1':

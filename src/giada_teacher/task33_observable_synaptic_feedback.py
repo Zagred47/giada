@@ -119,7 +119,8 @@ def cases(cfg: dict) -> list[dict]:
 
 
 def _native_case(h, cfg: dict, base: dict, t32cfg: dict, c3: dict,
-                 row: dict, zero_weight: bool = False) -> dict:
+                 row: dict, zero_weight: bool = False, *,
+                 injection_density=None, channel_multipliers=None) -> dict:
     h.CVode().active(0)
     h.secondorder = 0
     h.dt = cfg['dt_ms']
@@ -136,12 +137,18 @@ def _native_case(h, cfg: dict, base: dict, t32cfg: dict, c3: dict,
     h.ion_style('ca_ion', 3, 1, 0, 0, 0, sec=sec)
     seg = sec(.5)
     area = float(h.area(.5, sec=sec))
-    multipliers = ionic.panel_multipliers()[row.get('panel', 'canonical')].copy()
+    multipliers = (ionic.panel_multipliers()[row.get('panel', 'canonical')].copy()
+                   if channel_multipliers is None else np.asarray(channel_multipliers,dtype=float).copy())
+    if multipliers.shape != (11,) or not np.isfinite(multipliers).all() or np.any(multipliers<0):
+        raise ValueError('Invalid explicit native channel multipliers')
     initial_v = float(row['initial_voltage_mv'])
     initial_gate = t30.initial_states(np.array([initial_v]),
                                       np.array([cfg['initial_cai_mM']]))[0]
     time = np.arange(round(cfg['duration_ms']/cfg['dt_ms'])+1) * cfg['dt_ms']
-    injection = t30._injection(row['protocol'], time[:-1])
+    injection = (t30._injection(row['protocol'], time[:-1]) if injection_density is None
+                 else np.asarray(injection_density,dtype=float).copy())
+    if injection.shape != (len(time)-1,) or not np.isfinite(injection).all():
+        raise ValueError('Invalid explicit native injection')
     clamps = []
     for start, duration, density in t30c._pulses(injection, cfg['dt_ms']):
         clamp = h.IClamp(seg)

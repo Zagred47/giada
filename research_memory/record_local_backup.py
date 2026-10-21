@@ -1,9 +1,25 @@
 """Verified single-file local SQLite backup when external upload is deferred."""
-import hashlib,json,subprocess
+import argparse,hashlib,json,subprocess
 from pathlib import Path
 from .mirror import ROOT,write_json
 def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--raw-sqlite',action='store_true');args=parser.parse_args()
     info=json.loads((ROOT/'drive_exports/latest_local.json').read_text());folder=Path(info['folder'])
+    if args.raw_sqlite:
+        path=folder/info['filename'];h=hashlib.sha256()
+        with path.open('rb') as stream:
+            for chunk in iter(lambda:stream.read(1024*1024),b''):h.update(chunk)
+        assert h.hexdigest()==info['sha256'] and path.stat().st_size==info['bytes']
+        assert info['integrity_check']=='ok' and not info['foreign_key_violations']
+        receipt=dict(format='sqlite-local-backup-v1',snapshot_utc=info['snapshot_utc'],sqlite_sha256=info['sha256'],
+            sqlite_bytes=info['bytes'],semantic_records=info['semantic_records'],local_sqlite=str(path),local_archive=str(path),
+            archive_sha256=info['sha256'],archive_bytes=info['bytes'],archive_format='SQLite3',
+            integrity_check='ok',foreign_key_errors=[],valid=True,single_file=True,
+            scope='Complete authoritative local memory at snapshot time, including Task41 protocol and recorded execution status.',
+            drive_updated=False,upload_deferred_by_user=True,airtable_accessed=False)
+        write_json(ROOT/'data/local_backup_receipt.json',receipt)
+        write_json(ROOT/'data/research_memory.sqlite.manifest.json',receipt)
+        print(json.dumps(receipt),flush=True);return
     archive=folder/(Path(info['filename']).with_suffix('.sqlite.7z').name)
     exe='C:/Program Files/7-Zip/7z.exe'
     listing=subprocess.check_output([exe,'l','-slt',str(archive)],text=True).split('----------',1)[1]
