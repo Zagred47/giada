@@ -1,0 +1,48 @@
+{
+  "valid": true,
+  "launched": true,
+  "session": "giada-task41c-primary",
+  "revision": "a083e70aebfc8c3b42dbe178f0585aaddf0569c1",
+  "status": {
+    "task": "41c",
+    "revision": "a083e70aebfc8c3b42dbe178f0585aaddf0569c1",
+    "started_unix": 1792607125.3630452,
+    "elapsed_seconds": 54.52533006668091,
+    "manager_pid": 3131,
+    "state": "running",
+    "phase": "scientific_worker",
+    "worker_pid": 3385,
+    "last_progress": "[GIADA Task41c] checkpoint candidate frozen before fresh simulation"
+  },
+  "external_backup": {
+    "valid": true,
+    "remote": {
+      "label": "1792607179888",
+      "archive": "/content/giada_task41c_a083e70aebfc/recovery_1792607179888.zip",
+      "sha256": "81cb92cf3af898fed1fa40977bc530421d91f206df44d507c2d85735329eec3c",
+      "bytes": 41302
+    },
+    "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41c_primary_external\\recovery_1792607179888.zip",
+    "verified_at": 1792607200.0749424,
+    "runtime_independent": true
+  },
+  "DBbackup": "localonly",
+  "thresholds_changed": false,
+  "result_pending_audit": true,
+  "launcher_history": {
+    "valid": true,
+    "first_attempt_started_scientific_worker": false,
+    "cause": "Windows Start-Process split the unquoted script path at GIADA NEW; PowerShell rejected -File before reading the launcher.",
+    "second_attempt_started_scientific_worker": false,
+    "second_cause": "The background Windows PowerShell environment did not expose Get-FileHash; replaced with the SHA256 .NET API already used by Task41b.",
+    "third_attempt_started_scientific_worker": false,
+    "third_cause": "Colab released the idle preflight runtime while SQLite verification completed; sessions/status confirmed no active session. Reallocate primary T4 and repeat worker preflight before fresh data.",
+    "action": "Quoted the full script path and used the established .NET SHA256 check; same pinned scientific revision, no scientific worker restart.",
+    "training_performed": false,
+    "thresholds_changed": false,
+    "first_log": "artifacts/task41c_launcher.log",
+    "second_log": "artifacts/task41c_launcher_attempt2.log",
+    "third_log": "artifacts/task41c_launcher_attempt3.log",
+    "retry_log": "artifacts/task41c_launcher_attempt4.log"
+  }
+}

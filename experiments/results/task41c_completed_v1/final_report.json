@@ -1,0 +1,69 @@
+{
+  "valid": true,
+  "task": "41c",
+  "quality_passed": false,
+  "model_judged": true,
+  "decision": "FROZEN_P110_INDEPENDENT_SCIENTIFIC_NO_GO",
+  "independent_confirmation": true,
+  "summary": {
+    "B6/imposed": {
+      "trajectory": 527,
+      "total": 528,
+      "responses": 336,
+      "response_total": 336
+    },
+    "P110/imposed": {
+      "trajectory": 528,
+      "total": 528,
+      "responses": 336,
+      "response_total": 336
+    },
+    "LUT_control/imposed": {
+      "trajectory": 528,
+      "total": 528,
+      "responses": 336,
+      "response_total": 336
+    },
+    "B6/autonomous": {
+      "trajectory": 527,
+      "total": 528,
+      "responses": 334,
+      "response_total": 336
+    },
+    "P110/autonomous": {
+      "trajectory": 528,
+      "total": 528,
+      "responses": 334,
+      "response_total": 336
+    },
+    "LUT_control/autonomous": {
+      "trajectory": 528,
+      "total": 528,
+      "responses": 336,
+      "response_total": 336
+    }
+  },
+  "stress": {
+    "B6": {
+      "passed": 30,
+      "total": 36
+    },
+    "P110": {
+      "passed": 31,
+      "total": 36
+    }
+  },
+  "training_performed": false,
+  "model_selection_performed": false,
+  "thresholds_changed": false,
+  "task42_authorized": false,
+  "speedup_claim": false,
+  "cost_quality_qualified": false,
+  "limits": [
+    "Independent prospective test conditional on fixed Hay single-compartment teacher,not independent biological evidence or exhaustive bifurcation coverage.",
+    "No model/seed selection after opening;any failed registered case is scientific NO-GO if technical floors pass.",
+    "All18learned gates and cheap analytic readout,Ca,membrane,synapses unchanged;no canonical kinetic fallback.",
+    "Historical regressions already audited in41b;new41c is not a search over other arms. Task42 requires audit,not automatic authorization.",
+    "Cost on one T4;quality and speed qualification separate. DB backup strictly local;run backups off runtime onPC."
+  ]
+}
