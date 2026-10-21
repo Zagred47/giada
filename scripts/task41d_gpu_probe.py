@@ -8,7 +8,10 @@ root=Path('/content/giada41d_preflight_'+str(time.time_ns()))
 subprocess.run(['git','clone','--depth','1','--branch','codex/surrogate-validity-audit','https://github.com/Zagred47/giada.git',str(root)],check=True,stdout=subprocess.DEVNULL)
 subprocess.run(['git','fetch','--depth','1','origin',revision],cwd=root,check=True,stdout=subprocess.DEVNULL)
 subprocess.run(['git','checkout','--detach','FETCH_HEAD'],cwd=root,check=True,stdout=subprocess.DEVNULL)
-sys.path.insert(0,str(root));import torch
+code=r'''
+import sys,json
+from pathlib import Path
+root=Path(sys.argv[1]);sys.path.insert(0,str(root));import torch
 from src.giada_teacher import task41d_precision_response as d
 torch.set_num_threads(1);torch.use_deterministic_algorithms(True);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
 assert torch.cuda.is_available();out=root/'smoke';out.mkdir();spec,*_=d.contract(root)
@@ -22,3 +25,5 @@ with torch.inference_mode():
     report['composition_recurrence_preflight']=d.c.j.i.old.recurrence_preflight(out,{'recurrence_chunk':32,'numeric_atol':1e-5},[parent,ca,nap,combined],torch,'cuda') is not None
 assert report['legacy_formula_preflight']['valid']
 Path('/content/task41d_gpu_preflight.json').write_text(json.dumps(report,indent=2));print(json.dumps(report),flush=True)
+'''
+subprocess.run([sys.executable,'-u','-c',code,str(root)],cwd=root,check=True)

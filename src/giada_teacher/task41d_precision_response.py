@@ -37,6 +37,7 @@ def model_class(torch):
             super().__init__(dict(basis=64),seeds*len(definitions))
             for par in self.parameters():par.requires_grad_(False)
             self.definitions=definitions
+            self.register_buffer('equilibrium_masks',torch.eye(18)[[a['gate'] for a in definitions]],persistent=False)
             self.local_equilibrium=torch.nn.Parameter(torch.zeros(len(seeds)*len(definitions),64))
         def raw(self,v,ca):
             u,z=super().raw(v,ca);values=[]
@@ -45,7 +46,7 @@ def model_class(torch):
                 w=self.local_equilibrium[j*3:j*3+3,:a['basis']]
                 extra=(f.double()*w[:,None].double()).sum(-1).to(v.dtype)
                 extra=.1*torch.tanh(extra/.1)
-                mask=torch.nn.functional.one_hot(torch.tensor(a['gate'],device=v.device),18).to(v.dtype)
+                mask=self.equilibrium_masks[j].to(v.dtype)
                 values.append(extra[...,None]*mask)
             return u+torch.cat(values),z
     return Model

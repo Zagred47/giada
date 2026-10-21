@@ -1,0 +1,7 @@
+{
+  "scientific_training_started": false,
+  "attempts": [
+    {"revision":"10b9bbcd9e0be847fd1bdd9183f3c8cf891c7197","stage":"GPU technical preflight","valid":false,"error":"CPU-to-CUDA mask copy inside CUDA graph capture","resolution":"Preallocate one-hot masks as device buffers before capture;run subsequent GPU probes in fresh subprocesses."}
+  ],
+  "thresholds_changed": false
+}
