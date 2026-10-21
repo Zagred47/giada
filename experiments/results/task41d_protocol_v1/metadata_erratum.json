@@ -1,0 +1,30 @@
+{
+  "type": "documentary_metadata_erratum",
+  "task": "41d",
+  "date": "2026-10-22",
+  "scientific_revision": "428dae58b6df9069055617605bd7bc6ccb91390b",
+  "original_protocol_sha256": "09faee20aecf4a7235d2807313ffe074b473cc175df595f6ae5db7ba40a6e0d5",
+  "original_protocol_preserved": true,
+  "cause": "build_task41d_protocol.py inherited the entire Task41b mapping. Its old descriptive fields and seed aliases were left alongside the new authoritative41d fields. This is a documentary defect; these old fields are not read by the41d training or selection code.",
+  "inactive_inherited_fields": ["fit_seed","selection_seed","development_seed","stream_seed","targets","training","data","objective","negative_controls","contrasts","regression"],
+  "runtime_bindings": {
+    "fit_seed": "new_seeds.fit=341101",
+    "selection_seed": "new_seeds.selection=341103",
+    "development_seed": "new_seeds.development=341107",
+    "stream_seed": "new_seeds.stream=341109",
+    "feedback_seeds": "new_seeds.feedback=341113,selection_feedback=341127,feedback_stream=341139",
+    "targets": "arms[].gate: fourCa arms learn u0; eightNap arms learn u8; no newz7/z11 updates",
+    "training": "training_policy, arms, checkpoints, feedback_ticks, feedback_every, lr;36members, frozenP110",
+    "data": "prepare_atomic and feedback_data use new_seeds, anchors and feedback_anchors;development uses new_seeds.development",
+    "objective": "objectives; atomic_terms and feedback_terms in pinned source",
+    "contrasts": "contrast_rule; support/basis forCa, shape/paired/feedback forNap",
+    "regression": "task41d_evaluation.py: opened41,opened41c,40b,39j and new development afterfreeze"
+  },
+  "unchanged_active_inherited_fields": ["seeds","dt_ms","cost","opened_inputs_sha256","opened_origin_archive_sha256","opened_members","anchors","selection_anchors","batch","lr"],
+  "prospective_evidence": "The authoritative fields, all12arm definitions, new_seeds, immutable source hashes, five CPU tests and complete GPU preflight were pushed and registered before dispatch. No scientific result is used to choose between conflicting descriptions: the pre-pinned executable reads the new fields explicitly.",
+  "identified_after_progress_observation": "22000 updates; no opened regression outcomes inspected when defect identified",
+  "model_or_training_changed": false,
+  "thresholds_changed": false,
+  "scientific_run_restarted": false,
+  "future_rule": "Build future protocols from an explicit whitelist of shared fields; do not inherit obsolete narrative or unused aliases from a different experiment. Preserve the original dispatched protocol and link errata rather than silently rewriting it."
+}
