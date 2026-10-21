@@ -1,0 +1,48 @@
+{
+  "valid": true,
+  "request": {
+    "task": "41d",
+    "revision": "428dae58b6df9069055617605bd7bc6ccb91390b",
+    "worker_sha256": "e0a885e4469bcbe25db335c30d429c57ab7d4c510e2c730befb5a055ba639443",
+    "manager_sha256": "9267e5cca9d797770b463f9fee7261a85c32dc7c38b12c3aeec8c5495bc3259e",
+    "inputs": [
+      {
+        "remote": "/content/task41b_opened_inputs.zip",
+        "sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb"
+      },
+      {
+        "remote": "/content/task41d_opened41c.zip",
+        "sha256": "172ec87c4b1135d4f3421d63343ae399368f8426a68fadcf4c7ca788c6e97aff"
+      }
+    ]
+  },
+  "status_observed": {
+    "task": "41d",
+    "revision": "428dae58b6df9069055617605bd7bc6ccb91390b",
+    "started_unix": 1792621501.9965804,
+    "elapsed_seconds": 113.1256582736969,
+    "manager_pid": 1869,
+    "state": "running",
+    "phase": "scientific_worker",
+    "worker_pid": 2119,
+    "last_progress": "[GIADA Task41d] checkpoint development 3000 passing_members=0/36"
+  },
+  "external_recovery": {
+    "valid": true,
+    "remote": {
+      "label": "1792621602531",
+      "archive": "/content/giada_task41d_428dae58b6df/recovery_1792621602531.zip",
+      "sha256": "24e72da896059027f30d0719961515dd81f0e2b6a7812320aeaa1edc7e9d311a",
+      "bytes": 16824511
+    },
+    "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41d_primary_external\\recovery_1792621602531.zip",
+    "verified_at": 1792621624.114816,
+    "runtime_independent": true
+  },
+  "last_recovered_checkpoint": "checkpoint_3000.pt",
+  "checkpoint_tensor_count": 4,
+  "all_recovered_tensors_finite": true,
+  "thresholds_changed": false,
+  "DBbackup": "localonly",
+  "state_is_timestamped_not_live": true
+}
