@@ -1,0 +1,356 @@
+{
+  "task": "41c",
+  "version": "v1",
+  "candidate": "P110",
+  "checkpoint": "experiments/results/task41c_protocol_v1/P110_frozen.pt",
+  "model_seeds": [
+    17,
+    29,
+    43
+  ],
+  "native_seeds": [
+    241117,
+    241129
+  ],
+  "calibration_seed": 241003,
+  "stress_seeds": [
+    241143,
+    241159,
+    241173
+  ],
+  "initial_voltages_mv": [
+    -79.0,
+    -54.0
+  ],
+  "dt_ms": 0.1,
+  "duration_ms": 40.0,
+  "stress_duration_ms": 1200.0,
+  "panels": {
+    "canonical": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "calcium_mix": [
+      2.3,
+      2.7,
+      1.1,
+      0.9,
+      1.2,
+      0.8,
+      1.2,
+      0.9,
+      1.1,
+      0.8,
+      1.0
+    ],
+    "mixed_diagonal": [
+      0.7,
+      1.6,
+      1.15,
+      0.85,
+      1.3,
+      0.8,
+      1.65,
+      0.7,
+      1.2,
+      1.45,
+      0.95
+    ],
+    "low_mixed": [
+      0.6,
+      0.75,
+      0.7,
+      0.9,
+      0.85,
+      0.65,
+      0.8,
+      0.75,
+      0.65,
+      0.8,
+      0.95
+    ]
+  },
+  "protocols": [
+    "asymmetric_doublet",
+    "rebound_triplet",
+    "reversed_staircase",
+    "irregular_train"
+  ],
+  "schedules_ms": {
+    "asymmetric_doublet": {
+      "exc_1": [
+        3.15,
+        3.85,
+        10.15,
+        19.15
+      ],
+      "exc_2": [
+        3.35,
+        3.95,
+        10.45,
+        19.45
+      ],
+      "inh_1": [
+        6.15,
+        8.05,
+        16.15,
+        25.15
+      ],
+      "inh_2": [
+        6.45,
+        8.35,
+        16.45,
+        25.45
+      ]
+    },
+    "rebound_triplet": {
+      "exc_1": [
+        3.4499999999999997,
+        4.15,
+        10.450000000000001,
+        19.45
+      ],
+      "exc_2": [
+        3.65,
+        4.25,
+        10.75,
+        19.75
+      ],
+      "inh_1": [
+        6.45,
+        8.350000000000001,
+        16.45,
+        25.45
+      ],
+      "inh_2": [
+        6.75,
+        8.65,
+        16.75,
+        25.75
+      ]
+    },
+    "reversed_staircase": {
+      "exc_1": [
+        4.05,
+        4.75,
+        11.05,
+        20.049999999999997
+      ],
+      "exc_2": [
+        4.25,
+        4.8500000000000005,
+        11.35,
+        20.349999999999998
+      ],
+      "inh_1": [
+        7.050000000000001,
+        8.950000000000001,
+        17.049999999999997,
+        26.049999999999997
+      ],
+      "inh_2": [
+        7.3500000000000005,
+        9.25,
+        17.349999999999998,
+        26.349999999999998
+      ]
+    },
+    "irregular_train": {
+      "exc_1": [
+        4.65,
+        5.35,
+        11.65,
+        20.65
+      ],
+      "exc_2": [
+        4.85,
+        5.45,
+        11.95,
+        20.95
+      ],
+      "inh_1": [
+        7.65,
+        9.55,
+        17.65,
+        26.65
+      ],
+      "inh_2": [
+        7.95,
+        9.85,
+        17.95,
+        26.95
+      ]
+    },
+    "calibration": {
+      "exc_1": [
+        3.6,
+        13.6
+      ],
+      "exc_2": [
+        4.6,
+        14.6
+      ],
+      "inh_1": [
+        6.6,
+        16.6
+      ],
+      "inh_2": [
+        7.6,
+        17.6
+      ]
+    }
+  },
+  "interventions": [
+    "block_Ca_HVA",
+    "block_Nap_Et2",
+    "block_K_Pst",
+    "block_SK_E2",
+    "zero_synapses",
+    "injection_0.99",
+    "injection_1.01"
+  ],
+  "current_quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "neuron_version": "8.2.7",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "receptor_time_semantics": "ems_fixed_step",
+  "sources": {
+    "experiments/results/task41c_protocol_v1/P110_frozen.pt": "f83dd019d0f38c2a595da8565f9632765de95418b6103861b3159a61f3a693a6",
+    "src/giada_teacher/task41c_frozen_confirmation.py": "1bc97ececbb51a52c6ae3788cc46deebf1bdd15f3c6163ad6fa67c6dd7de1f8c",
+    "scripts/run_task41c_frozen_confirmation.py": "70d13f61eeab9cac746482fb47e6ef34390a1ac9159d4f7bf261af2b2943b506",
+    "src/giada_teacher/task41b_local_precision.py": "6b53a1f53678a4174c483540e78a4db910a15ae1517caac3b6ab10aafd0ae604",
+    "src/giada_teacher/task41b_evaluation.py": "8bdbc0d98c16261cb9e131c8f9e208cd86ccec11098dd79cda501fe8c63b5cc3",
+    "src/giada_teacher/task41_independent_confirmation.py": "9c36f607f7fa81634a23ee7ac69afe24688694f43b52ca12acd714a9c68f1220",
+    "experiments/task41b_preregistration_v1.json": "6370c149c2b6ba1eb532128105dbbdae60d0b4e825012c5b1fe07d891592f82b",
+    "experiments/task41_preregistration_v1.json": "fab4ef77d32674515c6cc6efdd87550210ff6dad81ad8132d865d7fac206de42"
+  },
+  "cost": {
+    "batches": [
+      1,
+      642,
+      4096
+    ],
+    "ticks": 80,
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "baselines": [
+      "resident formula CUDA Graph",
+      "0.01mV voltage LUT plus canonical calcium-dependent SK"
+    ],
+    "timing": "Same active native initial states at10ms,80resident future input ticks,no hosttransfer,alternatingorder;CUDAandwalltimes;pairedbootstrap uncertainty"
+  },
+  "design": "64fresh native base cases +112paired interventions=176;three original model seeds. Four new pulse families, new synaptic schedules, new RNG seeds, two new initial voltages, three new heterogeneous panels plus canonical. Two new long-history stress shapes,three seeds,two initial gate states=12histories.",
+  "phase": "Old V -> learned or canonical voltage gates -> analytical I_Ca -> unchanged CaDynamics -> learned/canonical SK from NEW Ca -> analytical currents -> unchanged semi-implicit membrane/NMDA solver. No future V/Ca in autonomous mode.",
+  "hypotheses": [
+    "Frozen P110 generalizes beyond opened41b inputs without fitting.",
+    "Paired current responses survive autonomous V/Ca feedback.",
+    "Nap.m equilibrium and NaTs.h/Im relaxation repairs survive new long histories.",
+    "Quality improvement does not imply speed improvement; benchmark frozen P110 vs B6,formula,LUT."
+  ],
+  "qualification": "All176x3 fresh native trajectories,112x3 paired responses in BOTH modes,12x3 new1200ms stress histories must pass unchanged gates. Require native/shadow, aligned current phase and FP32/64 floors before interpretation. Quality and speed decisions remain separate; Task42 only after detailed audit.",
+  "native_current_policy": "Staggered operator reference: native voltage gates at t, native SK at t+dt,old native V. Proven old-fixture one-step NMODL identity uses V_next/Ca_next; direct endpoint gates are not the same interface. Derived current is not endpoint h.ica. Require unchanged quality gate on aligned formula/native floor before B6 predictions; otherwise model not judged.",
+  "freeze": "Only P110 selected from opened Task41b; all original seeds17/29/43. No training, optimizer, calibration fitting, threshold changes or checkpoint selection. B6 and LUT descriptive controls, never fallback candidates.",
+  "limits": [
+    "Independent prospective test conditional on fixed Hay single-compartment teacher,not independent biological evidence or exhaustive bifurcation coverage.",
+    "No model/seed selection after opening;any failed registered case is scientific NO-GO if technical floors pass.",
+    "All18learned gates and cheap analytic readout,Ca,membrane,synapses unchanged;no canonical kinetic fallback.",
+    "Historical regressions already audited in41b;new41c is not a search over other arms. Task42 requires audit,not automatic authorization.",
+    "Cost on one T4;quality and speed qualification separate. DB backup strictly local;run backups off runtime onPC."
+  ],
+  "excluded_input_seeds": [
+    104117,
+    104129,
+    104143,
+    104159,
+    104173,
+    104003,
+    141101,
+    141103,
+    141107,
+    141109,
+    85317,
+    85329,
+    17,
+    29,
+    43
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "training_performed": false,
+  "model_selection_performed": false
+}

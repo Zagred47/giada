@@ -1226,6 +1226,16 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     diagnostica della41, non sostituisce la conferma indipendente: dopo
     l'eventuale riparazione congelare il candidato e preparare nuove prove.
     Task42 resta subordinata a quella conferma e al relativo audit.
+  - **Task41b conclusa:** P110 unica variante con528/528 traiettorie e336/336
+    risposte in entrambe le modalità,36/36stress; regressioni39j/40b integre.
+    Tutti i checkpoint finiti. Precisione migliorata ma costo superiore aB6;
+    nessuna accelerazione universale o attribuzione fattoriale definitiva.
+  - **Task41c — Conferma indipendente P110:** candidato e tre seed modello
+    congelati; quattro nuove famiglie di stimoli, nuovi seed dei dati, pannelli,
+    stati iniziali e storie stress1200ms.176nuove simulazioni native, controlli
+    B6/formula/LUT e costo appaiato nello stesso notebook. Nessuntraining,
+    selezione o soglia modificata. Backup esperimento sulPC; DBsolo locale.
+    Anche un eventuale GO richiede audit prima della Task42.
 
 ### ✅ Uscita del blocco 1
 
