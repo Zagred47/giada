@@ -1,0 +1,23 @@
+{
+  "valid": true,
+  "optimizer_isolation_max_error": 0.0,
+  "zero_correction_error": 0.0,
+  "inference_graph_error": 0.0,
+  "noncalcium_preservation_error": 0.0,
+  "finite": true,
+  "device": "cuda",
+  "source_sha256": "0329cd11a5e8279e7609711f72790baafdfa533b6aab6a19f3e21c40b4e5c16b",
+  "gpu": "Tesla T4",
+  "captured_training": {
+    "valid": true,
+    "cuda_graph_training": false,
+    "one_step_max_error": 0.0,
+    "independent_per_member_clipping": true,
+    "reason": "Runtime backward stream capture incompatible;21members remain vectorized,with precomputed frozen parent coefficients."
+  },
+  "smoke": {
+    "valid": true,
+    "decision": "PREFLIGHT_ONLY",
+    "parameters_finite": true
+  }
+}

@@ -1,0 +1,219 @@
+{
+  "task": "40b",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dt_ms": 0.1,
+  "arms": [
+    {
+      "name": "B0",
+      "frozen": true
+    },
+    {
+      "name": "B1",
+      "basis": 32,
+      "anchors": 1024,
+      "paired": false,
+      "equilibrium": false,
+      "m_only": false
+    },
+    {
+      "name": "B2",
+      "basis": 32,
+      "anchors": 1024,
+      "paired": true,
+      "equilibrium": false,
+      "m_only": false
+    },
+    {
+      "name": "B3",
+      "basis": 32,
+      "anchors": 4096,
+      "paired": false,
+      "equilibrium": false,
+      "m_only": false
+    },
+    {
+      "name": "B4",
+      "basis": 32,
+      "anchors": 4096,
+      "paired": true,
+      "equilibrium": false,
+      "m_only": false
+    },
+    {
+      "name": "B5",
+      "basis": 64,
+      "anchors": 1024,
+      "paired": false,
+      "equilibrium": false,
+      "m_only": false
+    },
+    {
+      "name": "B6",
+      "basis": 32,
+      "anchors": 1024,
+      "paired": false,
+      "equilibrium": true,
+      "m_only": false
+    },
+    {
+      "name": "B7",
+      "basis": 32,
+      "anchors": 1024,
+      "paired": false,
+      "equilibrium": false,
+      "m_only": true
+    }
+  ],
+  "sources": {
+    "experiments/task40_preregistration_v1.json": "e1e3d1ccf0171713f86aa092f29ea34ee3d0387eab2d3d83a003f1787c5fa173",
+    "experiments/task39j_preregistration_v1.json": "9e2f42b3058c5be7206b009a6a16650384c3ec707f02128d636f49083f2b3dfe",
+    "experiments/results/task40_audited_v1/audit.json": "ea0ab1dcdb60eb301b5a33fa52e33f70042cf5de2ccc7ef191118fa7fb614ab7",
+    "experiments/results/task40_audited_v1/attribution_audit.json": "cafab2953ce2c863c9a788058a5ff3203a30e6d983a74f5116131d6c6ac10260",
+    "experiments/results/task40_audited_v1/synthesis.json": "ca8c115e0413095d5efafde1c0fd614d85f7fdb252b54b82bb539810b7c70a4a",
+    "src/giada_teacher/task40_causal_reinsertion.py": "6f656ee5cb8a9c1712ae7b07c5602ddcf93e1062d7d5634a14702a7fcf0dfb43",
+    "src/giada_teacher/task39j_atomic_relaxation.py": "4bb3765140fb7dd67a6a0ad8c44e18ea090b83704bbfdcf25e92de3c0104a90f"
+  },
+  "current_quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "fit_seed": 40401,
+  "selection_seed": 40402,
+  "stream_seed": 40403,
+  "batch": 128,
+  "lr": 0.001,
+  "checkpoints": [
+    0,
+    1000,
+    3000,
+    10000,
+    30000
+  ],
+  "fit": "Independent nested uniform voltage anchors: first1024of4096. Shared initial gates and paired V±epsilon; epsilon in0.05,0.2,1mV. No historical failed paths copied into FIT.",
+  "architecture": "J1 frozen; learned bounded local residuals on Ca_HVA/Ca_LVAst u/z logits. Same18 recurrent states,0.1ms clock,cheap current readout,membrane andcalcium update. All promoted kinetics remainlearned.",
+  "trainable_parameters": {
+    "B1": 128,
+    "B2": 128,
+    "B3": 128,
+    "B4": 128,
+    "B5": 256,
+    "B6": 256,
+    "B7": 64
+  },
+  "capacity_caveat": "B6 u+z has twice the trainable outputs of B1; B7 has half. These are package/restriction contrasts, not capacity-matched pure causal attribution. B5 changes basis32to64 only.",
+  "loss": "Coefficient logit-u/log-z MSE plus optional bounded paired-current residual at held ticks1,10,80,400. Paired-loss gradient scale calibrated once on initial B2 FIT and shared with B4. Censored target logit-u at1e-7,log-z floor1e-12 as39j; no metric threshold changes.",
+  "selection": "Per arm/seed choose lowest common mean of coefficient and paired atomic selection losses normalized by frozen-parent values on256independent selection anchors; exact ties keep earliest. Task40 paths,72development traces andstress are evaluated only after freeze. Selection set is not fresh confirmation.",
+  "contrasts": [
+    {
+      "axis": "paired_objective",
+      "control": "B1",
+      "treatment": "B2"
+    },
+    {
+      "axis": "paired_objective_dense",
+      "control": "B3",
+      "treatment": "B4"
+    },
+    {
+      "axis": "coverage",
+      "control": "B1",
+      "treatment": "B3"
+    },
+    {
+      "axis": "coverage_paired",
+      "control": "B2",
+      "treatment": "B4"
+    },
+    {
+      "axis": "capacity",
+      "control": "B1",
+      "treatment": "B5"
+    },
+    {
+      "axis": "joint_u_z_package",
+      "control": "B1",
+      "treatment": "B6"
+    },
+    {
+      "axis": "m_only_restriction",
+      "control": "B1",
+      "treatment": "B7"
+    }
+  ],
+  "contrast_rule": "Report per-seed paired change, median and worst severity, counts and checkpoint curves. No supported-cause claim from one seed or confounded package. Use unchanged39j severity comparison: median treatment/control<=0.8,each ratio<1,worst ratio<=1.05; report timing separately.",
+  "qualification": "All72development case-seed checks andTask40 trajectory/current/state/V/Ca/spike gates inbothmodes; all168autonomous differential intervention checks. Imposed differential failures reported separately asTask40. Any candidate requires full audit beforeTask41 authorization.",
+  "stress_policy": "Replay both full families for I3/J1/all seeds. These previously opened failures are not waived or used for selection. A causal-domain pass is not an all-domain pass.",
+  "known_stress": [
+    {
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "channel": "Ca_LVAst",
+      "failure": "offset",
+      "observed_ms": 0.5,
+      "limit_ms": 0.3
+    },
+    {
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channel": "Ca_HVA",
+      "failure": "current_nrmse",
+      "observed": 0.01178899,
+      "limit": 0.01
+    }
+  ],
+  "execution": "21 learned members vectorized with independent Adam moments and per-member norm1clipping; frozen parent coefficients precomputed. Eager training verified after runtime backward capture incompatibility; CUDA Graph retained for inference. Common random minibatch uniforms mapped to supportsize; exposure128/update/member. FP64 affine correction accumulation,FP32 deployed state. No new speedup claim.",
+  "limits": [
+    "Historical opened native fixtures; not new independent data.",
+    "Intervention references are calibrated formula, not fresh NEURON replays.",
+    "Presynaptic shadow conductances are fixed exogenous input; NMDA voltage block recomputed causally.",
+    "No training, no model selection, no threshold relaxation.",
+    "Full morphology, new seed confirmation and exhaustive bifurcation/burst coverage remain outside this diagnostic.",
+    "Both stress failures remain unresolved unless reproduced differently and audited.",
+    "No claimed acceleration from this restricted baseline.",
+    "Posthoc-informed repair on opened diagnostic domains; independentTask41 still required.",
+    "No training on stress or historical failed trajectories.",
+    "Atomic sensitivity objective is a FIT surrogate, not the registered current evaluator."
+  ]
+}

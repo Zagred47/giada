@@ -1,0 +1,172 @@
+{
+  "task": "40",
+  "version": "v1",
+  "dt_ms": 0.1,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "sources": {
+    "experiments/task37_ionic_playground_preregistration_v1.json": "0d63cc7131008417cc3bcebadac2bd83762b3f44c02d3e0703c2a83c51a192b2",
+    "experiments/task39j_preregistration_v1.json": "9e2f42b3058c5be7206b009a6a16650384c3ec707f02128d636f49083f2b3dfe",
+    "experiments/task35_full_local_compartment_preregistration.json": "8f7ea4e85a36343e8134b018b7d17cf9ac98186c7b0842f38f24d2c6e269bd1e",
+    "experiments/results/task35_native_shadow_traces.npz": "75028e1cf57203969b96b915c29cf7a170e012b9c6eec943c410e51dd10c0971",
+    "experiments/results/task35_final_report.json": "1ced4c0b2af8afb6a1ca0cdac44c58236d5382359c9091ca19fb2b94778b9bc7",
+    "experiments/results/task39j_audited_v1/attribution_audit.json": "9be37c48b19e710f5d20692a14ca6262aa5d3706a967b944942618316299f506",
+    "experiments/results/task39j_audited_v1/frozen_checkpoint.pt": "3664e8233fee4550a4f7f99e63cde8c12e07556c3af964c203bac85c60e18a9b",
+    "experiments/results/task39j_audited_v1/selection_freeze.json": "71495bb9a09ec814a78a600e3aa9c2f7c7ffba6cf6d9bc0d8e40db1e42b2ae82",
+    "experiments/results/task39j_audited_v1/recurrence_evaluation.json": "28fe0512b1b952d74adc2a99d142b3a690783b6ebd36ecaedafc61ca1713d157",
+    "experiments/results/task37_playground_v2/stress_diagnostic__same_v_history.npz": "709756edfcaf5aac3bc3b492ce0224620a1868e44b539d64e07deb897f9e9949",
+    "experiments/results/task37_playground_v2/stress_diagnostic__activation_boundary.npz": "6cece614e8e330e44bde35712915b31175e5f1376aa7c56f94ef749976e4575e"
+  },
+  "current_quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "interventions": [
+    "block_Ca_HVA",
+    "block_Nap_Et2",
+    "block_K_Pst",
+    "block_SK_E2",
+    "zero_synapses",
+    "injection_0.99",
+    "injection_1.01"
+  ],
+  "arms": {
+    "models": [
+      "I3",
+      "J1"
+    ],
+    "families": {
+      "calcium": [
+        0,
+        1
+      ],
+      "sodium": [
+        2,
+        3,
+        4
+      ],
+      "potassium": [
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "ih": [
+        5
+      ],
+      "repaired_pair": [
+        4,
+        7
+      ],
+      "all": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "modes": [
+      "imposed",
+      "autonomous"
+    ]
+  },
+  "hypotheses": [
+    "H1: isolated current precision survives autonomous V/Ca feedback",
+    "H2: failure localizes to a channel family rather than a common solver floor",
+    "H3: learned calcium-only SK head remains valid when Ca is computed causally",
+    "H4: removal and small current interventions preserve differential responses",
+    "H5: quality improvement does not imply runtime speedup"
+  ],
+  "known_stress": [
+    {
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "channel": "Ca_LVAst",
+      "failure": "offset",
+      "observed_ms": 0.5,
+      "limit_ms": 0.3
+    },
+    {
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channel": "Ca_HVA",
+      "failure": "current_nrmse",
+      "observed": 0.01178899,
+      "limit": 0.01
+    }
+  ],
+  "stress_policy": "Replay both full families for I3/J1/all seeds. These previously opened failures are not waived or used for selection. A causal-domain pass is not an all-domain pass.",
+  "design": "32 historical native Task35 fixtures + 7 paired interventions on 8 canonical fixtures = 88 cases/model/seed/mode. Same fixed initial gates, currents and exogenous presynaptic conductances. Family masks are attribution controls; only all-learned J1 is the candidate.",
+  "phase": "Old V -> learned or canonical voltage gates -> analytical I_Ca -> unchanged CaDynamics -> learned/canonical SK from NEW Ca -> analytical currents -> unchanged semi-implicit membrane/NMDA solver. No future V/Ca in autonomous mode.",
+  "decisions": "Technical floors first. All-learned J1 must satisfy unchanged per-channel and state criteria, existing Task35 pooled/worst V/Ca criteria, paired intervention current criteria and spike count/timing checks. No averaging away failures. Only preparation of independent Task41 can be authorized; no deployment or independent confirmation.",
+  "spike_metric": "Upward zero-mV crossings, exact count matching, ordered timing <= existing 0.3ms onset/offset threshold. Report no-event cases explicitly; not a complete burst or bifurcation validation.",
+  "cost": {
+    "batches": [
+      642,
+      1,
+      4096
+    ],
+    "ticks": 80,
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "baseline": "Resident CUDA Graph formula, same FP32 state and readout; J1 retains audited FP64 correction. Local diagnostic, not complete competitive LUT/compiled benchmarking.",
+    "limits": "No general speedup claim until competitive LUT and compilation matched baselines also pass quality. Three seed replicas per batch; report actual sites=3*batch. Wall and device timings paired; no transfer within timed block."
+  },
+  "limits": [
+    "Historical opened native fixtures; not new independent data.",
+    "Intervention references are calibrated formula, not fresh NEURON replays.",
+    "Presynaptic shadow conductances are fixed exogenous input; NMDA voltage block recomputed causally.",
+    "No training, no model selection, no threshold relaxation.",
+    "Full morphology, new seed confirmation and exhaustive bifurcation/burst coverage remain outside this diagnostic.",
+    "Both stress failures remain unresolved unless reproduced differently and audited.",
+    "No claimed acceleration from this restricted baseline."
+  ]
+}

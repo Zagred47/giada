@@ -1,0 +1,34 @@
+{
+  "candidate": "J1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "checkpoint_sha256": "7e0b1dc17393e39a6ab67c8644631662f8a6bfdfbe90e6a87694fe4395549426",
+  "protocol_sha256": "e1e3d1ccf0171713f86aa092f29ea34ee3d0387eab2d3d83a003f1787c5fa173",
+  "thresholds_changed": false,
+  "training_performed": false,
+  "task41_new_protocols_and_seeds_required": true,
+  "known_stress_failures": [
+    {
+      "family": "same_v_history",
+      "case": 1,
+      "seed": 17,
+      "channel": "Ca_LVAst",
+      "failure": "offset",
+      "observed_ms": 0.5,
+      "limit_ms": 0.3
+    },
+    {
+      "family": "activation_boundary",
+      "case": 0,
+      "seed": 29,
+      "channel": "Ca_HVA",
+      "failure": "current_nrmse",
+      "observed": 0.01178899,
+      "limit": 0.01
+    }
+  ],
+  "inference_numerics": "FP32 recurrent state, original J1 FP64 affine correction; no canonical gating in all-learned arm"
+}

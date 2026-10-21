@@ -1,0 +1,108 @@
+{
+  "prior_findings": {
+    "sql": "SELECT * FROM findings WHERE \"Codice stabile\" IN (?,?,?,?)",
+    "parameters": [
+      "findings-giada-task39j-result-sufficient_package-v1",
+      "findings-giada-task39j-result-freeze_contrast-v1",
+      "findings-giada-task39j-result-remaining_stress-v1",
+      "findings-giada-iv-b-v2-result-pass-v1"
+    ],
+    "rows": [
+      {
+        "_record_id": "rec01a3443642ff1b",
+        "_created_time": "2026-10-05T21:33:36Z",
+        "Nome": "IV-B1/B2 causal calcium-to-SK timing confirmed prospectively",
+        "Codice stabile": "findings-giada-iv-b-v2-result-pass-v1",
+        "Descrizione": null,
+        "Risultato": "B1 worst cai RMSE 4.80e-14 mM; B2 worst composed SK gate RMSE 2.20e-11; current RMSE 4.40e-16 mA/cm2; imposed-voltage clamp error 1.57e-5 mV. Task32 feedback prerequisite passed.",
+        "Incertezza": null,
+        "Limitazioni": "One compartment, imposed ica and imposed V. No autonomous electrical feedback, morphology, synapses, full-cell validity, training or speedup claim.",
+        "Esito": "Positivo"
+      },
+      {
+        "_record_id": "rec1d46c3607fc89b",
+        "_created_time": "2026-10-20T21:07:08Z",
+        "Nome": "Task39j sufficient_package",
+        "Codice stabile": "findings-giada-task39j-result-sufficient_package-v1",
+        "Descrizione": null,
+        "Risultato": "I3 parent frozen +256 learned bounded residual weights onjoint u/z ofNap_Et2,K_Pst +coefficient supervision on1024independent FITanchors suffices inJ1. No canonical kinetics in inference. Not a proof that each element is necessary.",
+        "Incertezza": null,
+        "Limitazioni": "Repeated development,not independentconfirmation;24trajectories perrole x3trainingseeds. Two stressfailures remain;V/Ca imposed. No speedup/autonomouscompartment claim.8registeredcontrasts do not pass;freeze support is scoped,not universal.",
+        "Esito": "Misto"
+      },
+      {
+        "_record_id": "recd296453b6fe50b",
+        "_created_time": "2026-10-20T21:07:09Z",
+        "Nome": "Task39j remaining_stress",
+        "Codice stabile": "findings-giada-task39j-result-remaining_stress-v1",
+        "Descrizione": null,
+        "Risultato": "Ca_LVAst same_v_history case1 seed17 offset0.5ms versus0.3ms limit;Ca_HVA activation_boundary case0 seed29 nRMSE0.01178899 versus0.01. Both unchanged fromI3,not introducedbyJ1.",
+        "Incertezza": null,
+        "Limitazioni": "Repeated development,not independentconfirmation;24trajectories perrole x3trainingseeds. Two stressfailures remain;V/Ca imposed. No speedup/autonomouscompartment claim.8registeredcontrasts do not pass;freeze support is scoped,not universal.",
+        "Esito": "Misto"
+      },
+      {
+        "_record_id": "recd3169172196efb",
+        "_created_time": "2026-10-20T21:07:08Z",
+        "Nome": "Task39j freeze_contrast",
+        "Codice stabile": "findings-giada-task39j-result-freeze_contrast-v1",
+        "Descrizione": null,
+        "Risultato": "J2 vsJ8 differs byparenttrainability. Unfreezing harms selection-panel performance under this budget/objective/learningrate; it does not prove unfreezing can never work. J8 lowers coefficient holdout loss dramatically but not relaxation loss;global scalar optimization is not eventtiming qualification.",
+        "Incertezza": null,
+        "Limitazioni": "Repeated development,not independentconfirmation;24trajectories perrole x3trainingseeds. Two stressfailures remain;V/Ca imposed. No speedup/autonomouscompartment claim.8registeredcontrasts do not pass;freeze support is scoped,not universal.",
+        "Esito": "Misto"
+      }
+    ]
+  },
+  "prior_lesson": {
+    "sql": "SELECT * FROM lessons WHERE \"Codice stabile\"=?",
+    "parameters": [
+      "lessons-giada-task39j-result-protect-learned-function-v1"
+    ],
+    "rows": [
+      {
+        "_record_id": "recf557e58ed63b42",
+        "_created_time": "2026-10-20T21:07:10Z",
+        "Nome": "Protect learned function while correcting localized precision",
+        "Codice stabile": "lessons-giada-task39j-result-protect-learned-function-v1",
+        "Descrizione": null,
+        "Lezione": "J2 vsJ8 differs byparenttrainability. Unfreezing harms selection-panel performance under this budget/objective/learningrate; it does not prove unfreezing can never work. J8 lowers coefficient holdout loss dramatically but not relaxation loss;global scalar optimization is not eventtiming qualification.",
+        "Condizioni": null,
+        "Limiti": "Repeated development,not independentconfirmation;24trajectories perrole x3trainingseeds. Two stressfailures remain;V/Ca imposed. No speedup/autonomouscompartment claim.8registeredcontrasts do not pass;freeze support is scoped,not universal."
+      }
+    ]
+  },
+  "hypotheses": {
+    "sql": "SELECT * FROM claims WHERE \"Codice stabile\" IN (?,?)",
+    "parameters": [
+      "claims-giada-task39i-result-objective_precision-v1",
+      "claims-giada-task39e-result-residual-metric_or_precision-v1"
+    ],
+    "rows": [
+      {
+        "_record_id": "rec0792e288d45053",
+        "_created_time": "2026-10-20T20:18:36Z",
+        "Nome": "After39i objective_precision",
+        "Codice stabile": "claims-giada-task39i-result-objective_precision-v1",
+        "Descrizione": null,
+        "Enunciato": "The global coefficient/trajectory loss underweights the local accuracy required by shallow current crossings.",
+        "Tipo": "Ipotesi",
+        "Stato": "Aperta",
+        "Condizioni di falsificazione": "No paired improvement in independent atomic holdouts or unchanged full-trace timing despite sufficient FIT convergence.",
+        "Limiti": "Development-informed, not independent confirmation.36members share data/parents. CPU recovery differs from CUDA environment; equivalence audited, not bitwise identity. ParentH8oracles are not I3oracles. Historical analogies and gradient/clipping correlations are not causal proof. Proposed test: Compare bounded full-relaxation current losses with coefficient losses on identical FIT data and architecture."
+      },
+      {
+        "_record_id": "recbf2292874f47c7",
+        "_created_time": "2026-10-18T22:26:16Z",
+        "Nome": "After39e metric_or_precision",
+        "Codice stabile": "claims-giada-task39e-result-residual-metric_or_precision-v1",
+        "Descrizione": null,
+        "Enunciato": "Some timing discrepancies may involve disconnected threshold crossings or numerical sensitivity rather than a uniform physiological delay.",
+        "Tipo": "Ipotesi",
+        "Stato": "Aperta",
+        "Condizioni di falsificazione": "Signed timing error persists with stable event identity and negligible perturbation/precision sensitivity.",
+        "Limiti": "Post hoc; priority=diagnostic_not_assumed; proposed test: Audit current39e traces inFP32/FP64 with same frozen weights and clock, connected excursions, perturbations and phase shifts. Keep original pass/fail; report diagnostics separately. Prior parent precision probes are not evidence for current39e weights."
+      }
+    ]
+  }
+}

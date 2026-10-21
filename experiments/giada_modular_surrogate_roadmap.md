@@ -1615,7 +1615,7 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Stato corrente — Task 39j verificata; GO alla preparazione della Task 40
+# 🥇 Stato corrente — Task 40 verificata; NO-GO causale, proposta Task 40b
 
 **Audit 39j (20 ottobre 2026):** J1–J7 superano 72/72 casi development, contro 66/72
 di I3 congelato. J1 arriva a 70/72 stress contro 62/72; J4 arriva a 69/72.
@@ -1660,11 +1660,38 @@ quando presente; la preregistrazione non attesta un'esecuzione.
 [ricevuta finale](results/task40_protocol_v1/completion_backup_receipt.json).
 J1 supera 264/264 casi×seed sia imposti sia autonomi, ma 22/168 confronti
 differenziali agli interventi falliscono: `CAUSAL_REINSERTION_NO_GO`.
-Task41 non autorizzata. Il dettaglio richiede ancora audit; non modificare
+Task41 non autorizzata. L'audit dettagliato è descritto sotto; non modificare
 soglie o candidati per reinterpretare il risultato. Archivio finale verificato
 sia fuori dalla VM sia dopo download da Drive; GPU rilasciata.
-Importazione delle osservazioni scientifiche dettagliate nel DB da completare
-con l'audit; la registrazione del protocollo/lancio non va confusa con essa.
+La ricevuta dell'importazione scientifica, distinta dalla registrazione del
+protocollo/lancio, è `results/task40_audited_v1/memory_receipt.json` quando presente.
+
+**Audit Task40 (21 ottobre 2026):** [dettaglio dei 22 fallimenti](results/task40_audited_v1/AUDIT.md).
+Sono 10 combinazioni intervento/fixture per tre seed (10/6/6 fallimenti), tutte
+`early_high`: 18 Ca_LVAst e 4 Ca_HVA. I3 e J1 falliscono gli stessi confronti.
+Il floor differenziale FP32/FP64 passa 56/56; il replay CPU riproduce 168/168
+verdetti GPU. Non è giustificato attribuire il NO-GO al solo arrotondamento.
+I controlli canonici diagnostici localizzano il limite al calcio: calcio
+appreso da solo → 22 fallimenti; tutto appreso tranne calcio → zero.
+A V/Ca imposti e coerenti, correggere solo l'equilibrio lascia 22 fallimenti;
+correggere il rilassamento z dei quattro gate del calcio li porta a zero.
+Correggere solo z dei gate m ne lascia tre: non trascurare h.
+Questi sono oracle di attribuzione, non candidati promossi o prove di learnability.
+
+**Task40b preregistrata:** [notebook](../notebooks/giada_task40b_calcium_precision.ipynb),
+[protocollo](task40b_preregistration_v1.json). Parent J1 congelato,
+correzioni *apprese* dei coefficienti del calcio; matrice obiettivo × copertura,
+controlli di capacità, z contro u+z e m contro m+h; budget crescenti nella
+stessa traiettoria, stessi seed e valutatore invariato. Nessun ritorno a gate
+canonici nel candidato, nessuna modifica del livello di astrazione.
+I due stress restano da verificare dopo freeze. La Task41 rimane bloccata.
+Otto bracci B0–B7, tre seed; budget0/1000/3000/10000/30000. La selezione usa
+256 anchor atomici indipendenti, poi si aprono i replay development/causali/stress.
+21 membri appresi vettorizzati; coefficienti di J1 precalcolati. Il collaudo del
+backward CUDA Graph non è compatibile con il runtime corrente: training GPU
+vettorizzato eager verificato, replay ricorrente CUDA Graph con parità verificata.
+L'effettivo lancio è attestato solo da `results/task40b_protocol_v1/launch.json`
+quando presente, insieme alla verifica della copia fuori dal runtime.
 
 ## Stato storico precedente alla conclusione 39j
 

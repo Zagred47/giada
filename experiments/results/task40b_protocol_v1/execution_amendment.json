@@ -1,0 +1,13 @@
+{
+  "stage": "before_scientific_launch",
+  "technical_issue": "PyTorch 2.11.0+cu130 backward stream capture rejected by current CUDA runtime during smoke tests.",
+  "preserved_failure_reports": ["artifacts/task40b_smoke_failure1.json", "artifacts/task40b_smoke_failure2.json"],
+  "resolution": "21 independent correction models remain vectorized. Frozen J1 coefficients are precomputed; training uses eager GPU execution. Frozen recurrence inference retains verified CUDA Graph.",
+  "optimizer_equivalence_max_error": 0.0,
+  "inference_graph_max_error": 0.0,
+  "scientific_matrix_changed": false,
+  "thresholds_changed": false,
+  "selection_rule_changed": false,
+  "training_restarted": false,
+  "projected_training_seconds_smoke": 137.27540850004516
+}

@@ -1,0 +1,182 @@
+{
+  "valid": true,
+  "post_hoc": true,
+  "no_candidate_promotion": true,
+  "thresholds_changed": false,
+  "controls_are_diagnostic_not_allowed_deployment": true,
+  "cpu_gpu_max_error": {
+    "voltage": 3.0517578125e-05,
+    "calcium": 4.656612873077393e-10,
+    "gates": 1.0728836059570312e-06,
+    "current": 2.9103830456733704e-09
+  },
+  "cpu_gpu_168_flags_equal": true,
+  "autonomous_failures": {
+    "all": 22,
+    "calcium_only": 22,
+    "all_except_calcium": 0,
+    "all_except_Ca_LVAst": 4,
+    "all_except_Ca_HVA": 18
+  },
+  "readout_only_failures": {
+    "reference_V": 22,
+    "Ca_m_reference": 2,
+    "Ca_h_reference": 17,
+    "Ca_mh_reference": 0,
+    "Ca_mh_and_V_reference": 0
+  },
+  "coefficient_controls_failures": {
+    "learned": 22,
+    "oracle_u": 22,
+    "oracle_z": 0,
+    "oracle_m_z": 3,
+    "oracle_u_z": 0
+  },
+  "coefficient_probe": [
+    {
+      "seed": 17,
+      "gate": 0,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 0.00014837619485892045,
+      "z_log_rmse": 0.010023771684825664,
+      "tau_ratio_min": 0.9752899792749901,
+      "tau_ratio_max": 1.0329652538389886
+    },
+    {
+      "seed": 17,
+      "gate": 1,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 3.3084248738980575e-05,
+      "z_log_rmse": 0.00031339655108260004,
+      "tau_ratio_min": 0.9994275353420129,
+      "tau_ratio_max": 1.0007737443697344
+    },
+    {
+      "seed": 17,
+      "gate": 2,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 7.559087064031647e-05,
+      "z_log_rmse": 0.008132603355111056,
+      "tau_ratio_min": 0.9778466805661886,
+      "tau_ratio_max": 1.0271412043352413
+    },
+    {
+      "seed": 17,
+      "gate": 3,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 0.00019375232625539553,
+      "z_log_rmse": 0.005482621811471453,
+      "tau_ratio_min": 0.9919359655883694,
+      "tau_ratio_max": 1.008638597651462
+    },
+    {
+      "seed": 29,
+      "gate": 0,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 0.00011487910183720276,
+      "z_log_rmse": 0.00846604380710597,
+      "tau_ratio_min": 0.9743891276655757,
+      "tau_ratio_max": 1.0243380654173977
+    },
+    {
+      "seed": 29,
+      "gate": 1,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 5.4438035717736965e-05,
+      "z_log_rmse": 0.001046615009784377,
+      "tau_ratio_min": 0.9990405108419816,
+      "tau_ratio_max": 1.0016094235613655
+    },
+    {
+      "seed": 29,
+      "gate": 2,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 3.326580673327225e-05,
+      "z_log_rmse": 0.006370663628243821,
+      "tau_ratio_min": 0.9753873471749497,
+      "tau_ratio_max": 1.017850815256997
+    },
+    {
+      "seed": 29,
+      "gate": 3,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 0.00011606943624165923,
+      "z_log_rmse": 0.003507122529608716,
+      "tau_ratio_min": 0.9934293662867377,
+      "tau_ratio_max": 1.005816645751674
+    },
+    {
+      "seed": 43,
+      "gate": 0,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 0.00010839925084235767,
+      "z_log_rmse": 0.010232176679646366,
+      "tau_ratio_min": 0.9783201181706389,
+      "tau_ratio_max": 1.0299835444717855
+    },
+    {
+      "seed": 43,
+      "gate": 1,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 0.00014153854937666834,
+      "z_log_rmse": 0.0013888771420837822,
+      "tau_ratio_min": 0.9999769492203769,
+      "tau_ratio_max": 1.0018758723921373
+    },
+    {
+      "seed": 43,
+      "gate": 2,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 4.056955678818708e-05,
+      "z_log_rmse": 0.006726007777413869,
+      "tau_ratio_min": 0.9800040997987406,
+      "tau_ratio_max": 1.02020962639336
+    },
+    {
+      "seed": 43,
+      "gate": 3,
+      "range_V": [
+        -86.66529846191406,
+        0.6568434238433838
+      ],
+      "u_rmse": 0.00022333749059850718,
+      "z_log_rmse": 0.0029804585672095615,
+      "tau_ratio_min": 0.9953350323795879,
+      "tau_ratio_max": 1.0079402394521686
+    }
+  ],
+  "limits": "Readout-only replacements are counterfactual error probes, not dynamical repairs. CPU replay is same opened data, not independent confirmation."
+}
