@@ -15,6 +15,7 @@ with zipfile.ZipFile(archive) as z:
     assert 'checkpoint_0.pt' in z.namelist(),'No actual training checkpoint recovered'
 launch=dict(valid=True,launched=True,session='giada-task41b-primary',revision=request['revision'],status=status,external_backup=backup,
     DBbackup='localonly',thresholds_changed=False,result_pending_audit=True)
+if (folder/'runtime_allocation_note.json').exists():launch['allocation_history']=json.loads((folder/'runtime_allocation_note.json').read_text())
 write_json(folder/'launch.json',launch)
 m=ValidatedBatchMirror();arts=[]
 # Refresh this launch recorder's final reviewed bytes relative to its prospective
@@ -23,7 +24,7 @@ recorder=ROOT/'scripts/record_task41b_dispatch.py'
 m.local_upsert('artifacts',{'Codice stabile':'artifacts-giada-task41b-local-scripts/record_task41b_dispatch.py-v1',
     'SHA-256':hashlib.sha256(recorder.read_bytes()).hexdigest(),'Dimensione byte':recorder.stat().st_size})
 for path in (folder/'dispatch_request.json',folder/'launch.json'):
-    arts.append(m.local_upsert('artifacts',{'Codice stabile':'artifacts-giada-task41b-dispatch-'+path.name+'-v1','Nome':'Task41b '+path.name,'Tipo':'Report',Versione:'v1',Percorso:path.relative_to(ROOT).as_posix(),
+    arts.append(m.local_upsert('artifacts',{'Codice stabile':'artifacts-giada-task41b-dispatch-'+path.name+'-v1','Nome':'Task41b '+path.name,'Tipo':'Report','Versione':'v1','Percorso':path.relative_to(ROOT).as_posix(),
         'SHA-256':hashlib.sha256(path.read_bytes()).hexdigest(),'Dimensione byte':path.stat().st_size})['record_id'])
 spec=json.loads((ROOT/'experiments/task41b_preregistration_v1.json').read_text())
 for name in ['B6']+[a['name'] for a in spec['arms']]:
