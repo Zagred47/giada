@@ -2,6 +2,8 @@
 import json,sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
+if (ROOT/'experiments/results/task40b_protocol_v1/dispatch_request.json').exists():
+    raise FileExistsError('Executed Task40b preregistration is immutable; create a new protocol revision.')
 from src.giada_teacher import task40b_calcium_precision as b
 old=json.loads((ROOT/b.t.CONFIG).read_text());parent=json.loads((ROOT/b.j.CONFIG).read_text())
 sources=[b.t.CONFIG,b.j.CONFIG,'experiments/results/task40_audited_v1/audit.json',
@@ -24,7 +26,7 @@ spec=dict(task='40b',version='v1',seeds=[17,29,43],dt_ms=.1,arms=[dict(name='B0'
     qualification='All72development case-seed checks andTask40 trajectory/current/state/V/Ca/spike gates inbothmodes; all168autonomous differential intervention checks. Imposed differential failures reported separately asTask40. Any candidate requires full audit beforeTask41 authorization.',
     stress_policy=old['stress_policy'],known_stress=old['known_stress'],
     execution='21 learned members vectorized with independent Adam moments and per-member norm1clipping; frozen parent coefficients precomputed. Eager training verified after runtime backward capture incompatibility; CUDA Graph retained for inference. Common random minibatch uniforms mapped to supportsize; exposure128/update/member. FP64 affine correction accumulation,FP32 deployed state. No new speedup claim.',
-    limits=old['limits']+['Posthoc-informed repair on opened diagnostic domains; independentTask41 still required.','No training on stress or historical failed trajectories.','Atomic sensitivity objective is a FIT surrogate, not the registered current evaluator.'])
+    limits=[x for x in old['limits'] if not x.startswith('No training, no model selection,')]+['Task40b performs training and atomic checkpoint selection as specified above; quality thresholds remain unchanged.','Posthoc-informed repair on opened diagnostic domains; independentTask41 still required.','No training on stress or historical failed trajectories.','Atomic sensitivity objective is a FIT surrogate, not the registered current evaluator.'])
 b.p.save_json(ROOT/b.CONFIG,spec)
 rows=['# 🧪 GIADA Task 40b — Precisione cinetica del calcio\n',
       'J1 congelato + sette varianti apprese. Soglie Task37/40 invariate.\n',

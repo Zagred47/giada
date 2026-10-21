@@ -1693,6 +1693,17 @@ vettorizzato eager verificato, replay ricorrente CUDA Graph con parità verifica
 L'effettivo lancio è attestato solo da `results/task40b_protocol_v1/launch.json`
 quando presente, insieme alla verifica della copia fuori dal runtime.
 
+**Task40b eseguita e conclusa:** commit `b053612`; training30.000 aggiornamenti
+in circa2,4min, circa11min di worker complessivo, nessun errore tecnico.
+Il rapporto preliminare indica B1–B6 con72/72development,264/264traiettorie
+autonome e168/168interventi autonomi. B7 resta a165/168interventi.
+Soglie invariate, J1 riprodotto come controllo. Esito `CANDIDATE_REQUIRES_AUDIT`:
+Task41 non autorizzata, stress e attribuzione da auditare prima di interpretare
+la superiorità dei singoli bracci. Risultati completi conservati nello ZIP
+verificato su PC e Drive; ricevuta `results/task40b_protocol_v1/completion_backup_receipt.json`.
+L'importazione delle osservazioni scientifiche della40b attende quell'audit;
+la registrazione DB del protocollo e del lancio è già verificata.
+
 ## Stato storico precedente alla conclusione 39j
 
 **Task39i:** recupero completato dai checkpoint, senza rifare il training.

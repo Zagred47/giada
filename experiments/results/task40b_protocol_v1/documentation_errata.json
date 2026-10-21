@@ -1,0 +1,14 @@
+{
+  "kind": "descriptive_copy_forward_erratum",
+  "executed_revision": "b053612277311e12c4e946cd096f3a1e57dfbdc9",
+  "field": "limits",
+  "inherited_text": "No training, no model selection, no threshold relaxation.",
+  "correction": "Task40b trained the seven registered variants for30000updates and selected checkpoints using the registered independent atomic selection set. No quality threshold was changed.",
+  "evidence": "The same executed preregistration explicitly defines training arms,learning rate,budgets,FIT seeds andselection rule; training_curves.json,checkpoint_30000.pt andselection_freeze.json confirm that execution.",
+  "executed_preregistration_bytes_changed": false,
+  "scientific_execution_changed": false,
+  "selection_rule_changed": false,
+  "thresholds_changed": false,
+  "database_scope": "The DB preserves the original full protocol including this copied descriptive line. Read the explicit training/selection fields as authoritative. Reconcile this descriptive erratum during the detailed Task40b result audit; no execution or scientific data are missing.",
+  "future_generator": "The generator excludes the inherited frozen-Task40 limitation and refuses to overwrite a dispatched preregistration."
+}
