@@ -8,10 +8,10 @@ e=d.prior.evaluation
 
 def compose(torch,ca,nap,parent):
     class Composition:
-        def __init__(self):self.a,self.b,self.parent=ca,nap,parent
+        def __init__(self):self.ca_head,self.nap_head,self.parent=ca,nap,parent
         def __getattr__(self,k):return getattr(self.parent,k)
         def raw(self,v,calcium):
-            pu,pz=self.parent.raw(v,calcium);au,_=self.a.raw(v,calcium);bu,_=self.b.raw(v,calcium)
+            pu,pz=self.parent.raw(v,calcium);au,_=self.ca_head.raw(v,calcium);bu,_=self.nap_head.raw(v,calcium)
             return torch.cat((au[...,:1],pu[...,1:8],bu[...,8:9],pu[...,9:]),-1),pz
         def __call__(self,v,calcium,g):
             u,z=self.raw(v,calcium);return g+torch.sigmoid(z)*(torch.sigmoid(u)-g)

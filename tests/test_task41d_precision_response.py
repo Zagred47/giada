@@ -33,4 +33,14 @@ class PrecisionTests(unittest.TestCase):
         deriv=torch.autograd.grad((f*w).sum(),v)[0]
         eps=1e-4;fd=((d.feature(torch,v.detach()+eps,64,'smooth')*w).sum()-(d.feature(torch,v.detach()-eps,64,'smooth')*w).sum())/(2*eps)
         self.assertAlmostEqual(deriv.item(),fd.item(),places=8)
+    def test_composition_scanner_interface(self):
+        from src.giada_teacher.task41d_evaluation import compose
+        parent=d.prior.load_models(torch,ROOT,'cpu')['P110'];ca=d.make_model(torch,parent,[d.arms()[0]],[17,29,43],'cpu');nap=d.make_model(torch,parent,[d.arms()[4]],[17,29,43],'cpu')
+        model=compose(torch,ca,nap,parent);self.assertEqual(model.a.shape,parent.a.shape)
+        with torch.no_grad():
+            ca.local_equilibrium.fill_(.001);nap.local_equilibrium.fill_(.002)
+            v=torch.full((3,2),-45.);calcium=torch.full_like(v,1e-4);before=parent.raw(v,calcium);after=model.raw(v,calcium)
+            self.assertTrue(torch.equal(after[0][...,:1],ca.raw(v,calcium)[0][...,:1]))
+            self.assertTrue(torch.equal(after[0][...,8:9],nap.raw(v,calcium)[0][...,8:9]))
+            self.assertTrue(torch.equal(after[1],before[1]))
 if __name__=='__main__':unittest.main()
