@@ -26,4 +26,7 @@ with torch.inference_mode():
 assert report['legacy_formula_preflight']['valid']
 Path('/content/task41d_gpu_preflight.json').write_text(json.dumps(report,indent=2));print(json.dumps(report),flush=True)
 '''
-subprocess.run([sys.executable,'-u','-c',code,str(root)],cwd=root,check=True)
+result=subprocess.run([sys.executable,'-u','-c',code,str(root)],cwd=root,capture_output=True,text=True)
+Path('/content/task41d_preflight_process.log').write_text(result.stdout+'\n'+result.stderr)
+print(result.stdout,flush=True)
+if result.returncode:raise RuntimeError(result.stderr[-14000:])
