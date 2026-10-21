@@ -1,0 +1,88 @@
+{
+  "valid": true,
+  "task": "41",
+  "session": "giada-task41-primary",
+  "revision": "2ac07c10675fda43fa88939e5a92b50eba7ec1bb",
+  "status": {
+    "task": "41",
+    "revision": "2ac07c10675fda43fa88939e5a92b50eba7ec1bb",
+    "started_unix": 1792592756.6656954,
+    "elapsed_seconds": 166.75235247612,
+    "manager_pid": 9170,
+    "state": "finished",
+    "phase": "done",
+    "worker_exit_code": 0,
+    "report": "/content/giada_task41_2ac07c10675f/artifacts/final_report.json",
+    "scientific_valid": true,
+    "decision": "FROZEN_B6_FRESH_SCIENTIFIC_NO_GO",
+    "technical_failure": false,
+    "archive": "/content/giada_task41_2ac07c10675f/giada_task41_result.zip",
+    "archive_sha256": "3d02cdb451a73fc033fe896d84d822ca1552d9d3b48343db65db6b1dccc3ee92"
+  },
+  "backup": {
+    "valid": true,
+    "remote": {
+      "label": "final",
+      "archive": "/content/giada_task41_2ac07c10675f/giada_task41_result.zip",
+      "sha256": "3d02cdb451a73fc033fe896d84d822ca1552d9d3b48343db65db6b1dccc3ee92",
+      "bytes": 114157024
+    },
+    "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41_retry_external\\giada_task41_result.zip",
+    "verified_at": 1792593037.5513709,
+    "runtime_independent": true
+  },
+  "scientific_result_pending_audit": true,
+  "completed_report": {
+    "valid": true,
+    "task": "41",
+    "quality_passed": false,
+    "model_judged": true,
+    "decision": "FROZEN_B6_FRESH_SCIENTIFIC_NO_GO",
+    "new_native_simulations": true,
+    "native_cases": 176,
+    "stress_case_seed_count": 36,
+    "summary": {
+      "B6/imposed": {
+        "trajectory_passed": 527,
+        "total": 528,
+        "response_passed": 336,
+        "response_total": 336
+      },
+      "LUT_control/imposed": {
+        "trajectory_passed": 528,
+        "total": 528,
+        "response_passed": 336,
+        "response_total": 336
+      },
+      "B6/autonomous": {
+        "trajectory_passed": 527,
+        "total": 528,
+        "response_passed": 336,
+        "response_total": 336
+      },
+      "LUT_control/autonomous": {
+        "trajectory_passed": 528,
+        "total": 528,
+        "response_passed": 336,
+        "response_total": 336
+      }
+    },
+    "stress_passed": 33,
+    "native_current_phase_floor_passed": true,
+    "independent_confirmation": true,
+    "training_performed": false,
+    "model_selection_performed": false,
+    "thresholds_changed": false,
+    "task42_authorized": false,
+    "speedup_claim": false,
+    "limitations": [
+      "Single compartment,40mscoupled and1200msimposed stress;notwholecell,morphologyorexhaustivebifurcations.",
+      "B6 selectedposthoc onopenedTask40bdiagnostics;Task41data notusedforselection.",
+      "Analyticalcheapcurrentreadout,calcium,membraneandsynapticshadow retained;all18gateupdateslearnedinB6.",
+      "Quality GO doesnotimplyspeedGO;timinguncertaintyononedeviceisnotcross-devicereplication.",
+      "LUT iscomparisononly,notalternatecandidate;clampedlookuprequiresnoexitsforcostqualification.",
+      "Freshmodeloutcomesmustnottriggerretraining,restartsorthresholdrelaxation.",
+      "DBbackupremainslocal;runlogsandartifactsrecoveredoffVMtothePC."
+    ]
+  }
+}

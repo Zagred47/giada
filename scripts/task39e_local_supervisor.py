@@ -51,6 +51,9 @@ def main():
                         assert download(target.name,target),'Final archive download failed'
                         assert hashlib.sha256(target.read_bytes()).hexdigest()==state['archive_sha256']
                         with zipfile.ZipFile(target) as z:assert z.testzip() is None
+                        (dest/'external_backup_receipt.json').write_text(json.dumps(dict(valid=True,
+                            remote=dict(label='final',archive=state['archive'],sha256=state['archive_sha256'],bytes=target.stat().st_size),
+                            local=str(target),verified_at=time.time(),runtime_independent=True),indent=2))
                     break
             if driver is not None and driver.poll() is not None:
                 if got and state.get('state')=='running':

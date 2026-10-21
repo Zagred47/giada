@@ -5,6 +5,12 @@ from pathlib import Path
 from research_memory.packed_database import restore_if_missing
 
 class DriveBackupRestore(unittest.TestCase):
+    def test_raw_local_sqlite_requires_verified_copy_not_extraction(self):
+        with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1]) as folder:
+            db=Path(folder)/'research_memory.sqlite'
+            db.with_suffix('.sqlite.manifest.json').write_text(json.dumps(dict(format='sqlite-local-backup-v1',archive_format='SQLite3',local_archive='verified-local.sqlite',sqlite_sha256='c'*64)))
+            with self.assertRaisesRegex(FileNotFoundError,'Copy the verified SQLite'):restore_if_missing(db)
+            self.assertFalse(db.exists())
     def test_local_snapshot_never_silently_uses_older_drive_copy(self):
         with tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1]) as folder:
             db=Path(folder)/'research_memory.sqlite'

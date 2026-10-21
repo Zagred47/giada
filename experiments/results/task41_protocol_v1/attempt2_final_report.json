@@ -1,0 +1,53 @@
+{
+  "valid": true,
+  "task": "41",
+  "quality_passed": false,
+  "model_judged": true,
+  "decision": "FROZEN_B6_FRESH_SCIENTIFIC_NO_GO",
+  "new_native_simulations": true,
+  "native_cases": 176,
+  "stress_case_seed_count": 36,
+  "summary": {
+    "B6/imposed": {
+      "trajectory_passed": 527,
+      "total": 528,
+      "response_passed": 336,
+      "response_total": 336
+    },
+    "LUT_control/imposed": {
+      "trajectory_passed": 528,
+      "total": 528,
+      "response_passed": 336,
+      "response_total": 336
+    },
+    "B6/autonomous": {
+      "trajectory_passed": 527,
+      "total": 528,
+      "response_passed": 336,
+      "response_total": 336
+    },
+    "LUT_control/autonomous": {
+      "trajectory_passed": 528,
+      "total": 528,
+      "response_passed": 336,
+      "response_total": 336
+    }
+  },
+  "stress_passed": 33,
+  "native_current_phase_floor_passed": true,
+  "independent_confirmation": true,
+  "training_performed": false,
+  "model_selection_performed": false,
+  "thresholds_changed": false,
+  "task42_authorized": false,
+  "speedup_claim": false,
+  "limitations": [
+    "Single compartment,40mscoupled and1200msimposed stress;notwholecell,morphologyorexhaustivebifurcations.",
+    "B6 selectedposthoc onopenedTask40bdiagnostics;Task41data notusedforselection.",
+    "Analyticalcheapcurrentreadout,calcium,membraneandsynapticshadow retained;all18gateupdateslearnedinB6.",
+    "Quality GO doesnotimplyspeedGO;timinguncertaintyononedeviceisnotcross-devicereplication.",
+    "LUT iscomparisononly,notalternatecandidate;clampedlookuprequiresnoexitsforcostqualification.",
+    "Freshmodeloutcomesmustnottriggerretraining,restartsorthresholdrelaxation.",
+    "DBbackupremainslocal;runlogsandartifactsrecoveredoffVMtothePC."
+  ]
+}
