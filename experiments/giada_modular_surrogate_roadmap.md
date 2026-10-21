@@ -1209,6 +1209,24 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
   dimostrato; «accurato ma lento» resta un esito legittimo della Task41.
   Audit completo: `results/task40b_audited_v1/AUDIT.md` e file JSON associati.
 
+  **Task41 conclusa — NO-GO locale (21 ottobre2026):** B6 passa527/528
+  traiettorie in entrambe le modalità,336/336risposte per modalità e33/36
+  stress. Tutti i residui sono offset: un crossing secondario NaTs2_t,
+  due code Nap_Et2 e una Im. L'audit localizza rispettivamente z(h),u(m),z;
+  gli oracoli sono diagnostici, non correzioni canoniche autorizzate.
+  `results/task41_audited_v1/synthesis.json` conserva evidenze e limiti.
+
+  - **Task41b — Diagnosi e riparazione locale appresa:** matrice2×2×2
+    copertura FIT uniforme/stratificata,32/64basi,coefficienti/contributo
+    delle correnti condizionate;8bracci×3seed, B6 congelata e ladder di
+    budget sullo stesso training. Selezione su nuovi development, poi
+    regressioni complete39j/40b/41 e costo. Soglie originali e livello di
+    astrazione conservati. Notebook `giada_task41b_local_precision.ipynb`;
+    protocollo `task41b_preregistration_v1.json`. La41b è una sottotask
+    diagnostica della41, non sostituisce la conferma indipendente: dopo
+    l'eventuale riparazione congelare il candidato e preparare nuove prove.
+    Task42 resta subordinata a quella conferma e al relativo audit.
+
 ### ✅ Uscita del blocco 1
 
 Operatore e interfaccia congelati, errore attribuibile e costo misurato.

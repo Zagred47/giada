@@ -1,0 +1,128 @@
+{
+  "valid": true,
+  "archive_sha256": "3d02cdb451a73fc033fe896d84d822ca1552d9d3b48343db65db6b1dccc3ee92",
+  "checkpoint_bitwise_equal_to_frozen_B6": true,
+  "original_result": {
+    "valid": true,
+    "task": "41",
+    "quality_passed": false,
+    "model_judged": true,
+    "decision": "FROZEN_B6_FRESH_SCIENTIFIC_NO_GO",
+    "new_native_simulations": true,
+    "native_cases": 176,
+    "stress_case_seed_count": 36,
+    "summary": {
+      "B6/imposed": {
+        "trajectory_passed": 527,
+        "total": 528,
+        "response_passed": 336,
+        "response_total": 336
+      },
+      "LUT_control/imposed": {
+        "trajectory_passed": 528,
+        "total": 528,
+        "response_passed": 336,
+        "response_total": 336
+      },
+      "B6/autonomous": {
+        "trajectory_passed": 527,
+        "total": 528,
+        "response_passed": 336,
+        "response_total": 336
+      },
+      "LUT_control/autonomous": {
+        "trajectory_passed": 528,
+        "total": 528,
+        "response_passed": 336,
+        "response_total": 336
+      }
+    },
+    "stress_passed": 33,
+    "native_current_phase_floor_passed": true,
+    "independent_confirmation": true,
+    "training_performed": false,
+    "model_selection_performed": false,
+    "thresholds_changed": false,
+    "task42_authorized": false,
+    "speedup_claim": false,
+    "limitations": [
+      "Single compartment,40mscoupled and1200msimposed stress;notwholecell,morphologyorexhaustivebifurcations.",
+      "B6 selectedposthoc onopenedTask40bdiagnostics;Task41data notusedforselection.",
+      "Analyticalcheapcurrentreadout,calcium,membraneandsynapticshadow retained;all18gateupdateslearnedinB6.",
+      "Quality GO doesnotimplyspeedGO;timinguncertaintyononedeviceisnotcross-devicereplication.",
+      "LUT iscomparisononly,notalternatecandidate;clampedlookuprequiresnoexitsforcostqualification.",
+      "Freshmodeloutcomesmustnottriggerretraining,restartsorthresholdrelaxation.",
+      "DBbackupremainslocal;runlogsandartifactsrecoveredoffVMtothePC."
+    ]
+  },
+  "summary": {
+    "B6/imposed": {
+      "trajectory_passed": 527,
+      "trajectory_total": 528,
+      "response_passed": 336,
+      "response_total": 336,
+      "worst_voltage_rmse_mv": 2.2562199850929312e-05,
+      "worst_calcium_rmse_mM": 1.685243571805743e-10,
+      "spike_count_failures": 0,
+      "domain_exits": 0
+    },
+    "LUT_control/imposed": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "response_passed": 336,
+      "response_total": 336,
+      "worst_voltage_rmse_mv": 6.569653533538109e-06,
+      "worst_calcium_rmse_mM": 5.460981827580813e-12,
+      "spike_count_failures": 0,
+      "domain_exits": 0
+    },
+    "B6/autonomous": {
+      "trajectory_passed": 527,
+      "trajectory_total": 528,
+      "response_passed": 336,
+      "response_total": 336,
+      "worst_voltage_rmse_mv": 0.001742711216171187,
+      "worst_calcium_rmse_mM": 2.0063160834899432e-08,
+      "spike_count_failures": 0,
+      "domain_exits": 0
+    },
+    "LUT_control/autonomous": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "response_passed": 336,
+      "response_total": 336,
+      "worst_voltage_rmse_mv": 0.00023997278084840885,
+      "worst_calcium_rmse_mM": 5.81473493705623e-10,
+      "spike_count_failures": 0,
+      "domain_exits": 0
+    }
+  },
+  "metrics_recomputed": 3492,
+  "parameters_and_saved_outputs_finite": true,
+  "trajectory_failed_case_seed_count_per_mode": 1,
+  "distinct_failed_trajectory_case_seed_count": 1,
+  "stress_failed_case_seed_count": 3,
+  "stress_passed": 33,
+  "stress_total": 36,
+  "all_failures_are_offset_timing": true,
+  "CPU_learned_replay_max_gate_error": 5.364418029785156e-07,
+  "stress_metric_recompute_max_scalar_difference": 1.1440108906761795e-07,
+  "stress_recomputed_pass_flags_and_event_times_identical": true,
+  "CPU_numpy_version": "1.26.4",
+  "stress_probe_passes": {
+    "learned32": 33,
+    "learned32coeff_state64": 33,
+    "oracle_u": 35,
+    "oracle_z": 34,
+    "formula_coeff_cast32": 36,
+    "formula_coeff_cast32_convex": 36,
+    "formula64": 36,
+    "three_local_coefficient_oracles": 36,
+    "formula_torch32": 36
+  },
+  "thresholds_changed": false,
+  "original_scientific_NO_GO_preserved": true,
+  "task42_authorized": false,
+  "training_performed": false,
+  "next_experiment_not_launched": true
+}

@@ -1,0 +1,211 @@
+{
+  "task": "41b",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dt_ms": 0.1,
+  "arms": [
+    {
+      "name": "P000",
+      "support": "uniform",
+      "basis": 32,
+      "conditioned": false
+    },
+    {
+      "name": "P001",
+      "support": "uniform",
+      "basis": 32,
+      "conditioned": true
+    },
+    {
+      "name": "P010",
+      "support": "uniform",
+      "basis": 64,
+      "conditioned": false
+    },
+    {
+      "name": "P011",
+      "support": "uniform",
+      "basis": 64,
+      "conditioned": true
+    },
+    {
+      "name": "P100",
+      "support": "sensitive",
+      "basis": 32,
+      "conditioned": false
+    },
+    {
+      "name": "P101",
+      "support": "sensitive",
+      "basis": 32,
+      "conditioned": true
+    },
+    {
+      "name": "P110",
+      "support": "sensitive",
+      "basis": 64,
+      "conditioned": false
+    },
+    {
+      "name": "P111",
+      "support": "sensitive",
+      "basis": 64,
+      "conditioned": true
+    }
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "cost": {
+    "batches": [
+      1,
+      642,
+      4096
+    ],
+    "ticks": 80,
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "baselines": [
+      "resident formula CUDA Graph",
+      "0.01mV voltage LUT plus canonical calcium-dependent SK"
+    ],
+    "timing": "Same active native initial states at10ms,80resident future input ticks,no hosttransfer,alternatingorder;CUDAandwalltimes;pairedbootstrap uncertainty"
+  },
+  "fit_seed": 141101,
+  "selection_seed": 141103,
+  "development_seed": 141107,
+  "stream_seed": 141109,
+  "anchors": 4096,
+  "selection_anchors": 256,
+  "batch": 64,
+  "lr": 0.001,
+  "checkpoints": [
+    0,
+    1000,
+    3000,
+    10000,
+    30000
+  ],
+  "targets": [
+    {
+      "coefficient": "u",
+      "gate": 8
+    },
+    {
+      "coefficient": "z",
+      "gate": 7
+    },
+    {
+      "coefficient": "z",
+      "gate": 11
+    }
+  ],
+  "sources": {
+    "experiments/task41_preregistration_v1.json": "fab4ef77d32674515c6cc6efdd87550210ff6dad81ad8132d865d7fac206de42",
+    "experiments/task37_ionic_playground_preregistration_v1.json": "0d63cc7131008417cc3bcebadac2bd83762b3f44c02d3e0703c2a83c51a192b2",
+    "experiments/results/task41_audited_v1/audit.json": "f4b458a0ed7d6e3bc4a8eed3b4623ab0e406d48e7f7cf3b6ab8a8de6383c4d63",
+    "experiments/results/task41_audited_v1/synthesis.json": "db8ac653c66b9bf6a2d0e14287101d8b70ed7d471f29d7e12676371dcbea6fe6",
+    "experiments/results/task40b_audited_v1/frozen_checkpoint.pt": "f4aeecb646ae5b93ad69d80bcc4daba9a4c3c91aeb06e6bf006da0629f305811",
+    "src/giada_teacher/task41b_local_precision.py": "6b53a1f53678a4174c483540e78a4db910a15ae1517caac3b6ab10aafd0ae604",
+    "src/giada_teacher/task41b_evaluation.py": "8bdbc0d98c16261cb9e131c8f9e208cd86ccec11098dd79cda501fe8c63b5cc3",
+    "src/giada_teacher/task41_independent_confirmation.py": "9c36f607f7fa81634a23ee7ac69afe24688694f43b52ca12acd714a9c68f1220",
+    "src/giada_teacher/task40b_calcium_precision.py": "0329cd11a5e8279e7609711f72790baafdfa533b6aab6a19f3e21c40b4e5c16b"
+  },
+  "opened_inputs_sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb",
+  "opened_members": {
+    "native_shadow_traces.npz": "8d2563aeeb4084835a3ff1da205d35ba28c31ae6d46aa19d10c6af2075fade0c",
+    "reference_traces.npz": "e056da661b26f055cc0e583e75019b3cd68661e2b64bbd6f13ac71465bee2e3a",
+    "fresh_stress_traces.npz": "061c10676151bccdf9be6e5f2536705ff693de4a5bda3e347aa56c0cdcef4f19",
+    "cases.json": "8e7cd4fbab498d0439fe3541427ef0c7bed42e14b3350bdc320c9c266d4ad340",
+    "causal_results.json": "a7cbe053e6518d73c5ab37400f5693bbe31fa128c1266d2e1f986b680d6921d9",
+    "fresh_stress_results.json": "61a81cd2c399bdbeee779618d066245c63f080f20086f230b3d5f0ddd0fd4dbe"
+  },
+  "opened_origin_archive_sha256": "3d02cdb451a73fc033fe896d84d822ca1552d9d3b48343db65db6b1dccc3ee92",
+  "hypotheses": [
+    {
+      "id": "coverage",
+      "statement": "Lâ€™esposizione FIT alle regioni ad alta sensibilitÃ  Ã¨ insufficiente a imparare precisione trasferibile.",
+      "status": "Aperta",
+      "evidence": "three_functions",
+      "falsifier": "A uguale N/budget/basis, stratificazione FIT-only non migliora coefficienti holdout, margini eventi e gate completi nei3seed."
+    },
+    {
+      "id": "capacity",
+      "statement": "La risoluzione locale della correzione appresa limita la precisione dei tre coefficienti.",
+      "status": "Aperta",
+      "evidence": "three_functions",
+      "falsifier": "Raddoppiare risoluzione a paritÃ  di dati/obiettivo non riduce il residuo holdout dopo convergenza; considerare costo e non solo parametri."
+    },
+    {
+      "id": "objective_conditioning",
+      "statement": "La loss puntuale media sottopesa piccoli errori molto amplificati dalla pendenza di coda o dal margine del secondo impulso.",
+      "status": "Aperta",
+      "evidence": "secondary_crossing",
+      "falsifier": "Una loss FIT di correnti condizionate controllata per gradienti non migliora timing rispetto ai coefficienti soli, o introduce regressioni."
+    },
+    {
+      "id": "budget",
+      "statement": "A supporto/basis fissati, il residuo Ã¨ ancora riducibile aumentando il budget di ottimizzazione.",
+      "status": "Aperta",
+      "evidence": "three_functions",
+      "falsifier": "Curve multi-checkpoint e residui FIT/holdout saturano senza riduzione della severitÃ  locale e senza miglioramento tra seed."
+    }
+  ],
+  "training": "24independent correction tensors vectorized with independent Adam moments and per-member norm1clipping. ParentB6 frozen;96/192newweights perseed,zero initialization;onlyu_gate8,z_gate7,z_gate11canchange. FP64affine accumulation,FP32addedlogits and deployedstates.",
+  "data": "4096anchors for each support. Uniform and canonical-sensitivity stratified supports share pilot/random stream and equal counts. BroadV[-100,60],Ca[1e-7,1e-2];no Task41exactinputs copied. Independent three-stage held/recovery/pulse levels,initialstates anddurations. Nested timehorizons0.1,1,8,40,400,1200ms.",
+  "objective": "Common normalized logit-u/log-z MSE on3targetfunctions. Treatment adds bounded current residual scaled by canonical FIT slope*0.3ms withscale*1e-5floor. These are FIT surrogate weights,not altered evaluation thresholds. Initial uniformFIT gradient ratio0.1calibrated perseed andsharedacrossarms;allgradients clipped independently.",
+  "selection": "At everycheckpoint,new8developmenthistories x3seeds perarm,1200ms at0.1ms,are scored with cached learned GPUcoefficients and serialCPUFP32state. Lexicographic rank:failedcompletecases,worstcompleteerror/threshold includingtiming,commonatomiclossrelative tozero-correction. Exactties keepearliest. Allarmsuseidentical256selectionanchors andnewdevelopment. ActualCUDAdevelopment isreevaluatedafterfreeze;itmustpassforcandidatequalification.",
+  "negative_controls": "FrozenB6 exactzeroinitialization andbitwiseparentpreservation; untouchedcoefficients exact; no-canonical-fallback guard; formulaFP32/64 floors; actualT4optimizerisolation andeager/graphinferencepreflight. No extra learnedarchitecture sidecar without a new preregistration.",
+  "contrasts": "All12conditional contrasts ofsupport,resolution,objective;perseedfailedcounts,worstcompleteincludingtiming,andatomicerror. Mini budgetcurves alongsameoptimizertrajectory. A cause is only supported if matched effect improves all3seeds and medianworstseverityratio<=0.8,withnoincreasedfailedcasecount;reportdescriptiveeffectsotherwise.",
+  "regression": "OpenedTask41 native176cases x3seeds inbothmodes,112interventions x3seeds per mode,and12old41stresshistories x3seeds. ReproduceB6 passflags. Also all old40b native/syntheticcoupled cases,interventions and39j recurrence development/stress. Allopened,notnewconfirmation.",
+  "qualification": "Require all unchanged newdevelopmentCUDA,old39j/40b/41state,current,charge,timing,occupancy,V,Ca,spike,domainandpairedresponsegates. No averaging orexcludedfailedcase. A passingarmonlyauthorizesaudit andfutureindependentconfirmation;Task42remainsunauthorized.",
+  "execution": "One notebook invokes same isolated worker as console. No NEURON regeneration needed: originalnativeinputs memberSHAverified. Checkpoint beforeselectionwithoptimizer+RNG;out-of-VM supervisor verifies SHA/CRC of each recoverybundle. Fullnative/gpu evaluation onlyafterfreeze.",
+  "limits": [
+    "Diagnostic repair informed byopenedTask41;notindependentconfirmation.",
+    "All18gates remainlearned;cheapcurrentreadout,Ca,membraneandsynapses unchanged. No newstateorcanonicalkineticsininference.",
+    "Morelocalbasis changesparametersandcost;coverageaxis changesdistributionatfixedcount,notanindependenttestofallpossibledatasetsizes.",
+    "ShadowselectionCPU andCUDAarithmeticmaydiffer slightly;actualfrozenCUDAqualityauthoritative. No posthoc reselection.",
+    "Singlecompartment andtheseprotocols;no universalbifurcation,multicompartment or quality-qualifiedspeedclaim.",
+    "SQLitebackup localonly;externalrunbackups toPC;noAirtableorDriveDBaccess."
+  ]
+}
