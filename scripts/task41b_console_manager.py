@@ -35,6 +35,8 @@ def main():
             subprocess.run(['git','fetch','--depth','1','origin',revision],cwd=repo,stdout=log,stderr=subprocess.STDOUT,check=True)
             subprocess.run(['git','checkout','--detach','FETCH_HEAD'],cwd=repo,stdout=log,stderr=subprocess.STDOUT,check=True)
         assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()==revision
+        for item in request.get('inputs',[]):
+            assert hashlib.sha256(Path(item['remote']).read_bytes()).hexdigest()==item['sha256'],'Input transport SHA mismatch: '+item['remote']
         workers={'39e':'run_task39e_tail_support_heads.py','39f':'run_task39f_temporal_recovery.py','39g':'run_task39g_objective_horizon.py','39h':'run_task39h_relaxation_identification.py','39i':'run_task39i_coupled_relaxation.py','39j':'run_task39j_atomic_relaxation.py'}
         workers['40']='run_task40_causal_reinsertion.py'
         workers['40b']='run_task40b_calcium_precision.py'

@@ -2,7 +2,8 @@
   "scientific_training_started": false,
   "attempts": [
     {"revision":"10b9bbcd9e0be847fd1bdd9183f3c8cf891c7197","stage":"GPU technical preflight","valid":false,"error":"CPU-to-CUDA mask copy inside CUDA graph capture","resolution":"Preallocate one-hot masks as device buffers before capture;run subsequent GPU probes in fresh subprocesses."},
-    {"revision":"22b01a84ca0b4058c9235be504dd1bd53f7e2eb5","stage":"Composition evaluator preflight","valid":false,"training_gpu_preflight_passed":true,"error":"Composition head names a/b shadowed frozen parent tensor attributes expected by Scanner","resolution":"Rename composition head attributes;unit-test scanner tensor interface and disjoint function composition."}
+    {"revision":"22b01a84ca0b4058c9235be504dd1bd53f7e2eb5","stage":"Composition evaluator preflight","valid":false,"training_gpu_preflight_passed":true,"error":"Composition head names a/b shadowed frozen parent tensor attributes expected by Scanner","resolution":"Rename composition head attributes;unit-test scanner tensor interface and disjoint function composition."},
+    {"revision":"1b84031a236675ae99bba0d9d379f98aa829dc0a","stage":"Full GPU technical preflight","valid":true,"gpu":"Tesla T4","optimizer_isolation_max_error":0.0,"training_graph_optimizer_max_error":0.0,"composition_recurrence_preflight":true,"scientific_training_started":false}
   ],
   "thresholds_changed": false
 }

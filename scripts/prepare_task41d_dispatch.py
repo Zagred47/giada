@@ -7,4 +7,5 @@ for field,name in [('worker_sha256','scripts/run_task41d_precision_response.py')
 pf=json.loads((folder/'gpu_preflight.json').read_text());assert pf['valid'] and pf['all_parameters_finite']
 for field,name in [('source_sha256','src/giada_teacher/task41d_precision_response.py'),('protocol_sha256','experiments/task41d_preregistration_v1.json')]:assert pf[field]==hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
 assert json.loads((folder/'memory_receipt.json').read_text())['valid']
+request['inputs']=[dict(remote='/content/'+Path(name).name,sha256=hashlib.sha256((ROOT/name).read_bytes()).hexdigest()) for name in ('artifacts/task41b_opened_inputs.zip','artifacts/task41d_opened41c.zip')]
 path=folder/'dispatch_request.json';assert not path.exists();path.write_text(json.dumps(request,indent=2)+'\n');print(json.dumps(request))
