@@ -15,12 +15,12 @@ def cli(repo, *args, **kwargs):
     return subprocess.run(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),*map(str,args)],cwd=repo,**kwargs)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
     repo=Path(__file__).resolve().parents[1];dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=a.attach)
     remote='/content/giada_task'+a.task+'_'+a.revision[:12];seen=set();started=time.time()
     with (dest/'console.log').open('a',encoding='utf-8') as log:
         driver_args=['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',a.session,'-f','scripts/colab_task'+a.task+'_driver.py']
-        if a.task in ('41','41b','41c','41d'):driver_args += ['--timeout','86400']
+        if a.task in ('41','41b','41c','41d','41e'):driver_args += ['--timeout','86400']
         driver=None if a.attach else subprocess.Popen(driver_args,cwd=repo,stdout=log,stderr=subprocess.STDOUT)
         def download(name,target):
             r=cli(repo,'download','-s',a.session,remote+'/'+name,target,capture_output=True,text=True,encoding='utf-8',errors='replace')

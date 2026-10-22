@@ -1,0 +1,4982 @@
+{
+  "scope": "Post-hoc saved-output analysis, no training or selection changes; nonadditivity includes floating-point effects until precision replay isolates them.",
+  "thresholds_changed": false,
+  "interaction": [
+    {
+      "mode": "imposed",
+      "maximum_abs_current_cross": 0.0,
+      "rmse_current_cross": 0.0,
+      "units": "mA/cm2"
+    },
+    {
+      "mode": "autonomous",
+      "maximum_abs_current_cross": 3.1141098588705063e-09,
+      "rmse_current_cross": 4.9489961439882e-11,
+      "units": "mA/cm2"
+    }
+  ],
+  "paired_trace_analysis": [
+    {
+      "mode": "imposed",
+      "case": 108,
+      "seed": 17,
+      "case_metadata": {
+        "protocol": "irregular_train",
+        "panel": "canonical",
+        "seed": 241117,
+        "initial_voltage_mv": -79.0,
+        "schedule": "irregular_train",
+        "intervention": "block_K_Pst",
+        "id": 108,
+        "source_index": 48
+      },
+      "reference_peak_response": 3.128661774098873e-09,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.00045599390837708104,
+          "base_current_rmse": 2.1744502042831058e-09,
+          "intervention_current_rmse": 2.1377103079719157e-09,
+          "response_error_rmse": 4.55993908377081e-11,
+          "voltage_pair_error_rmse_mv": 6.631918822917478e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "C01": {
+          "nap_response_nrmse": 0.00045599390837708104,
+          "base_current_rmse": 2.1744502042831058e-09,
+          "intervention_current_rmse": 2.1377103079719157e-09,
+          "response_error_rmse": 4.55993908377081e-11,
+          "voltage_pair_error_rmse_mv": 6.631918822917478e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "N000": {
+          "nap_response_nrmse": 0.00041812452689391757,
+          "base_current_rmse": 2.640756853212977e-09,
+          "intervention_current_rmse": 2.6485333211618145e-09,
+          "response_error_rmse": 4.181245268939176e-11,
+          "voltage_pair_error_rmse_mv": 6.670112007265749e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "combined": {
+          "nap_response_nrmse": 0.00041812452689391757,
+          "base_current_rmse": 2.640756853212977e-09,
+          "intervention_current_rmse": 2.6485333211618145e-09,
+          "response_error_rmse": 4.181245268939176e-11,
+          "voltage_pair_error_rmse_mv": 6.670112007265749e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.00041812452689391757
+    },
+    {
+      "mode": "imposed",
+      "case": 108,
+      "seed": 29,
+      "case_metadata": {
+        "protocol": "irregular_train",
+        "panel": "canonical",
+        "seed": 241117,
+        "initial_voltage_mv": -79.0,
+        "schedule": "irregular_train",
+        "intervention": "block_K_Pst",
+        "id": 108,
+        "source_index": 48
+      },
+      "reference_peak_response": 3.128661774098873e-09,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.00036612853908188494,
+          "base_current_rmse": 6.4304016674718844e-09,
+          "intervention_current_rmse": 6.4002922738981974e-09,
+          "response_error_rmse": 3.661285390818849e-11,
+          "voltage_pair_error_rmse_mv": 5.391432220785707e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "C01": {
+          "nap_response_nrmse": 0.00036612853908188494,
+          "base_current_rmse": 6.4304016674718844e-09,
+          "intervention_current_rmse": 6.4002922738981974e-09,
+          "response_error_rmse": 3.661285390818849e-11,
+          "voltage_pair_error_rmse_mv": 5.404877209794493e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "N000": {
+          "nap_response_nrmse": 0.00035400083719647766,
+          "base_current_rmse": 9.600130386342507e-09,
+          "intervention_current_rmse": 9.612537631436056e-09,
+          "response_error_rmse": 3.5400083719647764e-11,
+          "voltage_pair_error_rmse_mv": 5.511256458013241e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "combined": {
+          "nap_response_nrmse": 0.00035400083719647766,
+          "base_current_rmse": 9.600130386342507e-09,
+          "intervention_current_rmse": 9.612537631436056e-09,
+          "response_error_rmse": 3.5400083719647764e-11,
+          "voltage_pair_error_rmse_mv": 5.511256458013241e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.00035400083719647766
+    },
+    {
+      "mode": "imposed",
+      "case": 108,
+      "seed": 43,
+      "case_metadata": {
+        "protocol": "irregular_train",
+        "panel": "canonical",
+        "seed": 241117,
+        "initial_voltage_mv": -79.0,
+        "schedule": "irregular_train",
+        "intervention": "block_K_Pst",
+        "id": 108,
+        "source_index": 48
+      },
+      "reference_peak_response": 3.128661774098873e-09,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.0003461135402997404,
+          "base_current_rmse": 5.315449086867925e-09,
+          "intervention_current_rmse": 5.286268066939045e-09,
+          "response_error_rmse": 3.461135402997404e-11,
+          "voltage_pair_error_rmse_mv": 5.344108389209815e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "C01": {
+          "nap_response_nrmse": 0.0003461135402997404,
+          "base_current_rmse": 5.315449086867925e-09,
+          "intervention_current_rmse": 5.286268066939045e-09,
+          "response_error_rmse": 3.461135402997404e-11,
+          "voltage_pair_error_rmse_mv": 5.344108389209815e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "N000": {
+          "nap_response_nrmse": 0.0004962814382531638,
+          "base_current_rmse": 1.251222517655312e-08,
+          "intervention_current_rmse": 1.2487694670618207e-08,
+          "response_error_rmse": 4.9628143825316375e-11,
+          "voltage_pair_error_rmse_mv": 5.32028862166057e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "combined": {
+          "nap_response_nrmse": 0.0004962814382531638,
+          "base_current_rmse": 1.251222517655312e-08,
+          "intervention_current_rmse": 1.2487694670618207e-08,
+          "response_error_rmse": 4.9628143825316375e-11,
+          "voltage_pair_error_rmse_mv": 5.32028862166057e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.0004962814382531638
+    },
+    {
+      "mode": "imposed",
+      "case": 122,
+      "seed": 17,
+      "case_metadata": {
+        "protocol": "reversed_staircase",
+        "panel": "canonical",
+        "seed": 241129,
+        "initial_voltage_mv": -79.0,
+        "schedule": "reversed_staircase",
+        "intervention": "block_SK_E2",
+        "id": 122,
+        "source_index": 34
+      },
+      "reference_peak_response": 1.664739102125168e-08,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.0009984740845521713,
+          "base_current_rmse": 1.0092135602752044e-08,
+          "intervention_current_rmse": 1.0057698133036058e-08,
+          "response_error_rmse": 9.984740845521712e-11,
+          "voltage_pair_error_rmse_mv": 4.963897199945187e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "C01": {
+          "nap_response_nrmse": 0.0009984740845521713,
+          "base_current_rmse": 1.0092135602752044e-08,
+          "intervention_current_rmse": 1.0057698133036058e-08,
+          "response_error_rmse": 9.984740845521712e-11,
+          "voltage_pair_error_rmse_mv": 5.003943957630327e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "N000": {
+          "nap_response_nrmse": 0.0012324082074446783,
+          "base_current_rmse": 1.5151581195513893e-08,
+          "intervention_current_rmse": 1.510908603257478e-08,
+          "response_error_rmse": 1.2324082074446784e-10,
+          "voltage_pair_error_rmse_mv": 5.014810298239331e-06,
+          "maximum_abs_voltage_error_mv": 1.9073486328125e-05
+        },
+        "combined": {
+          "nap_response_nrmse": 0.0012324082074446783,
+          "base_current_rmse": 1.5151581195513893e-08,
+          "intervention_current_rmse": 1.510908603257478e-08,
+          "response_error_rmse": 1.2324082074446784e-10,
+          "voltage_pair_error_rmse_mv": 5.022041463204187e-06,
+          "maximum_abs_voltage_error_mv": 1.9073486328125e-05
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.0012324082074446783
+    },
+    {
+      "mode": "imposed",
+      "case": 122,
+      "seed": 29,
+      "case_metadata": {
+        "protocol": "reversed_staircase",
+        "panel": "canonical",
+        "seed": 241129,
+        "initial_voltage_mv": -79.0,
+        "schedule": "reversed_staircase",
+        "intervention": "block_SK_E2",
+        "id": 122,
+        "source_index": 34
+      },
+      "reference_peak_response": 1.664739102125168e-08,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.0010978581670902732,
+          "base_current_rmse": 8.768342031065232e-09,
+          "intervention_current_rmse": 8.76126052510287e-09,
+          "response_error_rmse": 1.0978581670902731e-10,
+          "voltage_pair_error_rmse_mv": 2.06053892287082e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "C01": {
+          "nap_response_nrmse": 0.0010978581670902732,
+          "base_current_rmse": 8.768342031065232e-09,
+          "intervention_current_rmse": 8.76126052510287e-09,
+          "response_error_rmse": 1.0978581670902731e-10,
+          "voltage_pair_error_rmse_mv": 2.042851566279558e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "N000": {
+          "nap_response_nrmse": 0.0011774636002703967,
+          "base_current_rmse": 1.3422023975788257e-08,
+          "intervention_current_rmse": 1.339704959222381e-08,
+          "response_error_rmse": 1.1774636002703965e-10,
+          "voltage_pair_error_rmse_mv": 2.4171345702279755e-06,
+          "maximum_abs_voltage_error_mv": 1.1444091796875e-05
+        },
+        "combined": {
+          "nap_response_nrmse": 0.0011774636002703967,
+          "base_current_rmse": 1.3422023975788257e-08,
+          "intervention_current_rmse": 1.339704959222381e-08,
+          "response_error_rmse": 1.1774636002703965e-10,
+          "voltage_pair_error_rmse_mv": 2.402074395137749e-06,
+          "maximum_abs_voltage_error_mv": 1.1444091796875e-05
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.0011774636002703967
+    },
+    {
+      "mode": "imposed",
+      "case": 122,
+      "seed": 43,
+      "case_metadata": {
+        "protocol": "reversed_staircase",
+        "panel": "canonical",
+        "seed": 241129,
+        "initial_voltage_mv": -79.0,
+        "schedule": "reversed_staircase",
+        "intervention": "block_SK_E2",
+        "id": 122,
+        "source_index": 34
+      },
+      "reference_peak_response": 1.664739102125168e-08,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.0009671483787617444,
+          "base_current_rmse": 1.3361516424155896e-08,
+          "intervention_current_rmse": 1.3361782062601498e-08,
+          "response_error_rmse": 9.671483787617444e-11,
+          "voltage_pair_error_rmse_mv": 3.06575731924695e-06,
+          "maximum_abs_voltage_error_mv": 1.1444091796875e-05
+        },
+        "C01": {
+          "nap_response_nrmse": 0.0009671483787617444,
+          "base_current_rmse": 1.3361516424155896e-08,
+          "intervention_current_rmse": 1.3361782062601498e-08,
+          "response_error_rmse": 9.671483787617444e-11,
+          "voltage_pair_error_rmse_mv": 3.135974605350788e-06,
+          "maximum_abs_voltage_error_mv": 1.1444091796875e-05
+        },
+        "N000": {
+          "nap_response_nrmse": 0.0010598429225777664,
+          "base_current_rmse": 3.610884619284159e-08,
+          "intervention_current_rmse": 3.610522371615576e-08,
+          "response_error_rmse": 1.0598429225777665e-10,
+          "voltage_pair_error_rmse_mv": 3.574038475367091e-06,
+          "maximum_abs_voltage_error_mv": 1.52587890625e-05
+        },
+        "combined": {
+          "nap_response_nrmse": 0.0010598429225777664,
+          "base_current_rmse": 3.610884619284159e-08,
+          "intervention_current_rmse": 3.610522371615576e-08,
+          "response_error_rmse": 1.0598429225777665e-10,
+          "voltage_pair_error_rmse_mv": 3.6144243727962423e-06,
+          "maximum_abs_voltage_error_mv": 1.9073486328125e-05
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.0010598429225777664
+    },
+    {
+      "mode": "autonomous",
+      "case": 108,
+      "seed": 17,
+      "case_metadata": {
+        "protocol": "irregular_train",
+        "panel": "canonical",
+        "seed": 241117,
+        "initial_voltage_mv": -79.0,
+        "schedule": "irregular_train",
+        "intervention": "block_K_Pst",
+        "id": 108,
+        "source_index": 48
+      },
+      "reference_peak_response": 6.461050361394882e-09,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.009119631788471593,
+          "base_current_rmse": 1.9140546900658118e-09,
+          "intervention_current_rmse": 2.6058800988070965e-09,
+          "response_error_rmse": 9.119631788471592e-10,
+          "voltage_pair_error_rmse_mv": 4.385981483369716e-05,
+          "maximum_abs_voltage_error_mv": 0.0001068115234375
+        },
+        "C01": {
+          "nap_response_nrmse": 0.009119631788471593,
+          "base_current_rmse": 1.9140546900658118e-09,
+          "intervention_current_rmse": 2.6058800988070965e-09,
+          "response_error_rmse": 9.119631788471592e-10,
+          "voltage_pair_error_rmse_mv": 4.385981483369716e-05,
+          "maximum_abs_voltage_error_mv": 0.0001068115234375
+        },
+        "N000": {
+          "nap_response_nrmse": 0.008859249608407692,
+          "base_current_rmse": 2.9212700188142902e-09,
+          "intervention_current_rmse": 2.506326764249375e-09,
+          "response_error_rmse": 8.859249608407692e-10,
+          "voltage_pair_error_rmse_mv": 4.029673448041251e-05,
+          "maximum_abs_voltage_error_mv": 0.0001068115234375
+        },
+        "combined": {
+          "nap_response_nrmse": 0.008859249608407692,
+          "base_current_rmse": 2.9212700188142902e-09,
+          "intervention_current_rmse": 2.506326764249375e-09,
+          "response_error_rmse": 8.859249608407692e-10,
+          "voltage_pair_error_rmse_mv": 4.029673448041251e-05,
+          "maximum_abs_voltage_error_mv": 0.0001068115234375
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.008859249608407692
+    },
+    {
+      "mode": "autonomous",
+      "case": 108,
+      "seed": 29,
+      "case_metadata": {
+        "protocol": "irregular_train",
+        "panel": "canonical",
+        "seed": 241117,
+        "initial_voltage_mv": -79.0,
+        "schedule": "irregular_train",
+        "intervention": "block_K_Pst",
+        "id": 108,
+        "source_index": 48
+      },
+      "reference_peak_response": 6.461050361394882e-09,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.007406433173405278,
+          "base_current_rmse": 6.3148623745600294e-09,
+          "intervention_current_rmse": 7.022483947259591e-09,
+          "response_error_rmse": 7.406433173405277e-10,
+          "voltage_pair_error_rmse_mv": 2.7204396701976094e-05,
+          "maximum_abs_voltage_error_mv": 9.1552734375e-05
+        },
+        "C01": {
+          "nap_response_nrmse": 0.007406433173405278,
+          "base_current_rmse": 6.3148623745600294e-09,
+          "intervention_current_rmse": 7.022483947259591e-09,
+          "response_error_rmse": 7.406433173405277e-10,
+          "voltage_pair_error_rmse_mv": 2.7204396701976094e-05,
+          "maximum_abs_voltage_error_mv": 9.1552734375e-05
+        },
+        "N000": {
+          "nap_response_nrmse": 0.004941212743744922,
+          "base_current_rmse": 1.0332826993263406e-08,
+          "intervention_current_rmse": 9.97308798257257e-09,
+          "response_error_rmse": 4.941212743744922e-10,
+          "voltage_pair_error_rmse_mv": 2.3202333617952284e-05,
+          "maximum_abs_voltage_error_mv": 0.000110626220703125
+        },
+        "combined": {
+          "nap_response_nrmse": 0.004941212743744922,
+          "base_current_rmse": 1.0332826993263406e-08,
+          "intervention_current_rmse": 9.97308798257257e-09,
+          "response_error_rmse": 4.941212743744922e-10,
+          "voltage_pair_error_rmse_mv": 2.3202333617952284e-05,
+          "maximum_abs_voltage_error_mv": 0.000110626220703125
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.004941212743744922
+    },
+    {
+      "mode": "autonomous",
+      "case": 108,
+      "seed": 43,
+      "case_metadata": {
+        "protocol": "irregular_train",
+        "panel": "canonical",
+        "seed": 241117,
+        "initial_voltage_mv": -79.0,
+        "schedule": "irregular_train",
+        "intervention": "block_K_Pst",
+        "id": 108,
+        "source_index": 48
+      },
+      "reference_peak_response": 6.461050361394882e-09,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.010064244932568698,
+          "base_current_rmse": 4.97211437480295e-09,
+          "intervention_current_rmse": 5.913565131166067e-09,
+          "response_error_rmse": 1.0064244932568697e-09,
+          "voltage_pair_error_rmse_mv": 5.2058307738770476e-05,
+          "maximum_abs_voltage_error_mv": 0.000102996826171875
+        },
+        "C01": {
+          "nap_response_nrmse": 0.010064244932568698,
+          "base_current_rmse": 4.97211437480295e-09,
+          "intervention_current_rmse": 5.913565131166067e-09,
+          "response_error_rmse": 1.0064244932568697e-09,
+          "voltage_pair_error_rmse_mv": 5.2058307738770476e-05,
+          "maximum_abs_voltage_error_mv": 0.000102996826171875
+        },
+        "N000": {
+          "nap_response_nrmse": 0.007333853320985642,
+          "base_current_rmse": 1.2613884144577153e-08,
+          "intervention_current_rmse": 1.3145543866976583e-08,
+          "response_error_rmse": 7.333853320985642e-10,
+          "voltage_pair_error_rmse_mv": 2.949135518451336e-05,
+          "maximum_abs_voltage_error_mv": 0.0001373291015625
+        },
+        "combined": {
+          "nap_response_nrmse": 0.007333853320985642,
+          "base_current_rmse": 1.2613884144577153e-08,
+          "intervention_current_rmse": 1.3145543866976583e-08,
+          "response_error_rmse": 7.333853320985642e-10,
+          "voltage_pair_error_rmse_mv": 2.949135518451336e-05,
+          "maximum_abs_voltage_error_mv": 0.0001373291015625
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0,
+      "linear_superposition_response_error_nrmse": 0.007333853320985642
+    },
+    {
+      "mode": "autonomous",
+      "case": 122,
+      "seed": 17,
+      "case_metadata": {
+        "protocol": "reversed_staircase",
+        "panel": "canonical",
+        "seed": 241129,
+        "initial_voltage_mv": -79.0,
+        "schedule": "reversed_staircase",
+        "intervention": "block_SK_E2",
+        "id": 122,
+        "source_index": 34
+      },
+      "reference_peak_response": 1.4988472685217857e-08,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.011356893492565556,
+          "base_current_rmse": 1.1890007751236578e-08,
+          "intervention_current_rmse": 1.1325324613598698e-08,
+          "response_error_rmse": 1.1356893492565555e-09,
+          "voltage_pair_error_rmse_mv": 2.7636496876947323e-05,
+          "maximum_abs_voltage_error_mv": 0.000240325927734375
+        },
+        "C01": {
+          "nap_response_nrmse": 0.007810615458613906,
+          "base_current_rmse": 1.1942524478194431e-08,
+          "intervention_current_rmse": 1.160800900504551e-08,
+          "response_error_rmse": 7.810615458613906e-10,
+          "voltage_pair_error_rmse_mv": 2.5532269209345827e-05,
+          "maximum_abs_voltage_error_mv": 0.000240325927734375
+        },
+        "N000": {
+          "nap_response_nrmse": 0.01520522473704717,
+          "base_current_rmse": 2.0524398466352035e-08,
+          "intervention_current_rmse": 1.9477212694329634e-08,
+          "response_error_rmse": 1.5205224737047168e-09,
+          "voltage_pair_error_rmse_mv": 4.044505163019709e-05,
+          "maximum_abs_voltage_error_mv": 0.000423431396484375
+        },
+        "combined": {
+          "nap_response_nrmse": 0.011977105400820273,
+          "base_current_rmse": 2.050418028890788e-08,
+          "intervention_current_rmse": 1.9633398912214464e-08,
+          "response_error_rmse": 1.1977105400820273e-09,
+          "voltage_pair_error_rmse_mv": 3.0487835629068665e-05,
+          "maximum_abs_voltage_error_mv": 0.000423431396484375
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0032169947764255414,
+      "linear_superposition_response_error_nrmse": 0.011892145284872625
+    },
+    {
+      "mode": "autonomous",
+      "case": 122,
+      "seed": 29,
+      "case_metadata": {
+        "protocol": "reversed_staircase",
+        "panel": "canonical",
+        "seed": 241129,
+        "initial_voltage_mv": -79.0,
+        "schedule": "reversed_staircase",
+        "intervention": "block_SK_E2",
+        "id": 122,
+        "source_index": 34
+      },
+      "reference_peak_response": 1.4988472685217857e-08,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.007694359790144846,
+          "base_current_rmse": 9.218070099340932e-09,
+          "intervention_current_rmse": 8.827384191058287e-09,
+          "response_error_rmse": 7.694359790144846e-10,
+          "voltage_pair_error_rmse_mv": 1.688881446704159e-05,
+          "maximum_abs_voltage_error_mv": 0.00017547607421875
+        },
+        "C01": {
+          "nap_response_nrmse": 0.007425129224056002,
+          "base_current_rmse": 9.220303059571686e-09,
+          "intervention_current_rmse": 8.827384191058287e-09,
+          "response_error_rmse": 7.425129224056002e-10,
+          "voltage_pair_error_rmse_mv": 1.6455667901060976e-05,
+          "maximum_abs_voltage_error_mv": 0.00017547607421875
+        },
+        "N000": {
+          "nap_response_nrmse": 0.0036632472376553317,
+          "base_current_rmse": 1.2943736808027368e-08,
+          "intervention_current_rmse": 1.2893063982457495e-08,
+          "response_error_rmse": 3.6632472376553317e-10,
+          "voltage_pair_error_rmse_mv": 1.6725800585491747e-05,
+          "maximum_abs_voltage_error_mv": 0.000133514404296875
+        },
+        "combined": {
+          "nap_response_nrmse": 0.0029957683276634864,
+          "base_current_rmse": 1.2943737360173974e-08,
+          "intervention_current_rmse": 1.2893063982457495e-08,
+          "response_error_rmse": 2.995768327663486e-10,
+          "voltage_pair_error_rmse_mv": 1.6290547422487255e-05,
+          "maximum_abs_voltage_error_mv": 0.000133514404296875
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.0009685226117778224,
+      "linear_superposition_response_error_nrmse": 0.0035957141162731485
+    },
+    {
+      "mode": "autonomous",
+      "case": 122,
+      "seed": 43,
+      "case_metadata": {
+        "protocol": "reversed_staircase",
+        "panel": "canonical",
+        "seed": 241129,
+        "initial_voltage_mv": -79.0,
+        "schedule": "reversed_staircase",
+        "intervention": "block_SK_E2",
+        "id": 122,
+        "source_index": 34
+      },
+      "reference_peak_response": 1.4988472685217857e-08,
+      "scale": 1e-07,
+      "models": {
+        "P110": {
+          "nap_response_nrmse": 0.0072266863857536985,
+          "base_current_rmse": 1.4708286886569853e-08,
+          "intervention_current_rmse": 1.4423342373818117e-08,
+          "response_error_rmse": 7.226686385753698e-10,
+          "voltage_pair_error_rmse_mv": 2.153457607758154e-05,
+          "maximum_abs_voltage_error_mv": 0.000186920166015625
+        },
+        "C01": {
+          "nap_response_nrmse": 0.008454137233204605,
+          "base_current_rmse": 1.5021288167527733e-08,
+          "intervention_current_rmse": 1.4593426579966843e-08,
+          "response_error_rmse": 8.454137233204606e-10,
+          "voltage_pair_error_rmse_mv": 2.260259858523701e-05,
+          "maximum_abs_voltage_error_mv": 0.00020599365234375
+        },
+        "N000": {
+          "nap_response_nrmse": 0.006255100949265993,
+          "base_current_rmse": 3.5403929641104776e-08,
+          "intervention_current_rmse": 3.550725229417968e-08,
+          "response_error_rmse": 6.255100949265993e-10,
+          "voltage_pair_error_rmse_mv": 2.445493401982368e-05,
+          "maximum_abs_voltage_error_mv": 0.00025177001953125
+        },
+        "combined": {
+          "nap_response_nrmse": 0.015880438209453035,
+          "base_current_rmse": 3.512442321678924e-08,
+          "intervention_current_rmse": 3.548285660884104e-08,
+          "response_error_rmse": 1.5880438209453033e-09,
+          "voltage_pair_error_rmse_mv": 4.256401415983894e-05,
+          "maximum_abs_voltage_error_mv": 0.000274658203125
+        }
+      },
+      "nonadditive_response_error_nrmse": 0.008065560702208709,
+      "linear_superposition_response_error_nrmse": 0.008104330657734351
+    }
+  ],
+  "selection_gradient_analysis": [
+    {
+      "arm": "C00",
+      "seed": 17,
+      "selected_step": 3000,
+      "series": [
+        {
+          "step": 0,
+          "point": 1.0665721638926797,
+          "secant": 0.9285031891747201,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.9950753530673997
+          ],
+          "weighted_gradient_norms": [
+            0.6905744092821047,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.957719588531431,
+          "secant": 0.8856590138063796,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.8433786023378107
+          ],
+          "weighted_gradient_norms": [
+            0.024919239130404496,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.9556647065878894,
+          "secant": 0.6626222063050895,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.6182869128929789
+          ],
+          "weighted_gradient_norms": [
+            0.01780995921298236,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.9550129856731105,
+          "secant": 0.8644482074944463,
+          "response": 7.70001234032577e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.70001234032577e-09,
+            1.8194611931675568
+          ],
+          "weighted_gradient_norms": [
+            0.0013479021653609714,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.9550060821808433,
+          "secant": 0.9964790761787011,
+          "response": 7.70001234032577e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.70001234032577e-09,
+            1.9514851583595445
+          ],
+          "weighted_gradient_norms": [
+            0.0011522834755196736,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.9550073304072525,
+          "secant": 0.8368123753247804,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.7918197057320329
+          ],
+          "weighted_gradient_norms": [
+            0.0005909729779800606,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C00",
+      "seed": 29,
+      "selected_step": 1000,
+      "series": [
+        {
+          "step": 0,
+          "point": 1.0784302699315345,
+          "secant": 2.0050847335727355,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.08351500350427
+          ],
+          "weighted_gradient_norms": [
+            0.593272592605027,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.9815599899815655,
+          "secant": 2.3887106023277602,
+          "response": 1.3197462263145086e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3197462263145086e-08,
+            3.3702705923093257
+          ],
+          "weighted_gradient_norms": [
+            0.02261560272630111,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.9802534267260198,
+          "secant": 2.180595416672555,
+          "response": 1.3197462263145086e-08,
+          "rank": [
+            2,
+            10.333333333333334,
+            1.3197462263145086e-08,
+            3.1608488433985746
+          ],
+          "weighted_gradient_norms": [
+            0.005805094370116779,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.9797504729741688,
+          "secant": 1.9538261461443522,
+          "response": 1.3294827597865694e-08,
+          "rank": [
+            2,
+            10.333333333333334,
+            1.3294827597865694e-08,
+            2.9335766191185213
+          ],
+          "weighted_gradient_norms": [
+            0.0010053883873917977,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.9797029120497804,
+          "secant": 2.591655727334161,
+          "response": 1.38104901478601e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.38104901478601e-08,
+            3.5713586393839414
+          ],
+          "weighted_gradient_norms": [
+            0.0014475557980940866,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.9797029064094569,
+          "secant": 2.3583359778355253,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.338038884244982
+          ],
+          "weighted_gradient_norms": [
+            0.0009310157460086456,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C00",
+      "seed": 43,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 1.0680101228507775,
+          "secant": 6.014708450792456,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            7.082718573643234
+          ],
+          "weighted_gradient_norms": [
+            0.6696596808519949,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.9618534453071599,
+          "secant": 7.664974612834207,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            8.626828058141367
+          ],
+          "weighted_gradient_norms": [
+            0.024206792873997192,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.9600852716424387,
+          "secant": 6.599942139330958,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            7.5600274109733965
+          ],
+          "weighted_gradient_norms": [
+            0.0161957904513206,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.9595305026720438,
+          "secant": 5.457266951265347,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            6.416797453937391
+          ],
+          "weighted_gradient_norms": [
+            0.0016591699142220145,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.9595244921060015,
+          "secant": 5.661954712170209,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            6.62147920427621
+          ],
+          "weighted_gradient_norms": [
+            0.0011068127833025285,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.959525493066434,
+          "secant": 8.09436654222858,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            9.053892035295013
+          ],
+          "weighted_gradient_norms": [
+            0.0005202965815742619,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C01",
+      "seed": 17,
+      "selected_step": 60000,
+      "series": [
+        {
+          "step": 0,
+          "point": 1.0665721638926797,
+          "secant": 0.9285031891747201,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.9950753530673997
+          ],
+          "weighted_gradient_norms": [
+            0.539217437965841,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.9570174814777967,
+          "secant": 0.9678474909648983,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.9248649724426952
+          ],
+          "weighted_gradient_norms": [
+            0.03091290464579623,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.9552501905322015,
+          "secant": 0.8852904644606484,
+          "response": 7.70001234032577e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.70001234032577e-09,
+            1.84054065499285
+          ],
+          "weighted_gradient_norms": [
+            0.0067396091065439,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.9549846628363222,
+          "secant": 0.9712911031166725,
+          "response": 7.70001234032577e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.70001234032577e-09,
+            1.9262757659529948
+          ],
+          "weighted_gradient_norms": [
+            0.0014129255705381879,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.9549808650791611,
+          "secant": 0.7602530011622792,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.7152338662414404
+          ],
+          "weighted_gradient_norms": [
+            0.00110078391262314,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.9549814595213562,
+          "secant": 0.6942778360808781,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.6492592956022343
+          ],
+          "weighted_gradient_norms": [
+            0.0003987617163664814,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C01",
+      "seed": 29,
+      "selected_step": 60000,
+      "series": [
+        {
+          "step": 0,
+          "point": 1.0784302699315345,
+          "secant": 2.0050847335727355,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.08351500350427
+          ],
+          "weighted_gradient_norms": [
+            0.4613141293662935,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.981450328888784,
+          "secant": 2.930511500972112,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.911961829860896
+          ],
+          "weighted_gradient_norms": [
+            0.02700816570574991,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.9799758502961505,
+          "secant": 2.7346967498113903,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.7146726001075407
+          ],
+          "weighted_gradient_norms": [
+            0.002360709225666648,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.9796987600384799,
+          "secant": 3.2420347541476,
+          "response": 1.3800997869843678e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3800997869843678e-08,
+            4.22173351418608
+          ],
+          "weighted_gradient_norms": [
+            0.0009600468936168933,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.9796859710605165,
+          "secant": 2.652468536291411,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.6321545073519275
+          ],
+          "weighted_gradient_norms": [
+            0.0009992873625099396,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.9796849453051589,
+          "secant": 1.9365834911993176,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            2.9162684365044766
+          ],
+          "weighted_gradient_norms": [
+            0.0006715402918584994,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C01",
+      "seed": 43,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 1.0680101228507775,
+          "secant": 6.014708450792456,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            7.082718573643234
+          ],
+          "weighted_gradient_norms": [
+            0.5225486718921186,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.9614622687391072,
+          "secant": 7.26623934242287,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            8.227701611161978
+          ],
+          "weighted_gradient_norms": [
+            0.03033341723841276,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.959748171603794,
+          "secant": 8.49922006577185,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            9.458968237375643
+          ],
+          "weighted_gradient_norms": [
+            0.009371035569178857,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.9594992297624648,
+          "secant": 5.868752488335127,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            6.828251718097592
+          ],
+          "weighted_gradient_norms": [
+            0.0020481878837830983,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.9594949608463099,
+          "secant": 7.565364007586122,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            8.524858968432431
+          ],
+          "weighted_gradient_norms": [
+            0.0014264883732055102,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.9594953434962563,
+          "secant": 6.522858561997524,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            7.482353905493781
+          ],
+          "weighted_gradient_norms": [
+            0.0003201393139290524,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C10",
+      "seed": 17,
+      "selected_step": 30000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.7071720489051062,
+          "secant": 0.9162605236090887,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.623432572514195
+          ],
+          "weighted_gradient_norms": [
+            0.006940862792630494,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.6377864921757626,
+          "secant": 0.9926908293909006,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.630477321566663
+          ],
+          "weighted_gradient_norms": [
+            0.007287773579117848,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.6363997956868662,
+          "secant": 1.2516596253384593,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.8880594210253254
+          ],
+          "weighted_gradient_norms": [
+            0.009757600629196032,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.6360562151470207,
+          "secant": 0.9986536261731858,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.6347098413202064
+          ],
+          "weighted_gradient_norms": [
+            0.0005008036869774423,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.6360588773671046,
+          "secant": 1.0882241910280461,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.7242830683951507
+          ],
+          "weighted_gradient_norms": [
+            0.0005194827622146086,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.6360565319375864,
+          "secant": 1.2034533702128938,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.8395099021504802
+          ],
+          "weighted_gradient_norms": [
+            0.0007512360957953218,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C10",
+      "seed": 29,
+      "selected_step": 0,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.7102680135769551,
+          "secant": 3.2486180918180967,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.958886105395052
+          ],
+          "weighted_gradient_norms": [
+            0.005104188369190926,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.6492156749573107,
+          "secant": 4.265708785290134,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            4.914924460247445
+          ],
+          "weighted_gradient_norms": [
+            0.006447479118443205,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.6483084548854418,
+          "secant": 3.4645487705719815,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            4.112857225457423
+          ],
+          "weighted_gradient_norms": [
+            0.0026400569708377544,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.6480387409182061,
+          "secant": 3.7033418690276547,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            4.351380609945861
+          ],
+          "weighted_gradient_norms": [
+            0.0014335477295857448,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.6480146039225334,
+          "secant": 3.902756727524861,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            4.550771331447394
+          ],
+          "weighted_gradient_norms": [
+            0.0005078019018051512,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.6480107704837215,
+          "secant": 3.4685860408326694,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            4.116596811316391
+          ],
+          "weighted_gradient_norms": [
+            0.0014575931570805214,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C10",
+      "seed": 43,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.707531173564175,
+          "secant": 7.918258133410795,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            8.625789306974971
+          ],
+          "weighted_gradient_norms": [
+            0.0006668390653744449,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.639992646614941,
+          "secant": 9.539800878959822,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            2,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            10.179793525574762
+          ],
+          "weighted_gradient_norms": [
+            0.0072085301829283655,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.638758673109776,
+          "secant": 8.54415414074361,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            9.182912813853385
+          ],
+          "weighted_gradient_norms": [
+            0.00874485363593852,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.6384644323283475,
+          "secant": 7.644659914850563,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            8.28312434717891
+          ],
+          "weighted_gradient_norms": [
+            0.000656900533570306,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.6384689500795053,
+          "secant": 8.405669627601265,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            9.04413857768077
+          ],
+          "weighted_gradient_norms": [
+            0.000965395467710223,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.6384646788545801,
+          "secant": 11.053361826701558,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            11.691826505556138
+          ],
+          "weighted_gradient_norms": [
+            0.0005150147775366264,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C11",
+      "seed": 17,
+      "selected_step": 60000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.7071720489051062,
+          "secant": 0.9162605236090887,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.623432572514195
+          ],
+          "weighted_gradient_norms": [
+            0.006018084335567446,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.6374446436270234,
+          "secant": 1.331230452602818,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.9686750962298414
+          ],
+          "weighted_gradient_norms": [
+            0.009913551175128836,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.6362246012087173,
+          "secant": 0.976274034826778,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.6124986360354954
+          ],
+          "weighted_gradient_norms": [
+            0.004159939523539943,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.6360459003132729,
+          "secant": 1.1488354728197738,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.7848813731330466
+          ],
+          "weighted_gradient_norms": [
+            0.0005080148896115606,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.6360420817853607,
+          "secant": 1.0123364941119073,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.648378575897268
+          ],
+          "weighted_gradient_norms": [
+            0.0008550488933431316,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.6360424008874065,
+          "secant": 0.9148559433091853,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            1,
+            7.666666666666668,
+            7.68420137314945e-09,
+            1.5508983441965918
+          ],
+          "weighted_gradient_norms": [
+            0.0003514263674350209,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C11",
+      "seed": 29,
+      "selected_step": 3000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.7102680135769551,
+          "secant": 3.2486180918180967,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.958886105395052
+          ],
+          "weighted_gradient_norms": [
+            0.004370454709077524,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.6492159474323277,
+          "secant": 3.6884092176162526,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            4.33762516504858
+          ],
+          "weighted_gradient_norms": [
+            0.008406218262707104,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.6481955339389859,
+          "secant": 3.1090808235375365,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.757276357476522
+          ],
+          "weighted_gradient_norms": [
+            0.001354004583543897,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.6480159468359046,
+          "secant": 3.7780474668407686,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            4.426063413676673
+          ],
+          "weighted_gradient_norms": [
+            0.0006212595831960226,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.6480033249196495,
+          "secant": 3.185161518533401,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.8331648434530505
+          ],
+          "weighted_gradient_norms": [
+            0.00082474195395121,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.6480035826275495,
+          "secant": 3.1639593107191355,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            3.811962893346685
+          ],
+          "weighted_gradient_norms": [
+            0.00047282501780708677,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "C11",
+      "seed": 43,
+      "selected_step": 0,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.707531173564175,
+          "secant": 7.918258133410795,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            8.625789306974971
+          ],
+          "weighted_gradient_norms": [
+            0.0005845877541814129,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.639793783061666,
+          "secant": 10.017207048636768,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            2,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            10.657000831698435
+          ],
+          "weighted_gradient_norms": [
+            0.009595847346880893,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.6386191648501907,
+          "secant": 10.830530955505267,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            11.469150120355458
+          ],
+          "weighted_gradient_norms": [
+            0.005564889394019365,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.6384533414822625,
+          "secant": 11.193372960873727,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            11.83182630235599
+          ],
+          "weighted_gradient_norms": [
+            0.0006751678919068989,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.6384502945394753,
+          "secant": 10.838290444831921,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            11.476740739371397
+          ],
+          "weighted_gradient_norms": [
+            0.0008433120254871428,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.6384498943805332,
+          "secant": 8.853985980926069,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            9.492435875306603
+          ],
+          "weighted_gradient_norms": [
+            0.0005584862681126202,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.0
+    },
+    {
+      "arm": "N000",
+      "seed": 17,
+      "selected_step": 1000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8356734159929526,
+          "secant": 10.02299958915563,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            10.858673005148582
+          ],
+          "weighted_gradient_norms": [
+            0.12522010525999738,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.8054810876854236,
+          "secant": 10.617014220248844,
+          "response": 1.3122568566817798e-08,
+          "rank": [
+            2,
+            1.3333333333333335,
+            1.3122568566817798e-08,
+            11.422495307934268
+          ],
+          "weighted_gradient_norms": [
+            0.0026877733708067612,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8051010826699444,
+          "secant": 6.053733317141419,
+          "response": 1.4382031394594169e-08,
+          "rank": [
+            2,
+            8.333333333333334,
+            1.4382031394594169e-08,
+            6.8588343998113634
+          ],
+          "weighted_gradient_norms": [
+            0.00048406307504085874,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8050470200262986,
+          "secant": 8.75969908456842,
+          "response": 1.0377897481398145e-08,
+          "rank": [
+            2,
+            5.333333333333334,
+            1.0377897481398145e-08,
+            9.564746104594718
+          ],
+          "weighted_gradient_norms": [
+            0.00020557525159426582,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8050459813203187,
+          "secant": 9.686953457535997,
+          "response": 1.4160270698697003e-08,
+          "rank": [
+            2,
+            9.333333333333334,
+            1.4160270698697003e-08,
+            10.491999438856316
+          ],
+          "weighted_gradient_norms": [
+            3.579443022492037e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8050458760108771,
+          "secant": 9.2387481769736,
+          "response": 1.2949766078571933e-08,
+          "rank": [
+            2,
+            1.6666666666666667,
+            1.2949766078571933e-08,
+            10.043794052984477
+          ],
+          "weighted_gradient_norms": [
+            1.2627996072241948e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.6852455381793743
+    },
+    {
+      "arm": "N000",
+      "seed": 29,
+      "selected_step": 3000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.835686952588469,
+          "secant": 4.839128449134744,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            5.6748154017232135
+          ],
+          "weighted_gradient_norms": [
+            0.1258674214487712,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.805334752720073,
+          "secant": 4.2869798294925126,
+          "response": 1.9829426389057666e-08,
+          "rank": [
+            1,
+            15.0,
+            1.9829426389057666e-08,
+            5.092314582212586
+          ],
+          "weighted_gradient_norms": [
+            0.002701531227115349,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8049498428199966,
+          "secant": 6.32657398901231,
+          "response": 3.5659555814513735e-08,
+          "rank": [
+            1,
+            1.3333333333333335,
+            3.5659555814513735e-08,
+            7.131523831832307
+          ],
+          "weighted_gradient_norms": [
+            0.00048564560941861024,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8048934147640091,
+          "secant": 4.2140236516748075,
+          "response": 1.4017973858662005e-08,
+          "rank": [
+            1,
+            7.666666666666668,
+            1.4017973858662005e-08,
+            5.018917066438816
+          ],
+          "weighted_gradient_norms": [
+            8.40452051568929e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8048921581779193,
+          "secant": 6.826366709441171,
+          "response": 1.3487173118446339e-08,
+          "rank": [
+            1,
+            8.333333333333334,
+            1.3487173118446339e-08,
+            7.63125886761909
+          ],
+          "weighted_gradient_norms": [
+            8.912868287804802e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8048922474706078,
+          "secant": 7.456800483701628,
+          "response": 1.3261909622903328e-08,
+          "rank": [
+            1,
+            5.666666666666668,
+            1.3261909622903328e-08,
+            8.261692731172236
+          ],
+          "weighted_gradient_norms": [
+            1.0898795921028725e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 0.9917503365627841
+    },
+    {
+      "arm": "N000",
+      "seed": 43,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8357078636183974,
+          "secant": 1.3678360225821136,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            2.203543886200511
+          ],
+          "weighted_gradient_norms": [
+            0.12541807760107657,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.8054603631317896,
+          "secant": 1.7110303882424918,
+          "response": 4.788933493646187e-08,
+          "rank": [
+            1,
+            14.666666666666668,
+            4.788933493646187e-08,
+            2.516490751374281
+          ],
+          "weighted_gradient_norms": [
+            0.002691859773341454,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8050791844753462,
+          "secant": 1.292513500727894,
+          "response": 5.95997910916644e-08,
+          "rank": [
+            1,
+            22.66666666666667,
+            5.95997910916644e-08,
+            2.0975926852032405
+          ],
+          "weighted_gradient_norms": [
+            0.0004846009068752264,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8050249065491596,
+          "secant": 1.8762382088780754,
+          "response": 3.768585678755123e-08,
+          "rank": [
+            1,
+            1.3333333333333335,
+            3.768585678755123e-08,
+            2.681263115427235
+          ],
+          "weighted_gradient_norms": [
+            0.00015396376001184528,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8050238414032089,
+          "secant": 1.3531146882561913,
+          "response": 3.8943991162147625e-08,
+          "rank": [
+            1,
+            1.3333333333333335,
+            3.8943991162147625e-08,
+            2.1581385296594
+          ],
+          "weighted_gradient_norms": [
+            4.025107397748096e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8050237239899459,
+          "secant": 1.1905403179418637,
+          "response": 5.248726058545173e-08,
+          "rank": [
+            1,
+            8.333333333333334,
+            5.248726058545173e-08,
+            1.9955640419318095
+          ],
+          "weighted_gradient_norms": [
+            7.166503872762958e-06,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.3219415181915306
+    },
+    {
+      "arm": "N001",
+      "seed": 17,
+      "selected_step": 0,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8356734159929526,
+          "secant": 10.02299958915563,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            10.858673005148582
+          ],
+          "weighted_gradient_norms": [
+            0.12522010525999738,
+            0.0,
+            0.012522010525999739
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8054896575464724,
+          "secant": 113.90721887741915,
+          "response": 5.21606049449423e-07,
+          "rank": [
+            2,
+            192.0,
+            5.21606049449423e-07,
+            114.71270853496563
+          ],
+          "weighted_gradient_norms": [
+            0.002725971986766182,
+            0.0,
+            268.42765313512996
+          ],
+          "feedback_to_point_gradient": 98470.43712784644
+        },
+        {
+          "step": 3000,
+          "point": 0.8051058989820221,
+          "secant": 121.83716328679364,
+          "response": 1.029596757330182e-06,
+          "rank": [
+            2,
+            187.66666666666669,
+            1.029596757330182e-06,
+            122.64226918577566
+          ],
+          "weighted_gradient_norms": [
+            0.0005197721698760448,
+            0.0,
+            16.067369440697398
+          ],
+          "feedback_to_point_gradient": 30912.331155646792
+        },
+        {
+          "step": 10000,
+          "point": 0.805050700213741,
+          "secant": 128.14727961455978,
+          "response": 9.271802185127403e-06,
+          "rank": [
+            2,
+            342.00000000000006,
+            9.271802185127403e-06,
+            128.95233031477352
+          ],
+          "weighted_gradient_norms": [
+            0.00027830374153058946,
+            0.0,
+            25.474723867893736
+          ],
+          "feedback_to_point_gradient": 91535.68589408888
+        },
+        {
+          "step": 30000,
+          "point": 0.8050533442040807,
+          "secant": 328.8323131024015,
+          "response": 1.4120805511793169e-05,
+          "rank": [
+            2,
+            337.33333333333337,
+            1.4120805511793169e-05,
+            329.63736644660554
+          ],
+          "weighted_gradient_norms": [
+            0.000306804315333616,
+            0.0,
+            229.95820202577818
+          ],
+          "feedback_to_point_gradient": 749527.2736816752
+        },
+        {
+          "step": 60000,
+          "point": 0.8050535556096334,
+          "secant": 162.699565476147,
+          "response": 5.993897574209561e-06,
+          "rank": [
+            2,
+            129.33333333333334,
+            5.993897574209561e-06,
+            163.50461903175665
+          ],
+          "weighted_gradient_norms": [
+            0.0002902768199820251,
+            0.0,
+            1.3044296530587862
+          ],
+          "feedback_to_point_gradient": 4493.743775819098
+        }
+      ],
+      "feedback_final_over_initial": 780.0286956499814
+    },
+    {
+      "arm": "N001",
+      "seed": 29,
+      "selected_step": 0,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.835686952588469,
+          "secant": 4.839128449134744,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            5.6748154017232135
+          ],
+          "weighted_gradient_norms": [
+            0.1258674214487712,
+            0.0,
+            0.01258674214487712
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8053446266589539,
+          "secant": 100.77419757336459,
+          "response": 1.9215532011331768e-06,
+          "rank": [
+            1,
+            246.33333333333337,
+            1.9215532011331768e-06,
+            101.57954220002354
+          ],
+          "weighted_gradient_norms": [
+            0.002740417668790133,
+            0.0,
+            111.34779915210471
+          ],
+          "feedback_to_point_gradient": 40631.68925679262
+        },
+        {
+          "step": 3000,
+          "point": 0.8049542353544076,
+          "secant": 159.18903797390612,
+          "response": 7.226802652056733e-06,
+          "rank": [
+            1,
+            301.33333333333337,
+            7.226802652056733e-06,
+            159.99399220926054
+          ],
+          "weighted_gradient_norms": [
+            0.0005001074919495894,
+            0.0,
+            22.750440245771813
+          ],
+          "feedback_to_point_gradient": 45491.10063735067
+        },
+        {
+          "step": 10000,
+          "point": 0.8048979954055078,
+          "secant": 220.24371529794246,
+          "response": 1.1330021721828802e-05,
+          "rank": [
+            1,
+            25.333333333333336,
+            1.1330021721828802e-05,
+            221.04861329334796
+          ],
+          "weighted_gradient_norms": [
+            0.0002290042950012949,
+            0.0,
+            40.54889446947331
+          ],
+          "feedback_to_point_gradient": 177066.0872069846
+        },
+        {
+          "step": 30000,
+          "point": 0.8049006849273997,
+          "secant": 607.10108668718,
+          "response": 1.5371746317759477e-05,
+          "rank": [
+            1,
+            161.66666666666669,
+            1.5371746317759477e-05,
+            607.9059873721073
+          ],
+          "weighted_gradient_norms": [
+            0.00031661411700540954,
+            0.0,
+            78.80831900391286
+          ],
+          "feedback_to_point_gradient": 248909.68144217768
+        },
+        {
+          "step": 60000,
+          "point": 0.8049000609841644,
+          "secant": 272.64429650419186,
+          "response": 2.103423031022251e-06,
+          "rank": [
+            1,
+            442.3333333333334,
+            2.103423031022251e-06,
+            273.449196565176
+          ],
+          "weighted_gradient_norms": [
+            0.00031563394711452874,
+            0.0,
+            0.534522241501845
+          ],
+          "feedback_to_point_gradient": 1693.487808863259
+        }
+      ],
+      "feedback_final_over_initial": 157.29789738180565
+    },
+    {
+      "arm": "N001",
+      "seed": 43,
+      "selected_step": 0,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8357078636183974,
+          "secant": 1.3678360225821136,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            2.203543886200511
+          ],
+          "weighted_gradient_norms": [
+            0.12541807760107657,
+            0.0,
+            0.012541807760107658
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8054691985207568,
+          "secant": 10.365638041761176,
+          "response": 1.5509439779794395e-06,
+          "rank": [
+            1,
+            307.33333333333337,
+            1.5509439779794395e-06,
+            11.171107240281934
+          ],
+          "weighted_gradient_norms": [
+            0.002729307368953886,
+            0.0,
+            116.56050882992545
+          ],
+          "feedback_to_point_gradient": 42706.99231453797
+        },
+        {
+          "step": 3000,
+          "point": 0.8050845601658426,
+          "secant": 21.72448503941269,
+          "response": 1.1643821058442112e-05,
+          "rank": [
+            1,
+            285.33333333333337,
+            1.1643821058442112e-05,
+            22.529569599578533
+          ],
+          "weighted_gradient_norms": [
+            0.0005194845652872251,
+            0.0,
+            8.21244520408441
+          ],
+          "feedback_to_point_gradient": 15808.833895851587
+        },
+        {
+          "step": 10000,
+          "point": 0.8050293736780967,
+          "secant": 35.66865198144503,
+          "response": 1.778431457437465e-05,
+          "rank": [
+            1,
+            494.6666666666667,
+            1.778431457437465e-05,
+            36.47368135512313
+          ],
+          "weighted_gradient_norms": [
+            0.00023413861532463646,
+            0.0,
+            16.630100960317503
+          ],
+          "feedback_to_point_gradient": 71026.73319076239
+        },
+        {
+          "step": 30000,
+          "point": 0.8050290167978779,
+          "secant": 46.407951055964666,
+          "response": 8.75533854353413e-06,
+          "rank": [
+            1,
+            384.0,
+            8.75533854353413e-06,
+            47.21298007276254
+          ],
+          "weighted_gradient_norms": [
+            0.00024736294239203967,
+            0.0,
+            155.49399750448848
+          ],
+          "feedback_to_point_gradient": 628606.6781096488
+        },
+        {
+          "step": 60000,
+          "point": 0.8050335178077479,
+          "secant": 27.7807913882391,
+          "response": 3.981294732660473e-06,
+          "rank": [
+            1,
+            225.0,
+            3.981294732660473e-06,
+            28.585824906046845
+          ],
+          "weighted_gradient_norms": [
+            0.00023684135133741224,
+            0.0,
+            0.8409865154229591
+          ],
+          "feedback_to_point_gradient": 3550.8432572015736
+        }
+      ],
+      "feedback_final_over_initial": 100.27268987857836
+    },
+    {
+      "arm": "N010",
+      "seed": 17,
+      "selected_step": 1000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8356734159929526,
+          "secant": 10.02299958915563,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            10.858673005148582
+          ],
+          "weighted_gradient_norms": [
+            0.12522010525999738,
+            0.012522010525999739,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.805482087174127,
+          "secant": 9.042727490606126,
+          "response": 2.683817889597674e-08,
+          "rank": [
+            2,
+            3.0,
+            2.683817889597674e-08,
+            9.848209577780253
+          ],
+          "weighted_gradient_norms": [
+            0.002691407835358903,
+            0.10465687093789418,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8051029571115765,
+          "secant": 11.252949077273465,
+          "response": 6.589436201327768e-08,
+          "rank": [
+            2,
+            37.333333333333336,
+            6.589436201327768e-08,
+            12.058052034385042
+          ],
+          "weighted_gradient_norms": [
+            0.0004897625512396729,
+            0.18634782512378747,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.805048272244539,
+          "secant": 6.866111796851802,
+          "response": 2.329925451526096e-08,
+          "rank": [
+            2,
+            31.666666666666668,
+            2.329925451526096e-08,
+            7.6711600690963415
+          ],
+          "weighted_gradient_norms": [
+            0.0002551958619736674,
+            0.06631803850450241,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8050485341370838,
+          "secant": 8.720809286870084,
+          "response": 3.4691570755795104e-08,
+          "rank": [
+            2,
+            16.666666666666668,
+            3.4691570755795104e-08,
+            9.525857821007168
+          ],
+          "weighted_gradient_norms": [
+            0.00023372182862700164,
+            0.03863245979987812,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8050472712504592,
+          "secant": 11.568040828927536,
+          "response": 2.734747374469341e-08,
+          "rank": [
+            2,
+            11.000000000000002,
+            2.734747374469341e-08,
+            12.373088100177995
+          ],
+          "weighted_gradient_norms": [
+            0.00011831016818329033,
+            0.12406259359803172,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 3.5589220553553456
+    },
+    {
+      "arm": "N010",
+      "seed": 29,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.835686952588469,
+          "secant": 4.839128449134744,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            5.6748154017232135
+          ],
+          "weighted_gradient_norms": [
+            0.1258674214487712,
+            0.01258674214487712,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.8053359498830152,
+          "secant": 4.5319898007779615,
+          "response": 6.286205705082454e-08,
+          "rank": [
+            1,
+            18.666666666666668,
+            6.286205705082454e-08,
+            5.337325750660977
+          ],
+          "weighted_gradient_norms": [
+            0.0027045111470145886,
+            0.08205736390167592,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8049514530196636,
+          "secant": 7.483429603132632,
+          "response": 2.2300895673526206e-07,
+          "rank": [
+            1,
+            10.0,
+            2.2300895673526206e-07,
+            8.288381056152296
+          ],
+          "weighted_gradient_norms": [
+            0.0004900393798617371,
+            0.10782261868409351,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8048945731991742,
+          "secant": 6.893068757696252,
+          "response": 1.8896082577807613e-08,
+          "rank": [
+            1,
+            1.3333333333333335,
+            1.8896082577807613e-08,
+            7.697963330895426
+          ],
+          "weighted_gradient_norms": [
+            0.0002378218911284203,
+            0.032620670407765076,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8048936208197308,
+          "secant": 6.329543635562333,
+          "response": 5.014727660781193e-08,
+          "rank": [
+            1,
+            4.666666666666667,
+            5.014727660781193e-08,
+            7.134437256382063
+          ],
+          "weighted_gradient_norms": [
+            0.00017985423498069318,
+            0.045591681059750415,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8048942200482817,
+          "secant": 9.925518619120348,
+          "response": 2.8466233664563548e-08,
+          "rank": [
+            1,
+            21.000000000000004,
+            2.8466233664563548e-08,
+            10.730412839168629
+          ],
+          "weighted_gradient_norms": [
+            0.0002092179332371748,
+            0.07354492401208165,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 2.12875804618289
+    },
+    {
+      "arm": "N010",
+      "seed": 43,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8357078636183974,
+          "secant": 1.3678360225821136,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            2.203543886200511
+          ],
+          "weighted_gradient_norms": [
+            0.12541807760107657,
+            0.012541807760107658,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.805460708543333,
+          "secant": 1.4371797990474584,
+          "response": 1.2285433841939392e-07,
+          "rank": [
+            1,
+            19.333333333333336,
+            1.2285433841939392e-07,
+            2.2426405075907914
+          ],
+          "weighted_gradient_norms": [
+            0.002692969070137598,
+            0.04697320059417467,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8050797167173558,
+          "secant": 2.366215765687158,
+          "response": 2.5187143893479776e-07,
+          "rank": [
+            1,
+            27.0,
+            2.5187143893479776e-07,
+            3.171295482404514
+          ],
+          "weighted_gradient_norms": [
+            0.0004911268254292219,
+            0.07060169893494597,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8050252876453364,
+          "secant": 1.6143185839636163,
+          "response": 1.8243390775446396e-07,
+          "rank": [
+            1,
+            10.0,
+            1.8243390775446396e-07,
+            2.4193438716089526
+          ],
+          "weighted_gradient_norms": [
+            0.00017219515263573626,
+            0.028346754164540643,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8050246399065167,
+          "secant": 1.6089101571489832,
+          "response": 1.152272474138898e-07,
+          "rank": [
+            1,
+            19.0,
+            1.152272474138898e-07,
+            2.4139347970555
+          ],
+          "weighted_gradient_norms": [
+            7.86557970013364e-05,
+            0.06027158490091415,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8050241683617547,
+          "secant": 1.5834836141610429,
+          "response": 4.791421403989395e-08,
+          "rank": [
+            1,
+            34.333333333333336,
+            4.791421403989395e-08,
+            2.3885077825227974
+          ],
+          "weighted_gradient_norms": [
+            0.0001071832675484271,
+            0.07216565880276947,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.2067649967696676
+    },
+    {
+      "arm": "N011",
+      "seed": 17,
+      "selected_step": 60000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8356734159929526,
+          "secant": 10.02299958915563,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            10.858673005148582
+          ],
+          "weighted_gradient_norms": [
+            0.12522010525999738,
+            0.012522010525999739,
+            0.012522010525999739
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8054861722391337,
+          "secant": 11.666865089632065,
+          "response": 7.647336340258312e-08,
+          "rank": [
+            2,
+            12.333333333333334,
+            7.647336340258312e-08,
+            12.472351261871198
+          ],
+          "weighted_gradient_norms": [
+            0.0027203607895677855,
+            0.1221479266185654,
+            18.239060797094968
+          ],
+          "feedback_to_point_gradient": 6704.647731668274
+        },
+        {
+          "step": 3000,
+          "point": 0.805103687272525,
+          "secant": 9.256506143356624,
+          "response": 3.382274248040114e-07,
+          "rank": [
+            2,
+            14.333333333333334,
+            3.382274248040114e-07,
+            10.061609830629148
+          ],
+          "weighted_gradient_norms": [
+            0.0005555520245663403,
+            0.12840480694556547,
+            21.18824039521162
+          ],
+          "feedback_to_point_gradient": 38139.07511497415
+        },
+        {
+          "step": 10000,
+          "point": 0.8050493509650297,
+          "secant": 12.109748038971338,
+          "response": 1.7245923937398802e-08,
+          "rank": [
+            2,
+            18.666666666666668,
+            1.7245923937398802e-08,
+            12.914797389936368
+          ],
+          "weighted_gradient_norms": [
+            0.0002667058859009559,
+            0.05601258944600786,
+            121.5247158644264
+          ],
+          "feedback_to_point_gradient": 455650.67097752733
+        },
+        {
+          "step": 30000,
+          "point": 0.8050489684785298,
+          "secant": 9.853779551009225,
+          "response": 7.245603874925354e-08,
+          "rank": [
+            2,
+            3.0,
+            7.245603874925354e-08,
+            10.658828519487756
+          ],
+          "weighted_gradient_norms": [
+            0.00021723091699748465,
+            0.08779508572072964,
+            2.5375399021336538
+          ],
+          "feedback_to_point_gradient": 11681.301801819656
+        },
+        {
+          "step": 60000,
+          "point": 0.8050509001245522,
+          "secant": 11.074204410703748,
+          "response": 1.8758200298274522e-08,
+          "rank": [
+            2,
+            3.0,
+            1.8758200298274522e-08,
+            11.8792553108283
+          ],
+          "weighted_gradient_norms": [
+            0.0002067500049261834,
+            0.09057267265533488,
+            1.2205865441234491
+          ],
+          "feedback_to_point_gradient": 5903.683265010025
+        }
+      ],
+      "feedback_final_over_initial": 2.441138563054898
+    },
+    {
+      "arm": "N011",
+      "seed": 29,
+      "selected_step": 30000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.835686952588469,
+          "secant": 4.839128449134744,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            5.6748154017232135
+          ],
+          "weighted_gradient_norms": [
+            0.1258674214487712,
+            0.01258674214487712,
+            0.01258674214487712
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8053389826115566,
+          "secant": 6.334832249180101,
+          "response": 3.965929648108492e-08,
+          "rank": [
+            1,
+            24.666666666666668,
+            3.965929648108492e-08,
+            7.1401712317916575
+          ],
+          "weighted_gradient_norms": [
+            0.002728543666204902,
+            0.09653923559717162,
+            19.558198853323848
+          ],
+          "feedback_to_point_gradient": 7167.9992134877975
+        },
+        {
+          "step": 3000,
+          "point": 0.8049516337985522,
+          "secant": 7.383916500880424,
+          "response": 6.347871205732173e-08,
+          "rank": [
+            1,
+            18.000000000000004,
+            6.347871205732173e-08,
+            8.188868134678977
+          ],
+          "weighted_gradient_norms": [
+            0.0005014544887422711,
+            0.07362543481410402,
+            5.700997336883969
+          ],
+          "feedback_to_point_gradient": 11368.92273351265
+        },
+        {
+          "step": 10000,
+          "point": 0.8048946081968696,
+          "secant": 7.575960790787835,
+          "response": 5.8203257888716174e-08,
+          "rank": [
+            1,
+            50.33333333333334,
+            5.8203257888716174e-08,
+            8.380855398984703
+          ],
+          "weighted_gradient_norms": [
+            0.00016205763604273002,
+            0.04655978618140582,
+            34.885013983948596
+          ],
+          "feedback_to_point_gradient": 215263.0066425898
+        },
+        {
+          "step": 30000,
+          "point": 0.8048950177391455,
+          "secant": 6.949717484413663,
+          "response": 1.347889148831407e-08,
+          "rank": [
+            1,
+            1.3333333333333335,
+            1.347889148831407e-08,
+            7.754612502152808
+          ],
+          "weighted_gradient_norms": [
+            0.0001545274442540122,
+            0.10879180262025352,
+            1.87795094559909
+          ],
+          "feedback_to_point_gradient": 12152.863555499658
+        },
+        {
+          "step": 60000,
+          "point": 0.8048968363760559,
+          "secant": 5.6271456709198695,
+          "response": 2.05067540887503e-08,
+          "rank": [
+            1,
+            15.0,
+            2.05067540887503e-08,
+            6.432042507295925
+          ],
+          "weighted_gradient_norms": [
+            0.00017031943208406045,
+            0.04410923967288009,
+            0.3719517081706209
+          ],
+          "feedback_to_point_gradient": 2183.847747842687
+        }
+      ],
+      "feedback_final_over_initial": 1.5335333181735262
+    },
+    {
+      "arm": "N011",
+      "seed": 43,
+      "selected_step": 3000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8357078636183974,
+          "secant": 1.3678360225821136,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            2.203543886200511
+          ],
+          "weighted_gradient_norms": [
+            0.12541807760107657,
+            0.012541807760107658,
+            0.012541807760107658
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8054642947591678,
+          "secant": 1.3877909804195931,
+          "response": 1.8977909127066555e-07,
+          "rank": [
+            1,
+            47.00000000000001,
+            1.8977909127066555e-07,
+            2.193255275178761
+          ],
+          "weighted_gradient_norms": [
+            0.0027214492724215657,
+            0.04615635525521749,
+            39.77831532559038
+          ],
+          "feedback_to_point_gradient": 14616.592610670026
+        },
+        {
+          "step": 3000,
+          "point": 0.8050817879169683,
+          "secant": 1.7564133047890378,
+          "response": 7.829273941687405e-08,
+          "rank": [
+            1,
+            1.6666666666666667,
+            7.829273941687405e-08,
+            2.5614950927060063
+          ],
+          "weighted_gradient_norms": [
+            0.0005522814836664936,
+            0.0505028097770907,
+            58.65559182057367
+          ],
+          "feedback_to_point_gradient": 106205.97205463082
+        },
+        {
+          "step": 10000,
+          "point": 0.805026512856644,
+          "secant": 2.119698629473119,
+          "response": 2.2974003593166706e-07,
+          "rank": [
+            1,
+            35.0,
+            2.2974003593166706e-07,
+            2.924725142329763
+          ],
+          "weighted_gradient_norms": [
+            0.00021301532523991897,
+            0.019061996200409336,
+            80.50320367184787
+          ],
+          "feedback_to_point_gradient": 377922.12171202793
+        },
+        {
+          "step": 30000,
+          "point": 0.805024782417087,
+          "secant": 1.6990823355578812,
+          "response": 7.123509788407036e-08,
+          "rank": [
+            1,
+            22.66666666666667,
+            7.123509788407036e-08,
+            2.5041071179749683
+          ],
+          "weighted_gradient_norms": [
+            0.00012527579964380248,
+            0.027321088975781397,
+            0.9083003530606581
+          ],
+          "feedback_to_point_gradient": 7250.4055503396075
+        },
+        {
+          "step": 60000,
+          "point": 0.8050310657129887,
+          "secant": 1.607904917798229,
+          "response": 5.420403807128078e-08,
+          "rank": [
+            1,
+            15.0,
+            5.420403807128078e-08,
+            2.4129359835112174
+          ],
+          "weighted_gradient_norms": [
+            0.00017430258867932397,
+            0.07413051441445798,
+            0.7887886945924942
+          ],
+          "feedback_to_point_gradient": 4525.398621839639
+        }
+      ],
+      "feedback_final_over_initial": 1.3651801900273197
+    },
+    {
+      "arm": "N100",
+      "seed": 17,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8356734159929526,
+          "secant": 10.02299958915563,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            10.858673005148582
+          ],
+          "weighted_gradient_norms": [
+            0.1157855378993457,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.8054446567291794,
+          "secant": 8.537083473838493,
+          "response": 8.628959674802596e-09,
+          "rank": [
+            2,
+            8.000000000000002,
+            8.628959674802596e-09,
+            9.342528130567672
+          ],
+          "weighted_gradient_norms": [
+            0.002366985185358354,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8050963042147228,
+          "secant": 7.166796222796553,
+          "response": 1.4052490351389919e-08,
+          "rank": [
+            2,
+            3.3333333333333335,
+            1.4052490351389919e-08,
+            7.971892527011276
+          ],
+          "weighted_gradient_norms": [
+            0.00043212454584592313,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8050466481937161,
+          "secant": 8.234614698418879,
+          "response": 1.92884738522219e-08,
+          "rank": [
+            2,
+            1.3333333333333335,
+            1.92884738522219e-08,
+            9.039661346612595
+          ],
+          "weighted_gradient_norms": [
+            0.0001635505466555633,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8050436788433601,
+          "secant": 8.642436084069287,
+          "response": 2.4303635741397834e-08,
+          "rank": [
+            2,
+            5.0,
+            2.4303635741397834e-08,
+            9.447479762912646
+          ],
+          "weighted_gradient_norms": [
+            2.1855259012790647e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8050427948733171,
+          "secant": 11.919128232745825,
+          "response": 1.096793556573485e-08,
+          "rank": [
+            2,
+            3.3333333333333335,
+            1.096793556573485e-08,
+            12.724171027619143
+          ],
+          "weighted_gradient_norms": [
+            3.839863203787275e-06,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.4273357806654574
+    },
+    {
+      "arm": "N100",
+      "seed": 29,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.835686952588469,
+          "secant": 4.839128449134744,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            5.6748154017232135
+          ],
+          "weighted_gradient_norms": [
+            0.11638396907391903,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.8052968546244577,
+          "secant": 5.233192936949416,
+          "response": 1.5825384877953694e-08,
+          "rank": [
+            1,
+            21.333333333333336,
+            1.5825384877953694e-08,
+            6.038489791573873
+          ],
+          "weighted_gradient_norms": [
+            0.0023796742934154595,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8049439550611288,
+          "secant": 4.758689031106798,
+          "response": 1.6858783993190923e-08,
+          "rank": [
+            1,
+            9.333333333333334,
+            1.6858783993190923e-08,
+            5.563632986167927
+          ],
+          "weighted_gradient_norms": [
+            0.0004330361031519466,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8048916733120679,
+          "secant": 5.665311753994688,
+          "response": 8.411725108563339e-09,
+          "rank": [
+            1,
+            2.0000000000000004,
+            8.411725108563339e-09,
+            6.470203427306756
+          ],
+          "weighted_gradient_norms": [
+            4.37587363654312e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8048903844844011,
+          "secant": 6.261573949732176,
+          "response": 1.4757441713246766e-08,
+          "rank": [
+            1,
+            11.000000000000002,
+            1.4757441713246766e-08,
+            7.066464334216577
+          ],
+          "weighted_gradient_norms": [
+            3.5705708966025804e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8048903585213525,
+          "secant": 5.383089150243541,
+          "response": 1.0160895962647128e-08,
+          "rank": [
+            1,
+            4.666666666666667,
+            1.0160895962647128e-08,
+            6.187979508764894
+          ],
+          "weighted_gradient_norms": [
+            8.648951107595145e-06,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 0.7598507513074597
+    },
+    {
+      "arm": "N100",
+      "seed": 43,
+      "selected_step": 60000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8357078636183974,
+          "secant": 1.3678360225821136,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            2.203543886200511
+          ],
+          "weighted_gradient_norms": [
+            0.11596911547417016,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.8054240044307881,
+          "secant": 1.4609581302357613,
+          "response": 4.3320870135755664e-08,
+          "rank": [
+            1,
+            6.333333333333334,
+            4.3320870135755664e-08,
+            2.266382134666549
+          ],
+          "weighted_gradient_norms": [
+            0.0023705446815536764,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8050747907484105,
+          "secant": 1.3760724851572899,
+          "response": 3.413742128855341e-08,
+          "rank": [
+            1,
+            6.0,
+            3.413742128855341e-08,
+            2.1811472759057002
+          ],
+          "weighted_gradient_norms": [
+            0.00043261438237059976,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8050249027407032,
+          "secant": 1.4004994656287602,
+          "response": 4.230537058611239e-08,
+          "rank": [
+            1,
+            2.3333333333333335,
+            4.230537058611239e-08,
+            2.2055243683694634
+          ],
+          "weighted_gradient_norms": [
+            0.0001311750383456095,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8050221391654161,
+          "secant": 1.363461115683379,
+          "response": 4.5292248422509496e-08,
+          "rank": [
+            1,
+            9.000000000000002,
+            4.5292248422509496e-08,
+            2.168483254848795
+          ],
+          "weighted_gradient_norms": [
+            1.9618132343132422e-05,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8050212984723869,
+          "secant": 1.5523415572507264,
+          "response": 5.194869047807185e-08,
+          "rank": [
+            1,
+            1.3333333333333335,
+            5.194869047807185e-08,
+            2.3573628557231134
+          ],
+          "weighted_gradient_norms": [
+            6.4002929699331395e-06,
+            0.0,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 1.3083771184217383
+    },
+    {
+      "arm": "N101",
+      "seed": 17,
+      "selected_step": 3000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8356734159929526,
+          "secant": 10.02299958915563,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            10.858673005148582
+          ],
+          "weighted_gradient_norms": [
+            0.1157855378993457,
+            0.0,
+            0.011578553789934573
+          ],
+          "feedback_to_point_gradient": 0.10000000000000002
+        },
+        {
+          "step": 1000,
+          "point": 0.8054551069108798,
+          "secant": 101.07811269153933,
+          "response": 1.257261277910302e-05,
+          "rank": [
+            2,
+            758.0,
+            1.257261277910302e-05,
+            101.88356779845022
+          ],
+          "weighted_gradient_norms": [
+            0.0024025792510135044,
+            0.0,
+            51.527163989816096
+          ],
+          "feedback_to_point_gradient": 21446.60325692893
+        },
+        {
+          "step": 3000,
+          "point": 0.8051048580852029,
+          "secant": 56.378778815315165,
+          "response": 3.191888889155454e-06,
+          "rank": [
+            2,
+            1.3333333333333335,
+            3.191888889155454e-06,
+            57.183883673400366
+          ],
+          "weighted_gradient_norms": [
+            0.0004643728042218089,
+            0.0,
+            26.62307454284618
+          ],
+          "feedback_to_point_gradient": 57331.252607397735
+        },
+        {
+          "step": 10000,
+          "point": 0.8050520282328361,
+          "secant": 72.30288780423298,
+          "response": 7.182045988317948e-06,
+          "rank": [
+            2,
+            550.3333333333335,
+            7.182045988317948e-06,
+            73.10793983246582
+          ],
+          "weighted_gradient_norms": [
+            0.0002698658116104697,
+            0.0,
+            82.57648744797731
+          ],
+          "feedback_to_point_gradient": 305990.9180610475
+        },
+        {
+          "step": 30000,
+          "point": 0.8050462102981817,
+          "secant": 94.85093954684078,
+          "response": 9.161717459640474e-06,
+          "rank": [
+            2,
+            219.66666666666669,
+            9.161717459640474e-06,
+            95.65598575713896
+          ],
+          "weighted_gradient_norms": [
+            0.0001729244075433085,
+            0.0,
+            71.96801834799392
+          ],
+          "feedback_to_point_gradient": 416181.95702055364
+        },
+        {
+          "step": 60000,
+          "point": 0.8050511589755387,
+          "secant": 125.05380901383315,
+          "response": 3.0965529863707595e-06,
+          "rank": [
+            2,
+            39.333333333333336,
+            3.0965529863707595e-06,
+            125.85886017280869
+          ],
+          "weighted_gradient_norms": [
+            0.0003167376980916495,
+            0.0,
+            2.015692367671708
+          ],
+          "feedback_to_point_gradient": 6363.916830286674
+        }
+      ],
+      "feedback_final_over_initial": 402.97655358055835
+    },
+    {
+      "arm": "N101",
+      "seed": 29,
+      "selected_step": 0,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.835686952588469,
+          "secant": 4.839128449134744,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            5.6748154017232135
+          ],
+          "weighted_gradient_norms": [
+            0.11638396907391903,
+            0.0,
+            0.011638396907391903
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8053055185024756,
+          "secant": 60.0331030050934,
+          "response": 4.663652517257704e-06,
+          "rank": [
+            1,
+            658.3333333333334,
+            4.663652517257704e-06,
+            60.83840852359588
+          ],
+          "weighted_gradient_norms": [
+            0.0024123823987098406,
+            0.0,
+            47.1768441058597
+          ],
+          "feedback_to_point_gradient": 19556.121836691487
+        },
+        {
+          "step": 3000,
+          "point": 0.8049524163721754,
+          "secant": 77.86012133882825,
+          "response": 4.2133372382672e-06,
+          "rank": [
+            1,
+            248.6666666666667,
+            4.2133372382672e-06,
+            78.66507375520042
+          ],
+          "weighted_gradient_norms": [
+            0.00047746137891545965,
+            0.0,
+            27.6837542160955
+          ],
+          "feedback_to_point_gradient": 57981.13824196291
+        },
+        {
+          "step": 10000,
+          "point": 0.8048952444982961,
+          "secant": 47.940183685773725,
+          "response": 5.226179878702959e-06,
+          "rank": [
+            1,
+            283.33333333333337,
+            5.226179878702959e-06,
+            48.74507893027202
+          ],
+          "weighted_gradient_norms": [
+            0.00019127073832289238,
+            0.0,
+            22.737504174858845
+          ],
+          "feedback_to_point_gradient": 118876.0203166816
+        },
+        {
+          "step": 30000,
+          "point": 0.8048929858970149,
+          "secant": 70.23710848530315,
+          "response": 8.143811971972897e-06,
+          "rank": [
+            1,
+            70.66666666666669,
+            8.143811971972897e-06,
+            71.04200147120017
+          ],
+          "weighted_gradient_norms": [
+            0.00014421143786257778,
+            0.0,
+            22.58700725228074
+          ],
+          "feedback_to_point_gradient": 156624.24275808406
+        },
+        {
+          "step": 60000,
+          "point": 0.8048971817450589,
+          "secant": 101.22777169149718,
+          "response": 5.087634865745577e-06,
+          "rank": [
+            1,
+            407.66666666666674,
+            5.087634865745577e-06,
+            102.03266887324224
+          ],
+          "weighted_gradient_norms": [
+            0.00026684025123868287,
+            0.0,
+            0.5153094718858502
+          ],
+          "feedback_to_point_gradient": 1931.1534504024917
+        }
+      ],
+      "feedback_final_over_initial": 380.46282427516064
+    },
+    {
+      "arm": "N101",
+      "seed": 43,
+      "selected_step": 0,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8357078636183974,
+          "secant": 1.3678360225821136,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            2.203543886200511
+          ],
+          "weighted_gradient_norms": [
+            0.11596911547417016,
+            0.0,
+            0.011596911547417016
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.805432683900413,
+          "secant": 9.694214678315712,
+          "response": 4.631404151211823e-06,
+          "rank": [
+            1,
+            857.0000000000001,
+            4.631404151211823e-06,
+            10.499647362216125
+          ],
+          "weighted_gradient_norms": [
+            0.002405226145842884,
+            0.0,
+            46.20420810072066
+          ],
+          "feedback_to_point_gradient": 19209.922601489485
+        },
+        {
+          "step": 3000,
+          "point": 0.8050813665103929,
+          "secant": 16.40434661597553,
+          "response": 7.82895760060502e-06,
+          "rank": [
+            1,
+            67.00000000000001,
+            7.82895760060502e-06,
+            17.209427982485924
+          ],
+          "weighted_gradient_norms": [
+            0.0004640097842007855,
+            0.0,
+            16.594290947505165
+          ],
+          "feedback_to_point_gradient": 35762.80395916072
+        },
+        {
+          "step": 10000,
+          "point": 0.8050302814269681,
+          "secant": 7.078733878840537,
+          "response": 4.278120969117707e-06,
+          "rank": [
+            1,
+            71.0,
+            4.278120969117707e-06,
+            7.883764160267505
+          ],
+          "weighted_gradient_norms": [
+            0.00023642380958527567,
+            0.0,
+            34.400401658775586
+          ],
+          "feedback_to_point_gradient": 145503.11882343522
+        },
+        {
+          "step": 30000,
+          "point": 0.8050287757068418,
+          "secant": 29.07893373566837,
+          "response": 1.014703984093502e-05,
+          "rank": [
+            1,
+            186.33333333333337,
+            1.014703984093502e-05,
+            29.883962511375213
+          ],
+          "weighted_gradient_norms": [
+            0.00026322955422864103,
+            0.0,
+            39.110038788789026
+          ],
+          "feedback_to_point_gradient": 148577.68879104688
+        },
+        {
+          "step": 60000,
+          "point": 0.8050328498927007,
+          "secant": 28.8352007116243,
+          "response": 4.686747422126397e-06,
+          "rank": [
+            1,
+            762.6666666666667,
+            4.686747422126397e-06,
+            29.640233561517
+          ],
+          "weighted_gradient_norms": [
+            0.00032906212705741654,
+            0.0,
+            0.9875234754969646
+          ],
+          "feedback_to_point_gradient": 3001.0244093652755
+        }
+      ],
+      "feedback_final_over_initial": 118.04018600855103
+    },
+    {
+      "arm": "N110",
+      "seed": 17,
+      "selected_step": 60000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8356734159929526,
+          "secant": 10.02299958915563,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            10.858673005148582
+          ],
+          "weighted_gradient_norms": [
+            0.1157855378993457,
+            0.011578553789934571,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.8054479478776342,
+          "secant": 10.203312996192746,
+          "response": 1.8969059462677717e-08,
+          "rank": [
+            2,
+            8.666666666666668,
+            1.8969059462677717e-08,
+            11.008760944070382
+          ],
+          "weighted_gradient_norms": [
+            0.002377715956867498,
+            0.06930009794232299,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8050988633073954,
+          "secant": 10.165749159788248,
+          "response": 4.748234236023022e-08,
+          "rank": [
+            2,
+            9.333333333333334,
+            4.748234236023022e-08,
+            10.970848023095645
+          ],
+          "weighted_gradient_norms": [
+            0.0004395050650592428,
+            0.12588465095735754,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8050494547940762,
+          "secant": 8.202587927611122,
+          "response": 3.0837239161654974e-08,
+          "rank": [
+            2,
+            34.66666666666667,
+            3.0837239161654974e-08,
+            9.007637382405198
+          ],
+          "weighted_gradient_norms": [
+            0.0002692326032356386,
+            0.05112037620805422,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8050474523318386,
+          "secant": 10.041170380935355,
+          "response": 1.7889216441134403e-08,
+          "rank": [
+            2,
+            7.333333333333334,
+            1.7889216441134403e-08,
+            10.846217833267193
+          ],
+          "weighted_gradient_norms": [
+            0.00022916740858526912,
+            0.06544966127843234,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8050452226316398,
+          "secant": 7.682959684538539,
+          "response": 7.725363223808741e-08,
+          "rank": [
+            2,
+            1.6666666666666667,
+            7.725363223808741e-08,
+            8.488004907170179
+          ],
+          "weighted_gradient_norms": [
+            0.00016950647893951079,
+            0.12133087814063623,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 10.053566855760861
+    },
+    {
+      "arm": "N110",
+      "seed": 29,
+      "selected_step": 0,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.835686952588469,
+          "secant": 4.839128449134744,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            5.6748154017232135
+          ],
+          "weighted_gradient_norms": [
+            0.11638396907391903,
+            0.011638396907391903,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.805300699109502,
+          "secant": 6.062622424164616,
+          "response": 1.963146083005789e-08,
+          "rank": [
+            1,
+            28.333333333333336,
+            1.963146083005789e-08,
+            6.867923123274117
+          ],
+          "weighted_gradient_norms": [
+            0.0023939267298015913,
+            0.10114918879508464,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8049479513501702,
+          "secant": 7.370715014129265,
+          "response": 1.6162733824706202e-07,
+          "rank": [
+            1,
+            40.66666666666667,
+            1.6162733824706202e-07,
+            8.175662965479436
+          ],
+          "weighted_gradient_norms": [
+            0.0004407774169590443,
+            0.11844292254907975,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8048968676257597,
+          "secant": 5.808674738295509,
+          "response": 2.2553222903187127e-08,
+          "rank": [
+            1,
+            27.33333333333334,
+            2.2553222903187127e-08,
+            6.613571605921269
+          ],
+          "weighted_gradient_norms": [
+            0.0003238980556521235,
+            0.07213382636262321,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8048957416575174,
+          "secant": 6.930748638412799,
+          "response": 5.1177448537155254e-08,
+          "rank": [
+            1,
+            18.666666666666668,
+            5.1177448537155254e-08,
+            7.735644380070317
+          ],
+          "weighted_gradient_norms": [
+            0.00021326581538902377,
+            0.17414205129583227,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8048945031330258,
+          "secant": 7.314453934776831,
+          "response": 7.572435747482436e-08,
+          "rank": [
+            1,
+            47.00000000000001,
+            7.572435747482436e-08,
+            8.119348437909856
+          ],
+          "weighted_gradient_norms": [
+            0.00021562845839311133,
+            0.108834937689356,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 5.662808686462504
+    },
+    {
+      "arm": "N110",
+      "seed": 43,
+      "selected_step": 30000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8357078636183974,
+          "secant": 1.3678360225821136,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            2.203543886200511
+          ],
+          "weighted_gradient_norms": [
+            0.11596911547417016,
+            0.011596911547417016,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 1000,
+          "point": 0.8054245649660995,
+          "secant": 1.2764160502461412,
+          "response": 1.715096653540183e-07,
+          "rank": [
+            1,
+            16.666666666666668,
+            1.715096653540183e-07,
+            2.081840615212241
+          ],
+          "weighted_gradient_norms": [
+            0.0023722041312457145,
+            0.044871505607720207,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 3000,
+          "point": 0.8050759533306802,
+          "secant": 1.693375592795933,
+          "response": 1.9183275884360608e-07,
+          "rank": [
+            1,
+            45.66666666666667,
+            1.9183275884360608e-07,
+            2.4984515461266135
+          ],
+          "weighted_gradient_norms": [
+            0.0004387141172824753,
+            0.06518547336589275,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 10000,
+          "point": 0.8050255867436341,
+          "secant": 1.2993498511364618,
+          "response": 9.875664602035426e-08,
+          "rank": [
+            1,
+            6.333333333333334,
+            9.875664602035426e-08,
+            2.104375437880096
+          ],
+          "weighted_gradient_norms": [
+            0.00018770931610907163,
+            0.02015243906652282,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 30000,
+          "point": 0.8050243518189344,
+          "secant": 1.9625706984161195,
+          "response": 1.2537936846727932e-07,
+          "rank": [
+            1,
+            5.666666666666668,
+            1.2537936846727932e-07,
+            2.767595050235054
+          ],
+          "weighted_gradient_norms": [
+            0.00017668812046004915,
+            0.028422610596145193,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        },
+        {
+          "step": 60000,
+          "point": 0.8050220131012253,
+          "secant": 1.3029467173892455,
+          "response": 1.1128223651563685e-07,
+          "rank": [
+            1,
+            23.333333333333336,
+            1.1128223651563685e-07,
+            2.107968730490471
+          ],
+          "weighted_gradient_norms": [
+            8.215115127766435e-05,
+            0.05057474984104256,
+            0.0
+          ],
+          "feedback_to_point_gradient": 0.0
+        }
+      ],
+      "feedback_final_over_initial": 2.802748839363225
+    },
+    {
+      "arm": "N111",
+      "seed": 17,
+      "selected_step": 1000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8356734159929526,
+          "secant": 10.02299958915563,
+          "response": 7.68420137314945e-09,
+          "rank": [
+            2,
+            7.666666666666668,
+            7.68420137314945e-09,
+            10.858673005148582
+          ],
+          "weighted_gradient_norms": [
+            0.1157855378993457,
+            0.011578553789934571,
+            0.011578553789934573
+          ],
+          "feedback_to_point_gradient": 0.10000000000000002
+        },
+        {
+          "step": 1000,
+          "point": 0.8054511517829805,
+          "secant": 10.704802480394383,
+          "response": 9.977031454982364e-08,
+          "rank": [
+            2,
+            2.666666666666667,
+            9.977031454982364e-08,
+            11.510253632177363
+          ],
+          "weighted_gradient_norms": [
+            0.0024013214303931795,
+            0.08137868710655678,
+            34.11744734134867
+          ],
+          "feedback_to_point_gradient": 14207.78031192703
+        },
+        {
+          "step": 3000,
+          "point": 0.8051009932703674,
+          "secant": 8.501625962027951,
+          "response": 2.421261422762177e-07,
+          "rank": [
+            2,
+            29.666666666666668,
+            2.421261422762177e-07,
+            9.306726955298318
+          ],
+          "weighted_gradient_norms": [
+            0.00047929083965941074,
+            0.21001634847983897,
+            42.03203964077825
+          ],
+          "feedback_to_point_gradient": 87696.31330873478
+        },
+        {
+          "step": 10000,
+          "point": 0.8050501511712795,
+          "secant": 10.707692845312737,
+          "response": 1.6128567400469795e-07,
+          "rank": [
+            2,
+            76.0,
+            1.6128567400469795e-07,
+            11.512742996484016
+          ],
+          "weighted_gradient_norms": [
+            0.0002749807053013025,
+            0.07730283023482555,
+            42.7391394472134
+          ],
+          "feedback_to_point_gradient": 155425.95761540128
+        },
+        {
+          "step": 30000,
+          "point": 0.8050477564151274,
+          "secant": 8.884558083938142,
+          "response": 2.0863244048421963e-08,
+          "rank": [
+            2,
+            29.333333333333336,
+            2.0863244048421963e-08,
+            9.68960584035327
+          ],
+          "weighted_gradient_norms": [
+            0.00021024618756276242,
+            0.0322105880377005,
+            1.6730225657609437
+          ],
+          "feedback_to_point_gradient": 7957.4454364910425
+        },
+        {
+          "step": 60000,
+          "point": 0.8050481589660512,
+          "secant": 8.170538568474427,
+          "response": 6.243263295055713e-08,
+          "rank": [
+            2,
+            17.333333333333336,
+            6.243263295055713e-08,
+            8.97558672744048
+          ],
+          "weighted_gradient_norms": [
+            0.0002016282713798118,
+            0.11998258145733927,
+            1.5560443590149333
+          ],
+          "feedback_to_point_gradient": 7717.391754471658
+        }
+      ],
+      "feedback_final_over_initial": 8.124804377031632
+    },
+    {
+      "arm": "N111",
+      "seed": 29,
+      "selected_step": 3000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.835686952588469,
+          "secant": 4.839128449134744,
+          "response": 1.3372225986699996e-08,
+          "rank": [
+            1,
+            10.333333333333334,
+            1.3372225986699996e-08,
+            5.6748154017232135
+          ],
+          "weighted_gradient_norms": [
+            0.11638396907391903,
+            0.011638396907391903,
+            0.011638396907391903
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8053039141306397,
+          "secant": 5.029964680916224,
+          "response": 5.0086915202246824e-08,
+          "rank": [
+            1,
+            37.333333333333336,
+            5.0086915202246824e-08,
+            5.835268595046864
+          ],
+          "weighted_gradient_norms": [
+            0.002410157684292124,
+            0.10146661282482777,
+            16.75907471401322
+          ],
+          "feedback_to_point_gradient": 6953.517947492905
+        },
+        {
+          "step": 3000,
+          "point": 0.804949759009364,
+          "secant": 6.22146679754403,
+          "response": 1.151306281127377e-07,
+          "rank": [
+            1,
+            6.0,
+            1.151306281127377e-07,
+            7.026416556553395
+          ],
+          "weighted_gradient_norms": [
+            0.0004622268244286349,
+            0.2104419142278946,
+            10.368834974844429
+          ],
+          "feedback_to_point_gradient": 22432.35231460548
+        },
+        {
+          "step": 10000,
+          "point": 0.804897321927977,
+          "secant": 10.580596327004438,
+          "response": 1.4556478357026712e-08,
+          "rank": [
+            1,
+            9.666666666666668,
+            1.4556478357026712e-08,
+            11.385493648932414
+          ],
+          "weighted_gradient_norms": [
+            0.00026952299560486684,
+            0.03686537874001793,
+            22.461509385982847
+          ],
+          "feedback_to_point_gradient": 83338.00733987261
+        },
+        {
+          "step": 30000,
+          "point": 0.8048954704767295,
+          "secant": 5.927681371656956,
+          "response": 9.006030125564689e-08,
+          "rank": [
+            1,
+            40.33333333333334,
+            9.006030125564689e-08,
+            6.732576842133685
+          ],
+          "weighted_gradient_norms": [
+            0.0002520889574837086,
+            0.1925062558600668,
+            0.10759054166203828
+          ],
+          "feedback_to_point_gradient": 426.79593241997276
+        },
+        {
+          "step": 60000,
+          "point": 0.8048966288161377,
+          "secant": 7.6061218386330625,
+          "response": 1.9739245044678756e-08,
+          "rank": [
+            1,
+            21.666666666666668,
+            1.9739245044678756e-08,
+            8.4110184674492
+          ],
+          "weighted_gradient_norms": [
+            0.00020435461967848402,
+            0.10355369794164868,
+            0.494709249731132
+          ],
+          "feedback_to_point_gradient": 2420.8371237678393
+        }
+      ],
+      "feedback_final_over_initial": 1.476137560366643
+    },
+    {
+      "arm": "N111",
+      "seed": 43,
+      "selected_step": 10000,
+      "series": [
+        {
+          "step": 0,
+          "point": 0.8357078636183974,
+          "secant": 1.3678360225821136,
+          "response": 3.9704676691943544e-08,
+          "rank": [
+            1,
+            10.666666666666668,
+            3.9704676691943544e-08,
+            2.203543886200511
+          ],
+          "weighted_gradient_norms": [
+            0.11596911547417016,
+            0.011596911547417016,
+            0.011596911547417016
+          ],
+          "feedback_to_point_gradient": 0.1
+        },
+        {
+          "step": 1000,
+          "point": 0.8054274657078574,
+          "secant": 1.5534852689312215,
+          "response": 9.02403592601848e-08,
+          "rank": [
+            1,
+            28.666666666666668,
+            9.02403592601848e-08,
+            2.358912734639079
+          ],
+          "weighted_gradient_norms": [
+            0.0023938608097572563,
+            0.02466907044189257,
+            29.068400506802885
+          ],
+          "feedback_to_point_gradient": 12142.895020596663
+        },
+        {
+          "step": 3000,
+          "point": 0.8050769715229754,
+          "secant": 1.4922964361667628,
+          "response": 6.328327625097452e-08,
+          "rank": [
+            1,
+            8.666666666666668,
+            6.328327625097452e-08,
+            2.2973734076897383
+          ],
+          "weighted_gradient_norms": [
+            0.0004525643258000985,
+            0.07881935782523594,
+            4.028098128602267
+          ],
+          "feedback_to_point_gradient": 8900.609038242028
+        },
+        {
+          "step": 10000,
+          "point": 0.8050264470843908,
+          "secant": 1.879159630622334,
+          "response": 1.1097347589946794e-07,
+          "rank": [
+            1,
+            2.3333333333333335,
+            1.1097347589946794e-07,
+            2.6841860777067246
+          ],
+          "weighted_gradient_norms": [
+            0.00018974904095321322,
+            0.01666638220455651,
+            24.438781840223655
+          ],
+          "feedback_to_point_gradient": 128795.28516958129
+        },
+        {
+          "step": 30000,
+          "point": 0.805023293414979,
+          "secant": 1.522473548621427,
+          "response": 1.7519136982668072e-07,
+          "rank": [
+            1,
+            33.333333333333336,
+            1.7519136982668072e-07,
+            2.327496842036406
+          ],
+          "weighted_gradient_norms": [
+            8.410967068992663e-05,
+            0.027613900662723005,
+            0.22885301628426613
+          ],
+          "feedback_to_point_gradient": 2720.8882689356988
+        },
+        {
+          "step": 60000,
+          "point": 0.8050276083391615,
+          "secant": 1.4604668013623097,
+          "response": 1.0268561847110939e-07,
+          "rank": [
+            1,
+            25.0,
+            1.0268561847110939e-07,
+            2.2654944097014713
+          ],
+          "weighted_gradient_norms": [
+            0.00016632511227754446,
+            0.043289344759984194,
+            0.8569814717625027
+          ],
+          "feedback_to_point_gradient": 5152.4478776991255
+        }
+      ],
+      "feedback_final_over_initial": 2.5862348475424124
+    }
+  ],
+  "objective_geometry": [
+    {
+      "arm": "C01",
+      "gate": 0,
+      "clipped_target_fraction": 0.06486002604166667,
+      "clipped_point_SSE_fraction": [
+        0.9999179564402328,
+        0.9999467583978086,
+        0.9999952298271454
+      ],
+      "full_point_loss": [
+        0.16726377985784105,
+        0.23198424656519076,
+        0.17838024166855146
+      ],
+      "unsaturated_point_loss": [
+        1.4674718546774424e-05,
+        1.3207876162032946e-05,
+        9.0992216178176e-07
+      ],
+      "lower_bound_MSE_with_pointwise_logit_correction_bound_0p1": [
+        0.15043314814226394,
+        0.2115524849013979,
+        0.160951617513408
+      ],
+      "gradient_norm_clipped": [
+        0.0917190692188314,
+        0.1087612661063368,
+        0.09479073377222837
+      ],
+      "gradient_norm_unsaturated": [
+        0.0007142588526394197,
+        0.00047090690676647944,
+        0.00011788963440595199
+      ],
+      "gradient_cosine": [
+        -0.022850154216703146,
+        0.05503112366567813,
+        -0.02752823901334325
+      ],
+      "limitation": "Loss concentration is not proof of optimizer harm: local basis supports can decouple regions. Test a target-consistent objective at matched support, budget and deployment."
+    },
+    {
+      "arm": "N000",
+      "gate": 8,
+      "clipped_target_fraction": 0.239990234375,
+      "clipped_point_SSE_fraction": [
+        0.9999994468316344,
+        0.9999965097124316,
+        0.9999997599716539
+      ],
+      "full_point_loss": [
+        5.676192864644055,
+        5.617907674067183,
+        5.658186383807902
+      ],
+      "unsaturated_point_loss": [
+        4.131381566678422e-06,
+        2.579981757360405e-05,
+        1.786983759812813e-06
+      ],
+      "lower_bound_MSE_with_pointwise_logit_correction_bound_0p1": [
+        5.4795088700407355,
+        5.422219140378079,
+        5.461786550503477
+      ],
+      "gradient_norm_clipped": [
+        0.5907897147835584,
+        0.5877490846548363,
+        0.5898526473494549
+      ],
+      "gradient_norm_unsaturated": [
+        0.00012251156039769793,
+        0.0003794268951738969,
+        9.644003983324317e-05
+      ],
+      "gradient_cosine": [
+        -0.0021868293134403613,
+        -0.0029683324118264646,
+        -0.0027119307306610165
+      ],
+      "limitation": "Loss concentration is not proof of optimizer harm: local basis supports can decouple regions. Test a target-consistent objective at matched support, budget and deployment."
+    }
+  ],
+  "feedback_policy": {
+    "ticks": 4,
+    "dt_ms": 0.1,
+    "every": 64,
+    "batch": 8,
+    "weights_calibrated_once": true
+  },
+  "source_archive_sha256": "b27fdfc79da68a5b6afbe3aba44f608d53a84a42594a01183d6d5c6dd4e16311",
+  "memory_query": {
+    "sql": "SELECT [Codice stabile] code,Nome,Risultato,Limitazioni FROM findings WHERE [Codice stabile] IN (?,?,?,?,?,?,?)",
+    "parameters": [
+      "findings-giada-task39j-result-registered_contrasts-v1",
+      "findings-giada-task39j-result-freeze_contrast-v1",
+      "findings-giada-task41c-audit-ca_mechanism-v1",
+      "findings-giada-task41c-audit-nap_mechanism-v1",
+      "findings-giada-task41c-audit-secants-v1",
+      "findings-giada-task41c-audit-regression-v1",
+      "findings-giada-task41bc-41b-result-v1"
+    ],
+    "rows": [
+      {
+        "code": "findings-giada-task41c-audit-ca_mechanism-v1",
+        "Nome": "Task41c ca_mechanism",
+        "Risultato": "ReplacingonlyCa_HVA.m equilibrium u0 bycanonical diagnosticvalues givesoffset0,0,0,0.1,0ms;z0,u1,z1 alone do not repair. FP64stateaccumulationleavesallfivefailures(0.5,3.8,0.5,3.7,0.7ms). Learnedurestbias~1.06e-4in17/29and2.02e-5in43rescalesm^2h. Localtimingsensitivity-residual/slopepredicts0.484,3.800,0.471,3.718,0.775ms,close toobserved0.5,3.8,0.5,3.7,0.8. Dominanttestedcauseisequilibriumprecision,not missing slowstate.",
+        "Limitazioni": "Post-hoc analysis of opened41c,not a new confirmation. Oracles are diagnostic and not eligible inference models. CPU eager replay is not bitwise CUDA reproduction;response baselines retain the same fail flags,stress all36channel verdicts/eventtimes reproduced. Two failed responses are2protocol/seedchecks;five stresschecks are2initial-state/panel histories of1inputseed across3modelseeds. Initialstate and panel differ between the two histories,so their difference does not isolate initialstate causality. ScientificNO_GO retained,thresholds unchanged,noTask42authorization. No new training or selection performed."
+      },
+      {
+        "code": "findings-giada-task39j-result-registered_contrasts-v1",
+        "Nome": "Task39j registered_contrasts",
+        "Risultato": "0/8 meet registered thresholds;severity excludes timing and max-over-channel metrics are often dominated by unchangedchannels. Do not call unfreezing harm a positive result for the reverse preregistered improvement test.",
+        "Limitazioni": "Repeated development,not independentconfirmation;24trajectories perrole x3trainingseeds. Two stressfailures remain;V/Ca imposed. No speedup/autonomouscompartment claim.8registeredcontrasts do not pass;freeze support is scoped,not universal."
+      },
+      {
+        "code": "findings-giada-task41c-audit-regression-v1",
+        "Nome": "Task41c regression",
+        "Risultato": "On identical41c inputs B6failscase122seed29/43;P110fixesboth,but introducescase122seed17andcase108seed43. Both334/336 doesnotmean samefailures or monotoneimprovement. Allothertrajectories remainwithin gates;P110improves527to528andstress30to31. Ca_HVAfailures identicalB6/P110;Imseed43input241143case1 isfixedbyP110.",
+        "Limitazioni": "Post-hoc analysis of opened41c,not a new confirmation. Oracles are diagnostic and not eligible inference models. CPU eager replay is not bitwise CUDA reproduction;response baselines retain the same fail flags,stress all36channel verdicts/eventtimes reproduced. Two failed responses are2protocol/seedchecks;five stresschecks are2initial-state/panel histories of1inputseed across3modelseeds. Initialstate and panel differ between the two histories,so their difference does not isolate initialstate causality. ScientificNO_GO retained,thresholds unchanged,noTask42authorization. No new training or selection performed."
+      },
+      {
+        "code": "findings-giada-task41c-audit-nap_mechanism-v1",
+        "Nome": "Task41c nap_mechanism",
+        "Risultato": "Canonicalu8-onlycoupledCPUoracle bringsbothfailedresponsesunderthreshold(0.008148/0.007993 versusCPUbaseline0.011434/0.010131). RemovingonlyP110u8correctionyieldssixofsixresponsepassesonthetwoopenedprotocolpairs,includingall3seeds. Otherreversionsshowinteractions:z7reversionfixes122seed17butbreaksseed29;z11reversionfixes108butworsens122. No globalpromotionofrevertedmodel:oldNapstressmayreturn.",
+        "Limitazioni": "Post-hoc analysis of opened41c,not a new confirmation. Oracles are diagnostic and not eligible inference models. CPU eager replay is not bitwise CUDA reproduction;response baselines retain the same fail flags,stress all36channel verdicts/eventtimes reproduced. Two failed responses are2protocol/seedchecks;five stresschecks are2initial-state/panel histories of1inputseed across3modelseeds. Initialstate and panel differ between the two histories,so their difference does not isolate initialstate causality. ScientificNO_GO retained,thresholds unchanged,noTask42authorization. No new training or selection performed."
+      },
+      {
+        "code": "findings-giada-task39j-result-freeze_contrast-v1",
+        "Nome": "Task39j freeze_contrast",
+        "Risultato": "J2 vsJ8 differs byparenttrainability. Unfreezing harms selection-panel performance under this budget/objective/learningrate; it does not prove unfreezing can never work. J8 lowers coefficient holdout loss dramatically but not relaxation loss;global scalar optimization is not eventtiming qualification.",
+        "Limitazioni": "Repeated development,not independentconfirmation;24trajectories perrole x3trainingseeds. Two stressfailures remain;V/Ca imposed. No speedup/autonomouscompartment claim.8registeredcontrasts do not pass;freeze support is scoped,not universal."
+      },
+      {
+        "code": "findings-giada-task41c-audit-secants-v1",
+        "Nome": "Task41c secants",
+        "Risultato": "Onreferencebase/interventionVpairs,P110u8absoluteRMSEisworsethanB6:8.60e-6vs6.29e-6(case122seed17),1.14e-5vs6.74e-6(case108seed43). PairsecantRMSEalsoincreases3.04e-4vs2.48e-4and3.40e-4vs3.32e-4,conditionedondeltaV>1e-4mV. DifferencesinVareonly~2.5e-4mV;FP32roundingmatters. Thismotivatessmoothness/pairedsupervision,butdoesnotprovebasis-knotartifactsuniquelycausefailure.",
+        "Limitazioni": "Post-hoc analysis of opened41c,not a new confirmation. Oracles are diagnostic and not eligible inference models. CPU eager replay is not bitwise CUDA reproduction;response baselines retain the same fail flags,stress all36channel verdicts/eventtimes reproduced. Two failed responses are2protocol/seedchecks;five stresschecks are2initial-state/panel histories of1inputseed across3modelseeds. Initialstate and panel differ between the two histories,so their difference does not isolate initialstate causality. ScientificNO_GO retained,thresholds unchanged,noTask42authorization. No new training or selection performed."
+      },
+      {
+        "code": "findings-giada-task41bc-41b-result-v1",
+        "Nome": "Task41b P110 repairs opened quality, with cost penalty",
+        "Risultato": "P110 alone:528/528 bothmodes,336/336responses bothmodes,36/36stress,24/24newdevelopment;allhistorical264/264+168/168bothmodes,72/72recurrenceeachrole. B6reproduced527/528,33/36stress. Allsavedtensorsfinite. Fullrawreports queryable inobservations.",
+        "Limitazioni": "Opened repair,notindependentconfirmation. P010autonomousNapresponse335/336. Conditionedobjective notsystematicallyhelpful. Noformalcontrastimprovesall3seeds. P110stressoffset touches0.3mslimit. P110slowerthanB6andLUT;large4096batchslowerthanformula. NoTask42authorization."
+      }
+    ]
+  }
+}

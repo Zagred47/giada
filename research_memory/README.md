@@ -7,8 +7,12 @@ conservazione locale del nuovo backup, senza caricamento Drive.
 `data/local_backup_receipt.json` e il manifest SQLite indicano l'archivio
 unico completo verificato e il suo SHA256. La ricevuta Drive conserva
 l'ultima copia remota precedente, che non include il nuovo audit40b.
-Lo snapshot JSON XZ in Git include tutti i record aggiornati; il conteggio
-esatto è nel manifest e nella ricevuta locale più recente.
+**22 ottobre2026, Task41d/e:** il DB completo e il relativo export restano
+locali. Git conserva protocolli, script di registrazione e ricevute verificate;
+il precedente JSON XZ versionato può essere meno recente del mirror operativo.
+Il conteggio corrente è nella ricevuta locale più recente. Non sostituire il
+mirror esistente con lo snapshot Git storico e non pushare DB o nuovi archivi
+del suo contenuto durante questa fase.
 Non ripristinare la vecchia copia Drive come se fosse la versione corrente.
 Per Task41 il backup è direttamente un singolo SQLite verificato, non compresso:
 `python -m research_memory.prepare_drive_backup` (il nome è storico; scrive solo

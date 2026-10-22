@@ -1253,6 +1253,22 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     poi quattro controlli di composizione. Soglie invariate; ogni riparazione
     richiede successiva conferma indipendente. Notebook unico,
     `giada_task41d_precision_response.ipynb`; backup esterni PC, DB locale.
+    **Esito 41d:** nessun braccio supera tutti i gate. C01 migliora le risposte
+    autonome a335/336 e gli stress nuovi a32/36; C11 arriva33/36 stress ma non
+    era il nominato. La composizione C01+N000 introduce regressioni. Audit:
+    `results/task41d_audited_v1/synthesis.json`; la loss logit sui target
+    saturi e il bilanciamento iniziale richiedono contrasti controllati.
+  - **Task41e — Trasferimento e obiettivo di apprendimento:** dodici
+    configurazioni con controlli condivisi e tre seed nello stesso notebook
+    `giada_task41e_transfer_diagnosis.ipynb`. Loss logit attuale/censurata
+    ×bilanciamento iniziale/dinamico, feedback0,4/4ms ×supporto FIT
+    ampio/stratificato, training Ca/Nap separato/congiunto ×protezione code.
+    Due correzioni da64pesi, P110 e gli altri coefficienti congelati.
+    Replay V/Ca imposti/liberi, FP32/64, oracoli diagnostici, Jacobiani locali,
+    regressioni complete e confronto della composizione con una sola
+    valutazione del padre. Gate originali e livello di astrazione conservati;
+    K_Pst resta nel giudizio globale. Protocollo `task41e_preregistration_v1.json`.
+    Backup esperimento esterni al runtime; backup SQLite locale.
 
 ### ✅ Uscita del blocco 1
 
