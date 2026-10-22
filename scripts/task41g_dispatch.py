@@ -29,8 +29,15 @@ def main():
         pf=json.loads((folder/'gpu_preflight.json').read_text())
         assert pf['valid'] and pf['all_parameters_finite'] and pf['whole_loop_4096_parity_passed'] and pf['auxiliary_update_executed']
         assert pf['protocol_sha256']==digest(ROOT/'experiments/task41g_preregistration_v1.json')
-        receipt=json.loads((folder/'memory_receipt.json').read_text());assert receipt['valid'] and receipt['registration_before_scientific_run']
-        revision=pf['revision'];value=dict(task='41g',revision=revision,profile=args.profile,inputs=[])
+        full_readback=(folder/'memory_receipt.json').exists()
+        receipt=json.loads((folder/('memory_receipt.json' if full_readback else 'registration_committed.json')).read_text())
+        assert receipt['valid'] and receipt['registration_before_scientific_run']
+        # The prospective transaction must already be committed and bound to
+        # this protocol. Whole-memory readback may finish alongside GPU work.
+        from research_memory.mirror import Mirror
+        rows=Mirror().query("SELECT [Hash preregistrazione] h FROM protocols WHERE [Codice stabile]='protocols-giada-task41g-factorial-v1'")['rows']
+        assert len(rows)==1 and rows[0]['h']==pf['protocol_sha256']
+        revision=pf['revision'];value=dict(task='41g',revision=revision,profile=args.profile,inputs=[],DB_logical_readback_pending=not full_readback)
         for key,name in [('worker_sha256','scripts/run_task41g_preservation.py'),('manager_sha256','scripts/task41b_console_manager.py')]:
             raw=subprocess.check_output(['git','show',revision+':'+name],cwd=ROOT);assert raw==(ROOT/name).read_bytes()
             value[key]=hashlib.sha256(raw).hexdigest()

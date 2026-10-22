@@ -26,8 +26,10 @@ def main():
         rid=m.local_upsert(table,{'Codice stabile':code,**fields})['record_id'];ids[code]=rid;return rid
     if args.running:
         launch=json.loads((folder/'launch.json').read_text());assert launch['valid'] and launch['all_recovered_tensors_finite']
-        for name in ('launch.json','gpu_preflight.json','dispatch_request.json'):
-            path=folder/name;raw=path.read_bytes();artifacts.append(put('artifacts','dispatch-'+name,Nome='Task41g actual '+name,Tipo='Report',Versione='v1',Percorso=path.relative_to(repo).as_posix(),**{'SHA-256':hashlib.sha256(raw).hexdigest(),'Dimensione byte':len(raw)}))
+        for name in ('launch.json','gpu_preflight.json','dispatch_request.json','../../../scripts/task41g_dispatch.py'):
+            path=(folder/name).resolve();raw=path.read_bytes()
+            suffix='scripts/task41g_dispatch.py' if path.suffix=='.py' else 'dispatch-'+name
+            artifacts.append(put('artifacts',suffix,Nome='Task41g actual '+path.name,Tipo='Codice' if path.suffix=='.py' else 'Report',Versione='v1',Percorso=path.relative_to(repo).as_posix(),**{'SHA-256':hashlib.sha256(raw).hexdigest(),'Dimensione byte':len(raw)}))
         obs=put('observations','actual-dispatch',Nome='Task41g actual GPU run and external checkpoint',Descrizione=json.dumps(launch),**{'Artefatti dettagliati':artifacts})
         put('findings','actual-dispatch',Nome='Task41g pinned GPU execution and backup verified',Esito='Positivo',
             Esperimenti=[ref('experiments-giada-task41g-factorial-v1')],Osservazioni=[obs],
