@@ -85,9 +85,15 @@ class IncrementalBatchMirror(Mirror):
         for ti,key in enumerate(sorted(self.contract.tables)):
             if ti:h.update(b',')
             h.update((dumps(key)+':{').encode())
-            for ri,row in enumerate(con.execute('SELECT record_id,created_time,fields_json FROM _remote_records WHERE table_key=? ORDER BY record_id',(key,))):
+            for ri,row in enumerate(con.execute('SELECT rowid,record_id,created_time FROM _remote_records WHERE table_key=? ORDER BY record_id',(key,))):
                 if ri:h.update(b',')
-                h.update((dumps(row['record_id'])+':'+dumps(dict(createdTime=row['created_time'],fields=json.loads(row['fields_json'])))).encode())
+                h.update((dumps(row['record_id'])+':{"createdTime":'+dumps(row['created_time'])+',"fields":').encode())
+                # _remote_records is written exclusively with canonical dumps.
+                # Stream its UTF-8 TEXT bytes through SQLite incremental IO;
+                # several original scientific reports exceed400MB per row.
+                with con.blobopen('_remote_records','fields_json',row['rowid'],readonly=True) as blob:
+                    while chunk:=blob.read(1024*1024):h.update(chunk)
+                h.update(b'}')
             h.update(b'}')
         h.update(b'}');return h.hexdigest()
 
@@ -141,16 +147,19 @@ class IncrementalBatchMirror(Mirror):
     def export_snapshot_to(self,path):
         path=Path(path);temp=path.with_name(path.name+'.'+uuid.uuid4().hex+'.tmp')
         try:
-            with self.connect() as con,temp.open('w',encoding='utf-8',newline='\n') as stream:
+            with self.connect() as con,temp.open('wb') as stream:
                 con.execute('BEGIN')
-                stream.write('{"format":"airtable-record-snapshot-v1","base_id":'+dumps(self.contract.base_id)+',"complete":true,"tables":{')
+                stream.write(('{"format":"airtable-record-snapshot-v1","base_id":'+dumps(self.contract.base_id)+',"complete":true,"tables":{').encode())
                 for ti,(key,table) in enumerate(self.contract.tables.items()):
-                    if ti:stream.write(',')
-                    stream.write(dumps(table['id'])+':[')
-                    for ri,row in enumerate(con.execute('SELECT record_id,created_time,fields_json FROM _remote_records WHERE table_key=? ORDER BY record_id',(key,))):
-                        if ri:stream.write(',')
-                        stream.write('{"id":'+dumps(row[0])+',"createdTime":'+dumps(row[1])+',"cellValuesByFieldId":'+row[2]+'}')
-                    stream.write(']')
-                stream.write('}}\n')
+                    if ti:stream.write(b',')
+                    stream.write((dumps(table['id'])+':[').encode())
+                    for ri,row in enumerate(con.execute('SELECT rowid,record_id,created_time FROM _remote_records WHERE table_key=? ORDER BY record_id',(key,))):
+                        if ri:stream.write(b',')
+                        stream.write(('{"id":'+dumps(row[1])+',"createdTime":'+dumps(row[2])+',"cellValuesByFieldId":').encode())
+                        with con.blobopen('_remote_records','fields_json',row[0],readonly=True) as blob:
+                            while chunk:=blob.read(1024*1024):stream.write(chunk)
+                        stream.write(b'}')
+                    stream.write(b']')
+                stream.write(b'}}\n')
             temp.replace(path)
         finally:temp.unlink(missing_ok=True)
