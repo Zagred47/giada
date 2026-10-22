@@ -62,7 +62,8 @@ def main():
                 if isinstance(v,(list,tuple)):return all(finite(x) for x in v)
                 return True
             assert finite(value)
-        value=dict(valid=True,request=request,status_observed=status,external_backup=receipt,
+        pf=json.loads((folder/'gpu_preflight.json').read_text());assert pf['valid'] and pf['revision']==request['revision']
+        value=dict(valid=True,request=request,GPU_preflight=pf,runtime_probe=json.loads((folder/'runtime_probe.json').read_text()),status_observed=status,external_backup=receipt,
             last_recovered_checkpoint=checkpoint,all_recovered_tensors_finite=True,thresholds_changed=False,scientific_result_pending=True,DB_backup='localonly')
         write_json(folder/'launch.json',value)
     print(json.dumps(value),flush=True)

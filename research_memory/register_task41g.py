@@ -26,9 +26,9 @@ def main():
         rid=m.local_upsert(table,{'Codice stabile':code,**fields})['record_id'];ids[code]=rid;return rid
     if args.running:
         launch=json.loads((folder/'launch.json').read_text());assert launch['valid'] and launch['all_recovered_tensors_finite']
-        for name in ('launch.json','gpu_preflight.json','dispatch_request.json','../../../scripts/task41g_dispatch.py'):
+        for name in ('launch.json','gpu_preflight.json','dispatch_request.json','preserved_reports.json','../../../scripts/task41g_dispatch.py','../../../research_memory/register_task41g.py','../../../scripts/verify_task41g_preserved_reports.py','../../../research_memory/incremental_batch.py','../../../tests/test_incremental_memory.py'):
             path=(folder/name).resolve();raw=path.read_bytes()
-            suffix='scripts/task41g_dispatch.py' if path.suffix=='.py' else 'dispatch-'+name
+            suffix=path.relative_to(repo).as_posix() if path.suffix=='.py' else 'dispatch-'+name
             artifacts.append(put('artifacts',suffix,Nome='Task41g actual '+path.name,Tipo='Codice' if path.suffix=='.py' else 'Report',Versione='v1',Percorso=path.relative_to(repo).as_posix(),**{'SHA-256':hashlib.sha256(raw).hexdigest(),'Dimensione byte':len(raw)}))
         obs=put('observations','actual-dispatch',Nome='Task41g actual GPU run and external checkpoint',Descrizione=json.dumps(launch),**{'Artefatti dettagliati':artifacts})
         put('findings','actual-dispatch',Nome='Task41g pinned GPU execution and backup verified',Esito='Positivo',
@@ -37,7 +37,7 @@ def main():
         m.local_upsert('experiments',{'Codice stabile':'experiments-giada-task41g-factorial-v1','Stato':'In corso'})
         m.local_upsert('implementations',{'Codice stabile':'implementations-giada-task41g-worker-v1','Commit':launch['request']['revision']})
         for a in spec['arms']:
-            for seed in spec['seeds']:m.local_upsert('runs',{'Codice stabile':f"runs-giada-task41g-{a['name']}-{seed}-v1",'Stato':'In corso','Validità tecnica':'Observed GPU worker and finite external '+launch['last_recovered_checkpoint']+';result pending.'})
+            for seed in spec['seeds']:m.local_upsert('runs',{'Codice stabile':f"runs-giada-task41g-{a['name']}-{seed}-v1",'Stato':'In corso','Hardware e ambiente':json.dumps(launch['runtime_probe']),'Validità tecnica':'Observed GPU worker and finite external '+launch['last_recovered_checkpoint']+';result pending.'})
         m.local_upsert('actions',{'Codice stabile':'actions-giada-task41g-launch-v1','Stato':'Conclusa','Descrizione':'Actual console launch and off-runtime checkpoint verified; scientific run continues.'})
     else:
         paths=list(spec['sources'])+['experiments/task41g_preregistration_v1.json','scripts/build_task41g_protocol.py',
@@ -79,7 +79,9 @@ def main():
     m.commit_batch()
     if not args.running:write_json(folder/'registration_committed.json',dict(valid=True,records=ids,registration_before_scientific_run=True,logical_verification_pending=True,airtable_accessed=False))
     print('Task41g committed; exporting and verifying',flush=True)
-    m.export_snapshot_to(ROOT/'data/airtable_snapshot.json');verification=m.verify();assert verification['valid']
+    m.export_snapshot_to(ROOT/'data/airtable_snapshot.json')
+    verification=m.verify_incremental(json.loads((folder/'memory_receipt.json').read_text())['verification']) if args.running else m.verify()
+    assert verification['valid']
     write_json(folder/('launch_memory_receipt.json' if args.running else 'memory_receipt.json'),dict(valid=True,records=ids,verification=verification,planned_training_runs=36,registration_before_scientific_run=not args.running,airtable_accessed=False,DB_backup='localonly'))
     print('Task41g verified inSQLite',flush=True)
 

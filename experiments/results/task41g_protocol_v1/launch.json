@@ -1,0 +1,104 @@
+{
+  "valid": true,
+  "request": {
+    "task": "41g",
+    "revision": "296acd9956c22c7f3ae14ab4c64f3aa0c877859b",
+    "profile": "primary",
+    "inputs": [
+      {
+        "remote": "/content/task41b_opened_inputs.zip",
+        "sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb"
+      },
+      {
+        "remote": "/content/task41d_opened41c.zip",
+        "sha256": "172ec87c4b1135d4f3421d63343ae399368f8426a68fadcf4c7ca788c6e97aff"
+      }
+    ],
+    "DB_logical_readback_pending": true,
+    "worker_sha256": "9262d489ac2b96fef6ed2aa8fd97db8d5b6e62b1d5e27d858b96b7266d83ca53",
+    "manager_sha256": "ae6a4a49d699c9411457434b0e30c067d763445239e27bed3dec1795813caa52"
+  },
+  "GPU_preflight": {
+    "valid": true,
+    "device": "cuda",
+    "gpu": "Tesla T4",
+    "zero_Q0_error": 0.0,
+    "graph_error": 0.0,
+    "all_parameters_finite": true,
+    "members": 36,
+    "active_weights_per_seed": [
+      64,
+      64,
+      64,
+      64,
+      192,
+      192,
+      192,
+      192,
+      64,
+      64,
+      64,
+      64
+    ],
+    "tail_gradient_finite": true,
+    "z_frozen": true,
+    "protocol_sha256": "30bd38c24daee354c855683d2aa892b5c8027e998ef8ab433ed3af6115fe61d7",
+    "thresholds_changed": false,
+    "revision": "296acd9956c22c7f3ae14ab4c64f3aa0c877859b",
+    "account_profile": "primary",
+    "arms": [
+      "M_constant_point_broad",
+      "M_constant_sensitive_broad",
+      "M_anneal_point_broad",
+      "M_anneal_sensitive_broad",
+      "ALL_constant_point_broad",
+      "ALL_constant_sensitive_broad",
+      "ALL_anneal_point_broad",
+      "ALL_anneal_sensitive_broad",
+      "M_constant_point_tail",
+      "M_constant_sensitive_tail",
+      "M_anneal_point_tail",
+      "M_anneal_sensitive_tail"
+    ],
+    "precision_branches_executed": true,
+    "whole_loop_4096_parity_passed": true,
+    "auxiliary_update_executed": true,
+    "peak_cuda_memory_bytes": 270472704,
+    "scientific_training_performed": false
+  },
+  "runtime_probe": {
+    "valid": true,
+    "GPU": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "total_memory_bytes": 15637086208
+  },
+  "status_observed": {
+    "task": "41g",
+    "revision": "296acd9956c22c7f3ae14ab4c64f3aa0c877859b",
+    "started_unix": 1792700640.2947528,
+    "elapsed_seconds": 828.1167433261871,
+    "manager_pid": 5269,
+    "state": "running",
+    "phase": "scientific_worker",
+    "worker_pid": 5499,
+    "last_progress": "[GIADA Task41d] evaluation opened41 D_fused/autonomous 528/528 responses=336"
+  },
+  "external_backup": {
+    "valid": true,
+    "remote": {
+      "label": "1792701297108",
+      "archive": "/content/giada_task41g_296acd9956c2/recovery_1792701297108.zip",
+      "sha256": "f399d68e757be6b31eaa44d30e9b71beb96c493ecbfcc0682b2aece25c1839a5",
+      "bytes": 40591717
+    },
+    "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41g_primary_external\\recovery_1792701297108.zip",
+    "verified_at": 1792701332.007199,
+    "runtime_independent": true
+  },
+  "last_recovered_checkpoint": "checkpoint_60000.pt",
+  "all_recovered_tensors_finite": true,
+  "thresholds_changed": false,
+  "scientific_result_pending": true,
+  "DB_backup": "localonly"
+}

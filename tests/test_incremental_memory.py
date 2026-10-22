@@ -59,5 +59,12 @@ class IncrementalTests(unittest.TestCase):
         with b.connect() as con:
             value=json.loads(con.execute('SELECT fields_json FROM _remote_records WHERE table_key=? AND record_id=?',('actors',a)).fetchone()[0])
         self.assertEqual(value[link['inverseFieldId']],[s2,s1])
+    def test_delta_verification_requires_exact_full_baseline(self):
+        baseline=self.m.verify();b=IncrementalBatchMirror(self.path)
+        self.put(b,'actors','new');b.commit_batch()
+        result=b.verify_incremental(baseline)
+        self.assertTrue(result['valid']);self.assertEqual(result['changed_records_verified'],1)
+        with self.assertRaises(ValueError):b.verify_incremental(dict(baseline,snapshot_hash='wrong'))
+        self.assertTrue(b.verify()['valid'])
 
 if __name__=='__main__':unittest.main()

@@ -17,6 +17,7 @@ class IncrementalBatchMirror(Mirror):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.rows={};self.before={};self.indices={}
+        with self.connect() as con:self.baseline_hash=con.execute("SELECT value FROM _mirror_meta WHERE key='snapshot_hash'").fetchone()[0]
 
     def _get(self,key,rid):
         pair=(key,rid)
@@ -102,6 +103,8 @@ class IncrementalBatchMirror(Mirror):
             (row['createdTime'],dumps(row['fields']))!=self.before[pair]}
         with self.connect() as con:
             con.execute('BEGIN IMMEDIATE')
+            if con.execute("SELECT value FROM _mirror_meta WHERE key='snapshot_hash'").fetchone()[0]!=self.baseline_hash:
+                raise ValueError('Concurrent snapshot change; batch rolled back')
             for pair in self.rows:
                 old=con.execute('SELECT created_time,fields_json FROM _remote_records WHERE table_key=? AND record_id=?',pair).fetchone()
                 if (tuple(old) if old else None)!=self.before[pair]:raise ValueError('Concurrent record change; batch rolled back')
@@ -142,7 +145,33 @@ class IncrementalBatchMirror(Mirror):
             con.execute("INSERT OR REPLACE INTO _mirror_meta VALUES ('snapshot_hash',?)",(snapshot_hash,))
             con.execute("INSERT OR REPLACE INTO _mirror_meta VALUES ('operating_mode','local_sqlite_authoritative_pending_airtable_reconciliation')")
         self.rows.clear();self.before.clear();self.indices.clear()
+        self.last_expected={pair:(row['createdTime'],hashlib.sha256(dumps(row['fields']).encode()).hexdigest()) for pair,row in dirty.items()}
+        self.committed_hash=snapshot_hash
         return dict(changed_records=len(dirty),snapshot_hash=snapshot_hash)
+
+    def verify_incremental(self,baseline):
+        """Complete readback of changed rows after a verified unchanged baseline.
+
+        Global integrity/FKs are checked again. Unchanged scalar/JSON records
+        were never rewritten; changed reciprocal rows are included in the
+        before-image set. A different baseline requires the full verifier.
+        """
+        if not baseline.get('valid') or not baseline.get('logical_roundtrip_equal') or baseline['snapshot_hash']!=self.baseline_hash:
+            raise ValueError('Exact fully verified baseline required')
+        if not hasattr(self,'last_expected'):raise ValueError('No committed batch to verify')
+        with self.connect() as con:
+            for (key,rid),(created,expected) in self.last_expected.items():
+                raw=con.execute('SELECT created_time,fields_json FROM _remote_records WHERE table_key=? AND record_id=?',(key,rid)).fetchone()
+                row=con.execute(f'SELECT * FROM {quote(self.contract.tables[key]["name"])} WHERE _record_id=?',(rid,)).fetchone()
+                assert raw and row and raw[0]==created and row['_created_time']==created
+                assert hashlib.sha256(raw[1].encode()).hexdigest()==expected
+                cells={f['id']:json.loads(row[f['name']]) if f['type']=='multipleRecordLinks' else row[f['name']] for f in self.contract.tables[key]['fields']}
+                assert self.contract.normalize(key,cells)==self.contract.normalize(key,json.loads(raw[1]))
+        report=self.status()
+        okay=report['integrity']=='ok' and not report['foreign_key_errors'] and report['snapshot_hash']==self.committed_hash
+        report.update(valid=okay,logical_roundtrip_equal=okay,baseline_snapshot_hash=self.baseline_hash,
+            changed_records_verified=len(self.last_expected),verification_scope='Exact fully verified baseline + atomic delta and reciprocal readback + global integrity/FKs')
+        return report
 
     def export_snapshot_to(self,path):
         path=Path(path);temp=path.with_name(path.name+'.'+uuid.uuid4().hex+'.tmp')
