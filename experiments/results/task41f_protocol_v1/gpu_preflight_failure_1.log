@@ -1,0 +1,20 @@
+
+/content/giada41f_preflight_1792683289220171237/src/giada_teacher/task41f_precision_relaxation.py:356: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)
+  isolation=max(isolation,float((w[0]-model.f_correction[member]).abs().max()))
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+    report=f.preflight(torch,root,out,'cuda',spec)
+  File "/content/giada41f_preflight_1792683289220171237/src/giada_teacher/task41f_precision_relaxation.py", line 371, in preflight
+    graph=capture(torch,model,aa,atomic,idx,norm)
+  File "/content/giada41f_preflight_1792683289220171237/src/giada_teacher/task41f_precision_relaxation.py", line 389, in capture
+    with torch.cuda.graph(graph):atomic_step(torch,model,opt,atomic,idx,norm)
+                                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/giada41f_preflight_1792683289220171237/src/giada_teacher/task41f_precision_relaxation.py", line 310, in atomic_step
+    (atomic_terms(torch,model.f_correction,model.active,atomic,idx)/norm).sum().backward()
+     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/content/giada41f_preflight_1792683289220171237/src/giada_teacher/task41f_precision_relaxation.py", line 190, in atomic_terms
+    ru=prior.clipped_or_censored_error(torch,raw[...,:3],target[...,:3],True)
+  File "/content/giada41f_preflight_1792683289220171237/src/giada_teacher/task41e_transfer_model.py", line 157, in clipped_or_censored_error
+    censored = torch.as_tensor(censored,device=raw.device,dtype=torch.bool)
+RuntimeError: Cannot copy between CPU and CUDA tensors during CUDA graph capture unless the CPU tensor is pinned. Please use tensor.pin_memory() or allocate the tensor with pin_memory=True.

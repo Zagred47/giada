@@ -521,20 +521,34 @@ class Mirror:
 
     def verify(self):
         """Check normalized SQL tables/views against the preserved remote snapshot."""
-        actual = {"format": "airtable-record-snapshot-v1", "base_id": self.contract.base_id, "complete": True, "tables": {}}
+        # Compare the same normalized records in stable ID order, without
+        # retaining several complete multi-GB snapshots simultaneously.
+        from itertools import zip_longest
+        equal = True
         with self.connect() as conn:
+            known = set(self.contract.tables)
+            if any(row[0] not in known for row in conn.execute("SELECT DISTINCT table_key FROM _remote_records")):
+                raise ValueError("Unknown table in preserved snapshot")
             for key, t in self.contract.tables.items():
-                rows = []
-                for r in conn.execute(f"SELECT * FROM {quote(t['name'])} ORDER BY _record_id"):
+                actual = conn.execute(f"SELECT * FROM {quote(t['name'])} ORDER BY _record_id")
+                expected = conn.execute("SELECT record_id,created_time,fields_json FROM _remote_records WHERE table_key=? ORDER BY record_id", (key,))
+                for r, source in zip_longest(actual, expected):
+                    if r is None or source is None:
+                        equal = False
+                        continue
+                    if not re.fullmatch(r"rec[A-Za-z0-9]{14}",r["_record_id"]) or not re.fullmatch(r"rec[A-Za-z0-9]{14}",source["record_id"]):
+                        raise ValueError("Invalid record ID in roundtrip")
                     cells = {f["id"]: json.loads(r[f["name"]]) if f["type"] == "multipleRecordLinks" else r[f["name"]] for f in t["fields"]}
-                    rows.append({"id": r["_record_id"], "createdTime": r["_created_time"], "fields": cells})
-                actual["tables"][t["id"]] = rows
-        normalized = self.normalize_snapshot(actual)
-        expected = self.normalize_snapshot(self.export_snapshot())
+                    equal = (r["_record_id"] == source["record_id"]
+                             and r["_created_time"] == source["created_time"]
+                             and self.contract.normalize(key,cells) == self.contract.normalize(key,json.loads(source["fields_json"]))
+                             and equal)
         # SQLite REAL can return 1.0 where Airtable returned 1; numeric equality is intentional.
+        # Linked views project both directions from the same FK-constrained
+        # edges; comparing every linked list also verifies reciprocal order.
         status = self.status()
-        status["logical_roundtrip_equal"] = normalized == expected
-        status["valid"] = normalized == expected and status["integrity"] == "ok" and not status["foreign_key_errors"]
+        status["logical_roundtrip_equal"] = equal
+        status["valid"] = equal and status["integrity"] == "ok" and not status["foreign_key_errors"]
         return status
 
     def query(self, sql, limit=200):
