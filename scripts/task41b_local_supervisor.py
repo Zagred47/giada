@@ -11,20 +11,37 @@ import subprocess
 import time
 import zipfile
 
+def file_sha(path):
+    digest=hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda:stream.read(8*1024*1024),b''):digest.update(block)
+    return digest.hexdigest()
+
 def cli(repo, *args, **kwargs):
     return subprocess.run(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),*map(str,args)],cwd=repo,**kwargs)
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
     repo=Path(__file__).resolve().parents[1];dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=a.attach)
     remote='/content/giada_task'+a.task+'_'+a.revision[:12];seen=set();started=time.time()
     with (dest/'console.log').open('a',encoding='utf-8') as log:
         driver_args=['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',a.session,'-f','scripts/colab_task'+a.task+'_driver.py']
-        if a.task in ('41','41b','41c','41d','41e'):driver_args += ['--timeout','86400']
+        if a.task in ('41','41b','41c','41d','41e','41f'):driver_args += ['--timeout','86400']
         driver=None if a.attach else subprocess.Popen(driver_args,cwd=repo,stdout=log,stderr=subprocess.STDOUT)
         def download(name,target):
             r=cli(repo,'download','-s',a.session,remote+'/'+name,target,capture_output=True,text=True,encoding='utf-8',errors='replace')
-            return r.returncode==0 and target.exists() and 'not found' not in (r.stdout+r.stderr).lower()
+            okay=r.returncode==0 and target.exists() and 'not found' not in (r.stdout+r.stderr).lower()
+            if not okay and a.task=='41f':
+                def linux(path):
+                    value=str(path.resolve()).replace('\\','/')
+                    return '/mnt/'+value[0].lower()+value[2:]
+                fallback=subprocess.run(['wsl.exe','--distribution','Ubuntu','--exec','env',
+                    'GIADA_COLAB_PROFILE='+__import__('os').environ.get('GIADA_COLAB_PROFILE','reserve'),
+                    '/home/belli/.local/share/giada-colab-cli/venv/bin/python',linux(repo/'scripts/colab_terminal_download.py'),
+                    '--session',a.session,'--root',remote,remote+'/'+name,linux(target)],
+                    capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=1800)
+                okay=fallback.returncode==0 and target.exists()
+            return okay
         finished=False;console_disconnected=False
         while True:
             download('process.log',dest/'process.log')
@@ -34,7 +51,7 @@ def main():
                 if receipt['sha256'] not in seen:
                     name=Path(receipt['archive']).name;target=dest/name
                     if download(name,target):
-                        assert hashlib.sha256(target.read_bytes()).hexdigest()==receipt['sha256'],'External recovery SHA mismatch'
+                        assert file_sha(target)==receipt['sha256'],'External recovery SHA mismatch'
                         with zipfile.ZipFile(target) as z:assert z.testzip() is None
                         seen.add(receipt['sha256']);(dest/'external_backup_receipt.json').write_text(json.dumps(dict(valid=True,remote=receipt,local=str(target),verified_at=time.time(),runtime_independent=True),indent=2))
             # Re-read after a completed driver: the pre-poll status may still
@@ -49,7 +66,7 @@ def main():
                     if state.get('archive'):
                         target=dest/Path(state['archive']).name
                         assert download(target.name,target),'Final archive download failed'
-                        assert hashlib.sha256(target.read_bytes()).hexdigest()==state['archive_sha256']
+                        assert file_sha(target)==state['archive_sha256']
                         with zipfile.ZipFile(target) as z:assert z.testzip() is None
                         (dest/'external_backup_receipt.json').write_text(json.dumps(dict(valid=True,
                             remote=dict(label='final',archive=state['archive'],sha256=state['archive_sha256'],bytes=target.stat().st_size),

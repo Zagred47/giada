@@ -1273,6 +1273,23 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     revisione scientifica `a1036644b416e3602bc0d72f0a20b3a2fa8e37a3`.
     `results/task41e_protocol_v1/launch.json` conserva la ricevuta del lancio;
     lo stato successivo va letto dal supervisore e dal report finale.
+    **Esito41e verificato:** training60k completato e backup finale esterno integro;
+    Q0 nominata334/336risposte autonome,33/36stress41c. H10 diagnostica335/336
+    e33/36,vecchi stress36/36;nessunGO. Audit completo in
+    `results/task41e_audited_v1/AUDIT.md`. Individuati predicati di timing
+    incoerenti nella selezione e riferimenti FP32/FP64 diversi nei probe;
+    i risultati originali e le soglie restano conservati.
+  - **Task41f — Precisione, rilassamento e trasferimento:** notebook unico
+    `giada_task41f_precision_relaxation.ipynb`,12bracci×3seed. Correzioni
+    apprese u64/u128/uz64 ×supporto ampio/arricchito ×obiettivo puntuale/
+    risposta accoppiata. Gate Ca_HVA.m/h,Nap_Et2.m;192/384/384pesi attivi,
+    stessi18stati e livello di astrazione. Riproduzione dei fallimenti congelati
+    sul batch e riferimento originali;precisione mista/FP64,clampV/Ca e oracoli
+    solo diagnostici. Ranking coerente con il predicato canonico già esistente.
+    Mini scaling e probe di loss/gradienti;regressioni complete dopo freeze.
+    Matrice di costo graph intero/perpasso ×fisica imposta/accoppiata con
+    equivalenza verificata. Protocollo `task41f_preregistration_v1.json`.
+    GPU da console e backup esterni dell'esperimento;DB locale.
 
 ### ✅ Uscita del blocco 1
 

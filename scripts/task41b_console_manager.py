@@ -9,10 +9,16 @@ import sys
 import time
 import traceback
 
+def file_sha(path):
+    digest=hashlib.sha256()
+    with path.open('rb') as stream:
+        for block in iter(lambda:stream.read(8*1024*1024),b''):digest.update(block)
+    return digest.hexdigest()
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('request',type=Path);args=parser.parse_args()
     request=json.loads(args.request.read_text());revision=request['revision'];task=request.get('task','39e')
-    assert task in ('39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e')
+    assert task in ('39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f')
     assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
     root=Path('/content')/('giada_task'+task+'_'+revision[:12]);root.mkdir(exist_ok=False)
     status=root/'job_status.json';output=root/'artifacts';repo=root/'giada';started=time.time()
@@ -25,7 +31,7 @@ def main():
         output.mkdir(exist_ok=True)
         shutil.copy2(root/'process.log',output/'process.log')
         archive=Path(shutil.make_archive(str(root/('recovery_'+label)), 'zip', output))
-        receipt=dict(label=label,archive=archive.as_posix(),sha256=hashlib.sha256(archive.read_bytes()).hexdigest(),bytes=archive.stat().st_size)
+        receipt=dict(label=label,archive=archive.as_posix(),sha256=file_sha(archive),bytes=archive.stat().st_size)
         temp=root/'recovery_manifest.tmp';temp.write_text(json.dumps(receipt));temp.replace(root/'recovery_manifest.json')
         print('[GIADA recovery] '+json.dumps(receipt),flush=True)
     try:
@@ -36,7 +42,7 @@ def main():
             subprocess.run(['git','checkout','--detach','FETCH_HEAD'],cwd=repo,stdout=log,stderr=subprocess.STDOUT,check=True)
         assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).strip()==revision
         for item in request.get('inputs',[]):
-            assert hashlib.sha256(Path(item['remote']).read_bytes()).hexdigest()==item['sha256'],'Input transport SHA mismatch: '+item['remote']
+            assert file_sha(Path(item['remote']))==item['sha256'],'Input transport SHA mismatch: '+item['remote']
         workers={'39e':'run_task39e_tail_support_heads.py','39f':'run_task39f_temporal_recovery.py','39g':'run_task39g_objective_horizon.py','39h':'run_task39h_relaxation_identification.py','39i':'run_task39i_coupled_relaxation.py','39j':'run_task39j_atomic_relaxation.py'}
         workers['40']='run_task40_causal_reinsertion.py'
         workers['40b']='run_task40b_calcium_precision.py'
@@ -45,6 +51,7 @@ def main():
         workers['41c']='run_task41c_frozen_confirmation.py'
         workers['41d']='run_task41d_precision_response.py'
         workers['41e']='run_task41e_transfer.py'
+        workers['41f']='run_task41f_precision_relaxation.py'
         worker_source=repo/'scripts'/workers[task]
         assert hashlib.sha256(worker_source.read_bytes()).hexdigest()==request['worker_sha256']
         save(state='running',phase='scientific_worker');print('[GIADA console] pinned checkout verified; starting worker',flush=True)
@@ -57,7 +64,7 @@ def main():
                 if '[GIADA Task' in line:
                     save(state='running',phase='scientific_worker',worker_pid=worker.pid,last_progress=line.rstrip())
                     checkpoint='checkpoint_saved ' in line or 'checkpoint ' in line or 'preflights passed' in line
-                    if checkpoint and (task not in ('41d','41e') or 'checkpoint_saved ' in line or 'preflights passed' in line or time.time()-last_publish>=120):
+                    if checkpoint and (task not in ('41d','41e','41f') or 'checkpoint_saved ' in line or 'preflights passed' in line or time.time()-last_publish>=120):
                         publish(str(int(time.time()*1000)))
                         last_publish=time.time()
             code=worker.wait()
@@ -70,7 +77,7 @@ def main():
         save(state='running',phase='archive',worker_exit_code=code)
         archive=Path(shutil.make_archive(str(root/('giada_task'+task+'_result')),'zip',output))
         save(state='finished',phase='done',worker_exit_code=code,report=report_path.as_posix(),scientific_valid=report.get('valid',False),
-             decision=report.get('decision'),technical_failure=bool(code or report.get('technical_failure')),archive=archive.as_posix(),archive_sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+             decision=report.get('decision'),technical_failure=bool(code or report.get('technical_failure')),archive=archive.as_posix(),archive_sha256=file_sha(archive))
         print('[GIADA console] '+json.dumps(json.loads(status.read_text())),flush=True)
         return code if code else (0 if report.get('valid') else 1)
     except BaseException as exc:

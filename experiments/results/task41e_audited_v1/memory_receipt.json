@@ -1,0 +1,693 @@
+{
+  "valid": true,
+  "records": {
+    "artifacts-giada-task41e-result-archive-v1": "rec57917224d0d531",
+    "artifacts-giada-task41e-result-member-cost.json-v1": "rec170ac2a01448ba",
+    "observations-giada-task41e-result-raw-cost.json-v1": "rec875a082accb6f3",
+    "artifacts-giada-task41e-result-member-coupling_probe/clamp_precision.json-v1": "rec3c9b8077e7532b",
+    "observations-giada-task41e-result-raw-coupling_probe/clamp_precision.json-v1": "recd258be8c68b6be",
+    "artifacts-giada-task41e-result-member-coupling_probe/local_jacobians.json-v1": "rec60f4a88c73175b",
+    "observations-giada-task41e-result-raw-coupling_probe/local_jacobians.json-v1": "rec31bd89051c99a0",
+    "artifacts-giada-task41e-result-member-coupling_probe/oracles.json-v1": "rec598d0e92410488",
+    "observations-giada-task41e-result-raw-coupling_probe/oracles.json-v1": "rec0dd52f5218038d",
+    "artifacts-giada-task41e-result-member-coupling_probe/perturbation_sweep.json-v1": "rec23fd056b07fcfb",
+    "observations-giada-task41e-result-raw-coupling_probe/perturbation_sweep.json-v1": "recd1959c22d51f73",
+    "artifacts-giada-task41e-result-member-development_0.json-v1": "recd0210c23b52183",
+    "observations-giada-task41e-result-raw-development_0.json-v1": "rec340b5d3017a2e3",
+    "artifacts-giada-task41e-result-member-development_10000.json-v1": "rec6f10463c92abfa",
+    "observations-giada-task41e-result-raw-development_10000.json-v1": "recb0dde160781e13",
+    "artifacts-giada-task41e-result-member-development_1024.json-v1": "reca49becf7088928",
+    "observations-giada-task41e-result-raw-development_1024.json-v1": "recb124f950594a63",
+    "artifacts-giada-task41e-result-member-development_30000.json-v1": "recf69f30aaab6688",
+    "observations-giada-task41e-result-raw-development_30000.json-v1": "rec91e04afa43e050",
+    "artifacts-giada-task41e-result-member-development_3072.json-v1": "rece942fb6f7c4980",
+    "observations-giada-task41e-result-raw-development_3072.json-v1": "rec95b337ebe981fa",
+    "artifacts-giada-task41e-result-member-development_5760.json-v1": "rece4622a1cb101d4",
+    "observations-giada-task41e-result-raw-development_5760.json-v1": "recccbee6b3bb18de",
+    "artifacts-giada-task41e-result-member-development_57600.json-v1": "rec6d8c164573472c",
+    "observations-giada-task41e-result-raw-development_57600.json-v1": "rec0e0b5e87ac11ae",
+    "artifacts-giada-task41e-result-member-development_60000.json-v1": "rec6afd6736e6ec23",
+    "observations-giada-task41e-result-raw-development_60000.json-v1": "rec5b793571324077",
+    "artifacts-giada-task41e-result-member-development_KPst_oracle.json-v1": "recf5df32680aed3a",
+    "observations-giada-task41e-result-raw-development_KPst_oracle.json-v1": "recf245f54f6ecabf",
+    "artifacts-giada-task41e-result-member-development_gpu.json-v1": "recce0b378186c272",
+    "observations-giada-task41e-result-raw-development_gpu.json-v1": "reccf7d9f14c4d690",
+    "artifacts-giada-task41e-result-member-final_report.json-v1": "rec239c011ef9aaa8",
+    "observations-giada-task41e-result-raw-final_report.json-v1": "rec842e34d9c0be87",
+    "artifacts-giada-task41e-result-member-fit_calibration.json-v1": "rec1e2e8e114f514b",
+    "observations-giada-task41e-result-raw-fit_calibration.json-v1": "rec32e43bb18649a3",
+    "artifacts-giada-task41e-result-member-fit_support.json-v1": "rec3f7762ee10c86f",
+    "observations-giada-task41e-result-raw-fit_support.json-v1": "rec24d7c89c1c897c",
+    "artifacts-giada-task41e-result-member-fusion_equivalence.json-v1": "recfc2350b1911736",
+    "observations-giada-task41e-result-raw-fusion_equivalence.json-v1": "reca34b9f07b9e37e",
+    "artifacts-giada-task41e-result-member-historical_regression/B0_reproduction.json-v1": "rec81f9f32496fbd8",
+    "observations-giada-task41e-result-raw-historical_regression/B0_reproduction.json-v1": "rec884698565148ed",
+    "artifacts-giada-task41e-result-member-historical_regression/cases.json-v1": "rec414b1e5ca3e3c5",
+    "observations-giada-task41e-result-raw-historical_regression/cases.json-v1": "rece4660f6f0aea40",
+    "artifacts-giada-task41e-result-member-historical_regression/causal_results.json-v1": "recf95bb234b4f2b6",
+    "observations-giada-task41e-result-raw-historical_regression/causal_results.json-v1": "rec45a7c56ae9ce1a",
+    "artifacts-giada-task41e-result-member-historical_regression/differential_formula_floor.json-v1": "recd724b71d6ff29b",
+    "observations-giada-task41e-result-raw-historical_regression/differential_formula_floor.json-v1": "rec1234c2cc6b0481",
+    "artifacts-giada-task41e-result-member-historical_regression/native_floor.json-v1": "recc7169c751ec524",
+    "observations-giada-task41e-result-raw-historical_regression/native_floor.json-v1": "rec597fdd37390e91",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_evaluation.json-v1": "rec656a5cf720e868",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_evaluation.json-v1": "rec07c132e1b209d7",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_0/matched_history_probes.json-v1": "rec8a480e28bbb620",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_0/matched_history_probes.json-v1": "rec57a4726f2fd22e",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_0/recurrence_evaluation.json-v1": "recf70e93ba0d6cb4",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_0/recurrence_evaluation.json-v1": "recc5afbd0e38dec6",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_0/recurrence_preflight.json-v1": "recfaa27b8dfe5ed7",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_0/recurrence_preflight.json-v1": "rece51fb2458cbd3c",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_1/matched_history_probes.json-v1": "rec3d79c7df676c72",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_1/matched_history_probes.json-v1": "recc4bfaad08bdeb2",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_1/recurrence_evaluation.json-v1": "recdd132ec3846b96",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_1/recurrence_evaluation.json-v1": "rec9a8e5ba5f12cf3",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_1/recurrence_preflight.json-v1": "rec5c0d5bfea7d7fe",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_1/recurrence_preflight.json-v1": "recd01be67790cc27",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_2/matched_history_probes.json-v1": "rec7585c32d120881",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_2/matched_history_probes.json-v1": "rec3d2d85b89931c8",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_2/recurrence_evaluation.json-v1": "reccc30617c4ec67e",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_2/recurrence_evaluation.json-v1": "rec52ad44a477eefe",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_2/recurrence_preflight.json-v1": "recb2ca50644eb48b",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_2/recurrence_preflight.json-v1": "rec42e46cd3182cbe",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_3/matched_history_probes.json-v1": "rec70ef3947b1dabb",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_3/matched_history_probes.json-v1": "recf4826e93e30db5",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_3/recurrence_evaluation.json-v1": "rec9b16bb0fefaf12",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_3/recurrence_evaluation.json-v1": "rec4cb6e0a06db759",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_3/recurrence_preflight.json-v1": "rec35c30d4e77d98e",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_3/recurrence_preflight.json-v1": "rec8227d9f4267e62",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_4/matched_history_probes.json-v1": "reca465d296642a67",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_4/matched_history_probes.json-v1": "rec86209bb835a2ef",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_4/recurrence_evaluation.json-v1": "rec3efd57dce420c4",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_4/recurrence_evaluation.json-v1": "rec0e5e8517defb99",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_4/recurrence_preflight.json-v1": "recc77310fde2e1e9",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_4/recurrence_preflight.json-v1": "reccccf4f5dbc12ad",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_5/matched_history_probes.json-v1": "rece3b09a53e041ae",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_5/matched_history_probes.json-v1": "rec43ee0aa0fa78bc",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_5/recurrence_evaluation.json-v1": "rec16433e1d881905",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_5/recurrence_evaluation.json-v1": "rec0b0e70db1f3d86",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_5/recurrence_preflight.json-v1": "rec517d897c071de6",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_5/recurrence_preflight.json-v1": "rec75c98cc256ff3e",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_6/matched_history_probes.json-v1": "recf6ae4bc752921d",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_6/matched_history_probes.json-v1": "rec369b466459d1f5",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_6/recurrence_evaluation.json-v1": "rec6c5d593057ce90",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_6/recurrence_evaluation.json-v1": "rec6f4064ce66d9e6",
+    "artifacts-giada-task41e-result-member-historical_regression/recurrence_group_6/recurrence_preflight.json-v1": "rec478fee9ae77f0f",
+    "observations-giada-task41e-result-raw-historical_regression/recurrence_group_6/recurrence_preflight.json-v1": "rec6e827ad9e0a5fc",
+    "artifacts-giada-task41e-result-member-opened41/causal_results.json-v1": "recef532b9cc579ed",
+    "observations-giada-task41e-result-raw-opened41/causal_results.json-v1": "rec78987bedd182cd",
+    "artifacts-giada-task41e-result-member-opened41/floor_autonomous.json-v1": "rec6e29d93b26ae0c",
+    "observations-giada-task41e-result-raw-opened41/floor_autonomous.json-v1": "rec77367fc67adee3",
+    "artifacts-giada-task41e-result-member-opened41/floor_imposed.json-v1": "rec0da97b3c9ecfd5",
+    "observations-giada-task41e-result-raw-opened41/floor_imposed.json-v1": "recdcdca5b29debeb",
+    "artifacts-giada-task41e-result-member-opened41/native_phase_floor.json-v1": "recd8b1cac8a3f433",
+    "observations-giada-task41e-result-raw-opened41/native_phase_floor.json-v1": "recf4f74d77b82508",
+    "artifacts-giada-task41e-result-member-opened41c/causal_results.json-v1": "rec2f28196579cf49",
+    "observations-giada-task41e-result-raw-opened41c/causal_results.json-v1": "rec675360034d6771",
+    "artifacts-giada-task41e-result-member-opened41c/floor_autonomous.json-v1": "recc102dcbab8247a",
+    "observations-giada-task41e-result-raw-opened41c/floor_autonomous.json-v1": "reca5cd4cb2d94d7c",
+    "artifacts-giada-task41e-result-member-opened41c/floor_imposed.json-v1": "recacf0fadedfd236",
+    "observations-giada-task41e-result-raw-opened41c/floor_imposed.json-v1": "reccdb1c117458f18",
+    "artifacts-giada-task41e-result-member-opened41c/native_phase_floor.json-v1": "reced5e971d8701bd",
+    "observations-giada-task41e-result-raw-opened41c/native_phase_floor.json-v1": "rec94bc82e09aa284",
+    "artifacts-giada-task41e-result-member-paired_contrasts.json-v1": "rec54dd3c3118387e",
+    "observations-giada-task41e-result-raw-paired_contrasts.json-v1": "rec099d2b48967efb",
+    "artifacts-giada-task41e-result-member-preflight.json-v1": "rec946e22353aff97",
+    "observations-giada-task41e-result-raw-preflight.json-v1": "rec4a4a49dedab3d0",
+    "artifacts-giada-task41e-result-member-preregistration.json-v1": "reccfc2e12ac378ee",
+    "observations-giada-task41e-result-raw-preregistration.json-v1": "recf40455a58bf520",
+    "artifacts-giada-task41e-result-member-revision.json-v1": "recdf7ddcc0af2703",
+    "observations-giada-task41e-result-raw-revision.json-v1": "recf5b972a253b884",
+    "artifacts-giada-task41e-result-member-selection_freeze.json-v1": "rec9235efc97a2d72",
+    "observations-giada-task41e-result-raw-selection_freeze.json-v1": "rec0552a67874117d",
+    "artifacts-giada-task41e-result-member-selection_support.json-v1": "recbf84f39dd08733",
+    "observations-giada-task41e-result-raw-selection_support.json-v1": "rec905f99dac24d83",
+    "artifacts-giada-task41e-result-member-stress41.json-v1": "rec1b672acacf5f68",
+    "observations-giada-task41e-result-raw-stress41.json-v1": "recdef9f07e699091",
+    "artifacts-giada-task41e-result-member-stress41c.json-v1": "rec87ca2c773bc88f",
+    "observations-giada-task41e-result-raw-stress41c.json-v1": "rec9085345f212757",
+    "artifacts-giada-task41e-result-member-training_curves.json-v1": "reca8633076bb2b3e",
+    "observations-giada-task41e-result-raw-training_curves.json-v1": "rec329ec1c6a897f5",
+    "artifacts-giada-task41e-result-final_detailed_audit.json-v1": "recf03eaa3c8cd271",
+    "observations-giada-task41e-result-final_detailed_audit.json-v1": "rec4eb41030511de2",
+    "artifacts-giada-task41e-result-recovered_summary_audit.json-v1": "recba372e50b652a7",
+    "observations-giada-task41e-result-recovered_summary_audit.json-v1": "recc2df3e312a89e9",
+    "artifacts-giada-task41e-result-final_recovery_receipt.json-v1": "reca8fd8019611ce5",
+    "observations-giada-task41e-result-final_recovery_receipt.json-v1": "reccf990168e73fa7",
+    "artifacts-giada-task41e-result-final_delta_manifest.json-v1": "rec8462867b0205a6",
+    "observations-giada-task41e-result-final_delta_manifest.json-v1": "reca016c430ba4220",
+    "artifacts-giada-task41e-result-residual_probe.json-v1": "recbfe218297f4152",
+    "observations-giada-task41e-result-residual_probe.json-v1": "rec0ab5db7e49fc6f",
+    "artifacts-giada-task41e-result-synthesis.json-v1": "rec6ed60fc57ac888",
+    "observations-giada-task41e-result-synthesis.json-v1": "rec05b1a491e5a419",
+    "artifacts-giada-task41e-result-AUDIT.md-v1": "rec5a9139ac02b7ba",
+    "artifacts-giada-task41e-result-probe_task41e_residuals.py-v1": "rec9d9a638bb263c3",
+    "artifacts-giada-task41e-result-synthesize_task41e_audit.py-v1": "receb5697ed0c8cc9",
+    "artifacts-giada-task41e-result-test_task41e_audit.py-v1": "rec701f39634789f2",
+    "artifacts-giada-task41e-result-result_audit.json-v1": "rec9ecea71bc54e5c",
+    "observations-giada-task41e-result-result_audit.json-v1": "rec4c2b6e157d75f7",
+    "artifacts-giada-task41e-result-task39c_dynamic_identification.py-v1": "rec23b246eedef851",
+    "artifacts-giada-task41e-result-task41b_evaluation.py-v1": "rec678378ee04e5c1",
+    "artifacts-giada-task41e-result-finalize_task41e_recovery.py-v1": "rec6abb0eab617de1",
+    "artifacts-giada-task41e-result-audit_task41e_recovered_summary.py-v1": "rec22503e0f419da6",
+    "artifacts-giada-task41e-result-audit_task41e_final.py-v1": "rec928e5e0c696279",
+    "artifacts-giada-task41e-result-register_task41e_result.py-v1": "rec756d5b5216dd47",
+    "observations-giada-task41e-result-summary-B6-v1": "recfded972b52fb1f",
+    "observations-giada-task41e-result-summary-P110-v1": "rec69974d30e07577",
+    "observations-giada-task41e-result-summary-D_C01-v1": "rec60cffdcd379805",
+    "observations-giada-task41e-result-summary-D_N000-v1": "rec3ae2b184e28ca7",
+    "observations-giada-task41e-result-summary-D_combined-v1": "rec213e468322b889",
+    "observations-giada-task41e-result-summary-D_fused-v1": "rec2c97697847eb3b",
+    "observations-giada-task41e-result-summary-A00-v1": "recdcbadf4e499dd2",
+    "observations-giada-task41e-result-summary-A01-v1": "rec0501fdb417ea0c",
+    "observations-giada-task41e-result-summary-A10-v1": "rec132ec2e840ffff",
+    "observations-giada-task41e-result-summary-A11-v1": "rec134fdc08272de3",
+    "observations-giada-task41e-result-summary-Q0-v1": "rec4186578fe14912",
+    "observations-giada-task41e-result-summary-Q1-v1": "rec6c331705a9a3e4",
+    "observations-giada-task41e-result-summary-H10-v1": "rec0b1db31bda0bef",
+    "observations-giada-task41e-result-summary-H01-v1": "recd6c5441dc2ec4e",
+    "observations-giada-task41e-result-summary-H11-v1": "rec3796646728c143",
+    "observations-giada-task41e-result-summary-J01-v1": "rec5e50e8152a5045",
+    "observations-giada-task41e-result-summary-J10-v1": "rec47cc22205115f7",
+    "observations-giada-task41e-result-summary-J11-v1": "rece41d9e043ac925",
+    "observations-giada-task41e-result-summary-global_selection_same_arm-v1": "recc4088a728869c6",
+    "findings-giada-task41e-result-outcome-v1": "rec3f7c1cba3f9c7a",
+    "findings-giada-task41e-result-recovery-v1": "rece2cf370df596eb",
+    "findings-giada-task41e-result-quality-v1": "rec8fab3a5fa0d857",
+    "findings-giada-task41e-result-regressions-v1": "rec0d1852522de62c",
+    "findings-giada-task41e-result-residuals-v1": "recabd4a22132e883",
+    "findings-giada-task41e-result-selection-v1": "rec723d003ea7376c",
+    "findings-giada-task41e-result-reference-v1": "rec6a1b71b9cf3d92",
+    "findings-giada-task41e-result-feedback-v1": "recedb1a8161b16c5",
+    "findings-giada-task41e-result-representation-v1": "recf5a0ffb2d53895",
+    "findings-giada-task41e-result-fusion-v1": "rec9a9303f596f634",
+    "findings-giada-task41e-result-speed_scope-v1": "rec56c61684d9178f",
+    "findings-giada-task41e-result-cost-v1": "rece9571c2a03dc42",
+    "analyses-giada-task41e-result-residual-audit-v1": "rec834a402c26d692",
+    "evidence-giada-task41e-result-registered-objective-v1": "rec5eb738599ad9d0",
+    "evidence-giada-task41e-result-registered-gradient_balance-v1": "recb3715edeef42e8",
+    "evidence-giada-task41e-result-registered-feedback_path-v1": "reca11695a06168e8",
+    "evidence-giada-task41e-result-registered-horizon_support-v1": "rec799fba848a8d48",
+    "evidence-giada-task41e-result-registered-joint_protection-v1": "rec04f35ae8675c35",
+    "evidence-giada-task41e-result-registered-selection-v1": "rec2432ece99455fc",
+    "evidence-giada-task41e-result-registered-cost-v1": "rec3ee2866d21039a",
+    "claims-giada-task41e-result-numerical_response-v1": "recbde9d46d6ffd20",
+    "evidence-giada-task41e-result-numerical_response-v1": "rec5b14d3aecb23ab",
+    "claims-giada-task41e-result-relaxation_identifiability-v1": "rec1430fc0081a4bb",
+    "evidence-giada-task41e-result-relaxation_identifiability-v1": "recda220ee874306d",
+    "claims-giada-task41e-result-selection_semantics-v1": "rec7c0f6b4053e1db",
+    "evidence-giada-task41e-result-selection_semantics-v1": "rec1d28a858ca1e0c",
+    "claims-giada-task41e-result-rare_tail_support-v1": "rec704c4647cea5af",
+    "evidence-giada-task41e-result-rare_tail_support-v1": "rec0b078f71e699e2",
+    "claims-giada-task41e-result-objective_transfer-v1": "recf3fa050ba62043",
+    "evidence-giada-task41e-result-objective_transfer-v1": "rec43b882e3687111",
+    "claims-giada-task41e-result-execution_granularity-v1": "recbf8b9df43b978c",
+    "evidence-giada-task41e-result-execution_granularity-v1": "recf1a524078b6d5e",
+    "lessons-giada-task41e-result-same_predicate-v1": "recd42784354efd5c",
+    "lessons-giada-task41e-result-reference_contract-v1": "rec50c798ce13bd62",
+    "lessons-giada-task41e-result-relaxation-v1": "rec499a62b728f9a9",
+    "lessons-giada-task41e-result-scope_8x-v1": "rec1b1230aeb52740",
+    "lessons-giada-task41e-result-backup-v1": "reca5c689044825a8",
+    "lessons-giada-task41e-result-memory-patterns-v1": "recda8e29f340a7bd",
+    "decisions-giada-task41e-result-propose41f-v1": "rec920d81ab296357",
+    "actions-giada-task41e-result-propose41f-v1": "rec506577ddc21655"
+  },
+  "verification": {
+    "base_id": "app9dZ7ghujkFJIo5",
+    "tables": 78,
+    "relationships": 241,
+    "records": 172615,
+    "pending_writes": 0,
+    "foreign_key_errors": [],
+    "integrity": "ok",
+    "snapshot_hash": "dae917a76b9bce6af2dcbcce95cbcebd2cb24c4546bdf7337ca952563d0cb38c",
+    "table_counts": {
+      "sources": 0,
+      "segments": 0,
+      "actors": 0,
+      "artifacts": 1961,
+      "programs": 1,
+      "questions": 17,
+      "objectives": 0,
+      "capabilities": 0,
+      "capdeps": 0,
+      "definitions": 0,
+      "systems": 0,
+      "phenomena": 0,
+      "levels": 0,
+      "quantities": 0,
+      "mechanisms": 0,
+      "constraints": 0,
+      "crosslevels": 0,
+      "claims": 297,
+      "assumptions": 1,
+      "claimrels": 0,
+      "predictions": 114,
+      "causal": 1,
+      "evidence": 275,
+      "approaches": 1,
+      "choices": 1,
+      "mappings": 0,
+      "validity": 0,
+      "models": 213,
+      "types": 0,
+      "instances": 3,
+      "ports": 0,
+      "connections": 0,
+      "equations": 1,
+      "symbols": 0,
+      "bindings": 0,
+      "composition": 0,
+      "substitutions": 0,
+      "implementations": 19,
+      "numerics": 0,
+      "parameters": 0,
+      "losses": 0,
+      "recipes": 0,
+      "trained": 0,
+      "strategies": 0,
+      "patterns": 0,
+      "analogies": 0,
+      "candidates": 0,
+      "transformations": 0,
+      "campaigns": 0,
+      "playgrounds": 5,
+      "tasks": 0,
+      "generators": 11,
+      "datasets": 12,
+      "partitions": 32,
+      "experiments": 114,
+      "protocols": 119,
+      "factors": 4,
+      "factorlevels": 9,
+      "arms": 495,
+      "assignments": 0,
+      "contrasts": 259,
+      "blocks": 51,
+      "runs": 2295,
+      "checkpoints": 0,
+      "quality": 65,
+      "deviations": 1,
+      "metrics": 1666,
+      "evaluations": 1677,
+      "observations": 162255,
+      "analyses": 60,
+      "findings": 264,
+      "anomalies": 2,
+      "confirmations": 2,
+      "decisions": 99,
+      "lessons": 48,
+      "rules": 3,
+      "applications": 0,
+      "actions": 162
+    },
+    "logical_roundtrip_equal": true,
+    "valid": true
+  },
+  "raw_reports": [
+    {
+      "member": "cost.json",
+      "observation": "rec875a082accb6f3",
+      "original_bytes": 345577,
+      "canonical_json_sha256": "84f3463753ae446a6c095d5f9824a4a261a247cc61b7f0b1037434f625b86a2e"
+    },
+    {
+      "member": "coupling_probe/clamp_precision.json",
+      "observation": "recd258be8c68b6be",
+      "original_bytes": 2043947,
+      "canonical_json_sha256": "b403aef5f1423eda01cf9f4247f2404dcf13545471a2b013f984fd56d535ba62"
+    },
+    {
+      "member": "coupling_probe/local_jacobians.json",
+      "observation": "rec31bd89051c99a0",
+      "original_bytes": 123827,
+      "canonical_json_sha256": "d15eb2abfc8ab1e9ae6aedd9bbdbe1621d7aab1d59dc4cf5c5dcf3df1bee5619"
+    },
+    {
+      "member": "coupling_probe/oracles.json",
+      "observation": "rec0dd52f5218038d",
+      "original_bytes": 367051,
+      "canonical_json_sha256": "859478b209b8214d31195294834028b6bf804cc60130c49aeb4e00cf61760013"
+    },
+    {
+      "member": "coupling_probe/perturbation_sweep.json",
+      "observation": "recd1959c22d51f73",
+      "original_bytes": 753940,
+      "canonical_json_sha256": "61c37ac078262f6d34508672d11c153824f6fdc21dc83c4331edcc0a3e472187"
+    },
+    {
+      "member": "development_0.json",
+      "observation": "rec340b5d3017a2e3",
+      "original_bytes": 4308027,
+      "canonical_json_sha256": "4fed6022afaae2927b94680bbdcb0ff5a0c3511f4cce01147d39fd99732c33bc"
+    },
+    {
+      "member": "development_10000.json",
+      "observation": "recb0dde160781e13",
+      "original_bytes": 4308562,
+      "canonical_json_sha256": "93b52b13673ac64048ae58132d54d7b206c1e7a89dc1abfae43271a2c6885ef2"
+    },
+    {
+      "member": "development_1024.json",
+      "observation": "recb124f950594a63",
+      "original_bytes": 4308637,
+      "canonical_json_sha256": "abd15f70ea30685b9a8c1bbdae70f8c116ed6697d6780eb6de2c30b42521cc4e"
+    },
+    {
+      "member": "development_30000.json",
+      "observation": "rec91e04afa43e050",
+      "original_bytes": 4308634,
+      "canonical_json_sha256": "9a1c1cd641b346f8f3aad1c2005a25e3a186a876dc68ac66ee3794b5ac6ff522"
+    },
+    {
+      "member": "development_3072.json",
+      "observation": "rec95b337ebe981fa",
+      "original_bytes": 4308662,
+      "canonical_json_sha256": "f32fa57ce3616f882677f647318e82083cc7b93a6fc95654c66fe869a329f177"
+    },
+    {
+      "member": "development_5760.json",
+      "observation": "recccbee6b3bb18de",
+      "original_bytes": 4308554,
+      "canonical_json_sha256": "d743d9045dff3ed6460cd61adc4c0c9023ce11aa94a254377b38576be92736c5"
+    },
+    {
+      "member": "development_57600.json",
+      "observation": "rec0e0b5e87ac11ae",
+      "original_bytes": 4308782,
+      "canonical_json_sha256": "8b57f14d9c79d3926cd2d864e26520719dfbcf34249a937a936243916a8cbf64"
+    },
+    {
+      "member": "development_60000.json",
+      "observation": "rec5b793571324077",
+      "original_bytes": 4308902,
+      "canonical_json_sha256": "04fd3ef3b3a5c83a6d7a14b4c5faece5734a675a91d08d0e057059ac3a9a1b85"
+    },
+    {
+      "member": "development_KPst_oracle.json",
+      "observation": "recf245f54f6ecabf",
+      "original_bytes": 377247,
+      "canonical_json_sha256": "b67ef63a40fe17ae4ae388e9f3beb312b3d3bbf50c5d483ae40178262aab2b53"
+    },
+    {
+      "member": "development_gpu.json",
+      "observation": "reccf7d9f14c4d690",
+      "original_bytes": 7220099,
+      "canonical_json_sha256": "3e7156bc816faea4f2541455ab7f23774c9d1ff0afd490b5d83619632dede5b4"
+    },
+    {
+      "member": "final_report.json",
+      "observation": "rec842e34d9c0be87",
+      "original_bytes": 28630,
+      "canonical_json_sha256": "188a7791ad0e6d187d5de5e790da1ffdea0767e918b36184f5f4fd407deddf6a"
+    },
+    {
+      "member": "fit_calibration.json",
+      "observation": "rec32e43bb18649a3",
+      "original_bytes": 22183,
+      "canonical_json_sha256": "945fb86f706264dc31686c1d893edd5b3bd2e6cfadd1a7ec5817c10fdaabf322"
+    },
+    {
+      "member": "fit_support.json",
+      "observation": "rec24d7c89c1c897c",
+      "original_bytes": 353,
+      "canonical_json_sha256": "fb85e6b1cabcfb66c63c3d6f7d3af43e295751ec5886411d84633b97b248e74e"
+    },
+    {
+      "member": "fusion_equivalence.json",
+      "observation": "reca34b9f07b9e37e",
+      "original_bytes": 267,
+      "canonical_json_sha256": "294eb8d5b2c15fe3eabcdffabf4a292c5d7e0521d4f161d28edb884ca00fd844"
+    },
+    {
+      "member": "historical_regression/B0_reproduction.json",
+      "observation": "rec884698565148ed",
+      "original_bytes": 82,
+      "canonical_json_sha256": "b6934471ee99352d9881687c4aa9ff71fab484db357ee784340379312662f552"
+    },
+    {
+      "member": "historical_regression/cases.json",
+      "observation": "rece4660f6f0aea40",
+      "original_bytes": 22055,
+      "canonical_json_sha256": "59c0ff79cdb4d4d4f5125261b850cd149139e408b73e3d31f0dd26d0aeb49707"
+    },
+    {
+      "member": "historical_regression/causal_results.json",
+      "observation": "rec45a7c56ae9ce1a",
+      "original_bytes": 189972143,
+      "canonical_json_sha256": "47ddc7dcc84359072c09b6f72edb67567cb042cdeb88859e9ee9449129199e35"
+    },
+    {
+      "member": "historical_regression/differential_formula_floor.json",
+      "observation": "rec1234c2cc6b0481",
+      "original_bytes": 483882,
+      "canonical_json_sha256": "b48c0ed27a2173d2fd1a61db19eac85c9e8562ea2c8d5d8bb2b9608643d8d0b3"
+    },
+    {
+      "member": "historical_regression/native_floor.json",
+      "observation": "rec597fdd37390e91",
+      "original_bytes": 1141,
+      "canonical_json_sha256": "0b0fb25e33249108856c8bccc73310b1701bcbbb46bd2bc8c4d19ba843b57b1d"
+    },
+    {
+      "member": "historical_regression/recurrence_evaluation.json",
+      "observation": "rec07c132e1b209d7",
+      "original_bytes": 37856574,
+      "canonical_json_sha256": "c2696d76557607546f791a088b359fdc57211f591cf8f6d270355d075a61d5b9"
+    },
+    {
+      "member": "historical_regression/recurrence_group_0/matched_history_probes.json",
+      "observation": "rec57a4726f2fd22e",
+      "original_bytes": 7048,
+      "canonical_json_sha256": "b5fa79e0de71ce9148722c04418a51d30b6a134ab13d4e186157a85f5a0daa8b"
+    },
+    {
+      "member": "historical_regression/recurrence_group_0/recurrence_evaluation.json",
+      "observation": "recc5afbd0e38dec6",
+      "original_bytes": 5823123,
+      "canonical_json_sha256": "8f6ec352529e5b90a7442fed0c61d8a7f451987227443a33fc2b92ce64180e14"
+    },
+    {
+      "member": "historical_regression/recurrence_group_0/recurrence_preflight.json",
+      "observation": "rece51fb2458cbd3c",
+      "original_bytes": 105,
+      "canonical_json_sha256": "821213d36bcbd6581a22356f687392adcbc9e5bfc5d347382b84c4fec16c0f4e"
+    },
+    {
+      "member": "historical_regression/recurrence_group_1/matched_history_probes.json",
+      "observation": "recc4bfaad08bdeb2",
+      "original_bytes": 7120,
+      "canonical_json_sha256": "cd7cc5b0bba9a4a1ae7d39a332d83b5db9d805581d64fa49c16e23ae65431962"
+    },
+    {
+      "member": "historical_regression/recurrence_group_1/recurrence_evaluation.json",
+      "observation": "rec9a8e5ba5f12cf3",
+      "original_bytes": 5825201,
+      "canonical_json_sha256": "4c76488b086dbe944f683f9e050dd833d5f87615092ddd7ec746b79b398704be"
+    },
+    {
+      "member": "historical_regression/recurrence_group_1/recurrence_preflight.json",
+      "observation": "recd01be67790cc27",
+      "original_bytes": 105,
+      "canonical_json_sha256": "821213d36bcbd6581a22356f687392adcbc9e5bfc5d347382b84c4fec16c0f4e"
+    },
+    {
+      "member": "historical_regression/recurrence_group_2/matched_history_probes.json",
+      "observation": "rec3d2d85b89931c8",
+      "original_bytes": 7037,
+      "canonical_json_sha256": "17a764c38e4b72708bac3ba3c317d8f131396b8bc52ce8e6271a098eca53f5fb"
+    },
+    {
+      "member": "historical_regression/recurrence_group_2/recurrence_evaluation.json",
+      "observation": "rec52ad44a477eefe",
+      "original_bytes": 5823164,
+      "canonical_json_sha256": "ee1b185a433af707365eee9f456732d1fac4b46b5c7c6b77fff95474753f26f3"
+    },
+    {
+      "member": "historical_regression/recurrence_group_2/recurrence_preflight.json",
+      "observation": "rec42e46cd3182cbe",
+      "original_bytes": 105,
+      "canonical_json_sha256": "821213d36bcbd6581a22356f687392adcbc9e5bfc5d347382b84c4fec16c0f4e"
+    },
+    {
+      "member": "historical_regression/recurrence_group_3/matched_history_probes.json",
+      "observation": "recf4826e93e30db5",
+      "original_bytes": 7024,
+      "canonical_json_sha256": "7ded1eb4509ddc94078ee16f92bd503d6e67fed3a53502d4ae577886bb24cff1"
+    },
+    {
+      "member": "historical_regression/recurrence_group_3/recurrence_evaluation.json",
+      "observation": "rec4cb6e0a06db759",
+      "original_bytes": 5822887,
+      "canonical_json_sha256": "aa141f46218da279135a7cb9a73bd11291687834f50ef219a6ccabda046ce36c"
+    },
+    {
+      "member": "historical_regression/recurrence_group_3/recurrence_preflight.json",
+      "observation": "rec8227d9f4267e62",
+      "original_bytes": 105,
+      "canonical_json_sha256": "821213d36bcbd6581a22356f687392adcbc9e5bfc5d347382b84c4fec16c0f4e"
+    },
+    {
+      "member": "historical_regression/recurrence_group_4/matched_history_probes.json",
+      "observation": "rec86209bb835a2ef",
+      "original_bytes": 7033,
+      "canonical_json_sha256": "f109190ac82eaaa697fe30a9730ce5d115e7105ae7f9e1bbc4f72325b618a153"
+    },
+    {
+      "member": "historical_regression/recurrence_group_4/recurrence_evaluation.json",
+      "observation": "rec0e5e8517defb99",
+      "original_bytes": 5823093,
+      "canonical_json_sha256": "e12c2d4c5c03141c91636b97651d05a287ce8902ad44d17f9536b8ef1b9daabb"
+    },
+    {
+      "member": "historical_regression/recurrence_group_4/recurrence_preflight.json",
+      "observation": "reccccf4f5dbc12ad",
+      "original_bytes": 105,
+      "canonical_json_sha256": "821213d36bcbd6581a22356f687392adcbc9e5bfc5d347382b84c4fec16c0f4e"
+    },
+    {
+      "member": "historical_regression/recurrence_group_5/matched_history_probes.json",
+      "observation": "rec43ee0aa0fa78bc",
+      "original_bytes": 7034,
+      "canonical_json_sha256": "e4f2128d63c4dd20bb248b512bac1dee61fe2015c989be7768406883fd0d2f58"
+    },
+    {
+      "member": "historical_regression/recurrence_group_5/recurrence_evaluation.json",
+      "observation": "rec0b0e70db1f3d86",
+      "original_bytes": 5823193,
+      "canonical_json_sha256": "f97d46b5d35815f1bce594ae188487f103668282010e1fda0956b1b858996a70"
+    },
+    {
+      "member": "historical_regression/recurrence_group_5/recurrence_preflight.json",
+      "observation": "rec75c98cc256ff3e",
+      "original_bytes": 105,
+      "canonical_json_sha256": "821213d36bcbd6581a22356f687392adcbc9e5bfc5d347382b84c4fec16c0f4e"
+    },
+    {
+      "member": "historical_regression/recurrence_group_6/matched_history_probes.json",
+      "observation": "rec369b466459d1f5",
+      "original_bytes": 3704,
+      "canonical_json_sha256": "4a0127b98e76931373d4162e4ca7c66bc8e44750642a1a64f95d4fae8024fe9e"
+    },
+    {
+      "member": "historical_regression/recurrence_group_6/recurrence_evaluation.json",
+      "observation": "rec6f4064ce66d9e6",
+      "original_bytes": 2915931,
+      "canonical_json_sha256": "86fad63fc9ace9b5fdd422fd34649f84b052ac39c6ff0ee9f9518749973453ba"
+    },
+    {
+      "member": "historical_regression/recurrence_group_6/recurrence_preflight.json",
+      "observation": "rec6e827ad9e0a5fc",
+      "original_bytes": 105,
+      "canonical_json_sha256": "821213d36bcbd6581a22356f687392adcbc9e5bfc5d347382b84c4fec16c0f4e"
+    },
+    {
+      "member": "opened41/causal_results.json",
+      "observation": "rec78987bedd182cd",
+      "original_bytes": 378539138,
+      "canonical_json_sha256": "49cca12d8cf2e558a50f674852936c701a9b13220bfed51d32e03e06b0685178"
+    },
+    {
+      "member": "opened41/floor_autonomous.json",
+      "observation": "rec77367fc67adee3",
+      "original_bytes": 2729481,
+      "canonical_json_sha256": "dc919ff8a89f7450f8c9ffd03a2109ed6e08f8c40fc42bc5da65f35da78945a7"
+    },
+    {
+      "member": "opened41/floor_imposed.json",
+      "observation": "recdcdca5b29debeb",
+      "original_bytes": 2729062,
+      "canonical_json_sha256": "c9b25767aa66397db8dbad3e7906554e5990dc9602a1aa812491cd1aff62d0b9"
+    },
+    {
+      "member": "opened41/native_phase_floor.json",
+      "observation": "recf4f74d77b82508",
+      "original_bytes": 1603966,
+      "canonical_json_sha256": "e6008f27843bd1b721003f5736e9088bee360e75fb9238e12749037f7668b24a"
+    },
+    {
+      "member": "opened41c/causal_results.json",
+      "observation": "rec675360034d6771",
+      "original_bytes": 379701940,
+      "canonical_json_sha256": "f780c5eac0c1c54d331ff6a6101c70cf1ea3d016c490c2811cfab7c4e632c53d"
+    },
+    {
+      "member": "opened41c/floor_autonomous.json",
+      "observation": "reca5cd4cb2d94d7c",
+      "original_bytes": 2738972,
+      "canonical_json_sha256": "ab495f2b1f010a92eeeb80703552f6b8cc60ea8dc3847da15d2eab080d865642"
+    },
+    {
+      "member": "opened41c/floor_imposed.json",
+      "observation": "reccdb1c117458f18",
+      "original_bytes": 2738890,
+      "canonical_json_sha256": "6bffb0b7cb7e9edbd0496695082446af904265666f7387e42b17ee2e68e6ccd2"
+    },
+    {
+      "member": "opened41c/native_phase_floor.json",
+      "observation": "rec94bc82e09aa284",
+      "original_bytes": 1611289,
+      "canonical_json_sha256": "686f27474dd9c5d2b2b64b45a9b759fb7dfdc4731c65221e5eba30a4f25003de"
+    },
+    {
+      "member": "paired_contrasts.json",
+      "observation": "rec099d2b48967efb",
+      "original_bytes": 3756,
+      "canonical_json_sha256": "32ab4e48500806175ab7909ab360909822dc14862daf421a795ab0e935212c35"
+    },
+    {
+      "member": "preflight.json",
+      "observation": "rec4a4a49dedab3d0",
+      "original_bytes": 683,
+      "canonical_json_sha256": "0942a6a332c508d0049ea9d205e74abdadcadc06115585baf0b3f505a331feb4"
+    },
+    {
+      "member": "preregistration.json",
+      "observation": "recf40455a58bf520",
+      "original_bytes": 20756,
+      "canonical_json_sha256": "26ae55e502f203b4ff8bfe46b2bca990f3b635d71f6be44850ad2a6d11fb569f"
+    },
+    {
+      "member": "revision.json",
+      "observation": "recf5b972a253b884",
+      "original_bytes": 87,
+      "canonical_json_sha256": "01097394730de4e3342723ccaf00c2d98c5ac168ceed354fc2d8cfa93bedf2b7"
+    },
+    {
+      "member": "selection_freeze.json",
+      "observation": "rec0552a67874117d",
+      "original_bytes": 13601,
+      "canonical_json_sha256": "147e960d6977cab9dfc926ab02c35cb6756f9fb2f1d8dc348c3af0c226785b1c"
+    },
+    {
+      "member": "selection_support.json",
+      "observation": "rec905f99dac24d83",
+      "original_bytes": 348,
+      "canonical_json_sha256": "43fee8ee533b2fcc15d0a898355626ead0d99046ae7beab649fa62e2fbedc969"
+    },
+    {
+      "member": "stress41.json",
+      "observation": "recdef9f07e699091",
+      "original_bytes": 7412967,
+      "canonical_json_sha256": "a2451ef61368dbab3353abb094b3880d4d89a716b5a72e40dd17dd16d269ac18"
+    },
+    {
+      "member": "stress41c.json",
+      "observation": "rec9085345f212757",
+      "original_bytes": 7406357,
+      "canonical_json_sha256": "22bdc0165fa6471f9e34f589feed080774ec9621b039afccb5adea7760f02db1"
+    },
+    {
+      "member": "training_curves.json",
+      "observation": "rec329ec1c6a897f5",
+      "original_bytes": 547185,
+      "canonical_json_sha256": "029294e28426658dab7f9b49f8def202e33abfa3cde05a98cadacb0575a762c8"
+    }
+  ],
+  "completed_runs": 36,
+  "airtable_accessed": false,
+  "DB_backup": "localonly",
+  "new_experiment_launched": false,
+  "task42_authorized": false,
+  "original_freeze_unchanged": true
+}
