@@ -86,5 +86,10 @@ class Task41gTests(unittest.TestCase):
         grad=torch.autograd.grad(response.sum(),model.f_correction)[0]
         self.assertTrue(torch.isfinite(grad).all())
         self.assertTrue((grad*(1-model.active)==0).all())
+        tail=g.tail_data(torch,self.parent,self.spec,'cpu',count=16)
+        opt=g.Adam(torch,model.f_correction,g.arms(),self.spec)
+        self.assertIsNone(model.f_correction.grad)
+        g.auxiliary_step(torch,model,opt,atomic,idx,norm,atomic,idx,tail,torch.arange(8),view,fb,support,torch.arange(2),self.cfg,self.calcium,self.base)
+        self.assertTrue(torch.isfinite(model.f_correction).all())
 
 if __name__=='__main__':unittest.main()

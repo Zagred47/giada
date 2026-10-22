@@ -6,7 +6,7 @@ from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
 from .mirror import ROOT,write_json
-from .validated_batch import ValidatedBatchMirror
+from .incremental_batch import IncrementalBatchMirror
 from .register_task41d_result import ResultPreview,PreviewComplete
 
 def main():
@@ -16,7 +16,7 @@ def main():
     local=json.loads((folder/'local_verification.json').read_text())
     assert local['valid'] and local['unit_tests_passed'] and local['CPU_preflight']['valid']
     assert local['protocol_sha256']==hashlib.sha256((repo/'experiments/task41g_preregistration_v1.json').read_bytes()).hexdigest()
-    m=ResultPreview() if args.validate_only else ValidatedBatchMirror();ids={};artifacts=[]
+    m=ResultPreview() if args.validate_only else IncrementalBatchMirror();ids={};artifacts=[]
     @lru_cache(None)
     def ref(code):
         rows=m.query("SELECT record_id FROM v_records WHERE stable_code='"+code+"'")['rows'];assert len(rows)==1,code
@@ -43,8 +43,12 @@ def main():
             'scripts/launch_task41g_console.ps1','scripts/colab_task41g_driver.py','scripts/task41b_console_manager.py',
             'scripts/task41b_local_supervisor.py','scripts/colab_terminal_download.py','tests/test_task41g_preservation.py',
             'research_memory/register_task41g.py','experiments/results/task41g_protocol_v1/local_verification.json',
+            'research_memory/incremental_batch.py','tests/test_incremental_memory.py',
+            'experiments/results/task41g_protocol_v1/memory_engine_verification.json',
+            'experiments/results/task41g_protocol_v1/preflight_incidents.json','artifacts/task41g_preflight_failed_f4b63f4.log',
             'experiments/results/task41g_protocol_v1/source_receipt.json','experiments/giada_modular_surrogate_roadmap.md']
         prereg=None
+        if (folder/'pretraining_amendment.json').exists():paths.append('experiments/results/task41g_protocol_v1/pretraining_amendment.json')
         for name in dict.fromkeys(paths):
             path=repo/name;raw=path.read_bytes();a=put('artifacts',name,Nome='Task41g '+name,Tipo='Codice' if path.suffix in ('.py','.ps1') else 'Report',Versione='v1',Percorso=name,**{'SHA-256':hashlib.sha256(raw).hexdigest(),'Dimensione byte':len(raw)})
             artifacts.append(a)
@@ -64,14 +68,16 @@ def main():
         for name,definition in [('quality',spec['quality']),('compartment',spec['compartment_gates']),('selection',spec['selection']),('cost',spec['speed']),('diagnostics',spec['diagnostics']),('optimizer',spec['objective'])]:
             metric=put('metrics',name,Nome='Task41g '+name,Formula=json.dumps(definition));put('evaluations',name,Nome='Task41g '+name,Versione='v1',Metrica=[metric],Protocollo=[protocol],Partizioni=parts,Ruolo='Primaria' if name in ('quality','compartment') else 'Secondaria',Target=json.dumps(definition))
         obs=put('observations','local-preflight',Nome='Task41g actual CPU verification',Descrizione=json.dumps(local),**{'Artefatti dettagliati':artifacts})
-        finding=put('findings','local-preflight',Nome='Task41g CPU contract and gradients',Esito='Positivo',Esperimenti=[exp],Osservazioni=[obs],Risultato='ZeroQ0parity;maskedheadandzpreservation;compactforward;independentAdamversusPyTorch;finiteheldtailandfeedbackgradients;FP32precision-coreidentity.',Limitazioni='Technical only; GPUpreflight required before scientific run.')
+        incidents=json.loads((folder/'preflight_incidents.json').read_text())
+        incident_obs=put('observations','preflight-incidents',Nome='Task41g pretraining technical incidents and recovery',Descrizione=json.dumps(incidents),**{'Artefatti dettagliati':artifacts})
+        finding=put('findings','local-preflight',Nome='Task41g CPU contract and gradients',Esito='Positivo',Esperimenti=[exp],Osservazioni=[obs,incident_obs],Risultato='ZeroQ0parity;maskedheadandzpreservation;compactforward;independentAdamversusPyTorch;finiteheldtailandfeedbackgradients;FP32precision-coreidentity;25memorytests on temporaryDBs.',Limitazioni='Technical only; GPUpreflight required before scientific run. Pretraining incidents recorded separately,not scientific failures.')
         decision=put('decisions','authorized',Nome='Task41g user-authorized console experiment',Esito='Continuare',Risultati=[finding],Motivazione='User authorized all comparisons,DBregistration,push,Colabconsole,externalexperimentbackup;DBlocalonly.',**{'Data':datetime.now().date().isoformat()})
         put('actions','launch',Nome='Task41g GPUpreflight and console launch',Stato='In corso',Descrizione='Scientific launch pending GPUpreflight and committed prospective registration.',**{'Decisioni di origine':[decision]})
     print(json.dumps(dict(stage='staged',records=len(ids),running=args.running)),flush=True)
     m.commit_batch()
     if not args.running:write_json(folder/'registration_committed.json',dict(valid=True,records=ids,registration_before_scientific_run=True,logical_verification_pending=True,airtable_accessed=False))
     print('Task41g committed; exporting and verifying',flush=True)
-    write_json(ROOT/'data/airtable_snapshot.json',m.export_snapshot());verification=m.verify();assert verification['valid']
+    m.export_snapshot_to(ROOT/'data/airtable_snapshot.json');verification=m.verify();assert verification['valid']
     write_json(folder/('launch_memory_receipt.json' if args.running else 'memory_receipt.json'),dict(valid=True,records=ids,verification=verification,planned_training_runs=36,registration_before_scientific_run=not args.running,airtable_accessed=False,DB_backup='localonly'))
     print('Task41g verified inSQLite',flush=True)
 

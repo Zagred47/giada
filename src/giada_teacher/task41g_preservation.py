@@ -250,9 +250,12 @@ def auxiliary_step(torch,model,opt,data,ids,norm,preservation,pids,tail,tids,vie
     pn,an=gp.double().norm(dim=(-1,-2)),ga.double().norm(dim=(-1,-2))
     ratio=(.1*pn/an.clamp_min(1e-20)).clamp_max(1e6)
     enabled=torch.tensor([a['objective']=='sensitive' for a in model.definitions for _ in range(3)],device=gp.device)
-    grad=gp+ga*(ratio*enabled)[:,None,None]
+    grad=(gp+ga*(ratio*enabled)[:,None,None]).to(model.f_correction.dtype)
     assert torch.isfinite(grad).all()
-    opt.zero_grad();model.f_correction.grad.copy_(grad);f.clip(torch,model.f_correction.grad);opt.step()
+    opt.zero_grad()
+    if model.f_correction.grad is None:model.f_correction.grad=grad.clone()
+    else:model.f_correction.grad.copy_(grad)
+    f.clip(torch,model.f_correction.grad);opt.step()
     return dict(point=point.tolist(),tail_and_feedback=aux.tolist(),point_gradient=pn.tolist(),auxiliary_gradient=an.tolist(),
         cosine=((gp.double()*ga.double()).sum((-1,-2))/(pn*an).clamp_min(1e-30)).tolist(),normalized_heads=heads.tolist())
 
@@ -275,7 +278,7 @@ def preflight(torch,root,output,device,spec):
         graph=capture(torch,model,opt,atomic,ids,norm,keep,ids)
         for step in range(3):
             opt.rate(step);oo.rate(step);graph.replay();point_step(torch,ref,oo,atomic,ids,norm,keep,ids)
-        torch.cuda.synchronize();graph_error=float((model.f_correction-ref.f_correction).abs().max());assert graph_error<=1e-5
+        torch.cuda.synchronize();graph_error=float((model.f_correction-ref.f_correction).detach().abs().max());assert graph_error<=1e-5
     else:point_step(torch,model,opt,atomic,ids,norm,keep,ids);graph_error=None
     with torch.no_grad():
         assert bool((model.f_correction*(1-model.active)==0).all())
@@ -309,6 +312,7 @@ def run(root,output,device='cuda',smoke=False):
     selection,_=atomic_data(torch,parent,spec,device,selection=True)
     keep,_=atomic_data(torch,parent,dict(spec,new_seeds={**spec['new_seeds'],'fit':spec['new_seeds']['fit']+200000}),device)
     tail=tail_data(torch,parent,spec,device)
+    selection_tail=tail_data(torch,parent,spec,device,count=spec['selection_anchors'],selection=True)
     np.savez_compressed(output/'fit_tail.npz',**{k:v.cpu().numpy() for k,v in tail.items()})
     p.save_json(output/'fit_tail_support.json',dict(valid_crossings=int(tail['valid'].sum()),total=len(tail['valid']),FIT_only=True,
         label_horizons_ms=[1,8,40,160],crossing_horizon_max_ms=400))
@@ -334,12 +338,13 @@ def run(root,output,device='cuda',smoke=False):
             with torch.no_grad():
                 point=f.atomic_terms(torch,model.f_correction,model.active,selection,si)/norm
                 response=feedback_terms(torch,model,view,sf,ss,torch.arange(spec['selection_feedback_anchors'],device=device),cfg,calcium,base)
+                tail_selection=tail_loss(torch,model,selection_tail,torch.arange(spec['selection_anchors'],device=device))
                 measured=c.shadow_evaluate(torch,models,dev,spec['quality'],device)
             rr=[]
             for j,rows in enumerate(measured):
-                rank=f.ranks(rows,parent_rows[j%3],response[j],point[j].sum(),spec['quality']);rr.append(rank)
+                rank=f.ranks(rows,parent_rows[j%3],response[j]+tail_selection[j],point[j].sum(),spec['quality']);rr.append(rank)
                 if best[j] is None or rank<best[j]:best[j],chosen[j],saved[j]=rank,step,model.f_correction[j].detach().clone()
-            curves.append(dict(step=step,ranks=rr,point=point.tolist(),response=response.tolist(),gradients=diag,
+            curves.append(dict(step=step,ranks=rr,point=point.tolist(),response=response.tolist(),tail_selection=tail_selection.tolist(),gradients=diag,
                 elapsed_seconds=time.perf_counter()-start,atomic_examples=step*spec['batch'],preservation_examples=step*spec['batch'],
                 feedback_windows=(step//spec['feedback_every'])*spec['feedback_batch'],tail_examples=(step//spec['feedback_every'])*spec['tail_batch']))
             p.save_json(output/'training_curves.json',curves);p.save_json(output/f'development_{step}.json',measured)
@@ -360,7 +365,7 @@ def run(root,output,device='cuda',smoke=False):
     freeze=dict(arms=arms(),seeds=spec['seeds'],chosen_steps=chosen,ranks=best,nominee=arms()[nominee]['name'],
         checkpoint_sha256=p.digest(output/'frozen_checkpoint.pt'),opened_regressions_accessed=True,
         opened_regressions_used_for_selection=False,independent_confirmation=False,parent='E_Q0',
-        selection='Unchanged canonical rank, new development only, introduced-case guard relative to Q0.')
+        selection='Canonical gate predicates unchanged; introduced-case guard relative to Q0; common independent held-tail+feedback selection score; new development only.')
     freeze['freeze_sha256']=hashlib.sha256(json.dumps(freeze,sort_keys=True).encode()).hexdigest();p.save_json(output/'selection_freeze.json',freeze)
     print('[GIADA Task41g] checkpoint selection frozen',flush=True)
     with torch.inference_mode():result=ev.evaluate(torch,root,output,controls,trained,spec,cfg,calcium,base,device)

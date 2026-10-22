@@ -104,6 +104,15 @@ Il comando `query` è in sola lettura, limita risultati e lavoro computazionale,
 
 ## Modalita operativa corrente: solo mirror SQLite
 
+**Task41g:** `incremental_batch.IncrementalBatchMirror` applica batch locali
+transazionali usando lo stesso Contract e gli stessi identificatori e ordini
+delle relazioni. Verifica le before-image per rifiutare scritture concorrenti,
+mantiene i collegamenti reciproci e ricalcola in streaming lo stesso hash
+canonico. `export_snapshot_to` esporta tutte le78tabelle senza caricare il DB
+intero in RAM. Nessuna modifica dello schema, cancellazione di record o
+comunicazione remota. Test dedicati in `tests/test_incremental_memory.py`;
+restano obbligatori verify e backup locale dopo il batch.
+
 Per decisione dell'utente, Airtable e temporaneamente congelato. Fino a una
 richiesta esplicita di sincronizzazione, agenti e script devono interrogare e
 aggiornare soltanto il mirror SQLite versionato; non devono effettuare readback

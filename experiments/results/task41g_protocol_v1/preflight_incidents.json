@@ -1,0 +1,9 @@
+{
+  "scientific_training_performed": false,
+  "thresholds_changed": false,
+  "incidents": [
+    {"phase": "initial_assignment", "observation": "Primary assignment disappeared; no active assignment on either authorized account. Cause unconfirmed. Reallocated primary-r1 and immediately verified CUDA on Tesla T4."},
+    {"phase": "GPU_preflight_f4b63f4", "observation": "Atomic graph,8precision policies and4096whole-loop parity passed. Auxiliary update on fresh parameter failed because .grad was None.", "log": "artifacts/task41g_preflight_failed_f4b63f4.log", "fix": "Allocate gradient if missing; explicitly cast combined gradient to parameter dtype, matching existing copy_ behavior. Added CPU regression test."},
+    {"phase": "local_DB_preparation", "observation": "Full-snapshot rewrite caused paging; only own uncommitted writer was stopped. SQLite rollback verified172991records and0Task41gexperiment rows.", "fix": "Use versioned incremental batch with original Contract, reciprocal links, optimistic before-images and exact streaming snapshot hash.25tests passed on temporary DBs."}
+  ]
+}

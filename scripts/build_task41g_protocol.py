@@ -11,6 +11,7 @@ def main():
     folder=ROOT/'experiments/results/task41g_protocol_v1';folder.mkdir(exist_ok=True)
     assert not (folder/'dispatch_request.json').exists()
     old=json.loads((ROOT/g.f.CONFIG).read_text())
+    before=(ROOT/g.CONFIG).read_bytes() if (ROOT/g.CONFIG).exists() else None
     receipt=json.loads((ROOT/'artifacts/task41f_reserve_external/final_recovery_receipt.json').read_text())
     archive=Path(receipt['local']);assert receipt['valid'] and g.p.digest(archive)==receipt['sha256']
     with zipfile.ZipFile(archive) as z:
@@ -39,7 +40,7 @@ Proiezioni64/128nodi,lineari/smoothstepC2 e1024/4096/16384dati: diagnostica,non 
 
 La loss delle code usa label canoniche FIT a1/8/40/160ms e intornoal crossing fino400ms.
 Le label future non sono input del modello. Tutti i nuovi pesi sono selezionati solo su
-nuovo development; pannelli già aperti e precisioni alternative restano diagnostici.
+nuovo development e code di selection indipendenti; pannelli già aperti e precisioni alternative restano diagnostici.
 GO richiede tutti i gate originali, incluse regressioni,stress,ricorrenza e risposte causali.
 Confrontare sempre casi risolti/introdotti. Nuova conferma indipendente necessaria dopo riparazione.
 
@@ -73,12 +74,17 @@ subprocess.run([sys.executable,'-u',str(REPO/'scripts/run_task41g_preservation.p
         training_policy='36vectorizedmembers;Q0frozenparent;M64orALL192activeweights;allzand18statesunchanged;independentAdam;pointCUDAgraph;annealedorconstantpermemberLR;commonpreservationanchors.',
         support='4096fromshared8192FITanchors;equalcountbroad/tailsensitivityenrichment;new4096preservationanchors common;new4096held-inputtails withindependentinitialstates;newphysicalfeedbackhistories;selection/developmentdisjoint.',
         objective='Censoredlogitequilibrium;fixedinitialperheadnormalization;common0.01residualpreservation. Sensitivearms addcurrentlossat1/8/40/160msandcrossingupto400ms plus40tickcoupledresponse,gradientnormratio0.1. Crossinglossweight0.01,scaledbycanonical0.3msandmin1e-10. Samelabelsandslotsforpointcontrols;disabledauxiliarygradient.',
-        selection='Samecanonicalrankandthresholds;introducedcasesrelativeQ0first;newdevelopmentonly;earliestties;oldopenedpanelsneverselectweights.',
+        selection='Samecanonicalpredicatesandthresholds;introducedcasesrelativeQ0first;newdevelopmentonly;commonheldtail+feedbackscorebeforeatomicloss;newindependentselectiontailseed+19001;earliestties;oldopenedpanelsneverselectweights.',
         budget='60000updates;every256replacepointstepwithmatchedpoint+auxiliaryslot;batch64+64preservation,tail32,feedback4x40ticks.Allarmscomputebothobjectives,onlyregisteredgradientenabled. Sameinitialization/seed/minibatch/checkpoints;countalllabelandpreservationexposure.',
         diagnostics='Frozen8precisionpoliciesV/gates/readout,FP32voltagetrunklabels;originalfullbatchofficialreference;perheadandzrollback41f/P110. Projection64/128linearandC2smoothstep,count1024/4096/16384,heldoutindependent,nondeployable. Noanalyticaloracleincandidate.',
         speed='Alloriginalformula/modelresidentbenchmarksunchanged;selectedmodelprecisionpoliciesV64/gates64/readout64/all64versusownFP32,642/4096sites,30pairedrepeats. Original10%qualificationretained.',
         limits=old['limits']+['Q0sourceparentexplicit;noautomatic41fretrospectivepromotion.','QuinticsmoothpartitionisC2,notcubicB-spline;approximationprobeonly.','Preservationiscommon,itsindividualcausaleffectisnotidentified.'])
     g.p.save_json(ROOT/g.CONFIG,spec)
+    if before and before!=(ROOT/g.CONFIG).read_bytes():
+        g.p.save_json(folder/'pretraining_amendment.json',dict(valid=True,
+            before_protocol_sha256=hashlib.sha256(before).hexdigest(),after_protocol_sha256=g.p.digest(ROOT/g.CONFIG),
+            before=json.loads(before),after=spec,scientific_training_performed=False,thresholds_changed=False,
+            reason='Before first scientific run: auxiliary gradient handles a fresh parameter; common independent held-tail selection complements short feedback; incremental local registration replaces uncommitted full rewrite.'))
     print(json.dumps(dict(valid=True,arms=12,members=36,contrasts=len(g.contrasts()),thresholds_changed=False)))
 
 if __name__=='__main__':main()

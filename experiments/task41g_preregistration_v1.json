@@ -350,10 +350,10 @@
     "experiments/results/task41f_protocol_v1/task41e_frozen.pt": "7ac38b79429d147fc0acb3187a4d5c4581cae643ae722217fcf378c78d18b6dc",
     "experiments/results/task41f_protocol_v1/task41e_reproduction.json": "b636f0e32a1de8eca00bbd60b66dc71fffe3b7b243d14beb02d156727d408149",
     "experiments/task41f_preregistration_v1.json": "645a5ab7ddd62452c7c10fa5c1224b0acb53be46db40953219e669ef68a762de",
-    "src/giada_teacher/task41g_preservation.py": "cb0bf85bc20f71075c62e6f4e2169d80e4661c9755e6ea496fa6cca1c38d7682",
+    "src/giada_teacher/task41g_preservation.py": "3ae9aa19f656c55e60d16236057cc97e584dcc6463e7635219d7cb6d3b3caf4f",
     "src/giada_teacher/task41g_evaluation.py": "7fdf0ac4693fc507a1247e7cc3d1b6c32b9549ee77de364c91d9d00a29f23627",
     "scripts/run_task41g_preservation.py": "9262d489ac2b96fef6ed2aa8fd97db8d5b6e62b1d5e27d858b96b7266d83ca53",
-    "notebooks/giada_task41g_preservation.ipynb": "c0a553a75d318e75cbc024502cf015d63b043a85d0f5909a84cae3ee1259d5bf",
+    "notebooks/giada_task41g_preservation.ipynb": "bb5378500b3cf5f966d011438159ee2c6a1b101409f950c320d461f075e17bda",
     "experiments/results/task41g_protocol_v1/task41f_frozen.pt": "0b60f653d2e0513364100be8e3c9e4e980d51495b5b44e3b2ce802d4d7b25a88"
   },
   "task41e_checkpoint": "experiments/results/task41f_protocol_v1/task41e_frozen.pt",
@@ -442,7 +442,7 @@
     }
   ],
   "training_policy": "36vectorizedmembers;Q0frozenparent;M64orALL192activeweights;allzand18statesunchanged;independentAdam;pointCUDAgraph;annealedorconstantpermemberLR;commonpreservationanchors.",
-  "selection": "Samecanonicalrankandthresholds;introducedcasesrelativeQ0first;newdevelopmentonly;earliestties;oldopenedpanelsneverselectweights.",
+  "selection": "Samecanonicalpredicatesandthresholds;introducedcasesrelativeQ0first;newdevelopmentonly;commonheldtail+feedbackscorebeforeatomicloss;newindependentselectiontailseed+19001;earliestties;oldopenedpanelsneverselectweights.",
   "objective": "Censoredlogitequilibrium;fixedinitialperheadnormalization;common0.01residualpreservation. Sensitivearms addcurrentlossat1/8/40/160msandcrossingupto400ms plus40tickcoupledresponse,gradientnormratio0.1. Crossinglossweight0.01,scaledbycanonical0.3msandmin1e-10. Samelabelsandslotsforpointcontrols;disabledauxiliarygradient.",
   "support": "4096fromshared8192FITanchors;equalcountbroad/tailsensitivityenrichment;new4096preservationanchors common;new4096held-inputtails withindependentinitialstates;newphysicalfeedbackhistories;selection/developmentdisjoint.",
   "budget": "60000updates;every256replacepointstepwithmatchedpoint+auxiliaryslot;batch64+64preservation,tail32,feedback4x40ticks.Allarmscomputebothobjectives,onlyregisteredgradientenabled. Sameinitialization/seed/minibatch/checkpoints;countalllabelandpreservationexposure.",
