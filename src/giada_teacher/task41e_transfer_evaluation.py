@@ -17,6 +17,13 @@ p,t,c,x=m.p,m.t,m.c,m.x
 e=m.d.prior.evaluation
 
 
+def differentiable_constants():
+    # Forward controls can populate the shared readout cache in inference
+    # mode. Identical ordinary constants are required for an input Jacobian.
+    for key,values in tuple(t._CONSTANTS.items()):
+        t._CONSTANTS[key]=tuple(value.clone() if value.is_inference() else value for value in values)
+
+
 def clone_model(torch,model):
     if isinstance(model,GateOracle):
         return GateOracle(torch,clone_model(torch,model.parent),model.gates,model.equilibrium_only)
@@ -182,6 +189,7 @@ def coupling_probe(torch,root,output,controls,data,meta,spec,cfg,calcium,base,de
     # coordinates avoid a calcium-unit change dominating the reported norm.
     k=lookup[122]
     with torch.inference_mode(False),torch.enable_grad():
+        differentiable_constants()
         for precision,dtype in [('FP32',torch.float32),('FP64',torch.float64)]:
             for name in ('P110','D_combined'):
                 model=clone_model(torch,models[name])

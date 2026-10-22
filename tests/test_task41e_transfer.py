@@ -157,5 +157,24 @@ class TransferTests(unittest.TestCase):
         fd=(upper-lower)/(2*eps)
         self.assertLess(abs(expected-fd),1e-7+abs(expected)*1e-3)
 
+    def test_inference_constants_can_be_used_in_jacobian(self):
+        key=('cpu',torch.float32)
+        saved=m.t._CONSTANTS.pop(key,None)
+        try:
+            with torch.inference_mode():
+                vv=torch.ones(3,1,dtype=torch.float32)
+                before=tuple(v.clone() for v in m.t.constants(torch,vv))
+            with torch.inference_mode(False),torch.enable_grad():
+                evaluation.differentiable_constants()
+                v=torch.full((3,1),-45.,requires_grad=True)
+                g=torch.full((3,1,18),.4)
+                _,current=m.t.readout(torch,v,g,torch.ones(3,1,11))
+                derivative=torch.autograd.grad(current.sum(),v)[0]
+                self.assertTrue(torch.isfinite(derivative).all())
+                for a,b in zip(before,m.t._CONSTANTS[key]):
+                    self.assertTrue(torch.equal(a,b));self.assertFalse(b.is_inference())
+        finally:
+            if saved is not None:m.t._CONSTANTS[key]=saved
+
 
 if __name__=='__main__':unittest.main()

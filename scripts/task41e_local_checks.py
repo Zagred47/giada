@@ -19,5 +19,5 @@ spec,*_=m.contract(ROOT)
 report=training.preflight(torch,ROOT,folder,'cpu',spec)
 (folder/'cpu_preflight.json').write_text(json.dumps(report,indent=2)+'\n')
 (folder/'local_verification.json').write_text(json.dumps(dict(valid=True,unit_test_command='python -m unittest tests.test_task41e_transfer -v',
-    tests=9,cpu_preflight_valid=report['valid'],protocol_sha256=report['protocol_sha256'],GPU_preflight_required_before_dispatch=True),indent=2)+'\n')
-print(json.dumps(dict(valid=True,tests=9,CPU_members=36,all_parameters_finite=report['all_parameters_finite'])),flush=True)
+    tests=10,cpu_preflight_valid=report['valid'],protocol_sha256=report['protocol_sha256'],GPU_preflight_required_before_dispatch=True),indent=2)+'\n')
+print(json.dumps(dict(valid=True,tests=10,CPU_members=36,all_parameters_finite=report['all_parameters_finite'])),flush=True)

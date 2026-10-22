@@ -14,6 +14,13 @@ for field,name in [('worker_sha256','scripts/run_task41e_transfer.py'),('manager
 pf=json.loads((folder/'gpu_preflight.json').read_text())
 assert pf['valid'] and pf['all_parameters_finite'] and pf['fused_raw_bitwise_equal']
 request['profile']=pf['account_profile']
+evaluation=json.loads((folder/'gpu_evaluation_smoke.json').read_text())
+assert evaluation['valid'] and not evaluation['opened_regressions_accessed']
+assert evaluation['protocol_sha256']==pf['protocol_sha256']
+amendment=json.loads((folder/'pretraining_amendment.json').read_text())
+assert amendment['valid'] and amendment['unchanged_scientific_contract']
+assert not amendment['thresholds_changed'] and not amendment['scientific_training_performed_before_fix']
+assert amendment['after_protocol_sha256']==pf['protocol_sha256']
 for field,name in [('source_sha256','src/giada_teacher/task41e_transfer_training.py'),('protocol_sha256','experiments/task41e_preregistration_v1.json')]:
     assert pf[field]==hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
 receipt=json.loads((folder/'memory_receipt.json').read_text())

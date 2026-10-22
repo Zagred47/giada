@@ -48,6 +48,10 @@ def main():
     launch=dict(valid=True,request=request,status_observed=status,external_recovery=receipt,
                 last_recovered_checkpoint=last,checkpoint_tensor_count=len(tensors),all_recovered_tensors_finite=True,
                 GPU_preflight=pf,thresholds_changed=False,DBbackup='localonly',state_is_timestamped_not_live=True)
+    launch['allocation']=json.loads((folder/'allocation.json').read_text())
+    amendment=json.loads((folder/'pretraining_amendment.json').read_text())
+    assert amendment['valid'] and amendment['unchanged_scientific_contract'] and not amendment['thresholds_changed']
+    assert amendment['after_protocol_sha256']==pf['protocol_sha256']
     write_json(folder/'launch.json',launch)
     m=ValidatedBatchMirror();ids={}
     def ref(code):
@@ -56,11 +60,26 @@ def main():
     def put(table,suffix,**fields):
         code=f'{table}-giada-task41e-dispatch-{suffix}-v1'
         rid=m.local_upsert(table,{'Codice stabile':code,**fields})['record_id'];ids[code]=rid;return rid
-    artifacts=[]
-    for path in (folder/'dispatch_request.json',folder/'preflight_request.json',folder/'gpu_preflight.json',folder/'launch.json',Path(__file__)):
+    artifacts=[];artifact_ids={}
+    paths=[folder/name for name in ('dispatch_request.json','preflight_request.json','gpu_preflight.json','gpu_evaluation_smoke.json',
+        'allocation.json','launch.json','pretraining_amendment.json','local_verification.json','cpu_preflight.json')]
+    paths += [ROOT/'experiments/task41e_preregistration_v1.json',ROOT/'src/giada_teacher/task41e_transfer_evaluation.py',
+              ROOT/'scripts/launch_task41e_console.ps1',ROOT/'scripts/task41e_gpu_probe.py',
+              ROOT/'scripts/task41e_evaluation_smoke.py',ROOT/'scripts/prepare_task41e_dispatch.py',Path(__file__)]
+    for path in paths:
         raw=path.read_bytes()
-        artifacts.append(put('artifacts',path.name,Nome='Task41e dispatch '+path.name,Tipo='Codice' if path.suffix=='.py' else 'Report',
-                            Versione='v1',Percorso=path.relative_to(ROOT).as_posix(),**{'SHA-256':hashlib.sha256(raw).hexdigest(),'Dimensione byte':len(raw)}))
+        artifact=put('artifacts',path.name,Nome='Task41e dispatch '+path.name,Tipo='Codice' if path.suffix in ('.py','.ps1') else 'Report',
+                     Versione='v1-technical-fix1',Percorso=path.relative_to(ROOT).as_posix(),**{'SHA-256':hashlib.sha256(raw).hexdigest(),'Dimensione byte':len(raw)})
+        artifacts.append(artifact);artifact_ids[path.name]=artifact
+    amendment_observation=put('observations','pretraining-amendment',Nome='Task41e pretraining Jacobian technical amendment',
+        Descrizione=json.dumps(amendment),**{'Artefatti dettagliati':[artifact_ids['pretraining_amendment.json'],artifact_ids['task41e_transfer_evaluation.py']]})
+    put('findings','pretraining-amendment',Nome='Task41e Jacobian evaluator corrected before training',Esito='Positivo',
+        Esperimenti=[ref('experiments-giada-task41e-factorial-v1')],Osservazioni=[amendment_observation],
+        Risultato='SyntheticGPUevaluationpreflightcaughtinference-cache/autograderror. IdenticalordinaryconstantsfixinputJacobian;fullreplay,precision,oracleandselectionpathssmoketested. Entireold/newprotocolsaved;scientificcomparisonsandthresholdsequal.',
+        Limitazioni='Technicalfixbeforetraining,notascientificmodelimprovement.')
+    m.local_upsert('protocols',{'Codice stabile':'protocols-giada-task41e-factorial-v1','Versione':'v1-technical-fix1',
+        'Procedura':json.dumps(spec,ensure_ascii=False),'Hash preregistrazione':amendment['after_protocol_sha256'],
+        'Artefatto preregistrazione':[artifact_ids['task41e_preregistration_v1.json']]})
     obs=put('observations','actual-launch',Nome='Task41e actual GPU launch and external recovery',Descrizione=json.dumps(launch),
             **{'Artefatti dettagliati':artifacts})
     put('findings','technical-launch',Nome='Task41e GPU worker running with verified recovery',Esito='Positivo',
