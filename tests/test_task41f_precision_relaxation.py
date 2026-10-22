@@ -72,6 +72,15 @@ class Task41fTests(unittest.TestCase):
             f.clip(torch,w.grad);oo.step()
             self.assertLess(float((w[0]-model.f_correction[k]).abs().max()),1e-6)
 
+    def test_censor_expression_matches_original_loss(self):
+        model=f.make_model(torch,self.parent,f.arms(),'cpu')
+        data,_=f.atomic_data(torch,self.parent,self.spec,'cpu',count=16)
+        idx=torch.arange(8)[None].expand(36,-1);member=torch.arange(36)[:,None]
+        raw=data['base'][member,idx];target=data['target'][member,idx]
+        old=f.prior.clipped_or_censored_error(torch,raw[...,:3],target[...,:3],True).square().mean((1,2))
+        actual=f.atomic_terms(torch,model.f_correction,model.active,data,idx)[...,:3]
+        self.assertTrue(torch.equal(old,actual))
+
     def test_feedback_gradient_and_oracle_dtype(self):
         model=f.make_model(torch,self.parent,f.arms(),'cpu')
         fb,support=f.feedback_data(torch,self.spec,self.cfg,self.calcium,self.base,'cpu',small=True)

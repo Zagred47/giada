@@ -12,6 +12,7 @@ from src.giada_teacher import task41f_precision_relaxation as f
 def main():
     folder=ROOT/'experiments/results/task41f_protocol_v1';folder.mkdir(exist_ok=True)
     assert not (folder/'dispatch_request.json').exists()
+    previous=(ROOT/f.CONFIG).read_bytes() if (ROOT/f.CONFIG).exists() else None
     old=json.loads((ROOT/f.prior.CONFIG).read_text())
     receipt=json.loads((ROOT/'artifacts/task41e_reserve_external/final_recovery_receipt.json').read_text())
     archive=Path(receipt['local']);assert receipt['valid'] and f.p.digest(archive)==receipt['sha256']
@@ -91,6 +92,17 @@ subprocess.run([sys.executable,'-u',str(REPO/'scripts/run_task41f_precision_rela
             'Alternateprecisionreferencesandcanonicaloraclesare diagnosticandselectionineligible.','H10isafrozencomparison,notaretrospectivelypromotedwinner.',
             'Three modelseeds shareprotocols;notindependentbiologicalreplications.','Fullrawreportsandcheckpointscopiedoffruntime;DBbackuponlylocal.'])
     f.p.save_json(ROOT/f.CONFIG,new)
+    if '--record-technical-amendment' in sys.argv:
+        assert previous is not None
+        before=json.loads(previous);after=dict(new)
+        before_sources=before.pop('sources');after_sources=after.pop('sources')
+        assert before==after,'Scientific contract must be unchanged'
+        f.p.save_json(folder/'protocol_before_technical_fix.json',json.loads(previous))
+        f.p.save_json(folder/'pretraining_amendment.json',dict(valid=True,
+            reason='CUDAgraph capture cannot materialize a host Boolean. Equivalent explicit censor expression uses existing CUDA tensors.',
+            before_protocol_sha256=hashlib.sha256(previous).hexdigest(),after_protocol_sha256=f.p.digest(ROOT/f.CONFIG),
+            before_sources=before_sources,after_sources=after_sources,scientific_contract_unchanged=True,
+            thresholds_changed=False,scientific_training_performed_before_fix=False))
     print(json.dumps(dict(valid=True,arms=12,members=36,contrasts=len(f.contrasts()),thresholds_changed=False)))
 
 

@@ -14,6 +14,6 @@ torch.set_num_threads(1)
 spec,*_=f.contract(ROOT)
 report=f.preflight(torch,ROOT,folder,'cpu',spec)
 f.p.save_json(folder/'cpu_preflight.json',report)
-f.p.save_json(folder/'local_verification.json',dict(valid=True,unit_tests_passed=True,tests=10,CPU_preflight=report,
+f.p.save_json(folder/'local_verification.json',dict(valid=True,unit_tests_passed=True,tests=11,CPU_preflight=report,
     protocol_sha256=report['protocol_sha256'],GPU_preflight_required=True))
 print(json.dumps(report),flush=True)

@@ -187,7 +187,9 @@ def atomic_terms(torch,weights,mask,data,idx):
     extra=torch.einsum('mbkp,mop->mbko',f.double(),(weights*mask).double()).float()
     raw=data['base'][member,idx]+.1*torch.tanh(extra/.1)
     target=data['target'][member,idx]
-    ru=prior.clipped_or_censored_error(torch,raw[...,:3],target[...,:3],True)
+    residual=raw[...,:3].double()-torch.logit(target[...,:3].double().clamp(1e-7,1-1e-7))
+    ru=torch.where(target[...,:3]<=1e-7,residual.clamp_min(0),
+        torch.where(target[...,:3]>=1-1e-7,residual.clamp_max(0),residual))
     rz=torch.nn.functional.logsigmoid(raw[...,3:].double())-target[...,3:].clamp_min(1e-30).log()
     return torch.cat((ru,rz),-1).square().mean((1,2))*mask.sum(-1).clamp_max(1)
 
