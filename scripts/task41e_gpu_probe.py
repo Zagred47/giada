@@ -4,7 +4,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
-revision=json.loads(Path('/content/task41e_preflight_request.json').read_text())['revision']
+request=json.loads(Path('/content/task41e_preflight_request.json').read_text());revision=request['revision']
 root=Path('/content/giada41e_preflight_'+str(time.time_ns()))
 subprocess.run(['git','clone','--depth','1','--branch','codex/surrogate-validity-audit','https://github.com/Zagred47/giada.git',str(root)],check=True,stdout=subprocess.DEVNULL)
 subprocess.run(['git','fetch','--depth','1','origin',revision],cwd=root,check=True,stdout=subprocess.DEVNULL)
@@ -33,10 +33,11 @@ with torch.inference_mode():
     report['new_recurrence_preflight']=m.c.j.i.old.recurrence_preflight(out,{'recurrence_chunk':32,'numeric_atol':1e-5},[controls['P110'],controls['D_fused']],torch,'cuda') is not None
 assert report['legacy_formula_preflight']['valid']
 report['revision']=sys.argv[2]
+report['account_profile']=sys.argv[3]
 Path('/content/task41e_gpu_preflight.json').write_text(json.dumps(report,indent=2))
 print(json.dumps(report),flush=True)
 '''
-result=subprocess.run([sys.executable,'-u','-c',code,str(root),revision],cwd=root,capture_output=True,text=True)
+result=subprocess.run([sys.executable,'-u','-c',code,str(root),revision,request['profile']],cwd=root,capture_output=True,text=True)
 Path('/content/task41e_preflight_process.log').write_text(result.stdout+'\n'+result.stderr)
 print(result.stdout,flush=True)
 if result.returncode:raise RuntimeError(result.stderr[-16000:])

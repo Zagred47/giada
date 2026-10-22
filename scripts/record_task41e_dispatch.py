@@ -1,5 +1,6 @@
 """Record actual GPU launch and checked off-runtime recovery in SQLite."""
 import hashlib
+import argparse
 import io
 import json
 from pathlib import Path
@@ -13,11 +14,13 @@ from research_memory.validated_batch import ValidatedBatchMirror
 
 
 def main():
-    folder=ROOT/'experiments/results/task41e_protocol_v1';external=ROOT/'artifacts/task41e_primary_external'
+    parser=argparse.ArgumentParser();parser.add_argument('--profile',choices=['primary','reserve'],default='primary');args=parser.parse_args()
+    folder=ROOT/'experiments/results/task41e_protocol_v1';external=ROOT/('artifacts/task41e_'+args.profile+'_external')
     request=json.loads((folder/'dispatch_request.json').read_text())
     status=json.loads((external/'job_status.json').read_text())
     receipt=json.loads((external/'external_backup_receipt.json').read_text())
     pf=json.loads((folder/'gpu_preflight.json').read_text())
+    assert request['profile']==pf['account_profile']==args.profile
     assert status['revision']==request['revision'] and status['task']=='41e'
     assert pf['valid'] and pf['all_parameters_finite'] and pf['fused_raw_bitwise_equal']
     archive=Path(receipt['local'])

@@ -13,6 +13,7 @@ for field,name in [('worker_sha256','scripts/run_task41e_transfer.py'),('manager
     request[field]=hashlib.sha256(raw).hexdigest()
 pf=json.loads((folder/'gpu_preflight.json').read_text())
 assert pf['valid'] and pf['all_parameters_finite'] and pf['fused_raw_bitwise_equal']
+request['profile']=pf['account_profile']
 for field,name in [('source_sha256','src/giada_teacher/task41e_transfer_training.py'),('protocol_sha256','experiments/task41e_preregistration_v1.json')]:
     assert pf[field]==hashlib.sha256((ROOT/name).read_bytes()).hexdigest()
 receipt=json.loads((folder/'memory_receipt.json').read_text())
