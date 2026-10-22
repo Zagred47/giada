@@ -1269,6 +1269,10 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     valutazione del padre. Gate originali e livello di astrazione conservati;
     K_Pst resta nel giudizio globale. Protocollo `task41e_preregistration_v1.json`.
     Backup esperimento esterni al runtime; backup SQLite locale.
+    **Avviata il22ottobre2026:** T4 sull'account di riserva, da console;
+    revisione scientifica `a1036644b416e3602bc0d72f0a20b3a2fa8e37a3`.
+    `results/task41e_protocol_v1/launch.json` conserva la ricevuta del lancio;
+    lo stato successivo va letto dal supervisore e dal report finale.
 
 ### ✅ Uscita del blocco 1
 
