@@ -38,6 +38,20 @@ def main():
         checkpoint=name,step=int(state['step']),all_tensors_finite=True,tensor_count=len(tensors),
         archive=str(archive),archive_bytes=archive.stat().st_size,sha256=h.hexdigest(),CRC_valid=True,
         runtime_independent=True,status_observed=status,scientific_result_not_inferred=True)
+    freeze_path=folder/'selection_freeze.json';selected_path=folder/'frozen_checkpoint.pt'
+    if freeze_path.exists() and selected_path.exists():
+        freeze=json.loads(freeze_path.read_text());claimed=freeze.pop('freeze_sha256')
+        assert hashlib.sha256(json.dumps(freeze,sort_keys=True).encode()).hexdigest()==claimed
+        assert not freeze['opened_regressions_used_for_selection']
+        raw=selected_path.read_bytes();assert hashlib.sha256(raw).hexdigest()==freeze['checkpoint_sha256']
+        selected=torch.load(io.BytesIO(raw),map_location='cpu',weights_only=False)
+        assert set(selected)=={a['name'] for a in freeze['arms']}
+        previous=len(tensors);walk(selected)
+        assert all(bool(torch.isfinite(v).all()) for v in tensors)
+        report.update(selected_weights_backup_valid=True,selected_arms=len(selected),
+            selected_tensor_count=len(tensors)-previous,selected_weights_sha256=freeze['checkpoint_sha256'],
+            selection_freeze_sha256=claimed,selected_weights_local=str(selected_path),
+            selection_freeze_local=str(freeze_path),selection_used_opened_regressions=False)
     if args.output:write_json(args.output,report)
     print(json.dumps(report),flush=True)
 
