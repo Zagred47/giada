@@ -1,6 +1,6 @@
 {
   "valid": true,
-  "reason": "Equivalent CUDAcapture fixes: avoid hostBoolean copy; release stale autograd nodes and warm/capture on the same side stream. Diagnostic oracles compute only requested channels.",
+  "reason": "Equivalent CUDAcapture fixes: avoid hostBoolean copy; release stale autograd nodes and warm/capture on the same side stream. Diagnostic oracles compute only requested channels. NumPy diagnostic containers are converted losslessly to JSON-native values before report serialization.",
   "before_protocol_sha256": "a337419a600cd8708db1dc267f742247a69f09fdeeacad48696cd7afdbeab722",
   "after_protocol_sha256": "645a5ab7ddd62452c7c10fa5c1224b0acb53be46db40953219e669ef68a762de",
   "before_sources": {

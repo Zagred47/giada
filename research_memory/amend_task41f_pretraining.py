@@ -32,7 +32,7 @@ def main():
         Descrizione=json.dumps(dict(amendment=amendment,GPU_preflight=pf,scientific_training_performed=False)),**{'Artefatti dettagliati':artifacts})
     put('findings','GPU-preflight',Nome='Task41f actualGPU preflight passed after capture compatibility fix',Esito='Positivo',
         Esperimenti=[ref('experiments-giada-task41f-factorial-v1')],Osservazioni=[obs],
-        Risultato='Censorlossisequivalent,verifiedbyexactCPUtest. ScalarhostBooleanremovedfromCUDAcapture. GPUoptimizer/graphparity,4096wholeloop,samebatchfrozenfailurecases,precision,clamp,coefficientoracleandobjectiveprobepassbeforetraining.',
+        Risultato='Censorlossisequivalent,verifiedbyexactCPUtest. ScalarhostBooleanremovedfromCUDAcapture;warmup/capturestreams aligned;NumPydiagnosticcontainersserializedlosslessly. GPUoptimizer/graphparity,4096wholeloop,samebatchfrozenfailurecases,precision,clamp,coefficientoracleandobjectiveprobepassbeforetraining.',
         Limitazioni='Technicalverificationonly;allscientificthresholdsandarmsunchanged;openedcasesusedonlyforfrozendiagnostics.')
     m.local_upsert('protocols',{'Codice stabile':'protocols-giada-task41f-factorial-v1','Versione':'v1-technical-fix1',
         'Procedura':json.dumps(spec,ensure_ascii=False),'Hash preregistrazione':pf['protocol_sha256']})
