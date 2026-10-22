@@ -1,0 +1,110 @@
+{
+  "valid": true,
+  "request": {
+    "task": "41e",
+    "revision": "a1036644b416e3602bc0d72f0a20b3a2fa8e37a3",
+    "worker_sha256": "b61ad3e978298111d3dd164800910d482a2d6f3829a91b2b00f667bd9ae71c8e",
+    "manager_sha256": "c297e900eefd0ac878b932e385a291154b37d7da0a193f7e7c66c8602543f21c",
+    "profile": "reserve",
+    "inputs": [
+      {
+        "remote": "/content/task41b_opened_inputs.zip",
+        "sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb"
+      },
+      {
+        "remote": "/content/task41d_opened41c.zip",
+        "sha256": "172ec87c4b1135d4f3421d63343ae399368f8426a68fadcf4c7ca788c6e97aff"
+      }
+    ]
+  },
+  "status_observed": {
+    "task": "41e",
+    "revision": "a1036644b416e3602bc0d72f0a20b3a2fa8e37a3",
+    "started_unix": 1792669818.5288205,
+    "elapsed_seconds": 196.11657571792603,
+    "manager_pid": 6515,
+    "state": "running",
+    "phase": "scientific_worker",
+    "worker_pid": 6754,
+    "last_progress": "[GIADA Task41e] checkpoint_saved 3072"
+  },
+  "external_recovery": {
+    "valid": true,
+    "remote": {
+      "label": "1792669957582",
+      "archive": "/content/giada_task41e_a1036644b416/recovery_1792669957582.zip",
+      "sha256": "7583ed1a4fc5dc0c4f0071c183fea5fb7e68ea5ab57cae12121f41059e32582b",
+      "bytes": 31579322
+    },
+    "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41e_reserve_external\\recovery_1792669957582.zip",
+    "verified_at": 1792669987.354302,
+    "runtime_independent": true
+  },
+  "last_recovered_checkpoint": "checkpoint_1024.pt",
+  "checkpoint_tensor_count": 11,
+  "all_recovered_tensors_finite": true,
+  "GPU_preflight": {
+    "valid": true,
+    "device": "cuda",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "members": 36,
+    "new_weights_per_seed": 128,
+    "zero_initialization_error": 0.0,
+    "optimizer_isolation_max_error": 6.6356733441352844e-09,
+    "training_graph_max_error": 0.0,
+    "physical_graph_max_error": 0.0,
+    "all_parameters_finite": true,
+    "canonical_fallback": false,
+    "untargeted_coefficients_exact": true,
+    "feedback_seconds_per_gradient": {
+      "4": 0.08983524300003864,
+      "40": 1.020184692999976
+    },
+    "source_sha256": "7134de56faf0e0ddbe4e9d0afe96d75db57b6a789ccd918350af143b880bb187",
+    "protocol_sha256": "eb2b2f39ad663068d17cd0d2a4bfb90770e0ff2ee6ac3fc4e8b52240a7b3c502",
+    "legacy_formula_preflight": {
+      "valid": true,
+      "formula_numpy_max_errors": [
+        1.4210854715202004e-14,
+        1.6940658945086007e-21,
+        2.220446049250313e-16
+      ],
+      "cuda_graph_max_error": 0.0,
+      "learned_sk_head_max_error": 0.0,
+      "all_learned_has_no_canonical_gate_calls": true,
+      "source_sha256": "6f656ee5cb8a9c1712ae7b07c5602ddcf93e1062d7d5634a14702a7fcf0dfb43",
+      "device": "cuda",
+      "gpu": "Tesla T4"
+    },
+    "fused_raw_bitwise_equal": true,
+    "new_recurrence_preflight": true,
+    "revision": "49ee1d41549614c6ca1820dc2070d7d1a9310983",
+    "account_profile": "reserve"
+  },
+  "thresholds_changed": false,
+  "DBbackup": "localonly",
+  "state_is_timestamped_not_live": true,
+  "allocation": {
+    "observed_utc": "2026-10-22 11:30:27 UTC",
+    "preferred_profile": "primary",
+    "primary_T4_allocation_attempts": 2,
+    "primary_error": "HTTP 503 Service Unavailable during GPU assignment",
+    "primary_active_sessions_after_failure": 0,
+    "reserve_previously_authorized": true,
+    "actual_profile": "reserve",
+    "actual_account": "cinziamrg48@gmail.com",
+    "session": "giada-task41e-reserve",
+    "hardware": "Tesla T4",
+    "actual_GPU_preflight_passed": true,
+    "scientific_worker_started_at_this_observation": false,
+    "DB_backup_policy": "local only"
+  },
+  "console_recovery": {
+    "initial_connection_failed_before_worker": true,
+    "followup_connection_started_same_pinned_request": true,
+    "scientific_worker_restarted": false,
+    "external_supervisor_continued_recovery": true,
+    "failed_console_log_sha256": "10731b27b3ef8bf48b7c45ab5983a680a3ba911e63fddde5640094ced8077aed"
+  }
+}

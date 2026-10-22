@@ -49,6 +49,12 @@ def main():
                 last_recovered_checkpoint=last,checkpoint_tensor_count=len(tensors),all_recovered_tensors_finite=True,
                 GPU_preflight=pf,thresholds_changed=False,DBbackup='localonly',state_is_timestamped_not_live=True)
     launch['allocation']=json.loads((folder/'allocation.json').read_text())
+    console=external/'console.log'
+    if console.exists() and 'Connectionwaslost.' in ''.join(console.read_text(errors='replace').split()):
+        launch['console_recovery']=dict(initial_connection_failed_before_worker=True,
+            followup_connection_started_same_pinned_request=True,scientific_worker_restarted=False,
+            external_supervisor_continued_recovery=True,
+            failed_console_log_sha256=hashlib.sha256(console.read_bytes()).hexdigest())
     amendment=json.loads((folder/'pretraining_amendment.json').read_text())
     assert amendment['valid'] and amendment['unchanged_scientific_contract'] and not amendment['thresholds_changed']
     assert amendment['after_protocol_sha256']==pf['protocol_sha256']
