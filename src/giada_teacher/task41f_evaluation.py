@@ -43,14 +43,17 @@ class CoefficientOracle:
         if name=='parent':raise AttributeError(name)
         return getattr(self.parent,name)
     def raw(self,v,ca):
-        u,z=self.parent.raw(v,ca);truth_u=[];truth_z=[]
+        u,z=self.parent.raw(v,ca);truth_u={};truth_z={};needed=set(self.us)|set(self.zs)
         for channel,name in enumerate(c.ionic.CHANNELS):
+            lo,hi=map(int,c.ionic.OFFSETS[channel:channel+2])
+            if not any(g in needed for g in range(lo,hi)):continue
             inf,tau=t._rates(name,v,ca,self.torch)
             if len(c.ionic.STATE_NAMES[channel])==1:inf,tau=inf[...,None],tau[...,None]
-            truth_u.append(self.torch.logit(inf));truth_z.append(self.torch.logit(-self.torch.expm1(-.1/tau)))
-        tu,tz=self.torch.cat(truth_u,-1),self.torch.cat(truth_z,-1)
-        return tuple(self.torch.cat([truth[...,g:g+1] if g in gates else learned[...,g:g+1] for g in range(18)],-1)
-            for truth,learned,gates in ((tu,u,self.us),(tz,z,self.zs)))
+            for g in range(lo,hi):
+                if g in self.us:truth_u[g]=self.torch.logit(inf[...,g-lo:g-lo+1])
+                if g in self.zs:truth_z[g]=self.torch.logit(-self.torch.expm1(-.1/tau[...,g-lo:g-lo+1]))
+        return tuple(self.torch.cat([truth[g] if g in gates else learned[...,g:g+1] for g in range(18)],-1)
+            for truth,learned,gates in ((truth_u,u,self.us),(truth_z,z,self.zs)))
     def __call__(self,v,ca,g):
         u,z=self.raw(v,ca)
         return g+self.torch.sigmoid(z)*(self.torch.sigmoid(u)-g)

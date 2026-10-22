@@ -6,6 +6,9 @@ pf=json.loads((folder/'gpu_preflight.json').read_text())
 assert pf['valid'] and pf['all_parameters_finite'] and pf['whole_loop_4096_parity_passed']
 assert pf['objective_probe_executed'] and pf['oracle_branches_executed']
 assert json.loads((folder/'memory_receipt.json').read_text())['registration_before_scientific_run']
+if (folder/'pretraining_amendment.json').exists():
+    amendment=json.loads((folder/'pretraining_memory_receipt.json').read_text())
+    assert amendment['valid'] and amendment['registration_before_scientific_run'] and amendment['protocol_sha256']==pf['protocol_sha256']
 revision=pf['revision'];spec=json.loads((ROOT/'experiments/task41f_preregistration_v1.json').read_text())
 assert hashlib.sha256((ROOT/'experiments/task41f_preregistration_v1.json').read_bytes()).hexdigest()==pf['protocol_sha256']
 request=dict(task='41f',revision=revision,profile=pf['account_profile'],inputs=[])

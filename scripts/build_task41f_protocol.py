@@ -97,11 +97,14 @@ subprocess.run([sys.executable,'-u',str(REPO/'scripts/run_task41f_precision_rela
         before=json.loads(previous);after=dict(new)
         before_sources=before.pop('sources');after_sources=after.pop('sources')
         assert before==after,'Scientific contract must be unchanged'
-        f.p.save_json(folder/'protocol_before_technical_fix.json',json.loads(previous))
+        existing=json.loads((folder/'pretraining_amendment.json').read_text()) if (folder/'pretraining_amendment.json').exists() else {}
+        if not (folder/'protocol_before_technical_fix.json').exists():
+            f.p.save_json(folder/'protocol_before_technical_fix.json',json.loads(previous))
         f.p.save_json(folder/'pretraining_amendment.json',dict(valid=True,
-            reason='CUDAgraph capture cannot materialize a host Boolean. Equivalent explicit censor expression uses existing CUDA tensors.',
-            before_protocol_sha256=hashlib.sha256(previous).hexdigest(),after_protocol_sha256=f.p.digest(ROOT/f.CONFIG),
-            before_sources=before_sources,after_sources=after_sources,scientific_contract_unchanged=True,
+            reason='Equivalent CUDAcapture fixes: avoid hostBoolean copy; release stale autograd nodes and warm/capture on the same side stream. Diagnostic oracles compute only requested channels.',
+            before_protocol_sha256=existing.get('before_protocol_sha256',hashlib.sha256(previous).hexdigest()),after_protocol_sha256=f.p.digest(ROOT/f.CONFIG),
+            before_sources=existing.get('before_sources',before_sources),after_sources=after_sources,scientific_contract_unchanged=True,
+            history=existing.get('history',[])+[dict(before=hashlib.sha256(previous).hexdigest(),after=f.p.digest(ROOT/f.CONFIG))],
             thresholds_changed=False,scientific_training_performed_before_fix=False))
     print(json.dumps(dict(valid=True,arms=12,members=36,contrasts=len(f.contrasts()),thresholds_changed=False)))
 

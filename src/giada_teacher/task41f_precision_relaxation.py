@@ -365,6 +365,7 @@ def preflight(torch,root,output,device,spec):
     if device=='cuda':torch.cuda.synchronize()
     assert bool(torch.isfinite(grad).all())
     feedback_seconds=time.perf_counter()-start
+    del response,grad  # Release default-stream AccumulateGrad nodes before capture.
     graph_error=None
     if device=='cuda':
         ref=copy.deepcopy(model)
@@ -386,9 +387,14 @@ def preflight(torch,root,output,device,spec):
 
 def capture(torch,model,opt,atomic,idx,norm):
     initial=model.f_correction.detach().clone()
-    for _ in range(3):atomic_step(torch,model,opt,atomic,idx,norm)
+    stream=torch.cuda.Stream();stream.wait_stream(torch.cuda.current_stream())
+    with torch.cuda.stream(stream):
+        for _ in range(3):atomic_step(torch,model,opt,atomic,idx,norm)
+    torch.cuda.current_stream().wait_stream(stream)
+    opt.zero_grad(set_to_none=True)
     graph=torch.cuda.CUDAGraph()
-    with torch.cuda.graph(graph):atomic_step(torch,model,opt,atomic,idx,norm)
+    with torch.cuda.graph(graph,stream=stream):atomic_step(torch,model,opt,atomic,idx,norm)
+    torch.cuda.current_stream().wait_stream(stream)
     with torch.no_grad():
         model.f_correction.copy_(initial)
         for state in opt.state.values():
