@@ -1291,6 +1291,26 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     equivalenza verificata. Protocollo `task41f_preregistration_v1.json`.
     GPU da console e backup esterni dell'esperimento;DB locale.
 
+    **Esito41f verificato:**60k completati,NO-GO e backup finale esterno integro.
+    Q0:334/336risposte41c,33/36stress;nominee41f334/336,32/36stress41c,
+    35/36vecchi stress. Il conteggio invariato nasconde casi risolti e introdotti.
+    Audit `results/task41f_audited_v1/AUDIT.md`:precisione mista risolve6/6
+    risposte diagnostiche contro lo stesso riferimentoFP32;oracolo equilibrio m
+    risolve18/18replay lenti.33/36checkpoint selezionati peggiorano il contributo
+    normalizzato di h. Questi probe attribuiscono cause,non promuovono candidati.
+  - **Task41g — Precisione e conservazione:** notebook unico
+    `giada_task41g_preservation.ipynb`,12bracci×3seed. Q0 genitore congelato;
+    solo-m/tutti3equilibri ×Adamcostante/annealing ×loss puntuale/sensibile
+    a corrente,crossing e feedback;quattro confronti aggiuntivi di copertura
+    delle code. Nuovi FIT/development,conservazione comune,zero-residuo
+    verificato e ranking canonico invariato. Controlli congelati2×2×2
+    precisione V/gate/readout,rollback pertesta controP110 e probe di
+    approssimazione lineare/C2,dati e capacità. Correnti,membrana,sinapsi,
+    18stati e0.1ms invariati. Tutti i gate e pannelli storici dopo freeze;
+    nessuna autorizzazione automatica aTask42. Protocollo
+    `task41g_preregistration_v1.json`;esperimento da console e backup esterni,
+    backup del mirrorSQLite soltanto locale.
+
 ### ✅ Uscita del blocco 1
 
 Operatore e interfaccia congelati, errore attribuibile e costo misurato.
