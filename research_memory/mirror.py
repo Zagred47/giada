@@ -30,7 +30,14 @@ def dumps(value):
 
 
 def digest(value):
-    return hashlib.sha256(dumps(value).encode("utf-8")).hexdigest()
+    # Preserve the exact canonical JSON hash without materializing a second
+    # multi-gigabyte Unicode document and its UTF-8 copy in memory.
+    result = hashlib.sha256()
+    encoder = json.JSONEncoder(ensure_ascii=False, sort_keys=True,
+                               separators=(",", ":"), allow_nan=False)
+    for chunk in encoder.iterencode(value):
+        result.update(chunk.encode("utf-8"))
+    return result.hexdigest()
 
 
 def read_json(path):

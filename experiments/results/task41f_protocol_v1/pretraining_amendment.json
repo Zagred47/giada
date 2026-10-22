@@ -2,7 +2,7 @@
   "valid": true,
   "reason": "Equivalent CUDAcapture fixes: avoid hostBoolean copy; release stale autograd nodes and warm/capture on the same side stream. Diagnostic oracles compute only requested channels.",
   "before_protocol_sha256": "a337419a600cd8708db1dc267f742247a69f09fdeeacad48696cd7afdbeab722",
-  "after_protocol_sha256": "d90af60f69ce7c55f950e00d33cba12a3b634c85fd97fc0be6ffc47e18924d44",
+  "after_protocol_sha256": "645a5ab7ddd62452c7c10fa5c1224b0acb53be46db40953219e669ef68a762de",
   "before_sources": {
     "src/giada_teacher/task41e_transfer_model.py": "cc2b809f295525624d74751d0aa3fa0719180fa89e27fc3d626226365e540ea0",
     "src/giada_teacher/task41e_transfer_data.py": "aab7843141ad6f91e0ce28f6082b50679fdb27ce7cda42ab79af5f585cfa135f",
@@ -57,7 +57,7 @@
     "experiments/results/task41e_protocol_v1/task41d_summary.json": "89479331b96ca56eab8cc13d7b3c1edfadcf74e9d14354db9826361bce29bf1a",
     "experiments/task41e_preregistration_v1.json": "eb2b2f39ad663068d17cd0d2a4bfb90770e0ff2ee6ac3fc4e8b52240a7b3c502",
     "src/giada_teacher/task41f_precision_relaxation.py": "7528d8f00d5d3a9968bd9f85048a5d7cbc9e4d64353a84aff5c8022008837eae",
-    "src/giada_teacher/task41f_evaluation.py": "f5ae51e74d936b5f9ce547ef56b12756b5cc0f00227175bfb5c581478b32f7f5",
+    "src/giada_teacher/task41f_evaluation.py": "32d76bf36bf594803ccac9b479e0f6c236c45dfe346ae39070c4c89434dd7b77",
     "scripts/run_task41f_precision_relaxation.py": "1346a216d88602f071e25f842ceb5ce8c1cbb46a5c81270cc40a7e52f9948cf5",
     "notebooks/giada_task41f_precision_relaxation.ipynb": "06d1f77c59a1596675ce69929239478e2e006e3bb9bde3fce3aa408cd6056871",
     "experiments/results/task41f_protocol_v1/task41e_frozen.pt": "7ac38b79429d147fc0acb3187a4d5c4581cae643ae722217fcf378c78d18b6dc",
@@ -68,6 +68,10 @@
     {
       "before": "88e80fba3184606e1c9e2db8ffca4dc133951e21e493c48fdf5c0245ab9308c4",
       "after": "d90af60f69ce7c55f950e00d33cba12a3b634c85fd97fc0be6ffc47e18924d44"
+    },
+    {
+      "before": "d90af60f69ce7c55f950e00d33cba12a3b634c85fd97fc0be6ffc47e18924d44",
+      "after": "645a5ab7ddd62452c7c10fa5c1224b0acb53be46db40953219e669ef68a762de"
     }
   ],
   "thresholds_changed": false,

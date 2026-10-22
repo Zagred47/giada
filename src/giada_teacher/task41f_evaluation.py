@@ -10,6 +10,15 @@ from . import task41f_precision_relaxation as f
 p,t,c,d,x,ee=f.p,f.t,f.c,f.d,f.x,f.ee
 
 
+def json_native(value):
+    """Preserve diagnostic values while converting NumPy containers for JSON."""
+    if isinstance(value,np.ndarray):return json_native(value.tolist())
+    if isinstance(value,np.generic):return value.item()
+    if isinstance(value,dict):return {k:json_native(v) for k,v in value.items()}
+    if isinstance(value,(list,tuple)):return [json_native(v) for v in value]
+    return value
+
+
 def cast_model(torch,model,dtype):
     if isinstance(model,CoefficientOracle):
         return CoefficientOracle(torch,cast_model(torch,model.parent,dtype),model.us,model.zs)
@@ -153,7 +162,7 @@ def frozen_audit(torch,root,output,controls,spec,cfg,calcium,base,device):
                     items.append(dict(seed=seed,original_case=design[original_id],metrics=p.evaluate_currents(truth[:,k],current[:,k],.1,q,st['target_gates'][:,k],gates[:,si,k]),
                         Ca_crossing=signed_crossings(truth[:,k,0],current[:,k,0])))
             oracles.append(dict(model=name,oracle=label,selection_eligible=False,rows=items))
-            p.save_json(folder/'coefficient_oracles.json',oracles)
+            p.save_json(folder/'coefficient_oracles.json',json_native(oracles))
         print(f'[GIADA Task41f] checkpoint coefficient oracles {name}',flush=True)
     p.save_json(folder/'reproduction.json',dict(valid=True,controls=reproduction,official_reference='FP32 canonical; unchanged',
         alternate_references_selection_eligible=False,opened_diagnostics_before_training=True,thresholds_changed=False))
