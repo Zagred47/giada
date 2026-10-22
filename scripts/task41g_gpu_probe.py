@@ -23,6 +23,7 @@ torch.set_num_threads(1);torch.use_deterministic_algorithms(True)
 torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
 spec,cfg,calcium,base=g.contract(root);out=root/'smoke';out.mkdir()
 report=g.preflight(torch,root,out,'cuda',spec)
+print('[GIADA Task41g preflight] graph and independent optimizer passed',flush=True)
 controls=g.frozen_controls(torch,root,spec,'cuda');parent=controls['E_Q0']
 n=4;steps=180;v=np.full((n,steps),-45.);ca=np.full_like(v,1e-4)
 initial,_=g.p.coefficients(v[:,0],ca[:,0],.1)
@@ -31,11 +32,14 @@ with torch.inference_mode():
     for policy in __import__('itertools').product((False,True),repeat=3):
         paths=ev.policy_rollout(torch,parent,data,cfg,calcium,base,'cuda',policy)
         assert np.isfinite(paths).all()
+        __import__('gc').collect();torch.cuda.empty_cache()
+    print('[GIADA Task41g preflight] eight precision policies passed',flush=True)
     ordinary=g.fe.typed_rollout(torch,parent,data,cfg,calcium,base,'cuda')['current']
     actual=ev.policy_rollout(torch,parent,data,cfg,calcium,base,'cuda',(False,False,False))
     assert np.array_equal(actual,ordinary)
     small=dict(spec,cost=dict(spec['cost'],batches=[4096],repetitions=2))
     g.fe.execution_matrix(torch,root,out,{'E_Q0':parent},data,small,cfg,calcium,base,'cuda')
+    print('[GIADA Task41g preflight] whole-loop4096 passed',flush=True)
 g.f.ee.differentiable_constants()
 model=g.make_model(torch,parent,g.arms(),'cuda')
 atomic,_=g.atomic_data(torch,parent,spec,'cuda',count=16)
@@ -53,7 +57,9 @@ report.update(revision=sys.argv[2],account_profile=sys.argv[3],arms=[a['name'] f
 Path('/content/task41g_gpu_preflight.json').write_text(json.dumps(report,indent=2))
 print(json.dumps(report),flush=True)
 '''
-result=subprocess.run([sys.executable,'-u','-c',code,str(root),request['revision'],request['profile']],cwd=root,capture_output=True,text=True)
-Path('/content/task41g_preflight_process.log').write_text(result.stdout+'\n'+result.stderr)
-print(result.stdout,flush=True)
-if result.returncode:raise RuntimeError(result.stderr[-18000:])
+with Path('/content/task41g_preflight_process.log').open('w') as log:
+    proc=subprocess.Popen([sys.executable,'-u','-c',code,str(root),request['revision'],request['profile']],cwd=root,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
+    for line in proc.stdout:
+        log.write(line);log.flush();print(line.rstrip(),flush=True)
+    result=proc.wait()
+if result:raise RuntimeError(f'GPU preflight process failed with exit={result}; see saved process log')
