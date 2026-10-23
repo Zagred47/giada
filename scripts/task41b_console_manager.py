@@ -65,15 +65,32 @@ def main():
         workers['41f']='run_task41f_precision_relaxation.py'
         workers['41g']='run_task41g_preservation.py'
         workers['41h']='run_task41h_path_repair.py'
+        if request.get('evaluation_only'):
+            assert task=='41h'
+            workers['41h']='recover_task41h_evaluation.py'
         worker_source=repo/'scripts'/workers[task]
         assert hashlib.sha256(worker_source.read_bytes()).hexdigest()==request['worker_sha256']
         save(state='running',phase='scientific_worker');print('[GIADA console] pinned checkout verified; starting worker',flush=True)
         with (root/'process.log').open('w') as log:
-            worker=subprocess.Popen([sys.executable,'-u',str(worker_source),str(output)],cwd=repo,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
+            extra=[]
+            env=None
+            if request.get('evaluation_only'):
+                extra=['--archive',request['recovery_archive'],'--seal',request['recovery_seal']]
+                env=dict(__import__('os').environ,GIADA_RECOVERY_BARRIERS='1')
+            worker=subprocess.Popen([sys.executable,'-u',str(worker_source),str(output),*extra],cwd=repo,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
             last_publish=0.
             for line in worker.stdout:
                 log.write(line);log.flush()
                 print(line.rstrip(),flush=True)
+                if line.startswith('[GIADA recovery barrier] '):
+                    label=line.strip().split(' ',3)[-1]
+                    assert label and all(c.isalnum() or c=='_' for c in label)
+                    save(state='running',phase='evaluation_backup',worker_pid=worker.pid,last_progress=label)
+                    publish(label)
+                    ack=root/'backup_ack.txt';ack.write_text(label)
+                    last_publish=time.time()
+                    save(state='running',phase='scientific_worker',worker_pid=worker.pid,last_progress=label)
+                    continue
                 if '[GIADA Task' in line:
                     save(state='running',phase='scientific_worker',worker_pid=worker.pid,last_progress=line.rstrip())
                     checkpoint='checkpoint_saved ' in line or 'checkpoint ' in line or 'preflights passed' in line

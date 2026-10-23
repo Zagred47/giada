@@ -1,0 +1,34 @@
+{
+  "valid": true,
+  "original_training_revision": "509c1d0c10df47cba0f6c4ecf29cbbb18f28183d",
+  "source_archive_sha256": "56157144a0ac222d6517da2c9d665ead87c842554e812973ff32cbfc962833a6",
+  "source_archive_bytes": 122622624,
+  "protocol_sha256": "af62b2e60eb0b4c6bbc9ce09114770b6ac798d5b8a7de842a7fd1f9ddb52978b",
+  "checkpoint_sha256": {
+    "checkpoint_0.pt": "90a04f7bb50b73ead6a29a35cf5a0f11e6efe811de7ccfa875bc9e4e21f6911e",
+    "checkpoint_512.pt": "8dc6e142c6ee050862422cc57b2d130bd06bbca8ae91215e21d8cdd39f77068c",
+    "checkpoint_2048.pt": "3a4dccf362924d004a69782d78569d6f26271047e08fc899d858bd70b03f8114",
+    "checkpoint_8192.pt": "8820618f74380d20e52829941ea925212247ac2a4b738fb577a1c9bc41ec5b89",
+    "checkpoint_30000.pt": "3724084c0111acb61761ed1e90a600c128ab51c3d8675c63e96fac82f15b9a9d",
+    "checkpoint_60000.pt": "88cb93d1636d209c905570f90836bc324889cd521c52ee232991a79182930f4a"
+  },
+  "saved_rank_steps": [
+    0,
+    512,
+    2048,
+    8192,
+    30000
+  ],
+  "missing_rank_step": 60000,
+  "observed_aggregate_models": [
+    "aggregate_H1_D16_N16384",
+    "aggregate_H1_D16_N4096"
+  ],
+  "GPU": "Tesla T4",
+  "torch_version": "2.11.0+cu130",
+  "training_updates_performed": 0,
+  "thresholds_changed": false,
+  "selection_rule": "Original lexicographic minima, strict-less comparison, earliest tie; stratified primary and aggregate diagnostic.",
+  "source_backup": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41h_reserve_external\\recovery_1792765804734.zip",
+  "runtime_loss": "No active reserve assignment; CLI recorded session_terminated2026-10-23T14:46:59Z during evaluation; no final report recovered."
+}
