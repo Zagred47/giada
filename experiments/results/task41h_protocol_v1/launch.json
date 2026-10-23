@@ -1,0 +1,56 @@
+{
+  "valid": true,
+  "request": {
+    "task": "41h",
+    "revision": "509c1d0c10df47cba0f6c4ecf29cbbb18f28183d",
+    "profile": "reserve",
+    "inputs": [
+      {
+        "remote": "/content/task41b_opened_inputs.zip",
+        "sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb"
+      },
+      {
+        "remote": "/content/task41d_opened41c.zip",
+        "sha256": "172ec87c4b1135d4f3421d63343ae399368f8426a68fadcf4c7ca788c6e97aff"
+      }
+    ],
+    "worker_sha256": "737551a9e7d57f718f055f5b08ef7526220d7e0a588148445c790e9b1d658074",
+    "manager_sha256": "7d30af280cb58f4506744a3e1bd62de09afc6166a8e471dde9b06c63292b4629"
+  },
+  "status_observed": {
+    "task": "41h",
+    "revision": "509c1d0c10df47cba0f6c4ecf29cbbb18f28183d",
+    "started_unix": 1792760269.8384223,
+    "elapsed_seconds": 194.60709691047668,
+    "manager_pid": 3217,
+    "state": "running",
+    "phase": "scientific_worker",
+    "worker_pid": 3504,
+    "last_progress": "[GIADA Task41h] checkpoint numerical 41c/G_nominee"
+  },
+  "external_backup": {
+    "valid": true,
+    "remote": {
+      "label": "1792760464445",
+      "archive": "/content/giada_task41h_509c1d0c10df/recovery_1792760464445.zip",
+      "sha256": "598b82533e452eb2ffd610c3b11cc715516f0dc540182bfd20b6ae003c07bcaa",
+      "bytes": 27948778,
+      "parts": [
+        {
+          "remote": "/content/giada_task41h_509c1d0c10df/recovery_1792760464445.zip.part0000",
+          "bytes": 27948778,
+          "sha256": "598b82533e452eb2ffd610c3b11cc715516f0dc540182bfd20b6ae003c07bcaa"
+        }
+      ]
+    },
+    "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41h_reserve_external\\recovery_1792760464445.zip",
+    "verified_at": 1792760501.55726,
+    "runtime_independent": true
+  },
+  "last_recovered_checkpoint": "checkpoint_0.pt",
+  "all_recovered_tensors_finite": true,
+  "scientific_result_pending": true,
+  "thresholds_changed": false,
+  "DB_backup": "localonly",
+  "numerical_scope": "State64/solve32 casts the absolute solver output back to64 after FP32 arithmetic; it is an interface-dtype control, not an unquantized64-bit residual accumulator. Do not attribute a null result to the irrelevance of state accumulation. Solver64 and recentered-FP32 contrasts remain diagnostic, not selection-eligible."
+}

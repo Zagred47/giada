@@ -49,7 +49,8 @@ def main():
                 return True
             assert finite(state)
         value=dict(valid=True,request=request,status_observed=status,external_backup=receipt,last_recovered_checkpoint=name,
-            all_recovered_tensors_finite=True,scientific_result_pending=True,thresholds_changed=False,DB_backup='localonly')
+            all_recovered_tensors_finite=True,scientific_result_pending=True,thresholds_changed=False,DB_backup='localonly',
+            numerical_scope='State64/solve32 casts the absolute solver output back to64 after FP32 arithmetic; it is an interface-dtype control, not an unquantized64-bit residual accumulator. Do not attribute a null result to the irrelevance of state accumulation. Solver64 and recentered-FP32 contrasts remain diagnostic, not selection-eligible.')
         write_json(folder/'launch.json',value)
     print(json.dumps(value),flush=True)
 if __name__=='__main__':main()
