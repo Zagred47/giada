@@ -97,6 +97,9 @@ def main():
                         (dest/'external_backup_receipt.json').write_text(json.dumps(dict(valid=True,
                             remote=dict(label='final',archive=manifest['archive'] if a.task=='41h' else state['archive'],sha256=expected_sha,bytes=target.stat().st_size),
                             local=str(target),verified_at=time.time(),runtime_independent=True),indent=2))
+                        if a.task=='41h' and 'evaluation' in dest.name:
+                            ack=cli(repo,'upload','-s',a.session,dest/'external_backup_receipt.json',remote+'/external_final_ack.json',capture_output=True,text=True)
+                            assert ack.returncode==0,'Verified final backup saved locally, but remote acknowledgement failed'
                     break
             if driver is not None and driver.poll() is not None:
                 if got and state.get('state')=='running':

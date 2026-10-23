@@ -16,8 +16,21 @@ foreach($pair in @(@('scripts/task41b_console_manager.py','/content/task39e_cons
     if($LASTEXITCODE -ne 0){throw 'Upload failed'}
 }
 foreach($inputFile in $request.inputs){
-    & "$PSScriptRoot/colab.ps1" upload -s $Session $inputFile.local $inputFile.remote
-    if($LASTEXITCODE -ne 0){throw 'Input upload failed'}
+    if($inputFile.remote -eq $request.recovery_archive){
+        $partIndex=0
+        while(Test-Path -LiteralPath ($inputFile.local+('.part{0:D4}' -f $partIndex))){
+            $suffix='.part{0:D4}' -f $partIndex
+            & "$PSScriptRoot/colab.ps1" upload -s $Session ($inputFile.local+$suffix) ($inputFile.remote+$suffix)
+            if($LASTEXITCODE -ne 0){throw 'Recovery part upload failed'}
+            $partIndex++
+        }
+        if($partIndex -ne 4){throw 'Expected four verified source archive parts'}
+    }else{
+        & "$PSScriptRoot/colab.ps1" upload -s $Session $inputFile.local $inputFile.remote
+        if($LASTEXITCODE -ne 0){throw 'Input upload failed'}
+    }
 }
+& "$PSScriptRoot/colab.ps1" exec -s $Session -f scripts/assemble_task41h_recovery_input.py --timeout 120
+if($LASTEXITCODE -ne 0){throw 'Recovery archive assembly failed'}
 & 'C:/Users/belli/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe' scripts/task41b_local_supervisor.py --task 41h --session $Session --revision $request.revision --destination artifacts/task41h_evaluation_primary_external
 exit $LASTEXITCODE
