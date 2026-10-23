@@ -1,7 +1,8 @@
 """Compact read-only progress, never queues work in the active kernel."""
-import json,re,time
+import argparse,json,re,time
 from pathlib import Path
-root=Path(__file__).resolve().parents[1]/'artifacts/task41h_evaluation_primary_external'
+ap=argparse.ArgumentParser();ap.add_argument('--external-folder',type=Path);args=ap.parse_args()
+root=args.external_folder or Path(__file__).resolve().parents[1]/'artifacts/task41h_evaluation_primary_external'
 lines=(root/'console.log').read_text(errors='replace').splitlines();panels={}
 for line in lines:
     m=re.search(r'evaluation (\w+) (\S+)/(imposed|autonomous) (\d+)/(\d+) responses=(\d+)',line)

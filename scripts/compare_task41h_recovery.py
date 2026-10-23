@@ -1,5 +1,5 @@
 """Verify the recovered final bundle and compare every registered panel to41g."""
-import hashlib,io,json,statistics,sys,zipfile
+import argparse,hashlib,io,json,statistics,sys,zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 import torch
@@ -35,7 +35,8 @@ def compact_cost(rows):
     return output
 
 def main():
-    folder=ROOT/'experiments/results/task41h_recovery_v1';ext=ROOT/'artifacts/task41h_evaluation_primary_external'
+    ap=argparse.ArgumentParser();ap.add_argument('--external-folder',type=Path,default=ROOT/'artifacts/task41h_evaluation_primary_external');args=ap.parse_args()
+    folder=ROOT/'experiments/results/task41h_recovery_v1';ext=args.external_folder
     receipt=json.loads((ext/'external_backup_receipt.json').read_text());status=json.loads((ext/'job_status.json').read_text())
     assert status['state']=='finished' and status.get('worker_exit_code')==0 and not status.get('technical_failure')
     assert receipt['valid'] and receipt['remote']['label']=='final'
