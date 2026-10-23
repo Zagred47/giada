@@ -56,5 +56,5 @@ with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=1) as z:
     for name,raw in members.items():z.writestr(name,raw)
 with archive.open('rb') as f:digest=hashlib.file_digest(f,'sha256').hexdigest()
 result=dict(archive=str(archive),sha256=digest,bytes=archive.stat().st_size,salvaged=salvaged,
-    cached_reports={k:len(json.loads(v).get('reports',{})) for k,v in members.items() if k.endswith('causal_results.json')})
+    cached_reports={k:len(json.loads(v)) for k,v in members.items() if k.endswith('causal_results.json')})
 (dest/'package_receipt.json').write_text(json.dumps(result,indent=2));print(json.dumps(result),flush=True)

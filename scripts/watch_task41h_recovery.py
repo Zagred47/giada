@@ -12,5 +12,6 @@ last=next((x for x in reversed(lines) if '[GIADA Task' in x or 'Traceback' in x 
 status=json.loads((root/'job_status.json').read_text()) if (root/'job_status.json').exists() else {}
 backup=json.loads((root/'external_backup_receipt.json').read_text()) if (root/'external_backup_receipt.json').exists() else {}
 print(json.dumps(dict(state=status.get('state'),phase=status.get('phase'),completed_model_evaluations={k:len(v) for k,v in panels.items()},last_scientific_progress=last,
+    completed_recurrence_groups=len({m.group(1) for line in lines if (m:=re.search(r'checkpoint historical recurrence (\d+)',line))}),
     console_age_seconds=round(time.time()-(root/'console.log').stat().st_mtime,1),backup_label=backup.get('remote',{}).get('label'),backup_bytes=backup.get('remote',{}).get('bytes'),
     backup_verified=backup.get('valid',False),final_report_complete=status.get('state')=='finished' and status.get('worker_exit_code')==0)),flush=True)

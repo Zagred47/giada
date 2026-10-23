@@ -125,3 +125,34 @@ duplicating a running experiment. Reserve backups use
 `artifacts/task39f_reserve_external`. A0-unit balance alone does not establish
 GPU unavailability:the reserve T4 was actually assigned and passed CUDA smoke.
 Assignment success and verified external copies remain required evidence.
+
+## Task41h frozen evaluation recovery
+
+The original training archive and the reconstructed selection are separate
+immutable inputs. Once `frozen_checkpoint.pt`, `selection_freeze.json` and
+`selection_parity.json` have been verified, use
+`scripts/resume_task41h_frozen_evaluation.py`, not the training runner and not
+the earlier selection-reconstruction runner. The frozen-resume worker forbids
+optimizer steps and ranking reconstruction, checks the original T4/Torch
+backend, and reuses complete SHA-verified opened panels and stress reports.
+
+The console request must set both `evaluation_only` and
+`frozen_evaluation_resume`. Periodic archives contain all JSON metrics, frozen
+weights and logs; the final archive additionally includes new trace arrays.
+The previously completed trace arrays remain in the earlier verified local
+archive. `scripts/merge_task41h_frozen_final.py` reunites these immutable
+sources and asserts equality of the freeze, weights and training curves.
+
+Current recovery locations:
+
+- Input package and transport receipt: `artifacts/task41h_frozen_resume`.
+- New off-runtime copies: `artifacts/task41h_frozen_evaluation_primary_external`.
+- Reunited final copy: `artifacts/task41h_complete_evaluation_external`.
+- Audit and comparison: `experiments/results/task41h_recovery_v1/LATEST.json`.
+
+`scripts/complete_task41h_frozen_recovery.py` waits for the verified final
+external receipt before merging and running the comparison. Partial audit
+files are not evidence of completion. Check `LATEST.json`, the final archive
+SHA/CRC, unchanged checkpoint hashes, and fixed-panel control reproduction.
+Do not relaunch a worker merely because an individual console request stalls;
+inspect the named session and its existing manager first.

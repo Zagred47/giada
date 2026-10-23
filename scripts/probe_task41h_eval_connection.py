@@ -1,10 +1,11 @@
 """Read-only proxy health; never print credential-bearing exception URLs."""
-import json,time
+import argparse,json,time
 import requests
 from colab_profile_cli import configure_profile
 configure_profile()
 from colab_cli.common import state
-s=state.get_session('giada-task41h-eval-primary')
+ap=argparse.ArgumentParser();ap.add_argument('--session',default='giada-task41h-eval-primary');args=ap.parse_args()
+s=state.get_session(args.session)
 for path in ('/api/status','/api/kernels'):
     start=time.monotonic()
     try:

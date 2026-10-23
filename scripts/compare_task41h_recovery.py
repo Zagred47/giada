@@ -44,9 +44,24 @@ def main():
     old=json.loads((ROOT/'experiments/results/task41g_audited_v1/final_report_recovered.json').read_text())
     old_receipt=json.loads((ROOT/'artifacts/task41g_primary_external/final_reconstruction_receipt.json').read_text())
     old_path=Path(old_receipt['local']);assert sha(old_path)==old_receipt['sha256']
+    registration=json.loads((ROOT/'experiments/task41h_preregistration_v1.json').read_text())
+    old_names={'G_nominee':registration['task41g_nominee'],'G_tail_diagnostic':registration['task41g_diagnostic']}
+    old_fixed={k:{} for k in old_names}
     with zipfile.ZipFile(old_path) as prior:
         old_cost=compact_cost(json.loads(prior.read('cost.json')))
         old_execution=compact_cost(json.loads(prior.read('execution_matrix.json')))
+        for panel in ('41','41c'):
+            previous=json.loads(prior.read('opened'+panel+'/causal_results.json'))
+            for current,name in old_names.items():
+                for mode in ('imposed','autonomous'):
+                    row=previous[name+'/'+mode]
+                    old_fixed[current][panel+'/'+mode+'/responses']=failures(row['interventions'])
+                    old_fixed[current][panel+'/'+mode+'/trajectories']=failures(row['cases'])
+            del previous
+            previous=json.loads(prior.read('stress'+panel+'.json'))
+            for current,name in old_names.items():
+                old_fixed[current]['stress'+panel]=failures([r for r in previous['rows'] if r['model']==name])
+            del previous
     with zipfile.ZipFile(path) as z:
         assert z.testzip() is None
         read=lambda name:json.loads(z.read(name))
@@ -64,11 +79,12 @@ def main():
                 tensor_checks[name]=hashlib.sha256(z.read(name)).hexdigest()
         seal=json.loads((folder/'input_seal.json').read_text())
         for name,digest in seal['checkpoint_sha256'].items():assert tensor_checks[name]==digest
-        details={name:{} for name in report['summaries']};floors={}
+        details={name:{} for name in report['summaries']};floors={};panel_qualification={}
         for panel in ('41','41c'):
             data=read('opened'+panel+'/causal_results.json')
             for key,row in data.items():
                 name,mode=key.split('/');dest=details.setdefault(name,{})
+                panel_qualification.setdefault(name,{})[panel+'/'+mode]=dict(passed=row['passed'],pooled_voltage_rmse_mv=row.get('pooled_voltage_rmse_mv'))
                 dest[panel+'/'+mode+'/responses']=failures(row['interventions'])
                 dest[panel+'/'+mode+'/trajectories']=failures(row['cases'])
             del data
@@ -83,6 +99,7 @@ def main():
         hist=read('historical_regression/causal_results.json')
         for key,row in hist.items():
             name,mode=key.split('/');dest=details.setdefault(name,{})
+            panel_qualification.setdefault(name,{})['historical/'+mode]=dict(passed=row['passed'],pooled_voltage_rmse_mv=row.get('pooled_voltage_rmse_mv'))
             dest['historical/'+mode+'/responses']=failures(row['interventions'])
             dest['historical/'+mode+'/trajectories']=failures(row['cases'])
         del hist
@@ -97,9 +114,20 @@ def main():
         reproduction={}
         for current,previous in old_names.items():
             reproduction[current]={k:report['summaries'][current][k]==old['summaries'][previous][k] for k in ('panels','stress','historical','recurrence')}
+            reproduction[current]['fixed_panel_failure_identities']={panel:set(identities(rows))==set(identities(details[current][panel])) for panel,rows in old_fixed[current].items()}
         deltas={name:{base:{panel:difference(details[base][panel],rows) for panel,rows in panels.items() if panel in details[base]}
             for base in old_names} for name,panels in details.items() if name in {a['name'] for a in spec['arms']} or name.startswith('aggregate_')}
         rawcost=read('cost.json');cost=compact_cost(rawcost);execution=compact_cost(read('execution_matrix.json'));compact=read('compact_execution_cost.json')
+        numerical=[]
+        for row in read('selected_numerical_audit/voltage_precision.json'):
+            numerical.append({k:row[k] for k in ('panel','model','state64','solve64','recentered','selection_eligible')}|dict(
+                trajectories=row['metrics']['passed_cases'],trajectory_total=row['metrics']['total'],
+                response_passed=sum(r['metrics']['passed'] for r in row['responses']),response_total=len(row['responses']),
+                panel_passed=row['metrics']['passed'],failed_responses=failures(row['responses']),failed_trajectories=failures(row['metrics']['cases'])))
+        oracle=read('coefficient_oracle_stress.json');oracle_summary={}
+        for name in sorted({r['model'] for r in oracle['rows']}):
+            rows=[r for r in oracle['rows'] if r['model']==name]
+            oracle_summary[name]=dict(passed=sum(r['metrics']['passed'] for r in rows),total=len(rows),failures=failures(rows),selection_eligible=False)
         same_run_speed=[]
         for row in rawcost:
             samples=row['samples'];name=report['nominee']
@@ -110,14 +138,18 @@ def main():
                 quality_qualified=name in report['passing_arms']))
         result=dict(valid=True,complete_final_backup_verified=True,all_tensors_finite=True,unchanged_training_checkpoints=tensor_checks,
             backup=receipt,report=report,nominee=report['nominee'],old_nominee=old['nominee'],old_summaries=old['summaries'],
-            baseline_reproduction=reproduction,floors=floors,all_floors_passed=all(floors.values()),failures=details,deltas=deltas,
+            baseline_reproduction=reproduction,floors=floors,all_floors_passed=all(floors.values()),panel_qualification=panel_qualification,failures=details,deltas=deltas,
             selection=freeze,paired_contrasts=read('paired_contrasts.json'),ionic_cost=cost,execution_matrix=execution,compact_execution_cost=compact,
+            selected_numerical_diagnostics=numerical,coefficient_oracle_stress=oracle_summary,
             same_run_speed=same_run_speed,old41g_cost=old_cost,old41g_execution=old_execution,
             training_updates_performed=0,thresholds_changed=False,
             limits=['Old and new development use different seed families: compare new41h candidates to G controls evaluated on the same41h development, not old development counts as paired.',
                 '41g controls are measured again within41h. Historical timing ratios from different VM assignments are descriptive, not a paired speed benchmark.',
+                'If cached_cost_rows is present, those rows were retained from Colab and remaining cost rows were completed on Kaggle. References are paired within each row; absolute times across assignments are not paired.',
                 'Nominee is fixed by original stratified selection. Posthoc best counts do not replace it. Alternate numerical policies remain diagnostic.'])
         write_json(folder/'comparison_with_41g.json',result);write_json(folder/'final_report.json',report)
+        write_json(folder/'LATEST.json',dict(valid=True,complete=True,report='final_report.json',comparison='comparison_with_41g.json',
+            supersedes_partial='partial_resume_audit.json',final_backup_sha256=receipt['remote']['sha256'],training_updates_performed=0,thresholds_changed=False))
         print(json.dumps(dict(valid=True,nominee=report['nominee'],decision=report['decision'],passing=report['passing_arms'],floors=floors,reproduction=reproduction,
             summaries={k:report['summaries'][k] for k in (report['nominee'],'G_nominee','G_tail_diagnostic')})),flush=True)
 

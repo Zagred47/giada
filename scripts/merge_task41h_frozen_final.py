@@ -29,7 +29,8 @@ with zipfile.ZipFile(old) as a,zipfile.ZipFile(new) as b:
 with zipfile.ZipFile(tmp) as z:assert z.testzip() is None
 tmp.replace(target)
 receipt=dict(valid=True,runtime_independent=True,local=str(target),remote=dict(label='final',sha256=sha(target),bytes=target.stat().st_size),
-    source_archives=[old_receipt,new_receipt],merged_without_training_or_selection=True)
+    source_archives=[old_receipt,new_receipt],merged_without_training_or_selection=True,
+    runtime_environment=json.loads((ROOT/'artifacts/task41h_frozen_resume/runtime_environment.json').read_text()))
 (DEST/'external_backup_receipt.json').write_text(json.dumps(receipt,indent=2))
 (DEST/'job_status.json').write_text(json.dumps(status,indent=2))
 print(json.dumps(dict(valid=True,archive=str(target),sha256=receipt['remote']['sha256'],bytes=target.stat().st_size)),flush=True)
