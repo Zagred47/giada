@@ -1,0 +1,307 @@
+[
+  {
+    "name": "early_gate_findings",
+    "sql": "SELECT [Codice stabile] code,Nome,Risultato,Limitazioni FROM findings\n          WHERE [Codice stabile] LIKE 'finding-task1%' OR [Codice stabile] LIKE 'finding-task2b%'\n          OR [Codice stabile] LIKE 'finding-task3%'",
+    "rows": [
+      {
+        "code": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Nome": "Task 2b — la debole identificabilità endpoint causava il fallimento physical-tau di h",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694.",
+        "Limitazioni": "Ca_HVA.h isolato sotto voltage clamp costante; non prova ancora validità embedded, coupling con m, corrente analitica o traiettorie di voltaggio endogene."
+      },
+      {
+        "code": "finding-task3-joint-learnable-shared-optimization-failure-v1",
+        "Nome": "Task 3 — m+h è componibile ma il trunk condiviso non è ottimizzato affidabilmente",
+        "Risultato": "Development: independent 0.06949, shared_matched 0.26504, shared_compact 0.41691. Fresh independent: m 0.002277, h 9.83e-6, m^2h 0.000933; rollout1000 m 0.000479 e h 0.001845. Shared_matched: m 0.002791, h 2.72e-5, m^2h 0.001665; rollout1000 m 0.000819 e h 0.004725; zero violazioni. Seed17 shared_matched supera independent su m development, mentre seed29/43 peggiorano.",
+        "Limitazioni": "Held voltage soltanto; m conserva debito OOD-voltage. Nessuna conclusione su voltage path variabile o corrente completa."
+      },
+      {
+        "code": "finding-task3c-ood-voltage-generalization-failure-v2",
+        "Nome": "Task 3c — la riparazione shared m+h non generalizza alla tensione OOD",
+        "Risultato": "Fresh RMSE m=0,009892 e m²h=0,008650 contro limite 0,0025; rollout1000 h=0,009667 contro limite 0,005. Zero violazioni di occupazione. Il seed 29 domina la coda OOD-voltage.",
+        "Limitazioni": "Voltage clamp e solo Ca_HVA m+h; non riguarda ancora voltaggio accoppiato, corrente completa o neurone embedded."
+      },
+      {
+        "code": "finding-task3c-one-step-equivalence-insufficient-v1",
+        "Nome": "Task 3c v1 — equivalenza a un passo non conserva la traiettoria a 50k",
+        "Risultato": "Il training fuso è veloce (4,28 min; 584,6 model-step/s) ma non è una replica confermativa dell'esatto candidato selezionato.",
+        "Limitazioni": "Riguarda equivalenza della traiettoria di ottimizzazione, non equivalenza funzionale di un modello congelato."
+      },
+      {
+        "code": "finding-task1-physical-tau-no-go-current-budget-v1",
+        "Nome": "Task 1 — Physical-tau stabile ma sotto soglia one-step",
+        "Risultato": "Gate Task 1 non superato: physical-tau RMSE sealed macro 0.002110 contro soglia 0.001. Rimane il miglior learned arm, supera MLP, direct-z e LUT macro, conserva [0,1] e supera il rollout gate con RMSE 0.001018 a 1000 passi.",
+        "Limitazioni": "Solo gate m sotto V costante. Nessuna conclusione su voltage path variabile, neurone accoppiato o sostituzione embedded. Il NO-GO riguarda candidati e budget registrati, non l'intera famiglia physical-tau."
+      },
+      {
+        "code": "finding-task3e-full-repair-sealed-generalization-v1",
+        "Nome": "Task 3e — il full-repair shared m+h generalizza sul sealed",
+        "Risultato": "Tre seed sealed score 0,3487/0,2777/0,5678; tutti i gate di endpoint, rate, monotonicità e occupazione passano con margine. Nessun retraining e nessuna selezione sealed.",
+        "Limitazioni": "Nessuna conclusione ancora su percorsi V variabili, corrente Ca_HVA completa o integrazione nel neurone."
+      },
+      {
+        "code": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Nome": "Task 3d — supporto in tensione e prior condizionale riparano la cella m+h",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%.",
+        "Limitazioni": "Voltage clamp Ca_HVA; nessun nuovo sealed test; non autorizza Task 4."
+      },
+      {
+        "code": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+        "Nome": "Task 3b — i rate simmetrici stabilizzano e dimezzano il budget efficace",
+        "Risultato": "La loss simmetrica migliora del 61,5% a 50k e rende i seed coerenti; la baseline migliora del 63,1% raddoppiando il budget. I due bracci convergono nello stesso regime di score.",
+        "Limitazioni": "Non dimostra ancora generalizzazione fresh, tensione variabile o corrente ionica completa."
+      },
+      {
+        "code": "finding-task1b-budget-limited-engineering-go-v1",
+        "Nome": "Task 1b — Gate m limitato dal budget, non da dati o capacita",
+        "Risultato": "Il vincitore selezionato solo sul development, base-w16-endpoint_only a 50000 step, ottiene fresh macro RMSE 0.0022578625, zero violazioni e rollout RMSE 0.0003801586 a 1000 passi. In-support RMSE 0.0002378306 e OOD-dt 0.0001411297; il residuo e concentrato OOD-voltage (0.0063946271), soprattutto nell'extrapolazione di tau. Gate scientifico 1e-3 non superato; gate ingegneristico 2.5e-3 superato.",
+        "Limitazioni": "Solo gate m di Ca_HVA sotto voltage clamp costante. Nessuna conclusione su traiettorie V variabili, gate h, canale completo o neurone multicompartimentale."
+      }
+    ]
+  },
+  {
+    "name": "early_repair_evidence",
+    "sql": "SELECT DISTINCT c.[Codice stabile] claim,c.Enunciato,c.Stato,\n          e.Esito,e.Argomentazione,f.[Codice stabile] finding,f.Risultato\n          FROM v_evidence_chains v JOIN claims c ON c._record_id=v.claim_id\n          JOIN evidence e ON e._record_id=v.assessment_id\n          JOIN findings f ON f._record_id=v.finding_id\n          WHERE f.[Codice stabile] IN ('finding-task2b-h-physical-tau-identifiability-repaired-v1',\n            'finding-task3d-voltage-support-conditional-shape-repair-v1',\n            'finding-task3e-full-repair-sealed-generalization-v1',\n            'finding-task3b-symmetric-rates-stabilize-shared-mh-v1')",
+    "rows": [
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-history_exposure-v1",
+        "Enunciato": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-current_objective-v1",
+        "Enunciato": "Global current scaling underweights weak-regime errors required by local strict evaluation.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Global current scaling underweights weak-regime errors required by local strict evaluation. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694."
+      },
+      {
+        "claim": "hypothesis-task2b-h-multihorizon-identifiability-v1",
+        "Enunciato": "Almeno un intervento identificante porta physical-tau sotto le soglie fresh di endpoint, rate e rollout senza violazioni fisiche.",
+        "Stato": "Aperta",
+        "Esito": "Sostiene",
+        "Argomentazione": "Rate supervision migliora 33.4x il punteggio development rispetto a endpoint-only e supera tutti i gate fresh. La loss multi-orizzonte, intervento ortogonale, produce la stessa riparazione e supera anch'essa il controllo direct-z congelato: convergenza causale a favore dell'ipotesi di debole identificabilità endpoint.",
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-event_objective-v1",
+        "Enunciato": "Pointwise objectives fail to prioritize charge and event-boundary accuracy.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Pointwise objectives fail to prioritize charge and event-boundary accuracy. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-conditioning-v1",
+        "Enunciato": "Fixed initial auxiliary weights and gradient interaction hinder late optimization.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Fixed initial auxiliary weights and gradient interaction hinder late optimization. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-tail_bias-v1",
+        "Enunciato": "A learnable linear logit component helps approximate tail coefficients at the same abstraction.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "A learnable linear logit component helps approximate tail coefficients at the same abstraction. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694."
+      },
+      {
+        "claim": "claims-giada-task39b-architecture-residual-dynamic_information-v1",
+        "Enunciato": "Short state targets underweight equilibrium/relaxation errors, especially small fractions.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task2b-h-physical-tau-identifiability-repaired-v1\", \"findings-giada-roadmap-task21-duration-v1\", \"findings-giada-roadmap-task24b-rate_attribution-v1\"]",
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+        "Enunciato": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "Risultato": "Vincitore development rate_supervision: score 2.706e-5 contro 9.033e-4 endpoint-only (33.4x migliore). Fresh macro RMSE 1.733e-5; rollout1000 0.002619; h_inf RMSE 0.001517; log(tau_h) RMSE 0.01543; zero violazioni. Multi-horizon conferma indipendentemente la diagnosi e ottiene fresh rollout1000 0.002494. Entrambi superano il direct-z Task 2 congelato a 0.003694."
+      },
+      {
+        "claim": "claims-giada-task39b-architecture-residual-local_support-v1",
+        "Enunciato": "Rare or local V/Ca/state support is insufficient at fixed sampled windows.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task3d-voltage-support-conditional-shape-repair-v1\", \"finding-task3e-full-repair-sealed-generalization-v1\"]",
+        "finding": "finding-task3e-full-repair-sealed-generalization-v1",
+        "Risultato": "Tre seed sealed score 0,3487/0,2777/0,5678; tutti i gate di endpoint, rate, monotonicità e occupazione passano con margine. Nessun retraining e nessuna selezione sealed."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-history_exposure-v1",
+        "Enunciato": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Variable-input history and boundary/tail coverage remain insufficient despite long constant-input anchors. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%."
+      },
+      {
+        "claim": "hypothesis-task3d-factorial-generalization-diagnosis-v1",
+        "Enunciato": "Almeno uno dei contrasti su supporto, orizzonte temporale, prior di forma o topologia riduce di almeno il 20% lo score development di stress rispetto al controllo appropriato.",
+        "Stato": "Supportata nel dominio",
+        "Esito": "Sostiene",
+        "Argomentazione": "Dense→balanced migliora 50,8%; balanced→expanded 88,6%; expanded+multihorizon→full repair 75,5%; baseline→full repair 97,9%. Solo dati, multi-orizzonte o shape isolati non passano.",
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-current_objective-v1",
+        "Enunciato": "Global current scaling underweights weak-regime errors required by local strict evaluation.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Global current scaling underweights weak-regime errors required by local strict evaluation. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%."
+      },
+      {
+        "claim": "claims-giada-task39b-architecture-residual-local_support-v1",
+        "Enunciato": "Rare or local V/Ca/state support is insufficient at fixed sampled windows.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task3d-voltage-support-conditional-shape-repair-v1\", \"finding-task3e-full-repair-sealed-generalization-v1\"]",
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-event_objective-v1",
+        "Enunciato": "Pointwise objectives fail to prioritize charge and event-boundary accuracy.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Pointwise objectives fail to prioritize charge and event-boundary accuracy. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-conditioning-v1",
+        "Enunciato": "Fixed initial auxiliary weights and gradient interaction hinder late optimization.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Fixed initial auxiliary weights and gradient interaction hinder late optimization. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-tail_bias-v1",
+        "Enunciato": "A learnable linear logit component helps approximate tail coefficients at the same abstraction.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "A learnable linear logit component helps approximate tail coefficients at the same abstraction. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%."
+      },
+      {
+        "claim": "claims-giada-task39c-dynamic-residual-timing_sensitivity-v1",
+        "Enunciato": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Some timing failures reflect crossing sensitivity or precision rather than uniform phase shift. See residual_diagnosis.json and detailed result document.",
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "Risultato": "Full repair shared width23 raggiunge score medio 0,4193 e tutti i seed <1. Miglioramento 97,9% sulla baseline. Independent migliora solo 1,4%; width46 peggiora 66,1%."
+      },
+      {
+        "claim": "claims-giada-task39b-architecture-residual-optimization_budget-v1",
+        "Enunciato": "Residual error can be reduced by further optimization; all36 selection scores still improve at60k.",
+        "Stato": "Aperta",
+        "Esito": "Indeterminata",
+        "Argomentazione": "Exploratory analogy and current diagnostics motivate a discriminating intervention. See task39b_result_and_causal_next_design.md. [\"finding-task1b-budget-limited-engineering-go-v1\", \"finding-task3b-symmetric-rates-stabilize-shared-mh-v1\", \"findings-giada-roadmap-task24b-budget_capacity-v1\"]",
+        "finding": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+        "Risultato": "La loss simmetrica migliora del 61,5% a 50k e rende i seed coerenti; la baseline migliora del 63,1% raddoppiando il budget. I due bracci convergono nello stesso regime di score."
+      },
+      {
+        "claim": "hypothesis-task3b-shared-gradient-interference-v1",
+        "Enunciato": "La baseline mostra conflitto su almeno il 25% dei minibatch iniziali e PCGrad migliora lo score di almeno il 20%.",
+        "Stato": "Contraddetta nel dominio",
+        "Esito": "Contraddice",
+        "Argomentazione": "La frazione iniziale di conflitto è 66,7%, ma PCGrad peggiora lo score dell'82,8% e l'interazione peggiora del 45,2%.",
+        "finding": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+        "Risultato": "La loss simmetrica migliora del 61,5% a 50k e rende i seed coerenti; la baseline migliora del 63,1% raddoppiando il budget. I due bracci convergono nello stesso regime di score."
+      },
+      {
+        "claim": "hypothesis-task3b-initialization-path-v1",
+        "Enunciato": "Il pretraining rate-only migliora di almeno il 20% rispetto alla supervisione simmetrica senza warm-start.",
+        "Stato": "Contraddetta nel dominio",
+        "Esito": "Contraddice",
+        "Argomentazione": "Score 0,1990 contro 0,1022: peggioramento relativo del 94,8% rispetto al controllo simmetrico.",
+        "finding": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+        "Risultato": "La loss simmetrica migliora del 61,5% a 50k e rende i seed coerenti; la baseline migliora del 63,1% raddoppiando il budget. I due bracci convergono nello stesso regime di score."
+      },
+      {
+        "claim": "hypothesis-task3b-training-budget-v1",
+        "Enunciato": "Prolungare la baseline a 100k migliora lo score medio di almeno il 20% rispetto a 50k.",
+        "Stato": "Supportata nel dominio",
+        "Esito": "Sostiene",
+        "Argomentazione": "Miglioramento 63,1%, superiore alla soglia preregistrata del 20%; dispersione seed ridotta da 0,1963 a 0,0246.",
+        "finding": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+        "Risultato": "La loss simmetrica migliora del 61,5% a 50k e rende i seed coerenti; la baseline migliora del 63,1% raddoppiando il budget. I due bracci convergono nello stesso regime di score."
+      },
+      {
+        "claim": "hypothesis-task3b-objective-information-imbalance-v1",
+        "Enunciato": "Aggiungere supervisione simmetrica m_inf e log(tau_m) migliora di almeno il 20% lo score development condiviso a 50k.",
+        "Stato": "Supportata nel dominio",
+        "Esito": "Sostiene",
+        "Argomentazione": "Miglioramento appaiato 61,5%, superiore alla soglia preregistrata del 20%, e sd fra seed ridotta da 0,1963 a 0,0083.",
+        "finding": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+        "Risultato": "La loss simmetrica migliora del 61,5% a 50k e rende i seed coerenti; la baseline migliora del 63,1% raddoppiando il budget. I due bracci convergono nello stesso regime di score."
+      }
+    ]
+  },
+  {
+    "name": "early_repair_decisions",
+    "sql": "SELECT DISTINCT f.[Codice stabile] finding,\n          d.[Codice stabile] decision,d.Nome,d.Esito,d.Motivazione\n          FROM v_semantic_edges v JOIN findings f ON f._record_id=v.target_id\n          JOIN decisions d ON d._record_id=v.source_id\n          WHERE v.source_table='decisions' AND v.target_table='findings'\n          AND (f.[Codice stabile] LIKE 'finding-task2b%' OR f.[Codice stabile] LIKE 'finding-task3%')",
+    "rows": [
+      {
+        "finding": "finding-task3c-ood-voltage-generalization-failure-v2",
+        "decision": "decision-task3c-block-task4-diagnose-voltage-ood-v2",
+        "Nome": "Bloccare Task 4 e diagnosticare l'extrapolazione in tensione",
+        "Esito": "Modificare",
+        "Motivazione": "Gli esatti checkpoint Task 3b passano development ma falliscono tre gate fresh preregistrati, con difetto concentrato nell'OOD-voltage e accumulo ricorsivo di h."
+      },
+      {
+        "finding": "finding-task3b-symmetric-rates-stabilize-shared-mh-v1",
+        "decision": "decision-task3b-adopt-symmetric-rates-confirm-v1",
+        "Nome": "Adottare rate supervision simmetrica e preparare Task 3c",
+        "Esito": "Modificare",
+        "Motivazione": "La loss simmetrica e il budget lungo superano il gate causale, ma la prima raggiunge lo stesso regime con metà budget e minore varianza. PCGrad e warm-start peggiorano."
+      },
+      {
+        "finding": "finding-task2b-h-physical-tau-identifiability-repaired-v1",
+        "decision": "decision-task2b-authorize-task3-physical-tau-v1",
+        "Nome": "Autorizzare Task 3 con physical-tau identificato per h",
+        "Esito": "Continuare",
+        "Motivazione": "Il vincitore rate_supervision è selezionato solo sul development e supera fresh macro, rollout1000, h_inf, log(tau_h), finitezza e dominio fisico. Multi-horizon replica la riparazione come controllo ortogonale e il physical-tau supera il direct-z congelato."
+      },
+      {
+        "finding": "finding-task3d-voltage-support-conditional-shape-repair-v1",
+        "decision": "decision-task3d-confirm-full-repair-new-sealed-v1",
+        "Nome": "Confermare full-repair shared width23 su un nuovo sealed set",
+        "Esito": "Continuare",
+        "Motivazione": "Full repair è l'unico candidato compatto con tutti i seed sotto score 1 a 50k. Independent non offre un effetto materiale e wide peggiora."
+      },
+      {
+        "finding": "finding-task3-joint-learnable-shared-optimization-failure-v1",
+        "decision": "decision-task3-no-go-task4-diagnose-shared-optimization-v1",
+        "Nome": "Non autorizzare Task 4; diagnosticare l'ottimizzazione shared m+h",
+        "Esito": "Modificare",
+        "Motivazione": "Shared matched non è capacity-limited in senso parametrico, migliora ancora e presenta varianza tra seed; serve un contrasto mirato fra gradient conflict, inizializzazione/pretraining e budget prima della matrice di primitive Task 4."
+      }
+    ]
+  }
+]

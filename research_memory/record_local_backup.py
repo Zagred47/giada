@@ -3,7 +3,9 @@ import argparse,hashlib,json,subprocess
 from pathlib import Path
 from .mirror import ROOT,write_json
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--raw-sqlite',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--raw-sqlite',action='store_true')
+    parser.add_argument('--scope',default='Complete authoritative local memory at snapshot time; inspect the latest per-task audit receipts for scientific scope.')
+    args=parser.parse_args()
     info=json.loads((ROOT/'drive_exports/latest_local.json').read_text());folder=Path(info['folder'])
     if args.raw_sqlite:
         path=folder/info['filename'];h=hashlib.sha256()
@@ -15,10 +17,14 @@ def main():
             sqlite_bytes=info['bytes'],semantic_records=info['semantic_records'],local_sqlite=str(path),local_archive=str(path),
             archive_sha256=info['sha256'],archive_bytes=info['bytes'],archive_format='SQLite3',
             integrity_check='ok',foreign_key_errors=[],valid=True,single_file=True,
-            scope='Complete authoritative local memory at snapshot time, including Task41 protocol and recorded execution status.',
+            scope=args.scope,
             drive_updated=False,upload_deferred_by_user=True,airtable_accessed=False)
         write_json(ROOT/'data/local_backup_receipt.json',receipt)
         write_json(ROOT/'data/research_memory.sqlite.manifest.json',receipt)
+        manifest=json.loads((folder/'manifest.json').read_text())
+        manifest.update(scope=args.scope,drive_updated=False,upload_deferred_by_user=True,
+                        post_upload_verification='Not requested: local backup only.')
+        write_json(folder/'manifest.json',manifest)
         print(json.dumps(receipt),flush=True);return
     archive=folder/(Path(info['filename']).with_suffix('.sqlite.7z').name)
     exe='C:/Program Files/7-Zip/7z.exe'

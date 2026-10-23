@@ -1,0 +1,84 @@
+{
+  "valid": true,
+  "scope": "Offline reduction of existing saved traces, not new simulation or confirmation",
+  "model": "M_anneal_sensitive_tail",
+  "channel": "Nap_Et2",
+  "rows": [
+    {
+      "case": 122,
+      "seed": 17,
+      "protocol": "reversed_staircase",
+      "intervention": "block_SK_E2",
+      "base_index": 34,
+      "modes": {
+        "imposed": {
+          "Nap_response_nrmse": 0.0007610933971591294,
+          "Nap_response_scale_ma_cm2": 1.0000000116860974e-07,
+          "Nap_reference_response_peak_ma_cm2": 1.664739102125168e-08,
+          "Nap_reference_base_current_peak_ma_cm2": 0.000739394046831876,
+          "Nap_reference_intervention_current_peak_ma_cm2": 0.0007393971318379045,
+          "base_voltage_rmse_mv": 4.6349893981734185e-06,
+          "intervention_voltage_rmse_mv": 4.927208617214181e-06,
+          "voltage_response_error_rmse_mv": 5.0652116681369625e-06
+        },
+        "autonomous": {
+          "Nap_response_nrmse": 0.014014748856425285,
+          "Nap_response_scale_ma_cm2": 1.0000000116860974e-07,
+          "Nap_reference_response_peak_ma_cm2": 1.4988472685217857e-08,
+          "Nap_reference_base_current_peak_ma_cm2": 0.0007394015556201339,
+          "Nap_reference_intervention_current_peak_ma_cm2": 0.0007394043495878577,
+          "base_voltage_rmse_mv": 0.0001711394847631148,
+          "intervention_voltage_rmse_mv": 0.00014272845267298436,
+          "voltage_response_error_rmse_mv": 3.325685095565567e-05
+        }
+      }
+    },
+    {
+      "case": 108,
+      "seed": 43,
+      "protocol": "irregular_train",
+      "intervention": "block_K_Pst",
+      "base_index": 48,
+      "modes": {
+        "imposed": {
+          "Nap_response_nrmse": 0.0003461135202087462,
+          "Nap_response_scale_ma_cm2": 1.0000000116860974e-07,
+          "Nap_reference_response_peak_ma_cm2": 3.128661774098873e-09,
+          "Nap_reference_base_current_peak_ma_cm2": 0.00021351950999815017,
+          "Nap_reference_intervention_current_peak_ma_cm2": 0.00021352180920075625,
+          "base_voltage_rmse_mv": 3.5536734179964716e-06,
+          "intervention_voltage_rmse_mv": 3.6987805637249263e-06,
+          "voltage_response_error_rmse_mv": 5.344108389209815e-06
+        },
+        "autonomous": {
+          "Nap_response_nrmse": 0.010064245201647282,
+          "Nap_response_scale_ma_cm2": 1.0000000116860974e-07,
+          "Nap_reference_response_peak_ma_cm2": 6.461050361394882e-09,
+          "Nap_reference_base_current_peak_ma_cm2": 0.00021353246120270342,
+          "Nap_reference_intervention_current_peak_ma_cm2": 0.00021353771444410086,
+          "base_voltage_rmse_mv": 3.711708608075911e-05,
+          "intervention_voltage_rmse_mv": 4.1209897875819116e-05,
+          "voltage_response_error_rmse_mv": 5.2058307738770476e-05
+        }
+      }
+    }
+  ],
+  "trace_members": [
+    {
+      "member": "opened41c/reference_traces.npz",
+      "sha256": "519f3b8d7e22851f670d29b6856add32ca92453d75095a4f5d6d0df3a567128a"
+    },
+    {
+      "member": "opened41c/traces_M_anneal_sensitive_tail_imposed.npz",
+      "sha256": "e88ce6ce382eee532a9d123b0ed751b2c9c8bc7a72d4941f393bae81c5f75bf4"
+    },
+    {
+      "member": "opened41c/traces_M_anneal_sensitive_tail_autonomous.npz",
+      "sha256": "cd9897b67d0473fb36d202eb67d8973bb9a8a2ec7a27fd10f7714a26273f75c5"
+    }
+  ],
+  "interpretation": "The failing metric measures the difference between intervened and baseline currents. The two interventions block different potassium channels, not Nap_Et2. Raw trajectory quality and causal response quality are distinct; small voltage errors can be amplified relatively in a weak response. This supports examining numerical feedback but does not by itself prove roundoff causality.",
+  "thresholds_changed": false,
+  "selection_changed": false,
+  "training_performed": false
+}
