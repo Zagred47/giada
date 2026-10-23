@@ -1,0 +1,459 @@
+{
+  "valid": true,
+  "complete": true,
+  "scientific_decision": "PATH_EXPOSURE_REPAIR_NO_GO",
+  "nominee": "H0_D256_N4096_B128",
+  "models": {
+    "H0_D256_N4096_B128": {
+      "summary": {
+        "development": {
+          "passed": 33,
+          "total": 36
+        },
+        "panels": {
+          "41": {
+            "imposed": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            },
+            "autonomous": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            }
+          },
+          "41c": {
+            "imposed": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            },
+            "autonomous": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 335,
+              "response_total": 336
+            }
+          }
+        },
+        "stress": {
+          "41": {
+            "passed": 36,
+            "total": 36
+          },
+          "41c": {
+            "passed": 34,
+            "total": 36
+          }
+        },
+        "historical": {
+          "imposed": {
+            "trajectory": 264,
+            "total": 264,
+            "responses": 168
+          },
+          "autonomous": {
+            "trajectory": 264,
+            "total": 264,
+            "responses": 168
+          }
+        },
+        "recurrence": {
+          "development": {
+            "passed": 72,
+            "total": 72
+          },
+          "stress_diagnostic": {
+            "passed": 72,
+            "total": 72
+          }
+        }
+      },
+      "total_failed_evaluations": 6,
+      "failure_counts": {
+        "41c/autonomous/responses": 1,
+        "stress41c": 2,
+        "development_new_41h": 3
+      }
+    },
+    "G_nominee": {
+      "summary": {
+        "development": {
+          "passed": 33,
+          "total": 36
+        },
+        "panels": {
+          "41": {
+            "imposed": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            },
+            "autonomous": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            }
+          },
+          "41c": {
+            "imposed": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            },
+            "autonomous": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 334,
+              "response_total": 336
+            }
+          }
+        },
+        "stress": {
+          "41": {
+            "passed": 36,
+            "total": 36
+          },
+          "41c": {
+            "passed": 33,
+            "total": 36
+          }
+        },
+        "historical": {
+          "imposed": {
+            "trajectory": 264,
+            "total": 264,
+            "responses": 168
+          },
+          "autonomous": {
+            "trajectory": 264,
+            "total": 264,
+            "responses": 168
+          }
+        },
+        "recurrence": {
+          "development": {
+            "passed": 72,
+            "total": 72
+          },
+          "stress_diagnostic": {
+            "passed": 72,
+            "total": 72
+          }
+        }
+      },
+      "total_failed_evaluations": 8,
+      "failure_counts": {
+        "41c/autonomous/responses": 2,
+        "stress41c": 3,
+        "development_new_41h": 3
+      }
+    },
+    "G_tail_diagnostic": {
+      "summary": {
+        "development": {
+          "passed": 33,
+          "total": 36
+        },
+        "panels": {
+          "41": {
+            "imposed": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            },
+            "autonomous": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            }
+          },
+          "41c": {
+            "imposed": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 336,
+              "response_total": 336
+            },
+            "autonomous": {
+              "trajectory": 528,
+              "total": 528,
+              "responses": 334,
+              "response_total": 336
+            }
+          }
+        },
+        "stress": {
+          "41": {
+            "passed": 36,
+            "total": 36
+          },
+          "41c": {
+            "passed": 35,
+            "total": 36
+          }
+        },
+        "historical": {
+          "imposed": {
+            "trajectory": 264,
+            "total": 264,
+            "responses": 168
+          },
+          "autonomous": {
+            "trajectory": 264,
+            "total": 264,
+            "responses": 168
+          }
+        },
+        "recurrence": {
+          "development": {
+            "passed": 72,
+            "total": 72
+          },
+          "stress_diagnostic": {
+            "passed": 72,
+            "total": 72
+          }
+        }
+      },
+      "total_failed_evaluations": 6,
+      "failure_counts": {
+        "41c/autonomous/responses": 2,
+        "stress41c": 1,
+        "development_new_41h": 3
+      }
+    }
+  },
+  "training_updates_performed": 0,
+  "selection_recomputed": false,
+  "thresholds_changed": false,
+  "task42_authorized": false,
+  "all_parameters_finite": true,
+  "original_training_checkpoints_unchanged": true,
+  "selected_checkpoint_unchanged": true,
+  "final_backup": {
+    "label": "final",
+    "sha256": "13b91caa49c92e89b8fc2666c44f280fe5a648dc98acbcb861cc5c7336fa93cf",
+    "bytes": 2265661589
+  },
+  "raw_trace_restoration": {
+    "valid": true,
+    "training_updates_performed": 0,
+    "selection_recomputed": false,
+    "cached_metrics_unchanged": true,
+    "method": "Deterministic frozen-weight trace regeneration; not claimed byte-identical to lost NPZ containers",
+    "critical_response_checks": [
+      {
+        "model": "G_nominee",
+        "case": 108,
+        "seed": 17,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "G_nominee",
+        "case": 122,
+        "seed": 17,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "G_nominee",
+        "case": 108,
+        "seed": 29,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "G_nominee",
+        "case": 122,
+        "seed": 29,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "G_nominee",
+        "case": 108,
+        "seed": 43,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "G_nominee",
+        "case": 122,
+        "seed": 43,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "H0_D256_N4096_B128",
+        "case": 108,
+        "seed": 17,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "H0_D256_N4096_B128",
+        "case": 122,
+        "seed": 17,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "H0_D256_N4096_B128",
+        "case": 108,
+        "seed": 29,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "H0_D256_N4096_B128",
+        "case": 122,
+        "seed": 29,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "H0_D256_N4096_B128",
+        "case": 108,
+        "seed": 43,
+        "critical_response_reproduced": true
+      },
+      {
+        "model": "H0_D256_N4096_B128",
+        "case": 122,
+        "seed": 43,
+        "critical_response_reproduced": true
+      }
+    ],
+    "created": [
+      "opened41c/traces_B6_imposed.npz",
+      "opened41c/traces_P110_imposed.npz",
+      "opened41c/traces_D_C01_imposed.npz",
+      "opened41c/traces_D_N000_imposed.npz",
+      "opened41c/traces_D_combined_imposed.npz",
+      "opened41c/traces_D_fused_imposed.npz",
+      "opened41c/traces_E_Q0_imposed.npz",
+      "opened41c/traces_E_H10_imposed.npz",
+      "opened41c/traces_F_nominee_imposed.npz",
+      "opened41c/traces_G_nominee_imposed.npz",
+      "opened41c/traces_G_tail_diagnostic_imposed.npz",
+      "opened41c/traces_H0_D256_N4096_imposed.npz",
+      "opened41c/traces_H0_D256_N16384_imposed.npz",
+      "opened41c/traces_H0_D16_N4096_imposed.npz",
+      "opened41c/traces_H0_D16_N16384_imposed.npz",
+      "opened41c/traces_H1_D256_N4096_imposed.npz",
+      "opened41c/traces_H1_D256_N16384_imposed.npz",
+      "opened41c/traces_H1_D16_N4096_imposed.npz",
+      "opened41c/traces_H1_D16_N16384_imposed.npz",
+      "opened41c/traces_H0_D256_N4096_B128_imposed.npz",
+      "opened41c/traces_H1_D16_N16384_B128_imposed.npz",
+      "opened41c/traces_aggregate_H1_D16_N4096_imposed.npz",
+      "opened41c/traces_aggregate_H1_D16_N16384_imposed.npz",
+      "opened41c/traces_LUT_control_imposed.npz",
+      "opened41c/traces_B6_autonomous.npz",
+      "opened41c/traces_P110_autonomous.npz",
+      "opened41c/traces_D_C01_autonomous.npz",
+      "opened41c/traces_D_N000_autonomous.npz",
+      "opened41c/traces_D_combined_autonomous.npz",
+      "opened41c/traces_D_fused_autonomous.npz",
+      "opened41c/traces_E_Q0_autonomous.npz",
+      "opened41c/traces_E_H10_autonomous.npz",
+      "opened41c/traces_F_nominee_autonomous.npz",
+      "opened41c/traces_G_nominee_autonomous.npz",
+      "opened41c/traces_G_tail_diagnostic_autonomous.npz",
+      "opened41c/traces_H0_D256_N4096_autonomous.npz",
+      "opened41c/traces_H0_D256_N16384_autonomous.npz",
+      "opened41c/traces_H0_D16_N4096_autonomous.npz",
+      "opened41c/traces_H0_D16_N16384_autonomous.npz",
+      "opened41c/traces_H1_D256_N4096_autonomous.npz",
+      "opened41c/traces_H1_D256_N16384_autonomous.npz",
+      "opened41c/traces_H1_D16_N4096_autonomous.npz",
+      "opened41c/traces_H1_D16_N16384_autonomous.npz",
+      "opened41c/traces_H0_D256_N4096_B128_autonomous.npz",
+      "opened41c/traces_H1_D16_N16384_B128_autonomous.npz",
+      "opened41c/traces_aggregate_H1_D16_N4096_autonomous.npz",
+      "opened41c/traces_aggregate_H1_D16_N16384_autonomous.npz",
+      "opened41c/traces_LUT_control_autonomous.npz",
+      "opened41c/reference_traces.npz",
+      "historical_regression/autonomous_traces.npz",
+      "historical_regression/reference_traces.npz"
+    ]
+  },
+  "baseline_reproduction": {
+    "G_nominee": {
+      "panels": true,
+      "stress": true,
+      "historical": true,
+      "recurrence": true,
+      "fixed_panel_failure_identities": {
+        "41/imposed/responses": true,
+        "41/imposed/trajectories": true,
+        "41/autonomous/responses": true,
+        "41/autonomous/trajectories": true,
+        "stress41": true,
+        "41c/imposed/responses": true,
+        "41c/imposed/trajectories": true,
+        "41c/autonomous/responses": true,
+        "41c/autonomous/trajectories": true,
+        "stress41c": true
+      },
+      "failed_channel_metrics_exact": {
+        "41/imposed/responses": true,
+        "41/imposed/trajectories": true,
+        "41/autonomous/responses": true,
+        "41/autonomous/trajectories": true,
+        "stress41": true,
+        "41c/imposed/responses": true,
+        "41c/imposed/trajectories": true,
+        "41c/autonomous/responses": true,
+        "41c/autonomous/trajectories": true,
+        "stress41c": true
+      }
+    },
+    "G_tail_diagnostic": {
+      "panels": true,
+      "stress": true,
+      "historical": true,
+      "recurrence": true,
+      "fixed_panel_failure_identities": {
+        "41/imposed/responses": true,
+        "41/imposed/trajectories": true,
+        "41/autonomous/responses": true,
+        "41/autonomous/trajectories": true,
+        "stress41": true,
+        "41c/imposed/responses": true,
+        "41c/imposed/trajectories": true,
+        "41c/autonomous/responses": true,
+        "41c/autonomous/trajectories": true,
+        "stress41c": true
+      },
+      "failed_channel_metrics_exact": {
+        "41/imposed/responses": true,
+        "41/imposed/trajectories": true,
+        "41/autonomous/responses": true,
+        "41/autonomous/trajectories": true,
+        "stress41": true,
+        "41c/imposed/responses": true,
+        "41c/imposed/trajectories": true,
+        "41c/autonomous/responses": true,
+        "41c/autonomous/trajectories": true,
+        "stress41c": true
+      }
+    }
+  },
+  "cost_row_provenance": {
+    "1/ionic": "Colab b9cbd5b",
+    "1/integrated": "Colab b9cbd5b",
+    "642/ionic": "Colab b9cbd5b",
+    "642/integrated": "Kaggle version4 7a40214",
+    "4096/ionic": "Kaggle version4 7a40214",
+    "4096/integrated": "Kaggle version4 7a40214"
+  },
+  "interpretation": [
+    "Fixed opened-panel failures: official41g5 ->41h3. Best posthoc41g also has3, but with a different response/stress tradeoff.",
+    "New41h development adds3 Nap_Et2 offset failures shared by H and both G controls. On the full current evaluation set the totals are H6, G official8, G diagnostic6. These are not a comparison to old development seeds.",
+    "Exact canonical u_m fixes the remaining Ca_HVA stress offsets (36/36); z_m and h oracles do not. This is a diagnostic intervention, not a deployable candidate.",
+    "Joint state64+solve64 closes336/336 opened41c responses; state64 alone remains335 and solve64 alone334. Numerical policies remain ineligible for selection.",
+    "The official dense candidate is slower at642 sites/seed in the standard paired benchmark; whole-loop coupling is approximately at formula parity. Compact execution is diagnostic and not an established speedup over formula."
+  ]
+}

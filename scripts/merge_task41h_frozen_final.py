@@ -1,8 +1,9 @@
 """Combine verified historical traces/checkpoints and evaluation-only results."""
-import hashlib,json,shutil,zipfile
+import argparse,hashlib,json,shutil,zipfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-D=ROOT/'artifacts/task41h_frozen_evaluation_primary_external'
+ap=argparse.ArgumentParser();ap.add_argument('--new-folder',type=Path,default=ROOT/'artifacts/task41h_frozen_evaluation_primary_external');args=ap.parse_args()
+D=args.new_folder
 DEST=ROOT/'artifacts/task41h_complete_evaluation_external'
 def sha(p):
     with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
@@ -30,7 +31,8 @@ with zipfile.ZipFile(tmp) as z:assert z.testzip() is None
 tmp.replace(target)
 receipt=dict(valid=True,runtime_independent=True,local=str(target),remote=dict(label='final',sha256=sha(target),bytes=target.stat().st_size),
     source_archives=[old_receipt,new_receipt],merged_without_training_or_selection=True,
-    runtime_environment=json.loads((ROOT/'artifacts/task41h_frozen_resume/runtime_environment.json').read_text()))
+    runtime_environment=json.loads((ROOT/'artifacts/task41h_frozen_resume/runtime_environment.json').read_text()),
+    final_evaluation_backend=report.get('evaluation_backend'),cached_cost_rows=report.get('cached_cost_rows',[]))
 (DEST/'external_backup_receipt.json').write_text(json.dumps(receipt,indent=2))
 (DEST/'job_status.json').write_text(json.dumps(status,indent=2))
 print(json.dumps(dict(valid=True,archive=str(target),sha256=receipt['remote']['sha256'],bytes=target.stat().st_size)),flush=True)

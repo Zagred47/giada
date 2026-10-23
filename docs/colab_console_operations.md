@@ -156,3 +156,34 @@ files are not evidence of completion. Check `LATEST.json`, the final archive
 SHA/CRC, unchanged checkpoint hashes, and fixed-panel control reproduction.
 Do not relaunch a worker merely because an individual console request stalls;
 inspect the named session and its existing manager first.
+
+### Durable Kaggle fallback for remaining stages
+
+The Task41h Colab lease disappeared after the accuracy/regression panels were
+complete. The private Kaggle batch recovery uses the same T4 and pinned
+`torch==2.11.0+cu130`. `task41h_stage_cache.py` reuses all verified completed
+panels, individual cost rows, execution matrices and numerical diagnostics.
+Its only numerical-construction repair preserves `make_core.__defaults__`
+when cloning the function for the recentered diagnostic. Solver equations and
+all registered gates remain unchanged. A CPU forward regression test covers
+that previously failing path.
+
+Use official `kaggle kernels push` with explicit `dataset_sources` metadata;
+read the metadata back. The connector's SaveNotebook call did not apply the
+dependency list in the observed run. Kaggle extracts uploaded ZIP files, so
+the private recovery dataset transports them as `.zip.bin`, retaining original
+bytes and SHA256. No credentials belong in that metadata or the repository.
+
+The official SDK's `get_kernel_session_logs_stream` is a read-only SSE stream.
+Use `scripts/stream_task41h_kaggle_logs.py --version v5 --output <local-log>`
+and `scripts/watch_task41h_kaggle.py --log <local-log>`; version labels require
+the `v` prefix. Disconnecting this reader does not cancel the batch. A1-byte
+stream chunk avoids withholding sparse progress messages in client buffering.
+
+After completion, download the exact version's outputs, verify with
+`scripts/verify_task41h_kaggle_final.py`, merge with
+`scripts/merge_task41h_frozen_final.py --new-folder artifacts/task41h_kaggle_remaining_external`,
+and run `scripts/compare_task41h_recovery.py --external-folder artifacts/task41h_complete_evaluation_external`.
+The final receipt and ZIP CRC checks, not `RUNNING` or a successful dispatch,
+establish completion. Timing references are paired within each row; cached
+rows from earlier assignments are identified in `cost_row_provenance`.

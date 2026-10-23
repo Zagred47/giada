@@ -115,6 +115,8 @@ def main():
         for current,previous in old_names.items():
             reproduction[current]={k:report['summaries'][current][k]==old['summaries'][previous][k] for k in ('panels','stress','historical','recurrence')}
             reproduction[current]['fixed_panel_failure_identities']={panel:set(identities(rows))==set(identities(details[current][panel])) for panel,rows in old_fixed[current].items()}
+            reproduction[current]['failed_channel_metrics_exact']={panel:all(identities(rows)[key]['failed_channels']==identities(details[current][panel])[key]['failed_channels']
+                for key in set(identities(rows))&set(identities(details[current][panel]))) for panel,rows in old_fixed[current].items()}
         deltas={name:{base:{panel:difference(details[base][panel],rows) for panel,rows in panels.items() if panel in details[base]}
             for base in old_names} for name,panels in details.items() if name in {a['name'] for a in spec['arms']} or name.startswith('aggregate_')}
         rawcost=read('cost.json');cost=compact_cost(rawcost);execution=compact_cost(read('execution_matrix.json'));compact=read('compact_execution_cost.json')
@@ -145,7 +147,8 @@ def main():
             training_updates_performed=0,thresholds_changed=False,
             limits=['Old and new development use different seed families: compare new41h candidates to G controls evaluated on the same41h development, not old development counts as paired.',
                 '41g controls are measured again within41h. Historical timing ratios from different VM assignments are descriptive, not a paired speed benchmark.',
-                'If cached_cost_rows is present, those rows were retained from Colab and remaining cost rows were completed on Kaggle. References are paired within each row; absolute times across assignments are not paired.',
+                'Cached cost rows were retained from earlier Colab/Kaggle assignments; cost_row_provenance identifies their origin. References are paired within each row; absolute times across assignments are not paired.',
+                'state64 with solve32 still quantizes the membrane solver output to FP32 at every step; a null in this policy does not exclude accumulated numerical error.',
                 'Nominee is fixed by original stratified selection. Posthoc best counts do not replace it. Alternate numerical policies remain diagnostic.'])
         write_json(folder/'comparison_with_41g.json',result);write_json(folder/'final_report.json',report)
         write_json(folder/'LATEST.json',dict(valid=True,complete=True,report='final_report.json',comparison='comparison_with_41g.json',

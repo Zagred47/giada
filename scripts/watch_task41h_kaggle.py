@@ -1,13 +1,14 @@
 """Compact local view of the official read-only Kaggle SSE log stream."""
-import json
+import argparse,json
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];path=ROOT/'artifacts/task41h_kaggle_live.log'
+ROOT=Path(__file__).resolve().parents[1]
+parser=argparse.ArgumentParser();parser.add_argument('--log',type=Path,default=ROOT/'artifacts/task41h_kaggle_live.log');args=parser.parse_args();path=args.log
 messages=[]
 for line in path.read_text(errors='replace').splitlines():
     if not line.startswith('data: '):continue
     try:row=json.loads(line[6:])
     except json.JSONDecodeError:continue
-    if '[GIADA' in row.get('data',''):messages.append(row)
+    if row.get('stream_name')=='stdout' and row.get('data','').startswith('[GIADA'):messages.append(row)
 text=[r['data'] for r in messages]
 print(json.dumps(dict(last_progress=messages[-1] if messages else None,
     newly_computed_cost_rows=sum('checkpoint cost ' in s for s in text),
