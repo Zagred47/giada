@@ -8,6 +8,7 @@ import subprocess
 import sys
 import time
 import traceback
+import zipfile
 
 def file_sha(path):
     digest=hashlib.sha256()
@@ -30,7 +31,18 @@ def main():
         # OFF the ephemeral VM and verifies this SHA before acknowledging safety.
         output.mkdir(exist_ok=True)
         shutil.copy2(root/'process.log',output/'process.log')
-        archive=Path(shutil.make_archive(str(root/('recovery_'+label)), 'zip', output))
+        if request.get('frozen_evaluation_resume'):
+            archive=root/('recovery_'+label+'.zip')
+            # Periodic durability covers weights and all metrics. Large trace
+            # arrays are retained on the VM and included in the final bundle.
+            with zipfile.ZipFile(archive,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=1) as z:
+                for member in output.rglob('*'):
+                    if not member.is_file():continue
+                    if label!='final' and member.suffix not in ('.json','.pt','.log'):continue
+                    method=zipfile.ZIP_STORED if member.suffix in ('.pt','.npz') else zipfile.ZIP_DEFLATED
+                    z.write(member,member.relative_to(output).as_posix(),compress_type=method)
+        else:
+            archive=Path(shutil.make_archive(str(root/('recovery_'+label)), 'zip', output))
         receipt=dict(label=label,archive=archive.as_posix(),sha256=file_sha(archive),bytes=archive.stat().st_size)
         if task=='41h':
             # Transport only: original ZIP and scientific files stay intact.
@@ -68,6 +80,9 @@ def main():
         if request.get('evaluation_only'):
             assert task=='41h'
             workers['41h']='recover_task41h_evaluation.py'
+        if request.get('frozen_evaluation_resume'):
+            assert task=='41h' and request.get('evaluation_only')
+            workers['41h']='resume_task41h_frozen_evaluation.py'
         worker_source=repo/'scripts'/workers[task]
         assert hashlib.sha256(worker_source.read_bytes()).hexdigest()==request['worker_sha256']
         save(state='running',phase='scientific_worker');print('[GIADA console] pinned checkout verified; starting worker',flush=True)
@@ -77,6 +92,8 @@ def main():
             if request.get('evaluation_only'):
                 extra=['--archive',request['recovery_archive'],'--seal',request['recovery_seal']]
                 env=dict(__import__('os').environ,GIADA_RECOVERY_BARRIERS='1')
+                if request.get('frozen_evaluation_resume'):
+                    extra=['--archive',request['recovery_archive'],'--sha256',request['recovery_archive_sha256']]
             worker=subprocess.Popen([sys.executable,'-u',str(worker_source),str(output),*extra],cwd=repo,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
             last_publish=0.
             for line in worker.stdout:
@@ -105,7 +122,7 @@ def main():
         if code:print('[GIADA failure] '+json.dumps(report),flush=True)
         publish('final')
         save(state='running',phase='archive',worker_exit_code=code)
-        archive=Path(shutil.make_archive(str(root/('giada_task'+task+'_result')),'zip',output))
+        archive=root/'recovery_final.zip' if request.get('frozen_evaluation_resume') else Path(shutil.make_archive(str(root/('giada_task'+task+'_result')),'zip',output))
         save(state='finished',phase='done',worker_exit_code=code,report=report_path.as_posix(),scientific_valid=report.get('valid',False),
              decision=report.get('decision'),technical_failure=bool(code or report.get('technical_failure')),archive=archive.as_posix(),archive_sha256=file_sha(archive))
         print('[GIADA console] '+json.dumps(json.loads(status.read_text())),flush=True)

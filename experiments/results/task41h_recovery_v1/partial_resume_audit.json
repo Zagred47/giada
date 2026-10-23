@@ -1,0 +1,115 @@
+{
+  "valid": true,
+  "complete": false,
+  "training_updates_performed": 0,
+  "thresholds_changed": false,
+  "freeze_sha256": "ce31981198fec96d7f622cbe7b9b79e32921302b44fe5ecbed472f2c46b7e563",
+  "frozen_parameters_finite": true,
+  "selection_parity": {
+    "valid": true,
+    "step": 0,
+    "all60_rank_vectors_bitwise_equal": true,
+    "training_updates_performed": 0
+  },
+  "external_package": {
+    "archive": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41h_frozen_resume\\frozen_resume_input.zip",
+    "sha256": "10e3b20ac98e41046c82fe8e43c11365df8db56ed05042b0b67aa67ea69e4540",
+    "bytes": 120725349,
+    "salvaged": [
+      "development_30000.json",
+      "selection_support.json",
+      "evaluation_recovery.json",
+      "development_8192.json",
+      "fit_support.json",
+      "preflight.json",
+      "preregistration.json",
+      "stress41.json",
+      "development_0.json",
+      "development_60000.json",
+      "development_2048.json",
+      "revision.json",
+      "training_curves.json",
+      "selection_parity.json",
+      "selection_freeze.json",
+      "development_512.json",
+      "frozen_audit/scope.json",
+      "frozen_audit/coefficient_oracle_stress.json",
+      "frozen_audit/voltage_precision.json",
+      "opened41/floor_autonomous.json"
+    ],
+    "cached_reports": {
+      "opened41/causal_results.json": 0
+    }
+  },
+  "verified_comparison_on_opened41_only": {
+    "H0_D256_N4096_B128": {
+      "imposed": {
+        "trajectories": 528,
+        "total": 528,
+        "responses": 336,
+        "response_total": 336
+      },
+      "autonomous": {
+        "trajectories": 528,
+        "total": 528,
+        "responses": 336,
+        "response_total": 336
+      },
+      "stress41": {
+        "passed": 36,
+        "total": 36
+      }
+    },
+    "G_nominee": {
+      "imposed": {
+        "trajectories": 528,
+        "total": 528,
+        "responses": 336,
+        "response_total": 336
+      },
+      "autonomous": {
+        "trajectories": 528,
+        "total": 528,
+        "responses": 336,
+        "response_total": 336
+      },
+      "stress41": {
+        "passed": 36,
+        "total": 36
+      }
+    },
+    "G_tail_diagnostic": {
+      "imposed": {
+        "trajectories": 528,
+        "total": 528,
+        "responses": 336,
+        "response_total": 336
+      },
+      "autonomous": {
+        "trajectories": 528,
+        "total": 528,
+        "responses": 336,
+        "response_total": 336
+      },
+      "stress41": {
+        "passed": 36,
+        "total": 36
+      }
+    }
+  },
+  "missing": [
+    "opened41c complete externally verified reports",
+    "stress41c",
+    "historical regression",
+    "recurrence regression",
+    "cost",
+    "execution matrix",
+    "selected numerical diagnostics",
+    "final report"
+  ],
+  "backend_blocker": {
+    "primary": "T4 assignment Service Unavailable",
+    "reserve": "T4 assignment Service Unavailable"
+  },
+  "task42_authorized": false
+}

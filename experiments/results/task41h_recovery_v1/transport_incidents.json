@@ -1,0 +1,17 @@
+{
+  "scientific_training_repeated": false,
+  "thresholds_changed": false,
+  "incidents": [
+    {
+      "phase": "console readiness before scientific recovery",
+      "observation": "Initial official CLI smoke client waited in startup while REST status and kernels returned200 and the kernel was idle.",
+      "action": "Closed only the stalled local smoke client, not the VM or scientific worker. A fresh console connection completed the T4 smoke successfully."
+    },
+    {
+      "phase": "input transfer before scientific recovery",
+      "observation": "Single123MB recovery ZIP upload returned TLS EOF.",
+      "action": "Transferred four pre-existing32MiB-or-smaller parts, assembled the original ZIP on the VM and verified its complete SHA256. No scientific bytes changed."
+    }
+  ],
+  "evaluation_backup_policy": "Atomic JSON writes and acknowledged worker barriers before immutable ZIP creation; SHA256-verified external retrieval. A separate post-evaluation guard keeps the runtime active until the final PC copy is verified."
+}
