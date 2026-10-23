@@ -31,7 +31,7 @@ def compact_cost(rows):
         samples=row['samples'];medians={}
         for name,values in samples.items():
             medians[name]=statistics.median(values['wall_ms'] if isinstance(values,dict) else values)
-        output.append({k:v for k,v in row.items() if k not in ('samples','comparisons')}|dict(median_wall_ms=medians))
+        output.append({k:v for k,v in row.items() if k!='samples'}|dict(median_wall_ms=medians))
     return output
 
 def main():
@@ -41,6 +41,11 @@ def main():
     assert receipt['valid'] and receipt['remote']['label']=='final'
     path=Path(receipt['local']);assert sha(path)==receipt['remote']['sha256']
     old=json.loads((ROOT/'experiments/results/task41g_audited_v1/final_report_recovered.json').read_text())
+    old_receipt=json.loads((ROOT/'artifacts/task41g_primary_external/final_reconstruction_receipt.json').read_text())
+    old_path=Path(old_receipt['local']);assert sha(old_path)==old_receipt['sha256']
+    with zipfile.ZipFile(old_path) as prior:
+        old_cost=compact_cost(json.loads(prior.read('cost.json')))
+        old_execution=compact_cost(json.loads(prior.read('execution_matrix.json')))
     with zipfile.ZipFile(path) as z:
         assert z.testzip() is None
         read=lambda name:json.loads(z.read(name))
@@ -93,11 +98,20 @@ def main():
             reproduction[current]={k:report['summaries'][current][k]==old['summaries'][previous][k] for k in ('panels','stress','historical','recurrence')}
         deltas={name:{base:{panel:difference(details[base][panel],rows) for panel,rows in panels.items() if panel in details[base]}
             for base in old_names} for name,panels in details.items() if name in {a['name'] for a in spec['arms']} or name.startswith('aggregate_')}
-        cost=compact_cost(read('cost.json'));execution=compact_cost(read('execution_matrix.json'));compact=read('compact_execution_cost.json')
+        rawcost=read('cost.json');cost=compact_cost(rawcost);execution=compact_cost(read('execution_matrix.json'));compact=read('compact_execution_cost.json')
+        same_run_speed=[]
+        for row in rawcost:
+            samples=row['samples'];name=report['nominee']
+            same_run_speed.append(dict(batch=row['batch_per_seed'],scope=row['scope'],candidate=name,
+                speedup_vs_41g_nominee=statistics.median(a/b for a,b in zip(samples['G_nominee']['wall_ms'],samples[name]['wall_ms'])),
+                speedup_vs_41g_tail_diagnostic=statistics.median(a/b for a,b in zip(samples['G_tail_diagnostic']['wall_ms'],samples[name]['wall_ms'])),
+                speedup_vs_formula=statistics.median(a/b for a,b in zip(samples['formula']['wall_ms'],samples[name]['wall_ms'])),
+                quality_qualified=name in report['passing_arms']))
         result=dict(valid=True,complete_final_backup_verified=True,all_tensors_finite=True,unchanged_training_checkpoints=tensor_checks,
             backup=receipt,report=report,nominee=report['nominee'],old_nominee=old['nominee'],old_summaries=old['summaries'],
             baseline_reproduction=reproduction,floors=floors,all_floors_passed=all(floors.values()),failures=details,deltas=deltas,
             selection=freeze,paired_contrasts=read('paired_contrasts.json'),ionic_cost=cost,execution_matrix=execution,compact_execution_cost=compact,
+            same_run_speed=same_run_speed,old41g_cost=old_cost,old41g_execution=old_execution,
             training_updates_performed=0,thresholds_changed=False,
             limits=['Old and new development use different seed families: compare new41h candidates to G controls evaluated on the same41h development, not old development counts as paired.',
                 '41g controls are measured again within41h. Historical timing ratios from different VM assignments are descriptive, not a paired speed benchmark.',
