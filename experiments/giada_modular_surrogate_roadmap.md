@@ -1311,6 +1311,21 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     `task41g_preregistration_v1.json`;esperimento da console e backup esterni,
     backup del mirrorSQLite soltanto locale.
 
+  - **Task41h — Storie di ritorno, esposizione e risoluzione:** notebook unico
+    `giada_task41h_path_repair.ipynb`,10bracci×3seed. Matrice2×2×2:
+    storia costante/ritorno da rampa, dose ausiliaria ogni256/16update,
+    4096/16384ancore; due confronti64/128basi. Solo equilibrio m,
+    Q0 e17altri gate congelati, z invariato. Composizione affine esatta
+    della storia prescritta solo in training, non sostituzione dello stato.
+    Selezione stratificata primaria e aggregata diagnostica sugli stessi
+    checkpoint; nessun pannello storico usato per selezionare. Sidecar
+    congelati separano precisione dello stato V e solver2×2, includendo
+    residuo Newton ricentrato e oracoli u_m/z_m/h non selezionabili.
+    Stessi pesi confrontati in esecuzione densa/compatta contro formule e LUT.
+    Soglie,18stati,0.1ms e riferimento ufficiale invariati; nessuna promozione
+    automatica alla42. Protocollo `task41h_preregistration_v1.json`;
+    console Colab, backup sperimentali esterni, DB solo locale.
+
 ### ✅ Uscita del blocco 1
 
 Operatore e interfaccia congelati, errore attribuibile e costo misurato.
