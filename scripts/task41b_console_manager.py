@@ -18,7 +18,7 @@ def file_sha(path):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('request',type=Path);args=parser.parse_args()
     request=json.loads(args.request.read_text());revision=request['revision'];task=request.get('task','39e')
-    assert task in ('39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f','41g')
+    assert task in ('39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f','41g','41h')
     assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
     root=Path('/content')/('giada_task'+task+'_'+revision[:12]);root.mkdir(exist_ok=False)
     status=root/'job_status.json';output=root/'artifacts';repo=root/'giada';started=time.time()
@@ -32,6 +32,17 @@ def main():
         shutil.copy2(root/'process.log',output/'process.log')
         archive=Path(shutil.make_archive(str(root/('recovery_'+label)), 'zip', output))
         receipt=dict(label=label,archive=archive.as_posix(),sha256=file_sha(archive),bytes=archive.stat().st_size)
+        if task=='41h':
+            # Transport only: original ZIP and scientific files stay intact.
+            parts=[]
+            with archive.open('rb') as stream:
+                index=0
+                while block:=stream.read(32*1024*1024):
+                    part=archive.with_name(archive.name+f'.part{index:04d}')
+                    part.write_bytes(block)
+                    parts.append(dict(remote=part.as_posix(),bytes=len(block),sha256=hashlib.sha256(block).hexdigest()))
+                    index+=1
+            receipt['parts']=parts
         temp=root/'recovery_manifest.tmp';temp.write_text(json.dumps(receipt));temp.replace(root/'recovery_manifest.json')
         print('[GIADA recovery] '+json.dumps(receipt),flush=True)
     try:
@@ -53,6 +64,7 @@ def main():
         workers['41e']='run_task41e_transfer.py'
         workers['41f']='run_task41f_precision_relaxation.py'
         workers['41g']='run_task41g_preservation.py'
+        workers['41h']='run_task41h_path_repair.py'
         worker_source=repo/'scripts'/workers[task]
         assert hashlib.sha256(worker_source.read_bytes()).hexdigest()==request['worker_sha256']
         save(state='running',phase='scientific_worker');print('[GIADA console] pinned checkout verified; starting worker',flush=True)
@@ -65,7 +77,7 @@ def main():
                 if '[GIADA Task' in line:
                     save(state='running',phase='scientific_worker',worker_pid=worker.pid,last_progress=line.rstrip())
                     checkpoint='checkpoint_saved ' in line or 'checkpoint ' in line or 'preflights passed' in line
-                    if checkpoint and (task not in ('41d','41e','41f','41g') or 'checkpoint_saved ' in line or 'preflights passed' in line or time.time()-last_publish>=120):
+                    if checkpoint and (task not in ('41d','41e','41f','41g','41h') or 'checkpoint_saved ' in line or 'preflights passed' in line or time.time()-last_publish>=120):
                         publish(str(int(time.time()*1000)))
                         last_publish=time.time()
             code=worker.wait()

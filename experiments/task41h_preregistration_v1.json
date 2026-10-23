@@ -1,0 +1,441 @@
+{
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "cost": {
+    "batches": [
+      1,
+      642,
+      4096
+    ],
+    "ticks": 80,
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "baselines": [
+      "resident formula CUDA Graph",
+      "0.01mV voltage LUT plus canonical calcium-dependent SK"
+    ],
+    "timing": "Same active native initial states at10ms,80resident future input ticks,no hosttransfer,alternatingorder;CUDAandwalltimes;pairedbootstrap uncertainty"
+  },
+  "task41d_checkpoint": "experiments/results/task41e_protocol_v1/task41d_frozen.pt",
+  "task41d_checkpoint_sha256": "68fff43f9d2793fd30131321125ca8ce567d4beb37ff48c76697f92080103a9a",
+  "task41d_summary": "experiments/results/task41e_protocol_v1/task41d_summary.json",
+  "opened_inputs_sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb",
+  "opened_members": {
+    "native_shadow_traces.npz": "8d2563aeeb4084835a3ff1da205d35ba28c31ae6d46aa19d10c6af2075fade0c",
+    "reference_traces.npz": "e056da661b26f055cc0e583e75019b3cd68661e2b64bbd6f13ac71465bee2e3a",
+    "fresh_stress_traces.npz": "061c10676151bccdf9be6e5f2536705ff693de4a5bda3e347aa56c0cdcef4f19",
+    "cases.json": "8e7cd4fbab498d0439fe3541427ef0c7bed42e14b3350bdc320c9c266d4ad340",
+    "causal_results.json": "a7cbe053e6518d73c5ab37400f5693bbe31fa128c1266d2e1f986b680d6921d9",
+    "fresh_stress_results.json": "61a81cd2c399bdbeee779618d066245c63f080f20086f230b3d5f0ddd0fd4dbe"
+  },
+  "opened41c_sha256": "172ec87c4b1135d4f3421d63343ae399368f8426a68fadcf4c7ca788c6e97aff",
+  "opened41c_members": {
+    "cases.json": "6daff32ba1a568a73d86eb68584839e71f5f21280f557947cc22a37fdc9aaccb",
+    "native_shadow_traces.npz": "150fad971c8ff262420d2824a86472c4623e01fb2c11310bd42799d87f027a53",
+    "fresh_stress_traces.npz": "456b4c03405d066614ce5f6d280b3adfab62a1eb9579a915a42164f4ec7eecd7",
+    "causal_results.json": "7159704b0ffd565007aa6c98d9c77588e7fc56aae228a35d9e21999705eb5e09"
+  },
+  "parent_sha256": "f83dd019d0f38c2a595da8565f9632765de95418b6103861b3159a61f3a693a6",
+  "balance_policy": {
+    "target_gradient_ratio": 0.1,
+    "ema": 0.9,
+    "gradient_floor": 1e-12,
+    "maximum_weight": 1000000.0,
+    "minimum_weight_ratio": 0.5,
+    "maximum_weight_ratio": 2.0
+  },
+  "protection_ticks": [
+    4,
+    40,
+    400,
+    4000,
+    12000
+  ],
+  "task": "41h",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dt_ms": 0.1,
+  "arms": [
+    {
+      "name": "H0_D256_N4096",
+      "history": 0,
+      "aux_every": 256,
+      "fit_count": 4096,
+      "basis": 64,
+      "kind": "U64",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H0_D256_N16384",
+      "history": 0,
+      "aux_every": 256,
+      "fit_count": 16384,
+      "basis": 64,
+      "kind": "U64",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H0_D16_N4096",
+      "history": 0,
+      "aux_every": 16,
+      "fit_count": 4096,
+      "basis": 64,
+      "kind": "U64",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H0_D16_N16384",
+      "history": 0,
+      "aux_every": 16,
+      "fit_count": 16384,
+      "basis": 64,
+      "kind": "U64",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H1_D256_N4096",
+      "history": 1,
+      "aux_every": 256,
+      "fit_count": 4096,
+      "basis": 64,
+      "kind": "U64",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H1_D256_N16384",
+      "history": 1,
+      "aux_every": 256,
+      "fit_count": 16384,
+      "basis": 64,
+      "kind": "U64",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H1_D16_N4096",
+      "history": 1,
+      "aux_every": 16,
+      "fit_count": 4096,
+      "basis": 64,
+      "kind": "U64",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H1_D16_N16384",
+      "history": 1,
+      "aux_every": 16,
+      "fit_count": 16384,
+      "basis": 64,
+      "kind": "U64",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H0_D256_N4096_B128",
+      "history": 0,
+      "aux_every": 256,
+      "fit_count": 4096,
+      "basis": 128,
+      "kind": "U128",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    },
+    {
+      "name": "H1_D16_N16384_B128",
+      "history": 1,
+      "aux_every": 16,
+      "fit_count": 16384,
+      "basis": 128,
+      "kind": "U128",
+      "heads": "M",
+      "optimizer": "anneal",
+      "objective": "sensitive",
+      "support": "broad",
+      "feedback": true
+    }
+  ],
+  "contrasts": [
+    [
+      "history",
+      "H0_D256_N4096",
+      "H1_D256_N4096"
+    ],
+    [
+      "history",
+      "H0_D256_N16384",
+      "H1_D256_N16384"
+    ],
+    [
+      "history",
+      "H0_D16_N4096",
+      "H1_D16_N4096"
+    ],
+    [
+      "history",
+      "H0_D16_N16384",
+      "H1_D16_N16384"
+    ],
+    [
+      "aux_every",
+      "H0_D16_N4096",
+      "H0_D256_N4096"
+    ],
+    [
+      "aux_every",
+      "H0_D16_N16384",
+      "H0_D256_N16384"
+    ],
+    [
+      "aux_every",
+      "H1_D16_N4096",
+      "H1_D256_N4096"
+    ],
+    [
+      "aux_every",
+      "H1_D16_N16384",
+      "H1_D256_N16384"
+    ],
+    [
+      "fit_count",
+      "H0_D256_N4096",
+      "H0_D256_N16384"
+    ],
+    [
+      "fit_count",
+      "H0_D16_N4096",
+      "H0_D16_N16384"
+    ],
+    [
+      "fit_count",
+      "H1_D256_N4096",
+      "H1_D256_N16384"
+    ],
+    [
+      "fit_count",
+      "H1_D16_N4096",
+      "H1_D16_N16384"
+    ],
+    [
+      "basis",
+      "H0_D256_N4096",
+      "H0_D256_N4096_B128"
+    ],
+    [
+      "basis",
+      "H1_D16_N16384",
+      "H1_D16_N16384_B128"
+    ]
+  ],
+  "sources": {
+    "src/giada_teacher/task41e_transfer_model.py": "cc2b809f295525624d74751d0aa3fa0719180fa89e27fc3d626226365e540ea0",
+    "src/giada_teacher/task41e_transfer_data.py": "aab7843141ad6f91e0ce28f6082b50679fdb27ce7cda42ab79af5f585cfa135f",
+    "src/giada_teacher/task41e_transfer_training.py": "7134de56faf0e0ddbe4e9d0afe96d75db57b6a789ccd918350af143b880bb187",
+    "src/giada_teacher/task41e_transfer_evaluation.py": "bd9fbb6160092f8ef931bec8f591f871c2446cf7529b927d8980c1ca57ce091d",
+    "scripts/run_task41e_transfer.py": "b61ad3e978298111d3dd164800910d482a2d6f3829a91b2b00f667bd9ae71c8e",
+    "notebooks/giada_task41e_transfer_diagnosis.ipynb": "bf6db05a8c478d9b43668c146a29548fe186080f99edf8b0c26c3cde00c00103",
+    "experiments/task41d_preregistration_v1.json": "09faee20aecf4a7235d2807313ffe074b473cc175df595f6ae5db7ba40a6e0d5",
+    "src/giada_teacher/task41d_precision_response.py": "84fd16a3dd1c49915c24c653f9501401d5cedc920a1195dd7399555dd7028429",
+    "src/giada_teacher/task41d_evaluation.py": "6982efdef1d02048af6329874e76e162e8090e62bb9317a420dacd235a03ab9b",
+    "scripts/run_task41d_precision_response.py": "e0a885e4469bcbe25db335c30d429c57ab7d4c510e2c730befb5a055ba639443",
+    "experiments/task41c_preregistration_v1.json": "5e957f698b7858012b395ffd4d224810a133ad8ac0446b8f1386d4e314fa0547",
+    "src/giada_teacher/task41c_frozen_confirmation.py": "1bc97ececbb51a52c6ae3788cc46deebf1bdd15f3c6163ad6fa67c6dd7de1f8c",
+    "experiments/results/task41c_protocol_v1/P110_frozen.pt": "f83dd019d0f38c2a595da8565f9632765de95418b6103861b3159a61f3a693a6",
+    "scripts/run_task41c_frozen_confirmation.py": "70d13f61eeab9cac746482fb47e6ef34390a1ac9159d4f7bf261af2b2943b506",
+    "src/giada_teacher/task41b_local_precision.py": "6b53a1f53678a4174c483540e78a4db910a15ae1517caac3b6ab10aafd0ae604",
+    "src/giada_teacher/task41b_evaluation.py": "8bdbc0d98c16261cb9e131c8f9e208cd86ccec11098dd79cda501fe8c63b5cc3",
+    "src/giada_teacher/task41_independent_confirmation.py": "9c36f607f7fa81634a23ee7ac69afe24688694f43b52ca12acd714a9c68f1220",
+    "experiments/task41b_preregistration_v1.json": "6370c149c2b6ba1eb532128105dbbdae60d0b4e825012c5b1fe07d891592f82b",
+    "experiments/task41_preregistration_v1.json": "fab4ef77d32674515c6cc6efdd87550210ff6dad81ad8132d865d7fac206de42",
+    "experiments/results/task41e_protocol_v1/task41d_frozen.pt": "68fff43f9d2793fd30131321125ca8ce567d4beb37ff48c76697f92080103a9a",
+    "experiments/results/task41e_protocol_v1/task41d_summary.json": "89479331b96ca56eab8cc13d7b3c1edfadcf74e9d14354db9826361bce29bf1a",
+    "experiments/task41e_preregistration_v1.json": "eb2b2f39ad663068d17cd0d2a4bfb90770e0ff2ee6ac3fc4e8b52240a7b3c502",
+    "src/giada_teacher/task41f_precision_relaxation.py": "7528d8f00d5d3a9968bd9f85048a5d7cbc9e4d64353a84aff5c8022008837eae",
+    "src/giada_teacher/task41f_evaluation.py": "32d76bf36bf594803ccac9b479e0f6c236c45dfe346ae39070c4c89434dd7b77",
+    "scripts/run_task41f_precision_relaxation.py": "1346a216d88602f071e25f842ceb5ce8c1cbb46a5c81270cc40a7e52f9948cf5",
+    "notebooks/giada_task41f_precision_relaxation.ipynb": "06d1f77c59a1596675ce69929239478e2e006e3bb9bde3fce3aa408cd6056871",
+    "experiments/results/task41f_protocol_v1/task41e_frozen.pt": "7ac38b79429d147fc0acb3187a4d5c4581cae643ae722217fcf378c78d18b6dc",
+    "experiments/results/task41f_protocol_v1/task41e_reproduction.json": "b636f0e32a1de8eca00bbd60b66dc71fffe3b7b243d14beb02d156727d408149",
+    "experiments/task41f_preregistration_v1.json": "645a5ab7ddd62452c7c10fa5c1224b0acb53be46db40953219e669ef68a762de",
+    "src/giada_teacher/task41g_preservation.py": "3ae9aa19f656c55e60d16236057cc97e584dcc6463e7635219d7cb6d3b3caf4f",
+    "src/giada_teacher/task41g_evaluation.py": "7fdf0ac4693fc507a1247e7cc3d1b6c32b9549ee77de364c91d9d00a29f23627",
+    "scripts/run_task41g_preservation.py": "9262d489ac2b96fef6ed2aa8fd97db8d5b6e62b1d5e27d858b96b7266d83ca53",
+    "notebooks/giada_task41g_preservation.ipynb": "bb5378500b3cf5f966d011438159ee2c6a1b101409f950c320d461f075e17bda",
+    "experiments/results/task41g_protocol_v1/task41f_frozen.pt": "0b60f653d2e0513364100be8e3c9e4e980d51495b5b44e3b2ce802d4d7b25a88",
+    "experiments/task41g_preregistration_v1.json": "30bd38c24daee354c855683d2aa892b5c8027e998ef8ab433ed3af6115fe61d7",
+    "src/giada_teacher/task41h_path_repair.py": "dbc5ebc2eff204e0c7a5379b0e5120c3dce7776c2a63f51d610050d2c41be0ab",
+    "src/giada_teacher/task41h_evaluation.py": "7a9cf859f89ec51b14a6798e60b11f074fdfb7e3727d9bee19be099e72f10562",
+    "scripts/run_task41h_path_repair.py": "737551a9e7d57f718f055f5b08ef7526220d7e0a588148445c790e9b1d658074",
+    "notebooks/giada_task41h_path_repair.ipynb": "9271cbe3a1e9246c6f297fc33aebe8627ad70c58323d0232035741fd8b489637",
+    "experiments/results/task41h_protocol_v1/task41g_frozen.pt": "5bff26a0ea7d9ba0995e0ec4a332bce9d01add6448b5a55c96de2036c938e6b6"
+  },
+  "task41e_checkpoint": "experiments/results/task41f_protocol_v1/task41e_frozen.pt",
+  "task41e_checkpoint_sha256": "7ac38b79429d147fc0acb3187a4d5c4581cae643ae722217fcf378c78d18b6dc",
+  "task41e_reproduction": "experiments/results/task41f_protocol_v1/task41e_reproduction.json",
+  "new_seeds": {
+    "fit": 651101,
+    "selection": 651103,
+    "development": 651107,
+    "stream": 651109,
+    "feedback": 651113,
+    "feedback_stream": 651127,
+    "intervention": 651137,
+    "support": 651139,
+    "selection_support": 651149
+  },
+  "anchors": 16384,
+  "selection_anchors": 128,
+  "batch": 64,
+  "lr": 0.001,
+  "feedback_histories": 128,
+  "selection_feedback_histories": 16,
+  "history_ticks": 12000,
+  "feedback_anchors": 1024,
+  "selection_feedback_anchors": 32,
+  "feedback_batch": 4,
+  "feedback_every": 16,
+  "feedback_ratio": 0.1,
+  "checkpoints": [
+    0,
+    512,
+    2048,
+    8192,
+    30000,
+    60000
+  ],
+  "computational_parity_atol": 1e-05,
+  "hypothesis_links": [
+    {
+      "code": "claims-giada-task41g-result-voltage_roundoff-v1"
+    },
+    {
+      "code": "claims-giada-task41g-result-crossing_floor-v1"
+    },
+    {
+      "code": "claims-giada-task41g-result-effective_objective_dose-v1"
+    },
+    {
+      "code": "claims-giada-task41g-result-data_vs_capacity_vs_optimizer-v1"
+    },
+    {
+      "code": "claims-giada-task41g-result-composed_execution_cost-v1"
+    },
+    {
+      "code": "claims-giada-task41g-result-selection_coverage-v1"
+    },
+    {
+      "code": "claims-giada-task41g-completion-history-coverage-v1"
+    },
+    {
+      "code": "claims-giada-task41g-completion-voltage-state-versus-solver-v1"
+    }
+  ],
+  "training_policy": "30vectorizedmembers;frozenQ0;onlyCaHVA.m equilibrium;independentannealedAdam;18states,dt0.1ms unchanged.",
+  "selection": "Primarystratified:commonnewdevelopmentcanonicalguards,introducedfailures,worsttargetseverity,feedback+max(constanttail,ramptail),atomic. Secondaryaggregateusesmeanofsame twohistorylosses. Earliestties;bothfrozenbeforeopenedregressions;secondarycandidatesdiagnostic.",
+  "objective": "Same censored coefficient objective and0.01preservation. Auxiliarycurrent+crossing+4msfeedback,gradientnormratio0.1,executedevery16or256updates. Allmemberscalculatecommonslots;gradientmaskchangesdose. Constant/ramp prefixes530ticks;tailprobes1/8/40/160/400/800/1147msafterprefix+labelledtailcrossing;officialmetricsunchanged.",
+  "support": "Nested4096/16384atomicFIT;common4096preservationanchors;1024pairedconstant/ramp histories,matchedrest,Ca,initialstates,multipliers,horizon1200ms. Historytreatmentretains50%constant. Entireprefix retained by exact affine composition;trainingexecutiononly. HistorychangesprefixVdistribution intentionally;atomicdistribution and endpoint draws paired.",
+  "budget": "60000updates;checkpoints0/512/2048/8192/30000/60000;pairedRNGstreams;batch64atomic+64preservation;tail16;feedback4x40ticks. Supportsizechangesuniquecoverageatfixedupdates;logexamples,gradients,cost.",
+  "qualification": "All original current,charge,event,gate,physical,pairedresponse,compartment andhistoricalregression gates on every case and seed plusnewdevelopment. K_Pst remains included. New independent confirmation required after repair;Task42notautomatic.",
+  "contrast_rule": "At fixed remaining factors,all3target-severity ratios<1,median<=0.8,andnoincreaseintargetfailcountorintroducedregressions. Global gates remain mandatory;diagnostic target contrast is not a scientificGO.",
+  "diagnostics": "FrozengenitorQ0 and41gnominee/best-tail:2x2persistentV/solver32/64+recenteredFP32Newton,same12iterationsandreference;fullopened41/41cautonomousmetrics+allinterventions. CaHVAu_m/z_m/horaclesonstress41c. Repeatauditsonfrozen41hnominee. Alloraclesselectionineligible.",
+  "speed": "Originalformula/LUT,costthreshold10%,batches1/642/4096and30pairedrepetitions;legacy/compactexecutionwithsameweights;step/wholeloopinherited;originalandmatchedrecenteredformulabaselines; noqualificationfromcostalone.",
+  "stop_rules": "Nonfinite gradient/parameter,failedtechnicalparity orfailedrequiredcanonicalfloor:technicalstop,preservealloutputs. ScientificNO_GO retainedifanygatefails. Nochangesofthresholds orposthocnomination.",
+  "limits": [
+    "Opened repair,notindependentconfirmation;Task42notautomatic.",
+    "All18states andabstractionlevelunchanged;noinferencekineticfallback.",
+    "Alternateprecisionreferencesandcanonicaloraclesare diagnosticandselectionineligible.",
+    "H10isafrozencomparison,notaretrospectivelypromotedwinner.",
+    "Three modelseeds shareprotocols;notindependentbiologicalreplications.",
+    "Fullrawreportsandcheckpointscopiedoffruntime;DBbackuponlylocal.",
+    "Q0sourceparentexplicit;noautomatic41fretrospectivepromotion.",
+    "QuinticsmoothpartitionisC2,notcubicB-spline;approximationprobeonly.",
+    "Preservationiscommon,itsindividualcausaleffectisnotidentified.",
+    "41hprimaryselectionstratified;secondaryruleisadiagnostic,noretrospectiveselection.",
+    "Historyandcapacityeffectsregisteredconditionally;128basis2armsnotfullfactorial.",
+    "Affinepathcompositionacceleratestrainingonly;deployedrecurrencemodelunchanged."
+  ],
+  "task41f_checkpoint": "experiments/results/task41g_protocol_v1/task41f_frozen.pt",
+  "task41f_nominee": "UZ64_broad_point",
+  "task41f_checkpoint_sha256": "0b60f653d2e0513364100be8e3c9e4e980d51495b5b44e3b2ce802d4d7b25a88",
+  "lr_min_ratio": 0.0001,
+  "tail_anchors": 1024,
+  "tail_batch": 16,
+  "task41g_checkpoint": "experiments/results/task41h_protocol_v1/task41g_frozen.pt",
+  "task41g_checkpoint_sha256": "5bff26a0ea7d9ba0995e0ec4a332bce9d01add6448b5a55c96de2036c938e6b6",
+  "task41g_nominee": "M_constant_point_broad",
+  "task41g_diagnostic": "M_anneal_sensitive_tail",
+  "path_prefix_ticks": 530
+}

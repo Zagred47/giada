@@ -20,18 +20,33 @@ def file_sha(path):
 def cli(repo, *args, **kwargs):
     return subprocess.run(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),*map(str,args)],cwd=repo,**kwargs)
 
+def recover_parts(receipt,target,dest,download):
+    if not receipt.get('parts'):return download(Path(receipt['archive']).name,target)
+    for part in receipt['parts']:
+        local=dest/Path(part['remote']).name
+        if not (local.exists() and local.stat().st_size==part['bytes'] and file_sha(local)==part['sha256']):
+            if not download(Path(part['remote']).name,local):return False
+        if local.stat().st_size!=part['bytes'] or file_sha(local)!=part['sha256']:return False
+    temp=target.with_suffix(target.suffix+'.assembling')
+    with temp.open('wb') as output:
+        for part in receipt['parts']:
+            with (dest/Path(part['remote']).name).open('rb') as stream:
+                for block in iter(lambda:stream.read(8*1024*1024),b''):output.write(block)
+    if file_sha(temp)!=receipt['sha256']:raise RuntimeError('Assembled ZIP SHA mismatch')
+    temp.replace(target);return True
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f','41g'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f','41g','41h'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
     repo=Path(__file__).resolve().parents[1];dest=a.destination.resolve();dest.mkdir(parents=True,exist_ok=a.attach)
     remote='/content/giada_task'+a.task+'_'+a.revision[:12];seen=set();started=time.time()
     with (dest/'console.log').open('a',encoding='utf-8') as log:
         driver_args=['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',a.session,'-f','scripts/colab_task'+a.task+'_driver.py']
-        if a.task in ('41','41b','41c','41d','41e','41f','41g'):driver_args += ['--timeout','86400']
+        if a.task in ('41','41b','41c','41d','41e','41f','41g','41h'):driver_args += ['--timeout','86400']
         driver=None if a.attach else subprocess.Popen(driver_args,cwd=repo,stdout=log,stderr=subprocess.STDOUT)
         def download(name,target):
             r=cli(repo,'download','-s',a.session,remote+'/'+name,target,capture_output=True,text=True,encoding='utf-8',errors='replace')
             okay=r.returncode==0 and target.exists() and 'not found' not in (r.stdout+r.stderr).lower()
-            if not okay and a.task in ('41f','41g'):
+            if not okay and a.task in ('41f','41g','41h'):
                 def linux(path):
                     value=str(path.resolve()).replace('\\','/')
                     return '/mnt/'+value[0].lower()+value[2:]
@@ -42,6 +57,8 @@ def main():
                     capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=1800)
                 okay=fallback.returncode==0 and target.exists()
             return okay
+        def recover(receipt,target):
+            return recover_parts(receipt,target,dest,download)
         finished=False;console_disconnected=False
         while True:
             download('process.log',dest/'process.log')
@@ -50,7 +67,7 @@ def main():
                 receipt=json.loads((dest/'remote_recovery_manifest.json').read_text())
                 if receipt['sha256'] not in seen:
                     name=Path(receipt['archive']).name;target=dest/name
-                    if download(name,target):
+                    if recover(receipt,target):
                         assert file_sha(target)==receipt['sha256'],'External recovery SHA mismatch'
                         with zipfile.ZipFile(target) as z:assert z.testzip() is None
                         seen.add(receipt['sha256']);(dest/'external_backup_receipt.json').write_text(json.dumps(dict(valid=True,remote=receipt,local=str(target),verified_at=time.time(),runtime_independent=True),indent=2))
@@ -64,12 +81,21 @@ def main():
                     # manager publishes final bundle before final status.
                     finished=True
                     if state.get('archive'):
-                        target=dest/Path(state['archive']).name
-                        assert download(target.name,target),'Final archive download failed'
-                        assert file_sha(target)==state['archive_sha256']
+                        # The manager's immutable final recovery ZIP contains
+                        # identical members and supports verified resumable parts.
+                        manifest=json.loads((dest/'remote_recovery_manifest.json').read_text())
+                        if a.task=='41h' and manifest.get('label')=='final':
+                            target=dest/Path(manifest['archive']).name
+                            assert recover(manifest,target),'Final parts download failed'
+                            expected_sha=manifest['sha256']
+                        else:
+                            target=dest/Path(state['archive']).name
+                            assert download(target.name,target),'Final archive download failed'
+                            expected_sha=state['archive_sha256']
+                        assert file_sha(target)==expected_sha
                         with zipfile.ZipFile(target) as z:assert z.testzip() is None
                         (dest/'external_backup_receipt.json').write_text(json.dumps(dict(valid=True,
-                            remote=dict(label='final',archive=state['archive'],sha256=state['archive_sha256'],bytes=target.stat().st_size),
+                            remote=dict(label='final',archive=manifest['archive'] if a.task=='41h' else state['archive'],sha256=expected_sha,bytes=target.stat().st_size),
                             local=str(target),verified_at=time.time(),runtime_independent=True),indent=2))
                     break
             if driver is not None and driver.poll() is not None:
