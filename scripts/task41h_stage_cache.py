@@ -38,6 +38,21 @@ def guard_core(original):
         assert found==2,('Unexpected development evaluator source',found)
     return compile_function(original,transform)
 
+def guard_compact_cost(original):
+    def transform(fn):
+        found=0
+        for node in ast.walk(fn):
+            if isinstance(node,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='rows' for t in node.targets):
+                assert isinstance(node.value,ast.List)
+                node.value=ast.parse("json.loads((out/'compact_execution_cost.json').read_text()) if (out/'compact_execution_cost.json').exists() else []",mode='eval').body;found+=1
+            if isinstance(node,ast.For) and isinstance(node.target,ast.Name) and node.target.id=='stable':
+                node.body.insert(0,ast.parse("if any(r['batch']==batch and r['recentered_membrane']==stable for r in rows): continue").body[0]);found+=1
+            if isinstance(node,ast.Call) and ast.unparse(node.func)=='types.FunctionType':
+                assert len(node.args)==2 and not node.keywords
+                node.keywords=[ast.keyword(arg='argdefs',value=ast.parse('t.make_core.__defaults__',mode='eval').body)];found+=1
+        assert found==3,('Unexpected compact evaluator source',found)
+    return compile_function(original,transform)
+
 def install(h,ev,output):
     from resume_task41h_frozen_evaluation import install_completed_panel_cache
     reused=install_completed_panel_cache(output)
@@ -66,4 +81,29 @@ def install(h,ev,output):
     h.c.j.i.old.evaluate=recurrence
     h.g.fe.evaluate=guard_core(h.g.fe.evaluate)
     ev.ee.e.benchmark=guard_cost(ev.ee.e.benchmark)
+    original_execution=h.g.fe.execution_matrix
+    def execution(torch,root,folder,models,*args):
+        name=next(iter(models));path=folder/('execution_matrix_'+name+'.json')
+        if path.exists():
+            rows=json.loads(path.read_text())
+            if len(rows)==6 and len({(r['batch_per_seed'],r['physics']) for r in rows})==6:return rows
+        return original_execution(torch,root,folder,models,*args)
+    h.g.fe.execution_matrix=execution
+    original_numerical=ev.numerical_panels
+    def numerical(torch,root,folder,models,*args):
+        path=folder/'voltage_precision.json'
+        if path.exists():
+            rows=json.loads(path.read_text())
+            if len(rows)==10*len(models):return rows
+        return original_numerical(torch,root,folder,models,*args)
+    ev.numerical_panels=numerical
+    original_oracle=ev.oracle_stress
+    def oracle(torch,root,folder,models,*args):
+        path=folder/'coefficient_oracle_stress.json'
+        if path.exists():
+            report=json.loads(path.read_text())
+            if len(report['rows'])==4*36*len(models):return report
+        return original_oracle(torch,root,folder,models,*args)
+    ev.oracle_stress=oracle
+    ev.execution_cost=guard_compact_cost(ev.execution_cost)
     return reused

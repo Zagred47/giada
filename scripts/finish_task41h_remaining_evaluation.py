@@ -48,6 +48,7 @@ def run(archive,output,digest):
     report.update(evaluation_recovered=True,training_updates_performed=0,selection_recomputed=False,thresholds_changed=False,cached_panels_reused=reused,
         cached_cost_rows=[dict(batch=r['batch_per_seed'],scope=r['scope']) for r in old_cost],
         recovered_source_sha256=digest,trace_restoration=trace_report,evaluation_backend=dict(torch=torch.__version__,gpu=torch.cuda.get_device_name(),platform='Kaggle batch'))
+    if (output/'cost_row_provenance.json').exists():report['cost_row_provenance']=json.loads((output/'cost_row_provenance.json').read_text())
     h.p.save_json(output/'final_report.json',report)
     print('[GIADA Task41h] completed '+report['decision'],flush=True)
 
