@@ -22,8 +22,11 @@ causalmente garantite. Si interrompe l'aggiunta sequenziale di correttori.
 | J_chain_joint | Stessa catena |4004|Tutti i parametri|
 | J_compact64 | Un MLP V→34 output + testa Ca→SK |2404|Tutti i parametri|
 | J_compact128 | Stessa struttura, tronco più ampio |4708|Tutti i parametri|
+| J_restricted_control | H + vecchia riparazione limitata |4260|Solo due equilibri; controllo non selezionabile|
 
-Tre seed17/29/43, stessi dati e minibatch, stessa supervisione. La capacità
+Tre seed17/29/43, stessi dati e minibatch, stessa supervisione. Il controllo
+limitato distingue lo spazio di apprendimento dalla nuova loss/copertura:
+non sostituisce i tre candidati e non è nominabile. La capacità
 non è pareggiata:64/128 è una mini legge di scala a budget fisso. Nessuna
 conclusione di superiorità architetturale parameter-matched.
 

@@ -111,6 +111,11 @@
       "name": "J_compact128",
       "representation": "compact",
       "width": 128
+    },
+    {
+      "name": "J_restricted_control",
+      "representation": "restricted",
+      "width": 128
     }
   ],
   "contrasts": [],
@@ -165,13 +170,13 @@
     "notebooks/giada_task41i_selective_repair.ipynb": "e5b7310949062e97ccbfcb36fe6ce1d5c2226f9c7c74ec9590d2c4f94c44ad0f",
     "experiments/task41i_preregistration_v1.json": "e6445f29662c6709b21c2ee9fd07e07d79c2ed7876a2186b1aba1ef3a1fdb027",
     "experiments/task41i_evaluation_recovery_v1.json": "136eb2a492efb28caabefa9152b8daebfa42c2fadb76992a9f295de520819d91",
-    "src/giada_teacher/task41j_operator_reset.py": "4c14be0a7bcf5f2a8553b16b5f4e4c3434b3d6bb845a895f4c306172eee216a0",
-    "src/giada_teacher/task41j_evaluation.py": "9e79094bbe835ed5e92bdece57573fb21451187d012e839087399a055e1fa2cb",
+    "src/giada_teacher/task41j_operator_reset.py": "da0f5fc0b6ce081b89bd20b0fc9a3914914c636132e9e89b3e5f86c2dd485322",
+    "src/giada_teacher/task41j_evaluation.py": "f8aa6172e975bf9515920936527cb73f585047eaaa127e876f1ce0eec733e625",
     "scripts/run_task41j_operator_reset.py": "e8dab108a1ccb27f5f9af3141b36e1f985dfbe67c3fea7819dc43e0f625d8992",
-    "scripts/build_task41j_protocol.py": "c8d150d6f331d87779d26663bed9f44f61f25c523cdd8567096bee5dc19edc3c",
+    "scripts/build_task41j_protocol.py": "7d3c189c914c5c29c718cab7daaf72c78f50be21ecf2a41b50174412398aac0d",
     "scripts/task41j_kaggle_pipeline.py": "6eb352cc9662a3c836bdf99f0392c011325d8bdc4c2098e60499110c91a7c8d9",
     "scripts/task41j_gpu_probe.py": "4bdfc9edf2fc8ec60fffe0ab0ce4edf842630449aaf01b67de09dfc41de90998",
-    "tests/test_task41j_operator_reset.py": "0e14a91750a90d368cd20c3ca57e0564c6cb025ffe937bd6ff108e5e2de2b987"
+    "tests/test_task41j_operator_reset.py": "db05c35a067f86144eced0be925aeaec66eba7a4ede2223ee672247ceae5a9fc"
   },
   "task41e_checkpoint": "experiments/results/task41f_protocol_v1/task41e_frozen.pt",
   "task41e_checkpoint_sha256": "7ac38b79429d147fc0acb3187a4d5c4581cae643ae722217fcf378c78d18b6dc",
@@ -225,9 +230,9 @@
       "code": "claims-giada-task41h-result-whole_chain_execution-v1"
     }
   ],
-  "training_policy": "Three operators x three vectorized seeds. Unfreeze ALL parameters of H chain, versus a single shared voltage MLP at widths64/128 plus the same learned calcium-only SK head. All36 equilibrium/update outputs learnable. No new recurrent state, no extra causal input, no analytic kinetic inference.",
-  "selection": "Before opened tests, select earliest best per seed by (global failed development trajectories, introduced channel/gate regressions versus H, global worst severity, heldout path+coupled error, atomic error). Nominate one arm by worst-seed lexicographic rank. Failed gates are never waived; all arms reported, no posthoc nominee.",
-  "objective": "4096 parent-distillation slots; H chain uses zero warmup LR because it is already the identical teacher,compact operators learn. Then fresh Adam60000 canonical-refinement updates for ALL parameters of every arm. Censored logit errors with training censor1e-12 on all36 coefficients plus paired probability secants. Full-path current and official offset margin across all11 channels, plus40-step coupled causal differences; auxiliary every16, per-seed gradient norm ratio0.1. No hard frozen refinement coefficients or parent-residual bounds.",
+  "training_policy": "Three candidate operators plus one restricted control x three vectorized seeds. Unfreeze ALL parameters of H chain, versus a single shared voltage MLP at widths64/128 plus the same learned calcium-only SK head. All36 equilibrium/update outputs learnable in candidates. Restricted control: frozen H plus original bounded Ca/Nap equilibrium heads,all z frozen,same data/loss. Control cannot be nominated. No new recurrent state, no extra causal input, no analytic kinetic inference.",
+  "selection": "Before opened tests, select earliest best per seed by (global failed development trajectories, introduced channel/gate regressions versus H, global worst severity, heldout path+coupled error, atomic error). Nominate one of the three candidates by worst-seed lexicographic rank; restricted control is nonselectable. Failed gates are never waived; all arms reported, no posthoc nominee.",
+  "objective": "4096 parent-distillation slots; H chain and restricted control use zero warmup LR because they are already the identical teacher,compact operators learn. Then fresh Adam60000 canonical-refinement updates for ALL candidate parameters; restricted control only its2equilibrium heads. Censored logit errors with training censor1e-12 on all36 coefficients plus paired probability secants. Full-path current and official offset margin across all11 channels, plus40-step coupled causal differences; auxiliary every16, per-seed gradient norm ratio0.1. Candidates have no hard frozen refinement coefficients or parent-residual bounds.",
   "support": "Identical disjoint FIT/selection anchors, +/-voltage probes, constant/ramp 1200ms histories, and coupled perturbation histories for all arms; all11 currents supervised. New development seed; opened tests only after selection freeze.",
   "budget": "Same4096 warmup slots and60000 actual refinement updates per arm,same minibatches and counts. H identity warmup is zero-LR; compact warmup costs4096 real updates. Log this unequal initialization effort,reconstruction gap,params,updates and wall time. Independent Adam moments/clipping per seed. Seeds within arms vectorized,heterogeneous arms inside one captured update. Width is a nested capacity probe,NOT a parameter-matched architecture claim.",
   "qualification": "All original current,charge,event,gate,physical,pairedresponse,compartment andhistoricalregression gates on every case and seed plusnewdevelopment. K_Pst remains included. New independent confirmation required after repair;Task42notautomatic.",
@@ -268,6 +273,11 @@
   "fit_paths": 512,
   "selection_paths": 32,
   "registered_comparisons": [
+    {
+      "name": "trainable_space",
+      "control": "J_restricted_control",
+      "treatment": "J_chain_joint"
+    },
     {
       "name": "representation",
       "control": "J_chain_joint",

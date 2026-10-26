@@ -18,7 +18,8 @@ CONFIG='experiments/task41j_preregistration_v1.json'
 def arms():
     return [dict(name='J_chain_joint',representation='chain',width=64),
             dict(name='J_compact64',representation='compact',width=64),
-            dict(name='J_compact128',representation='compact',width=128)]
+            dict(name='J_compact128',representation='compact',width=128),
+            dict(name='J_restricted_control',representation='restricted',width=128)]
 
 
 def contract(root):
@@ -41,7 +42,11 @@ def model_class(torch):
         def __init__(self,parent,definition):
             super().__init__();self.definition=definition;self.definitions=[definition]
             self.architecture='shared';self.is_compact=definition['representation']=='compact'
-            if not self.is_compact:
+            if definition['representation']=='restricted':
+                old=next(a for a in prior.arms() if a['nap']==1 and a['official_loss']==1 and a['adaptive']==0)
+                knots=np.broadcast_to(np.linspace(-100,60,128),(2,128)).copy()
+                self.inner=prior.make_model(torch,parent,[old],knots,parent.a.device)
+            elif not self.is_compact:
                 self.inner=copy.deepcopy(parent)
                 for par in self.inner.parameters():par.requires_grad_(True)
             else:
@@ -317,9 +322,10 @@ def preflight(torch,root,out,device,spec):
         fb=feedback_pool(torch,spec,cfg,calcium,base,device,small=True)
         step(torch,models,opts,data,ids,paths=paths,pids=torch.arange(2,device=device),fb=fb,fids=torch.arange(1,device=device),physics=(cfg,calcium,base))
     finite(torch,models,opts)
-    result=dict(valid=True,device=device,members=9,graph_error=graph_error,all_parameters_finite=True,
+    result=dict(valid=True,device=device,members=3*len(arms()),graph_error=graph_error,all_parameters_finite=True,
                 joint_chain_initially_exact=True,all_equilibria_and_rates_trainable=True,path_gradients_finite=True,
                 auxiliary_update_executed=device=='cuda',parameters_per_seed={k:sum(x.numel() for x in m.parameters())//3 for k,m in models.items()},
+                trainable_parameters_per_seed={k:sum(x.numel() for x in parameters(m))//3 for k,m in models.items()},restricted_control_rates_frozen=True,
                 protocol_sha256=p.digest(root/CONFIG),thresholds_changed=False,scientific_training_performed=False)
     p.save_json(out/'preflight.json',result);return result
 
@@ -391,7 +397,8 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
         diagnostics=[]
         # H already IS its teacher. Do not optimize batch-shape roundoff during
         # the compact initialization stage; all refinement parameters open later.
-        opts['J_chain_joint'].param_groups[0]['lr'].zero_()
+        for name,model in models.items():
+            if not model.is_compact:opts[name].param_groups[0]['lr'].zero_()
         for w in range(spec['distillation_updates']):
             ids.copy_(torch.tensor(rng.integers(0,spec['anchors'],spec['batch']),device=device))
             warm_graph.replay()
@@ -442,7 +449,7 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
     for name,m in models.items():
         state=merge_selected(torch,saved[name],m.state_dict())
         m.load_state_dict(state);selected_weights[name]=state;m.eval()
-    nominee=min(models,key=lambda name:tuple(max(best[name][s][k] for s in range(3)) for k in range(5))+(list(models).index(name),))
+    nominee=min((name for name in models if name!='J_restricted_control'),key=lambda name:tuple(max(best[name][s][k] for s in range(3)) for k in range(5))+(list(models).index(name),))
     torch.save(selected_weights,out/'frozen_checkpoint.pt')
     freeze=dict(arms=arms(),seeds=spec['seeds'],chosen_steps=chosen,ranks=best,nominee=nominee,checkpoint_sha256=p.digest(out/'frozen_checkpoint.pt'),opened_regressions_used_for_selection=False,independent_confirmation=False,parent='H_nominee')
     freeze['freeze_sha256']=hashlib.sha256(json.dumps(freeze,sort_keys=True).encode()).hexdigest();p.save_json(out/'selection_freeze.json',freeze)

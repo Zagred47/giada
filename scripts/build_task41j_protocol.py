@@ -10,17 +10,17 @@ def main():
     assert not (folder/'kaggle_active_launch.json').exists()
     old=json.loads((ROOT/j.prior.CONFIG).read_text());spec=dict(old)
     spec.update(task='41j',version='v1',arms=j.arms(),contrasts=[],
-        registered_comparisons=[dict(name='representation',control='J_chain_joint',treatment='J_compact64'),dict(name='capacity',control='J_compact64',treatment='J_compact128')],
+        registered_comparisons=[dict(name='trainable_space',control='J_restricted_control',treatment='J_chain_joint'),dict(name='representation',control='J_chain_joint',treatment='J_compact64'),dict(name='capacity',control='J_compact64',treatment='J_compact128')],
         new_seeds=dict(fit=691101,selection=691103,development=691107,stream=691109,feedback=691113,
                        feedback_stream=691127,intervention=691137,support=691139,selection_support=691149),
         anchors=16384,selection_anchors=128,batch=64,fit_paths=512,selection_paths=32,tail_batch=4,
         distillation_updates=4096,aux_every=16,feedback_histories=128,selection_feedback_histories=16,
         feedback_anchors=512,selection_feedback_anchors=32,feedback_batch=2,lr=1e-4,lr_min_ratio=1e-4,
         checkpoints=[0,512,2048,8192,30000,60000],
-        training_policy='Three operators x three vectorized seeds. Unfreeze ALL parameters of H chain, versus a single shared voltage MLP at widths64/128 plus the same learned calcium-only SK head. All36 equilibrium/update outputs learnable. No new recurrent state, no extra causal input, no analytic kinetic inference.',
+        training_policy='Three candidate operators plus one restricted control x three vectorized seeds. Unfreeze ALL parameters of H chain, versus a single shared voltage MLP at widths64/128 plus the same learned calcium-only SK head. All36 equilibrium/update outputs learnable in candidates. Restricted control: frozen H plus original bounded Ca/Nap equilibrium heads,all z frozen,same data/loss. Control cannot be nominated. No new recurrent state, no extra causal input, no analytic kinetic inference.',
         support='Identical disjoint FIT/selection anchors, +/-voltage probes, constant/ramp 1200ms histories, and coupled perturbation histories for all arms; all11 currents supervised. New development seed; opened tests only after selection freeze.',
-        objective='4096 parent-distillation slots; H chain uses zero warmup LR because it is already the identical teacher,compact operators learn. Then fresh Adam60000 canonical-refinement updates for ALL parameters of every arm. Censored logit errors with training censor1e-12 on all36 coefficients plus paired probability secants. Full-path current and official offset margin across all11 channels, plus40-step coupled causal differences; auxiliary every16, per-seed gradient norm ratio0.1. No hard frozen refinement coefficients or parent-residual bounds.',
-        selection='Before opened tests, select earliest best per seed by (global failed development trajectories, introduced channel/gate regressions versus H, global worst severity, heldout path+coupled error, atomic error). Nominate one arm by worst-seed lexicographic rank. Failed gates are never waived; all arms reported, no posthoc nominee.',
+        objective='4096 parent-distillation slots; H chain and restricted control use zero warmup LR because they are already the identical teacher,compact operators learn. Then fresh Adam60000 canonical-refinement updates for ALL candidate parameters; restricted control only its2equilibrium heads. Censored logit errors with training censor1e-12 on all36 coefficients plus paired probability secants. Full-path current and official offset margin across all11 channels, plus40-step coupled causal differences; auxiliary every16, per-seed gradient norm ratio0.1. Candidates have no hard frozen refinement coefficients or parent-residual bounds.',
+        selection='Before opened tests, select earliest best per seed by (global failed development trajectories, introduced channel/gate regressions versus H, global worst severity, heldout path+coupled error, atomic error). Nominate one of the three candidates by worst-seed lexicographic rank; restricted control is nonselectable. Failed gates are never waived; all arms reported, no posthoc nominee.',
         qualification=old['qualification'],
         budget='Same4096 warmup slots and60000 actual refinement updates per arm,same minibatches and counts. H identity warmup is zero-LR; compact warmup costs4096 real updates. Log this unequal initialization effort,reconstruction gap,params,updates and wall time. Independent Adam moments/clipping per seed. Seeds within arms vectorized,heterogeneous arms inside one captured update. Width is a nested capacity probe,NOT a parameter-matched architecture claim.',
         diagnostics='Parallel affine-prefix scan versus sequential recurrence and gradients; chain exact initial map; compact approximation gap before/after warmup. All equilibria AND update coefficients reachable. Complete original scientific panels on all arms, same-panel H control. Frozen joint64 numerical audit for H/nominee only; no selection. Whole operator ionic and integrated paired timing at actual batches1/642/4096, formula/LUT/H baselines.',
@@ -46,7 +46,7 @@ def main():
     j.p.save_json(ROOT/j.CONFIG,spec)
     intro='''# GIADA — Task41j: riottimizzazione congiunta e operatore compatto
 
-Tre candidati x tre seed, stesso livello di astrazione:18 stati, V/Ca causali,0.1ms, aggiornamento convesso. Correnti, calcio, sinapsi e membrana invariati.
+Tre candidati e un controllo limitato (stessi nuovi dati/loss,non selezionabile) x tre seed, stesso livello di astrazione:18 stati, V/Ca causali,0.1ms, aggiornamento convesso. Correnti, calcio, sinapsi e membrana invariati.
 
 Catena H interamente riottimizzata contro MLP unici64/128 con testa SK calcium-only.4096 slot di distillazione (H identica al teacher: LR nullo; compatti apprendono), poi60000 update canonici per tutti. Tutti gli equilibri e tutti i coefficienti temporali apprendibili. Gap di compressione iniziale misurato; nessuna equivalenza presunta.
 
@@ -57,7 +57,7 @@ Console Kaggle con fasi512/8192/30000/60000 ed evaluation-only. Ogni fase è con
     code="import os,subprocess,sys\nfrom pathlib import Path\nREPO=Path(os.environ.get('GIADA_REPO','/kaggle/working/giada'))\nOUTPUT=Path(os.environ.get('GIADA_OUTPUT','/kaggle/working/artifacts/giada_task41j'))\nassert not OUTPUT.exists()\nsubprocess.run([sys.executable,'-u',str(REPO/'scripts/run_task41j_operator_reset.py'),str(OUTPUT)],cwd=REPO,check=True)\n"
     cells=[dict(cell_type='markdown',id='task41j-design',metadata={},source=intro.splitlines(True)),dict(cell_type='code',id='task41j-run',metadata={},execution_count=None,outputs=[],source=code.splitlines(True))]
     j.p.save_json(ROOT/'notebooks/giada_task41j_operator_reset.ipynb',dict(cells=cells,metadata=dict(kernelspec=dict(display_name='Python3',language='python',name='python3')),nbformat=4,nbformat_minor=5))
-    print(json.dumps(dict(valid=True,arms=3,members=9,thresholds_changed=False)),flush=True)
+    print(json.dumps(dict(valid=True,arms=4,members=12,thresholds_changed=False)),flush=True)
 
 
 if __name__=='__main__':main()

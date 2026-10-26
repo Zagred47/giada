@@ -52,6 +52,8 @@ def evaluate(torch,root,out,controls,trained,spec,cfg,calcium,base,device):
             control_globally_qualified=left in report['passing_arms'],treatment_globally_qualified=right in report['passing_arms'],
             new_nominee_selected=False,interpretation='Report all paired effects; global scientific gates remain mandatory. Different parameter counts and initial compression gaps are not controlled away.'))
     j.p.save_json(out/'paired_contrasts.json',contrasts)
+    report['restricted_control_passed']='J_restricted_control' in report['passing_arms']
+    report['passing_arms']=[name for name in report['passing_arms'] if name!='J_restricted_control']
     report.update(task='41j',decision='OPERATOR_REQUIRES_INDEPENDENT_CONFIRMATION' if freeze['nominee'] in report['passing_arms'] else 'OPERATOR_RESET_NO_GO',
                   nominee_passed=freeze['nominee'] in report['passing_arms'],
                   task42_authorized=False,independent_confirmation=False,speedup_claim=False,

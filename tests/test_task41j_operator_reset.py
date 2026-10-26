@@ -23,7 +23,7 @@ class OperatorTests(unittest.TestCase):
         self.assertTrue(all(torch.equal(a,b) for a,b in zip(m.raw(v,ca),self.parent.raw(v,ca))))
         self.assertTrue(all(p.requires_grad for p in m.parameters()))
     def test_compact_same_base_different_width(self):
-        a,b=[j.model_class(torch)(self.parent,x) for x in j.arms()[1:]]
+        a,b=[j.model_class(torch)(self.parent,x) for x in j.arms()[1:3]]
         v=torch.linspace(-90,30,17)[None].expand(3,-1);ca=torch.full_like(v,1e-4)
         self.assertTrue(all(torch.allclose(x,y,atol=1e-5) for x,y in zip(a.raw(v,ca),b.raw(v,ca))))
         self.assertFalse(hasattr(a,'inner'))
@@ -58,6 +58,14 @@ class OperatorTests(unittest.TestCase):
         selected=[{k:v[s:s+1].clone() if v.ndim and v.shape[0]==3 else v.clone() for k,v in template.items()} for s in range(3)]
         merged=j.merge_selected(torch,selected,template)
         self.assertTrue(all(torch.equal(v,merged[k]) for k,v in template.items()))
+    def test_restricted_control_protects_rates(self):
+        m=j.model_class(torch)(self.parent,j.arms()[3]);v=torch.linspace(-90,30,17)[None].expand(3,-1);ca=torch.full_like(v,1e-4)
+        before=m.raw(v,ca)
+        with torch.no_grad():m.inner.correction.fill_(.001)
+        after=m.raw(v,ca)
+        self.assertTrue(torch.equal(before[1],after[1]))
+        keep=[k for k in range(18) if k not in (0,8)]
+        self.assertTrue(torch.equal(before[0][...,keep],after[0][...,keep]))
 
 
 if __name__=='__main__':unittest.main()

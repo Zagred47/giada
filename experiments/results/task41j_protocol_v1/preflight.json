@@ -1,7 +1,7 @@
 {
   "valid": true,
   "device": "cpu",
-  "members": 9,
+  "members": 12,
   "graph_error": null,
   "all_parameters_finite": true,
   "joint_chain_initially_exact": true,
@@ -11,9 +11,17 @@
   "parameters_per_seed": {
     "J_chain_joint": 4004,
     "J_compact64": 2404,
-    "J_compact128": 4708
+    "J_compact128": 4708,
+    "J_restricted_control": 4260
   },
-  "protocol_sha256": "ba66af11b4dffd601179b92ff27cc2fc0b8688e918cd15c1bfbecf5f4c5f3458",
+  "trainable_parameters_per_seed": {
+    "J_chain_joint": 4004,
+    "J_compact64": 2404,
+    "J_compact128": 4708,
+    "J_restricted_control": 256
+  },
+  "restricted_control_rates_frozen": true,
+  "protocol_sha256": "fbf282da4ed84fa4031603cb6f8128bb850bbcfdf035bb4b32bb8883c62f564e",
   "thresholds_changed": false,
   "scientific_training_performed": false
 }

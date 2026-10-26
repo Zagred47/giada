@@ -47,6 +47,8 @@ def main():
                      'tests/test_task41j_operator_reset.py','research_memory/register_task41j.py'):
             artifact(repo/name)
         prereg=arts[0];artifact(folder/'local_verification.json');artifact(folder/'gpu_preflight.json')
+        history=json.loads((folder/'preflight_history.json').read_text()) if (folder/'preflight_history.json').exists() else []
+        if history:artifact(folder/'preflight_history.json')
         hypotheses=[]
         for h in spec['hypotheses']:
             claim=put('claims',h['id'],Nome='Task41j '+h['id'],Tipo='Ipotesi',Stato='Aperta',Enunciato=h['statement'],**{'Condizioni di falsificazione':h['falsifier']},Limiti='Prospective test; past DB similarities do not establish current causality.')
@@ -61,7 +63,7 @@ def main():
         gen=put('generators','fit',Nome='Task41j common atomic,path,feedback generators',Versione='v1',Procedura=spec['support'],**{'Seed e RNG':json.dumps(spec['new_seeds']),'Artefatti codice':arts})
         ds=put('datasets','fit-selection',Nome='Task41j disjoint paired FIT and selection',Versione='v1',Generatore=[gen],Schema='Same V/Ca,18gates,36 learned coefficients; canonical labels only; no new inference input.',Copertura=spec['support'])
         parts=[put('partitions',name,Nome='Task41j '+name,Dataset=[ds],Ruolo=role,**{'Regola di assegnazione':json.dumps(spec['new_seeds']),'Restrizioni di accesso':'Opened panels after freeze only; not independent confirmation.'}) for name,role in [('fit','Fit'),('development','Development')]]
-        protocol=put('protocols','comparison',Nome='Task41j registered three-arm reset',Versione='v1',Modalità='Ricomposizione',Esperimento=[exp],Procedura=json.dumps(spec),
+        protocol=put('protocols','comparison',Nome='Task41j three candidates and restricted control',Versione='v1',Modalità='Ricomposizione',Esperimento=[exp],Procedura=json.dumps(spec),
             **{'Partizioni autorizzate':parts,'Artefatto preregistrazione':[prereg],'Hash preregistrazione':digest,'Criteri di successo':spec['qualification'],'Regole di arresto':spec['stop_rules'],'Registrato il':date})
         impl=put('implementations','worker',Nome='Task41j heterogeneous-arm vectorized CUDA worker',Commit=gpu['revision'],**{'Repository URL':'https://github.com/Zagred47/giada','Percorso entrypoint':'scripts/run_task41j_operator_reset.py','Artefatti codice':arts,'Ambiente':json.dumps(gpu)})
         aa={}
@@ -69,11 +71,14 @@ def main():
             model=put('models',arm['name'],Nome='Task41j '+arm['name'],Ruolo='Surrogate',Descrizione=json.dumps(arm),**{'Contratto di stato':'18occupancies,dt0.1ms,bounded affine recurrence,all u/z learnable. Same abstraction.','Contratto di input e output':'Same causal V/Ca,calcium-only SK head,ionic readout,synapses and membrane unchanged.'})
             aa[arm['name']]=put('arms',arm['name'],Nome='Task41j '+arm['name'],Ruolo='Trattamento',Protocollo=[protocol],Modello=[model],Implementazione=[impl],Partizioni=parts,**{'Configurazione residua':json.dumps(arm)})
             for seed in spec['seeds']:put('runs',arm['name']+'-'+str(seed),Nome=f"Task41j {arm['name']} seed{seed}",Stato='Pianificata',Seed=str(seed),Braccio=[aa[arm['name']]],**{'Configurazione effettiva':json.dumps(dict(arm=arm,budget=spec['budget'],new_seeds=spec['new_seeds']))})
-        for name,left,right in [('representation','J_chain_joint','J_compact64'),('capacity','J_compact64','J_compact128')]:
+        for comparison in spec['registered_comparisons']:
+            name,left,right=comparison['name'],comparison['control'],comparison['treatment']
             put('contrasts',name,Nome='Task41j '+name,Protocollo=[protocol],Bracci=[aa[left],aa[right]],**{'Contrasto e coefficienti':'Matched same-panel quality/severity and actual paired time,allseeds;full original gates mandatory.','Soglia interpretativa':'No new global regression; report all seed effects. Scientific GO requires frozen nominee to pass every original gate. Cost minimum10% unchanged.','Confondenti controllati':spec['budget']+' Distinct parameter counts and compact initial gap explicitly measured.'})
         for name,value in [('quality',spec['quality']),('compartment',spec['compartment_gates']),('selection',spec['selection']),('cost',spec['speed']),('diagnostics',spec['diagnostics']),('optimizer',spec['objective'])]:
             metric=put('metrics',name,Nome='Task41j '+name,Formula=json.dumps(value));put('evaluations',name,Nome='Task41j '+name,Versione='v1',Metrica=[metric],Protocollo=[protocol],Partizioni=parts,Ruolo='Primaria' if name in ('quality','compartment') else 'Secondaria',Target=json.dumps(value))
-        obs=put('observations','preflight',Nome='Task41j CPU and actual GPU technical preflight',Descrizione=json.dumps(dict(local=local,gpu=gpu)),**{'Artefatti dettagliati':arts})
+        obs=put('observations','preflight',Nome='Task41j CPU and actual GPU technical preflight',Descrizione=json.dumps(dict(local=local,gpu=gpu,technical_history=history)),**{'Artefatti dettagliati':arts})
+        if history:
+            put('findings','technical-preflight-history',Nome='Task41j GPU batch-roundoff preflight repair before training',Esito='Misto',Esperimenti=[exp],Osservazioni=[obs],Risultato='A strict zero teacher-distillation assertion exposed GPU GEMM batch-shape roundoff. Identity H warmup now uses zero LR; compact warmup learns. Existing computational parity1e-5 and ALL scientific thresholds unchanged. Final GPU preflight includes exact graph/optimizer resume and mixed-device selected assembly.',Limitazioni='No scientific training before registration; this was not a scientific NO-GO. Initialization effort difference explicitly preregistered.')
         finding=put('findings','preflight',Nome='Task41j verified equivalence,gradients and CUDA capture',Esito='Positivo',Esperimenti=[exp],Osservazioni=[obs],Risultato='Sequential/parallel recurrence and gradients match; frozen H initially exact, compact gap not assumed zero; seed isolation,finite auxiliary gradients and actual CUDA capture verified.',Limitazioni='Technical test only; does not establish scientific qualification or speedup.')
         dec=put('decisions','authorized',Nome='Task41j approved operator strategy reset',Esito='Continuare',Risultati=[finding,ref('findings-giada-task41i-result-outcome-v1')],Motivazione='User approved joint optimization/compact comparison,unchanged thresholds/abstraction,Kaggle with external backups;DB local.',**{'Data':date})
         put('actions','launch',Nome='Task41j pinned console launch',Stato='In corso',Descrizione='Register before scientific launch;verify every phase outside runtime before continuation.',**{'Decisioni di origine':[dec]})
@@ -82,7 +87,7 @@ def main():
     if a.validate_only:return
     verification=m.verify_incremental(baseline);assert verification['valid']
     write_json(folder/('launch_memory_receipt.json' if a.running else 'memory_receipt.json'),dict(valid=True,verification=verification,change=change,records=ids,
-        registration_before_scientific_run=not a.running,planned_training_runs=9,airtable_accessed=False,DB_backup='local refresh pending'))
+        registration_before_scientific_run=not a.running,planned_training_runs=12,airtable_accessed=False,DB_backup='local refresh pending'))
     m.export_snapshot_to(ROOT/'data/airtable_snapshot.json')
     print('Task41j local memory verified and exported',flush=True)
 

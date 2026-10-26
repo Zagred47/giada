@@ -1350,7 +1350,7 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     primario è più lento del controllo H. Nessuna promozione alla42.
 
   - **Task41j — Riottimizzazione congiunta e operatore compatto:**
-    `giada_task41j_operator_reset.ipynb`,3bracci×3seed. Catena H con tutti
+    `giada_task41j_operator_reset.ipynb`,3candidati+1controllo limitato×3seed. Catena H con tutti
     i parametri apprendibili contro un operatore condiviso64/128, senza
     aggiungere altri correttori. Stessi18stati,V/Ca,passo0,1ms e readout;
     equilibri e coefficienti temporali riappresi congiuntamente.4096 slot
