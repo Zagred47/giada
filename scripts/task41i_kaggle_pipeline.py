@@ -104,7 +104,13 @@ def retrieve(api,launch):
     target=DEST/(f"preflight_v{launch['version']}" if launch['mode']=='preflight' else f"v{launch['version']}");target.mkdir(parents=True,exist_ok=True)
     # Small explicit set avoids duplicating notebook logs and caches.
     ref=launch['ref'].lstrip('/').removeprefix('code/')
-    api.kernels_output(ref+'/'+str(launch['version']),str(target),file_pattern=r'(kaggle_receipt\.json|task41i_stage\.zip|task41i_gpu_preflight\.json|process\.log)$',force=True,quiet=True)
+    existing=target/'kaggle_receipt.json'
+    cached=json.loads(existing.read_text()) if existing.exists() else {}
+    saved=target/cached.get('archive','__absent__')
+    complete_local=(cached.get('revision')==launch['revision'] and cached.get('mode')==launch['mode']
+                    and saved.is_file() and saved.stat().st_size==cached.get('bytes') and sha(saved)==cached.get('sha256'))
+    if not complete_local:
+        api.kernels_output(ref+'/'+str(launch['version']),str(target),file_pattern=r'(kaggle_receipt\.json|task41i_stage\.zip|task41i_gpu_preflight\.json|process\.log)$',force=True,quiet=True)
     receipt=json.loads((target/'kaggle_receipt.json').read_text());assert receipt['revision']==launch['revision']
     assert receipt['mode']==launch['mode'] and receipt['stop_after']==launch['stop_after']
     if launch['mode']=='preflight':
