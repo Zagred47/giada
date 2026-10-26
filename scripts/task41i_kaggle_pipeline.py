@@ -234,7 +234,9 @@ def main():
             receipt,target=retrieve(api,active);report=receipt['report']
             assert not receipt['technical_failure'],'Technical failure; outputs preserved; next phase blocked'
             if report['decision'] not in ('TRAINING_STAGE_COMPLETE','FROZEN_TRAINING_COMPLETE','FROZEN_EVALUATION_STAGE_COMPLETE'):
-                write_json(DEST/'pipeline_final.json',receipt);return
+                write_json(DEST/'pipeline_final.json',receipt)
+                subprocess.run([sys.executable,str(ROOT/'scripts/audit_task41i_final.py')],cwd=ROOT,check=True)
+                return
             publish_resume(api,receipt)
             if not report.get('training_complete'):
                 stop=next(k for k in (8192,30000,60000) if k>report['updates_completed']);mode='train'
