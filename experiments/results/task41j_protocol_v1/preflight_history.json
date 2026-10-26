@@ -1,0 +1,35 @@
+[
+  {
+    "launch": {
+      "ref": "/code/alessandrobelli/giada-task41j-preflight",
+      "version": 2,
+      "url": "https://www.kaggle.com/code/alessandrobelli/giada-task41j-preflight",
+      "revision": "22d5fa1c29339c0e324e5efcda997af583d929c2",
+      "mode": "preflight",
+      "stop_after": null,
+      "input_resume_sha256": null
+    },
+    "receipt": {
+      "valid": false,
+      "worker_exit_code": 1,
+      "revision": "22d5fa1c29339c0e324e5efcda997af583d929c2",
+      "mode": "preflight",
+      "stop_after": null,
+      "input_resume_sha256": null,
+      "thresholds_changed": false
+    },
+    "scientific_training_performed": false,
+    "log_path": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41j_kaggle_external\\preflight_v2\\process.log",
+    "log_sha256": "00d91ea2d8e791130512ddefb333a79792f06f2631519edfc713a535323fbc5c",
+    "error_tail": [
+      "/tmp/giada_task41j/giada/src/giada_teacher/task41j_operator_reset.py:307: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.",
+      "Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)",
+      "  graph_error=max(float((a-b).abs().max()) for name in models for a,b in zip(models[name].parameters(),copies[name].parameters()))",
+      "Traceback (most recent call last):",
+      "  File \"/tmp/giada_task41j/giada/scripts/task41j_gpu_probe.py\", line 17, in <module>",
+      "    assert float(j.coefficient_loss(torch,models['J_chain_joint'],data,ids,True).abs().max())==0.",
+      "           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "AssertionError"
+    ]
+  }
+]

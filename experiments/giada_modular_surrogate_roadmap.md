@@ -1353,8 +1353,8 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     `giada_task41j_operator_reset.ipynb`,3bracci×3seed. Catena H con tutti
     i parametri apprendibili contro un operatore condiviso64/128, senza
     aggiungere altri correttori. Stessi18stati,V/Ca,passo0,1ms e readout;
-    equilibri e coefficienti temporali riappresi congiuntamente.4096 update
-    di distillazione appaiati,poi60000 di raffinamento canonico, mini scaling,
+    equilibri e coefficienti temporali riappresi congiuntamente.4096 slot
+    di distillazione (H identica: LR nullo),poi60000 update di raffinamento, mini scaling,
     loss di percorso e feedback; gap di compressione esplicitamente misurato.
     Tutti i gate e regressioni originali dopo freeze, costo dell'intera catena
     contro operatori compatti. Soglie e livello di astrazione invariati.

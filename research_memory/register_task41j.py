@@ -49,7 +49,14 @@ def main():
         prereg=arts[0];artifact(folder/'local_verification.json');artifact(folder/'gpu_preflight.json')
         hypotheses=[]
         for h in spec['hypotheses']:
-            hypotheses.append(put('claims',h['id'],Nome='Task41j '+h['id'],Tipo='Ipotesi',Stato='Aperta',Enunciato=h['statement'],**{'Condizioni di falsificazione':h['falsifier']},Limiti='Prospective test; past DB similarities do not establish current causality.'))
+            claim=put('claims',h['id'],Nome='Task41j '+h['id'],Tipo='Ipotesi',Stato='Aperta',Enunciato=h['statement'],**{'Condizioni di falsificazione':h['falsifier']},Limiti='Prospective test; past DB similarities do not establish current causality.')
+            hypotheses.append(claim)
+            source={'restricted_repair_space':'strategy','cumulative_execution':'cost','compact_capacity':'outcome','numerical_seam':'numerics'}[h['id']]
+            put('evidence',h['id'],Nome='Task41j prospective motivation '+h['id'],Esito='Indeterminata',
+                **{'Affermazione valutata':[claim],'Risultati a sostegno':[ref('findings-giada-task41i-result-'+source+'-v1')],
+                   'Argomentazione':'The audited41i result motivates this contrast but does not establish the cause. '+h['falsifier'],
+                   'Limiti e spiegazioni alternative':'Capacity,optimization,initial compression gap and numerical carrier are distinguished prospectively; no causal conclusion from DB similarity.',
+                   'Data valutazione':date})
         exp=put('experiments','comparison',Nome='Task41j joint relearning versus compact ionic operator',Stato='Preregistrato',Ipotesi=hypotheses,Descrizione=spec['training_policy'],**{'Obiettivo informativo':'Distinguish constrained repair space, compact approximation/learnability, cumulative inference cost and numerical seams.'})
         gen=put('generators','fit',Nome='Task41j common atomic,path,feedback generators',Versione='v1',Procedura=spec['support'],**{'Seed e RNG':json.dumps(spec['new_seeds']),'Artefatti codice':arts})
         ds=put('datasets','fit-selection',Nome='Task41j disjoint paired FIT and selection',Versione='v1',Generatore=[gen],Schema='Same V/Ca,18gates,36 learned coefficients; canonical labels only; no new inference input.',Copertura=spec['support'])

@@ -53,6 +53,11 @@ class OperatorTests(unittest.TestCase):
         data=j.path_pool(torch,spec,'cpu',count=2);loss=j.path_loss(torch,m,data,torch.arange(2));loss.sum().backward()
         self.assertTrue(all(torch.isfinite(x.grad).all() for x in m.parameters() if x.grad is not None))
         self.assertGreater(float(m.c.grad[...,17:].abs().max()),0)
+    def test_selected_seed_assembly(self):
+        m=j.model_class(torch)(self.parent,j.arms()[1]);template=m.state_dict()
+        selected=[{k:v[s:s+1].clone() if v.ndim and v.shape[0]==3 else v.clone() for k,v in template.items()} for s in range(3)]
+        merged=j.merge_selected(torch,selected,template)
+        self.assertTrue(all(torch.equal(v,merged[k]) for k,v in template.items()))
 
 
 if __name__=='__main__':unittest.main()

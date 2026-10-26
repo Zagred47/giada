@@ -117,8 +117,8 @@ def coefficient_loss(torch,model,data,ids,distill=False):
     target=data['teacher'][:,ids] if distill else expand(torch,torch.stack((data['u'][ids],data['z'][ids]),-2))
     # Training censoring is not a metric tolerance. Keep slow rates down to1e-12.
     lo=1e-12;safe=target.clamp(lo,1-lo)
-    # Direct stored teacher logits make the identical chain an EXACT zero
-    # during distillation, avoiding an inverse-sigmoid roundoff Adam update.
+    # Direct stored teacher logits avoid an additional inverse-sigmoid roundoff.
+    # GEMM batch shapes can still differ; the identity chain uses zero warmup LR.
     wanted=data['teacher_logits'][:,ids] if distill else torch.logit(safe)
     error=logits-wanted
     error=torch.where(target<=lo,error.clamp_min(0),torch.where(target>=1-lo,error.clamp_max(0),error))
@@ -331,6 +331,14 @@ def verify_freeze(out):
     return freeze
 
 
+def merge_selected(torch,selected,template):
+    # map_location='cuda' also moves old CPU snapshots on resume. Normalize
+    # before joining seeds: later improvements may be newly saved CPU tensors.
+    return {key:torch.cat([selected[s][key].detach().cpu() for s in range(3)],0)
+            if value.ndim and value.shape[0]==3 else selected[0][key].detach().cpu()
+            for key,value in template.items()}
+
+
 def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluation_only=False):
     import torch
     from . import task41j_evaluation as ev
@@ -381,6 +389,9 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
     start=time.perf_counter()
     if not resume:
         diagnostics=[]
+        # H already IS its teacher. Do not optimize batch-shape roundoff during
+        # the compact initialization stage; all refinement parameters open later.
+        opts['J_chain_joint'].param_groups[0]['lr'].zero_()
         for w in range(spec['distillation_updates']):
             ids.copy_(torch.tensor(rng.integers(0,spec['anchors'],spec['batch']),device=device))
             warm_graph.replay()
@@ -394,6 +405,7 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
         for opt in opts.values():
             for state in opt.state.values():
                 for value in state.values():value.zero_()
+            opt.param_groups[0]['lr'].fill_(spec['lr'])
     for step_number in range(first,spec['checkpoints'][-1]+1):
         if step_number in spec['checkpoints'] and not (resume and step_number==first):
             finite(torch,models,opts)
@@ -428,7 +440,7 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
             finite(torch,models,opts);print(f'[GIADA Task41j] update {step_number+1}/60000 finite=True elapsed={(time.perf_counter()-start)/60:.1f}min',flush=True)
     selected_weights={}
     for name,m in models.items():
-        state={key:torch.cat([saved[name][s][key] for s in range(3)],0) if value.ndim and value.shape[0]==3 else saved[name][0][key] for key,value in m.state_dict().items()}
+        state=merge_selected(torch,saved[name],m.state_dict())
         m.load_state_dict(state);selected_weights[name]=state;m.eval()
     nominee=min(models,key=lambda name:tuple(max(best[name][s][k] for s in range(3)) for k in range(5))+(list(models).index(name),))
     torch.save(selected_weights,out/'frozen_checkpoint.pt')

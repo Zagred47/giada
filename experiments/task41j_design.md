@@ -38,8 +38,10 @@ regressioni e costo restano quelle precedenti.
 
 ## Apprendimento e identificazione
 
-4096 aggiornamenti di distillazione del parent per ogni braccio; la catena
-parte esattamente da H, i compatti soltanto dal suo tronco. Il gap iniziale
+4096 slot di distillazione del parent; la catena parte esattamente da H e usa
+learning rate nullo nel warmup (identità già nota), i compatti apprendono
+partendo soltanto dal suo tronco. Questo costo di inizializzazione diverso è
+dichiarato, non nascosto come parità di compute. Il gap iniziale
 e quello dopo warmup sono misurati su ancore indipendenti, non presunti nulli.
 Nuovo Adam per60000 aggiornamenti di raffinamento canonico con checkpoint
 0/512/2048/8192/30000/60000. Tutti i36 coefficienti apprendibili.
