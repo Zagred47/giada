@@ -23,6 +23,8 @@ def main():
         assert not report['thresholds_changed']
         assert read('preregistration.json')==json.loads((ROOT/'experiments/task41i_preregistration_v1.json').read_text())
         assert freeze['freeze_sha256']==repair['freeze_sha256']
+        payload={k:v for k,v in freeze.items() if k!='freeze_sha256'}
+        assert hashlib.sha256(json.dumps(payload,sort_keys=True).encode()).hexdigest()==freeze['freeze_sha256']
         assert hashlib.sha256(z.read('frozen_checkpoint.pt')).hexdigest()==repair['checkpoint_sha256']
         assert finite(torch.load(io.BytesIO(z.read('frozen_checkpoint.pt')),map_location='cpu',weights_only=False))
         names=['H_nominee',report['nominee']]+[n for n in report['summaries'] if '__' in n]
@@ -57,6 +59,7 @@ def main():
         result=dict(valid=True,complete=True,report=report,backup=receipt,selected_checkpoint_unchanged=True,
                     selection_unchanged=True,training_updates_performed=0,thresholds_changed=False,
                     old41h_audit=old,failures=failed,changes_vs_H_same_panels=changes,
+                    historical_failure_report_retained='failure_report.json' in z.namelist(),
                     failed_evaluations={n:sum(map(len,panels.values())) for n,panels in failed.items()},
                     paired_cost_vs_H=paired_cost,whole_chain_cost=read('whole_chain_execution_cost.json'),
                     limitations=['New development cases differ from41h; compare I to the H control rerun on the SAME41i panel, not old development counts.',
