@@ -123,7 +123,8 @@ def retrieve(api,launch):
     archive=target/receipt['archive'];assert sha(archive)==receipt['sha256'] and archive.stat().st_size==receipt['bytes']
     with zipfile.ZipFile(archive) as z:
         assert z.testzip() is None
-        report=json.loads(z.read('final_report.json'))
+        report_name='final_report.json' if 'final_report.json' in z.namelist() else 'failure_report.json'
+        report=json.loads(z.read(report_name))
         import torch
         import io
         checkpoints=[name for name in z.namelist() if name.startswith('checkpoint_') and name.endswith('.pt')]

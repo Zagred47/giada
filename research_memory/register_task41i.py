@@ -33,7 +33,7 @@ def main():
     date=datetime.now(timezone.utc).date().isoformat()
     if a.running:
         launch=json.loads((folder/'launch.json').read_text());assert launch['valid'] and launch['all_recovered_tensors_finite']
-        for name in ('launch.json','dispatch_request.json','gpu_preflight.json'):artifact(folder/name)
+        for name in ('launch.json','kaggle_active_launch.json','gpu_preflight.json'):artifact(folder/name)
         obs=put('observations','launch',Nome='Task41i actual console launch and off-runtime checkpoint',Descrizione=json.dumps(launch),**{'Artefatti dettagliati':artifacts})
         put('findings','launch',Nome='Task41i finite checkpoint recovered outside runtime',Esito='Positivo',Esperimenti=[ref('experiments-giada-task41i-factorial-v1')],Osservazioni=[obs],Risultato='Pinned worker running; external archive SHA/CRC and finite tensors verified.',Limitazioni='Technical launch only. Scientific result pending; no GO or speedup claim.')
         m.local_upsert('experiments',{'Codice stabile':'experiments-giada-task41i-factorial-v1','Stato':'In corso'})
