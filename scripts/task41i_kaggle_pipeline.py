@@ -151,15 +151,29 @@ def publish_resume(api,receipt):
     assert sha(folder/'resume.zip.bin')==receipt['remote']['sha256']
     write_json(folder/'dataset-metadata.json',dict(id=RESUME,title='GIADA Task41i Resume Stages',licenses=[dict(name='other')],description='Private sealed experiment state. Prior versions retained; no public sharing.'))
     marker=DEST/'resume_dataset_created.json'
+    readback=DEST/'resume_dataset_readback';readback.mkdir(exist_ok=True)
+    def remote_matches():
+        api.dataset_download_file(RESUME,'resume.zip.bin',path=str(readback),force=True,quiet=True,unzip=True)
+        candidate=readback/'resume.zip.bin'
+        return candidate.is_file() and candidate.stat().st_size==receipt['remote']['bytes'] and sha(candidate)==receipt['remote']['sha256']
+    # A prior create can succeed while GetDatasetStatus returns403. Verify the
+    # actual bytes instead of resubmitting an already-published version.
+    if marker.exists():
+        try:
+            if remote_matches():return
+        except Exception:
+            pass
     if marker.exists():api.dataset_create_version(str(folder),'Verified Task41i resume '+receipt['latest_checkpoint'],quiet=True,convert_to_csv=False,delete_old_versions=False)
     else:
         api.dataset_create_new(str(folder),public=False,quiet=True,convert_to_csv=False)
         write_json(marker,dict(created=True,id=RESUME))
     deadline=time.monotonic()+1800
     while True:
-        state=str(api.dataset_status(RESUME)).lower()
-        if 'ready' in state or 'complete' in state:break
-        assert time.monotonic()<deadline,('Resume dataset processing',state)
+        try:
+            if remote_matches():break
+        except Exception as error:
+            if time.monotonic()>=deadline:raise RuntimeError('Resume dataset readback unavailable; no next phase launched') from error
+        assert time.monotonic()<deadline,'Resume dataset byte verification timed out; no next phase launched'
         time.sleep(30)
 
 
