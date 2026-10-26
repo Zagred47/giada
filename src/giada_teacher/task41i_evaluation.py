@@ -18,8 +18,29 @@ def install_resume_cache(out):
     import sys,time
     from pathlib import Path
     sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts'))
-    from task41h_stage_cache import install
+    from task41h_stage_cache import install,compile_function
+    import ast
+    def cost_scope(fn):
+        # The old benchmark's third comparator was named B6. Here the real
+        # paired frozen parent is H_nominee. No timing body is changed.
+        count=0
+        for node in ast.walk(fn):
+            if isinstance(node,ast.Constant) and node.value=='B6':
+                node.value='H_nominee';count+=1
+        assert count==2,('Unexpected benchmark comparator source',count)
+        cached=0
+        for node in ast.walk(fn):
+            if isinstance(node,ast.Assign) and any(isinstance(v,ast.Name) and v.id=='results' for v in node.targets):
+                node.value=ast.parse("json.loads((output/'cost.json').read_text()) if (output/'cost.json').exists() else []",mode='eval').body;cached+=1
+            if isinstance(node,ast.For) and isinstance(node.target,ast.Name) and node.target.id=='scope':
+                node.body.insert(0,ast.parse("if any(r['batch_per_seed']==batch and r['scope']==scope for r in results): continue").body[0]);cached+=1
+        assert cached==2
+        fn.body.insert(0,ast.parse("models={k:v for k,v in models.items() if getattr(v,'runtime_policy',None) is None}").body[0])
+        # Numerical sidecars are timed separately by execution_cost with their
+        # actual voltage dtype; the inherited timer has FP32-only buffers.
+    original_benchmark=he.ee.e.benchmark
     install(i.h,he,out)
+    he.ee.e.benchmark=compile_function(original_benchmark,cost_scope)
     started=time.monotonic()
     def guard(original):
         def wrapped(*args,**kwargs):
