@@ -95,18 +95,28 @@ def launch(api,revision,mode,stop=None,resume_sha=None):
 
 
 def status(api,launch):
-    result=api.kernels_status(launch['ref']+'/'+str(launch['version']))
+    ref=launch['ref'].lstrip('/').removeprefix('code/')
+    result=api.kernels_status(ref+'/'+str(launch['version']))
     return str(result.status).split('.')[-1].lower(),result.failure_message
 
 
 def retrieve(api,launch):
-    target=DEST/('preflight' if launch['mode']=='preflight' else f"v{launch['version']}");target.mkdir(parents=True,exist_ok=True)
+    target=DEST/(f"preflight_v{launch['version']}" if launch['mode']=='preflight' else f"v{launch['version']}");target.mkdir(parents=True,exist_ok=True)
     # Small explicit set avoids duplicating notebook logs and caches.
-    api.kernels_output(launch['ref']+'/'+str(launch['version']),str(target),file_pattern=r'(kaggle_receipt\.json|task41i_stage\.zip|task41i_gpu_preflight\.json|process\.log)$',force=True,quiet=True)
+    ref=launch['ref'].lstrip('/').removeprefix('code/')
+    api.kernels_output(ref+'/'+str(launch['version']),str(target),file_pattern=r'(kaggle_receipt\.json|task41i_stage\.zip|task41i_gpu_preflight\.json|process\.log)$',force=True,quiet=True)
     receipt=json.loads((target/'kaggle_receipt.json').read_text());assert receipt['revision']==launch['revision']
     assert receipt['mode']==launch['mode'] and receipt['stop_after']==launch['stop_after']
     if launch['mode']=='preflight':
-        assert receipt['valid']
+        if not receipt['valid']:
+            history=FOLDER/'preflight_history.json'
+            rows=json.loads(history.read_text()) if history.exists() else []
+            if not any(row['launch']==launch for row in rows):
+                rows.append(dict(launch=launch,receipt=receipt,scientific_training_performed=False,
+                                 log_path=str(target/'process.log'),log_sha256=sha(target/'process.log'),
+                                 error_tail=(target/'process.log').read_text(errors='replace').splitlines()[-30:]))
+                write_json(history,rows)
+            raise RuntimeError('Technical preflight failed; complete local logs preserved; no scientific training')
         pf=json.loads((target/'task41i_gpu_preflight.json').read_text());assert pf['valid'] and pf['revision']==launch['revision']
         shutil.copy2(target/'task41i_gpu_preflight.json',FOLDER/'gpu_preflight.json')
         return receipt,target
@@ -150,15 +160,28 @@ def publish_resume(api,receipt):
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['preflight','status','retrieve','launch','supervise']);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['preflight','status','logs','retrieve','launch','supervise']);args=ap.parse_args()
     from kaggle.api.kaggle_api_extended import KaggleApi
     api=KaggleApi();api.authenticate();DEST.mkdir(parents=True,exist_ok=True)
     revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     if args.mode=='preflight':launch(api,revision,'preflight');return
-    if args.mode in ('status','retrieve'):
+    if args.mode in ('status','logs','retrieve'):
         path=FOLDER/('kaggle_active_launch.json' if (FOLDER/'kaggle_active_launch.json').exists() else 'kaggle_preflight_launch.json')
         value=json.loads(path.read_text())
-        if args.mode=='status':print(json.dumps(dict(launch=value,status=status(api,value))),flush=True)
+        if args.mode=='logs':
+            from kagglesdk.kernels.types.kernels_api_service import ApiGetKernelSessionLogsStreamRequest
+            ref=value['ref'].lstrip('/').removeprefix('code/');owner,slug=ref.split('/')
+            request=ApiGetKernelSessionLogsStreamRequest();request.user_name=owner;request.kernel_slug=slug;request.version_label='v'+str(value['version']);request.wait_for_logs_url_seconds=60
+            with api.build_kaggle_client() as client:
+                response=client.kernels.kernels_api_client.get_kernel_session_logs_stream(request)
+                try:
+                    with (DEST/('preflight_live.log' if value['mode']=='preflight' else 'training_live.log')).open('a',encoding='utf-8') as stream:
+                        for line in response.iter_lines(chunk_size=1,decode_unicode=True):
+                            if isinstance(line,bytes):line=line.decode('utf-8',errors='replace')
+                            if line:stream.write(line+'\n');stream.flush()
+                            if line and 'END_OF_LOG' in line:break
+                finally:response.close()
+        elif args.mode=='status':print(json.dumps(dict(launch=value,status=status(api,value))),flush=True)
         else:retrieve(api,value);print('Verified phase retrieved',flush=True)
         return
     if args.mode=='launch':

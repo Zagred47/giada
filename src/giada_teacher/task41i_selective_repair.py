@@ -144,7 +144,11 @@ def atomic_loss(torch,model,data,ids):
     base=data['base'][seed[:,None],ids]
     raw=base+model.delta(v)
     target=data['target'][ids]
-    residual=h.prior.clipped_or_censored_error(torch,raw,target,True)
+    # Always-censored branch of the original objective, without constructing a
+    # CPU Boolean and copying it inside a captured CUDA graph.
+    residual=raw.double()-torch.logit(target.double().clamp(1e-7,1-1e-7))
+    residual=torch.where(target<=1e-7,residual.clamp_min(0),
+                         torch.where(target>=1-1e-7,residual.clamp_max(0),residual))
     return residual.square().mean((1,2,3)),residual.square().mean((1,2))
 
 

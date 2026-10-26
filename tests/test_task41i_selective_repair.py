@@ -41,6 +41,13 @@ class Task41iTests(unittest.TestCase):
         loss,_=i.atomic_loss(torch,m,pool,ids);grad=torch.autograd.grad(loss.sum(),m.correction)[0]
         self.assertTrue(torch.isfinite(grad).all());self.assertTrue((grad*(1-m.mask)==0).all())
         self.assertGreater(float(grad[12:,1].abs().max()),0)
+    def test_capture_safe_censoring_matches_original(self):
+        target=torch.tensor([0.,1e-9,.2,.8,1-1e-9,1.],dtype=torch.float64)
+        raw=torch.linspace(-20,20,6,dtype=torch.float64)
+        original=i.h.prior.clipped_or_censored_error(torch,raw,target,True)
+        residual=raw-torch.logit(target.clamp(1e-7,1-1e-7))
+        safe=torch.where(target<=1e-7,residual.clamp_min(0),torch.where(target>=1-1e-7,residual.clamp_max(0),residual))
+        self.assertTrue(torch.equal(original,safe))
     def test_full_path_queries_and_affine_identity(self):
         m=self.model();tail=i.path_pool(torch,self.parent,self.spec,'cpu',count=4)
         pred,gates=i.path_loss(torch,m,tail,torch.arange(4),return_predictions=True)

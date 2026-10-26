@@ -1,0 +1,57 @@
+[
+  {
+    "launch": {
+      "ref": "/code/alessandrobelli/giada-task41i-preflight",
+      "version": 1,
+      "url": "https://www.kaggle.com/code/alessandrobelli/giada-task41i-preflight",
+      "revision": "c1e5e6b553b8666ef91379779c15e2e70cf4da83",
+      "mode": "preflight",
+      "stop_after": null,
+      "input_resume_sha256": null
+    },
+    "receipt": {
+      "valid": false,
+      "worker_exit_code": 1,
+      "revision": "c1e5e6b553b8666ef91379779c15e2e70cf4da83",
+      "mode": "preflight",
+      "stop_after": null,
+      "input_resume_sha256": null,
+      "thresholds_changed": false
+    },
+    "scientific_training_performed": false,
+    "log_path": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41i_kaggle_external\\preflight_v1\\process.log",
+    "log_sha256": "ab492410f8419994bb410464306e2dbccde8ef4886b236aeff4e50327680924d",
+    "error_tail": [
+      "Updating files:  96% (3432/3575)",
+      "Updating files:  97% (3468/3575)",
+      "Updating files:  98% (3504/3575)",
+      "Updating files:  99% (3540/3575)",
+      "Updating files: 100% (3575/3575)",
+      "Updating files: 100% (3575/3575), done.",
+      "From https://github.com/Zagred47/giada",
+      " * branch            c1e5e6b553b8666ef91379779c15e2e70cf4da83 -> FETCH_HEAD",
+      "HEAD is now at c1e5e6b Add resumable Kaggle-first Task41i phases and exact optimizer recovery",
+      "Traceback (most recent call last):",
+      "  File \"<string>\", line 12, in <module>",
+      "    r=i.preflight(torch,root,out,'cuda',spec)",
+      "  File \"/tmp/giada_task41i/probe/giada41i_preflight_1793025074140819837/src/giada_teacher/task41i_selective_repair.py\", line 352, in preflight",
+      "    graph=capture(torch,model,opt,pool,ids,norm,pool,ids)",
+      "  File \"/tmp/giada_task41i/probe/giada41i_preflight_1793025074140819837/src/giada_teacher/task41i_selective_repair.py\", line 302, in capture",
+      "    with torch.cuda.graph(graph,stream=stream):loss_step(torch,model,opt,*args)",
+      "                                               ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^",
+      "  File \"/tmp/giada_task41i/probe/giada41i_preflight_1793025074140819837/src/giada_teacher/task41i_selective_repair.py\", line 278, in loss_step",
+      "    point,heads=atomic_loss(torch,model,data,ids)",
+      "                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^",
+      "  File \"/tmp/giada_task41i/probe/giada41i_preflight_1793025074140819837/src/giada_teacher/task41i_selective_repair.py\", line 147, in atomic_loss",
+      "    residual=h.prior.clipped_or_censored_error(torch,raw,target,True)",
+      "  File \"/tmp/giada_task41i/probe/giada41i_preflight_1793025074140819837/src/giada_teacher/task41e_transfer_model.py\", line 157, in clipped_or_censored_error",
+      "    censored = torch.as_tensor(censored,device=raw.device,dtype=torch.bool)",
+      "RuntimeError: Cannot copy between CPU and CUDA tensors during CUDA graph capture unless the CPU tensor is pinned. Please use tensor.pin_memory() or allocate the tensor with pin_memory=True.",
+      "Traceback (most recent call last):",
+      "  File \"/tmp/giada_task41i/giada/scripts/task41i_gpu_probe.py\", line 54, in <module>",
+      "    if result:raise RuntimeError(f'GPU preflight failed exit={result}; inspect saved log')",
+      "              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "RuntimeError: GPU preflight failed exit=1; inspect saved log"
+    ]
+  }
+]
