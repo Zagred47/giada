@@ -10,6 +10,27 @@ from . import task41f_evaluation as fe
 p,t,c,d=i.p,i.t,i.c,i.d
 
 
+class EvaluationPause(Exception):pass
+
+
+def install_resume_cache(out):
+    """Reuse verified completed panels; pause only outside numerical bodies."""
+    import sys,time
+    from pathlib import Path
+    sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'scripts'))
+    from task41h_stage_cache import install
+    install(i.h,he,out)
+    started=time.monotonic()
+    def guard(original):
+        def wrapped(*args,**kwargs):
+            if time.monotonic()-started>6*3600:raise EvaluationPause()
+            return original(*args,**kwargs)
+        return wrapped
+    # Same formulas/metric bodies. Completed-cache checks remain inside wrappers.
+    for module,name in ((he.ee.old,'suite'),(he.ee.old,'stress'),(c.b,'causal_evaluate'),(c.j.i.old,'evaluate'),(he.ee.e,'benchmark')):
+        setattr(module,name,guard(getattr(module,name)))
+
+
 def projection_probe(torch,model,fit,held,out):
     rows=[]
     for ai,a in enumerate(model.definitions):
@@ -120,11 +141,14 @@ def visible_contrasts(out,spec):
     for axis,a,b in i.contrasts():
         channels=(4,) if axis=='nap' else i.CHANNELS
         per_head={}
+        introduced=sum(not treatment['metrics']['passed'] and control['metrics']['passed'] for control,treatment in zip(rows[a],rows[b]))
         for channel in channels:
             severity=lambda name,seed:max(i.f.channel_severity(r['metrics'],spec['quality'],(channel,)) for r in rows[name] if r['seed']==seed)
-            ratios=[severity(b,s)/max(severity(a,s),1e-12) for s in spec['seeds']]
-            per_head[str(channel)]=dict(ratios=ratios,median_ratio=float(np.median(ratios)),improvement_in_all_seeds=all(r<1 for r in ratios))
+            ratios=[max(severity(b,s),1e-12)/max(severity(a,s),1e-12) for s in spec['seeds']]
+            per_head[str(channel)]=dict(ratios=ratios,median_ratio=float(np.median(ratios)),improvement_in_all_seeds=all(r<1 for r in ratios),
+                                        registered_contrast_passed=bool(introduced==0 and all(r<1 for r in ratios) and np.median(ratios)<=.8))
         result.append(dict(axis=axis,control=a,treatment=b,per_head=per_head,
+                           introduced_case_failures=introduced,registered_contrast_passed=all(row['registered_contrast_passed'] for row in per_head.values()),
                            global_gate_waived=False,interpretation='Per-head severity distinguishes effects; original full conjunction remains mandatory.'))
     p.save_json(out/'paired_contrasts.json',result)
 
@@ -134,7 +158,7 @@ def execution_cost(torch,models,data,spec,cfg,calcium,base,device,out,qualified)
     from .ie_ionic_cost import paired_summary
     rows=[]
     for batch in spec['cost']['batches']:
-        ix=np.arange(batch)%len(data['voltage']);samples={};runners={};arguments={}
+        ix=np.arange(batch)%len(data['voltage']);samples={};cuda_samples={};runners={}
         for name,net in {'formula':None,**models}.items():
             dtype=torch.float64 if getattr(net,'runtime_policy',None) in ('joint64','increment32') else torch.float32
             ex=lambda value,dt:torch.tensor(value,device=device,dtype=dt)[None].expand(3,*value.shape).contiguous()
@@ -144,15 +168,18 @@ def execution_cost(torch,models,data,spec,cfg,calcium,base,device,out,qualified)
             runner=t.Stepper(torch,core,args,True)
             inj=[ex(data['injection'][ix,100+k],dtype) for k in range(spec['cost']['ticks'])]
             syn=[ex(data['base_g_us'][ix,100+k],dtype) for k in range(spec['cost']['ticks'])]
-            runners[name]=(runner,args,inj,syn);samples[name]=[]
+            runners[name]=(runner,args,inj,syn);samples[name]=[];cuda_samples[name]=[]
         names=list(runners)
         for repeat in range(spec['cost']['repetitions']):
             for name in names if repeat%2==0 else names[::-1]:
-                runner,args,inj,syn=runners[name];runner.reset(args);torch.cuda.synchronize();start=time.perf_counter()
+                runner,args,inj,syn=runners[name];runner.reset(args);torch.cuda.synchronize()
+                begin=torch.cuda.Event(enable_timing=True);end=torch.cuda.Event(enable_timing=True)
+                start=time.perf_counter();begin.record()
                 for k in range(len(inj)):runner.tick(inj[k],syn[k])
-                torch.cuda.synchronize();samples[name].append(1000*(time.perf_counter()-start))
-        rows.append(dict(batch_per_seed=batch,actual_sites=3*batch,samples=samples,
+                end.record();end.synchronize();samples[name].append(1000*(time.perf_counter()-start));cuda_samples[name].append(begin.elapsed_time(end))
+        rows.append(dict(batch_per_seed=batch,actual_sites=3*batch,samples=samples,cuda_samples=cuda_samples,
                          vs_formula={name:paired_summary(samples['formula'],values) for name,values in samples.items() if name!='formula'},
+                         cuda_vs_formula={name:paired_summary(cuda_samples['formula'],values) for name,values in cuda_samples.items() if name!='formula'},
                          quality_qualified={name:name in qualified for name in samples},reference='Original FP32 formula; all candidates measured at their actual runtime state dtype'))
         p.save_json(out/'whole_chain_execution_cost.json',rows)
         if batch==642:

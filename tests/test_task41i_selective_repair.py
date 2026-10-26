@@ -70,6 +70,19 @@ class Task41iTests(unittest.TestCase):
         self.assertIs(i.t.make_core,original);self.assertIs(i.t.rollout,roll)
     def test_component_metric_visibility(self):
         self.assertTrue(i.metric_visibility(self.spec['quality'])['valid'])
+    def test_optimizer_and_rng_resume_are_exact(self):
+        rng=np.random.default_rng(991);weights=torch.zeros(24,2,128,requires_grad=True)
+        opt=i.g.Adam(torch,weights,i.arms(),self.spec)
+        for step in range(8):
+            opt.rate(step);weights.grad=torch.tensor(rng.normal(size=weights.shape),dtype=weights.dtype);opt.step()
+        saved=copy.deepcopy(opt.state_dict());saved_weights=weights.detach().clone();saved_rng=copy.deepcopy(rng.bit_generator.state)
+        for step in range(8,20):
+            opt.rate(step);weights.grad=torch.tensor(rng.normal(size=weights.shape),dtype=weights.dtype);opt.step()
+        other=saved_weights.clone().requires_grad_();resumed=i.g.Adam(torch,other,i.arms(),self.spec)
+        i.restore_optimizer(torch,resumed,saved);rng.bit_generator.state=saved_rng
+        for step in range(8,20):
+            resumed.rate(step);other.grad=torch.tensor(rng.normal(size=other.shape),dtype=other.dtype);resumed.step()
+        self.assertTrue(torch.equal(weights,other));self.assertTrue(torch.equal(opt.m,resumed.m));self.assertTrue(torch.equal(opt.v,resumed.v))
     @torch.no_grad()
     def test_mixed_policy_rollout_matches_existing(self):
         data=dict(voltage=np.full((2,9),-45.,dtype='float32'),calcium=np.full((2,9),1e-4,dtype='float32'),

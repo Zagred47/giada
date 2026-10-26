@@ -283,9 +283,11 @@
     "experiments/results/task41h_protocol_v1/task41g_frozen.pt": "5bff26a0ea7d9ba0995e0ec4a332bce9d01add6448b5a55c96de2036c938e6b6",
     "experiments/task41h_preregistration_v1.json": "af62b2e60eb0b4c6bbc9ce09114770b6ac798d5b8a7de842a7fd1f9ddb52978b",
     "experiments/results/task41i_protocol_v1/task41h_frozen.pt": "8450f9aaf5e375263aa5318688ccf46252bc0ab79b1f594f73e0789638080cf8",
-    "src/giada_teacher/task41i_selective_repair.py": "5cf569c97c9747cd72e9638c63e1e504f1f2141d34325ec6ff4bf01d7c5d5bca",
-    "src/giada_teacher/task41i_evaluation.py": "dc6cbf466a7431d0925431e02412c1771055da47121e5cae1b19a625fad8c9ad",
-    "scripts/run_task41i_selective_repair.py": "b1fa278131603a51c8503c856d13a9e2abf22c3f9e5c505c39a9ffc42ee605c8",
+    "src/giada_teacher/task41i_selective_repair.py": "246a229b3372811cc9c192f3b562a0954580a81c264382acc6ec5710acb6624f",
+    "src/giada_teacher/task41i_evaluation.py": "484ce050bb1739e59414443ffeb5b8bf534b1726be06cd16828dfcbbc05b201f",
+    "scripts/run_task41i_selective_repair.py": "714638959f51a203d75d255c888ef92da31133dda79a7983f94afdf60d4f2934",
+    "scripts/task41h_stage_cache.py": "ce407d2911403bf6977a86ae679e79cf51d92fbf15273d5f085f94b1e12e406e",
+    "scripts/resume_task41h_frozen_evaluation.py": "86ea1864ed705091bfd2aa9ae3ce11df2264a5aebf44683a7dd9e9ddf91025fd",
     "notebooks/giada_task41i_selective_repair.ipynb": "e5b7310949062e97ccbfcb36fe6ce1d5c2226f9c7c74ec9590d2c4f94c44ad0f"
   },
   "task41e_checkpoint": "experiments/results/task41f_protocol_v1/task41e_frozen.pt",
@@ -378,6 +380,12 @@
   "task41g_nominee": "M_constant_point_broad",
   "task41g_diagnostic": "M_anneal_sensitive_tail",
   "path_prefix_ticks": 530,
+  "execution_priority": [
+    "Kaggle",
+    "Colab primary",
+    "Colab reserve"
+  ],
+  "durability": "One notebook, automatic phases:512,8192,30000,60000updates,then frozen evaluation. Each completed phase is SHA/CRC verified off-runtime before the next phase; optimizer,RNG,best/selected weights restored, never reselected on resume. Evaluation-only phases prohibit Adam and reuse only complete cached panels with the same source/freeze.",
   "task41h_checkpoint": "experiments/results/task41i_protocol_v1/task41h_frozen.pt",
   "task41h_checkpoint_sha256": "8450f9aaf5e375263aa5318688ccf46252bc0ab79b1f594f73e0789638080cf8",
   "task41h_nominee": "H0_D256_N4096_B128",

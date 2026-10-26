@@ -16,6 +16,8 @@ def main():
     checkpoint=out/'task41h_frozen.pt';checkpoint.write_bytes(weights)
     old=json.loads((ROOT/i.h.CONFIG).read_text(encoding='utf-8'));spec=dict(old)
     spec.update(task='41i',version='v1',arms=i.arms(),contrasts=[list(x) for x in i.contrasts()],
+        execution_priority=['Kaggle','Colab primary','Colab reserve'],
+        durability='One notebook, automatic phases:512,8192,30000,60000updates,then frozen evaluation. Each completed phase is SHA/CRC verified off-runtime before the next phase; optimizer,RNG,best/selected weights restored, never reselected on resume. Evaluation-only phases prohibit Adam and reuse only complete cached panels with the same source/freeze.',
         task41h_checkpoint=checkpoint.relative_to(ROOT).as_posix(),task41h_checkpoint_sha256=freeze['checkpoint_sha256'],task41h_nominee=freeze['nominee'],
         new_seeds=dict(fit=671101,selection=671103,development=671107,stream=671109,feedback=671113,feedback_stream=671127,intervention=671137,support=671139,selection_support=671149),
         anchors=8192,selection_anchors=64,fit_paths=512,selection_paths=32,tail_batch=8,
@@ -41,7 +43,7 @@ Controlli prima del training, mini scaling sulla stessa traiettoria, proiezione 
     cells=[dict(cell_type='markdown',metadata={},source=intro.splitlines(True)),dict(cell_type='code',metadata={},execution_count=None,outputs=[],source=code.splitlines(True))]
     for k,cell in enumerate(cells):cell['id']=f'task41i-{k}'
     i.p.save_json(ROOT/notebook,dict(cells=cells,metadata=dict(kernelspec=dict(display_name='Python3',language='python',name='python3')),nbformat=4,nbformat_minor=5))
-    paths=list(old['sources'])+[i.h.CONFIG,checkpoint.relative_to(ROOT).as_posix(),'src/giada_teacher/task41i_selective_repair.py','src/giada_teacher/task41i_evaluation.py','scripts/run_task41i_selective_repair.py',notebook]
+    paths=list(old['sources'])+[i.h.CONFIG,checkpoint.relative_to(ROOT).as_posix(),'src/giada_teacher/task41i_selective_repair.py','src/giada_teacher/task41i_evaluation.py','scripts/run_task41i_selective_repair.py','scripts/task41h_stage_cache.py','scripts/resume_task41h_frozen_evaluation.py',notebook]
     spec['sources']={n:i.p.digest(ROOT/n) for n in dict.fromkeys(paths)}
     i.p.save_json(ROOT/i.CONFIG,spec)
     print(json.dumps(dict(valid=True,arms=8,members=24,thresholds_changed=False)),flush=True)

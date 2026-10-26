@@ -309,6 +309,12 @@ def ranks(rows,parent,aux,atomic,q):
     return f.ranks(rows,parent,aux,atomic,q)
 
 
+def restore_optimizer(torch,opt,state):
+    # Copy in place: captured CUDA graphs retain the original buffer addresses.
+    with torch.no_grad():
+        for dst,src in ((opt.m,state['m']),(opt.v,state['v']),(opt.step_count,state['step']),(opt.lr,state['lr'])):dst.copy_(src)
+
+
 def metric_visibility(q):
     clock=np.arange(1000);pulse=np.where(clock>=50,-.001*np.exp(-np.maximum(clock-50,0)/100),0.)
     target=np.zeros((1000,11));target[:,0]=pulse;target[:,4]=pulse
@@ -359,18 +365,39 @@ def preflight(torch,root,out,device,spec):
     p.save_json(out/'preflight.json',report);return report
 
 
-def run(root,out,device='cuda',smoke=False):
+def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluation_only=False):
     import torch
     from . import task41i_evaluation as ev
     spec,cfg,calcium,base=contract(root)
     torch.set_num_threads(1);torch.use_deterministic_algorithms(True)
     torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
     assert device=='cuda' and torch.cuda.is_available()
-    out.mkdir(parents=True,exist_ok=True);assert not (out/'checkpoint_0.pt').exists()
-    p.save_json(out/'preregistration.json',spec);preflight(torch,root,out,device,spec)
+    out.mkdir(parents=True,exist_ok=True)
+    if resume:
+        assert json.loads((out/'preregistration.json').read_text())==spec
+    else:
+        assert not (out/'checkpoint_0.pt').exists()
+        p.save_json(out/'preregistration.json',spec);preflight(torch,root,out,device,spec)
     print('[GIADA Task41i] preflights passed',flush=True)
     if smoke:return dict(valid=True,decision='GPU_PREFLIGHT_ONLY')
     controls=frozen_controls(torch,root,spec,device);parent=controls['H_nominee']
+    if evaluation_only:
+        assert resume
+        freeze=json.loads((out/'selection_freeze.json').read_text())
+        payload={key:value for key,value in freeze.items() if key!='freeze_sha256'}
+        assert hashlib.sha256(json.dumps(payload,sort_keys=True).encode()).hexdigest()==freeze['freeze_sha256']
+        assert p.digest(out/'frozen_checkpoint.pt')==freeze['checkpoint_sha256']
+        knots=np.asarray(json.loads((out/'FIT_knots.json').read_text())['knots'])
+        saved=torch.load(out/'frozen_checkpoint.pt',map_location=device,weights_only=True);trained={}
+        for a in arms():
+            net=make_model(torch,parent,[a],knots,device);net.load_state_dict(saved[a['name']]);trained[a['name']]=net.eval()
+        def forbidden(*args,**kwargs):raise RuntimeError('Training forbidden during frozen evaluation')
+        g.Adam.step=forbidden
+        ev.install_resume_cache(out)
+        with torch.inference_mode():report=ev.evaluate(torch,root,out,controls,trained,spec,cfg,calcium,base,device)
+        assert p.digest(out/'frozen_checkpoint.pt')==freeze['checkpoint_sha256']
+        report.update(selection_recomputed=False,training_updates_performed=0)
+        p.save_json(out/'final_report.json',report);return report
     raw=d.anchors(spec['new_seeds']['fit'],spec['anchors']);knots=fit_knots(raw)
     p.save_json(out/'FIT_knots.json',dict(knots=knots.tolist(),source_seed=spec['new_seeds']['fit'],opened_cases_used=False))
     model=make_model(torch,parent,arms(),knots,device)
@@ -388,13 +415,24 @@ def run(root,out,device='cuda',smoke=False):
     ev.projection_probe(torch,model,data,selected,out)
     dev=d.development(spec['new_seeds']['development']);np.savez_compressed(out/'development_inputs.npz',**dev)
     parent_rows=c.shadow_evaluate(torch,[parent],dev,spec['quality'],device)
-    rng=np.random.default_rng(spec['new_seeds']['stream']);best=[None]*24;saved=[None]*24;chosen=[None]*24;curves=[];diag={};start=time.perf_counter()
+    rng=np.random.default_rng(spec['new_seeds']['stream']);best=[None]*24;saved=[None]*24;chosen=[None]*24;curves=[];diag={};start=time.perf_counter();first_step=0
+    if resume:
+        paths=list(out.glob('checkpoint_*.pt'));assert paths
+        checkpoint=max(paths,key=lambda path:int(path.stem.split('_')[-1]))
+        state=torch.load(checkpoint,map_location=device,weights_only=False)
+        assert state['protocol_sha256']==p.digest(root/CONFIG) and state['torch_version']==torch.__version__ and state['gpu']==torch.cuda.get_device_name()
+        assert np.array_equal(state['knots'],knots)
+        with torch.no_grad():
+            model.correction.copy_(state['correction'])
+        restore_optimizer(torch,opt,state['optimizer'])
+        rng.bit_generator.state=state['rng'];best=state['best'];saved=[value.to(device) for value in state['selected_weights']];chosen=state['chosen_steps'];first_step=state['step']
+        curves=json.loads((out/'training_curves.json').read_text())
+        assert curves[-1]['step']==first_step and float(opt.step_count)==first_step
+        print(f'[GIADA Task41i] resumed exact optimizer/RNG at {first_step}',flush=True)
     si=torch.arange(spec['selection_anchors'],device=device)[None].expand(24,-1)
-    for step in range(spec['checkpoints'][-1]+1):
-        if step in spec['checkpoints']:
+    for step in range(first_step,spec['checkpoints'][-1]+1):
+        if step in spec['checkpoints'] and not (resume and step==first_step):
             assert all(torch.isfinite(x).all() for x in model.parameters())
-            torch.save(dict(step=step,correction=model.correction.detach().cpu(),optimizer=opt.state_dict(),rng=rng.bit_generator.state,knots=knots),out/f'checkpoint_{step}.pt')
-            print(f'[GIADA Task41i] checkpoint_saved {step}',flush=True)
             models=[extract(torch,model,k,parent,knots,device) for k in range(8)]
             with torch.no_grad():
                 point=atomic_loss(torch,model,selected,si)[0]/norm
@@ -408,18 +446,29 @@ def run(root,out,device='cuda',smoke=False):
                 if best[j] is None or rank<best[j]:best[j],saved[j],chosen[j]=rank,model.correction[j].detach().clone(),step
             curves.append(dict(step=step,ranks=rr,per_head_severity=per_head,point=point.tolist(),official_tail=tails.tolist(),feedback=response.tolist(),gradients=diag,elapsed_seconds=time.perf_counter()-start))
             p.save_json(out/'training_curves.json',curves);p.save_json(out/f'development_{step}.json',measured)
+            torch.save(dict(step=step,correction=model.correction.detach().cpu(),optimizer=opt.state_dict(),rng=rng.bit_generator.state,knots=knots,
+                            best=best,selected_weights=[value.detach().cpu() for value in saved],chosen_steps=chosen,
+                            protocol_sha256=p.digest(root/CONFIG),torch_version=torch.__version__,gpu=torch.cuda.get_device_name()),out/f'checkpoint_{step}.pt')
+            print(f'[GIADA Task41i] checkpoint_saved {step}',flush=True)
+        if stop_after is not None and step==stop_after and step<spec['checkpoints'][-1]:
+            return dict(valid=True,decision='TRAINING_STAGE_COMPLETE',updates_completed=step,training_complete=False,thresholds_changed=False,scientific_go_claimed=False)
         if step==spec['checkpoints'][-1]:break
         opt.rate(step);ids.copy_(torch.tensor(rng.integers(0,spec['anchors'],spec['batch']),device=device)[None].expand(24,-1))
         pids.copy_(torch.tensor(rng.integers(0,4096,spec['batch']),device=device)[None].expand(24,-1))
         if (step+1)%16==0:
             diag=loss_step(torch,model,opt,data,ids,norm,keep,pids,tail,torch.tensor(rng.integers(0,spec['fit_paths'],spec['tail_batch']),device=device),view,fb,support,torch.tensor(rng.integers(0,len(support['broad']),spec['feedback_batch']),device=device),(cfg,calcium,base))
         else:graph.replay()
-        if (step+1)%1000==0:print(f'[GIADA Task41i] update {step+1}/60000 elapsed={(time.perf_counter()-start)/60:.1f}min',flush=True)
+        if (step+1)%1000==0:
+            assert torch.isfinite(model.correction).all() and torch.isfinite(opt.m).all() and torch.isfinite(opt.v).all()
+            assert (model.correction*(1-model.mask)==0).all()
+            print(f'[GIADA Task41i] update {step+1}/60000 finite=True elapsed={(time.perf_counter()-start)/60:.1f}min',flush=True)
     weights=torch.stack(saved);trained={a['name']:extract(torch,model,k,parent,knots,device,weights) for k,a in enumerate(arms())}
     nominee=min(range(8),key=lambda k:tuple(max(best[3*k+s][j] for s in range(3)) for j in range(len(best[0])))+(k,))
     torch.save({k:v.state_dict() for k,v in trained.items()},out/'frozen_checkpoint.pt')
     freeze=dict(arms=arms(),seeds=spec['seeds'],chosen_steps=chosen,ranks=best,nominee=arms()[nominee]['name'],checkpoint_sha256=p.digest(out/'frozen_checkpoint.pt'),opened_regressions_used_for_selection=False,independent_confirmation=False,parent='H_nominee')
     freeze['freeze_sha256']=hashlib.sha256(json.dumps(freeze,sort_keys=True).encode()).hexdigest();p.save_json(out/'selection_freeze.json',freeze)
     print('[GIADA Task41i] checkpoint selection frozen',flush=True)
+    if stop_after is not None:
+        return dict(valid=True,decision='FROZEN_TRAINING_COMPLETE',updates_completed=60000,training_complete=True,thresholds_changed=False,scientific_go_claimed=False)
     with torch.inference_mode():report=ev.evaluate(torch,root,out,controls,trained,spec,cfg,calcium,base,device)
     p.save_json(out/'final_report.json',report);return report
