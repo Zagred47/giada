@@ -41,6 +41,17 @@ def evaluate(torch,root,out,controls,trained,spec,cfg,calcium,base,device):
         error=max(float((a-b).abs().max()) for a,b in zip(actual,expected))
         parity.append(dict(model=name,max_abs_raw_error=error,valid=error<=spec['computational_parity_atol'],selection_eligible=False))
     j.p.save_json(out/'compiled_parity.json',parity)
+    contrasts=[]
+    for contrast in spec['registered_comparisons']:
+        left,right=contrast['control'],contrast['treatment']
+        a,b=freeze['ranks'][left],freeze['ranks'][right]
+        contrasts.append(dict(contrast,control_ranks=a,treatment_ranks=b,
+            global_development_failed_difference=[b[s][0]-a[s][0] for s in range(3)],
+            worst_severity_ratio=[b[s][2]/max(a[s][2],1e-12) for s in range(3)],
+            full_suite_control=report['summaries'][left],full_suite_treatment=report['summaries'][right],
+            control_globally_qualified=left in report['passing_arms'],treatment_globally_qualified=right in report['passing_arms'],
+            new_nominee_selected=False,interpretation='Report all paired effects; global scientific gates remain mandatory. Different parameter counts and initial compression gaps are not controlled away.'))
+    j.p.save_json(out/'paired_contrasts.json',contrasts)
     report.update(task='41j',decision='OPERATOR_REQUIRES_INDEPENDENT_CONFIRMATION' if freeze['nominee'] in report['passing_arms'] else 'OPERATOR_RESET_NO_GO',
                   nominee_passed=freeze['nominee'] in report['passing_arms'],
                   task42_authorized=False,independent_confirmation=False,speedup_claim=False,

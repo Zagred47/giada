@@ -10,6 +10,7 @@ def main():
     assert not (folder/'kaggle_active_launch.json').exists()
     old=json.loads((ROOT/j.prior.CONFIG).read_text());spec=dict(old)
     spec.update(task='41j',version='v1',arms=j.arms(),contrasts=[],
+        registered_comparisons=[dict(name='representation',control='J_chain_joint',treatment='J_compact64'),dict(name='capacity',control='J_compact64',treatment='J_compact128')],
         new_seeds=dict(fit=691101,selection=691103,development=691107,stream=691109,feedback=691113,
                        feedback_stream=691127,intervention=691137,support=691139,selection_support=691149),
         anchors=16384,selection_anchors=128,batch=64,fit_paths=512,selection_paths=32,tail_batch=4,

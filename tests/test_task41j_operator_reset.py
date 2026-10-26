@@ -38,6 +38,16 @@ class OperatorTests(unittest.TestCase):
         before=copy.deepcopy(m.state_dict());opt=torch.optim.Adam(j.parameters(m),lr=1e-4)
         loss=j.coefficient_loss(torch,m,data,ids);loss[0].backward();j.clip_members(torch,j.parameters(m));opt.step()
         self.assertTrue(all(torch.equal(v[1:],before[k][1:]) for k,v in m.state_dict().items() if v.ndim and v.shape[0]==3))
+    def test_identical_chain_distillation_is_exact_zero(self):
+        m=j.model_class(torch)(self.parent,j.arms()[0]);data,_=j.atomic_pool(torch,self.parent,691101,16,'cpu')
+        self.assertEqual(float(j.coefficient_loss(torch,m,data,torch.arange(16),True).max()),0.)
+    def test_optimizer_resume_and_gradient_addresses(self):
+        a=j.model_class(torch)(self.parent,j.arms()[1]);data,_=j.atomic_pool(torch,self.parent,691101,8,'cpu');ids=torch.arange(4)
+        oa=torch.optim.Adam(j.parameters(a),lr=torch.tensor(1e-4));j.step(torch,{'a':a},{'a':oa},data,ids)
+        b=copy.deepcopy(a);ob=torch.optim.Adam(j.parameters(b),lr=torch.tensor(1e-4));j.step(torch,{'a':b},{'a':ob},data,ids)
+        b.load_state_dict(a.state_dict());j.restore_optimizer(torch,ob,copy.deepcopy(oa.state_dict()))
+        j.step(torch,{'a':a},{'a':oa},data,ids);j.step(torch,{'a':b},{'a':ob},data,ids)
+        self.assertTrue(all(torch.equal(x,y) for x,y in zip(a.parameters(),b.parameters())))
     def test_long_path_gradients_all_heads(self):
         m=j.model_class(torch)(self.parent,j.arms()[1]);spec=dict(new_seeds=dict(fit=691101,selection=691103),path_prefix_ticks=17,fit_paths=2,quality=dict(onset_offset_max_ms=.3))
         data=j.path_pool(torch,spec,'cpu',count=2);loss=j.path_loss(torch,m,data,torch.arange(2));loss.sum().backward()

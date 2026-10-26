@@ -165,13 +165,13 @@
     "notebooks/giada_task41i_selective_repair.ipynb": "e5b7310949062e97ccbfcb36fe6ce1d5c2226f9c7c74ec9590d2c4f94c44ad0f",
     "experiments/task41i_preregistration_v1.json": "e6445f29662c6709b21c2ee9fd07e07d79c2ed7876a2186b1aba1ef3a1fdb027",
     "experiments/task41i_evaluation_recovery_v1.json": "136eb2a492efb28caabefa9152b8daebfa42c2fadb76992a9f295de520819d91",
-    "src/giada_teacher/task41j_operator_reset.py": "53a2739fc05dd99bf137e0f04d1f5f9c1b030ce734242f6c8e0be42a7e4edcd5",
-    "src/giada_teacher/task41j_evaluation.py": "a97e990fef6f56bfeb9da6d216a33681093d87fa08a42822419a45e6a51475ae",
+    "src/giada_teacher/task41j_operator_reset.py": "6a531d859de595a2cf925cf2a1f1808d523aaa802be5473b7f1947e6099c7a41",
+    "src/giada_teacher/task41j_evaluation.py": "9e79094bbe835ed5e92bdece57573fb21451187d012e839087399a055e1fa2cb",
     "scripts/run_task41j_operator_reset.py": "e8dab108a1ccb27f5f9af3141b36e1f985dfbe67c3fea7819dc43e0f625d8992",
-    "scripts/build_task41j_protocol.py": "d19efdf2f5ee82c0f1aca4dc63ec771ee945cd83f2643ec7b375c4f079d9423d",
+    "scripts/build_task41j_protocol.py": "437376a5a159cfe256bf91bb8198ea9184800dcf1bab62893a9013f1e8bf1df9",
     "scripts/task41j_kaggle_pipeline.py": "6eb352cc9662a3c836bdf99f0392c011325d8bdc4c2098e60499110c91a7c8d9",
-    "scripts/task41j_gpu_probe.py": "7f6046fd08af600a9bcfd94f8240d4e42a78b2fec71ba5ab002f8f40ab32fe96",
-    "tests/test_task41j_operator_reset.py": "1ce67f9e2f49241bb0960829334b3e28632579c1eeb437d4e72e0aca1ea6597d"
+    "scripts/task41j_gpu_probe.py": "8a71e4e93a5a2c3106c917c93087673c5b7e237ce7e009e16b54316c982f7f62",
+    "tests/test_task41j_operator_reset.py": "b71415b3361738009490502e9841691a6f0e0db213fb56752acd4ec01a03ae6a"
   },
   "task41e_checkpoint": "experiments/results/task41f_protocol_v1/task41e_frozen.pt",
   "task41e_checkpoint_sha256": "7ac38b79429d147fc0acb3187a4d5c4581cae643ae722217fcf378c78d18b6dc",
@@ -267,6 +267,18 @@
   "task41h_nominee": "H0_D256_N4096_B128",
   "fit_paths": 512,
   "selection_paths": 32,
+  "registered_comparisons": [
+    {
+      "name": "representation",
+      "control": "J_chain_joint",
+      "treatment": "J_compact64"
+    },
+    {
+      "name": "capacity",
+      "control": "J_compact64",
+      "treatment": "J_compact128"
+    }
+  ],
   "distillation_updates": 4096,
   "aux_every": 16,
   "hypotheses": [

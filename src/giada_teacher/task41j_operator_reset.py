@@ -104,6 +104,7 @@ def atomic_pool(torch,parent,seed,count,device):
         v=data['v'].reshape(1,-1).expand(3,-1);ca=data['ca'].reshape(1,-1).expand(3,-1)
         u,z=parent.raw(v,ca)
         data['teacher']=torch.stack((torch.sigmoid(u.double()),torch.sigmoid(z.double())),-2).reshape(3,count,3,2,18)
+        data['teacher_logits']=torch.stack((u.double(),z.double()),-2).reshape(3,count,3,2,18)
     return data,raw
 
 
@@ -116,7 +117,10 @@ def coefficient_loss(torch,model,data,ids,distill=False):
     target=data['teacher'][:,ids] if distill else expand(torch,torch.stack((data['u'][ids],data['z'][ids]),-2))
     # Training censoring is not a metric tolerance. Keep slow rates down to1e-12.
     lo=1e-12;safe=target.clamp(lo,1-lo)
-    error=logits-torch.logit(safe)
+    # Direct stored teacher logits make the identical chain an EXACT zero
+    # during distillation, avoiding an inverse-sigmoid roundoff Adam update.
+    wanted=data['teacher_logits'][:,ids] if distill else torch.logit(safe)
+    error=logits-wanted
     error=torch.where(target<=lo,error.clamp_min(0),torch.where(target>=1-lo,error.clamp_max(0),error))
     point=error.square().mean((1,2,3,4))
     prob=torch.sigmoid(logits)
