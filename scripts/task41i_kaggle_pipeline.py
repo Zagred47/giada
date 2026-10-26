@@ -124,20 +124,23 @@ def retrieve(api,launch):
     with zipfile.ZipFile(archive) as z:
         assert z.testzip() is None
         report=json.loads(z.read('final_report.json'))
-        assert receipt['valid'] and report['valid'],report
         import torch
         import io
         checkpoints=[name for name in z.namelist() if name.startswith('checkpoint_') and name.endswith('.pt')]
-        latest=max(checkpoints,key=lambda name:int(name.split('_')[1].split('.')[0]))
-        state=torch.load(io.BytesIO(z.read(latest)),map_location='cpu',weights_only=False)
+        latest=max(checkpoints,key=lambda name:int(name.split('_')[1].split('.')[0])) if checkpoints else None
+        state=torch.load(io.BytesIO(z.read(latest)),map_location='cpu',weights_only=False) if latest else {}
         def finite(value):
             if torch.is_tensor(value):return bool(torch.isfinite(value).all())
             if isinstance(value,dict):return all(finite(item) for item in value.values())
             if isinstance(value,(list,tuple)):return all(finite(item) for item in value)
             return True
-        assert finite(state)
-    verified=dict(valid=True,runtime_independent=True,local=str(archive),remote=dict(label='phase',sha256=receipt['sha256'],bytes=receipt['bytes'],platform='Kaggle persisted output'),kaggle=launch,latest_checkpoint=latest,all_recovered_tensors_finite=True,report=report,verified_at=time.time())
+        tensors_finite=finite(state)
+    verified=dict(valid=True,runtime_independent=True,local=str(archive),remote=dict(label='phase',sha256=receipt['sha256'],bytes=receipt['bytes'],platform='Kaggle persisted output'),kaggle=launch,latest_checkpoint=latest,all_recovered_tensors_finite=bool(latest and tensors_finite),report=report,technical_failure=not(receipt['valid'] and report.get('valid') and tensors_finite),verified_at=time.time())
     write_json(target/'external_backup_receipt.json',verified);write_json(DEST/'external_backup_receipt.json',verified)
+    if not verified['technical_failure'] and latest and not (FOLDER/'launch.json').exists():
+        write_json(FOLDER/'launch.json',dict(valid=True,request=dict(revision=launch['revision'],platform='Kaggle',notebook=launch['url']),
+                  status_observed=launch,external_backup=verified,last_recovered_checkpoint=latest,
+                  all_recovered_tensors_finite=True,scientific_result_pending=True,thresholds_changed=False,DB_backup='local only'))
     return verified,target
 
 
@@ -196,6 +199,7 @@ def main():
         write_json(DEST/'pipeline_status.json',dict(launch=active,state=state,error=error,observed_at=time.time()))
         if 'complete' in state:
             receipt,target=retrieve(api,active);report=receipt['report']
+            assert not receipt['technical_failure'],'Technical failure; outputs preserved; next phase blocked'
             if report['decision'] not in ('TRAINING_STAGE_COMPLETE','FROZEN_TRAINING_COMPLETE','FROZEN_EVALUATION_STAGE_COMPLETE'):
                 write_json(DEST/'pipeline_final.json',receipt);return
             publish_resume(api,receipt)
@@ -203,7 +207,9 @@ def main():
                 stop=next(k for k in (8192,30000,60000) if k>report['updates_completed']);mode='train'
             else:stop=None;mode='evaluate'
             launch(api,active['revision'],mode,stop,receipt['remote']['sha256'])
-        elif any(word in state for word in ('error','cancel','fail')):raise RuntimeError((state,error))
+        elif any(word in state for word in ('error','cancel','fail')):
+            try:retrieve(api,active)
+            finally:raise RuntimeError((state,error,'No next phase launched; available outputs retrieved'))
         time.sleep(45)
 
 if __name__=='__main__':main()

@@ -45,6 +45,10 @@ def main():
         for path in paths:artifact(repo/path)
         prereg=artifacts[0]
         for name in ('local_verification.json','gpu_preflight.json','task41h_frozen.pt'):artifact(folder/name)
+        history=[]
+        if (folder/'preflight_history.json').exists():
+            artifact(folder/'preflight_history.json')
+            history=json.loads((folder/'preflight_history.json').read_text())
         exp=put('experiments','factorial',Nome='Task41i selective Ca/Nap equilibrium and crossing supervision',Stato='Preregistrato',Ipotesi=[ref(h['code']) for h in spec['hypothesis_links']],Descrizione=spec['training_policy'],**{'Obiettivo informativo':'Separate causal reachability, crossing supervision and local resolution; distinguish optimization from approximation; measure qualified numerical and whole-chain execution policies.'})
         gen=put('generators','fit',Nome='Task41i paired full-path generator',Versione='v1',Procedura=spec['support'],**{'Seed e RNG':json.dumps(spec['new_seeds']),'Artefatti codice':artifacts})
         ds=put('datasets','fit-selection',Nome='Task41i disjoint FIT and selection',Versione='v1',Generatore=[gen],Schema='Same causal V,Ca and18 recurrent gates. 1200ms labels; common query union; official event definition retained. No opened-case training.',Copertura=spec['support'])
@@ -60,6 +64,9 @@ def main():
         for name,definition in [('quality',spec['quality']),('compartment',spec['compartment_gates']),('selection',spec['selection']),('cost',spec['speed']),('diagnostics',spec['diagnostics']),('optimizer',spec['objective'])]:
             metric=put('metrics',name,Nome='Task41i '+name,Formula=json.dumps(definition));put('evaluations',name,Nome='Task41i '+name,Versione='v1',Metrica=[metric],Protocollo=[protocol],Partizioni=parts,Ruolo='Primaria' if name in ('quality','compartment') else 'Secondaria',Target=json.dumps(definition))
         obs=put('observations','preflight',Nome='Task41i technical CPU and GPU preflight',Descrizione=json.dumps(dict(local=local,gpu=gpu)),**{'Artefatti dettagliati':artifacts})
+        if history:
+            prior=put('observations','technical-history',Nome='Task41i technical preflight failures before scientific training',Descrizione=json.dumps(history),**{'Artefatti dettagliati':artifacts})
+            put('findings','capture-repair',Nome='Task41i capture-unsafe CPU Boolean removed without loss change',Esito='Misto',Esperimenti=[exp],Osservazioni=[prior,obs],Risultato='Initial GPU capture rejected CPU-to-CUDA Boolean construction. Equivalent always-censored tensor expression avoids the transfer; local exact-expression test and final CUDA preflight verify repair.',Limitazioni='Technical preflight only; no scientific training or scientific NO-GO arose from this error.')
         finding=put('findings','preflight',Nome='Task41i causal masks and informative metrics verified',Esito='Positivo',Esperimenti=[exp],Osservazioni=[obs],Risultato='Same initial function, protected states, reachable Nap, positive/negative component metric controls, full-path affine identity, finite CUDA graph and auxiliary feedback gradients; whole-chain compile parity tested.',Limitazioni='Technical evidence only; does not establish learnability, qualification or speedup.')
         decision=put('decisions','authorized',Nome='Task41i approved continuation',Esito='Continuare',Risultati=[finding],Motivazione='User approved the eight-arm experiment. Explicit execution priority: Kaggle, Colab primary, Colab reserve. Pinned source and external experiment backups; thresholds unchanged; DB stays local.',**{'Data':date})
         put('actions','launch',Nome='Task41i pinned GPU launch',Stato='In corso',Descrizione='Register and verify protocol before scientific training; Kaggle first, then two Colab accounts. External experiment backup required; DB backup local.',**{'Decisioni di origine':[decision]})
