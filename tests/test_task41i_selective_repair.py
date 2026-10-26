@@ -70,6 +70,9 @@ class Task41iTests(unittest.TestCase):
             self.assertTrue(all(torch.equal(a,b) for a,b in zip(expected,actual)))
             for policy in ('joint64','increment32'):
                 net=e.RuntimeModel(torch,copy.deepcopy(self.parent),policy)
+                ionic=i.t.make_core(torch,self.cfg,self.ca,self.base,100*np.pi,net,i.t.FAMILIES['all'],True)
+                parent_ionic=original(torch,self.cfg,self.ca,self.base,100*np.pi,self.parent,i.t.FAMILIES['all'],True)
+                self.assertTrue(all(torch.equal(a,b) for a,b in zip(ionic(v,ca,gg,mult,inj,syn),parent_ionic(v,ca,gg,mult,inj,syn))))
                 core=i.t.make_core(torch,self.cfg,self.ca,self.base,100*np.pi,net,i.t.FAMILIES['all'])
                 result=core(v.double(),ca,gg,mult,inj.double(),syn.double())
                 self.assertEqual(result[0].dtype,torch.float64)

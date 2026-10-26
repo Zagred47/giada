@@ -178,11 +178,23 @@ def publish_resume(api,receipt):
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['preflight','status','logs','retrieve','launch','supervise']);args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['preflight','status','logs','retrieve','launch','supervise','recover-evaluation']);args=ap.parse_args()
     from kaggle.api.kaggle_api_extended import KaggleApi
     api=KaggleApi();api.authenticate();DEST.mkdir(parents=True,exist_ok=True)
     revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     if args.mode=='preflight':launch(api,revision,'preflight');return
+    if args.mode=='recover-evaluation':
+        active=json.loads((FOLDER/'kaggle_active_launch.json').read_text())
+        assert active['mode']=='evaluate' and status(api,active)[0]=='error'
+        repair=json.loads((ROOT/'experiments/task41i_evaluation_recovery_v1.json').read_text())
+        receipt,target=retrieve(api,active)
+        assert receipt['remote']['sha256']==repair['input_archive_sha256']
+        with zipfile.ZipFile(receipt['local']) as archive:
+            freeze=json.loads(archive.read('selection_freeze.json'))
+            assert freeze['freeze_sha256']==repair['freeze_sha256']
+            assert hashlib.sha256(archive.read('frozen_checkpoint.pt')).hexdigest()==repair['checkpoint_sha256']
+        publish_resume(api,receipt)
+        launch(api,revision,'evaluate',None,receipt['remote']['sha256']);return
     if args.mode in ('status','logs','retrieve'):
         path=FOLDER/('kaggle_active_launch.json' if (FOLDER/'kaggle_active_launch.json').exists() else 'kaggle_preflight_launch.json')
         value=json.loads(path.read_text())

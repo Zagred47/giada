@@ -35,7 +35,13 @@ def contract(root):
     for key in ('quality','compartment_gates','cost'):assert spec[key]==old[key],key
     assert spec['arms']==arms() and spec['dt_ms']==.1 and spec['seeds']==[17,29,43]
     assert not set(spec['new_seeds'].values())&set(old['new_seeds'].values())
-    for path,sha in spec['sources'].items():assert p.digest(root/path)==sha,path
+    for path,sha in spec['sources'].items():
+        actual=p.digest(root/path)
+        if actual!=sha:
+            repair=json.loads((root/'experiments/task41i_evaluation_recovery_v1.json').read_text())
+            assert repair['original_protocol_sha256']==p.digest(root/CONFIG)
+            assert path in ('src/giada_teacher/task41i_evaluation.py','src/giada_teacher/task41i_selective_repair.py')
+            assert repair['source_repairs'][path]==dict(original=sha,repaired=actual),path
     return spec,cfg,ca,base
 
 
@@ -370,6 +376,8 @@ def preflight(torch,root,out,device,spec):
 
 
 def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluation_only=False):
+    if (root/'experiments/task41i_evaluation_recovery_v1.json').exists():
+        assert evaluation_only and resume,'Recovery revision permits frozen evaluation only'
     import torch
     from . import task41i_evaluation as ev
     spec,cfg,calcium,base=contract(root)
@@ -391,6 +399,12 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
         payload={key:value for key,value in freeze.items() if key!='freeze_sha256'}
         assert hashlib.sha256(json.dumps(payload,sort_keys=True).encode()).hexdigest()==freeze['freeze_sha256']
         assert p.digest(out/'frozen_checkpoint.pt')==freeze['checkpoint_sha256']
+        recovery_path=root/'experiments/task41i_evaluation_recovery_v1.json'
+        if recovery_path.exists():
+            recovery=json.loads(recovery_path.read_text())
+            assert freeze['freeze_sha256']==recovery['freeze_sha256']
+            assert freeze['checkpoint_sha256']==recovery['checkpoint_sha256']
+            p.save_json(out/'evaluation_recovery.json',dict(recovery,training_updates_performed=0,selection_recomputed=False))
         knots=np.asarray(json.loads((out/'FIT_knots.json').read_text())['knots'])
         saved=torch.load(out/'frozen_checkpoint.pt',map_location=device,weights_only=True);trained={}
         for a in arms():

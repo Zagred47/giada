@@ -1,0 +1,21 @@
+{
+  "task": "41i evaluation-only recovery",
+  "original_protocol_sha256": "e6445f29662c6709b21c2ee9fd07e07d79c2ed7876a2186b1aba1ef3a1fdb027",
+  "input_archive_sha256": "82b89efe9436af20efbd3cb8435cb3b082f2a6a9fe88a0246bc04bafab754e74",
+  "freeze_sha256": "62806390f23044fca9362eaab09d8c9770fab4de37cae43262b5ddf70429e4ff",
+  "checkpoint_sha256": "af7b02ab42b73e02a0d161386ac362490873b7df2539b3cdfcafcf13ca75e871",
+  "training_authorized": false,
+  "selection_authorized": false,
+  "thresholds_changed": false,
+  "repair": "Membrane precision sidecars retain their identical FP32 ionic map in the ionic-only benchmark; actual coupled precision policies are unchanged. Reuse complete cached panels. No training, no new selection, no protocol changes.",
+  "source_repairs": {
+    "src/giada_teacher/task41i_evaluation.py": {
+      "original": "484ce050bb1739e59414443ffeb5b8bf534b1726be06cd16828dfcbbc05b201f",
+      "repaired": "ee9830aff1906c905afa52b3df6cce289e52c801adf2df52aaf7f4d18f5cc588"
+    },
+    "src/giada_teacher/task41i_selective_repair.py": {
+      "original": "8b6406b0eb018d8b762ce2b9eaa7967cdfe032f5dee5ba71150f4fa902aa6646",
+      "repaired": "97a205cc9493e8d5c87204faa44a77c6e00a3c44215ed4590ab6f34eadc37abd"
+    }
+  }
+}

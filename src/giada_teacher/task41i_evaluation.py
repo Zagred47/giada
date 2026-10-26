@@ -115,7 +115,11 @@ def runtime_adapters():
         policy=getattr(model,'runtime_policy',None) if model is not None else None
         if policy not in ('joint64','increment32'):
             return original_core(torch,cfg,calcium,base,area,model,channels,ionic_only)
-        assert not ionic_only,'Precision sidecars require the coupled membrane'
+        if ionic_only:
+            # These policies change only the voltage carrier/solver. Without
+            # a membrane solve their ionic map is exactly the FP32 parent map;
+            # do not fabricate an FP64 ionic workload or claim a solver gain.
+            return original_core(torch,cfg,calcium,base,area,model,channels,True)
         core=he.precision_core(torch,model,cfg,calcium,base,area,True,True,False) if policy=='joint64' else compensated_core(torch,model,cfg,calcium,base,area)
         core._giada_runtime=(model,policy)
         return core
