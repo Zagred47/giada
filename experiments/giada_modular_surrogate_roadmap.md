@@ -1344,6 +1344,24 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     `task41i_preregistration_v1.json`; console Colab e backup esterni;
     mirror SQLite e backup del DB soltanto locali.
 
+  - **Task41i conclusa — NO-GO:** recupero tecnico completato senza training
+    aggiuntivo né nuova selezione. Sugli stessi pannelli H ha4 fallimenti e
+    I010 ne ha6; le varianti numeriche ne risolvono due, non tutti. Il candidato
+    primario è più lento del controllo H. Nessuna promozione alla42.
+
+  - **Task41j — Riottimizzazione congiunta e operatore compatto:**
+    `giada_task41j_operator_reset.ipynb`,3bracci×3seed. Catena H con tutti
+    i parametri apprendibili contro un operatore condiviso64/128, senza
+    aggiungere altri correttori. Stessi18stati,V/Ca,passo0,1ms e readout;
+    equilibri e coefficienti temporali riappresi congiuntamente.4096 update
+    di distillazione appaiati,poi60000 di raffinamento canonico, mini scaling,
+    loss di percorso e feedback; gap di compressione esplicitamente misurato.
+    Tutti i gate e regressioni originali dopo freeze, costo dell'intera catena
+    contro operatori compatti. Soglie e livello di astrazione invariati.
+    Protocollo `task41j_preregistration_v1.json`, dettagli `task41j_design.md`.
+    Kaggle da console con fasi e backup esterni verificati; DB soltanto locale.
+    Non è la Task42 e non autorizza automaticamente il passaggio successivo.
+
 ### ✅ Uscita del blocco 1
 
 Operatore e interfaccia congelati, errore attribuibile e costo misurato.
