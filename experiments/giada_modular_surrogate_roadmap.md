@@ -1326,6 +1326,24 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     automatica alla42. Protocollo `task41h_preregistration_v1.json`;
     console Colab, backup sperimentali esterni, DB solo locale.
 
+  - **Task41i — Riparazione selettiva e osservabilità dei contrasti:** notebook
+    unico `giada_task41i_selective_repair.ipynb`, 8 bracci × 3 seed. Parent 41h
+    congelato e correzioni nuove inizialmente nulle. Fattori appaiati: Nap.m
+    congelato/addestrabile, loss della coda/crossing ufficiale, 128 basi uniformi
+    o allocate soltanto su FIT. Ca.m sempre addestrabile; tutti gli z e gli altri
+    16 equilibri protetti. Percorsi e query condivisi, etichette ufficiali dal
+    primo campione e dalla massima deviazione dell'intero percorso. Preflight
+    di raggiungibilità e visibilità delle metriche per testa; gate globale
+    invariato. Proiezione FIT diagnostica e mini scaling sulla stessa traiettoria.
+    Dopo freeze, tutti i pannelli originali anche per i sidecar numerici e di
+    esecuzione: stato V/solver64, Newton in coordinate incrementali FP32,
+    compilazione dell'intera catena senza fondere nonlinearità distinte.
+    Profilo e tempi appaiati a 1/642/4096 siti per seed. Nessuna riduzione del
+    livello di astrazione, nessun cambio delle soglie, nessun oracle selezionabile
+    e nessuna autorizzazione automatica alla Task42. Protocollo
+    `task41i_preregistration_v1.json`; console Colab e backup esterni;
+    mirror SQLite e backup del DB soltanto locali.
+
 ### ✅ Uscita del blocco 1
 
 Operatore e interfaccia congelati, errore attribuibile e costo misurato.

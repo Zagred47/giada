@@ -1,0 +1,1797 @@
+{
+  "valid": true,
+  "scope": "Post hoc CPU/offline diagnostic; original GPU verdicts unchanged",
+  "source_checkpoint_sha256": "8450f9aaf5e375263aa5318688ccf46252bc0ab79b1f594f73e0789638080cf8",
+  "nominee": "H0_D256_N4096_B128",
+  "training_performed": false,
+  "selection_changed": false,
+  "thresholds_changed": false,
+  "imposed_development_nap_structurally_unaffected": true,
+  "other17_u_and_all_z_equal_parent": true,
+  "original_development_case8": [
+    {
+      "seed": 17,
+      "case": 8,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 0.0012225437399800948,
+            "rmse_ma_cm2": 4.052455242109969e-08,
+            "max_abs_ma_cm2": 7.502086575707592e-07,
+            "nrmse": 3.31477321390231e-05,
+            "nmax": 0.0006136456578502246,
+            "signed_charge_error_ma_ms_cm2": 3.3531624718739735e-06,
+            "absolute_charge_error_ma_ms_cm2": 3.3531624718739735e-06,
+            "signed_charge_normalized": 2.2856458779466746e-06,
+            "absolute_charge_normalized": 2.2856458779466746e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.01044551541331558,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 0.0003875557186594007,
+            "rmse_ma_cm2": 1.1322919464980555e-08,
+            "max_abs_ma_cm2": 1.5811547304198396e-07,
+            "nrmse": 2.9216236323767382e-05,
+            "nmax": 0.0004079812667683588,
+            "signed_charge_error_ma_ms_cm2": 1.7081602338904606e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.7081602338904606e-07,
+            "signed_charge_normalized": 3.672934736970067e-07,
+            "absolute_charge_normalized": 3.672934736970067e-07,
+            "reference_signed_charge_ma_ms_cm2": -0.003935986538931663,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 0.0003224949146587795,
+            "rmse_ma_cm2": 2.5335967780144594e-09,
+            "max_abs_ma_cm2": 9.465357650467352e-08,
+            "nrmse": 7.856237921441858e-06,
+            "nmax": 0.0002935040901492141,
+            "signed_charge_error_ma_ms_cm2": 1.2330657195132579e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.2330657195132579e-06,
+            "signed_charge_normalized": 3.1862665721367524e-06,
+            "absolute_charge_normalized": 3.1862665721367524e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.0003685584842683053,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 0.0002745603754780805,
+            "rmse_ma_cm2": 2.9049634105034684e-09,
+            "max_abs_ma_cm2": 2.0701715671068337e-07,
+            "nrmse": 1.0580417532738207e-05,
+            "nmax": 0.0007539950233175965,
+            "signed_charge_error_ma_ms_cm2": 5.5973886115575706e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.5973886115575706e-08,
+            "signed_charge_normalized": 1.6988942783555058e-07,
+            "absolute_charge_normalized": 1.6988942783555058e-07,
+            "reference_signed_charge_ma_ms_cm2": -0.00024968766736095785,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": false,
+            "scale_ma_cm2": 0.0008828329255796515,
+            "rmse_ma_cm2": 2.4101257479944347e-08,
+            "max_abs_ma_cm2": 4.069298469529573e-08,
+            "nrmse": 2.729990780998558e-05,
+            "nmax": 4.609364186159854e-05,
+            "signed_charge_error_ma_ms_cm2": 2.7341944225683462e-05,
+            "absolute_charge_error_ma_ms_cm2": 2.7341944225683462e-05,
+            "signed_charge_normalized": 2.5808907734657454e-05,
+            "absolute_charge_normalized": 2.5808907734657454e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 2.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 4.95905964994243e-05,
+            "rmse_ma_cm2": 1.9093654406034237e-09,
+            "max_abs_ma_cm2": 9.522189774462971e-09,
+            "nrmse": 3.850257055539934e-05,
+            "nmax": 0.00019201603623730386,
+            "signed_charge_error_ma_ms_cm2": 1.407672897495386e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.5563454244121716e-06,
+            "signed_charge_normalized": 2.3654902959803812e-05,
+            "absolute_charge_normalized": 2.615323492546475e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00017653302643534007,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 0.0002742169976515595,
+            "rmse_ma_cm2": 8.35803129416149e-09,
+            "max_abs_ma_cm2": 4.2602308187710686e-08,
+            "nrmse": 3.047962513535294e-05,
+            "nmax": 0.00015535983747384016,
+            "signed_charge_error_ma_ms_cm2": 9.651451670615256e-06,
+            "absolute_charge_error_ma_ms_cm2": 9.651451670615256e-06,
+            "signed_charge_normalized": 2.9330334957565376e-05,
+            "absolute_charge_normalized": 2.9330334957565376e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.01211808938851273,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.1355145725864026e-05,
+            "rmse_ma_cm2": 9.916217153263992e-09,
+            "max_abs_ma_cm2": 8.969861401943476e-08,
+            "nrmse": 0.00019309101382356474,
+            "nmax": 0.0017466334240048664,
+            "signed_charge_error_ma_ms_cm2": 2.0023037793759477e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.0023037793759477e-06,
+            "signed_charge_normalized": 3.249112546034382e-05,
+            "absolute_charge_normalized": 3.249112546034382e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.000596727225409053,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 9.374159163963287e-06,
+            "rmse_ma_cm2": 5.594234851266748e-11,
+            "max_abs_ma_cm2": 8.189313032422587e-10,
+            "nrmse": 5.967719081165644e-06,
+            "nmax": 8.736050763789506e-05,
+            "signed_charge_error_ma_ms_cm2": 1.2864519289877722e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.2864519289877722e-08,
+            "signed_charge_normalized": 1.1436153956903253e-06,
+            "absolute_charge_normalized": 1.1436153956903253e-06,
+            "reference_signed_charge_ma_ms_cm2": 3.4118993174192594e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1e-07,
+            "rmse_ma_cm2": 5.906906724265146e-11,
+            "max_abs_ma_cm2": 1.243091732509784e-10,
+            "nrmse": 0.0005906906724265147,
+            "nmax": 0.0012430917325097842,
+            "signed_charge_error_ma_ms_cm2": 7.057792754172897e-08,
+            "absolute_charge_error_ma_ms_cm2": 7.057792754172897e-08,
+            "signed_charge_normalized": 0.0005881493961809429,
+            "absolute_charge_normalized": 0.0005881493961809429,
+            "reference_signed_charge_ma_ms_cm2": 1.7092272121031046e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.4168710584923555e-05,
+            "rmse_ma_cm2": 5.726291019261207e-10,
+            "max_abs_ma_cm2": 7.0924132799009894e-09,
+            "nrmse": 4.041504683816719e-05,
+            "nmax": 0.000500568717060802,
+            "signed_charge_error_ma_ms_cm2": 2.380072074180118e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.380072074180118e-07,
+            "signed_charge_normalized": 1.3998404323824101e-05,
+            "absolute_charge_normalized": 1.3998404323824101e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00033813888547346244,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.00010311811446161755,
+          "max_abs": 0.0010382443967711097,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0002153413616045494,
+          "8": 0.00037202610282249896,
+          "40": 0.0004055572013471446,
+          "100": 0.0002937899168487379,
+          "500": 0.00020547094848081382,
+          "1000": 0.00019149249599536634
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 6.563938699724481e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "seed": 29,
+      "case": 8,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 0.0012225437399800948,
+            "rmse_ma_cm2": 4.2007053478101004e-08,
+            "max_abs_ma_cm2": 7.798667574749978e-07,
+            "nrmse": 3.436036855318155e-05,
+            "nmax": 0.000637904994293043,
+            "signed_charge_error_ma_ms_cm2": 3.5906088842334495e-06,
+            "absolute_charge_error_ma_ms_cm2": 3.5906088842334495e-06,
+            "signed_charge_normalized": 2.447498582131113e-06,
+            "absolute_charge_normalized": 2.447498582131113e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.01044551541331558,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 0.0003875557186594007,
+            "rmse_ma_cm2": 1.064140332584093e-08,
+            "max_abs_ma_cm2": 1.4062371131586633e-07,
+            "nrmse": 2.7457737851606875e-05,
+            "nmax": 0.00036284772626320606,
+            "signed_charge_error_ma_ms_cm2": 3.7361537931246336e-07,
+            "absolute_charge_error_ma_ms_cm2": 3.7361537931246336e-07,
+            "signed_charge_normalized": 8.033584190271075e-07,
+            "absolute_charge_normalized": 8.033584190271075e-07,
+            "reference_signed_charge_ma_ms_cm2": -0.003935986538931663,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 0.0003224949146587795,
+            "rmse_ma_cm2": 2.167785493691371e-09,
+            "max_abs_ma_cm2": 8.856267212929746e-08,
+            "nrmse": 6.721921478932554e-06,
+            "nmax": 0.00027461726713738264,
+            "signed_charge_error_ma_ms_cm2": 5.565928189271422e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.565928189271422e-08,
+            "signed_charge_normalized": 1.438247017311528e-07,
+            "absolute_charge_normalized": 1.438247017311528e-07,
+            "reference_signed_charge_ma_ms_cm2": -0.0003685584842683053,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 0.0002745603754780805,
+            "rmse_ma_cm2": 1.8810881595150697e-09,
+            "max_abs_ma_cm2": 1.145499380379581e-07,
+            "nrmse": 6.8512732627190265e-06,
+            "nmax": 0.00041721219909645403,
+            "signed_charge_error_ma_ms_cm2": 1.3150395079763867e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.3150395079763867e-08,
+            "signed_charge_normalized": 3.99134891456427e-08,
+            "absolute_charge_normalized": 3.99134891456427e-08,
+            "reference_signed_charge_ma_ms_cm2": -0.00024968766736095785,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": false,
+            "scale_ma_cm2": 0.0008828329255796515,
+            "rmse_ma_cm2": 2.5606930126723514e-08,
+            "max_abs_ma_cm2": 4.203086004001162e-08,
+            "nrmse": 2.9005409047142737e-05,
+            "nmax": 4.760907621610844e-05,
+            "signed_charge_error_ma_ms_cm2": 3.0229735247944645e-05,
+            "absolute_charge_error_ma_ms_cm2": 3.0229735247944645e-05,
+            "signed_charge_normalized": 2.8534783094336567e-05,
+            "absolute_charge_normalized": 2.8534783094336567e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 1.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 4.95905964994243e-05,
+            "rmse_ma_cm2": 1.3770476029996205e-09,
+            "max_abs_ma_cm2": 1.5791006839119655e-08,
+            "nrmse": 2.776832101657835e-05,
+            "nmax": 0.00031842744297909327,
+            "signed_charge_error_ma_ms_cm2": 6.936499292406922e-07,
+            "absolute_charge_error_ma_ms_cm2": 4.471537154576988e-07,
+            "signed_charge_normalized": 1.1656274546068186e-05,
+            "absolute_charge_normalized": 7.51408780128457e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.00017653302643534007,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 0.0002742169976515595,
+            "rmse_ma_cm2": 5.049949481247709e-09,
+            "max_abs_ma_cm2": 1.237072822044688e-08,
+            "nrmse": 1.84158878716357e-05,
+            "nmax": 4.5112915415134284e-05,
+            "signed_charge_error_ma_ms_cm2": 5.666477977838296e-06,
+            "absolute_charge_error_ma_ms_cm2": 5.666477977838296e-06,
+            "signed_charge_normalized": 1.7220176072137753e-05,
+            "absolute_charge_normalized": 1.7220176072137753e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.01211808938851273,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.1355145725864026e-05,
+            "rmse_ma_cm2": 9.885298913667927e-09,
+            "max_abs_ma_cm2": 8.952724341051662e-08,
+            "nrmse": 0.0001924889662748905,
+            "nmax": 0.001743296453454088,
+            "signed_charge_error_ma_ms_cm2": 2.0076429504103068e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.0076429504103068e-06,
+            "signed_charge_normalized": 3.257776350084451e-05,
+            "absolute_charge_normalized": 3.257776350084451e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.000596727225409053,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 9.374159163963287e-06,
+            "rmse_ma_cm2": 1.2899625015988066e-10,
+            "max_abs_ma_cm2": 1.858759438957821e-09,
+            "nrmse": 1.3760834214952942e-05,
+            "nmax": 0.00019828545754838227,
+            "signed_charge_error_ma_ms_cm2": 1.1599168668602066e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.1599168668602066e-08,
+            "signed_charge_normalized": 1.0311296961609012e-06,
+            "absolute_charge_normalized": 1.0311296961609012e-06,
+            "reference_signed_charge_ma_ms_cm2": 3.4118993174192594e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1e-07,
+            "rmse_ma_cm2": 4.149536957212286e-11,
+            "max_abs_ma_cm2": 8.732575472843884e-11,
+            "nrmse": 0.0004149536957212286,
+            "nmax": 0.0008732575472843884,
+            "signed_charge_error_ma_ms_cm2": 4.95801951723928e-08,
+            "absolute_charge_error_ma_ms_cm2": 4.95801951723928e-08,
+            "signed_charge_normalized": 0.0004131682931032034,
+            "absolute_charge_normalized": 0.0004131682931032034,
+            "reference_signed_charge_ma_ms_cm2": 1.7092272121031046e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.4168710584923555e-05,
+            "rmse_ma_cm2": 4.709020859172353e-10,
+            "max_abs_ma_cm2": 6.321706882710836e-09,
+            "nrmse": 3.323535215817777e-05,
+            "nmax": 0.0004461737604717221,
+            "signed_charge_error_ma_ms_cm2": 2.4551209480846077e-07,
+            "absolute_charge_error_ma_ms_cm2": 2.4551209480846077e-07,
+            "signed_charge_normalized": 1.4439804604246707e-05,
+            "absolute_charge_normalized": 1.4439804604246707e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00033813888547346244,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 5.3986623948422085e-05,
+          "max_abs": 0.0010305087406139724,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.00015933598840387294,
+          "8": 0.00027961767475321946,
+          "40": 0.00036764905460537285,
+          "100": 0.00025410588246035205,
+          "500": 0.00015880850948328575,
+          "1000": 0.00014253327297725872
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 6.265515358149139e-08,
+        "causal_behavior_validated": false
+      }
+    },
+    {
+      "seed": 43,
+      "case": 8,
+      "metrics": {
+        "passed": false,
+        "finite": true,
+        "channels": [
+          {
+            "channel": "Ca_HVA",
+            "passed": true,
+            "scale_ma_cm2": 0.0012225437399800948,
+            "rmse_ma_cm2": 5.373491552415497e-08,
+            "max_abs_ma_cm2": 9.933222618472215e-07,
+            "nrmse": 4.395336851099485e-05,
+            "nmax": 0.000812504476824195,
+            "signed_charge_error_ma_ms_cm2": 5.6948400227608505e-06,
+            "absolute_charge_error_ma_ms_cm2": 5.6948400227608505e-06,
+            "signed_charge_normalized": 3.881824317422492e-06,
+            "absolute_charge_normalized": 3.881824317422492e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.01044551541331558,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ca_LVAst",
+            "passed": true,
+            "scale_ma_cm2": 0.0003875557186594007,
+            "rmse_ma_cm2": 1.0915109870429166e-08,
+            "max_abs_ma_cm2": 1.8559958392844493e-07,
+            "nrmse": 2.81639757714988e-05,
+            "nmax": 0.0004788978074441915,
+            "signed_charge_error_ma_ms_cm2": 5.597771582110692e-07,
+            "absolute_charge_error_ma_ms_cm2": 5.597771582110692e-07,
+            "signed_charge_normalized": 1.2036487728511943e-06,
+            "absolute_charge_normalized": 1.2036487728511943e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.003935986538931663,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTa_t",
+            "passed": true,
+            "scale_ma_cm2": 0.0003224949146587795,
+            "rmse_ma_cm2": 1.7078853649039783e-08,
+            "max_abs_ma_cm2": 6.631258030318681e-07,
+            "nrmse": 5.295852080988724e-05,
+            "nmax": 0.0020562364641733906,
+            "signed_charge_error_ma_ms_cm2": 1.6565612878159365e-06,
+            "absolute_charge_error_ma_ms_cm2": 1.6565612878159365e-06,
+            "signed_charge_normalized": 4.280587621998846e-06,
+            "absolute_charge_normalized": 4.280587621998846e-06,
+            "reference_signed_charge_ma_ms_cm2": -0.0003685584842683053,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "NaTs2_t",
+            "passed": true,
+            "scale_ma_cm2": 0.0002745603754780805,
+            "rmse_ma_cm2": 1.0183323473767833e-09,
+            "max_abs_ma_cm2": 6.018799609137362e-08,
+            "nrmse": 3.7089559831916887e-06,
+            "nmax": 0.00021921588643871416,
+            "signed_charge_error_ma_ms_cm2": 1.5701040239769857e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.5701040239769857e-07,
+            "signed_charge_normalized": 4.765509289906854e-07,
+            "absolute_charge_normalized": 4.765509289906854e-07,
+            "reference_signed_charge_ma_ms_cm2": -0.00024968766736095785,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Nap_Et2",
+            "passed": false,
+            "scale_ma_cm2": 0.0008828329255796515,
+            "rmse_ma_cm2": 3.366657287118334e-08,
+            "max_abs_ma_cm2": 1.5780467999617102e-07,
+            "nrmse": 3.813470464876296e-05,
+            "nmax": 0.00017874806820617777,
+            "signed_charge_error_ma_ms_cm2": 3.9758776378820426e-05,
+            "absolute_charge_error_ma_ms_cm2": 3.9758776378820426e-05,
+            "signed_charge_normalized": 3.752954006247889e-05,
+            "absolute_charge_normalized": 3.752954006247889e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 1.4000000000000001
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Ih",
+            "passed": true,
+            "scale_ma_cm2": 4.95905964994243e-05,
+            "rmse_ma_cm2": 1.948950644686489e-09,
+            "max_abs_ma_cm2": 9.519979614788608e-09,
+            "nrmse": 3.9300810683112355e-05,
+            "nmax": 0.0001919714681169267,
+            "signed_charge_error_ma_ms_cm2": 2.079516049945097e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.228210135900818e-06,
+            "signed_charge_normalized": 3.4944730734199566e-05,
+            "absolute_charge_normalized": 3.744342498357957e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.00017653302643534007,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "Im",
+            "passed": true,
+            "scale_ma_cm2": 0.0002742169976515595,
+            "rmse_ma_cm2": 2.4267213279526216e-08,
+            "max_abs_ma_cm2": 7.154109032736283e-08,
+            "nrmse": 8.849638602768871e-05,
+            "nmax": 0.0002608922529969067,
+            "signed_charge_error_ma_ms_cm2": 2.891703612370168e-05,
+            "absolute_charge_error_ma_ms_cm2": 2.891703612370168e-05,
+            "signed_charge_normalized": 8.787759442144056e-05,
+            "absolute_charge_normalized": 8.787759442144056e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.01211808938851273,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.1
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Pst",
+            "passed": true,
+            "scale_ma_cm2": 5.1355145725864026e-05,
+            "rmse_ma_cm2": 1.0681187907189988e-08,
+            "max_abs_ma_cm2": 9.677328301131915e-08,
+            "nrmse": 0.00020798671206594618,
+            "nmax": 0.0018843931147211439,
+            "signed_charge_error_ma_ms_cm2": 2.1473868767779373e-06,
+            "absolute_charge_error_ma_ms_cm2": 2.1473868767779373e-06,
+            "signed_charge_normalized": 3.4845370190048066e-05,
+            "absolute_charge_normalized": 3.4845370190048066e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.000596727225409053,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.2
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "K_Tst",
+            "passed": true,
+            "scale_ma_cm2": 9.374159163963287e-06,
+            "rmse_ma_cm2": 4.471966654127791e-11,
+            "max_abs_ma_cm2": 6.240404580246015e-10,
+            "nrmse": 4.7705256289216825e-06,
+            "nmax": 6.657028615681883e-05,
+            "signed_charge_error_ma_ms_cm2": 1.0642422958846742e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.0642422958846742e-08,
+            "signed_charge_normalized": 9.460780048550898e-07,
+            "absolute_charge_normalized": 9.460780048550898e-07,
+            "reference_signed_charge_ma_ms_cm2": 3.4118993174192594e-05,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SK_E2",
+            "passed": true,
+            "scale_ma_cm2": 1e-07,
+            "rmse_ma_cm2": 1.454765190162304e-10,
+            "max_abs_ma_cm2": 3.0615159832792875e-10,
+            "nrmse": 0.001454765190162304,
+            "nmax": 0.0030615159832792877,
+            "signed_charge_error_ma_ms_cm2": 1.738208904123239e-07,
+            "absolute_charge_error_ma_ms_cm2": 1.738208904123239e-07,
+            "signed_charge_normalized": 0.0014485074201031163,
+            "absolute_charge_normalized": 0.0014485074201031163,
+            "reference_signed_charge_ma_ms_cm2": 1.7092272121031046e-05,
+            "event": {
+              "status": "not_evaluable",
+              "reason": "insufficient or boundary transient"
+            },
+            "blocked_current_passed": true
+          },
+          {
+            "channel": "SKv3_1",
+            "passed": true,
+            "scale_ma_cm2": 1.4168710584923555e-05,
+            "rmse_ma_cm2": 1.4376144093228858e-09,
+            "max_abs_ma_cm2": 1.7716973887623938e-08,
+            "nrmse": 0.00010146402530464577,
+            "nmax": 0.0012504295137820071,
+            "signed_charge_error_ma_ms_cm2": 7.233502067425973e-07,
+            "absolute_charge_error_ma_ms_cm2": 7.233502067425973e-07,
+            "signed_charge_normalized": 4.2543874076571094e-05,
+            "absolute_charge_normalized": 4.2543874076571094e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00033813888547346244,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.0
+            },
+            "blocked_current_passed": true
+          }
+        ],
+        "gate": {
+          "finite": true,
+          "occupancy_violations": 0,
+          "rmse": 0.00010425982479769029,
+          "max_abs": 0.0011142234642010085,
+          "passed": true
+        },
+        "horizon_current_nrmse": {
+          "1": 0.0006436715681572067,
+          "8": 0.0009117071012989009,
+          "40": 0.0006964202240335696,
+          "100": 0.0005555357719435451,
+          "500": 0.00046120693141797804,
+          "1000": 0.0004480458726951549
+        },
+        "first_tolerance_exceedance_ms": null,
+        "nonfailure_right_censored": true,
+        "total_current_rmse_ma_cm2": 6.401973965170049e-08,
+        "causal_behavior_validated": false
+      }
+    }
+  ],
+  "numpy_recurrence_probes": [
+    {
+      "policy": "learned32",
+      "seed": 17,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 2.4122160419215787e-08,
+        "max_abs_ma_cm2": 4.082253600369741e-08,
+        "nrmse": 2.732358492789293e-05,
+        "nmax": 4.6240386851106736e-05,
+        "signed_charge_error_ma_ms_cm2": 2.737014579778274e-05,
+        "absolute_charge_error_ma_ms_cm2": 2.737014579778274e-05,
+        "signed_charge_normalized": 2.583552807175832e-05,
+        "absolute_charge_normalized": 2.583552807175832e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 2.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 30.400000000000002,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": -3.823987227424017e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "learned32",
+      "seed": 29,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 2.5638920612334672e-08,
+        "max_abs_ma_cm2": 4.203086004001162e-08,
+        "nrmse": 2.9041645218998417e-05,
+        "nmax": 4.760907621610844e-05,
+        "signed_charge_error_ma_ms_cm2": 3.0267451563249778e-05,
+        "absolute_charge_error_ma_ms_cm2": 3.0267451563249778e-05,
+        "signed_charge_normalized": 2.8570384692151316e-05,
+        "absolute_charge_normalized": 2.8570384692151316e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 1.0
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 27.3,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 1.673036727919638e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "learned32",
+      "seed": 43,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 3.370845473790053e-08,
+        "max_abs_ma_cm2": 1.579342313045998e-07,
+        "nrmse": 3.81821449576863e-05,
+        "nmax": 0.00017889481319571668,
+        "signed_charge_error_ma_ms_cm2": 3.980986080951121e-05,
+        "absolute_charge_error_ma_ms_cm2": 3.980986080951121e-05,
+        "signed_charge_normalized": 3.757776023831911e-05,
+        "absolute_charge_normalized": 3.757776023831911e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 1.4000000000000001
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 26.900000000000002,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 2.499736014764751e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "state64",
+      "seed": 17,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 2.4064065236577454e-08,
+        "max_abs_ma_cm2": 4.0804603210290715e-08,
+        "nrmse": 2.7257779517882664e-05,
+        "nmax": 4.62200740683739e-05,
+        "signed_charge_error_ma_ms_cm2": 2.7295132922873587e-05,
+        "absolute_charge_error_ma_ms_cm2": 2.7295132922873587e-05,
+        "signed_charge_normalized": 2.5764721096531312e-05,
+        "absolute_charge_normalized": 2.5764721096531312e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 2.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 30.400000000000002,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": -3.81715137085382e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "state64",
+      "seed": 29,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 2.569024056381893e-08,
+        "max_abs_ma_cm2": 4.1875629746440136e-08,
+        "nrmse": 2.909977620844986e-05,
+        "nmax": 4.743324419956968e-05,
+        "signed_charge_error_ma_ms_cm2": 3.0328842570789423e-05,
+        "absolute_charge_error_ma_ms_cm2": 3.0328842570789423e-05,
+        "signed_charge_normalized": 2.8628333564998384e-05,
+        "absolute_charge_normalized": 2.8628333564998384e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 1.0
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 27.3,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 1.6794753513536928e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "state64",
+      "seed": 43,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 3.379914749677075e-08,
+        "max_abs_ma_cm2": 1.5777851767044722e-07,
+        "nrmse": 3.8284874201513115e-05,
+        "nmax": 0.00017871843369100988,
+        "signed_charge_error_ma_ms_cm2": 3.991860332326398e-05,
+        "absolute_charge_error_ma_ms_cm2": 3.991860332326398e-05,
+        "signed_charge_normalized": 3.768040566401066e-05,
+        "absolute_charge_normalized": 3.768040566401066e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 1.4000000000000001
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 26.900000000000002,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 2.5076794304829662e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_m32",
+      "seed": 17,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.3253457693132033e-08,
+        "max_abs_ma_cm2": 1.94563925324235e-08,
+        "nrmse": 1.5012418895036184e-05,
+        "nmax": 2.203858960023359e-05,
+        "signed_charge_error_ma_ms_cm2": 1.4386816827491046e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.4386816827491046e-05,
+        "signed_charge_normalized": 1.358016185796133e-05,
+        "absolute_charge_normalized": 1.358016185796133e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 4.2309633197673037e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_m32",
+      "seed": 29,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.157669004500171e-08,
+        "max_abs_ma_cm2": 2.0609844380713345e-08,
+        "nrmse": 1.3113115414675627e-05,
+        "nmax": 2.3345124296515457e-05,
+        "signed_charge_error_ma_ms_cm2": 1.2580102325176867e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.2580102325176867e-05,
+        "signed_charge_normalized": 1.1874748098493072e-05,
+        "absolute_charge_normalized": 1.1874748098493072e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 3.502237209821509e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_m32",
+      "seed": 43,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.2609642323942363e-08,
+        "max_abs_ma_cm2": 1.2638848770465732e-07,
+        "nrmse": 1.4283158181558655e-05,
+        "nmax": 0.00014316240824578785,
+        "signed_charge_error_ma_ms_cm2": 1.3282746238597114e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.3282746238597114e-05,
+        "signed_charge_normalized": 1.2537995444113346e-05,
+        "absolute_charge_normalized": 1.2537995444113346e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 4.3119328875691754e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_m",
+      "seed": 17,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.330878920963417e-08,
+        "max_abs_ma_cm2": 1.9521684091719136e-08,
+        "nrmse": 1.5075093853002673e-05,
+        "nmax": 2.211254646953903e-05,
+        "signed_charge_error_ma_ms_cm2": 1.4456526414234579e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.4456526414234579e-05,
+        "signed_charge_normalized": 1.3645962895284573e-05,
+        "absolute_charge_normalized": 1.3645962895284573e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 4.892508564079134e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_m",
+      "seed": 29,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.1617757700609924e-08,
+        "max_abs_ma_cm2": 2.0389052339379356e-08,
+        "nrmse": 1.3159633452707852e-05,
+        "nmax": 2.3095029363559688e-05,
+        "signed_charge_error_ma_ms_cm2": 1.263230328340158e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.263230328340158e-05,
+        "signed_charge_normalized": 1.1924022199243269e-05,
+        "absolute_charge_normalized": 1.1924022199243269e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 4.0800176514491516e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_m",
+      "seed": 43,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.2685398875503558e-08,
+        "max_abs_ma_cm2": 1.262939072173893e-07,
+        "nrmse": 1.4368968927132576e-05,
+        "nmax": 0.00014305527530531,
+        "signed_charge_error_ma_ms_cm2": 1.3380890079502186e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.3380890079502186e-05,
+        "signed_charge_normalized": 1.2630636454340523e-05,
+        "absolute_charge_normalized": 1.2630636454340523e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 4.996907538895763e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_h",
+      "seed": 17,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 2.4531028513772134e-08,
+        "max_abs_ma_cm2": 4.080451085242023e-08,
+        "nrmse": 2.7786716832820348e-05,
+        "nmax": 4.6219969453029585e-05,
+        "signed_charge_error_ma_ms_cm2": 2.7996515440633607e-05,
+        "absolute_charge_error_ma_ms_cm2": 2.7996515440633607e-05,
+        "signed_charge_normalized": 2.6426777771731877e-05,
+        "absolute_charge_normalized": 2.6426777771731877e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 2.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 30.400000000000002,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": -3.8191913492152934e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_h",
+      "seed": 29,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 2.5863197134863906e-08,
+        "max_abs_ma_cm2": 4.1885406654184904e-08,
+        "nrmse": 2.9295687083581094e-05,
+        "nmax": 4.744431867069721e-05,
+        "signed_charge_error_ma_ms_cm2": 3.052266823914525e-05,
+        "absolute_charge_error_ma_ms_cm2": 3.052266823914525e-05,
+        "signed_charge_normalized": 2.8811291614723016e-05,
+        "absolute_charge_normalized": 2.8811291614723016e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 1.0
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 27.3,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 1.6802746877875958e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u_h",
+      "seed": 43,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 3.3418793424151484e-08,
+        "max_abs_ma_cm2": 1.5777761164860763e-07,
+        "nrmse": 3.7854040618398246e-05,
+        "nmax": 0.00017871740742452918,
+        "signed_charge_error_ma_ms_cm2": 3.9481694022717866e-05,
+        "absolute_charge_error_ma_ms_cm2": 3.9481694022717866e-05,
+        "signed_charge_normalized": 3.726799344733975e-05,
+        "absolute_charge_normalized": 3.726799344733975e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 1.4000000000000001
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 26.900000000000002,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 2.506337927524443e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u",
+      "seed": 17,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.2649273514287865e-08,
+        "max_abs_ma_cm2": 1.845448661725766e-08,
+        "nrmse": 1.4328049110744924e-05,
+        "nmax": 2.0903713582205592e-05,
+        "signed_charge_error_ma_ms_cm2": 1.3755439880602729e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.3755439880602729e-05,
+        "signed_charge_normalized": 1.2984185608667241e-05,
+        "absolute_charge_normalized": 1.2984185608667241e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 4.688596807621206e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u",
+      "seed": 29,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.1799385751896583e-08,
+        "max_abs_ma_cm2": 2.0400110524779712e-08,
+        "nrmse": 1.336536666227002e-05,
+        "nmax": 2.310755515986831e-05,
+        "signed_charge_error_ma_ms_cm2": 1.282616362229584e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.282616362229584e-05,
+        "signed_charge_normalized": 1.210701297556237e-05,
+        "absolute_charge_normalized": 1.210701297556237e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 4.1599655996673885e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_u",
+      "seed": 43,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.2293034046676272e-08,
+        "max_abs_ma_cm2": 1.2629300113369598e-07,
+        "nrmse": 1.3924530554413676e-05,
+        "nmax": 0.00014305424896876652,
+        "signed_charge_error_ma_ms_cm2": 1.2943863496770163e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.2943863496770163e-05,
+        "signed_charge_normalized": 1.2218113531382924e-05,
+        "absolute_charge_normalized": 1.2218113531382924e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.200000000000003,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 4.862721232894596e-10,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_z",
+      "seed": 17,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 3.443455333959746e-08,
+        "max_abs_ma_cm2": 5.2884146277572524e-08,
+        "nrmse": 3.900460930021202e-05,
+        "nmax": 5.9902779727942054e-05,
+        "signed_charge_error_ma_ms_cm2": 4.105728206840133e-05,
+        "absolute_charge_error_ma_ms_cm2": 4.105728206840133e-05,
+        "signed_charge_normalized": 3.875523978809834e-05,
+        "absolute_charge_normalized": 3.875523978809834e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 2.1
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 30.400000000000002,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": -3.864060669826438e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_z",
+      "seed": 29,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.4678760574832145e-08,
+        "max_abs_ma_cm2": 2.2392904793953287e-08,
+        "nrmse": 1.662688392052703e-05,
+        "nmax": 2.5364827415391793e-05,
+        "signed_charge_error_ma_ms_cm2": 1.7505199374485098e-05,
+        "absolute_charge_error_ma_ms_cm2": 1.7505199374485098e-05,
+        "signed_charge_normalized": 1.652369969756882e-05,
+        "absolute_charge_normalized": 1.652369969756882e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 1.0
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 27.3,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 1.637884017634619e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_z",
+      "seed": 43,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 2.2605243348381552e-08,
+        "max_abs_ma_cm2": 3.3502132981602217e-08,
+        "nrmse": 2.5605346938707993e-05,
+        "nmax": 3.79484407648314e-05,
+        "signed_charge_error_ma_ms_cm2": 2.6977626820690157e-05,
+        "absolute_charge_error_ma_ms_cm2": 2.6977626820690157e-05,
+        "signed_charge_normalized": 2.546501725583883e-05,
+        "absolute_charge_normalized": 2.546501725583883e-05,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 1.4000000000000001
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 26.900000000000002,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 2.4590632406411967e-08,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_uz",
+      "seed": 17,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.7199149476141386e-21,
+        "max_abs_ma_cm2": 1.0842021724855044e-19,
+        "nrmse": 1.948177166687428e-18,
+        "nmax": 1.2280944005046456e-16,
+        "signed_charge_error_ma_ms_cm2": 4.014936169985384e-20,
+        "absolute_charge_error_ma_ms_cm2": 4.014936169985384e-20,
+        "signed_charge_normalized": 3.789822564057305e-20,
+        "absolute_charge_normalized": 3.789822564057305e-20,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.0
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.3,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 0.0,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_uz",
+      "seed": 29,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.7199149476141386e-21,
+        "max_abs_ma_cm2": 1.0842021724855044e-19,
+        "nrmse": 1.948177166687428e-18,
+        "nmax": 1.2280944005046456e-16,
+        "signed_charge_error_ma_ms_cm2": 4.014936169985384e-20,
+        "absolute_charge_error_ma_ms_cm2": 4.014936169985384e-20,
+        "signed_charge_normalized": 3.789822564057305e-20,
+        "absolute_charge_normalized": 3.789822564057305e-20,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.0
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.3,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 0.0,
+      "prediction_within_reference_threshold_band": 6
+    },
+    {
+      "policy": "nap_uz",
+      "seed": 43,
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": true,
+        "scale_ma_cm2": 0.0008828329255796515,
+        "rmse_ma_cm2": 1.7199149476141386e-21,
+        "max_abs_ma_cm2": 1.0842021724855044e-19,
+        "nrmse": 1.948177166687428e-18,
+        "nmax": 1.2280944005046456e-16,
+        "signed_charge_error_ma_ms_cm2": 4.014936169985384e-20,
+        "absolute_charge_error_ma_ms_cm2": 4.014936169985384e-20,
+        "signed_charge_normalized": 3.789822564057305e-20,
+        "absolute_charge_normalized": 3.789822564057305e-20,
+        "reference_signed_charge_ma_ms_cm2": -0.10611428926542042,
+        "event": {
+          "status": "evaluable",
+          "peak_error_ms": 0.0,
+          "onset_error_ms": 0.0,
+          "offset_error_ms": 0.0
+        },
+        "blocked_current_passed": true
+      },
+      "reference_offset_ms": 28.3,
+      "prediction_offset_ms": 28.3,
+      "reference_crossing_slope": -1.795236534008328e-08,
+      "crossing_signed_current_error": 0.0,
+      "prediction_within_reference_threshold_band": 6
+    }
+  ],
+  "response_reduction_probes": [
+    {
+      "dtype": "<class 'numpy.float32'>",
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 1.0000000116860974e-07,
+        "rmse_ma_cm2": 1.006424277250062e-09,
+        "max_abs_ma_cm2": 4.103640094399452e-09,
+        "nrmse": 0.010064242407679558,
+        "nmax": 0.04103640094399452,
+        "signed_charge_error_ma_ms_cm2": 1.5173570488968836e-08,
+        "absolute_charge_error_ma_ms_cm2": 1.5173570488968836e-08,
+        "signed_charge_normalized": 0.003793393261730671,
+        "absolute_charge_normalized": 0.003793393261730671,
+        "reference_signed_charge_ma_ms_cm2": -2.4142130428117527e-08,
+        "event": {
+          "status": "not_evaluable",
+          "reason": "insufficient or boundary transient"
+        },
+        "blocked_current_passed": true
+      }
+    },
+    {
+      "dtype": "<class 'numpy.float64'>",
+      "Nap_metric": {
+        "channel": "Nap_Et2",
+        "passed": false,
+        "scale_ma_cm2": 1e-07,
+        "rmse_ma_cm2": 1.0064244932568695e-09,
+        "max_abs_ma_cm2": 4.103640094399452e-09,
+        "nrmse": 0.010064244932568696,
+        "nmax": 0.04103640094399452,
+        "signed_charge_error_ma_ms_cm2": 1.517356902824493e-08,
+        "absolute_charge_error_ma_ms_cm2": 1.51735692959995e-08,
+        "signed_charge_normalized": 0.003793392257061233,
+        "absolute_charge_normalized": 0.003793392323999875,
+        "reference_signed_charge_ma_ms_cm2": -2.4142128861542966e-08,
+        "event": {
+          "status": "not_evaluable",
+          "reason": "insufficient or boundary transient"
+        },
+        "blocked_current_passed": true
+      }
+    }
+  ],
+  "correction_bounds": {
+    "local_v_range": [
+      -50,
+      -35
+    ],
+    "required_correction_max_abs": 0.0014620848450412893,
+    "allowed_correction_abs_max": 0.1,
+    "observed_delta_max_abs": 0.0012898445129394531,
+    "local_required_outside_bound_count": 0,
+    "observed_local_saturation_fraction": 0.0,
+    "caveat": "Bound probe only, not an optimized approximation floor or deployment quality proof."
+  },
+  "registered_contrast_bottleneck": {
+    "official_contrast_count": 14,
+    "all_official_ratios_one": true,
+    "frozen_worst_by_seed": [
+      7.000000000000001,
+      3.3333333333333335,
+      4.666666666666667
+    ],
+    "all_arms_share_worst_by_seed": true,
+    "attribution": "Official contrasts divide the max Ca_HVA/Nap_Et2 severity. Frozen Nap timing 2.1/1.0/1.4ms divided by0.3 dominates all arms. Ratios1 cannot identify the effect on the trainable Ca head.",
+    "Ca_only_posthoc_contrasts": [
+      {
+        "axis": "history",
+        "control": "H0_D256_N4096",
+        "treatment": "H1_D256_N4096",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "axis": "history",
+        "control": "H0_D256_N16384",
+        "treatment": "H1_D256_N16384",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "axis": "history",
+        "control": "H0_D16_N4096",
+        "treatment": "H1_D16_N4096",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.01017931270153,
+          1.0486557681681523,
+          1.0
+        ]
+      },
+      {
+        "axis": "history",
+        "control": "H0_D16_N16384",
+        "treatment": "H1_D16_N16384",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.0,
+          1.0053845348055843,
+          1.0
+        ]
+      },
+      {
+        "axis": "aux_every",
+        "control": "H0_D16_N4096",
+        "treatment": "H0_D256_N4096",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.039720395568323,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "axis": "aux_every",
+        "control": "H0_D16_N16384",
+        "treatment": "H0_D256_N16384",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.0,
+          1.018666387325865,
+          1.0
+        ]
+      },
+      {
+        "axis": "aux_every",
+        "control": "H1_D16_N4096",
+        "treatment": "H1_D256_N4096",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.0292434051018042,
+          0.9536017731985141,
+          1.0
+        ]
+      },
+      {
+        "axis": "aux_every",
+        "control": "H1_D16_N16384",
+        "treatment": "H1_D256_N16384",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.0,
+          1.0132107189443182,
+          1.0
+        ]
+      },
+      {
+        "axis": "fit_count",
+        "control": "H0_D256_N4096",
+        "treatment": "H0_D256_N16384",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          0.9969053754706194,
+          1.001279051685904,
+          1.000780389513319
+        ]
+      },
+      {
+        "axis": "fit_count",
+        "control": "H0_D16_N4096",
+        "treatment": "H0_D16_N16384",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.0365028513285,
+          0.982931275777534,
+          1.000780389513319
+        ]
+      },
+      {
+        "axis": "fit_count",
+        "control": "H1_D256_N4096",
+        "treatment": "H1_D256_N16384",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          0.9969053754706194,
+          1.001279051685904,
+          1.000780389513319
+        ]
+      },
+      {
+        "axis": "fit_count",
+        "control": "H1_D16_N4096",
+        "treatment": "H1_D16_N16384",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          1.026058283213673,
+          0.9423720666408365,
+          1.000780389513319
+        ]
+      },
+      {
+        "axis": "basis",
+        "control": "H0_D256_N4096",
+        "treatment": "H0_D256_N4096_B128",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          0.9742552534735115,
+          1.0126140959369303,
+          0.9984392209733076
+        ]
+      },
+      {
+        "axis": "basis",
+        "control": "H1_D16_N16384",
+        "treatment": "H1_D16_N16384_B128",
+        "official_ratios": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "posthoc_Ca_only_ratios": [
+          0.9767503403880925,
+          1.024413051562705,
+          0.9979725694508013
+        ]
+      }
+    ],
+    "official_selection_changed": false
+  },
+  "timing_definition_mismatch": {
+    "training": "10 percent of distance to asymptotic steady current after prefix, with terminal-crossing weighting",
+    "evaluation": "10 percent of max absolute current deviation from first reference sample; first/last crossing on full path",
+    "causal_attribution": "Different objectives by construction; not proof this mismatch alone causes the residual."
+  },
+  "limits": "CPU coefficient/recurrent arithmetic is not bitwise the original CUDA graph. Oracles are nonselectable. No official result recomputed or replaced."
+}

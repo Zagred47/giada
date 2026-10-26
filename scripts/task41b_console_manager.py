@@ -19,7 +19,7 @@ def file_sha(path):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('request',type=Path);args=parser.parse_args()
     request=json.loads(args.request.read_text());revision=request['revision'];task=request.get('task','39e')
-    assert task in ('39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f','41g','41h')
+    assert task in ('39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f','41g','41h','41i')
     assert len(revision)==40 and all(c in '0123456789abcdef' for c in revision)
     root=Path('/content')/('giada_task'+task+'_'+revision[:12]);root.mkdir(exist_ok=False)
     status=root/'job_status.json';output=root/'artifacts';repo=root/'giada';started=time.time()
@@ -44,7 +44,7 @@ def main():
         else:
             archive=Path(shutil.make_archive(str(root/('recovery_'+label)), 'zip', output))
         receipt=dict(label=label,archive=archive.as_posix(),sha256=file_sha(archive),bytes=archive.stat().st_size)
-        if task=='41h':
+        if task in ('41h','41i'):
             # Transport only: original ZIP and scientific files stay intact.
             parts=[]
             with archive.open('rb') as stream:
@@ -77,6 +77,7 @@ def main():
         workers['41f']='run_task41f_precision_relaxation.py'
         workers['41g']='run_task41g_preservation.py'
         workers['41h']='run_task41h_path_repair.py'
+        workers['41i']='run_task41i_selective_repair.py'
         if request.get('evaluation_only'):
             assert task=='41h'
             workers['41h']='recover_task41h_evaluation.py'
@@ -111,7 +112,7 @@ def main():
                 if '[GIADA Task' in line:
                     save(state='running',phase='scientific_worker',worker_pid=worker.pid,last_progress=line.rstrip())
                     checkpoint='checkpoint_saved ' in line or 'checkpoint ' in line or 'preflights passed' in line
-                    if checkpoint and (task not in ('41d','41e','41f','41g','41h') or 'checkpoint_saved ' in line or 'preflights passed' in line or time.time()-last_publish>=120):
+                    if checkpoint and (task not in ('41d','41e','41f','41g','41h','41i') or 'checkpoint_saved ' in line or 'preflights passed' in line or time.time()-last_publish>=120):
                         publish(str(int(time.time()*1000)))
                         last_publish=time.time()
             code=worker.wait()
