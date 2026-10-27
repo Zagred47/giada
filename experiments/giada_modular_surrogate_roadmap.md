@@ -1362,6 +1362,22 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     Kaggle da console con fasi e backup esterni verificati; DB soltanto locale.
     Non è la Task42 e non autorizza automaticamente il passaggio successivo.
 
+  - **Task41j conclusa — NO-GO:** stesso pannello: H6 fallimenti, catena6,
+    compatti64/128 rispettivamente435/477, controllo limitato8. I checkpoint
+    selezionati di catena e compatti sono step0 (compatti dopo distillazione).
+    La loss atomica migliora ma la dinamica peggiora: non confondere selezione
+    del parent con assenza di training. I compatti accelerano, ma non qualificano.
+
+  - **Task41k — Riparazione e compressione separate:** sei bracci di riparazione
+    H e due di copia compatta del solo H, tre seed, stesso notebook. Controlli
+    coefficienti/vecchio mix, matrice2×2 loss dinamica con targeting FIT e replay,
+    compressione tramite coefficienti o dinamica del parent. Probe gradienti e
+    checkpoint0/16/64/256/1024; budget diagnostico, non saturazione dimostrata.
+    Stesse soglie,18stati,V/Ca,ricorrenza,dt0,1ms. Selezione compressione separata;
+    tutte le suite e i costi dopo freeze. Dettagli `task41k_design.md` e protocollo
+    `task41k_preregistration_v1.json`. Kaggle console, backup esterni per fase;
+    DB soltanto locale. Nessuna promozione automatica alla42.
+
 ### ✅ Uscita del blocco 1
 
 Operatore e interfaccia congelati, errore attribuibile e costo misurato.
