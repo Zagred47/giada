@@ -227,7 +227,12 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
             p.save_json(out/'training_curves.json',curves);p.save_json(out/f'development_{step_number}.json',measured)
             torch.save(dict(step=step_number,exposure=exposure,models={n:m.state_dict() for n,m in models.items()},optimizer={n:o.state_dict() for n,o in opts.items()},rng=rng.bit_generator.state,best=best,selected_weights=saved,chosen_steps=chosen,protocol_sha256=p.digest(root/CONFIG),torch_version=torch.__version__,gpu=torch.cuda.get_device_name()),out/f'checkpoint_{step_number}.pt')
             print(f'[GIADA Task41l] checkpoint {step_number} finite=True',flush=True)
-        if stop_after==step_number and step_number<spec['checkpoints'][-1]:return dict(valid=True,decision='TRAINING_STAGE_COMPLETE',updates_completed=step_number,training_complete=False,thresholds_changed=False)
+        if stop_after==step_number and step_number<spec['checkpoints'][-1]:
+            if step_number not in spec['checkpoints']:
+                # Infrastructure-only boundary: no development, probe, rank or RNG draw.
+                j.finite(torch,models,opts)
+                torch.save(dict(step=step_number,exposure=exposure,models={n:m.state_dict() for n,m in models.items()},optimizer={n:o.state_dict() for n,o in opts.items()},rng=rng.bit_generator.state,best=best,selected_weights=saved,chosen_steps=chosen,protocol_sha256=p.digest(root/CONFIG),torch_version=torch.__version__,gpu=torch.cuda.get_device_name()),out/f'checkpoint_{step_number}.pt')
+            return dict(valid=True,decision='TRAINING_STAGE_COMPLETE',updates_completed=step_number,training_complete=False,thresholds_changed=False,selection_checkpoint=step_number in spec['checkpoints'])
         if step_number==spec['checkpoints'][-1]:break
         batches=support.minibatches(torch,rng,pools,samplers,spec,device)
         diagnostics=update(torch,models,opts,pools,batches,physics,step_number+1)

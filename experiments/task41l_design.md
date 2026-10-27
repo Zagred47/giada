@@ -2,10 +2,12 @@
 
 ## Stato e perimetro
 
-**Protocollo scientifico proposto, non ancora eseguibile o lanciato.** Sottotask
-della Task 41 originale; non autorizza Task 42. Prima del lancio servono worker,
-notebook unico, preregistrazione macchina con hash, test CPU/GPU e stima di costo.
-Nessun risultato della 41l è già disponibile. Nessun cambiamento alle soglie,
+**Protocollo implementato; stato esecutivo nelle ricevute `results/task41l_protocol_v1/`.**
+Sottotask della Task 41 originale; non autorizza Task 42. Worker, notebook unico,
+preregistrazione macchina con hash e sette test CPU sono disponibili. Il lancio
+scientifico richiede preflight GPU superato, stima di costo e registrazione
+SQLite verificata; nessun risultato scientifico è implicito nel preflight.
+Nessun cambiamento alle soglie,
 al passo 0.1 ms, alle 18 occupazioni, alle dipendenze causali V/Ca, alla ricorrenza
 affine limitata o al readout, alle sinapsi e al solver. Nessun fallback cinetico
 analitico in inferenza. La compressione NON è parte della riparazione.
@@ -174,3 +176,33 @@ finiti, isolamento dei probe, scanner senza cicli, resume identico, export repor
 completo, hash/CRC backup fuori runtime. Registrare prereg e hash nel SQLite
 prima di qualsiasi training; checkpoint esterno per fase prima di proseguire.
 Il backup completo DB resta locale. Non modificare i sorgenti hash-pinned 41k.
+
+### Dettagli esecutivi fissati prima del training
+
+Il targeting viene calibrato **per famiglia sul FIT1x** (due famiglie di path,
+tredici interventi feedback), poi riutilizzato nel4x. Le famiglie hanno
+probabilità uniformi: le righe sono appaiate esattamente fra A/P e tramite gli
+stessi quantili casuali fra D. Ogni blocco feedback contiene almeno un esempio
+per intervento; il resto è estratto senza rimpiazzo. Questa stratificazione FIT
+è dichiarata, non rende appaiati gli esperimenti41k e41l. Il tie del massimo P
+è risolto dal primo gruppo nell'ordine preregistrato. Nessun dato test colma
+gruppi FIT vuoti.
+
+La matrice congelata conserva il batch originale per non introdurre un nuovo
+fattore di roundoff GEMM. Salva le traiettorie dei casi120 (41),108/122 (41c) e
+dei rispettivi controlli; include entrambi i pannelli stress e la ricorrenza
+storica, quindi anche il fallimento K_Tst. Le risposte H/K primarie devono
+riprodurre il sidecar41k. I margini di corrente/timing/gate sono calcolati con
+gli stessi predicati originali. La validità dei floor numerici è separata dalla
+qualità del candidato. Le politiche alternative non competono nella selezione.
+
+I checkpoint contengono momenti Adam, RNG, selezione, esposizioni ai gruppi,
+protocollo e ambiente. Il probe frazionario usa la LR del prossimo passo, su
+una copia dei pesi e dell'optimizer. La pipeline console mantiene lo stesso
+notebook Kaggle privato e versiona le fasi64/256/1024/2048/3072/4096/valutazione; ogni
+continuazione richiede prima SHA/CRC e checkpoint finiti fuori dal runtime.
+I confini2048/3072 sono esclusivamente tecnici: non aggiungono valutazioni,
+probe, estrazioni RNG o opportunita di selezione. Il preflightT4 stima circa
+17.6ore di soli aggiornamenti totali; questi confini evitano una singola fase
+di13ore, incompatibile con il limite runtime. Budget e checkpoint scientifici
+restano invariati.

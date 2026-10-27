@@ -1,0 +1,40 @@
+[
+  {
+    "launch": {
+      "ref": "/code/alessandrobelli/giada-task41l-preflight",
+      "version": 1,
+      "url": "https://www.kaggle.com/code/alessandrobelli/giada-task41l-preflight",
+      "revision": "eb95cc3cdb86d081db002f70059ca9e4e8ba6f5e",
+      "mode": "preflight",
+      "stop_after": null,
+      "input_resume_sha256": null
+    },
+    "receipt": {
+      "valid": false,
+      "worker_exit_code": 1,
+      "revision": "eb95cc3cdb86d081db002f70059ca9e4e8ba6f5e",
+      "mode": "preflight",
+      "stop_after": null,
+      "input_resume_sha256": null,
+      "thresholds_changed": false
+    },
+    "scientific_training_performed": false,
+    "log_path": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41l_kaggle_external\\preflight_v1\\process.log",
+    "log_sha256": "4191d52c945c22e3d479216f74c84ed85d8d997dc2e863dcfeac3056f207c6a2",
+    "error_tail": [
+      "/tmp/giada_task41l/giada/src/giada_teacher/task41l_regression_attribution.py:165: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.",
+      "Consider using tensor.detach() first. (Triggered internally at /pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:836.)",
+      "  seed_error=max(seed_error,max(float((a[seed]-b[seed]).abs().max()) for a,b in zip(independent.parameters(),models[name].parameters())))",
+      "[GIADA Task41b] checkpoint cost ionic batch=1",
+      "[GIADA Task41b] checkpoint cost integrated batch=1",
+      "Traceback (most recent call last):",
+      "  File \"/tmp/giada_task41l/giada/scripts/task41l_gpu_probe.py\", line 29, in <module>",
+      "    scanner_preflight(torch,models,spec,'cuda',folder)",
+      "    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "  File \"/tmp/giada_task41l/giada/src/giada_teacher/task41k_recovery.py\", line 41, in preflight",
+      "    expected.append(state.cpu().numpy().copy())",
+      "                    ~~~~~~~~~~~~~~~~~^^",
+      "RuntimeError: Can't call numpy() on Tensor that requires grad. Use tensor.detach().numpy() instead."
+    ]
+  }
+]

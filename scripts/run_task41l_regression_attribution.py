@@ -8,7 +8,7 @@ from src.giada_teacher import task41l_regression_attribution as i
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('output',type=Path);ap.add_argument('--smoke',action='store_true')
-    ap.add_argument('--resume-archive',type=Path);ap.add_argument('--resume-sha256');ap.add_argument('--resume-local',action='store_true');ap.add_argument('--stop-after',type=int,choices=[64,256,1024,4096]);ap.add_argument('--evaluation-only',action='store_true');args=ap.parse_args()
+    ap.add_argument('--resume-archive',type=Path);ap.add_argument('--resume-sha256');ap.add_argument('--resume-local',action='store_true');ap.add_argument('--stop-after',type=int,choices=[64,256,1024,2048,3072,4096]);ap.add_argument('--evaluation-only',action='store_true');args=ap.parse_args()
     args.output.mkdir(parents=True,exist_ok=True)
     try:
         revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()

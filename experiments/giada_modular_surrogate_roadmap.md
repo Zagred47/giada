@@ -1384,15 +1384,16 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     non qualificati. Il probe iniziale suggerisce di distinguere direzione e
     ampiezza dell'update, non dimostra da solo la causa del training.
 
-  - **Task41l — Attribuzione delle regressioni (disegno proposto):** trapianti
+  - **Task41l — Attribuzione delle regressioni:** trapianti
     fattoriali congelati di coefficienti appresi Ca_HVA/Nap_Et2/K_Tst con controlli
     imposti e autonomi; matrice2×2×2 di LR, supporto FIT annidato e protezione
     canonica dei gruppi peggiori. Checkpoint di budget lungo la stessa traiettoria,
     probe degli update effettivi e controllo numerico voltaggio/solve incrociato
     (solo diagnostico, non deroga al FP32). Compressione parcheggiata e separata; nessun
     cambio di astrazione o soglie. `task41l_design.md` definisce contrasti e limiti.
-    Worker/notebook e preregistrazione eseguibile richiedono ancora implementazione
-    e preflight; nessun lancio o promozione alla42 implicito in questo piano.
+    Worker/notebook e preregistrazione eseguibile implementati; stato reale del
+    preflight GPU, registrazione e lancio in `results/task41l_protocol_v1/`.
+    Nessuna promozione alla42 implicita nel piano o nel superamento del preflight.
 
 ### ✅ Uscita del blocco 1
 

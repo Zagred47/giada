@@ -234,7 +234,7 @@ def main():
                 return
             publish_resume(api,receipt)
             if not report.get('training_complete'):
-                stop=next(k for k in (256,1024,4096) if k>report['updates_completed']);mode='train'
+                stop=next(k for k in (256,1024,2048,3072,4096) if k>report['updates_completed']);mode='train'
             else:stop=None;mode='evaluate'
             launch(api,active['revision'],mode,stop,receipt['remote']['sha256'])
         elif any(word in state for word in ('error','cancel','fail')):
