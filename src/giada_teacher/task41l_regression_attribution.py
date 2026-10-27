@@ -155,7 +155,8 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
         batches=support.minibatches(torch,rng,pools,samplers,spec,device)
         probe=adam_probe(torch,models[arms()[0]['name']],opts[arms()[0]['name']],*pools[0],batches[0],physics,False)
         sequential=copy.deepcopy(models)
-        update(torch,models,opts,pools,batches,physics,1);j.finite(torch,models,opts)
+        timed_update=update(torch,models,opts,pools,batches,physics,1);j.finite(torch,models,opts)
+        print('[GIADA Task41l] all8 objectives finite; checking seed isolation',flush=True)
         seed_error=0.
         for definition in arms():
             name=definition['name'];level=definition['coverage']
@@ -174,6 +175,7 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
         error=max(float((a-b).abs().max()) for n in models for a,b in zip(models[n].parameters(),copies[n].parameters()))
         assert error<=spec['computational_parity_atol']
         result=dict(valid=True,all_parameters_finite=True,resume_parameter_error=error,all_eight_objectives_exercised=True,
+                    per_arm_first_update=timed_update,estimated_update_only_hours_4096=sum(r['seconds'] for r in timed_update.values())*4096/3600,
                     sequential_vectorized_parameter_error=seed_error,serialized_resume_verified=True,probe_isolated=probe['candidate_and_optimizer_unchanged'],scientific_training_performed=False,
                     protocol_sha256=p.digest(root/CONFIG),thresholds_changed=False,members=24)
         p.save_json(out/'preflight.json',result);return result
