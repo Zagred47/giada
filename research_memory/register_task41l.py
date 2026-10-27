@@ -8,14 +8,15 @@ from .register_task41d_result import ResultPreview,PreviewComplete
 
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--validate-only',action='store_true');ap.add_argument('--running',action='store_true');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--validate-only',action='store_true');mode=ap.add_mutually_exclusive_group();mode.add_argument('--running',action='store_true');mode.add_argument('--submitted',action='store_true');args=ap.parse_args()
     repo=ROOT.parent;folder=repo/'experiments/results/task41l_protocol_v1'
     spec=json.loads((repo/'experiments/task41l_preregistration_v1.json').read_text())
     local=json.loads((folder/'local_verification.json').read_text());gpu=json.loads((folder/'gpu_preflight.json').read_text())
     digest=hashlib.sha256((repo/'experiments/task41l_preregistration_v1.json').read_bytes()).hexdigest()
     assert local['valid'] and gpu['valid'] and gpu['all_parameters_finite']
     assert local['protocol_sha256']==gpu['protocol_sha256']==digest
-    baseline_path=folder/'memory_receipt.json' if args.running else repo/'experiments/results/task41k_audited_v1/memory_receipt.json'
+    baseline_path=folder/'memory_receipt.json' if args.running or args.submitted else repo/'experiments/results/task41k_audited_v1/memory_receipt.json'
+    if args.running and (folder/'launch_submitted_memory_receipt.json').exists():baseline_path=folder/'launch_submitted_memory_receipt.json'
     baseline=json.loads(baseline_path.read_text())['verification']
     m=ResultPreview() if args.validate_only else IncrementalBatchMirror();ids={};arts=[]
     if not args.validate_only:assert m.baseline_hash==baseline['snapshot_hash']
@@ -32,7 +33,20 @@ def main():
         arts.append(rid);return rid
     date=datetime.now(timezone.utc).date().isoformat()
     exp=ref('experiments-giada-task41l-regression-attribution-v1')
-    if args.running:
+    if args.submitted:
+        launch=json.loads((folder/'kaggle_active_launch.json').read_text())
+        status_path=repo/'artifacts/task41l_kaggle_external/pipeline_status.json'
+        observed=json.loads(status_path.read_text())
+        assert launch['mode']=='train' and launch['revision']==gpu['revision']
+        assert observed['launch']==launch and observed['state'] in ('running','queued','complete')
+        artifact(folder/'kaggle_active_launch.json');artifact(status_path)
+        obs=put('observations','submitted',Nome='Task41l actual Kaggle submission',Descrizione=json.dumps(dict(launch=launch,status=observed,first_training_backup_verified=False)),**{'Artefatti dettagliati':arts})
+        put('findings','submitted',Nome='Task41l scientific run submitted',Esito='Positivo',Esperimenti=[exp],Osservazioni=[obs],Risultato='Pinned private Kaggle run submitted after CPU/GPU preflight and DB preregistration.',Limitazioni='No scientific result. First external training checkpoint verification pending; finite workflow retrieves and verifies each phase before continuation.')
+        put('experiments','regression-attribution',Stato='In corso')
+        for arm in spec['arms']:
+            for seed in spec['seeds']:put('runs',arm['name']+'-'+str(seed),Stato='In corso',**{'Hardware e ambiente':json.dumps(gpu),'Validità tecnica':'Kaggle submission verified; training checkpoint/evaluation pending.'})
+        put('actions','launch',Stato='In corso',Descrizione='Actual private Kaggle submission; finite external-backup pipeline active. No completed-training claim.')
+    elif args.running:
         launch=json.loads((folder/'launch.json').read_text());assert launch['valid'] and launch['all_recovered_tensors_finite']
         artifact(folder/'launch.json');artifact(folder/'kaggle_active_launch.json')
         obs=put('observations','launch',Nome='Task41l verified external checkpoint',Descrizione=json.dumps(launch),**{'Artefatti dettagliati':arts})
@@ -47,6 +61,7 @@ def main():
                      'scripts/run_task41l_regression_attribution.py','scripts/task41l_kaggle_pipeline.py','scripts/task41l_gpu_probe.py','scripts/build_task41l_protocol.py','tests/test_task41l_regression_attribution.py','research_memory/register_task41l.py'):
             artifact(repo/name)
         prereg=arts[0];artifact(folder/'local_verification.json');artifact(folder/'gpu_preflight.json')
+        if (folder/'gpu_preflight_before_phase_split.json').exists():artifact(folder/'gpu_preflight_before_phase_split.json')
         history=json.loads((folder/'preflight_history.json').read_text()) if (folder/'preflight_history.json').exists() else []
         if history:artifact(folder/'preflight_history.json')
         # Keep original hypothesis wording, evidence and stable identities.
@@ -77,7 +92,8 @@ def main():
     change=m.commit_batch()
     if args.validate_only:return
     verification=m.verify_incremental(baseline);assert verification['valid']
-    write_json(folder/('launch_memory_receipt.json' if args.running else 'memory_receipt.json'),dict(valid=True,verification=verification,change=change,records=ids,registration_before_scientific_run=not args.running,planned_training_runs=24,protocol_sha256=digest,airtable_accessed=False,DB_backup='local refresh pending'))
+    receipt_name='launch_memory_receipt.json' if args.running else 'launch_submitted_memory_receipt.json' if args.submitted else 'memory_receipt.json'
+    write_json(folder/receipt_name,dict(valid=True,verification=verification,change=change,records=ids,registration_before_scientific_run=not(args.running or args.submitted),planned_training_runs=24,protocol_sha256=digest,airtable_accessed=False,DB_backup='local refresh pending'))
     m.export_snapshot_to(ROOT/'data/airtable_snapshot.json')
     print('Task41l local memory verified and exported',flush=True)
 
