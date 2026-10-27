@@ -1,0 +1,40 @@
+[
+  {
+    "launch": {
+      "ref": "/code/alessandrobelli/giada-task41k-preflight",
+      "version": 1,
+      "url": "https://www.kaggle.com/code/alessandrobelli/giada-task41k-preflight",
+      "revision": "0a1db06affab2f8d16d7ee830c483e66254bd70d",
+      "mode": "preflight",
+      "stop_after": null,
+      "input_resume_sha256": null
+    },
+    "receipt": {
+      "valid": false,
+      "worker_exit_code": 1,
+      "revision": "0a1db06affab2f8d16d7ee830c483e66254bd70d",
+      "mode": "preflight",
+      "stop_after": null,
+      "input_resume_sha256": null,
+      "thresholds_changed": false
+    },
+    "scientific_training_performed": false,
+    "log_path": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41k_kaggle_external\\preflight_v1\\process.log",
+    "log_sha256": "027fb686764c358ba5520effc61864dea1c0d4adb02cbce96a7e77d8155dd973",
+    "error_tail": [
+      "Traceback (most recent call last):",
+      "  File \"/tmp/giada_task41k/giada/scripts/task41k_gpu_probe.py\", line 9, in <module>",
+      "    with tempfile.TemporaryDirectory() as tmp:result=k.run(ROOT,Path(tmp),smoke=True)",
+      "                                                     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "  File \"/tmp/giada_task41k/giada/src/giada_teacher/task41k_learning_alignment.py\", line 190, in run",
+      "    cc,models,data,selection,paths,sp,fb,sf,errors=setup(torch,root,out,device,spec,cfg,calcium,base,smoke)",
+      "                                                   ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+      "  File \"/tmp/giada_task41k/giada/src/giada_teacher/task41k_learning_alignment.py\", line 169, in setup",
+      "    errors=prepare_targets(torch,parent,paths,fb,(cfg,calcium,base));prepare_targets(torch,parent,sp,sf,(cfg,calcium,base))",
+      "  File \"/tmp/giada_task41k/giada/src/giada_teacher/task41k_learning_alignment.py\", line 80, in prepare_targets",
+      "    paths['retain_mask']=(pe<=pe.median(1,keepdim=True).values).double()",
+      "                              ~~~~~~~~~^^^^^^^^^^^^^^^^",
+      "RuntimeError: median CUDA with indices output does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation, or you can use the 'warn_only=True' option, if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation."
+    ]
+  }
+]

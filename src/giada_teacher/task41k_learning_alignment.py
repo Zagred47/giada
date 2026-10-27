@@ -77,8 +77,10 @@ def prepare_targets(torch,parent,paths,fb,physics):
         pe=path_errors(torch,paths['parent'],paths,pi);fe=feedback_errors(torch,fb['parent'],fb,fi)
         # Training-only replay masks: lower-half FIT discrepancy per seed.
         # These are NOT claims of full-trajectory qualification or changed gates.
-        paths['retain_mask']=(pe<=pe.median(1,keepdim=True).values).double()
-        fb['retain_mask']=(fe<=fe.median(1,keepdim=True).values).double()
+        # CUDA median-with-indices is rejected in strict deterministic mode.
+        # This one-time FIT quantile has no gradient: identical CPU lower median.
+        paths['retain_mask']=(pe<=pe.cpu().median(1,keepdim=True).values.to(pe.device)).double()
+        fb['retain_mask']=(fe<=fe.cpu().median(1,keepdim=True).values.to(fe.device)).double()
     return pe.mean(0).cpu().numpy(),fe.mean(0).cpu().numpy()
 
 
