@@ -1,0 +1,443 @@
+{
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "cost": {
+    "batches": [
+      1,
+      642,
+      4096
+    ],
+    "ticks": 80,
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "baselines": [
+      "resident formula CUDA Graph",
+      "0.01mV voltage LUT plus canonical calcium-dependent SK"
+    ],
+    "timing": "Same active native initial states at10ms,80resident future input ticks,no hosttransfer,alternatingorder;CUDAandwalltimes;pairedbootstrap uncertainty"
+  },
+  "task41d_checkpoint": "experiments/results/task41e_protocol_v1/task41d_frozen.pt",
+  "task41d_checkpoint_sha256": "68fff43f9d2793fd30131321125ca8ce567d4beb37ff48c76697f92080103a9a",
+  "task41d_summary": "experiments/results/task41e_protocol_v1/task41d_summary.json",
+  "opened_inputs_sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb",
+  "opened_members": {
+    "native_shadow_traces.npz": "8d2563aeeb4084835a3ff1da205d35ba28c31ae6d46aa19d10c6af2075fade0c",
+    "reference_traces.npz": "e056da661b26f055cc0e583e75019b3cd68661e2b64bbd6f13ac71465bee2e3a",
+    "fresh_stress_traces.npz": "061c10676151bccdf9be6e5f2536705ff693de4a5bda3e347aa56c0cdcef4f19",
+    "cases.json": "8e7cd4fbab498d0439fe3541427ef0c7bed42e14b3350bdc320c9c266d4ad340",
+    "causal_results.json": "a7cbe053e6518d73c5ab37400f5693bbe31fa128c1266d2e1f986b680d6921d9",
+    "fresh_stress_results.json": "61a81cd2c399bdbeee779618d066245c63f080f20086f230b3d5f0ddd0fd4dbe"
+  },
+  "opened41c_sha256": "172ec87c4b1135d4f3421d63343ae399368f8426a68fadcf4c7ca788c6e97aff",
+  "opened41c_members": {
+    "cases.json": "6daff32ba1a568a73d86eb68584839e71f5f21280f557947cc22a37fdc9aaccb",
+    "native_shadow_traces.npz": "150fad971c8ff262420d2824a86472c4623e01fb2c11310bd42799d87f027a53",
+    "fresh_stress_traces.npz": "456b4c03405d066614ce5f6d280b3adfab62a1eb9579a915a42164f4ec7eecd7",
+    "causal_results.json": "7159704b0ffd565007aa6c98d9c77588e7fc56aae228a35d9e21999705eb5e09"
+  },
+  "parent_sha256": "f83dd019d0f38c2a595da8565f9632765de95418b6103861b3159a61f3a693a6",
+  "balance_policy": {
+    "target_gradient_ratio": 0.1,
+    "ema": 0.9,
+    "gradient_floor": 1e-12,
+    "maximum_weight": 1000000.0,
+    "minimum_weight_ratio": 0.5,
+    "maximum_weight_ratio": 2.0
+  },
+  "protection_ticks": [
+    4,
+    40,
+    400,
+    4000,
+    12000
+  ],
+  "task": "41l",
+  "version": "v1",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dt_ms": 0.1,
+  "arms": [
+    {
+      "name": "L_A0D0P0",
+      "representation": "chain",
+      "width": 64,
+      "task": "repair",
+      "amplitude": 0,
+      "coverage": 0,
+      "protection": 0,
+      "lr": 1e-05
+    },
+    {
+      "name": "L_A0D0P1",
+      "representation": "chain",
+      "width": 64,
+      "task": "repair",
+      "amplitude": 0,
+      "coverage": 0,
+      "protection": 1,
+      "lr": 1e-05
+    },
+    {
+      "name": "L_A0D1P0",
+      "representation": "chain",
+      "width": 64,
+      "task": "repair",
+      "amplitude": 0,
+      "coverage": 1,
+      "protection": 0,
+      "lr": 1e-05
+    },
+    {
+      "name": "L_A0D1P1",
+      "representation": "chain",
+      "width": 64,
+      "task": "repair",
+      "amplitude": 0,
+      "coverage": 1,
+      "protection": 1,
+      "lr": 1e-05
+    },
+    {
+      "name": "L_A1D0P0",
+      "representation": "chain",
+      "width": 64,
+      "task": "repair",
+      "amplitude": 1,
+      "coverage": 0,
+      "protection": 0,
+      "lr": 1e-06
+    },
+    {
+      "name": "L_A1D0P1",
+      "representation": "chain",
+      "width": 64,
+      "task": "repair",
+      "amplitude": 1,
+      "coverage": 0,
+      "protection": 1,
+      "lr": 1e-06
+    },
+    {
+      "name": "L_A1D1P0",
+      "representation": "chain",
+      "width": 64,
+      "task": "repair",
+      "amplitude": 1,
+      "coverage": 1,
+      "protection": 0,
+      "lr": 1e-06
+    },
+    {
+      "name": "L_A1D1P1",
+      "representation": "chain",
+      "width": 64,
+      "task": "repair",
+      "amplitude": 1,
+      "coverage": 1,
+      "protection": 1,
+      "lr": 1e-06
+    }
+  ],
+  "contrasts": [],
+  "sources": {
+    "src/giada_teacher/task41e_transfer_model.py": "cc2b809f295525624d74751d0aa3fa0719180fa89e27fc3d626226365e540ea0",
+    "src/giada_teacher/task41e_transfer_data.py": "aab7843141ad6f91e0ce28f6082b50679fdb27ce7cda42ab79af5f585cfa135f",
+    "src/giada_teacher/task41e_transfer_training.py": "7134de56faf0e0ddbe4e9d0afe96d75db57b6a789ccd918350af143b880bb187",
+    "src/giada_teacher/task41e_transfer_evaluation.py": "bd9fbb6160092f8ef931bec8f591f871c2446cf7529b927d8980c1ca57ce091d",
+    "scripts/run_task41e_transfer.py": "b61ad3e978298111d3dd164800910d482a2d6f3829a91b2b00f667bd9ae71c8e",
+    "notebooks/giada_task41e_transfer_diagnosis.ipynb": "bf6db05a8c478d9b43668c146a29548fe186080f99edf8b0c26c3cde00c00103",
+    "experiments/task41d_preregistration_v1.json": "09faee20aecf4a7235d2807313ffe074b473cc175df595f6ae5db7ba40a6e0d5",
+    "src/giada_teacher/task41d_precision_response.py": "84fd16a3dd1c49915c24c653f9501401d5cedc920a1195dd7399555dd7028429",
+    "src/giada_teacher/task41d_evaluation.py": "6982efdef1d02048af6329874e76e162e8090e62bb9317a420dacd235a03ab9b",
+    "scripts/run_task41d_precision_response.py": "e0a885e4469bcbe25db335c30d429c57ab7d4c510e2c730befb5a055ba639443",
+    "experiments/task41c_preregistration_v1.json": "5e957f698b7858012b395ffd4d224810a133ad8ac0446b8f1386d4e314fa0547",
+    "src/giada_teacher/task41c_frozen_confirmation.py": "1bc97ececbb51a52c6ae3788cc46deebf1bdd15f3c6163ad6fa67c6dd7de1f8c",
+    "experiments/results/task41c_protocol_v1/P110_frozen.pt": "f83dd019d0f38c2a595da8565f9632765de95418b6103861b3159a61f3a693a6",
+    "scripts/run_task41c_frozen_confirmation.py": "70d13f61eeab9cac746482fb47e6ef34390a1ac9159d4f7bf261af2b2943b506",
+    "src/giada_teacher/task41b_local_precision.py": "6b53a1f53678a4174c483540e78a4db910a15ae1517caac3b6ab10aafd0ae604",
+    "src/giada_teacher/task41b_evaluation.py": "8bdbc0d98c16261cb9e131c8f9e208cd86ccec11098dd79cda501fe8c63b5cc3",
+    "src/giada_teacher/task41_independent_confirmation.py": "9c36f607f7fa81634a23ee7ac69afe24688694f43b52ca12acd714a9c68f1220",
+    "experiments/task41b_preregistration_v1.json": "6370c149c2b6ba1eb532128105dbbdae60d0b4e825012c5b1fe07d891592f82b",
+    "experiments/task41_preregistration_v1.json": "fab4ef77d32674515c6cc6efdd87550210ff6dad81ad8132d865d7fac206de42",
+    "experiments/results/task41e_protocol_v1/task41d_frozen.pt": "68fff43f9d2793fd30131321125ca8ce567d4beb37ff48c76697f92080103a9a",
+    "experiments/results/task41e_protocol_v1/task41d_summary.json": "89479331b96ca56eab8cc13d7b3c1edfadcf74e9d14354db9826361bce29bf1a",
+    "experiments/task41e_preregistration_v1.json": "eb2b2f39ad663068d17cd0d2a4bfb90770e0ff2ee6ac3fc4e8b52240a7b3c502",
+    "src/giada_teacher/task41f_precision_relaxation.py": "7528d8f00d5d3a9968bd9f85048a5d7cbc9e4d64353a84aff5c8022008837eae",
+    "src/giada_teacher/task41f_evaluation.py": "32d76bf36bf594803ccac9b479e0f6c236c45dfe346ae39070c4c89434dd7b77",
+    "scripts/run_task41f_precision_relaxation.py": "1346a216d88602f071e25f842ceb5ce8c1cbb46a5c81270cc40a7e52f9948cf5",
+    "notebooks/giada_task41f_precision_relaxation.ipynb": "06d1f77c59a1596675ce69929239478e2e006e3bb9bde3fce3aa408cd6056871",
+    "experiments/results/task41f_protocol_v1/task41e_frozen.pt": "7ac38b79429d147fc0acb3187a4d5c4581cae643ae722217fcf378c78d18b6dc",
+    "experiments/results/task41f_protocol_v1/task41e_reproduction.json": "b636f0e32a1de8eca00bbd60b66dc71fffe3b7b243d14beb02d156727d408149",
+    "experiments/task41f_preregistration_v1.json": "645a5ab7ddd62452c7c10fa5c1224b0acb53be46db40953219e669ef68a762de",
+    "src/giada_teacher/task41g_preservation.py": "3ae9aa19f656c55e60d16236057cc97e584dcc6463e7635219d7cb6d3b3caf4f",
+    "src/giada_teacher/task41g_evaluation.py": "7fdf0ac4693fc507a1247e7cc3d1b6c32b9549ee77de364c91d9d00a29f23627",
+    "scripts/run_task41g_preservation.py": "9262d489ac2b96fef6ed2aa8fd97db8d5b6e62b1d5e27d858b96b7266d83ca53",
+    "notebooks/giada_task41g_preservation.ipynb": "bb5378500b3cf5f966d011438159ee2c6a1b101409f950c320d461f075e17bda",
+    "experiments/results/task41g_protocol_v1/task41f_frozen.pt": "0b60f653d2e0513364100be8e3c9e4e980d51495b5b44e3b2ce802d4d7b25a88",
+    "experiments/task41g_preregistration_v1.json": "30bd38c24daee354c855683d2aa892b5c8027e998ef8ab433ed3af6115fe61d7",
+    "src/giada_teacher/task41h_path_repair.py": "dbc5ebc2eff204e0c7a5379b0e5120c3dce7776c2a63f51d610050d2c41be0ab",
+    "src/giada_teacher/task41h_evaluation.py": "7a9cf859f89ec51b14a6798e60b11f074fdfb7e3727d9bee19be099e72f10562",
+    "scripts/run_task41h_path_repair.py": "737551a9e7d57f718f055f5b08ef7526220d7e0a588148445c790e9b1d658074",
+    "notebooks/giada_task41h_path_repair.ipynb": "9271cbe3a1e9246c6f297fc33aebe8627ad70c58323d0232035741fd8b489637",
+    "experiments/results/task41h_protocol_v1/task41g_frozen.pt": "5bff26a0ea7d9ba0995e0ec4a332bce9d01add6448b5a55c96de2036c938e6b6",
+    "experiments/task41h_preregistration_v1.json": "af62b2e60eb0b4c6bbc9ce09114770b6ac798d5b8a7de842a7fd1f9ddb52978b",
+    "experiments/results/task41i_protocol_v1/task41h_frozen.pt": "8450f9aaf5e375263aa5318688ccf46252bc0ab79b1f594f73e0789638080cf8",
+    "src/giada_teacher/task41i_selective_repair.py": "97a205cc9493e8d5c87204faa44a77c6e00a3c44215ed4590ab6f34eadc37abd",
+    "src/giada_teacher/task41i_evaluation.py": "a01064aee69f7c772c42da796616169d6623020fdb7b8e49ac96b75e3c664904",
+    "scripts/run_task41i_selective_repair.py": "714638959f51a203d75d255c888ef92da31133dda79a7983f94afdf60d4f2934",
+    "scripts/task41h_stage_cache.py": "ce407d2911403bf6977a86ae679e79cf51d92fbf15273d5f085f94b1e12e406e",
+    "scripts/resume_task41h_frozen_evaluation.py": "86ea1864ed705091bfd2aa9ae3ce11df2264a5aebf44683a7dd9e9ddf91025fd",
+    "notebooks/giada_task41i_selective_repair.ipynb": "e5b7310949062e97ccbfcb36fe6ce1d5c2226f9c7c74ec9590d2c4f94c44ad0f",
+    "experiments/task41i_preregistration_v1.json": "e6445f29662c6709b21c2ee9fd07e07d79c2ed7876a2186b1aba1ef3a1fdb027",
+    "experiments/task41i_evaluation_recovery_v1.json": "136eb2a492efb28caabefa9152b8daebfa42c2fadb76992a9f295de520819d91",
+    "src/giada_teacher/task41j_operator_reset.py": "da0f5fc0b6ce081b89bd20b0fc9a3914914c636132e9e89b3e5f86c2dd485322",
+    "src/giada_teacher/task41j_evaluation.py": "f8aa6172e975bf9515920936527cb73f585047eaaa127e876f1ce0eec733e625",
+    "scripts/run_task41j_operator_reset.py": "e8dab108a1ccb27f5f9af3141b36e1f985dfbe67c3fea7819dc43e0f625d8992",
+    "scripts/build_task41j_protocol.py": "7d3c189c914c5c29c718cab7daaf72c78f50be21ecf2a41b50174412398aac0d",
+    "scripts/task41j_kaggle_pipeline.py": "6eb352cc9662a3c836bdf99f0392c011325d8bdc4c2098e60499110c91a7c8d9",
+    "scripts/task41j_gpu_probe.py": "4bdfc9edf2fc8ec60fffe0ab0ce4edf842630449aaf01b67de09dfc41de90998",
+    "tests/test_task41j_operator_reset.py": "db05c35a067f86144eced0be925aeaec66eba7a4ede2223ee672247ceae5a9fc",
+    "experiments/task41j_preregistration_v1.json": "fbf282da4ed84fa4031603cb6f8128bb850bbcfdf035bb4b32bb8883c62f564e",
+    "src/giada_teacher/task41k_learning_alignment.py": "e55d8c9ffa382ad191d020ae1a0ab012f35efbdc200af927cf86f987db57485d",
+    "src/giada_teacher/task41k_evaluation.py": "10541a397541db5f0caf203ba28c4a73a520b475fe3467b7f4fc5cf179f12219",
+    "scripts/run_task41k_learning_alignment.py": "deb2fe50a2a95826e1353b9e30a68f2c5d2a9a2d978ceb9aee7380ebbacacdd1",
+    "scripts/task41k_gpu_probe.py": "ae4d6bb733e425e1acc13fb7022b69c12216140646393683f6568209e81b9793",
+    "scripts/task41k_kaggle_pipeline.py": "da900207bd713cf532752f00841a9ccef45a9d3677a27d96cb02cde545b6f2c6",
+    "scripts/build_task41k_protocol.py": "fb10586c0859c2474b949ba4ca3d739fd8a482a3db44e0baee5175a6837f469b",
+    "tests/test_task41k_learning_alignment.py": "453460e050b7341a52763d1608f2a6e21986d1990a48f8fdc207d96f825ddc94",
+    "experiments/task41k_preregistration_v1.json": "b465635394a059de91c5077fa7e0c8301bdc0bf4741e8c24a27938075ef2e070",
+    "src/giada_teacher/task41k_recovery.py": "31feb2d04ff171b32a4609e0309a4f673bee9536d99255a078eebe3ce38aedda",
+    "src/giada_teacher/task41l_support.py": "79b3d4e6f5fc1fc56a8ba71e2ab74964945520bf642ad34a84ed51a552f54cc0",
+    "src/giada_teacher/task41l_regression_attribution.py": "866d8ed4f28312f3690e92f69847dc335e442ee2178bc96364354cb4ebf550f4",
+    "src/giada_teacher/task41l_frozen_attribution.py": "830149ebf992bff4a41f445e643277b6526f866a9295c365895de93fcba07a32",
+    "src/giada_teacher/task41l_evaluation.py": "a3a7e539280821adcd54a88f14a388368cdd7b0a1fb550a3744711668fd98fdf",
+    "scripts/build_task41l_protocol.py": "1c196f8be70a99859ecc21d0cb5c7998b2cb117219771cf07a6be5a5293fde66",
+    "scripts/run_task41l_regression_attribution.py": "aabb7d787ca01bc5e620ca5bdf78aabe140d8a6f47c6a6e10413f86121c6a806",
+    "scripts/task41l_kaggle_pipeline.py": "a0f9e439ff63c32867f75346a8c8adf1f2901bf15eb5bcc52269613cb4c499f5",
+    "scripts/task41l_gpu_probe.py": "4309b66c2de421e1c749fefc6850ece3fd91463e3e058a365174502ea79c6114",
+    "tests/test_task41l_regression_attribution.py": "3fdaf236d50477d7e08a8a0d6a9c403189b7ce405008a75df1f572e05e7a0ec9"
+  },
+  "task41e_checkpoint": "experiments/results/task41f_protocol_v1/task41e_frozen.pt",
+  "task41e_checkpoint_sha256": "7ac38b79429d147fc0acb3187a4d5c4581cae643ae722217fcf378c78d18b6dc",
+  "task41e_reproduction": "experiments/results/task41f_protocol_v1/task41e_reproduction.json",
+  "new_seeds": {
+    "fit": 811101,
+    "selection": 811103,
+    "development": 811107,
+    "stream": 811109,
+    "feedback": 811113,
+    "feedback_stream": 811127,
+    "intervention": 811137,
+    "support": 811139,
+    "selection_support": 811149,
+    "probe": 811157
+  },
+  "anchors": 8192,
+  "selection_anchors": 128,
+  "batch": 64,
+  "lr": 1e-05,
+  "feedback_histories": 32,
+  "selection_feedback_histories": 8,
+  "history_ticks": 12000,
+  "feedback_anchors": 128,
+  "selection_feedback_anchors": 8,
+  "feedback_batch": 2,
+  "feedback_every": 16,
+  "feedback_ratio": 0.1,
+  "checkpoints": [
+    0,
+    16,
+    64,
+    256,
+    1024,
+    4096
+  ],
+  "computational_parity_atol": 1e-05,
+  "hypothesis_links": [
+    {
+      "code": "claims-giada-task41h-result-selective_nap_equilibrium-v1"
+    },
+    {
+      "code": "claims-giada-task41h-result-crossing_objective_alignment-v1"
+    },
+    {
+      "code": "claims-giada-task41h-result-local_resolution_vs_optimization-v1"
+    },
+    {
+      "code": "claims-giada-task41h-result-coupled_voltage_precision-v1"
+    },
+    {
+      "code": "claims-giada-task41h-result-whole_chain_execution-v1"
+    }
+  ],
+  "training_policy": "8 full4004param H-initialized repair arms,3vectorized seeds; same18occupancies/causalV,Ca/bounded-affine transition/dt0.1/readout. Compression parked.",
+  "selection": "Original canonical lexicographic development rank; P-protection not a selection score. Earliest best perseed; minimaxrank nominee acrossseeds. Opened panels only after freeze. No transplant/numerical diagnostic eligible.",
+  "objective": "Same41k canonical dynamic base. P1 adds unit-weight maximum across165(channel x2path/13feedbackfamily) normalized losses, protection minibatch1example/family. P0 computes same probe without gradient. First flattenedgroup wins exactmax tie. Emptygroups abort. Same40tickfeedback,1200mspath timingquery,normalizers; no Hretention.",
+  "support": "128paths/128anchors perblock;4x is exactblock0 plus3 independentseedoffset10000blocks. Families2paths and13feedbackinterventions uniformly sampled. Eachfeedbackpool guarantees13actions before seededwithoutreplacementfill. Cutoff inclusive topquartile per-family from1xHerror reused4x. Within each family50%uniform/50%abovefixedcutoff. Same inverse-CDF variates acrossD; exactsame rows acrossA/P. Independentselection unchanged16paths/8anchors. No openedtest targets in FIT.",
+  "budget": "4096updates x8arms x3seeds; checkpoints0/16/64/256/1024/4096. LRinitial1e-5 or1e-6 times0.1**(min(completedupdates,1024)/1024). Phase64/256/1024/4096+frozen evaluation, externalSHA/CRC verified before continuation. Actual perarmGPUtime and exposure recorded; unequalP compute explicit.",
+  "qualification": "All original current,charge,event,gate,physical,pairedresponse,compartment andhistoricalregression gates on every case and seed plusnewdevelopment. K_Pst remains included. New independent confirmation required after repair;Task42notautomatic.",
+  "contrast_rule": "At fixed remaining factors,all3target-severity ratios<1,median<=0.8,andnoincreaseintargetfailcountorintroducedregressions. Global gates remain mandatory;diagnostic target contrast is not a scientificGO.",
+  "diagnostics": "8H/K channel swaps+fullK;2openedpanels x4feedbackforcing x2jointprecisionpolicies plusH/K intermediates; matchedcanonical references/nativefloors; old41knumericalsidecar reused. All fulloriginalbatches, saved diagnosticcases120/108/122 andsources. Imposedstress41c. Atcheckpoints realAdamdirectionfraction0,.25,.5,1 discardedclones andchannelgradientcos/blocknorm onFIT; candidate/optimizer unchanged.",
+  "speed": "Whole chain versus compact, no final-head-only timing. Same compiled-graph resident execution and FP32 primary reference. CUDA+wall samples and paired uncertainty; no speedup claim without full quality. Compiler parity diagnostic does not waive quality.",
+  "stop_rules": "Nonfinite gradient/parameter,failedtechnicalparity orfailedrequiredcanonicalfloor:technicalstop,preservealloutputs. ScientificNO_GO retainedifanygatefails. Nochangesofthresholds orposthocnomination.",
+  "limits": [
+    "No threshold,abstraction,primaryFP32 or solver change. No new kinetic inference fallback.",
+    "No automaticTask42;openedpanels not independentconfirmation;compression not trained.",
+    "Numerical policy/control remains diagnostic. Nativefloor comparison must precede scientific attribution.",
+    "Uniformfamily-stratified FIT sampling is declared refinement;41k/41l are not data-paired. Comparisons inside41l are paired.",
+    "Protectioncompute unequal;3seeds not independentbiologicalreplicas;4096negative does not prove capacityimpossibility.",
+    "Externalphasebackups;DBbackup localonly."
+  ],
+  "task41f_checkpoint": "experiments/results/task41g_protocol_v1/task41f_frozen.pt",
+  "task41f_nominee": "UZ64_broad_point",
+  "task41f_checkpoint_sha256": "0b60f653d2e0513364100be8e3c9e4e980d51495b5b44e3b2ce802d4d7b25a88",
+  "lr_min_ratio": 0.1,
+  "tail_anchors": 1024,
+  "tail_batch": 4,
+  "task41g_checkpoint": "experiments/results/task41h_protocol_v1/task41g_frozen.pt",
+  "task41g_checkpoint_sha256": "5bff26a0ea7d9ba0995e0ec4a332bce9d01add6448b5a55c96de2036c938e6b6",
+  "task41g_nominee": "M_constant_point_broad",
+  "task41g_diagnostic": "M_anneal_sensitive_tail",
+  "path_prefix_ticks": 530,
+  "execution_priority": [
+    "Kaggle",
+    "Colab primary",
+    "Colab reserve"
+  ],
+  "durability": "One notebook, automatic phases:512,8192,30000,60000updates,then frozen evaluation. Each completed phase is SHA/CRC verified off-runtime before the next phase; optimizer,RNG,best/selected weights restored, never reselected on resume. Evaluation-only phases prohibit Adam and reuse only complete cached panels with the same source/freeze.",
+  "task41h_checkpoint": "experiments/results/task41i_protocol_v1/task41h_frozen.pt",
+  "task41h_checkpoint_sha256": "8450f9aaf5e375263aa5318688ccf46252bc0ab79b1f594f73e0789638080cf8",
+  "task41h_nominee": "H0_D256_N4096_B128",
+  "fit_paths": 128,
+  "selection_paths": 16,
+  "registered_comparisons": [
+    {
+      "name": "A_L_A0D0P0",
+      "control": "L_A0D0P0",
+      "treatment": "L_A1D0P0"
+    },
+    {
+      "name": "D_L_A0D0P0",
+      "control": "L_A0D0P0",
+      "treatment": "L_A0D1P0"
+    },
+    {
+      "name": "P_L_A0D0P0",
+      "control": "L_A0D0P0",
+      "treatment": "L_A0D0P1"
+    },
+    {
+      "name": "A_L_A0D0P1",
+      "control": "L_A0D0P1",
+      "treatment": "L_A1D0P1"
+    },
+    {
+      "name": "D_L_A0D0P1",
+      "control": "L_A0D0P1",
+      "treatment": "L_A0D1P1"
+    },
+    {
+      "name": "A_L_A0D1P0",
+      "control": "L_A0D1P0",
+      "treatment": "L_A1D1P0"
+    },
+    {
+      "name": "P_L_A0D1P0",
+      "control": "L_A0D1P0",
+      "treatment": "L_A0D1P1"
+    },
+    {
+      "name": "A_L_A0D1P1",
+      "control": "L_A0D1P1",
+      "treatment": "L_A1D1P1"
+    },
+    {
+      "name": "D_L_A1D0P0",
+      "control": "L_A1D0P0",
+      "treatment": "L_A1D1P0"
+    },
+    {
+      "name": "P_L_A1D0P0",
+      "control": "L_A1D0P0",
+      "treatment": "L_A1D0P1"
+    },
+    {
+      "name": "D_L_A1D0P1",
+      "control": "L_A1D0P1",
+      "treatment": "L_A1D1P1"
+    },
+    {
+      "name": "P_L_A1D1P0",
+      "control": "L_A1D1P0",
+      "treatment": "L_A1D1P1"
+    }
+  ],
+  "distillation_updates": 0,
+  "aux_every": 16,
+  "hypotheses": [
+    {
+      "id": "step"
+    },
+    {
+      "id": "coverage"
+    },
+    {
+      "id": "protection"
+    },
+    {
+      "id": "feedback"
+    },
+    {
+      "id": "numerical-interaction"
+    }
+  ],
+  "frozen_diagnostic_input": {
+    "sha256": "6ffd1b92755025ae009c987fc689bb4fe24edba1d313b6f3a4563f08272fbabd",
+    "members": {
+      "frozen_checkpoint.pt": "4e3b457bfe609964b3480b8bc5b1e73279256cb9b863acd30a0b6974a3c09644",
+      "selection_freeze.json": "dfe34bc54e28e8bc6b886b5388866507905fd5d2c5e782eb2a127d809c313351",
+      "voltage_precision.json": "07a4881dbdc7d59cf7ebacf2400c47ab188cddcf32675a518943a1e07a2491b7"
+    },
+    "source_archive_sha256": "ee629c24da75676e735670b4a0c5d22b223c932f9d394a4cd9a4ca738257e0c4"
+  }
+}
