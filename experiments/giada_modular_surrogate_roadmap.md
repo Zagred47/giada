@@ -1378,6 +1378,22 @@ un operatore discreto appreso, conservando inizialmente lo stato fisico?
     `task41k_preregistration_v1.json`. Kaggle console, backup esterni per fase;
     DB soltanto locale. Nessuna promozione automatica alla42.
 
+    **Esito finale41k:** recupero tecnico completato senza retraining/reselezione;
+    NO-GO scientifico. H6 valutazioni fallite; dinamico target8: due stress Ca_HVA
+    riparati ma quattro regressioni Nap_Et2/K_Tst introdotte. Compatti veloci ma
+    non qualificati. Il probe iniziale suggerisce di distinguere direzione e
+    ampiezza dell'update, non dimostra da solo la causa del training.
+
+  - **Task41l — Attribuzione delle regressioni (disegno proposto):** trapianti
+    fattoriali congelati di coefficienti appresi Ca_HVA/Nap_Et2/K_Tst con controlli
+    imposti e autonomi; matrice2×2×2 di LR, supporto FIT annidato e protezione
+    canonica dei gruppi peggiori. Checkpoint di budget lungo la stessa traiettoria,
+    probe degli update effettivi e controllo numerico voltaggio/solve incrociato
+    (solo diagnostico, non deroga al FP32). Compressione parcheggiata e separata; nessun
+    cambio di astrazione o soglie. `task41l_design.md` definisce contrasti e limiti.
+    Worker/notebook e preregistrazione eseguibile richiedono ancora implementazione
+    e preflight; nessun lancio o promozione alla42 implicito in questo piano.
+
 ### ✅ Uscita del blocco 1
 
 Operatore e interfaccia congelati, errore attribuibile e costo misurato.

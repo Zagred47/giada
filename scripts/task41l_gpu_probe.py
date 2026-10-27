@@ -8,7 +8,9 @@ from src.giada_teacher import task41l_regression_attribution as k
 from src.giada_teacher import task41l_frozen_attribution as attribution
 from src.giada_teacher.task41k_recovery import preflight as scanner_preflight
 assert torch.cuda.is_available()
+print('[GIADA Task41l] starting GPU objective/resume preflight',flush=True)
 with tempfile.TemporaryDirectory() as tmp:result=k.run(ROOT,Path(tmp),smoke=True)
+print('[GIADA Task41l] objectives and optimizer preflight passed',flush=True)
 spec,cfg,calcium,base=k.contract(ROOT);parent=k.j.controls(torch,ROOT,'cuda')['H_nominee']
 models={a['name']:k.j.model_class(torch)(parent,a).to('cuda') for a in k.arms()}
 args=[torch.full((3,2),-65.,device='cuda'),torch.full((3,2),1e-4,device='cuda'),torch.full((3,2,18),.01,device='cuda'),torch.ones((3,2,11),device='cuda'),torch.full((3,2),.001,device='cuda'),torch.full((3,2,4),1e-5,device='cuda')]
@@ -26,14 +28,14 @@ with tempfile.TemporaryDirectory() as tmp:
     smoke=dict(spec,cost=dict(spec['cost'],batches=[1],ticks=2,repetitions=2))
     with torch.inference_mode():rows=ev.he.ee.e.benchmark(torch,ROOT,folder,dict(H_nominee=parent,**models),fake,smoke,'cuda')
     assert len(rows)==2 and all(all(row['finite'].values()) for row in rows)
-    scanner_preflight(torch,models,spec,'cuda',folder)
+    with torch.inference_mode():scanner_preflight(torch,models,spec,'cuda',folder)
     swaps,_=attribution.source(torch,ROOT,dict(H_nominee=parent),spec,'cuda')
     v=torch.linspace(-90,40,97,device='cuda')[None].expand(3,-1);ca=torch.full_like(v,1e-4)
     assert all(torch.equal(a,b) for a,b in zip(swaps['swap000'].raw(v,ca),parent.raw(v,ca)))
     with torch.inference_mode():
         for name,model in {'H':parent,**swaps}.items():
             for policy in ((False,False),(True,True),(True,False),(False,True)):
-                pred=attribution.rollout(torch,model,fake,cfg_calcium_base:=(cfg,calcium,base),'cuda',policy,(False,False),[0,1])
+                pred=attribution.rollout(torch,model,fake,(cfg,calcium,base),'cuda',policy,(False,False),[0,1])
                 assert all(np.isfinite(x).all() for x in pred.values())
         canonical=attribution.rollout(torch,None,fake,(cfg,calcium,base),'cuda',(False,False),keep=[0,1])
         baseline=k.t.rollout(torch,k.t.make_core(torch,cfg,calcium,base,float(fake['area_um2'])),fake,'cuda',graph=True)

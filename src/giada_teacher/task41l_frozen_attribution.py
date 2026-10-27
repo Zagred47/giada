@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import types
+import time
 import zipfile
 import numpy as np
 from . import task41l_regression_attribution as l
@@ -105,12 +106,24 @@ def factorial(rows):
     return out
 
 
-def evaluate(torch,root,out,controls,spec,cfg,calcium,base,device):
+def metric_margins(metric,q):
+    rows=[]
+    for row in metric['channels']:
+        margins={key:q[limit]-row[key] for key,limit in [('nrmse','current_nrmse_max'),('nmax','current_nmax_max'),('signed_charge_normalized','signed_charge_error_max'),('absolute_charge_normalized','absolute_charge_error_max')]}
+        if row['event']['status']=='evaluable':
+            margins.update({key:q[limit]-row['event'][key] for key,limit in [('peak_error_ms','peak_timing_max_ms'),('onset_error_ms','onset_offset_max_ms'),('offset_error_ms','onset_offset_max_ms')]})
+        rows.append(dict(channel=row['channel'],margins=margins,event_status=row['event']['status'],blocked_passed=row['blocked_current_passed']))
+    gate=metric.get('gate')
+    return dict(channels=rows,gate=None if gate is None else dict(rmse=q['gate_rmse_max']-gate['rmse'],max_abs=q['gate_max_abs_max']-gate['max_abs'],occupancy_violations=gate['occupancy_violations']))
+
+
+def evaluate(torch,root,out,controls,spec,cfg,calcium,base,device,stage_started=None):
+    stage_started=time.monotonic() if stage_started is None else stage_started
     dest=out/'frozen_channel_attribution';dest.mkdir(exist_ok=True)
     models,sidecar=source(torch,root,controls,spec,device)
     p.save_json(dest/'reused_41k_voltage_precision.json',sidecar)
     physics=(cfg,calcium,base);oldspec=json.loads((root/c.CONFIG).read_text())
-    aa,am,_,_=he.ee.e.load_opened(root,oldspec);bb,bm,stress=he.ee.load41c(root,spec)
+    aa,am,stress41,_=he.ee.e.load_opened(root,oldspec);bb,bm,stress=he.ee.load41c(root,spec)
     rows=[];floors=[]
     policies=[(False,False),(True,True)]
     for label,data,meta,cases in [('41',aa,am,[120]),('41c',bb,bm,[108,122])]:
@@ -124,19 +137,31 @@ def evaluate(torch,root,out,controls,spec,cfg,calcium,base,device):
                 canonical=rollout(torch,None,data,physics,device,policy,forcing,keep)
                 # Native records are post/pre-aligned by the canonical rollout contract.
                 floor={key:float(np.sqrt(np.mean((canonical[key][:min(len(canonical[key]),len(native[key]))]-native[key][:min(len(canonical[key]),len(native[key]))])**2))) for key in native}
-                floors.append(dict(panel=label,policy=policy_name,forcing=force_name,native_rmse=floor,selection_eligible=False))
+                qualified=(floor['voltage']<=cfg['gates']['max_formula_floor_worst_voltage_rmse_mv'] and floor['calcium']<=cfg['gates']['max_formula_floor_worst_cai_rmse_mM'])
+                floors.append(dict(panel=label,policy=policy_name,forcing=force_name,native_rmse=floor,native_floor_qualified=qualified,selection_eligible=False))
                 selected=models if policy in policies else {n:models[n] for n in ('swap000','K_full')}
                 for name,model in selected.items():
                     cache=dest/f'{label}_{policy_name}_{force_name}_{name}.json'
                     if cache.exists():rows.append(json.loads(cache.read_text()));continue
+                    if time.monotonic()-stage_started>5.5*3600:
+                        from .task41i_evaluation import EvaluationPause
+                        raise EvaluationPause()
                     pred=rollout(torch,model,data,physics,device,policy,forcing,keep)
-                    measurements=[]
+                    measurements=[];case_metrics=[]
                     for seed_index,seed in enumerate(spec['seeds']):
                         for case in cases:
                             src=keep.index(int(meta[case]['source_index']));idx=keep.index(case)
                             metrics=p.evaluate_intervention(canonical['current'][:,seed_index,src],canonical['current'][:,seed_index,idx],pred['current'][:,seed_index,src],pred['current'][:,seed_index,idx],.1,spec['quality'])
-                            measurements.append(dict(case=case,seed=seed,metrics=metrics))
-                    row=dict(panel=label,policy=policy_name,forcing=force_name,model=name,continuous=continuous(pred,canonical),responses=measurements,selection_eligible=False,full_original_batch=True,reference_policy_matched=True)
+                            measurements.append(dict(case=case,seed=seed,metrics=metrics,margins=metric_margins(metrics,spec['quality'])))
+                        for index,case in enumerate(keep):
+                            metrics=p.evaluate_currents(canonical['current'][:,seed_index,index],pred['current'][:,seed_index,index],.1,spec['quality'],canonical['gates'][1:,seed_index,index],pred['gates'][1:,seed_index,index],data['multipliers'][case]==0)
+                            case_metrics.append(dict(case=case,seed=seed,metrics=metrics,margins=metric_margins(metrics,spec['quality'])))
+                    if policy==(False,False) and forcing==(False,False) and name in ('swap000','K_full'):
+                        old_name='H_nominee' if name=='swap000' else 'nominee'
+                        previous=next(r for r in sidecar if r['panel']==label and r['model']==old_name and not r['state64'] and not r['solve64'] and not r['recentered'])
+                        wanted={(r['case'],r['seed']):r['metrics']['passed'] for r in previous['responses']}
+                        assert all(r['metrics']['passed']==wanted[(r['case'],r['seed'])] for r in measurements),('Frozen primary reproduction failed',label,name)
+                    row=dict(panel=label,policy=policy_name,forcing=force_name,model=name,continuous=continuous(pred,canonical),responses=measurements,cases=case_metrics,selection_eligible=False,full_original_batch=True,reference_policy_matched=True,native_floor_qualified=qualified,causal_interpretation_requires_valid_floor=True)
                     np.savez_compressed(cache.with_suffix('.npz'),case_ids=np.array(keep),**pred)
                     p.save_json(cache,fe.json_native(row));rows.append(row)
                     print('[GIADA Task41l] frozen attribution '+cache.stem,flush=True)
@@ -144,6 +169,8 @@ def evaluate(torch,root,out,controls,spec,cfg,calcium,base,device):
     design=l.d.prior.stress_design(json.loads((root/l.d.prior.CONFIG).read_text()))
     stress_file=dest/'imposed_stress41c.json'
     if not stress_file.exists():p.save_json(stress_file,he.ee.old.stress(torch,models,stress,spec,device,design))
+    stress_file=dest/'imposed_stress41.json'
+    if not stress_file.exists():p.save_json(stress_file,he.ee.old.stress(torch,models,stress41,spec,device,fe.x.stress_design(json.loads((root/fe.x.CONFIG).read_text()))))
     # Original recurrence panels also cover the K_Tst regression, not only
     # the opened autonomous responses. Pure frozen diagnostics, no selection.
     oldcfg=json.loads((root/c.j.i.old.CONFIG).read_text());evaluation=json.loads((root/c.j.CONFIG).read_text())

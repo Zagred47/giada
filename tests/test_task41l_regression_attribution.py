@@ -1,6 +1,7 @@
 import copy
 import itertools
 import unittest
+from pathlib import Path
 import numpy as np
 import torch
 from src.giada_teacher import task41l_regression_attribution as l
@@ -54,5 +55,40 @@ class Tests(unittest.TestCase):
             rows.append(dict(panel='x',policy='p',forcing='f',model='swap'+''.join(map(str,bits)),continuous={key:dict(rmse=[value]*3) for key in ('voltage','calcium','gates','current')}))
         effects=a.factorial(rows);self.assertEqual(len(effects),7)
         self.assertEqual(next(x for x in effects if x['interaction']==['Ca_HVA'])['rmse_effect']['current'],[4.]*3)
+
+
+class Integration(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        torch.set_num_threads(1);cls.root=Path(__file__).resolve().parents[1]
+        cls.spec,cls.cfg,cls.ca,cls.base=l.k.contract(cls.root)
+        cls.spec=copy.deepcopy(cls.spec);cls.spec['new_seeds']={k:v+110000 for k,v in cls.spec['new_seeds'].items()}
+        out=cls.root/'artifacts/task41l_cpu_preflight';out.mkdir(exist_ok=True)
+        cls.cc,cls.models,cls.data,_,cls.pools,_,_,cls.samplers=l.setup(torch,cls.root,out,'cpu',cls.spec,cls.cfg,cls.ca,cls.base,True)
+        cls.physics=(cls.cfg,cls.ca,cls.base)
+    def test_initial_parent_and_nested_support(self):
+        v=torch.full((3,4),-60.);ca=torch.full_like(v,1e-4)
+        for model in self.models.values():
+            self.assertEqual(sum(p.numel() for p in model.parameters())//3,4004)
+            self.assertTrue(all(p.requires_grad for p in model.parameters()))
+            self.assertTrue(all(torch.equal(x,y) for x,y in zip(model.raw(v,ca),self.cc['H_nominee'].raw(v,ca))))
+        for small,large in zip(self.pools[0],self.pools[1]):
+            self.assertTrue(torch.equal(small['v'],large['v'][:len(small['v'])]))
+    def test_objectives_probe_and_resume(self):
+        models=copy.deepcopy(self.models);opts={n:torch.optim.Adam(l.j.parameters(m)) for n,m in models.items()}
+        batch=s.minibatches(torch,np.random.default_rng(12),self.pools,self.samplers,self.spec,'cpu')
+        l.update(torch,models,opts,self.pools,batch,self.physics,1);l.j.finite(torch,models,opts)
+        copies=copy.deepcopy(models);co={n:torch.optim.Adam(l.j.parameters(m)) for n,m in copies.items()}
+        for n in co:co[n].load_state_dict(copy.deepcopy(opts[n].state_dict()))
+        for name in ('L_A0D0P0','L_A0D0P1'):
+            result=l.adam_probe(torch,models[name],opts[name],*self.pools[0],batch[0],self.physics,name.endswith('1'),1e-6)
+            self.assertTrue(result['candidate_and_optimizer_unchanged']);self.assertEqual(len(result['regime_gradients']),15)
+        l.update(torch,models,opts,self.pools,batch,self.physics,2);l.update(torch,copies,co,self.pools,batch,self.physics,2)
+        self.assertTrue(all(torch.equal(a,b) for n in models for a,b in zip(models[n].parameters(),copies[n].parameters())))
+    def test_primary_canonical_core_exact(self):
+        args=[torch.full((3,4),-65.),torch.full((3,4),1e-4),torch.full((3,4,18),.01),torch.ones(3,4,11),torch.full((3,4),.001),torch.full((3,4,4),1e-5)]
+        expected=l.t.make_core(torch,*self.physics,100*np.pi)(*args)
+        actual=a.canonical_core(torch,*self.physics,100*np.pi,False,False)(*args)
+        self.assertTrue(all(torch.equal(x,y) for x,y in zip(expected,actual)))
 
 if __name__=='__main__':unittest.main()

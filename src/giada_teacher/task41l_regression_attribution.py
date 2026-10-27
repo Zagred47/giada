@@ -82,11 +82,13 @@ def update(torch,models,opts,pools,batches,physics,step_number):
     return diagnostics
 
 
-def adam_probe(torch,model,opt,paths,fb,batch,physics,protect):
+def adam_probe(torch,model,opt,paths,fb,batch,physics,protect,next_lr=None):
     """Replay the real next Adam direction on a clone; never mutate the run."""
     before=copy.deepcopy(model.state_dict());optimizer_before=copy.deepcopy(opt.state_dict())
     probe=copy.deepcopy(model);params=j.parameters(probe)
     po=torch.optim.Adam(params);po.load_state_dict(copy.deepcopy(optimizer_before));po.zero_grad(set_to_none=False)
+    if next_lr is not None:
+        for group in po.param_groups:group['lr']=next_lr
     groups,names=support.group_losses(torch,probe,paths,fb,batch[2],batch[3],physics)
     channels=list(c.ionic.CHANNELS);channel_groups=[['Ca_HVA'],['Nap_Et2'],['K_Tst'],[n for n in channels if n not in ('Ca_HVA','Nap_Et2','K_Tst')]]
     by_group=[];flat=[];block_norm=[];block_gradients=[]
@@ -127,7 +129,7 @@ def adam_probe(torch,model,opt,paths,fb,batch,physics,protect):
         if isinstance(a,(list,tuple)):return len(a)==len(b) and all(same(x,y) for x,y in zip(a,b))
         return a==b
     assert same(opt.state_dict(),optimizer_before)
-    return dict(group_names=names,channel_groups=by_group,gradient_cosines=cosine,parameter_block_names=[name for name,x in model.named_parameters() if x.requires_grad],gradient_block_norms=block_norm,gradient_block_cosines=block_cosines,regime_gradients=regime_gradients,finite_step_effects=effects,candidate_and_optimizer_unchanged=True,selection_eligible=False)
+    return dict(probe_learning_rate=po.param_groups[0]['lr'],group_names=names,channel_groups=by_group,gradient_cosines=cosine,parameter_block_names=[name for name,x in model.named_parameters() if x.requires_grad],gradient_block_norms=block_norm,gradient_block_cosines=block_cosines,regime_gradients=regime_gradients,finite_step_effects=effects,candidate_and_optimizer_unchanged=True,selection_eligible=False)
 
 def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluation_only=False):
     import torch
@@ -206,7 +208,7 @@ def run(root,out,device='cuda',smoke=False,resume=False,stop_after=None,evaluati
             probes={}
             for definition in arms():
                 name=definition['name'];level=definition['coverage']
-                probes[name]=adam_probe(torch,models[name],opts[name],*pools[level],probe_batches[level],physics,definition['protection'])
+                probes[name]=adam_probe(torch,models[name],opts[name],*pools[level],probe_batches[level],physics,definition['protection'],definition['lr']*.1**(min(step_number,1024)/1024))
             p.save_json(out/f'optimizer_probe_{step_number}.json',probes)
             ranks={}
             for ai,(name,m) in enumerate(models.items()):

@@ -2,6 +2,7 @@
 import copy
 import json
 import types
+import time
 from . import task41l_regression_attribution as j
 from . import task41i_evaluation as previous
 
@@ -13,6 +14,7 @@ def install_cache(out):
 
 
 def evaluate(torch,root,out,controls,trained,spec,cfg,calcium,base,device):
+    stage_started=time.monotonic()
     fe=previous.fe;he=previous.he
     proxy=types.SimpleNamespace(**{**vars(j),'contrasts':lambda:[]})
     quality=types.FunctionType(fe.evaluate.__code__,dict(fe.__dict__,f=proxy,execution_matrix=lambda *a,**kw:[]))
@@ -63,7 +65,7 @@ def evaluate(torch,root,out,controls,trained,spec,cfg,calcium,base,device):
                   parameter_counts={name:sum(x.numel() for x in model.parameters())//3 for name,model in trained.items()},
                   no_reselection_on_opened_panels=True)
     from .task41l_frozen_attribution import evaluate as attribution
-    report['frozen_causal_attribution']=attribution(torch,root,out,controls,spec,cfg,calcium,base,device)
+    report['frozen_causal_attribution']=attribution(torch,root,out,controls,spec,cfg,calcium,base,device,stage_started)
     return report
 
 
