@@ -38,7 +38,7 @@ def main():
         put('findings','launch',Nome='Task41k finite original checkpoint off runtime',Esito='Positivo',Esperimenti=[ref('experiments-giada-task41k-comparison-v1')],Osservazioni=[obs],Risultato='Actual pinned Kaggle worker, finite checkpoint and SHA/CRC-verified archive outside runtime.',Limitazioni='Technical progress only, scientific result pending.')
         m.local_upsert('experiments',{'Codice stabile':'experiments-giada-task41k-comparison-v1','Stato':'In corso'})
         for arm in spec['arms']:
-            for seed in spec['seeds']:put('runs',arm['name']+'-'+str(seed),Stato='In corso',**{'Hardware e ambiente':json.dumps(gpu),'ValiditÃ  tecnica':'Actual finite checkpoint and external backup verified; scientific evaluation pending.'})
+            for seed in spec['seeds']:put('runs',arm['name']+'-'+str(seed),Stato='In corso',**{'Hardware e ambiente':json.dumps(gpu),'Validità tecnica':'Actual finite checkpoint and external backup verified; scientific evaluation pending.'})
         put('actions','launch',Stato='Conclusa',Descrizione='Kaggle launch and first external finite checkpoint verified.')
     else:
         for name in ('experiments/task41k_preregistration_v1.json','experiments/task41k_design.md','notebooks/giada_task41k_learning_alignment.ipynb',
@@ -63,7 +63,7 @@ def main():
         gen=put('generators','fit',Nome='Task41k common atomic,path,feedback generators',Versione='v1',Procedura=spec['support'],**{'Seed e RNG':json.dumps(spec['new_seeds']),'Artefatti codice':arts})
         ds=put('datasets','fit-selection',Nome='Task41k disjoint paired FIT and selection',Versione='v1',Generatore=[gen],Schema='Same V/Ca,18gates,36 learned coefficients; canonical labels for repair,parent-only targets for compression; no new inference input.',Copertura=spec['support'])
         parts=[put('partitions',name,Nome='Task41k '+name,Dataset=[ds],Ruolo=role,**{'Regola di assegnazione':json.dumps(spec['new_seeds']),'Restrizioni di accesso':'Opened panels after freeze only; not independent confirmation.'}) for name,role in [('fit','Fit'),('development','Development')]]
-        protocol=put('protocols','comparison',Nome='Task41k six repair and two compression candidates',Versione='v1',ModalitÃ ='Ricomposizione',Esperimento=[exp],Procedura=json.dumps(spec),
+        protocol=put('protocols','comparison',Nome='Task41k six repair and two compression candidates',Versione='v1',Modalità='Ricomposizione',Esperimento=[exp],Procedura=json.dumps(spec),
             **{'Partizioni autorizzate':parts,'Artefatto preregistrazione':[prereg],'Hash preregistrazione':digest,'Criteri di successo':spec['qualification'],'Regole di arresto':spec['stop_rules'],'Registrato il':date})
         impl=put('implementations','worker',Nome='Task41k heterogeneous-arm vectorized CUDA worker',Commit=gpu['revision'],**{'Repository URL':'https://github.com/Zagred47/giada','Percorso entrypoint':'scripts/run_task41k_learning_alignment.py','Artefatti codice':arts,'Ambiente':json.dumps(gpu)})
         aa={}

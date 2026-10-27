@@ -61,7 +61,7 @@ def main():
     for arm in spec['arms']:
         for seed in spec['seeds']:
             m.local_upsert('runs',{'Codice stabile':f"runs-giada-task41j-{arm['name']}-{seed}-v1",'Stato':'Completata',
-                'Artefatti prodotti':[aid],'ValiditÃ  tecnica':'60000 finite canonical updates after4096 distillation; complete full-suite frozen evaluation. Scientific OPERATOR_RESET_NO_GO.'})
+                'Artefatti prodotti':[aid],'Validità tecnica':'60000 finite canonical updates after4096 distillation; complete full-suite frozen evaluation. Scientific OPERATOR_RESET_NO_GO.'})
     flush();progress.update(complete=True);write_json(progress_path,progress)
     write_json(folder/'memory_receipt.json',dict(valid=True,verification=baseline,records=ids,raw_reports=progress['raw'],
         raw_original_bytes_verified=True,completed_runs=12,airtable_accessed=False,DB_backup='local refresh pending'))
