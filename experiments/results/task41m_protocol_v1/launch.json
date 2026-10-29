@@ -1,0 +1,80 @@
+{
+  "valid": true,
+  "request": {
+    "task": "41m",
+    "revision": "c664b8b5f608ebcf95f7ef8e774796d17000e146",
+    "session": "giada-task41m-frozen-primary",
+    "profile": "primary",
+    "remote_root": "/content/giada_task41m_c664b8b5f608",
+    "training_updates": 0,
+    "selection_performed": false,
+    "worker_sha256": "148c4677604faa8ba0dfe44736f2f55bec92f19c7338e2800359d57fbaed8018",
+    "manager_sha256": "0c86ecbf636015ec4eb49d5c72094a3d57135147ca1bd2d1bb7613b4b6aba10f",
+    "protocol_sha256": "9040d5544d21b5b9f703d66b85741b9d37c0d2f9c8656a252b375de25f80ccbd",
+    "inputs": [
+      {
+        "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41b_opened_inputs.zip",
+        "remote": "/content/task41b_opened_inputs.zip",
+        "sha256": "a8b261ed8bd742c18e66bfb2f92d0e06a6c875403545d94480e82ef9521934bb",
+        "bytes": 53130922
+      },
+      {
+        "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41d_opened41c.zip",
+        "remote": "/content/task41d_opened41c.zip",
+        "sha256": "172ec87c4b1135d4f3421d63343ae399368f8426a68fadcf4c7ca788c6e97aff",
+        "bytes": 23369778
+      },
+      {
+        "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41l_frozen_input\\task41k_frozen_diagnostic.zip.bin",
+        "remote": "/content/task41k_frozen_diagnostic.zip.bin",
+        "sha256": "6ffd1b92755025ae009c987fc689bb4fe24edba1d313b6f3a4563f08272fbabd",
+        "bytes": 22556154
+      },
+      {
+        "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41m_reuse.zip.bin",
+        "remote": "/content/task41m_reuse.zip.bin",
+        "sha256": "88589d62c296bf6786524357a2c93fac5cf25b4719ad5050a4f8f38b49d516db",
+        "bytes": 3883799
+      }
+    ],
+    "environment": {
+      "CUBLAS_WORKSPACE_CONFIG": ":4096:8",
+      "GIADA_PROVIDER": "Colab",
+      "GIADA_TASK41_INPUTS": "/content/task41b_opened_inputs.zip",
+      "GIADA_TASK41C_INPUTS": "/content/task41d_opened41c.zip",
+      "GIADA_TASK41L_FROZEN_INPUT": "/content/task41k_frozen_diagnostic.zip.bin",
+      "GIADA_TASK41M_REUSE": "/content/task41m_reuse.zip.bin"
+    }
+  },
+  "observed": {
+    "task": "41m",
+    "revision": "c664b8b5f608ebcf95f7ef8e774796d17000e146",
+    "elapsed_seconds": 0.0037245750427246094,
+    "state": "running",
+    "phase": "frozen_evaluation",
+    "worker_pid": 1213,
+    "training_updates_performed": 0
+  },
+  "supervisor_pid": 34564,
+  "external_backup": {
+    "valid": true,
+    "remote": {
+      "label": "1793315449",
+      "archive": "/content/giada_task41m_c664b8b5f608/recovery_1793315449.zip",
+      "sha256": "6596450c5a3d552b3c97ca24f13cd9ba789de4c313dfbc362760c8f12b4843df",
+      "bytes": 4290609,
+      "parts": [
+        {
+          "remote": "/content/giada_task41m_c664b8b5f608/recovery_1793315449.zip.part0000",
+          "bytes": 4290609,
+          "sha256": "6596450c5a3d552b3c97ca24f13cd9ba789de4c313dfbc362760c8f12b4843df"
+        }
+      ]
+    },
+    "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41m_primary_external\\recovery_1793315449.zip",
+    "runtime_independent": true,
+    "verified_at": 1793315493.7773259
+  },
+  "provider_reason": "Kaggle GPU quota checked:112269.406s used/108000s allowed, reset2026-10-31T00:00:00Z; use authorized Colab primary.",
+  "training_updates": 0
+}

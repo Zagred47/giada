@@ -1,0 +1,9 @@
+{
+  "valid": false,
+  "scientific_no_go": false,
+  "budget_exhausted": false,
+  "technical_failure": true,
+  "error": "ValueError('operands could not be broadcast together with shapes (6,) (5,) ')",
+  "traceback": "Traceback (most recent call last):\n  File \"/content/giada_task41m_9bddcb857b9e/giada/scripts/run_task41m_frozen_contract.py\", line 16, in main\n    result=m.run(ROOT,a.output,preflight=a.preflight)\n  File \"/content/giada_task41m_9bddcb857b9e/giada/src/giada_teacher/task41m_frozen_contract.py\", line 135, in run\n    measure(pred,canonical,fake,meta,spec,cfg,'autonomous','41')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/content/giada_task41m_9bddcb857b9e/giada/src/giada_teacher/task41m_frozen_contract.py\", line 51, in measure\n    measured=t.metrics(pred,metric_ref,data,meta,spec['quality'],cfg['gates'],mode)\n  File \"/content/giada_task41m_9bddcb857b9e/giada/src/giada_teacher/task40_causal_reinsertion.py\", line 253, in metrics\n    rms_v = float(np.sqrt(np.mean((v-rv)**2))) if finite else None\n                                   ~^~~\nValueError: operands could not be broadcast together with shapes (6,) (5,) \n",
+  "training_updates_performed": 0
+}
