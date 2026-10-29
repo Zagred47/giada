@@ -10,7 +10,8 @@ def main():
     with (dest/'console.log').open('a',encoding='utf-8') as log:
         driver=None if a.attach else subprocess.Popen(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',a.session,'-f','scripts/colab_task41m_driver.py','--timeout','7200'],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
         def download(name,target):
-            result=cli(repo,'download','-s',a.session,remote+'/'+name,target,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=300)
+            local=target.resolve().relative_to(repo).as_posix()
+            result=cli(repo,'download','-s',a.session,remote+'/'+name,local,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=300)
             return result.returncode==0 and target.exists() and 'not found' not in (result.stdout+result.stderr).lower()
         for poll in range(240):
             try:

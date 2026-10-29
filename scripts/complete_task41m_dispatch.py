@@ -19,7 +19,10 @@ def main():
     def command(*args):
         subprocess.run([sys.executable,'-u',*args],cwd=ROOT,check=True)
     def upload(source,target):
-        result=cli(ROOT,'upload','-s',request['session'],source,target,timeout=300)
+        # Keep local paths relative to the declared cwd across Windows/WSL.
+        # This does not replace checking that the remote session still exists.
+        local=Path(source).resolve().relative_to(ROOT).as_posix()
+        result=cli(ROOT,'upload','-s',request['session'],local,target,timeout=300)
         if result.returncode:raise RuntimeError('Console upload failed; scientific worker not duplicated')
     try:
         assert not (FOLDER/'launch.json').exists(),'Existing launch receipt: inspect, never duplicate.'
