@@ -26,7 +26,7 @@ def main():
                     'Nonfinite parameters/traces, SHA mismatch, primary H control mismatch: stop and preserve technical failure.',
                     'No automatic retraining, reselection, new capacity, threshold changes, independent-confirmation claim or Task42.'],
         limits=['All panels already opened: diagnostic only; seeds17/29/43 not new independent biological replicas.',
-                'Three model interventions share frozen weights; swap100 evaluates two networks, not a compressed deployment.',
+                'Three model interventions share frozen weights; all swap wrappers evaluate two networks, even swap000. Actual single-network H_native is additionally timed on the same GPU, not confused with the swap000 diagnostic overhead.',
                 'Voltage/Ca/gate/current traces and response differentials use exact previous alignment and thresholds.',
                 'Imposed stress and recurrence reused byte-identically from41l because numerical voltage policy is absent in those tests.',
                 'No new development selection; no complete release qualification is claimed by this diagnostic.',
@@ -34,8 +34,8 @@ def main():
                 'DB backup local only; scientific archive/logs copied off-runtime with SHA/CRC.'])
     cells=[dict(cell_type='markdown',metadata={},source=['# GIADA41m — Verifica congelata del contratto numerico\n','Nessun training o selezione. Tre modelli × tre politiche numeriche; riferimenti originale e allineato. Soglie invariate, limite60min.\n','La console esegue lo stesso worker di questo notebook; nessuna duplicazione del run.']),
         dict(cell_type='code',metadata={},execution_count=None,outputs=[],source=[
-            'from pathlib import Path\nimport os, subprocess, sys\n',
-            "REPO=Path('/content/giada_task41m/giada') # checkout fissata dal manager console\n",
+            'from pathlib import Path\nimport json, os, subprocess, sys\n',
+            "REQUEST=json.loads(Path('/content/giada_task41m_launch.json').read_text())\nREPO=Path(REQUEST['remote_root'])/'giada' # checkout fissata dal manager console\n",
             "OUTPUT=REPO.parent/'artifacts'\nassert not OUTPUT.exists(), 'Non duplicare il run console.'\n",
             "subprocess.run([sys.executable,'-u',str(REPO/'scripts/run_task41m_frozen_contract.py'),str(OUTPUT)],cwd=REPO,check=True)\n"])]
     notebook=ROOT/'notebooks/giada_task41m_frozen_contract.ipynb'

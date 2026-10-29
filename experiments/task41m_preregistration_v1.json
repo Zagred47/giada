@@ -147,7 +147,7 @@
   ],
   "limits": [
     "All panels already opened: diagnostic only; seeds17/29/43 not new independent biological replicas.",
-    "Three model interventions share frozen weights; swap100 evaluates two networks, not a compressed deployment.",
+    "Three model interventions share frozen weights; all swap wrappers evaluate two networks, even swap000. Actual single-network H_native is additionally timed on the same GPU, not confused with the swap000 diagnostic overhead.",
     "Voltage/Ca/gate/current traces and response differentials use exact previous alignment and thresholds.",
     "Imposed stress and recurrence reused byte-identically from41l because numerical voltage policy is absent in those tests.",
     "No new development selection; no complete release qualification is claimed by this diagnostic.",
@@ -155,10 +155,10 @@
     "DB backup local only; scientific archive/logs copied off-runtime with SHA/CRC."
   ],
   "sources": {
-    "src/giada_teacher/task41m_frozen_contract.py": "ce402ed2b594b8640fd039cdbca9c7f4dfb5b2ca9f870722e73b7e9384910a06",
+    "src/giada_teacher/task41m_frozen_contract.py": "375f5e2ddcc4db5cc1e5be56364a061bd62f0e66ac49010061f5ca8a8a3fe134",
     "scripts/run_task41m_frozen_contract.py": "148c4677604faa8ba0dfe44736f2f55bec92f19c7338e2800359d57fbaed8018",
-    "scripts/build_task41m_protocol.py": "e53d7c49003b29c8dbd70e87f5ea1b1719508d5342dd83b7b24c3153b8a71c29",
-    "notebooks/giada_task41m_frozen_contract.ipynb": "76ab5896a870a73f841d93764b0bba8cd949bcda46ce17083d923df3490eba25",
+    "scripts/build_task41m_protocol.py": "0421a5bf9a87854676512f38b6665698c416a6af1af0097f0f157744f21d3f6a",
+    "notebooks/giada_task41m_frozen_contract.ipynb": "d099145bca245bbd50c48c2e2c977e9906e958399e0396eee85608b5090e87ac",
     "tests/test_task41m_frozen_contract.py": "33593c513f938c51112f0d9c58fee1224377fc84542a7b627d2c36759d2f257f"
   }
 }

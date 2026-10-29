@@ -140,8 +140,9 @@ def run(root,out,device='cuda',preflight=False):
                     fake_cost[key]=np.repeat(fake[key][:1,:1],64,axis=0).repeat(103,axis=1)
                 fake_cost['multipliers']=np.ones((64,11),dtype='float32')
                 small=dict(spec,cost=dict(spec['cost'],batches=[1],ticks=2,repetitions=2))
-                primary_benchmark(torch,root,out,models,fake_cost,small,device)
-                cost(torch,models,fake_cost,physics,small,device,save,lambda:None)
+                timed=dict(H_native=controls['H_nominee'],**models)
+                primary_benchmark(torch,root,out,timed,fake_cost,small,device)
+                cost(torch,timed,fake_cost,physics,small,device,save,lambda:None)
         result=dict(valid=True,gpu=torch.cuda.get_device_name() if device=='cuda' else 'cpu',torch=torch.__version__,all_parameters_finite=True,
             protocol_sha256=p.digest(root/CONFIG),training_updates=0,canonical_primary_parity=True,all_policy_graphs_exercised=True)
         save('gpu_preflight.json',result);return result
@@ -202,8 +203,9 @@ def run(root,out,device='cuda',preflight=False):
                         del pred;gc.collect();torch.cuda.empty_cache()
             del refs
         # Same primary ionic/integrated cost protocol; variants are diagnostics.
-        check();primary_cost=primary_benchmark(torch,root,out,models,bb,spec,device)
-        numeric_cost=cost(torch,models,bb,physics,spec,device,save,check) if device=='cuda' else []
+        timed=dict(H_native=controls['H_nominee'],**models)
+        check();primary_cost=primary_benchmark(torch,root,out,timed,bb,spec,device)
+        numeric_cost=cost(torch,timed,bb,physics,spec,device,save,check) if device=='cuda' else []
     for model in models.values():assert all(torch.isfinite(v).all() for v in model.parameters())
     # Report the evidence, never silently qualify a diagnostic against new policy.
     result=dict(valid=True,complete=True,task='41m',decision='FROZEN_DIAGNOSTIC_COMPLETE_REQUIRES_AUDIT',
