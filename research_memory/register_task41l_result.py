@@ -5,6 +5,8 @@ from functools import lru_cache
 from .mirror import ROOT,write_json
 from .incremental_batch import IncrementalBatchMirror
 
+EVIDENCE_POSITIVE='Sostiene'
+
 STATEMENTS={
  'outcome':'All8 repair arms fail global qualification. Same-panel H has3 failures (2Ca_HVA stress,1Nap autonomous); nominee L_A1D1P0 has6 (2Nap stress,3Nap autonomous,1Nap recurrence). Historical failures are additionally counted in the paired audit; L_A0D1P1 adds2. No Task42 or qualified speedup.',
  'local_separability':'Frozen K Ca_HVA-only transplant swap100 repairs both slow_boundary_return stress41c failures and preserves the measured stress41 and recurrence panels. Nap transplant induces Nap stress; K_Tst transplant induces K_Tst recurrence. These local harms are separable, but autonomous effects interact non-additively. Not a full-suite repair claim.',
@@ -58,7 +60,7 @@ def main():
     findings={key:put('findings',key,Nome='Task41l '+key,Esito='Negativo' if key=='outcome' else 'Misto',Esperimenti=[exp],Osservazioni=[obs],Risultato=text,Limitazioni=limits) for key,text in STATEMENTS.items()}
     date=datetime.now(timezone.utc).date().isoformat()
     for hypothesis,key in [('step','step_coverage_protection'),('coverage','step_coverage_protection'),('protection','step_coverage_protection'),('feedback','feedback_numerics'),('numerical-interaction','feedback_numerics')]:
-        put('evidence',hypothesis,Nome='Task41l scoped assessment '+hypothesis,Esito='Supporta' if hypothesis in ('feedback','numerical-interaction') else 'Indeterminata',**{'Affermazione valutata':[ref('claims-giada-task41l-'+hypothesis+'-v1')],'Risultati a sostegno':[findings[key]],'Argomentazione':STATEMENTS[key],'Limiti e spiegazioni alternative':limits+' Support restricted to measured probes, not global sufficiency.','Data valutazione':date})
+        put('evidence',hypothesis,Nome='Task41l scoped assessment '+hypothesis,Esito=EVIDENCE_POSITIVE if hypothesis in ('feedback','numerical-interaction') else 'Indeterminata',**{'Affermazione valutata':[ref('claims-giada-task41l-'+hypothesis+'-v1')],'Risultati a sostegno':[findings[key]],'Argomentazione':STATEMENTS[key],'Limiti e spiegazioni alternative':limits+' Support restricted to measured probes, not global sufficiency.','Data valutazione':date})
     runs=[]
     for arm in audit['chosen_steps']:
         for seed in (17,29,43):
