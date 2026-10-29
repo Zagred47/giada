@@ -120,8 +120,8 @@ def run(root,out,device='cuda',preflight=False):
         model.eval()
         for param in model.parameters():param.requires_grad_(False);assert torch.isfinite(param).all()
     if preflight:
-        fake=dict(voltage=np.full((4,5),-65.,dtype='float32'),calcium=np.full((4,5),1e-4,dtype='float32'),
-            gates=np.full((4,5,18),.01,dtype='float32'),multipliers=np.ones((4,11),dtype='float32'),
+        fake=dict(voltage=np.full((4,6),-65.,dtype='float32'),calcium=np.full((4,6),1e-4,dtype='float32'),
+            gates=np.full((4,6,18),.01,dtype='float32'),multipliers=np.ones((4,11),dtype='float32'),
             injection=np.full((4,5),.001,dtype='float32'),base_g_us=np.full((4,5,4),1e-5,dtype='float32'),area_um2=np.array(314.1592653589793))
         with torch.inference_mode():
             canonical=rollout(torch,None,fake,physics,device,'primary')

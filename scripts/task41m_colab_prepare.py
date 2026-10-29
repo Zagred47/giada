@@ -12,6 +12,9 @@ assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=repo,text=True).st
 for row in request['inputs']:
     with Path(row['remote']).open('rb') as f:assert hashlib.file_digest(f,'sha256').hexdigest()==row['sha256']
 env=dict(os.environ,**request['environment'])
-subprocess.run([sys.executable,'-u',str(repo/'scripts/run_task41m_frozen_contract.py'),str(root/'preflight'),'--preflight'],cwd=repo,env=env,check=True)
+with (root/'preflight_console.log').open('w') as log:
+    completed=subprocess.run([sys.executable,'-u',str(repo/'scripts/run_task41m_frozen_contract.py'),str(root/'preflight'),'--preflight'],cwd=repo,env=env,stdout=log,stderr=subprocess.STDOUT)
+print((root/'preflight_console.log').read_text()[-6000:],flush=True)
+completed.check_returncode()
 report=json.loads((root/'preflight/gpu_preflight.json').read_text());assert report['valid']
 print(json.dumps(report),flush=True)

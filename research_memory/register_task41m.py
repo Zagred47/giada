@@ -48,7 +48,8 @@ def main():
         for key in ('quality','compartment_gates','cost'):
             metric=put('metrics',key,Nome='Task41m unchanged '+key,Formula=json.dumps(spec[key]))
             put('evaluations',key,Nome='Task41m '+key,Versione='v1',Metrica=[metric],Protocollo=[protocol],Ruolo='Primaria' if key!='cost' else 'Secondaria',Target=json.dumps(spec[key]))
-        put('observations','preflight',Nome='Task41m CPU/GPU execution readiness',Descrizione=json.dumps(gpu),**{'Artefatti dettagliati':arts})
+        history=[json.loads(p.read_text()) for p in sorted(folder.glob('preflight_failure_*.json'))]
+        put('observations','preflight',Nome='Task41m CPU/GPU execution readiness',Descrizione=json.dumps(dict(gpu=gpu,technical_preflight_history=history)),**{'Artefatti dettagliati':arts})
         put('decisions','bounded-go',Nome='User-authorized bounded41m, no indefinite training',Esito='Continuare',Risultati=[ref('findings-giada-task41l-result-stop_policy-v1'),ref('findings-giada-task41l-result-local_separability-v1'),ref('findings-giada-task41l-result-feedback_numerics-v1')],Motivazione='User asks to preserve all evidence and proceed, with material progress or actionable information required. Frozen evaluation only; no automatic additional training. DBbackup stays local.',**{'Data':date})
     change=m.commit_batch()
     if args.validate_only:return

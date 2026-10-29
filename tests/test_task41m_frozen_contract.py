@@ -30,5 +30,12 @@ class FrozenContractTest(unittest.TestCase):
             a=m.rollout(torch,None,data,(cfg,ca,base),'cpu','primary')
             b=m.a.rollout(torch,None,data,(cfg,ca,base),'cpu',(False,False))
             for name in a:np.testing.assert_array_equal(a[name],b[name])
+            # Native records contain the initial state plus each post-step state.
+            aligned=dict(data)
+            for key in ('voltage','calcium','gates'):aligned[key]=np.concatenate([data[key],data[key][:,-1:]],axis=1)
+            meta=[dict(id=k,source_index=0,intervention='none' if k==0 else 'test') for k in range(2)]
+            spec=m.contract(ROOT)[0]
+            measured=m.measure(a,a,aligned,meta,spec,cfg,'autonomous','41')
+            self.assertEqual(measured['total'],6);self.assertEqual(len(measured['interventions']),3)
 
 if __name__=='__main__':unittest.main()
