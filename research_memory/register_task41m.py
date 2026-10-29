@@ -6,6 +6,8 @@ from .mirror import ROOT,write_json
 from .incremental_batch import IncrementalBatchMirror
 from .register_task41d_result import ResultPreview,PreviewComplete
 
+BASELINE_ROLE='Baseline'
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--validate-only',action='store_true');ap.add_argument('--running',action='store_true');args=ap.parse_args()
     repo=ROOT.parent;folder=repo/'experiments/results/task41m_protocol_v1';folder.mkdir(exist_ok=True)
@@ -40,7 +42,7 @@ def main():
         aa={}
         for condition in conditions:
             model,policy=condition.split('/')
-            aa[condition]=put('arms',condition,Nome='Task41m '+condition,Ruolo='Controllo' if model=='swap000' else 'Trattamento',Protocollo=[protocol],**{'Configurazione residua':json.dumps(dict(model=model,numerics=policy,weights='immutable',training_updates=0,seeds=spec['seeds'],references=['original','matched']))})
+            aa[condition]=put('arms',condition,Nome='Task41m '+condition,Ruolo=BASELINE_ROLE if model=='swap000' else 'Trattamento',Protocollo=[protocol],**{'Configurazione residua':json.dumps(dict(model=model,numerics=policy,weights='immutable',training_updates=0,seeds=spec['seeds'],references=['original','matched']))})
             put('runs',condition,Nome='Task41m frozen evaluation '+condition,Stato='Pianificata',Seed='17,29,43 paired/vectorized',Braccio=[aa[condition]],**{'Configurazione effettiva':json.dumps(spec),'Validità tecnica':'Actual GPU preflight passed; scientific evaluation not started.'})
         for model in spec['models']:
             for policy in spec['policies'][1:]:
