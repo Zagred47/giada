@@ -37,6 +37,12 @@ def main():
         "Include la memoria locale allo stato della data indicata; i risultati e gli stati di esecuzione sono interrogabili nelle tabelle findings, runs e observations. Consultare la ricevuta della versione per il perimetro aggiornato.")
     (folder/'README.md').write_text(readme,encoding='utf-8')
     (ROOT/'drive_exports/latest_local.json').write_text(json.dumps(dict(folder=str(folder),**manifest),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    # Rotate only after the new SQLite passes integrity/FKs and its complete
+    # checksum/manifest are on disk. Never touch the operational database.
+    # The first ever backup has no superseded generation to prune.
+    from .backup_retention import rotate,STAMP
+    generations=[p for p in (ROOT/'drive_exports').iterdir() if p.is_dir() and STAMP.fullmatch(p.name)]
+    if len(generations)>=2:rotate(keep=2,apply=True)
     print(json.dumps(dict(folder=str(folder),filename=path.name,bytes=path.stat().st_size,sha256=h.hexdigest(),records=records)),flush=True)
 
 if __name__=='__main__':main()

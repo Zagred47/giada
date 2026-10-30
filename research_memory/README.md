@@ -1,5 +1,22 @@
 # Scientific Modeling & Experimentation Lab — SQLite mirror
 
+## Rotazione locale dei backup — 30 ottobre 2026
+
+Per richiesta dell'utente, `prepare_drive_backup` conserva automaticamente le
+**ultime due generazioni complete**, dopo verifica SHA-256 di entrambe e dopo
+che il nuovo backup ha superato integrità e foreign key. Solo a quel punto
+elimina le generazioni precedenti in `drive_exports`. Se una verifica fallisce,
+non elimina i vecchi backup. Il DB operativo non è mai un bersaglio della rotazione.
+Le ricevute e i manifest delle generazioni rimosse restano in
+`drive_exports/retention_history`; i vecchi file SQLite non sono più recuperabili
+localmente dopo la rotazione. I percorsi storici nei vecchi report non implicano
+che ogni snapshot completo sia ancora conservato.
+
+La rotazione è parte del comando di backup, non un servizio pianificato.
+Non ruota né elimina risultati scientifici, checkpoint o archivi sperimentali.
+Le parti di trasporto ridondanti si eliminano soltanto dopo confronto integrale
+con l'archivio completo preservato e verifica CRC dello ZIP.
+
 Mirror della [base Airtable](https://airtable.com/app9dZ7ghujkFJIo5), nel workspace **My First Workspace**.
 
 **21 ottobre2026, Task41:** l'utente ha richiesto la

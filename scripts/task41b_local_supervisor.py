@@ -21,6 +21,12 @@ def cli(repo, *args, **kwargs):
     return subprocess.run(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),*map(str,args)],cwd=repo,**kwargs)
 
 def recover_parts(receipt,target,dest,download):
+    # A verified complete archive is the durable backup, not a second set of
+    # transport chunks. Reuse it after restart instead of downloading it again.
+    if target.exists() and file_sha(target)==receipt['sha256']:
+        with zipfile.ZipFile(target) as z:
+            if z.testzip() is not None:raise RuntimeError('Existing recovery ZIP CRC mismatch')
+        return True
     if not receipt.get('parts'):return download(Path(receipt['archive']).name,target)
     for part in receipt['parts']:
         local=dest/Path(part['remote']).name
@@ -33,7 +39,15 @@ def recover_parts(receipt,target,dest,download):
             with (dest/Path(part['remote']).name).open('rb') as stream:
                 for block in iter(lambda:stream.read(8*1024*1024),b''):output.write(block)
     if file_sha(temp)!=receipt['sha256']:raise RuntimeError('Assembled ZIP SHA mismatch')
-    temp.replace(target);return True
+    with zipfile.ZipFile(temp) as z:
+        if z.testzip() is not None:raise RuntimeError('Assembled recovery ZIP CRC mismatch')
+    temp.replace(target)
+    for part in receipt['parts']:
+        local=dest/Path(part['remote']).name
+        if local.is_symlink() or local.resolve().parent!=dest.resolve():raise RuntimeError('Unsafe transport part path')
+        if local.stat().st_size!=part['bytes'] or file_sha(local)!=part['sha256']:raise RuntimeError('Transport chunk changed before cleanup')
+        local.unlink()
+    return True
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--session',required=True);p.add_argument('--revision',required=True);p.add_argument('--destination',type=Path,required=True);p.add_argument('--task',choices=['39e','39f','39g','39h','39i','39j','40','40b','41','41b','41c','41d','41e','41f','41g','41h','41i'],default='39e');p.add_argument('--attach',action='store_true');a=p.parse_args()
