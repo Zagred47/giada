@@ -1,0 +1,134 @@
+{
+  "valid": true,
+  "tests_exit_code": 0,
+  "tests_output": "test_alignment_and_coupled_cpu (tests.test_task41n.ExactConfirmationTest.test_alignment_and_coupled_cpu) ... ok\ntest_bitwise_guard_detects_signed_zero (tests.test_task41n.ExactConfirmationTest.test_bitwise_guard_detects_signed_zero) ... ok\ntest_contract_and_native_design (tests.test_task41n.ExactConfirmationTest.test_contract_and_native_design) ... ok\ntest_cpu_exact_logits_and_state (tests.test_task41n.ExactConfirmationTest.test_cpu_exact_logits_and_state) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 13.207s\n\nOK\n",
+  "cpu_parity": {
+    "valid": true,
+    "rows": [
+      {
+        "model": "dual",
+        "batch": 1,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "donor_pruned",
+        "batch": 1,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "shared_features",
+        "batch": 1,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "dual",
+        "batch": 2,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "donor_pruned",
+        "batch": 2,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "shared_features",
+        "batch": 2,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "dual",
+        "batch": 64,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "donor_pruned",
+        "batch": 64,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "shared_features",
+        "batch": 64,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "dual",
+        "batch": 176,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "donor_pruned",
+        "batch": 176,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "shared_features",
+        "batch": 176,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "dual",
+        "batch": 642,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "donor_pruned",
+        "batch": 642,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "shared_features",
+        "batch": 642,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "dual",
+        "batch": 4096,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "donor_pruned",
+        "batch": 4096,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      },
+      {
+        "model": "shared_features",
+        "batch": 4096,
+        "bitwise_equal": true,
+        "max_abs_error": 0.0
+      }
+    ],
+    "eligible": [
+      "dual",
+      "donor_pruned",
+      "shared_features"
+    ],
+    "atol": 0,
+    "rtol": 0,
+    "fresh_accessed": false,
+    "selection_on_fresh": false,
+    "gpu": "cpu",
+    "torch": "2.4.1+cpu",
+    "protocol_sha256": "20e4557b66830cf747240a9fa92b935b3da227e78f8c2d9ba213158ed5560973",
+    "all_parameters_finite": true
+  },
+  "protocol_sha256": "20e4557b66830cf747240a9fa92b935b3da227e78f8c2d9ba213158ed5560973",
+  "actual_GPU_preflight_pending": true,
+  "fresh_confirmation_accessed": false
+}

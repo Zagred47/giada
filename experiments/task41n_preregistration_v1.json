@@ -1,0 +1,622 @@
+{
+  "task": "41n",
+  "version": "v1",
+  "candidate": "Frozen41m Ca_HVA-only (swap100)",
+  "declared_candidate_policy": "voltage_solve64",
+  "training_updates": 0,
+  "selection_performed": false,
+  "learned_compression": false,
+  "model_seeds": [
+    17,
+    29,
+    43
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "native_seeds": [
+    9410117,
+    9410129
+  ],
+  "stress_seeds": [
+    9410143,
+    9410159,
+    9410173
+  ],
+  "calibration_seed": 9410003,
+  "parity_seed": 9419001,
+  "excluded_input_seeds": [
+    true,
+    3,
+    17,
+    29,
+    43,
+    768,
+    1701,
+    2901,
+    4301,
+    5901,
+    40401,
+    40402,
+    40403,
+    70211,
+    71001,
+    71317,
+    71329,
+    71343,
+    71359,
+    72001,
+    73001,
+    81103,
+    81501,
+    81601,
+    81701,
+    81801,
+    81901,
+    81902,
+    82001,
+    82317,
+    82329,
+    85103,
+    85317,
+    85329,
+    86031,
+    86032,
+    88031,
+    88032,
+    89031,
+    90601,
+    90703,
+    90717,
+    90729,
+    97101,
+    97201,
+    97301,
+    97401,
+    97501,
+    97601,
+    98317,
+    99317,
+    99391,
+    99491,
+    99591,
+    104003,
+    104117,
+    104129,
+    104143,
+    104159,
+    104173,
+    139701,
+    139801,
+    140701,
+    140801,
+    141101,
+    141103,
+    141107,
+    141109,
+    150701,
+    150801,
+    241003,
+    241117,
+    241129,
+    241143,
+    241159,
+    241173,
+    341101,
+    341103,
+    341107,
+    341109,
+    341113,
+    341127,
+    341139,
+    390701,
+    390702,
+    390703,
+    441101,
+    441103,
+    441107,
+    441109,
+    441113,
+    441127,
+    441137,
+    441139,
+    441149,
+    441151,
+    441163,
+    541101,
+    541103,
+    541107,
+    541109,
+    541113,
+    541127,
+    541137,
+    541139,
+    541149,
+    641101,
+    641103,
+    641107,
+    641109,
+    641113,
+    641127,
+    641137,
+    641139,
+    641149,
+    651101,
+    651103,
+    651107,
+    651109,
+    651113,
+    651127,
+    651137,
+    651139,
+    651149,
+    671101,
+    671103,
+    671107,
+    671109,
+    671113,
+    671127,
+    671137,
+    671139,
+    671149,
+    691101,
+    691103,
+    691107,
+    691109,
+    691113,
+    691127,
+    691137,
+    691139,
+    691149,
+    701101,
+    701103,
+    701107,
+    701109,
+    701113,
+    701127,
+    701137,
+    701139,
+    701149,
+    811101,
+    811103,
+    811107,
+    811109,
+    811113,
+    811127,
+    811137,
+    811139,
+    811149,
+    811157
+  ],
+  "dt_ms": 0.1,
+  "duration_ms": 40.0,
+  "stress_duration_ms": 1200.0,
+  "initial_voltages_mv": [
+    -77.0,
+    -52.0
+  ],
+  "protocols": [
+    "jittered_triplet",
+    "late_rebound",
+    "notched_plateau",
+    "spaced_rapid_train"
+  ],
+  "pulses": {
+    "jittered_triplet": [
+      [
+        4.4,
+        6.1,
+        0.0098
+      ],
+      [
+        11.6,
+        14.1,
+        0.0102
+      ],
+      [
+        20.8,
+        22.0,
+        0.0096
+      ]
+    ],
+    "late_rebound": [
+      [
+        3.2,
+        8.6,
+        -0.0031
+      ],
+      [
+        12.3,
+        14.9,
+        0.0103
+      ],
+      [
+        20.1,
+        21.7,
+        0.0101
+      ]
+    ],
+    "notched_plateau": [
+      [
+        4.1,
+        7.4,
+        0.0032
+      ],
+      [
+        7.4,
+        10.6,
+        0.0088
+      ],
+      [
+        10.6,
+        13.2,
+        0.0042
+      ],
+      [
+        17.4,
+        19.6,
+        0.0102
+      ]
+    ],
+    "spaced_rapid_train": [
+      [
+        5.2,
+        5.9,
+        0.011
+      ],
+      [
+        7.8,
+        8.5,
+        0.0108
+      ],
+      [
+        11.9,
+        12.6,
+        0.0112
+      ],
+      [
+        17.1,
+        17.8,
+        0.0106
+      ]
+    ]
+  },
+  "schedules_ms": {
+    "calibration": {
+      "exc_1": [
+        3.6,
+        13.6
+      ],
+      "exc_2": [
+        4.6,
+        14.6
+      ],
+      "inh_1": [
+        6.6,
+        16.6
+      ],
+      "inh_2": [
+        7.6,
+        17.6
+      ]
+    },
+    "jittered_triplet": {
+      "exc_1": [
+        2.65,
+        3.55,
+        11.25,
+        20.65
+      ],
+      "exc_2": [
+        2.95,
+        3.85,
+        11.65,
+        21.05
+      ],
+      "inh_1": [
+        6.35,
+        8.65,
+        17.75,
+        26.25
+      ],
+      "inh_2": [
+        6.75,
+        9.05,
+        18.15,
+        26.65
+      ]
+    },
+    "late_rebound": {
+      "exc_1": [
+        2.82,
+        3.72,
+        11.42,
+        20.82
+      ],
+      "exc_2": [
+        3.12,
+        4.02,
+        11.82,
+        21.22
+      ],
+      "inh_1": [
+        6.52,
+        8.82,
+        17.92,
+        26.42
+      ],
+      "inh_2": [
+        6.92,
+        9.22,
+        18.32,
+        26.82
+      ]
+    },
+    "notched_plateau": {
+      "exc_1": [
+        2.99,
+        3.89,
+        11.59,
+        20.99
+      ],
+      "exc_2": [
+        3.29,
+        4.19,
+        11.99,
+        21.39
+      ],
+      "inh_1": [
+        6.69,
+        8.99,
+        18.09,
+        26.59
+      ],
+      "inh_2": [
+        7.09,
+        9.39,
+        18.49,
+        26.99
+      ]
+    },
+    "spaced_rapid_train": {
+      "exc_1": [
+        3.16,
+        4.06,
+        11.76,
+        21.16
+      ],
+      "exc_2": [
+        3.46,
+        4.36,
+        12.16,
+        21.56
+      ],
+      "inh_1": [
+        6.86,
+        9.16,
+        18.26,
+        26.76
+      ],
+      "inh_2": [
+        7.26,
+        9.56,
+        18.66,
+        27.16
+      ]
+    }
+  },
+  "panels": {
+    "canonical": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "calcium_mix": [
+      2.3,
+      2.7,
+      1.1,
+      0.9,
+      1.2,
+      0.8,
+      1.2,
+      0.9,
+      1.1,
+      0.8,
+      1.0
+    ],
+    "mixed_diagonal": [
+      0.7,
+      1.6,
+      1.15,
+      0.85,
+      1.3,
+      0.8,
+      1.65,
+      0.7,
+      1.2,
+      1.45,
+      0.95
+    ],
+    "low_mixed": [
+      0.6,
+      0.75,
+      0.7,
+      0.9,
+      0.85,
+      0.65,
+      0.8,
+      0.75,
+      0.65,
+      0.8,
+      0.95
+    ]
+  },
+  "interventions": [
+    "block_Ca_HVA",
+    "block_Nap_Et2",
+    "block_K_Pst",
+    "block_SK_E2",
+    "zero_synapses",
+    "injection_0.99",
+    "injection_1.01"
+  ],
+  "neuron_version": "8.2.7",
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "receptor_time_semantics": "ems_fixed_step",
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "current_quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "cost": {
+    "batches": [
+      1,
+      642,
+      4096
+    ],
+    "ticks": 80,
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "baselines": [
+      "resident formula CUDA Graph",
+      "0.01mV voltage LUT plus canonical calcium-dependent SK"
+    ],
+    "timing": "Same active native initial states at10ms,80resident future input ticks,no hosttransfer,alternatingorder;CUDAandwalltimes;pairedbootstrap uncertainty"
+  },
+  "stress_families": [
+    "doublepulse_recovery",
+    "slow_boundary_return",
+    "calcium_swing",
+    "near_threshold_staircase"
+  ],
+  "execution_variants": [
+    "dual",
+    "donor_pruned",
+    "shared_features"
+  ],
+  "parity": {
+    "atol": 0,
+    "rtol": 0,
+    "required": "Bitwise logits,gate step,coupled traces and stress states. Source eligibility frozen before fresh data. No acceptance from a quality tolerance."
+  },
+  "frozen_input": {
+    "local": "artifacts/task41n_frozen.zip.bin",
+    "sha256": "c5744fef3fe1a1c503daa02a8ac1e7e8844219bb20b203917b99ad668e5adea9",
+    "bytes": 197763,
+    "checkpoint_sha256": "a45a42626ea64fe37cb8d62a6b2053a5b2e0096e365ec410d114d8fb4f6330b6",
+    "origin_archive_sha256": "7678e8683e8889b9eca833e4cff0d95eace4787ee2aa24379be9fc01ab3b52fc"
+  },
+  "gpu": "Tesla T4",
+  "torch": "2.11.0+cu130",
+  "max_worker_seconds": 5400,
+  "hypotheses": [
+    {
+      "id": "independent",
+      "statement": "Frozen Ca-only mixed-precision function generalizes to new native protocols,initial voltages and RNG seeds.",
+      "falsifier": "Any registered fresh trajectory,response or stress gate fails against either originalFP32 or matched canonical reference; no fitting after opening."
+    },
+    {
+      "id": "pruning",
+      "statement": "Unused donor SK/Nap precision branches can be skipped while retaining identical logits and dynamics.",
+      "falsifier": "Any bit differs on preflight or fresh parity; implementation becomes ineligible regardless of speed."
+    },
+    {
+      "id": "feature_reuse",
+      "statement": "Input normalization/identical hat features can be computed once across frozen parent/donor without sharing their different weighted activations.",
+      "falsifier": "Any bit differs or no paired speed benefit; preserve full GEMM widths and reduction order."
+    },
+    {
+      "id": "cost",
+      "statement": "Output-preserving execution changes remove measurable duplicate work without new learned compression.",
+      "falsifier": "No improvement >=10% with positive paired uncertainty versus dual at642/4096; separate original formula >=10% deployment speed gate remains unchanged."
+    }
+  ],
+  "qualification": "Primary independent quality requires ALL176x3 trajectories and112x3 responses in BOTH modes and24x3stress histories, original AND matched reference. Native/shadow/phase/canonical floors required. Implementation admissibility requires exact parity. Original cost thresholds unchanged and separate; Task42 never automatic.",
+  "limits": [
+    "Modelseeds17/29/43 remain frozen; only stimulus/release seeds are new. No model ranking on fresh outcomes.",
+    "Primary mixed voltage/solve64 is declared prospectively, not an unnoticed waiver of oldFP32. Gate network,calcium and18occupancies stayFP32.",
+    "No new analytic kinetic fallback,optimizer,training,weight rounding or representation change.",
+    "Single isolated compartment,40msnative and1200ms imposed histories; no multicompartment or untested-horizon claim.",
+    "All implementations benchmarked even if inaccurate only as diagnostics; no speedup claim without independent quality and parity.",
+    "NEURON8.2.7 runs in a separate Python3.12 CPU environment; GPU/Torch runs in current Colab Python. No native/CUDA memory sharing.",
+    "90-minute bounded worker;partial archives every180seconds,final traces included;DBbackup local only."
+  ],
+  "sources": {
+    "src/giada_teacher/task41n_exact_execution.py": "fca84a6c034f8df690a1a3b1aded76304f8bf0483442a73f8e708afc07b78e59",
+    "src/giada_teacher/task41n_independent_confirmation.py": "121b3853d67e5847d20343f3b4480b5aeffe7c01647dff03033b37df0cdfba71",
+    "scripts/run_task41n_independent.py": "6fa983bcc0d986f845b7dbf6de3d0a1986fcc05cb86a134a0dc64d7789329637",
+    "scripts/build_task41n_protocol.py": "870be00543a63c05a2bcb54ba7d9ecbedce1eae2b9b186edfb3f8a1d04c65327",
+    "notebooks/giada_task41n_independent_exact_execution.ipynb": "642cfebdca167e479efd9a497d4cecf5e39ae33f5b60dfdb2bf885ca96521077",
+    "tests/test_task41n.py": "6e826cfd33344278cba8dc0131df6dc3522e1c1c8413ee506cfc0fbbe24848e2"
+  }
+}
