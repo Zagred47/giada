@@ -1,0 +1,655 @@
+{
+  "valid": true,
+  "verification": {
+    "base_id": "app9dZ7ghujkFJIo5",
+    "tables": 78,
+    "relationships": 241,
+    "records": 175231,
+    "pending_writes": 0,
+    "foreign_key_errors": [],
+    "integrity": "ok",
+    "snapshot_hash": "ff0645dfd031f22db8d488ed8bac159ddd0bb2776a6e02f37dcbbfd3ee67e0d2",
+    "table_counts": {
+      "sources": 0,
+      "segments": 0,
+      "actors": 0,
+      "artifacts": 2925,
+      "programs": 1,
+      "questions": 17,
+      "objectives": 0,
+      "capabilities": 0,
+      "capdeps": 0,
+      "definitions": 0,
+      "systems": 0,
+      "phenomena": 0,
+      "levels": 0,
+      "quantities": 0,
+      "mechanisms": 0,
+      "constraints": 0,
+      "crosslevels": 0,
+      "claims": 333,
+      "assumptions": 1,
+      "claimrels": 0,
+      "predictions": 114,
+      "causal": 1,
+      "evidence": 340,
+      "approaches": 1,
+      "choices": 1,
+      "mappings": 0,
+      "validity": 0,
+      "models": 275,
+      "types": 0,
+      "instances": 3,
+      "ports": 0,
+      "connections": 0,
+      "equations": 1,
+      "symbols": 0,
+      "bindings": 0,
+      "composition": 0,
+      "substitutions": 0,
+      "implementations": 26,
+      "numerics": 0,
+      "parameters": 0,
+      "losses": 0,
+      "recipes": 0,
+      "trained": 0,
+      "strategies": 0,
+      "patterns": 0,
+      "analogies": 0,
+      "candidates": 0,
+      "transformations": 0,
+      "campaigns": 0,
+      "playgrounds": 5,
+      "tasks": 0,
+      "generators": 18,
+      "datasets": 19,
+      "partitions": 46,
+      "experiments": 122,
+      "protocols": 127,
+      "factors": 7,
+      "factorlevels": 15,
+      "arms": 566,
+      "assignments": 24,
+      "contrasts": 353,
+      "blocks": 51,
+      "runs": 2490,
+      "checkpoints": 0,
+      "quality": 65,
+      "deviations": 1,
+      "metrics": 1711,
+      "evaluations": 1722,
+      "observations": 163065,
+      "analyses": 67,
+      "findings": 351,
+      "anomalies": 2,
+      "confirmations": 2,
+      "decisions": 115,
+      "lessons": 72,
+      "rules": 3,
+      "applications": 0,
+      "actions": 173
+    },
+    "valid": true,
+    "logical_roundtrip_equal": true,
+    "baseline_snapshot_hash": "e5fc137c65f2d2cb95127203d5b1633499ae16882656bdb3bc7d1f07006ca025",
+    "changed_records_verified": 158,
+    "verification_scope": "Exact fully verified baseline + atomic delta and reciprocal readback + global integrity/FKs"
+  },
+  "change": {
+    "changed_records": 158,
+    "snapshot_hash": "ff0645dfd031f22db8d488ed8bac159ddd0bb2776a6e02f37dcbbfd3ee67e0d2"
+  },
+  "records": {
+    "artifacts-giada-task41m-result-archive-v1": "reccd874802f6d64d",
+    "artifacts-giada-task41m-result-member-historical_imposed_primary_swap000_vs_primary.json-v1": "rec49c4de69499d5b",
+    "observations-giada-task41m-result-raw-historical_imposed_primary_swap000_vs_primary.json-v1": "recf1491e2a97c04d",
+    "artifacts-giada-task41m-result-member-historical_autonomous_recentered32_swap000_vs_primary.json-v1": "rec1a9238d796f9d5",
+    "observations-giada-task41m-result-raw-historical_autonomous_recentered32_swap000_vs_primary.json-v1": "rec0e045bcf390b68",
+    "artifacts-giada-task41m-result-member-41c_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json-v1": "recff1a588c04ea25",
+    "observations-giada-task41m-result-raw-41c_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json-v1": "rec7c03c121bde621",
+    "artifacts-giada-task41m-result-member-41_imposed_primary_swap000_vs_primary.json-v1": "rec3c8e885dda8a58",
+    "observations-giada-task41m-result-raw-41_imposed_primary_swap000_vs_primary.json-v1": "recc948d618599684",
+    "artifacts-giada-task41m-result-member-registration_receipt.json-v1": "reccc9ae29b1ceb11",
+    "observations-giada-task41m-result-raw-registration_receipt.json-v1": "reca81e3990811964",
+    "artifacts-giada-task41m-result-member-41_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json-v1": "rec5169d66943a97d",
+    "observations-giada-task41m-result-raw-41_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json-v1": "rec607e9742a13478",
+    "artifacts-giada-task41m-result-member-historical_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json-v1": "rec5dbc521a3fa9a4",
+    "observations-giada-task41m-result-raw-historical_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json-v1": "reca56f4972db8b4f",
+    "artifacts-giada-task41m-result-member-41c_autonomous_recentered32_K_full_vs_primary.json-v1": "rec26d5fbafaf766d",
+    "observations-giada-task41m-result-raw-41c_autonomous_recentered32_K_full_vs_primary.json-v1": "rec3b98880cdc5882",
+    "artifacts-giada-task41m-result-member-41c_imposed_primary_K_full_vs_primary.json-v1": "recfd1d73faa4d12b",
+    "observations-giada-task41m-result-raw-41c_imposed_primary_K_full_vs_primary.json-v1": "rec6b7bbb55ddaf7f",
+    "artifacts-giada-task41m-result-member-historical_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json-v1": "reccc6359ed73e2f2",
+    "observations-giada-task41m-result-raw-historical_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json-v1": "recf73676645bddf0",
+    "artifacts-giada-task41m-result-member-41c_autonomous_primary_swap000_vs_primary.json-v1": "rec380367a335206b",
+    "observations-giada-task41m-result-raw-41c_autonomous_primary_swap000_vs_primary.json-v1": "rec12662c80db8490",
+    "artifacts-giada-task41m-result-member-canonical_floors.json-v1": "rece4ca3072f6a8e2",
+    "observations-giada-task41m-result-raw-canonical_floors.json-v1": "recf78308506f0bf8",
+    "artifacts-giada-task41m-result-member-41c_autonomous_recentered32_swap100_vs_recentered32.json-v1": "rec1ffb88636bd2ec",
+    "observations-giada-task41m-result-raw-41c_autonomous_recentered32_swap100_vs_recentered32.json-v1": "rec1dcd1a2e9a9fa2",
+    "artifacts-giada-task41m-result-member-cost.json-v1": "reca06342e7d0011e",
+    "observations-giada-task41m-result-raw-cost.json-v1": "recef717608a4d916",
+    "artifacts-giada-task41m-result-member-historical_autonomous_recentered32_swap000_vs_recentered32.json-v1": "rec9ba34e40b24218",
+    "observations-giada-task41m-result-raw-historical_autonomous_recentered32_swap000_vs_recentered32.json-v1": "rec0bb09b1e3d4755",
+    "artifacts-giada-task41m-result-member-41_autonomous_recentered32_swap000_vs_primary.json-v1": "recc2cbb957be8407",
+    "observations-giada-task41m-result-raw-41_autonomous_recentered32_swap000_vs_primary.json-v1": "recb3c8505b337c9e",
+    "artifacts-giada-task41m-result-member-41_autonomous_recentered32_swap100_vs_primary.json-v1": "recb69e176232c19b",
+    "observations-giada-task41m-result-raw-41_autonomous_recentered32_swap100_vs_primary.json-v1": "rec2811d7c6237531",
+    "artifacts-giada-task41m-result-member-historical_autonomous_voltage_solve64_swap000_vs_primary.json-v1": "rec05b6292528f595",
+    "observations-giada-task41m-result-raw-historical_autonomous_voltage_solve64_swap000_vs_primary.json-v1": "rec49f3093c0ea987",
+    "artifacts-giada-task41m-result-member-41_autonomous_recentered32_K_full_vs_recentered32.json-v1": "rec7378e21db24feb",
+    "observations-giada-task41m-result-raw-41_autonomous_recentered32_K_full_vs_recentered32.json-v1": "rec4d0f8b49313408",
+    "artifacts-giada-task41m-result-member-41_imposed_primary_swap100_vs_primary.json-v1": "rec16b6853eef25e5",
+    "observations-giada-task41m-result-raw-41_imposed_primary_swap100_vs_primary.json-v1": "reccabcfc8f0ac42a",
+    "artifacts-giada-task41m-result-member-numerical_cost.json-v1": "rec050ec4b8c17fb3",
+    "observations-giada-task41m-result-raw-numerical_cost.json-v1": "recb90ef412288c89",
+    "artifacts-giada-task41m-result-member-41_autonomous_recentered32_swap100_vs_recentered32.json-v1": "rec62508aa958ffdb",
+    "observations-giada-task41m-result-raw-41_autonomous_recentered32_swap100_vs_recentered32.json-v1": "recc5c551008b5cd0",
+    "artifacts-giada-task41m-result-member-historical_imposed_primary_K_full_vs_primary.json-v1": "rec070a23ebc78b92",
+    "observations-giada-task41m-result-raw-historical_imposed_primary_K_full_vs_primary.json-v1": "rec6d46c9fb409adf",
+    "artifacts-giada-task41m-result-member-41c_autonomous_primary_swap100_vs_primary.json-v1": "recc1fc7065a1783e",
+    "observations-giada-task41m-result-raw-41c_autonomous_primary_swap100_vs_primary.json-v1": "recbdb8f36ccfb22d",
+    "artifacts-giada-task41m-result-member-41c_autonomous_recentered32_swap100_vs_primary.json-v1": "recf9c9796306f344",
+    "observations-giada-task41m-result-raw-41c_autonomous_recentered32_swap100_vs_primary.json-v1": "rec1959e6309bb0bd",
+    "artifacts-giada-task41m-result-member-41_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json-v1": "rec50bf84cced2227",
+    "observations-giada-task41m-result-raw-41_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json-v1": "rece66605a43c13f0",
+    "artifacts-giada-task41m-result-member-41c_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json-v1": "recd45ae0000b9060",
+    "observations-giada-task41m-result-raw-41c_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json-v1": "rec90adf6a2690e6f",
+    "artifacts-giada-task41m-result-member-41_autonomous_primary_swap100_vs_primary.json-v1": "rec566dab06d8e7c4",
+    "observations-giada-task41m-result-raw-41_autonomous_primary_swap100_vs_primary.json-v1": "recbd5a9ba6428e1b",
+    "artifacts-giada-task41m-result-member-41c_autonomous_recentered32_swap000_vs_recentered32.json-v1": "rec4e18e190938aa4",
+    "observations-giada-task41m-result-raw-41c_autonomous_recentered32_swap000_vs_recentered32.json-v1": "recb2455600c04d61",
+    "artifacts-giada-task41m-result-member-41c_autonomous_voltage_solve64_swap100_vs_primary.json-v1": "rec02a0d5ae8985c5",
+    "observations-giada-task41m-result-raw-41c_autonomous_voltage_solve64_swap100_vs_primary.json-v1": "rec2b1d528c8e53b9",
+    "artifacts-giada-task41m-result-member-41c_autonomous_recentered32_swap000_vs_primary.json-v1": "rec37185a03112231",
+    "observations-giada-task41m-result-raw-41c_autonomous_recentered32_swap000_vs_primary.json-v1": "rec567aa9970a9284",
+    "artifacts-giada-task41m-result-member-preregistration.json-v1": "rece15e717846d911",
+    "observations-giada-task41m-result-raw-preregistration.json-v1": "rec9db7117f013195",
+    "artifacts-giada-task41m-result-member-41_autonomous_primary_swap000_vs_primary.json-v1": "rec5cab04061eea53",
+    "observations-giada-task41m-result-raw-41_autonomous_primary_swap000_vs_primary.json-v1": "rec7358a926ba05f0",
+    "artifacts-giada-task41m-result-member-historical_autonomous_recentered32_swap100_vs_recentered32.json-v1": "rec1cd7b85ff5822a",
+    "observations-giada-task41m-result-raw-historical_autonomous_recentered32_swap100_vs_recentered32.json-v1": "recc2bb4b66614470",
+    "artifacts-giada-task41m-result-member-41_autonomous_voltage_solve64_swap000_vs_primary.json-v1": "rec1c1f9e5e92a15e",
+    "observations-giada-task41m-result-raw-41_autonomous_voltage_solve64_swap000_vs_primary.json-v1": "rec3889ecad77c2fe",
+    "artifacts-giada-task41m-result-member-historical_imposed_primary_swap100_vs_primary.json-v1": "recd0a2dc911f8318",
+    "observations-giada-task41m-result-raw-historical_imposed_primary_swap100_vs_primary.json-v1": "rec68c5758b630e76",
+    "artifacts-giada-task41m-result-member-41_autonomous_recentered32_swap000_vs_recentered32.json-v1": "recd5a107c466eba8",
+    "observations-giada-task41m-result-raw-41_autonomous_recentered32_swap000_vs_recentered32.json-v1": "recda091a9a0cb625",
+    "artifacts-giada-task41m-result-member-41_autonomous_recentered32_K_full_vs_primary.json-v1": "rec3d7cc062d91d7c",
+    "observations-giada-task41m-result-raw-41_autonomous_recentered32_K_full_vs_primary.json-v1": "rec18ea92e84cfbc8",
+    "artifacts-giada-task41m-result-member-41c_autonomous_recentered32_K_full_vs_recentered32.json-v1": "rec86d7066069a18f",
+    "observations-giada-task41m-result-raw-41c_autonomous_recentered32_K_full_vs_recentered32.json-v1": "rec19db5bfac27142",
+    "artifacts-giada-task41m-result-member-41c_imposed_primary_swap000_vs_primary.json-v1": "rec3f13ab06eccc94",
+    "observations-giada-task41m-result-raw-41c_imposed_primary_swap000_vs_primary.json-v1": "rec23eebcc82cd46a",
+    "artifacts-giada-task41m-result-member-reused_reports.json-v1": "rec9e8cec648acb97",
+    "observations-giada-task41m-result-raw-reused_reports.json-v1": "rec968c4e4ef8d882",
+    "artifacts-giada-task41m-result-member-historical_autonomous_recentered32_K_full_vs_recentered32.json-v1": "recc5307d84a46cb2",
+    "observations-giada-task41m-result-raw-historical_autonomous_recentered32_K_full_vs_recentered32.json-v1": "recb57a7af5fe9e01",
+    "artifacts-giada-task41m-result-member-final_report.json-v1": "rec1a62d9aa930bfc",
+    "observations-giada-task41m-result-raw-final_report.json-v1": "rec0be2e3fb8c611f",
+    "artifacts-giada-task41m-result-member-41_autonomous_voltage_solve64_swap100_vs_primary.json-v1": "reca7b6a1d2464397",
+    "observations-giada-task41m-result-raw-41_autonomous_voltage_solve64_swap100_vs_primary.json-v1": "rec25d229c9333706",
+    "artifacts-giada-task41m-result-member-historical_autonomous_recentered32_K_full_vs_primary.json-v1": "recadb6d2f6ab1b49",
+    "observations-giada-task41m-result-raw-historical_autonomous_recentered32_K_full_vs_primary.json-v1": "rec4f80aac28cdf86",
+    "artifacts-giada-task41m-result-member-historical_autonomous_recentered32_swap100_vs_primary.json-v1": "rec488c4fc4abfc2c",
+    "observations-giada-task41m-result-raw-historical_autonomous_recentered32_swap100_vs_primary.json-v1": "recc81964c87b76eb",
+    "artifacts-giada-task41m-result-member-41c_autonomous_voltage_solve64_swap000_vs_primary.json-v1": "rec33a9e80836d682",
+    "observations-giada-task41m-result-raw-41c_autonomous_voltage_solve64_swap000_vs_primary.json-v1": "reced6cb060835f7b",
+    "artifacts-giada-task41m-result-member-41_imposed_primary_K_full_vs_primary.json-v1": "rece264be415b8a3c",
+    "observations-giada-task41m-result-raw-41_imposed_primary_K_full_vs_primary.json-v1": "rec9302263562714e",
+    "artifacts-giada-task41m-result-member-historical_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json-v1": "reca28106340cc4d6",
+    "observations-giada-task41m-result-raw-historical_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json-v1": "rec9a8c4530f96528",
+    "artifacts-giada-task41m-result-member-revision.json-v1": "recd090ab86e924f1",
+    "observations-giada-task41m-result-raw-revision.json-v1": "rec7accff6c9047c0",
+    "artifacts-giada-task41m-result-member-historical_autonomous_primary_swap000_vs_primary.json-v1": "reccab7dbbfc13392",
+    "observations-giada-task41m-result-raw-historical_autonomous_primary_swap000_vs_primary.json-v1": "recff96bfc20691a2",
+    "artifacts-giada-task41m-result-member-historical_autonomous_voltage_solve64_swap100_vs_primary.json-v1": "rec0eb7463eeb8b7d",
+    "observations-giada-task41m-result-raw-historical_autonomous_voltage_solve64_swap100_vs_primary.json-v1": "recf5b2ebfe5d020f",
+    "artifacts-giada-task41m-result-member-historical_autonomous_primary_K_full_vs_primary.json-v1": "recc991d08b36b470",
+    "observations-giada-task41m-result-raw-historical_autonomous_primary_K_full_vs_primary.json-v1": "recb4512d7dfd2d74",
+    "artifacts-giada-task41m-result-member-gpu_preflight.json-v1": "rec5b3bb1339ee16b",
+    "observations-giada-task41m-result-raw-gpu_preflight.json-v1": "rec52b3a3cf0689d9",
+    "artifacts-giada-task41m-result-member-historical_autonomous_voltage_solve64_K_full_vs_primary.json-v1": "recd5e89dee51c347",
+    "observations-giada-task41m-result-raw-historical_autonomous_voltage_solve64_K_full_vs_primary.json-v1": "rec9135999bbe5109",
+    "artifacts-giada-task41m-result-member-41_autonomous_primary_K_full_vs_primary.json-v1": "recdb0f6ec8c3b1e7",
+    "observations-giada-task41m-result-raw-41_autonomous_primary_K_full_vs_primary.json-v1": "rec82760cef0c2852",
+    "artifacts-giada-task41m-result-member-41c_imposed_primary_swap100_vs_primary.json-v1": "recf2ef204eed368c",
+    "observations-giada-task41m-result-raw-41c_imposed_primary_swap100_vs_primary.json-v1": "recf5014aaba3fd38",
+    "artifacts-giada-task41m-result-member-41c_autonomous_voltage_solve64_K_full_vs_primary.json-v1": "recc9da9860c4d1cc",
+    "observations-giada-task41m-result-raw-41c_autonomous_voltage_solve64_K_full_vs_primary.json-v1": "rec3139c912c86b4b",
+    "artifacts-giada-task41m-result-member-41c_autonomous_primary_K_full_vs_primary.json-v1": "rec99fbf23553b827",
+    "observations-giada-task41m-result-raw-41c_autonomous_primary_K_full_vs_primary.json-v1": "rec4e23bf991e4c8a",
+    "artifacts-giada-task41m-result-member-progress_summary.json-v1": "rec2a191cb186ec0d",
+    "observations-giada-task41m-result-raw-progress_summary.json-v1": "recbc3e27dab2812c",
+    "artifacts-giada-task41m-result-member-41_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json-v1": "rece403ba4c61577f",
+    "observations-giada-task41m-result-raw-41_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json-v1": "recde2dd5d81e0a61",
+    "artifacts-giada-task41m-result-member-41_autonomous_voltage_solve64_K_full_vs_primary.json-v1": "rec61eb0ed05b7c3b",
+    "observations-giada-task41m-result-raw-41_autonomous_voltage_solve64_K_full_vs_primary.json-v1": "recf9ec87f74e1bbb",
+    "artifacts-giada-task41m-result-member-historical_autonomous_primary_swap100_vs_primary.json-v1": "rec07e5e49d2a9ab8",
+    "observations-giada-task41m-result-raw-historical_autonomous_primary_swap100_vs_primary.json-v1": "rec60bf1b7e90c8d2",
+    "artifacts-giada-task41m-result-member-41c_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json-v1": "rec8420693caefe84",
+    "observations-giada-task41m-result-raw-41c_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json-v1": "rec44688de5772e42",
+    "artifacts-giada-task41m-result-scripts/audit_task41m_final.py-v1": "rec654e2311c5d69f",
+    "artifacts-giada-task41m-result-experiments/results/task41m_audited_v1/audit.json-v1": "rec96f151f190e6d9",
+    "observations-giada-task41m-result-audit-v1": "rec9fd3ffc0941f11",
+    "findings-giada-task41m-result-quality-v1": "rec1f6e97a1e8e898",
+    "findings-giada-task41m-result-separation-v1": "reccb1563498ff242",
+    "findings-giada-task41m-result-reference-v1": "rec1dd2ab2dd38075",
+    "findings-giada-task41m-result-cost-v1": "rec921f511a113959",
+    "findings-giada-task41m-result-scope-v1": "rec9935195204e024",
+    "findings-giada-task41m-result-decision-v1": "recc9a93f8c18c2dd",
+    "evidence-giada-task41m-result-selective_transfer-v1": "rec3967fce788aa9c",
+    "evidence-giada-task41m-result-numerical_contract-v1": "rec5402802497377f",
+    "evidence-giada-task41m-result-reference_confound-v1": "rec405f8d0f5baccb",
+    "evidence-giada-task41m-result-fp32_algebra-v1": "rec18190c9b842a00",
+    "analyses-giada-task41m-result-full-v1": "recdd93c1e8800b87",
+    "decisions-giada-task41m-result-confirm-independently-v1": "rec1c7411d222f3e7"
+  },
+  "raw_reports": [
+    {
+      "member": "historical_imposed_primary_swap000_vs_primary.json",
+      "observation": "recf1491e2a97c04d",
+      "sha256": "8f2e0a157a012ab69f69f4a1f085f1db1c34f9eb6185b66e5ed7a60f2bb4e4aa",
+      "bytes": 4777226
+    },
+    {
+      "member": "historical_autonomous_recentered32_swap000_vs_primary.json",
+      "observation": "rec0e045bcf390b68",
+      "sha256": "d3b4bb1477a7ee6d3d495c6b802f6c2b4a9cca604556cfae931e3967e98980ff",
+      "bytes": 4726432
+    },
+    {
+      "member": "41c_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json",
+      "observation": "rec7c03c121bde621",
+      "sha256": "d756d7ae3937539445624ea5695c84f45a4a4cd9ceca199db2ccb74f5fc9c887",
+      "bytes": 9499739
+    },
+    {
+      "member": "41_imposed_primary_swap000_vs_primary.json",
+      "observation": "recc948d618599684",
+      "sha256": "e6f170ed59da1c0519596018331915acc385c27397d82477c45d446124670e2b",
+      "bytes": 9470400
+    },
+    {
+      "member": "registration_receipt.json",
+      "observation": "reca81e3990811964",
+      "sha256": "85eb74885e6dbe1cda8e9c5e95cb2cbabd27f413dcdba0da753a0a1c59706ee4",
+      "bytes": 6725
+    },
+    {
+      "member": "41_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json",
+      "observation": "rec607e9742a13478",
+      "sha256": "889f284c73ed819a6c3e9113eba6a320b525fbf452434d5ca537b19738d6f6dd",
+      "bytes": 9470551
+    },
+    {
+      "member": "historical_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json",
+      "observation": "reca56f4972db8b4f",
+      "sha256": "b7461122749857c6725a26edc60ad88c428fd0ec779303b34c0663f26743840f",
+      "bytes": 4727051
+    },
+    {
+      "member": "41c_autonomous_recentered32_K_full_vs_primary.json",
+      "observation": "rec3b98880cdc5882",
+      "sha256": "431ed3a69ad0ab35707280260af310899a93125ab34873abe53c277f1ff2bc72",
+      "bytes": 9499629
+    },
+    {
+      "member": "41c_imposed_primary_K_full_vs_primary.json",
+      "observation": "rec6b7bbb55ddaf7f",
+      "sha256": "676a75be04b021545e632d055e760f5ae0d88b0d95d65429c20867e78645eea3",
+      "bytes": 9499222
+    },
+    {
+      "member": "historical_autonomous_voltage_solve64_swap100_vs_voltage_solve64.json",
+      "observation": "recf73676645bddf0",
+      "sha256": "3ed415e89942a3029ce8f5ac6c0c95042f167a65a7ae986ae6baae281c372103",
+      "bytes": 4727117
+    },
+    {
+      "member": "41c_autonomous_primary_swap000_vs_primary.json",
+      "observation": "rec12662c80db8490",
+      "sha256": "b3c1af6cda4339725e8971c589e302416968424537086846476b1c105cf2eae6",
+      "bytes": 9499091
+    },
+    {
+      "member": "canonical_floors.json",
+      "observation": "recf78308506f0bf8",
+      "sha256": "53ac6228bfedd3a86ecb234cfc57e81ac82a4899d4bc39590d1fa82ede0e9173",
+      "bytes": 27239625
+    },
+    {
+      "member": "41c_autonomous_recentered32_swap100_vs_recentered32.json",
+      "observation": "rec1dcd1a2e9a9fa2",
+      "sha256": "1335e736b66256ebab53c6541398884ff142c2feca8b9988aa129c38a5d58e06",
+      "bytes": 9500131
+    },
+    {
+      "member": "cost.json",
+      "observation": "recef717608a4d916",
+      "sha256": "95d5211ba8bc794bf2916c1d1ff8f705fc8380eb368642175a1a665caac32f67",
+      "bytes": 86209
+    },
+    {
+      "member": "historical_autonomous_recentered32_swap000_vs_recentered32.json",
+      "observation": "rec0bb09b1e3d4755",
+      "sha256": "7337bfae86c56246b6c9fd773dd63b67c170ee9b137dd0c1dc98b4681df6bd88",
+      "bytes": 4726725
+    },
+    {
+      "member": "41_autonomous_recentered32_swap000_vs_primary.json",
+      "observation": "recb3c8505b337c9e",
+      "sha256": "4eb529b935c7c6abad61aa038565bff61400ee06f705a3e8f8e3bcb21cc69de0",
+      "bytes": 9470127
+    },
+    {
+      "member": "41_autonomous_recentered32_swap100_vs_primary.json",
+      "observation": "rec2811d7c6237531",
+      "sha256": "af384571ccb1874c1f84c0c07e83012fb534cdb3e9f77b104ab649818a5e3af1",
+      "bytes": 9470291
+    },
+    {
+      "member": "historical_autonomous_voltage_solve64_swap000_vs_primary.json",
+      "observation": "rec49f3093c0ea987",
+      "sha256": "2f7cbc3fd0f3ad55aadb605cd8df020530da65335325d7397ea0e19d655439f7",
+      "bytes": 4726325
+    },
+    {
+      "member": "41_autonomous_recentered32_K_full_vs_recentered32.json",
+      "observation": "rec4d0f8b49313408",
+      "sha256": "d469f63c404bf9cc7f7a06836668aad7484c57e39924a2230ed36ca577cb683d",
+      "bytes": 9467198
+    },
+    {
+      "member": "41_imposed_primary_swap100_vs_primary.json",
+      "observation": "reccabcfc8f0ac42a",
+      "sha256": "02696bcc7b55af0cc6e7d32360e9381ef300c0ae0e7c952a564bed29fa5ab267",
+      "bytes": 9470371
+    },
+    {
+      "member": "numerical_cost.json",
+      "observation": "recb90ef412288c89",
+      "sha256": "1bfa082357fc41461fb3cc495daed02841687ea90d1aa6089ce862c730a4b3b6",
+      "bytes": 67539
+    },
+    {
+      "member": "41_autonomous_recentered32_swap100_vs_recentered32.json",
+      "observation": "recc5c551008b5cd0",
+      "sha256": "3bc5c044e75380e8a0ab9da72dfa7fe8ac6f00a2837746b11bb6e924c15d76b8",
+      "bytes": 9468412
+    },
+    {
+      "member": "historical_imposed_primary_K_full_vs_primary.json",
+      "observation": "rec6d46c9fb409adf",
+      "sha256": "a03082e8710eb0066e84a7cd8252c15a821df3ead77d1af37a5a9d8cd4c28a28",
+      "bytes": 4776858
+    },
+    {
+      "member": "41c_autonomous_primary_swap100_vs_primary.json",
+      "observation": "recbdb8f36ccfb22d",
+      "sha256": "37186c4a6303ba3439d119be789fc4bc7a378f7cbf8ba119e4b28d524a2b47a5",
+      "bytes": 9499330
+    },
+    {
+      "member": "41c_autonomous_recentered32_swap100_vs_primary.json",
+      "observation": "rec1959e6309bb0bd",
+      "sha256": "1c7dac28174d546bda181e00962a50d933ff6412e519333aeec19d3e26d1b7bc",
+      "bytes": 9499566
+    },
+    {
+      "member": "41_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json",
+      "observation": "rece66605a43c13f0",
+      "sha256": "ab56b80dbc8ec534d1b2352acf0c22bdfd11e9041061cf9258f6db59e5b942c0",
+      "bytes": 9470731
+    },
+    {
+      "member": "41c_autonomous_voltage_solve64_swap000_vs_voltage_solve64.json",
+      "observation": "rec90adf6a2690e6f",
+      "sha256": "0a451991c30ce9f98d606d95c8b0eb685623f03aaed4ded4392ae482bc42455a",
+      "bytes": 9499534
+    },
+    {
+      "member": "41_autonomous_primary_swap100_vs_primary.json",
+      "observation": "recbd5a9ba6428e1b",
+      "sha256": "b4deed5ef5080a5ffedb77aa88940b14f32632087a2eb4cf79d89659ead40107",
+      "bytes": 9470174
+    },
+    {
+      "member": "41c_autonomous_recentered32_swap000_vs_recentered32.json",
+      "observation": "recb2455600c04d61",
+      "sha256": "bf2672dbb02719c80e3b91c7d79b694e11cc8f3b2f1299538d2dde1ac2be4811",
+      "bytes": 9499761
+    },
+    {
+      "member": "41c_autonomous_voltage_solve64_swap100_vs_primary.json",
+      "observation": "rec2b1d528c8e53b9",
+      "sha256": "e7a9f41d201379ad012b04e5f524fdd17190a065c6e1d060caa5607109fd2553",
+      "bytes": 9499781
+    },
+    {
+      "member": "41c_autonomous_recentered32_swap000_vs_primary.json",
+      "observation": "rec567aa9970a9284",
+      "sha256": "405f7455ad9d5f79296d1251a2d6e5f98537dc5d5015fa6e3ca25a251f070d50",
+      "bytes": 9499264
+    },
+    {
+      "member": "preregistration.json",
+      "observation": "rec9db7117f013195",
+      "sha256": "9e4a31661471ef36568ca3ccca28e29ea950272d569065d3edad66f2377607b4",
+      "bytes": 8234
+    },
+    {
+      "member": "41_autonomous_primary_swap000_vs_primary.json",
+      "observation": "rec7358a926ba05f0",
+      "sha256": "66499387fbd3cdec454a4d9dfd8805853c09129efa21630fff1320ea46440898",
+      "bytes": 9469784
+    },
+    {
+      "member": "historical_autonomous_recentered32_swap100_vs_recentered32.json",
+      "observation": "recc2bb4b66614470",
+      "sha256": "ace8117b9f2b4746c7ca7a996b6d838453c33703877519fd59b6731ba7d5eb9c",
+      "bytes": 4726907
+    },
+    {
+      "member": "41_autonomous_voltage_solve64_swap000_vs_primary.json",
+      "observation": "rec3889ecad77c2fe",
+      "sha256": "be37d57f768cf2f9ad3078abf0f9bad20c25fd138255e94256241fdc86c2538a",
+      "bytes": 9470289
+    },
+    {
+      "member": "historical_imposed_primary_swap100_vs_primary.json",
+      "observation": "rec68c5758b630e76",
+      "sha256": "30aa5e04cda47829f94bc4037ec3411de66ee7f95257cc630d1aa6b7ab478ea6",
+      "bytes": 4777132
+    },
+    {
+      "member": "41_autonomous_recentered32_swap000_vs_recentered32.json",
+      "observation": "recda091a9a0cb625",
+      "sha256": "9ba8c6a33d549fd9b85a3220048ec09c5a6927e0da18861b7a597e7fcb94cdba",
+      "bytes": 9468113
+    },
+    {
+      "member": "41_autonomous_recentered32_K_full_vs_primary.json",
+      "observation": "rec18ea92e84cfbc8",
+      "sha256": "6d1e30f07b8ba93c81b146720705f86c18fcfd0b873625179620de604c1dbb59",
+      "bytes": 9470179
+    },
+    {
+      "member": "41c_autonomous_recentered32_K_full_vs_recentered32.json",
+      "observation": "rec19db5bfac27142",
+      "sha256": "441998574749f203bf6c0e11e663c818bad0ce1b82ad080c290be867b89daeb5",
+      "bytes": 9499744
+    },
+    {
+      "member": "41c_imposed_primary_swap000_vs_primary.json",
+      "observation": "rec23eebcc82cd46a",
+      "sha256": "09522b0aa1ab288d81b038d4bdb79e78c6c5f00e3d5a178b3b0a54ff10aac2fb",
+      "bytes": 9498873
+    },
+    {
+      "member": "reused_reports.json",
+      "observation": "rec968c4e4ef8d882",
+      "sha256": "73c49eb99e85224099eb734b9be8d79650ef4624c405d6f1d0a3a3c9966268bf",
+      "bytes": 27147708
+    },
+    {
+      "member": "historical_autonomous_recentered32_K_full_vs_recentered32.json",
+      "observation": "recb57a7af5fe9e01",
+      "sha256": "cf9d14e4f7da6b8083740289a574e81ed218c3864d9d4dd05857a801e7c89bb7",
+      "bytes": 4726642
+    },
+    {
+      "member": "final_report.json",
+      "observation": "rec0be2e3fb8c611f",
+      "sha256": "7bca8101d5c01f82dbfb7b7edc3fd1260fe047e6d335a43e82878548665882ad",
+      "bytes": 143854
+    },
+    {
+      "member": "41_autonomous_voltage_solve64_swap100_vs_primary.json",
+      "observation": "rec25d229c9333706",
+      "sha256": "423549801af3afb8361e02a32c3dc5efd03db6d5d236c302187a2d939a397bab",
+      "bytes": 9470301
+    },
+    {
+      "member": "historical_autonomous_recentered32_K_full_vs_primary.json",
+      "observation": "rec4f80aac28cdf86",
+      "sha256": "5e3b5e9031de83508e2a7bdb8ba1c4b954a8337d265de44640060b6880abafe4",
+      "bytes": 4726423
+    },
+    {
+      "member": "historical_autonomous_recentered32_swap100_vs_primary.json",
+      "observation": "recc81964c87b76eb",
+      "sha256": "3adcc78ec9224d44f1afb9a1b24b64c73f84fe3a194b35edbd55948f23d2e286",
+      "bytes": 4726564
+    },
+    {
+      "member": "41c_autonomous_voltage_solve64_swap000_vs_primary.json",
+      "observation": "reced6cb060835f7b",
+      "sha256": "0829a0a28c159e38a4f453e2d3dcaf2ff6ce35316ee39128f9ed690626f191a2",
+      "bytes": 9499636
+    },
+    {
+      "member": "41_imposed_primary_K_full_vs_primary.json",
+      "observation": "rec9302263562714e",
+      "sha256": "478877e8ef43f57465546cd6f161c99e0555dcd01913b3afb89f14f89c72bea3",
+      "bytes": 9470373
+    },
+    {
+      "member": "historical_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json",
+      "observation": "rec9a8c4530f96528",
+      "sha256": "71f9ce92ab938aac54eda4c31c5adc0f6990a85fd10142c3282af9cb18432f1d",
+      "bytes": 4726881
+    },
+    {
+      "member": "revision.json",
+      "observation": "rec7accff6c9047c0",
+      "sha256": "8ad47fd118dfcf71ff4098cb70cfb951324691dd8ae37abe3195430d1cb693a7",
+      "bytes": 79
+    },
+    {
+      "member": "historical_autonomous_primary_swap000_vs_primary.json",
+      "observation": "recff96bfc20691a2",
+      "sha256": "a21cbef8f0906e07c1625fc3c37f535ab3cef3e2d560e1324ec05107561f4d25",
+      "bytes": 4726010
+    },
+    {
+      "member": "historical_autonomous_voltage_solve64_swap100_vs_primary.json",
+      "observation": "recf5b2ebfe5d020f",
+      "sha256": "62caef134f9c67707d6512b2b2eddea8c579f5b55524637138c72a3b409c719d",
+      "bytes": 4726347
+    },
+    {
+      "member": "historical_autonomous_primary_K_full_vs_primary.json",
+      "observation": "recb4512d7dfd2d74",
+      "sha256": "a9905d59db5f13167c09b4a191bc5c7bfd44383f55677488a1227c10a9d6425e",
+      "bytes": 4722808
+    },
+    {
+      "member": "gpu_preflight.json",
+      "observation": "rec52b3a3cf0689d9",
+      "sha256": "93d4a0ec83150bb9da0b4469ce86f42dc075de398fea6d9dbbd3943b38a5c888",
+      "bytes": 290
+    },
+    {
+      "member": "historical_autonomous_voltage_solve64_K_full_vs_primary.json",
+      "observation": "rec9135999bbe5109",
+      "sha256": "65d0d976531dfdb637bba6b2c838296f4a9b1c3b235100672d5c8efbc4030c47",
+      "bytes": 4725942
+    },
+    {
+      "member": "41_autonomous_primary_K_full_vs_primary.json",
+      "observation": "rec82760cef0c2852",
+      "sha256": "3e2deed8384914556dd5fb61968a3efeebe36c48003acd4fcb9ba1fe6fea1c7a",
+      "bytes": 9470474
+    },
+    {
+      "member": "41c_imposed_primary_swap100_vs_primary.json",
+      "observation": "recf5014aaba3fd38",
+      "sha256": "885628c50416e6495e1a05c6e9a329a5d22c091b31fad0f0af1bfbe8163de267",
+      "bytes": 9499008
+    },
+    {
+      "member": "41c_autonomous_voltage_solve64_K_full_vs_primary.json",
+      "observation": "rec3139c912c86b4b",
+      "sha256": "01f90e18984ae2865caa65497e7753e7e631355cfd9b84eaa915a06bcd44e4e9",
+      "bytes": 9499359
+    },
+    {
+      "member": "41c_autonomous_primary_K_full_vs_primary.json",
+      "observation": "rec4e23bf991e4c8a",
+      "sha256": "125bc0612b2bebb36ccd838c9a6502b86dc70ec564e93d99126c6369b101834e",
+      "bytes": 9499173
+    },
+    {
+      "member": "progress_summary.json",
+      "observation": "recbc3e27dab2812c",
+      "sha256": "906d79ed7216c352eef4420c5f3bd2f427c6eb22cfa5e3c9074cf14b5abd82db",
+      "bytes": 130835
+    },
+    {
+      "member": "41_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json",
+      "observation": "recde2dd5d81e0a61",
+      "sha256": "0df5c7685280d2dfcbd14b1f0c346b1ec1ba1d6113a6ee95d6a2a560753e18fe",
+      "bytes": 9470565
+    },
+    {
+      "member": "41_autonomous_voltage_solve64_K_full_vs_primary.json",
+      "observation": "recf9ec87f74e1bbb",
+      "sha256": "b56c277b1c5f2262f7f634fafde879cc18ad9e69629901118c2ccc9a02a72792",
+      "bytes": 9470736
+    },
+    {
+      "member": "historical_autonomous_primary_swap100_vs_primary.json",
+      "observation": "rec60bf1b7e90c8d2",
+      "sha256": "e9612359bada8061a56567fb67894964ec3e769bf575f9e7baaf3ef90aa51d9c",
+      "bytes": 4726057
+    },
+    {
+      "member": "41c_autonomous_voltage_solve64_K_full_vs_voltage_solve64.json",
+      "observation": "rec44688de5772e42",
+      "sha256": "c6a3e013e88cdf47dff01f1aa8e70c0e824893dce21a92d766eea8b1303b229d",
+      "bytes": 9499886
+    }
+  ],
+  "airtable_accessed": false,
+  "DB_backup": {
+    "format": "sqlite-local-backup-v1",
+    "snapshot_utc": "2026-10-30_13-33-53Z",
+    "sqlite_sha256": "47996e264b10a617a5266ae7a5a44cc591352470e00e4cb4f663087b68cdc5ce",
+    "sqlite_bytes": 22008565760,
+    "semantic_records": 175289,
+    "local_sqlite": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\research_memory\\drive_exports\\2026-10-30_13-33-53Z\\giada__research-memory__2026-10-30_13-33-53Z.sqlite",
+    "local_archive": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\research_memory\\drive_exports\\2026-10-30_13-33-53Z\\giada__research-memory__2026-10-30_13-33-53Z.sqlite",
+    "archive_sha256": "47996e264b10a617a5266ae7a5a44cc591352470e00e4cb4f663087b68cdc5ce",
+    "archive_bytes": 22008565760,
+    "archive_format": "SQLite3",
+    "integrity_check": "ok",
+    "foreign_key_errors": [],
+    "valid": true,
+    "single_file": true,
+    "scope": "Complete41m64original JSON reports,full audit,ninecompleted frozen evaluations;sealed41n independent confirmation/exact execution,CPUverification andactual console launch/first off-runtime backup. No41n scientific result yet audited. DBlocalonly.",
+    "drive_updated": false,
+    "upload_deferred_by_user": true,
+    "airtable_accessed": false
+  }
+}
