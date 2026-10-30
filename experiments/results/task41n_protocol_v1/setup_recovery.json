@@ -1,0 +1,16 @@
+{
+  "task": "41n",
+  "scientific_protocol_changed": false,
+  "thresholds_changed": false,
+  "fresh_data_accessed_before_failure": false,
+  "failure_phase": "native_environment_audit",
+  "cause": "Inherited MPLBACKEND=module://matplotlib_inline.backend_inline is unavailable in isolated Python3.12 native environment.",
+  "fix": "Set MPLBACKEND=Agg for all worker subprocesses; no scientific implementation changes.",
+  "failed_revision": "680554e6f3ce362badff6dc08c1dbf5c49a0909e",
+  "recovery_revision": "05c1836cab4b429499b395b6542eaf6f6dba5b20",
+  "preserved_archive": "artifacts/task41n_setup_failure_680554e/recovery_final.zip",
+  "preserved_archive_sha256": "5f42cbdf10d37957642dafc017d3538a80cec96964ff6d86de8d34a2832f56a5",
+  "preserved_archive_bytes": 201941,
+  "same_gpu_session_reused": true,
+  "transport": "Read-only independent terminal fallback added; no runtime interruption."
+}

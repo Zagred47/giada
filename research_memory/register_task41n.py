@@ -22,6 +22,11 @@ def main():
     names=spec['execution_variants']+['H_control','dual_fp32'];date=datetime.now(timezone.utc).date().isoformat()
     if args.running:
         launch=json.loads((folder/'launch.json').read_text());assert launch['valid'] and launch['external_backup']['valid']
+        recovery=folder/'setup_recovery.json'
+        if recovery.exists():
+            detail=json.loads(recovery.read_text());assert not detail['scientific_protocol_changed'] and not detail['thresholds_changed']
+            raw=(repo/detail['preserved_archive']).read_bytes();assert hashlib.sha256(raw).hexdigest()==detail['preserved_archive_sha256']
+            put('observations','setup-recovery',Nome='Task41n technical setup failure and headless recovery',Descrizione=json.dumps(detail))
         obs=put('observations','launch',Nome='Task41n pinned console process and off-runtime checkpoint',Descrizione=json.dumps(launch))
         exp=put('experiments','confirmation',Stato='In corso')
         for name in names:put('runs',name,Stato='In corso',**{'Validità tecnica':'Pinned console manager observed; first off-runtime bundle verified. Native/GPU preflight gates still precede fresh interpretation. No training.'})
