@@ -1,0 +1,3650 @@
+{
+  "valid": true,
+  "task": "41n",
+  "complete": false,
+  "decision": "INCONCLUSIVE_CANONICAL_FP32_FLOOR_FAILED",
+  "archive": "artifacts/task41n_primary_external/recovery_final.zip",
+  "sha256": "7e07984c6c8770fee223a83f4694922c2f8cb92529e3df899bc511cf8d5080be",
+  "bytes": 165036864,
+  "original_reports_sha256": {
+    "native_phase_floor.json": "763e87cbd3ca11ea3dbd4d2f73a5be2b23f14db3c3c20c21912a0108df0914ad",
+    "native_interface_report.json": "ad2c8f97f6a52c5b7d06e99deeeadfff928c2031adafd63ccbce5d3077c6c7f0",
+    "registration_receipt.json": "da843e0e13b2a77aa809ae792631b92f8b144e9bc9e989a5680e01486a3fd482",
+    "native_environment.json": "f4ac3ddfc07ac852830ffe828f254b366e6a7c00f3565218a8862942a956dea4",
+    "native_calibration.json": "6cc28dad1ad36e3485dea6419ee685df7ab10ce00d6257c5ed85708d83592569",
+    "execution_freeze.json": "2222cab25070bdcd3bbd30bea39577e9939e875d5ffd97f9dec4e55aa67bf873",
+    "canonical_floors.json": "f27418212e8f04e976e30863f0026a5efe7f29a25c7ab51816c5d9b1a775b959",
+    "failure_report.json": "2578ef4232d6b82e12150ece6bb471ab0f1e11ac79662b4c0ab7c4d2637ec497",
+    "preregistration.json": "a1de03f020ea5946fb0ca6f8d4ba8eb9b17b7ce1003f2ef3cca561107605fa51",
+    "causal_results.json": "0995403930934751b47aa9e408a7b0bfc47eb2ba16f06e1b87c8fe965bb7bbf1",
+    "native_progress.json": "eb7c848b9c1996c5a4cf9e20ead6cf4a5f94ea5e84366599f6e551d82809f908",
+    "fresh_execution_parity.json": "0cf3c2d8081a0f8e2f940f463acfdb27de89a5ad2f655b4c1a430eedd42753d5",
+    "revision.json": "3870cf4975c7b2be8dc20117e61a3685c040f598fbce8fdcaaebe657d73a2258",
+    "gpu_preflight.json": "a416a65fe0b69c2a018d84451e05fcdfe6856ed4dd57f4dbf427705c70cd67c6",
+    "cases.json": "32854d26c553b0f906e359fa133608fc37e27cfbf510b9be24b654abe26deeb2",
+    "preflight_cost/cost.json": "7a9fa7ddf8dd60615001885e0e856533f2d4785add6dc0d42dde8ec886debab5"
+  },
+  "execution_eligibility": {
+    "protocol_sha256": "20e4557b66830cf747240a9fa92b935b3da227e78f8c2d9ba213158ed5560973",
+    "revision": "05c1836cab4b429499b395b6542eaf6f6dba5b20",
+    "eligible": [
+      "dual",
+      "donor_pruned",
+      "shared_features"
+    ],
+    "fresh_accessed": false,
+    "training_updates": 0,
+    "selected_on_fresh": false
+  },
+  "canonical_floors": [
+    {
+      "mode": "imposed",
+      "policy": "primary",
+      "passed": true,
+      "checks": 288,
+      "failed": []
+    },
+    {
+      "mode": "imposed",
+      "policy": "voltage_solve64",
+      "passed": true,
+      "checks": 288,
+      "failed": []
+    },
+    {
+      "mode": "autonomous",
+      "policy": "primary",
+      "passed": false,
+      "checks": 288,
+      "failed": [
+        {
+          "index": 218,
+          "channels": [
+            {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 1e-07,
+              "rmse_ma_cm2": 1.118091934027304e-09,
+              "max_abs_ma_cm2": 3.749760599356007e-09,
+              "nrmse": 0.011180919340273042,
+              "nmax": 0.03749760599356007,
+              "signed_charge_error_ma_ms_cm2": 1.991665376881936e-08,
+              "absolute_charge_error_ma_ms_cm2": 1.4609249486091e-08,
+              "signed_charge_normalized": 0.004979163442204843,
+              "absolute_charge_normalized": 0.0036523123715227544,
+              "reference_signed_charge_ma_ms_cm2": -7.797329163006312e-08,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          ],
+          "other_keys": {
+            "finite": true,
+            "gate": null,
+            "horizon_current_nrmse": {
+              "1": 5.947209276403432e-07,
+              "8": 5.39815381048384e-05,
+              "40": 0.003371802198919705
+            },
+            "first_tolerance_exceedance_ms": null,
+            "nonfailure_right_censored": true,
+            "total_current_rmse_ma_cm2": 1.1108644110503281e-09,
+            "causal_behavior_validated": false
+          }
+        },
+        {
+          "index": 234,
+          "channels": [
+            {
+              "channel": "Nap_Et2",
+              "passed": false,
+              "scale_ma_cm2": 1e-07,
+              "rmse_ma_cm2": 1.1729845702285859e-09,
+              "max_abs_ma_cm2": 3.863346170155258e-09,
+              "nrmse": 0.011729845702285859,
+              "nmax": 0.03863346170155258,
+              "signed_charge_error_ma_ms_cm2": 1.9689317624186818e-08,
+              "absolute_charge_error_ma_ms_cm2": 1.9689085604228017e-08,
+              "signed_charge_normalized": 0.004922329406046704,
+              "absolute_charge_normalized": 0.004922271401057003,
+              "reference_signed_charge_ma_ms_cm2": -6.038849850922982e-08,
+              "event": {
+                "status": "not_evaluable",
+                "reason": "insufficient or boundary transient"
+              },
+              "blocked_current_passed": true
+            }
+          ],
+          "other_keys": {
+            "finite": true,
+            "gate": null,
+            "horizon_current_nrmse": {
+              "1": 6.0652679768888426e-06,
+              "8": 8.235204254949031e-05,
+              "40": 0.003537303056458357
+            },
+            "first_tolerance_exceedance_ms": null,
+            "nonfailure_right_censored": true,
+            "total_current_rmse_ma_cm2": 1.165511125724441e-09,
+            "causal_behavior_validated": false
+          }
+        }
+      ]
+    },
+    {
+      "mode": "autonomous",
+      "policy": "voltage_solve64",
+      "passed": true,
+      "checks": 288,
+      "failed": []
+    }
+  ],
+  "native_interface": {
+    "valid": true,
+    "new_native_simulations": true,
+    "case_count": 176,
+    "floor_by_panel": {
+      "canonical": {
+        "pooled_voltage_rmse_mv": 7.361475998305123e-05,
+        "worst_voltage_rmse_mv": 0.00011855845769737162,
+        "worst_cai_rmse_mM": 7.2369612191605825e-12,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          9.831734578235837e-05,
+          0.00011505527457354413,
+          0.000102186342495473,
+          0.00011633910439551214,
+          5.374704972511215e-05,
+          6.185354314349804e-05,
+          5.087072442255761e-05,
+          5.8795752865492166e-05,
+          8.160359154142797e-05,
+          7.211356050203326e-05,
+          7.085594132995359e-05,
+          6.125191772037635e-05,
+          6.201677257093395e-05,
+          8.082567953405873e-05,
+          6.029504348104816e-05,
+          7.780662974510011e-05,
+          9.831685012824297e-05,
+          0.00011503388571850153,
+          0.00010218585588738971,
+          0.00011631626926033522,
+          5.374703702043825e-05,
+          6.185346335709167e-05,
+          5.087071626707217e-05,
+          5.879568577602888e-05,
+          8.158858840664534e-05,
+          7.205255043712564e-05,
+          7.084260598242739e-05,
+          6.119519895118445e-05,
+          6.201675709419949e-05,
+          8.082397382766072e-05,
+          6.029502604308301e-05,
+          7.780468888754337e-05,
+          9.567639099349585e-05,
+          0.00010836512872859237,
+          9.963269173134783e-05,
+          0.00011008854038016038,
+          5.359940146194407e-05,
+          6.148425132974476e-05,
+          5.077225353395471e-05,
+          5.8494537008095096e-05,
+          7.213817615120998e-05,
+          6.650228782304039e-05,
+          6.340817020505765e-05,
+          5.710004016173877e-05,
+          6.186810815342857e-05,
+          7.750352344421627e-05,
+          6.012730239064225e-05,
+          7.434241124834625e-05,
+          9.83190743903594e-05,
+          0.00011506108382646513,
+          0.00010218805423516003,
+          0.00011634464565772677,
+          5.3747312673585176e-05,
+          6.185442043590111e-05,
+          5.087092742446251e-05,
+          5.8796504970606824e-05,
+          8.160978528951808e-05,
+          7.211914791766646e-05,
+          7.086047645948242e-05,
+          6.125639147504006e-05,
+          6.201715851608936e-05,
+          8.082835332148687e-05,
+          6.02953996223486e-05,
+          7.780916218292039e-05,
+          9.831897708927275e-05,
+          0.00011505838875417444,
+          0.00010218794432738245,
+          0.00011634232954642714,
+          5.374758341774817e-05,
+          6.18545230008217e-05,
+          5.0871164775945805e-05,
+          5.8796612002455615e-05,
+          8.1613756380899e-05,
+          7.21287669292813e-05,
+          7.086451667994414e-05,
+          6.126778337511763e-05,
+          6.201741537568824e-05,
+          8.082720230897524e-05,
+          6.029565877764579e-05,
+          7.78081283336691e-05,
+          5.439222441262743e-09,
+          7.372998659447201e-09,
+          5.439222441262743e-09,
+          7.372998659447201e-09,
+          1.3380922328622642e-09,
+          1.4728303750809786e-09,
+          1.3380922328622642e-09,
+          1.4728303750809786e-09,
+          1.6815549545559772e-07,
+          4.0115454167915353e-07,
+          1.6815549545559772e-07,
+          4.0115454167915353e-07,
+          2.836901822970241e-10,
+          8.618154346964768e-10,
+          2.836901822970241e-10,
+          8.618154346964768e-10,
+          9.60313189700661e-05,
+          0.00011285254715870477,
+          9.987705895502721e-05,
+          0.00011413254828055668,
+          5.2400060255261263e-05,
+          6.038824760083326e-05,
+          4.9657547054806513e-05,
+          5.746678276034518e-05,
+          7.94799838747945e-05,
+          7.067517571028206e-05,
+          6.908137717409865e-05,
+          6.005416204821046e-05,
+          6.070423376004888e-05,
+          7.916910025416243e-05,
+          5.902442729196784e-05,
+          7.621343303715953e-05,
+          0.00010064277545744463,
+          0.00011727095757557644,
+          0.00010453412289780422,
+          0.00011855845769737162,
+          5.511711962134398e-05,
+          6.334340833878637e-05,
+          5.21042437613231e-05,
+          6.014648625158726e-05,
+          8.374265646814804e-05,
+          7.353874076774834e-05,
+          7.264407151628055e-05,
+          6.244313800635863e-05,
+          6.334867200271902e-05,
+          8.250387917960701e-05,
+          6.158449564031071e-05,
+          7.942021494620188e-05
+        ]
+      },
+      "calcium_mix": {
+        "pooled_voltage_rmse_mv": 8.002360004233014e-05,
+        "worst_voltage_rmse_mv": 0.00011770984357589187,
+        "worst_cai_rmse_mM": 1.7001477114959024e-11,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          9.88766523378401e-05,
+          0.00011650969705664884,
+          0.00010272887664827984,
+          0.00011770984357589187,
+          5.376579724691461e-05,
+          6.192211884750002e-05,
+          5.088137517497536e-05,
+          5.885183474205668e-05,
+          8.408895883924652e-05,
+          7.342201243032671e-05,
+          7.276903284036628e-05,
+          6.221064348148347e-05,
+          6.204185098717976e-05,
+          8.150109932644944e-05,
+          6.032204002807317e-05,
+          7.851955822705296e-05
+        ]
+      },
+      "mixed_diagonal": {
+        "pooled_voltage_rmse_mv": 8.030931345640835e-05,
+        "worst_voltage_rmse_mv": 0.00011814171311705534,
+        "worst_cai_rmse_mM": 9.464854838440119e-12,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          9.909897406605491e-05,
+          0.00011697252521354729,
+          0.00010294484519669296,
+          0.00011814171311705534,
+          5.377060617003651e-05,
+          6.192891725031175e-05,
+          5.0883814528113774e-05,
+          5.8856328890706024e-05,
+          8.512570793905735e-05,
+          7.373012397639629e-05,
+          7.355823896522078e-05,
+          6.238998190291472e-05,
+          6.204292286666316e-05,
+          8.171712924190116e-05,
+          6.032578998830469e-05,
+          7.876124913585526e-05
+        ]
+      },
+      "low_mixed": {
+        "pooled_voltage_rmse_mv": 7.863027512558479e-05,
+        "worst_voltage_rmse_mv": 0.00011539649665696201,
+        "worst_cai_rmse_mM": 4.2655370308289575e-12,
+        "finite": true,
+        "occupancy_violations": 0,
+        "physical_voltage_violations": 0,
+        "per_episode_voltage_rmse_mv": [
+          9.791978263104715e-05,
+          0.00011405039423897341,
+          0.00010180113027728921,
+          0.00011539649665696201,
+          5.37109027935479e-05,
+          6.181550074924218e-05,
+          5.084375467504344e-05,
+          5.8766456698424195e-05,
+          7.998240700624779e-05,
+          7.125089142354082e-05,
+          6.959665266964415e-05,
+          6.062770672208211e-05,
+          6.199424925000237e-05,
+          8.036025088080433e-05,
+          6.026573307908027e-05,
+          7.731119268549848e-05
+        ]
+      }
+    },
+    "cases": [
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 0,
+          "source_index": 0
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.209238430557093e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 1,
+          "source_index": 1
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.642919299551295e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 2,
+          "source_index": 2
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 3,
+          "source_index": 3
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "calcium_mix",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 4,
+          "source_index": 4
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.209238430557093e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "calcium_mix",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 5,
+          "source_index": 5
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.642919299551295e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "calcium_mix",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 6,
+          "source_index": 6
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "calcium_mix",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 7,
+          "source_index": 7
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "mixed_diagonal",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 8,
+          "source_index": 8
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.209238430557093e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "mixed_diagonal",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 9,
+          "source_index": 9
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.642919299551295e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "mixed_diagonal",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 10,
+          "source_index": 10
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0755285551056204e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "mixed_diagonal",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 11,
+          "source_index": 11
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0495077029659683e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "low_mixed",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 12,
+          "source_index": 12
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.252606517456513e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "low_mixed",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 13,
+          "source_index": 13
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.642919299551295e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "low_mixed",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 14,
+          "source_index": 14
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "low_mixed",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "none",
+          "id": 15,
+          "source_index": 15
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0495077029659683e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 16,
+          "source_index": 16
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.4936649967166602e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 17,
+          "source_index": 17
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8406096919120216e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 18,
+          "source_index": 18
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 19,
+          "source_index": 19
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "calcium_mix",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 20,
+          "source_index": 20
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.47198095326695e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "calcium_mix",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 21,
+          "source_index": 21
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8189256484623115e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "calcium_mix",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 22,
+          "source_index": 22
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "calcium_mix",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 23,
+          "source_index": 23
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "mixed_diagonal",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 24,
+          "source_index": 24
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.4936649967166602e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "mixed_diagonal",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 25,
+          "source_index": 25
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8189256484623115e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "mixed_diagonal",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 26,
+          "source_index": 26
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "mixed_diagonal",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 27,
+          "source_index": 27
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0495077029659683e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "low_mixed",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 28,
+          "source_index": 28
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.4936649967166602e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "low_mixed",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 29,
+          "source_index": 29
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8189256484623115e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "low_mixed",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 30,
+          "source_index": 30
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "low_mixed",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "none",
+          "id": 31,
+          "source_index": 31
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 32,
+          "source_index": 32
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.686287386450715e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 33,
+          "source_index": 33
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.9898639947466563e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 34,
+          "source_index": 34
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 35,
+          "source_index": 35
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1188966420050406e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "calcium_mix",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 36,
+          "source_index": 36
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.707971429900425e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "calcium_mix",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 37,
+          "source_index": 37
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 4.0332320816460765e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "calcium_mix",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 38,
+          "source_index": 38
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "calcium_mix",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 39,
+          "source_index": 39
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1102230246251565e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "mixed_diagonal",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 40,
+          "source_index": 40
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.729655473350135e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "mixed_diagonal",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 41,
+          "source_index": 41
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 4.0332320816460765e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "mixed_diagonal",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 42,
+          "source_index": 42
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "mixed_diagonal",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 43,
+          "source_index": 43
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1102230246251565e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "low_mixed",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 44,
+          "source_index": 44
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.664603343001005e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "low_mixed",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 45,
+          "source_index": 45
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.9898639947466563e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "low_mixed",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 46,
+          "source_index": 46
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "low_mixed",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "none",
+          "id": 47,
+          "source_index": 47
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1188966420050406e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 48,
+          "source_index": 48
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.6020852139652106e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 49,
+          "source_index": 49
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5587171270657905e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 50,
+          "source_index": 50
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2923689896027213e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 51,
+          "source_index": 51
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2663481374630692e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "calcium_mix",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 52,
+          "source_index": 52
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.42861286636753e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "calcium_mix",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 53,
+          "source_index": 53
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5587171270657905e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "calcium_mix",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 54,
+          "source_index": 54
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "calcium_mix",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 55,
+          "source_index": 55
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2750217548429532e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "mixed_diagonal",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 56,
+          "source_index": 56
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.42861286636753e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "mixed_diagonal",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 57,
+          "source_index": 57
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5587171270657905e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "mixed_diagonal",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 58,
+          "source_index": 58
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "mixed_diagonal",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 59,
+          "source_index": 59
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2750217548429532e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "low_mixed",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 60,
+          "source_index": 60
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.42861286636753e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "low_mixed",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 61,
+          "source_index": 61
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5587171270657905e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "low_mixed",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 62,
+          "source_index": 62
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "low_mixed",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "none",
+          "id": 63,
+          "source_index": 63
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2663481374630692e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_Ca_HVA",
+          "id": 64,
+          "source_index": 0
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.252606517456513e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_Ca_HVA",
+          "id": 65,
+          "source_index": 1
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.642919299551295e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_Ca_HVA",
+          "id": 66,
+          "source_index": 2
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0755285551056204e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_Ca_HVA",
+          "id": 67,
+          "source_index": 3
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "block_Ca_HVA",
+          "id": 68,
+          "source_index": 16
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.47198095326695e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "block_Ca_HVA",
+          "id": 69,
+          "source_index": 17
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8189256484623115e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "block_Ca_HVA",
+          "id": 70,
+          "source_index": 18
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "block_Ca_HVA",
+          "id": 71,
+          "source_index": 19
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0495077029659683e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_Ca_HVA",
+          "id": 72,
+          "source_index": 32
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.686287386450715e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_Ca_HVA",
+          "id": 73,
+          "source_index": 33
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.9898639947466563e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_Ca_HVA",
+          "id": 74,
+          "source_index": 34
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_Ca_HVA",
+          "id": 75,
+          "source_index": 35
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1102230246251565e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_Ca_HVA",
+          "id": 76,
+          "source_index": 48
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.6020852139652106e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_Ca_HVA",
+          "id": 77,
+          "source_index": 49
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5587171270657905e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_Ca_HVA",
+          "id": 78,
+          "source_index": 50
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_Ca_HVA",
+          "id": 79,
+          "source_index": 51
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2750217548429532e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_Nap_Et2",
+          "id": 80,
+          "source_index": 0
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.209238430557093e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_Nap_Et2",
+          "id": 81,
+          "source_index": 1
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.5561831257524545e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_Nap_Et2",
+          "id": 82,
+          "source_index": 2
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0755285551056204e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_Nap_Et2",
+          "id": 83,
+          "source_index": 3
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "block_Nap_Et2",
+          "id": 84,
+          "source_index": 16
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.47198095326695e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "block_Nap_Et2",
+          "id": 85,
+          "source_index": 17
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8189256484623115e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "block_Nap_Et2",
+          "id": 86,
+          "source_index": 18
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "block_Nap_Et2",
+          "id": 87,
+          "source_index": 19
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0495077029659683e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_Nap_Et2",
+          "id": 88,
+          "source_index": 32
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.599551212651875e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_Nap_Et2",
+          "id": 89,
+          "source_index": 33
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.8163916471489756e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_Nap_Et2",
+          "id": 90,
+          "source_index": 34
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1362438767648086e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_Nap_Et2",
+          "id": 91,
+          "source_index": 35
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_Nap_Et2",
+          "id": 92,
+          "source_index": 48
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.42861286636753e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_Nap_Et2",
+          "id": 93,
+          "source_index": 49
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5153490401663703e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_Nap_Et2",
+          "id": 94,
+          "source_index": 50
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_Nap_Et2",
+          "id": 95,
+          "source_index": 51
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2663481374630692e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_K_Pst",
+          "id": 96,
+          "source_index": 0
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.252606517456513e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_K_Pst",
+          "id": 97,
+          "source_index": 1
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.642919299551295e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_K_Pst",
+          "id": 98,
+          "source_index": 2
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_K_Pst",
+          "id": 99,
+          "source_index": 3
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "block_K_Pst",
+          "id": 100,
+          "source_index": 16
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.4936649967166602e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "block_K_Pst",
+          "id": 101,
+          "source_index": 17
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8189256484623115e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "block_K_Pst",
+          "id": 102,
+          "source_index": 18
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "block_K_Pst",
+          "id": 103,
+          "source_index": 19
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0495077029659683e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_K_Pst",
+          "id": 104,
+          "source_index": 32
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.686287386450715e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_K_Pst",
+          "id": 105,
+          "source_index": 33
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.9898639947466563e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_K_Pst",
+          "id": 106,
+          "source_index": 34
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_K_Pst",
+          "id": 107,
+          "source_index": 35
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1188966420050406e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_K_Pst",
+          "id": 108,
+          "source_index": 48
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.6020852139652106e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_K_Pst",
+          "id": 109,
+          "source_index": 49
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5587171270657905e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_K_Pst",
+          "id": 110,
+          "source_index": 50
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_K_Pst",
+          "id": 111,
+          "source_index": 51
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2750217548429532e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_SK_E2",
+          "id": 112,
+          "source_index": 0
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.209238430557093e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_SK_E2",
+          "id": 113,
+          "source_index": 1
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.642919299551295e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_SK_E2",
+          "id": 114,
+          "source_index": 2
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "block_SK_E2",
+          "id": 115,
+          "source_index": 3
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "block_SK_E2",
+          "id": 116,
+          "source_index": 16
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.47198095326695e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "block_SK_E2",
+          "id": 117,
+          "source_index": 17
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8406096919120216e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "block_SK_E2",
+          "id": 118,
+          "source_index": 18
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "block_SK_E2",
+          "id": 119,
+          "source_index": 19
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_SK_E2",
+          "id": 120,
+          "source_index": 32
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.686287386450715e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_SK_E2",
+          "id": 121,
+          "source_index": 33
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.9898639947466563e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_SK_E2",
+          "id": 122,
+          "source_index": 34
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "block_SK_E2",
+          "id": 123,
+          "source_index": 35
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1188966420050406e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_SK_E2",
+          "id": 124,
+          "source_index": 48
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.42861286636753e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_SK_E2",
+          "id": 125,
+          "source_index": 49
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5587171270657905e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_SK_E2",
+          "id": 126,
+          "source_index": 50
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "block_SK_E2",
+          "id": 127,
+          "source_index": 51
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2663481374630692e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "zero_synapses",
+          "id": 128,
+          "source_index": 0
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "zero_synapses",
+          "id": 129,
+          "source_index": 1
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "zero_synapses",
+          "id": 130,
+          "source_index": 2
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "zero_synapses",
+          "id": 131,
+          "source_index": 3
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "zero_synapses",
+          "id": 132,
+          "source_index": 16
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "zero_synapses",
+          "id": 133,
+          "source_index": 17
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "zero_synapses",
+          "id": 134,
+          "source_index": 18
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "zero_synapses",
+          "id": 135,
+          "source_index": 19
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "zero_synapses",
+          "id": 136,
+          "source_index": 32
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "zero_synapses",
+          "id": 137,
+          "source_index": 33
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "zero_synapses",
+          "id": 138,
+          "source_index": 34
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "zero_synapses",
+          "id": 139,
+          "source_index": 35
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "zero_synapses",
+          "id": 140,
+          "source_index": 48
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "zero_synapses",
+          "id": 141,
+          "source_index": 49
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "zero_synapses",
+          "id": 142,
+          "source_index": 50
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "zero_synapses",
+          "id": 143,
+          "source_index": 51
+        },
+        "shadow_passed": true,
+        "release_count": 0,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 0.0,
+        "max_shadow_receptor_state_error": 0.0
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "injection_0.99",
+          "id": 144,
+          "source_index": 0
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.209238430557093e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "injection_0.99",
+          "id": 145,
+          "source_index": 1
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.599551212651875e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "injection_0.99",
+          "id": 146,
+          "source_index": 2
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "injection_0.99",
+          "id": 147,
+          "source_index": 3
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "injection_0.99",
+          "id": 148,
+          "source_index": 16
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.47198095326695e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "injection_0.99",
+          "id": 149,
+          "source_index": 17
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.7972416050126014e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "injection_0.99",
+          "id": 150,
+          "source_index": 18
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "injection_0.99",
+          "id": 151,
+          "source_index": 19
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "injection_0.99",
+          "id": 152,
+          "source_index": 32
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.664603343001005e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "injection_0.99",
+          "id": 153,
+          "source_index": 33
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.946495907847236e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "injection_0.99",
+          "id": 154,
+          "source_index": 34
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1362438767648086e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "injection_0.99",
+          "id": 155,
+          "source_index": 35
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1188966420050406e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "injection_0.99",
+          "id": 156,
+          "source_index": 48
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.6020852139652106e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "injection_0.99",
+          "id": 157,
+          "source_index": 49
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5587171270657905e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "injection_0.99",
+          "id": 158,
+          "source_index": 50
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "injection_0.99",
+          "id": 159,
+          "source_index": 51
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2663481374630692e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "injection_1.01",
+          "id": 160,
+          "source_index": 0
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.209238430557093e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "injection_1.01",
+          "id": 161,
+          "source_index": 1
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.686287386450715e-17,
+        "max_shadow_receptor_state_error": 1.7832957333041577e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "jittered_triplet",
+          "intervention": "injection_1.01",
+          "id": 162,
+          "source_index": 2
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0668549377257364e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "jittered_triplet",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "jittered_triplet",
+          "intervention": "injection_1.01",
+          "id": 163,
+          "source_index": 3
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0495077029659683e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "injection_1.01",
+          "id": 164,
+          "source_index": 16
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.5153490401663703e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "injection_1.01",
+          "id": 165,
+          "source_index": 17
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.8406096919120216e-17,
+        "max_shadow_receptor_state_error": 1.85268467234323e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "late_rebound",
+          "intervention": "injection_1.01",
+          "id": 166,
+          "source_index": 18
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0581813203458523e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "late_rebound",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "late_rebound",
+          "intervention": "injection_1.01",
+          "id": 167,
+          "source_index": 19
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.0495077029659683e-16,
+        "max_shadow_receptor_state_error": 2.3869795029440866e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "injection_1.01",
+          "id": 168,
+          "source_index": 32
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.729655473350135e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "injection_1.01",
+          "id": 169,
+          "source_index": 33
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 3.9898639947466563e-17,
+        "max_shadow_receptor_state_error": 1.9012569296705806e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "notched_plateau",
+          "intervention": "injection_1.01",
+          "id": 170,
+          "source_index": 34
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1275702593849246e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "notched_plateau",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "notched_plateau",
+          "intervention": "injection_1.01",
+          "id": 171,
+          "source_index": 35
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.1188966420050406e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "injection_1.01",
+          "id": 172,
+          "source_index": 48
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.6020852139652106e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410117,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "injection_1.01",
+          "id": 173,
+          "source_index": 49
+        },
+        "shadow_passed": true,
+        "release_count": 3,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 2.6020852139652106e-17,
+        "max_shadow_receptor_state_error": 1.942890293094024e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -77.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "injection_1.01",
+          "id": 174,
+          "source_index": 50
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2836953722228372e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      },
+      {
+        "case": {
+          "protocol": "spaced_rapid_train",
+          "panel": "canonical",
+          "seed": 9410129,
+          "initial_voltage_mv": -52.0,
+          "schedule": "spaced_rapid_train",
+          "intervention": "injection_1.01",
+          "id": 175,
+          "source_index": 51
+        },
+        "shadow_passed": true,
+        "release_count": 4,
+        "release_mismatch_count": 0,
+        "max_rng_sequence_difference": 0.0,
+        "max_shadow_current_error_na": 1.2663481374630692e-16,
+        "max_shadow_receptor_state_error": 2.4147350785597155e-15
+      }
+    ],
+    "model_judged": false,
+    "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+    "neuron": "8.2.7+",
+    "thresholds_changed": false
+  },
+  "partial_model_summaries": {
+    "dual/imposed/primary": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "dual/imposed/voltage_solve64": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "donor_pruned/imposed/primary": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "donor_pruned/imposed/voltage_solve64": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "shared_features/imposed/primary": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "shared_features/imposed/voltage_solve64": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "H_control/imposed/primary": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "H_control/imposed/voltage_solve64": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "dual_fp32/imposed/primary": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    },
+    "dual_fp32/imposed/voltage_solve64": {
+      "trajectory_passed": 528,
+      "trajectory_total": 528,
+      "responses_passed": 336,
+      "responses_total": 336,
+      "failed_responses": [],
+      "passed": true
+    }
+  },
+  "completed_fresh_execution_parity": [
+    {
+      "mode": "imposed",
+      "model": "dual",
+      "bitwise_equal": true
+    },
+    {
+      "mode": "imposed",
+      "model": "donor_pruned",
+      "bitwise_equal": true
+    },
+    {
+      "mode": "imposed",
+      "model": "shared_features",
+      "bitwise_equal": true
+    }
+  ],
+  "training_updates": 0,
+  "thresholds_changed": false,
+  "model_quality_judged": false,
+  "speedup_claim": false,
+  "missing": [
+    "autonomous model evaluation",
+    "fresh stress",
+    "full cost benchmarks"
+  ],
+  "interpretation": "Original FP32 canonical autonomous reference fails its own registered quality floor on two checks; matched mixed64 passes. Confirmation cannot judge the learned model. No threshold waiver or automatic rerun."
+}
