@@ -23,9 +23,16 @@ def main():
         identity=bridge('whoami',capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
         assert 'bellialessandro39@gmail.com' in identity.stdout,'Unexpected account; do not allocate'
         sessions=bridge('sessions',capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
-        assert request['session'] not in sessions.stdout,'Named session already exists; inspect rather than duplicate'
+        reuse=os.environ.get('GIADA_TASK41N_REUSE_FAILED_SETUP')
+        if reuse:
+            previous=Path(reuse).resolve();prior=json.loads(previous.read_text())
+            assert prior['state']=='finished' and prior['technical_failure'] and prior['phase']=='technical_failure'
+            assert prior['error']=="RuntimeError('Phasenative_environment_audit exit1; inspect preserved failure report')"
+            assert request['session'] in sessions.stdout,'Expected existing session missing'
+        else:
+            assert request['session'] not in sessions.stdout,'Named session already exists; inspect rather than duplicate'
         status('allocating_after_verified_preregistration')
-        bridge('new','-s',request['session'],'--gpu','T4',timeout=180)
+        if not reuse:bridge('new','-s',request['session'],'--gpu','T4',timeout=180)
         for item in request['inputs']:upload(ROOT/item['local'],item['remote'])
         upload(FOLDER/'dispatch_request.json','/content/giada_task41n_launch.json')
         upload(FOLDER/'memory_receipt.json','/content/giada_task41n_registration_receipt.json')

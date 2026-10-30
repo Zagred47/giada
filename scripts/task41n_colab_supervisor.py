@@ -10,8 +10,22 @@ def main():
     with (dest/'console.log').open('a',encoding='utf-8') as log:
         driver=None if args.attach else subprocess.Popen(['powershell.exe','-NoProfile','-File',str(repo/'scripts/colab.ps1'),'exec','-s',args.session,'-f','scripts/colab_task41n_driver.py','--timeout','10800'],cwd=repo,stdout=log,stderr=subprocess.STDOUT)
         def download(name,target):
-            result=cli(repo,'download','-s',args.session,remote+'/'+name,target.relative_to(repo).as_posix(),capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=300)
-            return result.returncode==0 and target.exists() and 'not found' not in (result.stdout+result.stderr).lower()
+            try:
+                result=cli(repo,'download','-s',args.session,remote+'/'+name,target.relative_to(repo).as_posix(),capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=25)
+                okay=result.returncode==0 and target.exists() and 'not found' not in (result.stdout+result.stderr).lower()
+            except subprocess.TimeoutExpired:
+                okay=False
+            if not okay:
+                def linux(path):
+                    value=str(path.resolve()).replace('\\','/')
+                    return '/mnt/'+value[0].lower()+value[2:]
+                fallback=subprocess.run(['wsl.exe','--distribution','Ubuntu','--exec','env',
+                    'GIADA_COLAB_PROFILE='+__import__('os').environ.get('GIADA_COLAB_PROFILE','primary'),
+                    '/home/belli/.local/share/giada-colab-cli/venv/bin/python',linux(repo/'scripts/colab_terminal_download.py'),
+                    '--session',args.session,'--root',remote,remote+'/'+name,linux(target)],
+                    capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=300)
+                okay=fallback.returncode==0 and target.exists()
+            return okay
         for poll in range(300):
             try:
                 download('process.log',dest/'process.log');got=download('job_status.json',dest/'job_status.json')

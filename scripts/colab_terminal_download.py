@@ -13,7 +13,7 @@ from colab_profile_cli import configure_profile
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--session',required=True);parser.add_argument('--root',required=True)
     parser.add_argument('remote');parser.add_argument('local',type=Path);args=parser.parse_args()
-    assert re.fullmatch(r'/content/(?:giada_task41[fgh]_[0-9a-f]{12}|giada41[fgh]_preflight_[0-9]{16,22})',args.root)
+    assert re.fullmatch(r'/content/(?:giada_task41[fghn]_[0-9a-f]{12}|giada41[fgh]_preflight_[0-9]{16,22})',args.root)
     assert args.remote.startswith(args.root+'/') and '..' not in Path(args.remote).parts
     configure_profile()
     from colab_cli.common import state

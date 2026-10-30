@@ -58,7 +58,7 @@ def main():
         worker=repo/'scripts/run_task41n_independent.py';assert sha(worker)==request['worker_sha256']
         for item in request['inputs']:assert sha(item['remote'])==item['sha256']
         shutil.copy2(request['inputs'][0]['remote'],out/'frozen_source.zip.bin')
-        env=dict(os.environ,CUBLAS_WORKSPACE_CONFIG=':4096:8',GIADA_TASK41N_FROZEN=request['inputs'][0]['remote'])
+        env=dict(os.environ,CUBLAS_WORKSPACE_CONFIG=':4096:8',MPLBACKEND='Agg',GIADA_TASK41N_FROZEN=request['inputs'][0]['remote'])
         run([sys.executable,'-m','pip','install','--quiet','torch==2.11.0+cu130','--index-url','https://download.pytorch.org/whl/cu130'],'torch_setup',env)
         # Python3.13 Colab cannot load the historical8.2.7 wheel. Use an isolated
         #3.12 native environment; never substitute a newer NEURON silently.
