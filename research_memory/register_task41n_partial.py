@@ -8,7 +8,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--validate-only',action='store_true');args=ap.parse_args()
     repo=ROOT.parent;folder=repo/'experiments/results/task41n_audited_v1'
     audit=json.loads((folder/'audit.json').read_text());assert audit['valid'] and not audit['model_quality_judged']
-    baseline=json.loads((repo/'experiments/results/task41n_protocol_v1/launch_memory_receipt.json').read_text())['verification']
+    baseline={} if args.validate_only else json.loads((repo/'experiments/results/task41n_protocol_v1/launch_memory_receipt.json').read_text())['verification']
     m=ResultPreview() if args.validate_only else IncrementalBatchMirror();ids={}
     if not args.validate_only:assert m.baseline_hash==baseline['snapshot_hash']
     def put(table,suffix,**fields):
