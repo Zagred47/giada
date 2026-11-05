@@ -1,0 +1,1548 @@
+{
+  "valid": true,
+  "archive_sha256": "7e07984c6c8770fee223a83f4694922c2f8cb92529e3df899bc511cf8d5080be",
+  "diagnostic_only": true,
+  "training_updates": 0,
+  "thresholds_changed": false,
+  "canonical_floors": [
+    {
+      "mode": "imposed",
+      "policy": "primary",
+      "passed": true,
+      "total": 288,
+      "failed": 0
+    },
+    {
+      "mode": "imposed",
+      "policy": "voltage_solve64",
+      "passed": true,
+      "total": 288,
+      "failed": 0
+    },
+    {
+      "mode": "autonomous",
+      "policy": "primary",
+      "passed": false,
+      "total": 288,
+      "failed": 2
+    },
+    {
+      "mode": "autonomous",
+      "policy": "voltage_solve64",
+      "passed": true,
+      "total": 288,
+      "failed": 0
+    }
+  ],
+  "failures": [
+    {
+      "floor_index": 218,
+      "case": 106,
+      "source": 34,
+      "metadata": {
+        "protocol": "notched_plateau",
+        "panel": "canonical",
+        "seed": 9410129,
+        "initial_voltage_mv": -77.0,
+        "schedule": "notched_plateau",
+        "intervention": "block_K_Pst",
+        "id": 106,
+        "source_index": 34
+      },
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "nrmse": 0.011180919340273042,
+          "nmax": 0.03749760599356007,
+          "scale": 1e-07,
+          "rmse": 1.118091934027304e-09,
+          "normalization_floor": {
+            "current_scale_floor_ma_cm2": 1e-07,
+            "current_nrmse_max": 0.01,
+            "current_nmax_max": 0.05,
+            "signed_charge_error_max": 0.02,
+            "absolute_charge_error_max": 0.02,
+            "peak_timing_max_ms": 0.2,
+            "peak_plateau_relative_band": 0.001,
+            "onset_offset_max_ms": 0.3,
+            "gate_rmse_max": 0.005,
+            "gate_max_abs_max": 0.03,
+            "occupancy_atol": 2e-07,
+            "blocked_current_atol_ma_cm2": 1e-10,
+            "evaluation_horizons_ms": [
+              1,
+              8,
+              40,
+              100,
+              500,
+              1000,
+              3000,
+              10000
+            ],
+            "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+            "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+          },
+          "target_response_peak": 1.4178902435648235e-08,
+          "original_error_peak": 3.749760599735478e-09,
+          "peak_error_tick": 131,
+          "peak_error_time_ms": 13.100000000000001,
+          "mixed_rmse": 4.941406104128996e-11,
+          "response_current_inputs_finite": true
+        }
+      ],
+      "trajectory_errors": {
+        "primary": {
+          "baseline": {
+            "voltage": {
+              "rmse": 0.00010266973668130827,
+              "max_abs": 0.0001620667218134031
+            },
+            "calcium": {
+              "rmse": 8.393408317170862e-11,
+              "max_abs": 1.3705288413759596e-10
+            },
+            "gates": {
+              "rmse": 1.0793571410654484e-06,
+              "max_abs": 5.613046533292643e-06
+            },
+            "current": {
+              "rmse": 4.962344323977261e-10,
+              "max_abs": 5.289423971792471e-09
+            }
+          },
+          "intervention": {
+            "voltage": {
+              "rmse": 0.0001132338798242516,
+              "max_abs": 0.00018856049089777116
+            },
+            "calcium": {
+              "rmse": 8.297376626473187e-11,
+              "max_abs": 1.3656146542360623e-10
+            },
+            "gates": {
+              "rmse": 1.3848504259937157e-06,
+              "max_abs": 7.062776774369173e-06
+            },
+            "current": {
+              "rmse": 8.166133259483671e-10,
+              "max_abs": 8.093724322753935e-09
+            }
+          }
+        },
+        "voltage_solve64": {
+          "baseline": {
+            "voltage": {
+              "rmse": 4.403905260838509e-07,
+              "max_abs": 1.1189546711420917e-06
+            },
+            "calcium": {
+              "rmse": 7.919959196976075e-11,
+              "max_abs": 1.2977692652341253e-10
+            },
+            "gates": {
+              "rmse": 1.5438333482928036e-07,
+              "max_abs": 7.988270274150722e-07
+            },
+            "current": {
+              "rmse": 3.579040578482329e-11,
+              "max_abs": 5.157843912715308e-10
+            }
+          },
+          "intervention": {
+            "voltage": {
+              "rmse": 5.760966676816803e-07,
+              "max_abs": 1.4570580262329713e-06
+            },
+            "calcium": {
+              "rmse": 7.857337346332155e-11,
+              "max_abs": 1.292855078094228e-10
+            },
+            "gates": {
+              "rmse": 1.6529484985339242e-07,
+              "max_abs": 8.47154474348244e-07
+            },
+            "current": {
+              "rmse": 4.5689937960889094e-11,
+              "max_abs": 6.034522686236554e-10
+            }
+          }
+        }
+      },
+      "evaluator_pass_readback_equal": true,
+      "cross_environment_metric_differences": [
+        {
+          "path": "/channels/0/rmse_ma_cm2",
+          "saved": 2.3124789989629818e-12,
+          "recomputed": 2.312478999010415e-12,
+          "absolute_difference": 4.743323435430421e-23,
+          "relative_difference": 2.0511855188567088e-11
+        },
+        {
+          "path": "/channels/0/max_abs_ma_cm2",
+          "saved": 8.436096360111678e-12,
+          "recomputed": 8.436096360270497e-12,
+          "absolute_difference": 1.5881867761018131e-22,
+          "relative_difference": 1.8826086240329398e-11
+        },
+        {
+          "path": "/channels/0/nrmse",
+          "saved": 2.3124789989629818e-05,
+          "recomputed": 2.312478999010415e-05,
+          "absolute_difference": 4.743316741988302e-16,
+          "relative_difference": 2.0511826243689657e-11
+        },
+        {
+          "path": "/channels/0/nmax",
+          "saved": 8.436096360111679e-05,
+          "recomputed": 8.436096360270497e-05,
+          "absolute_difference": 1.5881799998382351e-15,
+          "relative_difference": 1.8826005915694772e-11
+        },
+        {
+          "path": "/channels/0/signed_charge_error_ma_ms_cm2",
+          "saved": 3.8736213998178554e-11,
+          "recomputed": 3.873621399890698e-11,
+          "absolute_difference": 7.284294645809744e-22,
+          "relative_difference": 1.880486989775326e-11
+        },
+        {
+          "path": "/channels/0/absolute_charge_error_ma_ms_cm2",
+          "saved": 3.7089172991722487e-11,
+          "recomputed": 3.708917299245092e-11,
+          "absolute_difference": 7.2843592692951e-22,
+          "relative_difference": 1.9640123199235927e-11
+        },
+        {
+          "path": "/channels/0/signed_charge_normalized",
+          "saved": 9.684053499544634e-06,
+          "recomputed": 9.68405349972674e-06,
+          "absolute_difference": 1.8210530739609654e-16,
+          "relative_difference": 1.880465730607902e-11
+        },
+        {
+          "path": "/channels/0/absolute_charge_normalized",
+          "saved": 9.272293247930616e-06,
+          "recomputed": 9.272293248112725e-06,
+          "absolute_difference": 1.8210869552788556e-16,
+          "relative_difference": 1.9640092332600872e-11
+        },
+        {
+          "path": "/channels/0/reference_signed_charge_ma_ms_cm2",
+          "saved": -1.0589775460599691e-10,
+          "recomputed": -1.0589775460672535e-10,
+          "absolute_difference": 7.2843592692951e-22,
+          "relative_difference": 6.8786720703825815e-12
+        },
+        {
+          "path": "/channels/1/rmse_ma_cm2",
+          "saved": 6.746450575160518e-12,
+          "recomputed": 6.746450575335424e-12,
+          "absolute_difference": 1.749058864959172e-22,
+          "relative_difference": 2.5925615928375956e-11
+        },
+        {
+          "path": "/channels/1/max_abs_ma_cm2",
+          "saved": 1.8522124995230796e-11,
+          "recomputed": 1.8522124995654313e-11,
+          "absolute_difference": 4.235164736271502e-22,
+          "relative_difference": 2.2865436537466202e-11
+        },
+        {
+          "path": "/channels/1/nrmse",
+          "saved": 6.746450575160518e-05,
+          "recomputed": 6.746450575335424e-05,
+          "absolute_difference": 1.7490620497079279e-15,
+          "relative_difference": 2.5925663134661994e-11
+        },
+        {
+          "path": "/channels/1/nmax",
+          "saved": 0.00018522124995230796,
+          "recomputed": 0.00018522124995654313,
+          "absolute_difference": 4.235164736271502e-15,
+          "relative_difference": 2.2865436537466202e-11
+        },
+        {
+          "path": "/channels/1/signed_charge_error_ma_ms_cm2",
+          "saved": 1.6666656038356516e-10,
+          "recomputed": 1.6666656038808704e-10,
+          "absolute_difference": 4.521886216097695e-21,
+          "relative_difference": 2.7131334597464396e-11
+        },
+        {
+          "path": "/channels/1/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.5732974021689112e-10,
+          "recomputed": 1.57329740221413e-10,
+          "absolute_difference": 4.521886216097695e-21,
+          "relative_difference": 2.8741458606198434e-11
+        },
+        {
+          "path": "/channels/1/signed_charge_normalized",
+          "saved": 4.1666640095891293e-05,
+          "recomputed": 4.1666640097021764e-05,
+          "absolute_difference": 1.1304705001963233e-15,
+          "relative_difference": 2.7131309305573857e-11
+        },
+        {
+          "path": "/channels/1/absolute_charge_normalized",
+          "saved": 3.933243505422278e-05,
+          "recomputed": 3.9332435055353256e-05,
+          "absolute_difference": 1.1304772764599014e-15,
+          "relative_difference": 2.8741604095168785e-11
+        },
+        {
+          "path": "/channels/1/reference_signed_charge_ma_ms_cm2",
+          "saved": -5.56972814366962e-10,
+          "recomputed": -5.569728143714839e-10,
+          "absolute_difference": 4.521886216097695e-21,
+          "relative_difference": 8.118683891601457e-12
+        },
+        {
+          "path": "/channels/2/rmse_ma_cm2",
+          "saved": 5.049130891640652e-12,
+          "recomputed": 5.0491308916101595e-12,
+          "absolute_difference": 3.049259156508954e-23,
+          "relative_difference": 6.039176289838933e-12
+        },
+        {
+          "path": "/channels/2/max_abs_ma_cm2",
+          "saved": 2.2200830881785247e-11,
+          "recomputed": 2.2200830880514697e-11,
+          "absolute_difference": 1.2705494208814505e-21,
+          "relative_difference": 5.7229813949165184e-11
+        },
+        {
+          "path": "/channels/2/nrmse",
+          "saved": 5.049130891640652e-05,
+          "recomputed": 5.04913089161016e-05,
+          "absolute_difference": 3.049250847479701e-16,
+          "relative_difference": 6.03915983348351e-12
+        },
+        {
+          "path": "/channels/2/nmax",
+          "saved": 0.00022200830881785247,
+          "recomputed": 0.00022200830880514697,
+          "absolute_difference": 1.2705494208814505e-14,
+          "relative_difference": 5.7229813949165184e-11
+        },
+        {
+          "path": "/channels/2/signed_charge_error_ma_ms_cm2",
+          "saved": 7.397739990749702e-11,
+          "recomputed": 7.397739990705234e-11,
+          "absolute_difference": 4.446871274296792e-22,
+          "relative_difference": 6.0111213422710965e-12
+        },
+        {
+          "path": "/channels/2/absolute_charge_error_ma_ms_cm2",
+          "saved": 4.977922796905827e-11,
+          "recomputed": 4.977922796861358e-11,
+          "absolute_difference": 4.446935897782148e-22,
+          "relative_difference": 8.933316323319178e-12
+        },
+        {
+          "path": "/channels/2/signed_charge_normalized",
+          "saved": 1.8494349976874252e-05,
+          "recomputed": 1.8494349976763074e-05,
+          "absolute_difference": 1.1117815652481045e-16,
+          "relative_difference": 6.0114660241549495e-12
+        },
+        {
+          "path": "/channels/2/absolute_charge_normalized",
+          "saved": 1.2444806992264564e-05,
+          "recomputed": 1.2444806992153386e-05,
+          "absolute_difference": 1.1117815652481045e-16,
+          "relative_difference": 8.933698738270228e-12
+        },
+        {
+          "path": "/channels/2/reference_signed_charge_ma_ms_cm2",
+          "saved": -2.0720514689524957e-10,
+          "recomputed": -2.072051468948049e-10,
+          "absolute_difference": 4.446612780355369e-22,
+          "relative_difference": 2.145995332154229e-12
+        },
+        {
+          "path": "/channels/3/rmse_ma_cm2",
+          "saved": 1.4065941321213487e-12,
+          "recomputed": 1.4065941320939558e-12,
+          "absolute_difference": 2.739288570032479e-23,
+          "relative_difference": 1.947461963246806e-11
+        },
+        {
+          "path": "/channels/3/max_abs_ma_cm2",
+          "saved": 7.224475510161659e-12,
+          "recomputed": 7.2244755100028404e-12,
+          "absolute_difference": 1.5881867761018131e-22,
+          "relative_difference": 2.198341974954352e-11
+        },
+        {
+          "path": "/channels/3/nrmse",
+          "saved": 1.4065941321213487e-05,
+          "recomputed": 1.4065941320939558e-05,
+          "absolute_difference": 2.739287610761462e-16,
+          "relative_difference": 1.9474612812654195e-11
+        },
+        {
+          "path": "/channels/3/nmax",
+          "saved": 7.224475510161659e-05,
+          "recomputed": 7.224475510002841e-05,
+          "absolute_difference": 1.5881799998382351e-15,
+          "relative_difference": 2.1983325953619255e-11
+        },
+        {
+          "path": "/channels/3/signed_charge_error_ma_ms_cm2",
+          "saved": 1.89066113665932e-11,
+          "recomputed": 1.890661136627069e-11,
+          "absolute_difference": 3.225099660161828e-22,
+          "relative_difference": 1.7058052326925053e-11
+        },
+        {
+          "path": "/channels/3/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.4716736270415457e-11,
+          "recomputed": 1.471673627009295e-11,
+          "absolute_difference": 3.22506734841915e-22,
+          "relative_difference": 2.191428377297479e-11
+        },
+        {
+          "path": "/channels/3/signed_charge_normalized",
+          "saved": 4.726652841648303e-06,
+          "recomputed": 4.726652841567675e-06,
+          "absolute_difference": 8.06282192161896e-17,
+          "relative_difference": 1.7058206286221034e-11
+        },
+        {
+          "path": "/channels/3/absolute_charge_normalized",
+          "saved": 3.6791840676038678e-06,
+          "recomputed": 3.6791840675232395e-06,
+          "absolute_difference": 8.06282192161896e-17,
+          "relative_difference": 2.1914701122496467e-11
+        },
+        {
+          "path": "/channels/3/reference_signed_charge_ma_ms_cm2",
+          "saved": -4.589349748241986e-11,
+          "recomputed": -4.589349748209735e-11,
+          "absolute_difference": 3.225099660161828e-22,
+          "relative_difference": 7.027356460241992e-12
+        },
+        {
+          "path": "/channels/4/rmse_ma_cm2",
+          "saved": 1.118091934027304e-09,
+          "recomputed": 1.1180919340325664e-09,
+          "absolute_difference": 5.262316261909224e-21,
+          "relative_difference": 4.706514823812287e-12
+        },
+        {
+          "path": "/channels/4/max_abs_ma_cm2",
+          "saved": 3.749760599356007e-09,
+          "recomputed": 3.749760599735478e-09,
+          "absolute_difference": 3.7947076036992655e-19,
+          "relative_difference": 1.0119866329511698e-10
+        },
+        {
+          "path": "/channels/4/nrmse",
+          "saved": 0.011180919340273042,
+          "recomputed": 0.011180919340325664,
+          "absolute_difference": 5.2622836643756443e-14,
+          "relative_difference": 4.706485669202914e-12
+        },
+        {
+          "path": "/channels/4/nmax",
+          "saved": 0.03749760599356007,
+          "recomputed": 0.03749760599735478,
+          "absolute_difference": 3.7947076036992655e-12,
+          "relative_difference": 1.0119866329511698e-10
+        },
+        {
+          "path": "/channels/4/signed_charge_error_ma_ms_cm2",
+          "saved": 1.991665376881936e-08,
+          "recomputed": 1.9916653768738884e-08,
+          "absolute_difference": 8.047474743405896e-20,
+          "relative_difference": 4.040575709562552e-12
+        },
+        {
+          "path": "/channels/4/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.4609249486091e-08,
+          "recomputed": 1.4609249486010527e-08,
+          "absolute_difference": 8.047309307283385e-20,
+          "relative_difference": 5.508365994396202e-12
+        },
+        {
+          "path": "/channels/4/signed_charge_normalized",
+          "saved": 0.004979163442204843,
+          "recomputed": 0.004979163442184724,
+          "absolute_difference": 2.011932287437901e-14,
+          "relative_difference": 4.040703445048972e-12
+        },
+        {
+          "path": "/channels/4/absolute_charge_normalized",
+          "saved": 0.0036523123715227544,
+          "recomputed": 0.0036523123715026342,
+          "absolute_difference": 2.0120190236116997e-14,
+          "relative_difference": 5.508890858568132e-12
+        },
+        {
+          "path": "/channels/4/reference_signed_charge_ma_ms_cm2",
+          "saved": -7.797329163006312e-08,
+          "recomputed": -7.797329162998265e-08,
+          "absolute_difference": 8.046812998915853e-20,
+          "relative_difference": 1.0319960630998103e-12
+        },
+        {
+          "path": "/channels/5/rmse_ma_cm2",
+          "saved": 9.194083841089744e-12,
+          "recomputed": 9.194083841479765e-12,
+          "absolute_difference": 3.9002050558015423e-22,
+          "relative_difference": 4.24208123729032e-11
+        },
+        {
+          "path": "/channels/5/max_abs_ma_cm2",
+          "saved": 2.166720224916191e-11,
+          "recomputed": 2.1667202249797186e-11,
+          "absolute_difference": 6.352747104407253e-22,
+          "relative_difference": 2.931964649227713e-11
+        },
+        {
+          "path": "/channels/5/nrmse",
+          "saved": 9.194083841089745e-05,
+          "recomputed": 9.194083841479765e-05,
+          "absolute_difference": 3.900200475082105e-15,
+          "relative_difference": 4.242076255043567e-11
+        },
+        {
+          "path": "/channels/5/nmax",
+          "saved": 0.0002166720224916191,
+          "recomputed": 0.00021667202249797186,
+          "absolute_difference": 6.3527471044072525e-15,
+          "relative_difference": 2.931964649227713e-11
+        },
+        {
+          "path": "/channels/5/signed_charge_error_ma_ms_cm2",
+          "saved": 2.3687171104500973e-10,
+          "recomputed": 2.3687171109382264e-10,
+          "absolute_difference": 4.881291022373157e-20,
+          "relative_difference": 2.0607319463486814e-10
+        },
+        {
+          "path": "/channels/5/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.4633719782540082e-10,
+          "recomputed": 1.4633719787421373e-10,
+          "absolute_difference": 4.881291022373157e-20,
+          "relative_difference": 3.335646092232094e-10
+        },
+        {
+          "path": "/channels/5/signed_charge_normalized",
+          "saved": 5.921792776125244e-05,
+          "recomputed": 5.921792777345566e-05,
+          "absolute_difference": 1.2203223999883439e-14,
+          "relative_difference": 2.0607313458465046e-10
+        },
+        {
+          "path": "/channels/5/absolute_charge_normalized",
+          "saved": 3.658429945635021e-05,
+          "recomputed": 3.658429946855343e-05,
+          "absolute_difference": 1.2203223999883439e-14,
+          "relative_difference": 3.335645120216911e-10
+        },
+        {
+          "path": "/channels/5/reference_signed_charge_ma_ms_cm2",
+          "saved": 3.0348355272373602e-09,
+          "recomputed": 3.034835527286173e-09,
+          "absolute_difference": 4.8812755127366716e-20,
+          "relative_difference": 1.6084151740182218e-11
+        },
+        {
+          "path": "/channels/6/rmse_ma_cm2",
+          "saved": 1.7368325287684502e-11,
+          "recomputed": 1.736832528778635e-11,
+          "absolute_difference": 1.0184661292059153e-22,
+          "relative_difference": 5.863928227565585e-12
+        },
+        {
+          "path": "/channels/6/nrmse",
+          "saved": 0.00017368325287684503,
+          "recomputed": 0.0001736832528778635,
+          "absolute_difference": 1.0184724157785707e-15,
+          "relative_difference": 5.863964423183476e-12
+        },
+        {
+          "path": "/channels/6/signed_charge_error_ma_ms_cm2",
+          "saved": 4.4626596949594337e-10,
+          "recomputed": 4.4626596949887505e-10,
+          "absolute_difference": 2.9316831872527838e-21,
+          "relative_difference": 6.569363087543635e-12
+        },
+        {
+          "path": "/channels/6/absolute_charge_error_ma_ms_cm2",
+          "saved": 4.057298616921975e-10,
+          "recomputed": 4.0572986169512924e-10,
+          "absolute_difference": 2.9317348860410683e-21,
+          "relative_difference": 7.225829703025439e-12
+        },
+        {
+          "path": "/channels/6/signed_charge_normalized",
+          "saved": 0.00011156649237398584,
+          "recomputed": 0.0001115664923747188,
+          "absolute_difference": 7.329613261816692e-16,
+          "relative_difference": 6.569726363000364e-12
+        },
+        {
+          "path": "/channels/6/absolute_charge_normalized",
+          "saved": 0.00010143246542304938,
+          "recomputed": 0.00010143246542378235,
+          "absolute_difference": 7.329613261816692e-16,
+          "relative_difference": 7.226101851309389e-12
+        },
+        {
+          "path": "/channels/6/reference_signed_charge_ma_ms_cm2",
+          "saved": 2.5571331838514377e-09,
+          "recomputed": 2.5571331838543696e-09,
+          "absolute_difference": 2.9319416811942066e-21,
+          "relative_difference": 1.1465737098506883e-12
+        },
+        {
+          "path": "/channels/8/rmse_ma_cm2",
+          "saved": 6.36616535235183e-14,
+          "recomputed": 6.366165352361829e-14,
+          "absolute_difference": 9.998969745857369e-26,
+          "relative_difference": 1.5706424813718951e-12
+        },
+        {
+          "path": "/channels/8/nrmse",
+          "saved": 6.366165352351831e-07,
+          "recomputed": 6.36616535236183e-07,
+          "absolute_difference": 9.999223942337016e-19,
+          "relative_difference": 1.5706824106645819e-12
+        },
+        {
+          "path": "/channels/8/signed_charge_error_ma_ms_cm2",
+          "saved": 9.76528680837733e-13,
+          "recomputed": 9.765286808428265e-13,
+          "absolute_difference": 5.093542336379996e-24,
+          "relative_difference": 5.215967985685622e-12
+        },
+        {
+          "path": "/channels/8/absolute_charge_error_ma_ms_cm2",
+          "saved": 6.366727596546032e-13,
+          "recomputed": 6.366727596596968e-13,
+          "absolute_difference": 5.093542336379996e-24,
+          "relative_difference": 8.000251713458744e-12
+        },
+        {
+          "path": "/channels/8/signed_charge_normalized",
+          "saved": 2.441321702094335e-07,
+          "recomputed": 2.4413217021070663e-07,
+          "absolute_difference": 1.2731434592824168e-18,
+          "relative_difference": 5.214976208107218e-12
+        },
+        {
+          "path": "/channels/8/absolute_charge_normalized",
+          "saved": 1.5916818991365085e-07,
+          "recomputed": 1.5916818991492424e-07,
+          "absolute_difference": 1.273381687298832e-18,
+          "relative_difference": 8.000227231204033e-12
+        },
+        {
+          "path": "/channels/8/reference_signed_charge_ma_ms_cm2",
+          "saved": 2.8791798294499996e-12,
+          "recomputed": 2.879179829455093e-12,
+          "absolute_difference": 5.093542336379996e-24,
+          "relative_difference": 1.7690948944109503e-12
+        },
+        {
+          "path": "/channels/9/rmse_ma_cm2",
+          "saved": 2.8603253563582634e-14,
+          "recomputed": 2.860325356328451e-14,
+          "absolute_difference": 2.981263133011248e-25,
+          "relative_difference": 1.0422811259509867e-11
+        },
+        {
+          "path": "/channels/9/nrmse",
+          "saved": 2.8603253563582635e-07,
+          "recomputed": 2.860325356328451e-07,
+          "absolute_difference": 2.981238336979917e-18,
+          "relative_difference": 1.0422724569961504e-11
+        },
+        {
+          "path": "/channels/9/signed_charge_error_ma_ms_cm2",
+          "saved": 4.2602749657959047e-13,
+          "recomputed": 4.2602749656685187e-13,
+          "absolute_difference": 1.27386016281558e-23,
+          "relative_difference": 2.9900890741628396e-11
+        },
+        {
+          "path": "/channels/9/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.8497587347297645e-13,
+          "recomputed": 1.8497587346023788e-13,
+          "absolute_difference": 1.2738576384606833e-23,
+          "relative_difference": 6.88661507332622e-11
+        },
+        {
+          "path": "/channels/9/signed_charge_normalized",
+          "saved": 1.0650687414489762e-07,
+          "recomputed": 1.0650687414171297e-07,
+          "absolute_difference": 3.1846453583291565e-18,
+          "relative_difference": 2.990084333896229e-11
+        },
+        {
+          "path": "/channels/9/absolute_charge_normalized",
+          "saved": 4.6243968368244116e-08,
+          "recomputed": 4.624396836505947e-08,
+          "absolute_difference": 3.1846453583291565e-18,
+          "relative_difference": 6.88661780271449e-11
+        },
+        {
+          "path": "/channels/9/reference_signed_charge_ma_ms_cm2",
+          "saved": 7.438151711191094e-12,
+          "recomputed": 7.438151711178356e-12,
+          "absolute_difference": 1.2738904550743405e-23,
+          "relative_difference": 1.7126438187025745e-12
+        },
+        {
+          "path": "/channels/10/rmse_ma_cm2",
+          "saved": 8.718734992792644e-13,
+          "recomputed": 8.718734992836157e-13,
+          "absolute_difference": 4.351381996748068e-24,
+          "relative_difference": 4.990840988197747e-12
+        },
+        {
+          "path": "/channels/10/max_abs_ma_cm2",
+          "saved": 2.721069948692651e-12,
+          "recomputed": 2.7210699487455905e-12,
+          "absolute_difference": 5.293955920339377e-23,
+          "relative_difference": 1.9455420184181165e-11
+        },
+        {
+          "path": "/channels/10/nrmse",
+          "saved": 8.718734992792645e-06,
+          "recomputed": 8.718734992836159e-06,
+          "absolute_difference": 4.351377656634792e-17,
+          "relative_difference": 4.990836010281477e-12
+        },
+        {
+          "path": "/channels/10/nmax",
+          "saved": 2.721069948692651e-05,
+          "recomputed": 2.7210699487455905e-05,
+          "absolute_difference": 5.293955920339377e-16,
+          "relative_difference": 1.9455420184181165e-11
+        },
+        {
+          "path": "/channels/10/signed_charge_error_ma_ms_cm2",
+          "saved": 1.844404826943474e-11,
+          "recomputed": 1.844404826941517e-11,
+          "absolute_difference": 1.9571222539975346e-23,
+          "relative_difference": 1.0611131707136413e-12
+        },
+        {
+          "path": "/channels/10/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.4518832561412007e-11,
+          "recomputed": 1.4518832561392434e-11,
+          "absolute_difference": 1.957283812710924e-23,
+          "relative_difference": 1.3480999966298746e-12
+        },
+        {
+          "path": "/channels/10/signed_charge_normalized",
+          "saved": 4.611012067358685e-06,
+          "recomputed": 4.611012067353792e-06,
+          "absolute_difference": 4.892462303340839e-18,
+          "relative_difference": 1.0610387116473924e-12
+        },
+        {
+          "path": "/channels/10/absolute_charge_normalized",
+          "saved": 3.629708140353002e-06,
+          "recomputed": 3.6297081403481086e-06,
+          "absolute_difference": 4.893309336288093e-18,
+          "relative_difference": 1.348127493196244e-12
+        },
+        {
+          "path": "/channels/10/reference_signed_charge_ma_ms_cm2",
+          "saved": 9.55399001941592e-11,
+          "recomputed": 9.553990019413962e-11,
+          "absolute_difference": 1.9580916062778702e-23,
+          "relative_difference": 2.049501414904741e-13
+        },
+        {
+          "path": "/horizon_current_nrmse/1",
+          "saved": 5.947209276403432e-07,
+          "recomputed": 5.947209276403418e-07,
+          "absolute_difference": 1.4823076576950256e-21,
+          "relative_difference": 2.4924424024833533e-15
+        },
+        {
+          "path": "/horizon_current_nrmse/8",
+          "saved": 5.39815381048384e-05,
+          "recomputed": 5.398153810504711e-05,
+          "absolute_difference": 2.087089182034596e-16,
+          "relative_difference": 3.866301804837716e-12
+        },
+        {
+          "path": "/horizon_current_nrmse/40",
+          "saved": 0.003371802198919705,
+          "recomputed": 0.0033718021989355856,
+          "absolute_difference": 1.588052606082968e-14,
+          "relative_difference": 4.7098035779924644e-12
+        },
+        {
+          "path": "/total_current_rmse_ma_cm2",
+          "saved": 1.1108644110503281e-09,
+          "recomputed": 1.1108644110553303e-09,
+          "absolute_difference": 5.0021679592612966e-21,
+          "relative_difference": 4.502950953761491e-12
+        }
+      ]
+    },
+    {
+      "floor_index": 234,
+      "case": 122,
+      "source": 34,
+      "metadata": {
+        "protocol": "notched_plateau",
+        "panel": "canonical",
+        "seed": 9410129,
+        "initial_voltage_mv": -77.0,
+        "schedule": "notched_plateau",
+        "intervention": "block_SK_E2",
+        "id": 122,
+        "source_index": 34
+      },
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "nrmse": 0.011729845702285859,
+          "nmax": 0.03863346170155258,
+          "scale": 1e-07,
+          "rmse": 1.1729845702285859e-09,
+          "normalization_floor": {
+            "current_scale_floor_ma_cm2": 1e-07,
+            "current_nrmse_max": 0.01,
+            "current_nmax_max": 0.05,
+            "signed_charge_error_max": 0.02,
+            "absolute_charge_error_max": 0.02,
+            "peak_timing_max_ms": 0.2,
+            "peak_plateau_relative_band": 0.001,
+            "onset_offset_max_ms": 0.3,
+            "gate_rmse_max": 0.005,
+            "gate_max_abs_max": 0.03,
+            "occupancy_atol": 2e-07,
+            "blocked_current_atol_ma_cm2": 1e-10,
+            "evaluation_horizons_ms": [
+              1,
+              8,
+              40,
+              100,
+              500,
+              1000,
+              3000,
+              10000
+            ],
+            "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+            "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+          },
+          "target_response_peak": 1.0440011503193812e-08,
+          "original_error_peak": 3.863346170209468e-09,
+          "peak_error_tick": 128,
+          "peak_error_time_ms": 12.8,
+          "mixed_rmse": 5.841544850033552e-11,
+          "response_current_inputs_finite": true
+        }
+      ],
+      "trajectory_errors": {
+        "primary": {
+          "baseline": {
+            "voltage": {
+              "rmse": 0.00010266973668130827,
+              "max_abs": 0.0001620667218134031
+            },
+            "calcium": {
+              "rmse": 8.393408317170862e-11,
+              "max_abs": 1.3705288413759596e-10
+            },
+            "gates": {
+              "rmse": 1.0793571410654484e-06,
+              "max_abs": 5.613046533292643e-06
+            },
+            "current": {
+              "rmse": 4.962344323977261e-10,
+              "max_abs": 5.289423971792471e-09
+            }
+          },
+          "intervention": {
+            "voltage": {
+              "rmse": 0.00011860825647277871,
+              "max_abs": 0.00016420036567410534
+            },
+            "calcium": {
+              "rmse": 8.251493143340746e-11,
+              "max_abs": 1.349301794562963e-10
+            },
+            "gates": {
+              "rmse": 1.3749220807416682e-06,
+              "max_abs": 6.778125960782422e-06
+            },
+            "current": {
+              "rmse": 8.228591513140089e-10,
+              "max_abs": 8.218303335766602e-09
+            }
+          }
+        },
+        "voltage_solve64": {
+          "baseline": {
+            "voltage": {
+              "rmse": 4.403905260838509e-07,
+              "max_abs": 1.1189546711420917e-06
+            },
+            "calcium": {
+              "rmse": 7.919959196976075e-11,
+              "max_abs": 1.2977692652341253e-10
+            },
+            "gates": {
+              "rmse": 1.5438333482928036e-07,
+              "max_abs": 7.988270274150722e-07
+            },
+            "current": {
+              "rmse": 3.579040578482329e-11,
+              "max_abs": 5.157843912715308e-10
+            }
+          },
+          "intervention": {
+            "voltage": {
+              "rmse": 2.8860719520021956e-07,
+              "max_abs": 7.083744293368e-07
+            },
+            "calcium": {
+              "rmse": 7.812834464941277e-11,
+              "max_abs": 1.2834911497332235e-10
+            },
+            "gates": {
+              "rmse": 1.641190554583961e-07,
+              "max_abs": 7.571586363441796e-07
+            },
+            "current": {
+              "rmse": 2.5163544359775762e-11,
+              "max_abs": 4.3721924599662496e-10
+            }
+          }
+        }
+      },
+      "evaluator_pass_readback_equal": true,
+      "cross_environment_metric_differences": [
+        {
+          "path": "/channels/0/rmse_ma_cm2",
+          "saved": 2.430899615158456e-12,
+          "recomputed": 2.430899615178319e-12,
+          "absolute_difference": 1.9862836017642966e-23,
+          "relative_difference": 8.170981596122357e-12
+        },
+        {
+          "path": "/channels/0/max_abs_ma_cm2",
+          "saved": 8.927314129034258e-12,
+          "recomputed": 8.927314129193077e-12,
+          "absolute_difference": 1.5881867761018131e-22,
+          "relative_difference": 1.7790197063955745e-11
+        },
+        {
+          "path": "/channels/0/nrmse",
+          "saved": 2.4308996151584562e-05,
+          "recomputed": 2.430899615178319e-05,
+          "absolute_difference": 1.9862922613113343e-16,
+          "relative_difference": 8.171017218930406e-12
+        },
+        {
+          "path": "/channels/0/nmax",
+          "saved": 8.927314129034258e-05,
+          "recomputed": 8.927314129193078e-05,
+          "absolute_difference": 1.5881935523653912e-15,
+          "relative_difference": 1.779027296879655e-11
+        },
+        {
+          "path": "/channels/0/signed_charge_error_ma_ms_cm2",
+          "saved": 3.991622839949341e-11,
+          "recomputed": 3.991622839970861e-11,
+          "absolute_difference": 2.152026685830342e-22,
+          "relative_difference": 5.391357781302934e-12
+        },
+        {
+          "path": "/channels/0/absolute_charge_error_ma_ms_cm2",
+          "saved": 3.9916206578569434e-11,
+          "recomputed": 3.991620657878464e-11,
+          "absolute_difference": 2.152026685830342e-22,
+          "relative_difference": 5.391360728587216e-12
+        },
+        {
+          "path": "/channels/0/signed_charge_normalized",
+          "saved": 9.97905709987335e-06,
+          "recomputed": 9.979057099927157e-06,
+          "absolute_difference": 5.3806920941382175e-17,
+          "relative_difference": 5.391984473340166e-12
+        },
+        {
+          "path": "/channels/0/absolute_charge_normalized",
+          "saved": 9.979051644642356e-06,
+          "recomputed": 9.979051644696163e-06,
+          "absolute_difference": 5.3806920941382175e-17,
+          "relative_difference": 5.391987420967041e-12
+        },
+        {
+          "path": "/channels/0/reference_signed_charge_ma_ms_cm2",
+          "saved": -1.1047581817877267e-10,
+          "recomputed": -1.1047581817898789e-10,
+          "absolute_difference": 2.152220556286409e-22,
+          "relative_difference": 1.9481372410381058e-12
+        },
+        {
+          "path": "/channels/1/rmse_ma_cm2",
+          "saved": 7.007924995992354e-12,
+          "recomputed": 7.007924996199044e-12,
+          "absolute_difference": 2.066901399745539e-22,
+          "relative_difference": 2.949377170655485e-11
+        },
+        {
+          "path": "/channels/1/max_abs_ma_cm2",
+          "saved": 2.022954203417698e-11,
+          "recomputed": 2.0229542034812256e-11,
+          "absolute_difference": 6.352747104407253e-22,
+          "relative_difference": 3.140331646398643e-11
+        },
+        {
+          "path": "/channels/1/nrmse",
+          "saved": 7.007924995992355e-05,
+          "recomputed": 7.007924996199044e-05,
+          "absolute_difference": 2.0668959165720535e-15,
+          "relative_difference": 2.949369346408667e-11
+        },
+        {
+          "path": "/channels/1/nmax",
+          "saved": 0.00020229542034176981,
+          "recomputed": 0.00020229542034812256,
+          "absolute_difference": 6.3527471044072525e-15,
+          "relative_difference": 3.140331646398643e-11
+        },
+        {
+          "path": "/channels/1/signed_charge_error_ma_ms_cm2",
+          "saved": 1.6583469901339882e-10,
+          "recomputed": 1.6583469901826052e-10,
+          "absolute_difference": 4.8617023514921356e-21,
+          "relative_difference": 2.931655666922156e-11
+        },
+        {
+          "path": "/channels/1/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.6581706895308892e-10,
+          "recomputed": 1.6581706895795062e-10,
+          "absolute_difference": 4.8617023514921356e-21,
+          "relative_difference": 2.931967367439723e-11
+        },
+        {
+          "path": "/channels/1/signed_charge_normalized",
+          "saved": 4.1458674753349706e-05,
+          "recomputed": 4.145867475456513e-05,
+          "absolute_difference": 1.2154245166741406e-15,
+          "relative_difference": 2.9316530831471084e-11
+        },
+        {
+          "path": "/channels/1/absolute_charge_normalized",
+          "saved": 4.145426723827223e-05,
+          "recomputed": 4.145426723948766e-05,
+          "absolute_difference": 1.2154312929377187e-15,
+          "relative_difference": 2.931981129749528e-11
+        },
+        {
+          "path": "/channels/1/reference_signed_charge_ma_ms_cm2",
+          "saved": -4.784844273424053e-10,
+          "recomputed": -4.784844273472669e-10,
+          "absolute_difference": 4.861650652703851e-21,
+          "relative_difference": 1.0160520123208606e-11
+        },
+        {
+          "path": "/channels/2/rmse_ma_cm2",
+          "saved": 5.240139010888086e-12,
+          "recomputed": 5.2401390109305445e-12,
+          "absolute_difference": 4.245843767226532e-23,
+          "relative_difference": 8.102540330266076e-12
+        },
+        {
+          "path": "/channels/2/max_abs_ma_cm2",
+          "saved": 2.4317606786252027e-11,
+          "recomputed": 2.4317606786463785e-11,
+          "absolute_difference": 2.117582368135751e-22,
+          "relative_difference": 8.708021256904636e-12
+        },
+        {
+          "path": "/channels/2/nrmse",
+          "saved": 5.240139010888086e-05,
+          "recomputed": 5.240139010930545e-05,
+          "absolute_difference": 4.245871232724796e-16,
+          "relative_difference": 8.102592743948625e-12
+        },
+        {
+          "path": "/channels/2/nmax",
+          "saved": 0.00024317606786252027,
+          "recomputed": 0.00024317606786463785,
+          "absolute_difference": 2.117582368135751e-15,
+          "relative_difference": 8.708021256904636e-12
+        },
+        {
+          "path": "/channels/2/signed_charge_error_ma_ms_cm2",
+          "saved": 7.346608162192933e-11,
+          "recomputed": 7.346608162233348e-11,
+          "absolute_difference": 4.0415527741458087e-22,
+          "relative_difference": 5.501249944051988e-12
+        },
+        {
+          "path": "/channels/2/absolute_charge_error_ma_ms_cm2",
+          "saved": 7.345855118732011e-11,
+          "recomputed": 7.345855118772427e-11,
+          "absolute_difference": 4.0415527741458087e-22,
+          "relative_difference": 5.501813892051272e-12
+        },
+        {
+          "path": "/channels/2/signed_charge_normalized",
+          "saved": 1.8366520405482315e-05,
+          "recomputed": 1.836652040558336e-05,
+          "absolute_difference": 1.0104425434386e-16,
+          "relative_difference": 5.501545862391163e-12
+        },
+        {
+          "path": "/channels/2/absolute_charge_normalized",
+          "saved": 1.836463779683001e-05,
+          "recomputed": 1.8364637796931055e-05,
+          "absolute_difference": 1.0104425434386e-16,
+          "relative_difference": 5.502109840725836e-12
+        },
+        {
+          "path": "/channels/2/reference_signed_charge_ma_ms_cm2",
+          "saved": -1.993064593018257e-10,
+          "recomputed": -1.9930645930222986e-10,
+          "absolute_difference": 4.0415527741458087e-22,
+          "relative_difference": 2.0278082247285153e-12
+        },
+        {
+          "path": "/channels/3/rmse_ma_cm2",
+          "saved": 1.5050666332134756e-12,
+          "recomputed": 1.5050666332635004e-12,
+          "absolute_difference": 5.0024838065459726e-23,
+          "relative_difference": 3.3237623477831496e-11
+        },
+        {
+          "path": "/channels/3/max_abs_ma_cm2",
+          "saved": 7.985396447531693e-12,
+          "recomputed": 7.98539644795521e-12,
+          "absolute_difference": 4.235164736271502e-22,
+          "relative_difference": 5.303637413463654e-11
+        },
+        {
+          "path": "/channels/3/nrmse",
+          "saved": 1.5050666332134756e-05,
+          "recomputed": 1.5050666332635005e-05,
+          "absolute_difference": 5.002491883189172e-16,
+          "relative_difference": 3.32376771408589e-11
+        },
+        {
+          "path": "/channels/3/nmax",
+          "saved": 7.985396447531694e-05,
+          "recomputed": 7.98539644795521e-05,
+          "absolute_difference": 4.235164736271502e-15,
+          "relative_difference": 5.3036374134636536e-11
+        },
+        {
+          "path": "/channels/3/signed_charge_error_ma_ms_cm2",
+          "saved": 1.9473516235154745e-11,
+          "recomputed": 1.9473516235747488e-11,
+          "absolute_difference": 5.927427635538678e-22,
+          "relative_difference": 3.04384044657416e-11
+        },
+        {
+          "path": "/channels/3/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.9473060653401867e-11,
+          "recomputed": 1.947306065399461e-11,
+          "absolute_difference": 5.927427635538678e-22,
+          "relative_difference": 3.04391165870618e-11
+        },
+        {
+          "path": "/channels/3/signed_charge_normalized",
+          "saved": 4.868379058788684e-06,
+          "recomputed": 4.868379058936868e-06,
+          "absolute_difference": 1.4818417895740357e-16,
+          "relative_difference": 3.043809390424978e-11
+        },
+        {
+          "path": "/channels/3/absolute_charge_normalized",
+          "saved": 4.8682651633504645e-06,
+          "recomputed": 4.868265163498649e-06,
+          "absolute_difference": 1.4818417895740357e-16,
+          "relative_difference": 3.043880601830424e-11
+        },
+        {
+          "path": "/channels/3/reference_signed_charge_ma_ms_cm2",
+          "saved": -4.994415939264219e-11,
+          "recomputed": -4.994415939323493e-11,
+          "absolute_difference": 5.927395323796e-22,
+          "relative_difference": 1.186804502429744e-11
+        },
+        {
+          "path": "/channels/4/rmse_ma_cm2",
+          "saved": 1.1729845702285859e-09,
+          "recomputed": 1.1729845702669625e-09,
+          "absolute_difference": 3.837663092909144e-20,
+          "relative_difference": 3.271708077145227e-11
+        },
+        {
+          "path": "/channels/4/max_abs_ma_cm2",
+          "saved": 3.863346170155258e-09,
+          "recomputed": 3.863346170209468e-09,
+          "absolute_difference": 5.421010862427522e-20,
+          "relative_difference": 1.403190556473897e-11
+        },
+        {
+          "path": "/channels/4/nrmse",
+          "saved": 0.011729845702285859,
+          "recomputed": 0.011729845702669627,
+          "absolute_difference": 3.837676704199211e-13,
+          "relative_difference": 3.2717196811257154e-11
+        },
+        {
+          "path": "/channels/4/nmax",
+          "saved": 0.03863346170155258,
+          "recomputed": 0.03863346170209468,
+          "absolute_difference": 5.421010862427522e-13,
+          "relative_difference": 1.403190556473897e-11
+        },
+        {
+          "path": "/channels/4/signed_charge_error_ma_ms_cm2",
+          "saved": 1.9689317624186818e-08,
+          "recomputed": 1.968931762476518e-08,
+          "absolute_difference": 5.783613755746267e-19,
+          "relative_difference": 2.937437378973282e-11
+        },
+        {
+          "path": "/channels/4/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.9689085604228017e-08,
+          "recomputed": 1.968908560480638e-08,
+          "absolute_difference": 5.783613755746267e-19,
+          "relative_difference": 2.9374719942984084e-11
+        },
+        {
+          "path": "/channels/4/signed_charge_normalized",
+          "saved": 0.004922329406046704,
+          "recomputed": 0.004922329406191295,
+          "absolute_difference": 1.4459093644614285e-13,
+          "relative_difference": 2.937449417023507e-11
+        },
+        {
+          "path": "/channels/4/absolute_charge_normalized",
+          "saved": 0.004922271401057003,
+          "recomputed": 0.004922271401201595,
+          "absolute_difference": 1.4459180380788084e-13,
+          "relative_difference": 2.937501653658999e-11
+        },
+        {
+          "path": "/channels/4/reference_signed_charge_ma_ms_cm2",
+          "saved": -6.038849850922982e-08,
+          "recomputed": -6.038849850980818e-08,
+          "absolute_difference": 5.7836468429707695e-19,
+          "relative_difference": 9.577397990829993e-12
+        },
+        {
+          "path": "/channels/5/rmse_ma_cm2",
+          "saved": 1.2027186787970392e-11,
+          "recomputed": 1.2027186787863129e-11,
+          "absolute_difference": 1.0726367658053353e-22,
+          "relative_difference": 8.918434416252585e-12
+        },
+        {
+          "path": "/channels/5/nrmse",
+          "saved": 0.00012027186787970392,
+          "recomputed": 0.0001202718678786313,
+          "absolute_difference": 1.0726283142942217e-15,
+          "relative_difference": 8.918364146194736e-12
+        },
+        {
+          "path": "/channels/5/signed_charge_error_ma_ms_cm2",
+          "saved": 4.071097393659216e-10,
+          "recomputed": 4.0710973935160676e-10,
+          "absolute_difference": 1.4314825789324705e-20,
+          "relative_difference": 3.5162081387736444e-11
+        },
+        {
+          "path": "/channels/5/absolute_charge_error_ma_ms_cm2",
+          "saved": 3.3334971905213713e-10,
+          "recomputed": 3.3334971903782226e-10,
+          "absolute_difference": 1.431487748811299e-20,
+          "relative_difference": 4.294252153209131e-11
+        },
+        {
+          "path": "/channels/5/signed_charge_normalized",
+          "saved": 0.0001017774348414804,
+          "recomputed": 0.0001017774348379017,
+          "absolute_difference": 3.578693873358685e-15,
+          "relative_difference": 3.5161957843922325e-11
+        },
+        {
+          "path": "/channels/5/absolute_charge_normalized",
+          "saved": 8.333742976303429e-05,
+          "recomputed": 8.333742975945557e-05,
+          "absolute_difference": 3.578720978412997e-15,
+          "relative_difference": 4.294254080776077e-11
+        },
+        {
+          "path": "/channels/5/reference_signed_charge_ma_ms_cm2",
+          "saved": 1.604873050122194e-09,
+          "recomputed": 1.6048730501078792e-09,
+          "absolute_difference": 1.431477409053642e-20,
+          "relative_difference": 8.919567868278742e-12
+        },
+        {
+          "path": "/channels/6/rmse_ma_cm2",
+          "saved": 1.5908478810413368e-11,
+          "recomputed": 1.5908478810453987e-11,
+          "absolute_difference": 4.061909172032856e-23,
+          "relative_difference": 2.553298288560212e-12
+        },
+        {
+          "path": "/channels/6/max_abs_ma_cm2",
+          "saved": 4.006451590284646e-11,
+          "recomputed": 4.0064515904540525e-11,
+          "absolute_difference": 1.6940658945086007e-21,
+          "relative_difference": 4.228344848955511e-11
+        },
+        {
+          "path": "/channels/6/nrmse",
+          "saved": 0.0001590847881041337,
+          "recomputed": 0.00015908478810453986,
+          "absolute_difference": 4.061692388673821e-16,
+          "relative_difference": 2.5531620194916116e-12
+        },
+        {
+          "path": "/channels/6/nmax",
+          "saved": 0.0004006451590284646,
+          "recomputed": 0.00040064515904540525,
+          "absolute_difference": 1.6940658945086007e-14,
+          "relative_difference": 4.228344848955511e-11
+        },
+        {
+          "path": "/channels/6/signed_charge_error_ma_ms_cm2",
+          "saved": 4.092531757305884e-10,
+          "recomputed": 4.092531757304658e-10,
+          "absolute_difference": 1.225778270227018e-22,
+          "relative_difference": 2.9951588476712235e-13
+        },
+        {
+          "path": "/channels/6/absolute_charge_error_ma_ms_cm2",
+          "saved": 4.0755675494896115e-10,
+          "recomputed": 4.075567549488386e-10,
+          "absolute_difference": 1.225778270227018e-22,
+          "relative_difference": 3.0076259449570984e-13
+        },
+        {
+          "path": "/channels/6/signed_charge_normalized",
+          "saved": 0.0001023132939326471,
+          "recomputed": 0.00010231329393261643,
+          "absolute_difference": 3.0669368954183707e-17,
+          "relative_difference": 2.9975937412760235e-13
+        },
+        {
+          "path": "/channels/6/absolute_charge_normalized",
+          "saved": 0.00010188918873724029,
+          "recomputed": 0.00010188918873720962,
+          "absolute_difference": 3.0669368954183707e-17,
+          "relative_difference": 3.01007097360214e-13
+        },
+        {
+          "path": "/channels/6/reference_signed_charge_ma_ms_cm2",
+          "saved": 1.6036575067258573e-09,
+          "recomputed": 1.6036575067257349e-09,
+          "absolute_difference": 1.224227306578481e-22,
+          "relative_difference": 7.633969856057055e-14
+        },
+        {
+          "path": "/channels/7/rmse_ma_cm2",
+          "saved": 5.476977262007312e-13,
+          "recomputed": 5.476977261923511e-13,
+          "absolute_difference": 8.380050463501083e-24,
+          "relative_difference": 1.5300502563031994e-11
+        },
+        {
+          "path": "/channels/7/nrmse",
+          "saved": 5.4769772620073126e-06,
+          "recomputed": 5.476977261923511e-06,
+          "absolute_difference": 8.38012046366042e-17,
+          "relative_difference": 1.530063037104723e-11
+        },
+        {
+          "path": "/channels/7/signed_charge_error_ma_ms_cm2",
+          "saved": 1.4280475933241301e-11,
+          "recomputed": 1.4280475932965352e-11,
+          "absolute_difference": 2.7594874481739715e-22,
+          "relative_difference": 1.9323497767680064e-11
+        },
+        {
+          "path": "/channels/7/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.4233913179588521e-11,
+          "recomputed": 1.4233913179312574e-11,
+          "absolute_difference": 2.7594712923026325e-22,
+          "relative_difference": 1.9386596345548345e-11
+        },
+        {
+          "path": "/channels/7/signed_charge_normalized",
+          "saved": 3.5701189833103256e-06,
+          "recomputed": 3.570118983241338e-06,
+          "absolute_difference": 6.898744542207375e-17,
+          "relative_difference": 1.9323570375267e-11
+        },
+        {
+          "path": "/channels/7/absolute_charge_normalized",
+          "saved": 3.5584782948971304e-06,
+          "recomputed": 3.558478294828144e-06,
+          "absolute_difference": 6.898659838912649e-17,
+          "relative_difference": 1.9386544660973062e-11
+        },
+        {
+          "path": "/channels/7/reference_signed_charge_ma_ms_cm2",
+          "saved": 4.3211422460580374e-11,
+          "recomputed": 4.321142246030443e-11,
+          "absolute_difference": 2.7594228246886158e-22,
+          "relative_difference": 6.385864356133843e-12
+        },
+        {
+          "path": "/channels/8/rmse_ma_cm2",
+          "saved": 6.751738788400611e-14,
+          "recomputed": 6.751738788349168e-14,
+          "absolute_difference": 5.1442566262548445e-25,
+          "relative_difference": 7.619158245713833e-12
+        },
+        {
+          "path": "/channels/8/nrmse",
+          "saved": 6.751738788400611e-07,
+          "recomputed": 6.751738788349169e-07,
+          "absolute_difference": 5.1442428469121795e-18,
+          "relative_difference": 7.619137837130065e-12
+        },
+        {
+          "path": "/channels/8/signed_charge_error_ma_ms_cm2",
+          "saved": 9.757067604507447e-13,
+          "recomputed": 9.757067604372568e-13,
+          "absolute_difference": 1.3487931135694376e-23,
+          "relative_difference": 1.3823754925571482e-11
+        },
+        {
+          "path": "/channels/8/absolute_charge_error_ma_ms_cm2",
+          "saved": 9.721186584130342e-13,
+          "recomputed": 9.721186583995465e-13,
+          "absolute_difference": 1.348772918730264e-23,
+          "relative_difference": 1.3874570836158118e-11
+        },
+        {
+          "path": "/channels/8/signed_charge_normalized",
+          "saved": 2.439266901126863e-07,
+          "recomputed": 2.439266901093142e-07,
+          "absolute_difference": 3.372091102578573e-18,
+          "relative_difference": 1.382419898790401e-11
+        },
+        {
+          "path": "/channels/8/absolute_charge_normalized",
+          "saved": 2.430296646032587e-07,
+          "recomputed": 2.4302966459988665e-07,
+          "absolute_difference": 3.3720381630193696e-18,
+          "relative_difference": 1.387500644632892e-11
+        },
+        {
+          "path": "/channels/8/reference_signed_charge_ma_ms_cm2",
+          "saved": 2.7425964332170256e-12,
+          "recomputed": 2.742596433203538e-12,
+          "absolute_difference": 1.348772918730264e-23,
+          "relative_difference": 4.91786871154125e-12
+        },
+        {
+          "path": "/channels/10/rmse_ma_cm2",
+          "saved": 9.011238550116554e-13,
+          "recomputed": 9.0112385502639e-13,
+          "absolute_difference": 1.473455855788428e-23,
+          "relative_difference": 1.635131339126825e-11
+        },
+        {
+          "path": "/channels/10/max_abs_ma_cm2",
+          "saved": 2.8363211132780963e-12,
+          "recomputed": 2.8363211133839754e-12,
+          "absolute_difference": 1.0587911840678754e-22,
+          "relative_difference": 3.732973601161282e-11
+        },
+        {
+          "path": "/channels/10/nrmse",
+          "saved": 9.011238550116554e-06,
+          "recomputed": 9.0112385502639e-06,
+          "absolute_difference": 1.4734646337256907e-16,
+          "relative_difference": 1.6351410802264682e-11
+        },
+        {
+          "path": "/channels/10/nmax",
+          "saved": 2.8363211132780963e-05,
+          "recomputed": 2.8363211133839754e-05,
+          "absolute_difference": 1.0587911840678754e-15,
+          "relative_difference": 3.732973601161282e-11
+        },
+        {
+          "path": "/channels/10/signed_charge_error_ma_ms_cm2",
+          "saved": 1.8023851966387665e-11,
+          "recomputed": 1.8023851966540515e-11,
+          "absolute_difference": 1.5285069873758193e-22,
+          "relative_difference": 8.480467938891975e-12
+        },
+        {
+          "path": "/channels/10/absolute_charge_error_ma_ms_cm2",
+          "saved": 1.780083036520096e-11,
+          "recomputed": 1.7800830365353815e-11,
+          "absolute_difference": 1.5285392991184972e-22,
+          "relative_difference": 8.586898856659687e-12
+        },
+        {
+          "path": "/channels/10/signed_charge_normalized",
+          "saved": 4.505962991596917e-06,
+          "recomputed": 4.505962991635129e-06,
+          "absolute_difference": 3.821219734948325e-17,
+          "relative_difference": 8.480362004841226e-12
+        },
+        {
+          "path": "/channels/10/absolute_charge_normalized",
+          "saved": 4.4502075913002404e-06,
+          "recomputed": 4.450207591338454e-06,
+          "absolute_difference": 3.821389141537776e-17,
+          "relative_difference": 8.586990748421348e-12
+        },
+        {
+          "path": "/channels/10/reference_signed_charge_ma_ms_cm2",
+          "saved": 6.484429948541247e-11,
+          "recomputed": 6.484429948556533e-11,
+          "absolute_difference": 1.5286039226038529e-22,
+          "relative_difference": 2.357345109332437e-12
+        },
+        {
+          "path": "/horizon_current_nrmse/8",
+          "saved": 8.235204254949031e-05,
+          "recomputed": 8.235204254891541e-05,
+          "absolute_difference": 5.748982019604387e-16,
+          "relative_difference": 6.9809829138718416e-12
+        },
+        {
+          "path": "/horizon_current_nrmse/40",
+          "saved": 0.003537303056458357,
+          "recomputed": 0.0035373030565740505,
+          "absolute_difference": 1.156934791024522e-13,
+          "relative_difference": 3.270669129902137e-11
+        },
+        {
+          "path": "/total_current_rmse_ma_cm2",
+          "saved": 1.165511125724441e-09,
+          "recomputed": 1.165511125762778e-09,
+          "absolute_difference": 3.83369262596889e-20,
+          "relative_difference": 3.289280163207279e-11
+        }
+      ]
+    }
+  ],
+  "input_dtypes": {
+    "voltage": "float64",
+    "calcium": "float64",
+    "gates": "float64",
+    "injection": "float64",
+    "multipliers": "float64",
+    "base_g_us": "float64",
+    "area_um2": "float64"
+  },
+  "interpretation": "Failures are intervention differences, not individual trajectories. Canonical equations in FP32 vs NumPy64; exact metric readback, same causal data/time grid, mixed64 control. Need separate diagnostic completion from original confirmation validity."
+}

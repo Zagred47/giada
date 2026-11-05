@@ -1,0 +1,63 @@
+{
+  "task": "41n",
+  "version": "evaluation-recovery-v1",
+  "diagnostic_completion": true,
+  "new_independent_confirmation": false,
+  "source_local": "artifacts/task41n_primary_external/recovery_final.zip",
+  "source_sha256": "7e07984c6c8770fee223a83f4694922c2f8cb92529e3df899bc511cf8d5080be",
+  "source_bytes": 165036864,
+  "members": {
+    "preregistration.json": "a1de03f020ea5946fb0ca6f8d4ba8eb9b17b7ce1003f2ef3cca561107605fa51",
+    "execution_freeze.json": "2222cab25070bdcd3bbd30bea39577e9939e875d5ffd97f9dec4e55aa67bf873",
+    "canonical_floors.json": "f27418212e8f04e976e30863f0026a5efe7f29a25c7ab51816c5d9b1a775b959",
+    "native_phase_floor.json": "763e87cbd3ca11ea3dbd4d2f73a5be2b23f14db3c3c20c21912a0108df0914ad",
+    "native_interface_report.json": "ad2c8f97f6a52c5b7d06e99deeeadfff928c2031adafd63ccbce5d3077c6c7f0",
+    "native_shadow_traces.npz": "4244e4a13e9586e3d83ec8557a5af30b9f79311d54984c446e0535b584ab8a23",
+    "reference_autonomous_primary.npz": "72e46d294562d3e53a9f6139a583076285cf14b4d87303b4a24249b68e09c4c0",
+    "reference_autonomous_voltage_solve64.npz": "a2bc3a78c92460ae946f704849b9872527e1a2e9fb5fdaaf6367211f906fcd45",
+    "causal_results.json": "0995403930934751b47aa9e408a7b0bfc47eb2ba16f06e1b87c8fe965bb7bbf1",
+    "fresh_execution_parity.json": "0cf3c2d8081a0f8e2f940f463acfdb27de89a5ad2f655b4c1a430eedd42753d5",
+    "frozen_source.zip.bin": "c5744fef3fe1a1c503daa02a8ac1e7e8844219bb20b203917b99ad668e5adea9",
+    "cases.json": "32854d26c553b0f906e359fa133608fc37e27cfbf510b9be24b654abe26deeb2",
+    "gpu_preflight.json": "a416a65fe0b69c2a018d84451e05fcdfe6856ed4dd57f4dbf427705c70cd67c6",
+    "revision.json": "3870cf4975c7b2be8dc20117e61a3685c040f598fbce8fdcaaebe657d73a2258"
+  },
+  "eligible": [
+    "dual",
+    "donor_pruned",
+    "shared_features"
+  ],
+  "arms": [
+    "dual",
+    "donor_pruned",
+    "shared_features",
+    "H_control",
+    "dual_fp32"
+  ],
+  "remaining": [
+    "autonomous evaluation vs both saved canonical references",
+    "declared24x3 imposed stress histories",
+    "original ionic and integrated cost at1/642/4096"
+  ],
+  "reused_without_recomputation": [
+    "native teacher data",
+    "imposed evaluations",
+    "original implementation freeze",
+    "all four canonical floor reports",
+    "native phase/interface/calibration"
+  ],
+  "training_updates": 0,
+  "selection_recomputed": false,
+  "thresholds_changed": false,
+  "native_regenerated": false,
+  "original_primary_confirmation_blocked": true,
+  "failed_original_fp32_floor_indices": [
+    218,
+    234
+  ],
+  "task42_authorized": false,
+  "rule": "Complete missing measurements only. Preserve failed original FP32 canonical floors and original thresholds. Diagnostics may score against both original/matched saved references but cannot reinstate the original confirmation or claim qualified speedup.",
+  "provider_priority": "Kaggle console SDK; current quota21600s available. Colab primary/reserve fallback only if needed.",
+  "backup": "Private persisted Kaggle output plus SHA/CRC-verified local final ZIP; atomic per-arm reports. No repeated whole DB snapshots or duplicate transport chunks; DB backups local payload-v2 bundles.",
+  "max_seconds": 5400
+}
