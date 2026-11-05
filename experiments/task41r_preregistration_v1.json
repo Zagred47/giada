@@ -1,0 +1,79 @@
+{
+  "task": "41r",
+  "scope": "Prospective diagnostic 2x2: fixed/joint K_Pst update heads x coefficient-only/timing-Jacobian objective; frozen baseline and saved41q equilibrium control",
+  "ridge_relative": 1e-06,
+  "fit_path_seeds": [
+    9414101,
+    9414113,
+    9414127
+  ],
+  "development_seeds": [
+    9414201,
+    9414211,
+    9414229
+  ],
+  "arms": [
+    "baseline",
+    "q_equilibrium",
+    "coefficient_frozen_k",
+    "coefficient_joint_k",
+    "timing_frozen_k",
+    "timing_joint_k"
+  ],
+  "factorial": {
+    "K_Pst_z": [
+      0,
+      1
+    ],
+    "timing_objective": [
+      0,
+      1
+    ]
+  },
+  "coefficient_objective": "Same original41p16384 anchors. Existing-head probability Jacobian, teacher probability residual, normalization1e-4/sqrt(N), relative SVD ridge1e-6. Uniform frozen-K cell reuses saved41q joint_nap weights exactly; q_equilibrium also reused exactly.",
+  "timing_objective": "Teacher training paths from registered new fit seeds, same4 stress families. At evaluable reference onset/offset crossings and +/-1tick, linearize baseline currents through the FULL causal affine gate recurrence and existing frozen features. Residual and Jacobian divided by max(abs(reference current slope)*original onset_offset_max_ms,1e-10), then sqrt(event row count). Solve one regularized linearized step around coefficient-fit weights, penalized in the same coefficient/SVD geometry. No unreachable frozen-z trajectory terms; no model formulas in inference.",
+  "trainable_heads": "Original equilibrium heads8,9,11,12,13,16 and Nap update8,9; joint-K adds existing K_Pst update12,13 (parent c/d columns29,30). All trunks, donor and other heads frozen. No new layers, parameters, inference operations or step-size change.",
+  "nomination": "Before opened41n evaluation, compare new-development cases to frozen baseline case by case. Only nonregressing candidates with pass count>=baseline are eligible; highest count then preregistered arm order. Baseline fallback if none. Report all arms regardless; no sealed confirmation.",
+  "progress": "More than61/72 opened stress with no new stress failure, no new development failure vs baseline, no acquired imposed or autonomous trajectory/response regression. Preserve original primary330/336 caveat, matched64336/336 and original FP32 floor failures218/234. Same original cost protocol1/642/4096. No qualified speedup or Task42 authorization.",
+  "stop": "Input, weights, source or GPU identity/parity failure; nonfinite; materialization/head isolation failure;90minute worker cap. Preserve partial output, no stochastic retraining or automatic resubmission.",
+  "hypotheses": {
+    "saved_fit_transfer": "The saved41q coefficient fits improve at least some GPU stress timing; coefficient RMSE alone is not sufficient.",
+    "joint_K": "Allowing K_Pst update repair removes the frozen-rate compensation conflict and reduces K_Pst failures without regressions.",
+    "timing": "Causal crossing-current Jacobian weighting improves actual unchanged timing gates beyond coefficient-only fits.",
+    "interaction": "Joint K update and timing weighting may be complementary; report paired per-case contrasts and their interaction, not only the best arm."
+  },
+  "limits": [
+    "All new fits are deterministic local linearized diagnostic calibration, not a global optimum guarantee",
+    "Current Jacobian fit uses imposed training paths; autonomous transfer is tested separately",
+    "Old41n is opened diagnostic data, not independent confirmation",
+    "No threshold or abstraction change",
+    "Original FP32 failures remain explicit; no deployment qualification"
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "recovery_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63"
+}

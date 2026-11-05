@@ -1,0 +1,2963 @@
+{
+  "valid": true,
+  "baseline_weights_sha256": "d5b7a92d2d0fe350c79e97879003570afefc8eb4b45026e148ef5c4a338d0cd0",
+  "saved41q_weights_sha256": "4378ed08c0c6edc1c4925c920e41a4b13c6aec0038695d408513a4bc0ac7f951",
+  "models": {
+    "q_equilibrium": {
+      "path": "experiments/results/task41r_protocol_v1/heads_q_equilibrium.npz",
+      "sha256": "0a8cdd35fb60ad340ba0b23c8d8b62b7467c1fc5c77acda68c8a26b0363269be",
+      "weights_sha256": "c46ac263b71635689f64aabba0b25b0b00dd42fa6844a9e73d50c7cb2d59fc40"
+    },
+    "coefficient_frozen_k": {
+      "path": "experiments/results/task41r_protocol_v1/heads_coefficient_frozen_k.npz",
+      "sha256": "bcc80f1aa2104c4eda19a49c6f0376a4a98d32530e578f57f95fa014100438c2",
+      "weights_sha256": "badef5f005f538f38dc16c45d993eb2685c67f4d01b88fbdb31cfda0d5e3c09f"
+    },
+    "coefficient_joint_k": {
+      "path": "experiments/results/task41r_protocol_v1/heads_coefficient_joint_k.npz",
+      "sha256": "eb64f0c7c8900d636d2cf2b340f81454834cb8dce879a876da90d92a852fc1e5",
+      "weights_sha256": "c5f1714679752a1ef9770a8aebf4b5d5d298f22cb2d12e5517f65a76dcbc333e"
+    },
+    "timing_frozen_k": {
+      "path": "experiments/results/task41r_protocol_v1/heads_timing_frozen_k.npz",
+      "sha256": "426bd95fb229d3c0c877a5663bde0449fa7d9b5edd64e8d9bd29e7b73ccb45a8",
+      "weights_sha256": "a8c8240648022024faa4aac66a5f4d0adba6952cea647cc6494594c6e5ca08e6"
+    },
+    "timing_joint_k": {
+      "path": "experiments/results/task41r_protocol_v1/heads_timing_joint_k.npz",
+      "sha256": "d8084303a6f35a4c0437c59174fb92fed591aa757a5c2fa454f6a78e0e8a8836",
+      "weights_sha256": "8d0a83e17627735f120725459f73d5ff01bf0c594a5b68dadec00e5bc7aafe8f"
+    }
+  },
+  "fit_events": [
+    {
+      "channel": "Nap_Et2",
+      "case": 0,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 0.00012465705476280204
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 0,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00012465705476280204
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 0,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.00012465705476280204
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 0,
+      "kind": "offset",
+      "tick": 983,
+      "denominator": 0.0001557335258705453
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 0,
+      "kind": "offset",
+      "tick": 984,
+      "denominator": 0.0001557335258705453
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 0,
+      "kind": "offset",
+      "tick": 985,
+      "denominator": 0.0001557335258705453
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 1,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 1.6242665008812257e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 1,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 1.6242665008812257e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 1,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 1.6242665008812257e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 1,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 1,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 2,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 0.00020085377066802093
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 2,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 0.00020085377066802093
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 2,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00020085377066802093
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1027,
+      "denominator": 1.5236387625159131e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1028,
+      "denominator": 1.5236387625159131e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1029,
+      "denominator": 1.5236387625159131e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 3,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 2.1114439655506366e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 3,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 2.1114439655506366e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 3,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 2.1114439655506366e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 3,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1.1462633907545928e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 3,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1.1462633907545928e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 4,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.0001437784709094738
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 4,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.0001437784709094738
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 4,
+      "kind": "onset",
+      "tick": 6,
+      "denominator": 0.0001437784709094738
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1020,
+      "denominator": 8.830655328109927e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1021,
+      "denominator": 8.830655328109927e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1022,
+      "denominator": 8.830655328109927e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 5,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 9.665904128901395e-06
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 5,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 9.665904128901395e-06
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 5,
+      "kind": "onset",
+      "tick": 6,
+      "denominator": 9.665904128901395e-06
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 5,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 5,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 6,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 0.00013487416301440788
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 6,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00013487416301440788
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 6,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.00013487416301440788
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 6,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1.1439510195392685e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 6,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1.1439510195392685e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 7,
+      "kind": "onset",
+      "tick": 1,
+      "denominator": 2.146746016931024e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 7,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 2.146746016931024e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 7,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 2.146746016931024e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 7,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 3.1539834431090546e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 7,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 3.1539834431090546e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 8,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00013025658624834138
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 8,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.00013025658624834138
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 8,
+      "kind": "onset",
+      "tick": 6,
+      "denominator": 0.00013025658624834138
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 8,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 3.1069384897675686e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 8,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 3.1069384897675686e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 10,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 0.00018013498304953593
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 10,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00018013498304953593
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 10,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.00018013498304953593
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 10,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 2.6544974026981773e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 10,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 2.6544974026981773e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 11,
+      "kind": "onset",
+      "tick": 0,
+      "denominator": 1.7513143308786367e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 11,
+      "kind": "onset",
+      "tick": 1,
+      "denominator": 1.7513143308786367e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 11,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 1.7513143308786367e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 11,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 4.4171651887136686e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 11,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 4.4171651887136686e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 12,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 0.00013594791288215437
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 12,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00013594791288215437
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 12,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.00013594791288215437
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 12,
+      "kind": "offset",
+      "tick": 165,
+      "denominator": 2.802762664850252e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 12,
+      "kind": "offset",
+      "tick": 166,
+      "denominator": 2.802762664850252e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 12,
+      "kind": "offset",
+      "tick": 167,
+      "denominator": 2.802762664850252e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 13,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 1.6437213590076756e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 13,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 1.6437213590076756e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 13,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 1.6437213590076756e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 13,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 6.231460129853776e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 13,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 6.231460129853776e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 14,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 0.00019514013152926508
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 14,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 0.00019514013152926508
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 14,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00019514013152926508
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 14,
+      "kind": "offset",
+      "tick": 239,
+      "denominator": 4.3500193562118076e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 14,
+      "kind": "offset",
+      "tick": 240,
+      "denominator": 4.3500193562118076e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 14,
+      "kind": "offset",
+      "tick": 241,
+      "denominator": 4.3500193562118076e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 15,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 2.1123048056761865e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 15,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 2.1123048056761865e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 15,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 2.1123048056761865e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 15,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 4.643516523595762e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 15,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 4.643516523595762e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 16,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.0001593220296995078
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 16,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.0001593220296995078
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 16,
+      "kind": "onset",
+      "tick": 6,
+      "denominator": 0.0001593220296995078
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 16,
+      "kind": "offset",
+      "tick": 231,
+      "denominator": 6.944610209580192e-06
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 16,
+      "kind": "offset",
+      "tick": 232,
+      "denominator": 6.944610209580192e-06
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 16,
+      "kind": "offset",
+      "tick": 233,
+      "denominator": 6.944610209580192e-06
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 17,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 1.1163386964526423e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 17,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 1.1163386964526423e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 17,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 1.1163386964526423e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 17,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 8.237963973494909e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 17,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 8.237963973494909e-10
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 18,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00010948335121185769
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 18,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.00010948335121185769
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 18,
+      "kind": "onset",
+      "tick": 6,
+      "denominator": 0.00010948335121185769
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 18,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 2.4626410254693096e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 18,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 2.4626410254693096e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 19,
+      "kind": "onset",
+      "tick": 1,
+      "denominator": 1.86805471960448e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 19,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 1.86805471960448e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 19,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 1.86805471960448e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 19,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1.6876136830763604e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 19,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1.6876136830763604e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 20,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.00014701923456700414
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 20,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.00014701923456700414
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 20,
+      "kind": "onset",
+      "tick": 6,
+      "denominator": 0.00014701923456700414
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 20,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1.0792636860547291e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 20,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1.0792636860547291e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 21,
+      "kind": "onset",
+      "tick": 1,
+      "denominator": 2.144482169967764e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 21,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 2.144482169967764e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 21,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 2.144482169967764e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 21,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 3.4214692444398337e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 21,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 3.4214692444398337e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 22,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 0.0001852256964438885
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 22,
+      "kind": "onset",
+      "tick": 4,
+      "denominator": 0.0001852256964438885
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 22,
+      "kind": "onset",
+      "tick": 5,
+      "denominator": 0.0001852256964438885
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 22,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 3.257185875443075e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 22,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 3.257185875443075e-08
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 23,
+      "kind": "onset",
+      "tick": 1,
+      "denominator": 1.547356331736665e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 23,
+      "kind": "onset",
+      "tick": 2,
+      "denominator": 1.547356331736665e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 23,
+      "kind": "onset",
+      "tick": 3,
+      "denominator": 1.547356331736665e-05
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 23,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1.3791759829724724e-09
+    },
+    {
+      "channel": "Nap_Et2",
+      "case": 23,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1.3791759829724724e-09
+    },
+    {
+      "channel": "Im",
+      "case": 0,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 4.43942590535862e-06
+    },
+    {
+      "channel": "Im",
+      "case": 0,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 4.43942590535862e-06
+    },
+    {
+      "channel": "Im",
+      "case": 0,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 4.43942590535862e-06
+    },
+    {
+      "channel": "Im",
+      "case": 0,
+      "kind": "offset",
+      "tick": 1003,
+      "denominator": 1.4298772868478703e-06
+    },
+    {
+      "channel": "Im",
+      "case": 0,
+      "kind": "offset",
+      "tick": 1004,
+      "denominator": 1.4298772868478703e-06
+    },
+    {
+      "channel": "Im",
+      "case": 0,
+      "kind": "offset",
+      "tick": 1005,
+      "denominator": 1.4298772868478703e-06
+    },
+    {
+      "channel": "Im",
+      "case": 1,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 4.125680012281001e-06
+    },
+    {
+      "channel": "Im",
+      "case": 1,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 4.125680012281001e-06
+    },
+    {
+      "channel": "Im",
+      "case": 1,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 4.125680012281001e-06
+    },
+    {
+      "channel": "Im",
+      "case": 1,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 1,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 2,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 1.304890715071149e-05
+    },
+    {
+      "channel": "Im",
+      "case": 2,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 1.304890715071149e-05
+    },
+    {
+      "channel": "Im",
+      "case": 2,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 1.304890715071149e-05
+    },
+    {
+      "channel": "Im",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1123,
+      "denominator": 1.1045306324402211e-06
+    },
+    {
+      "channel": "Im",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1124,
+      "denominator": 1.1045306324402211e-06
+    },
+    {
+      "channel": "Im",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1125,
+      "denominator": 1.1045306324402211e-06
+    },
+    {
+      "channel": "Im",
+      "case": 3,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 1.4292043869610938e-05
+    },
+    {
+      "channel": "Im",
+      "case": 3,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 1.4292043869610938e-05
+    },
+    {
+      "channel": "Im",
+      "case": 3,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 1.4292043869610938e-05
+    },
+    {
+      "channel": "Im",
+      "case": 3,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 3,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 4,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 4.648752787151352e-06
+    },
+    {
+      "channel": "Im",
+      "case": 4,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 4.648752787151352e-06
+    },
+    {
+      "channel": "Im",
+      "case": 4,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 4.648752787151352e-06
+    },
+    {
+      "channel": "Im",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1099,
+      "denominator": 8.528726086102352e-07
+    },
+    {
+      "channel": "Im",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1100,
+      "denominator": 8.528726086102352e-07
+    },
+    {
+      "channel": "Im",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1101,
+      "denominator": 8.528726086102352e-07
+    },
+    {
+      "channel": "Im",
+      "case": 5,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 1.669602213176096e-06
+    },
+    {
+      "channel": "Im",
+      "case": 5,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 1.669602213176096e-06
+    },
+    {
+      "channel": "Im",
+      "case": 5,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 1.669602213176096e-06
+    },
+    {
+      "channel": "Im",
+      "case": 5,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 5,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 6,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 5.137191663421286e-06
+    },
+    {
+      "channel": "Im",
+      "case": 6,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 5.137191663421286e-06
+    },
+    {
+      "channel": "Im",
+      "case": 6,
+      "kind": "onset",
+      "tick": 18,
+      "denominator": 5.137191663421286e-06
+    },
+    {
+      "channel": "Im",
+      "case": 6,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 6,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 7,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 4.829908638277755e-06
+    },
+    {
+      "channel": "Im",
+      "case": 7,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 4.829908638277755e-06
+    },
+    {
+      "channel": "Im",
+      "case": 7,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 4.829908638277755e-06
+    },
+    {
+      "channel": "Im",
+      "case": 7,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 7,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 8,
+      "kind": "onset",
+      "tick": 19,
+      "denominator": 3.2315692466997044e-06
+    },
+    {
+      "channel": "Im",
+      "case": 8,
+      "kind": "onset",
+      "tick": 20,
+      "denominator": 3.2315692466997044e-06
+    },
+    {
+      "channel": "Im",
+      "case": 8,
+      "kind": "onset",
+      "tick": 21,
+      "denominator": 3.2315692466997044e-06
+    },
+    {
+      "channel": "Im",
+      "case": 8,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 8,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 9,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 3.2886787769174176e-06
+    },
+    {
+      "channel": "Im",
+      "case": 9,
+      "kind": "onset",
+      "tick": 18,
+      "denominator": 3.2886787769174176e-06
+    },
+    {
+      "channel": "Im",
+      "case": 9,
+      "kind": "onset",
+      "tick": 19,
+      "denominator": 3.2886787769174176e-06
+    },
+    {
+      "channel": "Im",
+      "case": 9,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 9,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 10,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 8.909050002488507e-06
+    },
+    {
+      "channel": "Im",
+      "case": 10,
+      "kind": "onset",
+      "tick": 18,
+      "denominator": 8.909050002488507e-06
+    },
+    {
+      "channel": "Im",
+      "case": 10,
+      "kind": "onset",
+      "tick": 19,
+      "denominator": 8.909050002488507e-06
+    },
+    {
+      "channel": "Im",
+      "case": 10,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 10,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 11,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 3.3931485555630328e-06
+    },
+    {
+      "channel": "Im",
+      "case": 11,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 3.3931485555630328e-06
+    },
+    {
+      "channel": "Im",
+      "case": 11,
+      "kind": "onset",
+      "tick": 18,
+      "denominator": 3.3931485555630328e-06
+    },
+    {
+      "channel": "Im",
+      "case": 11,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 11,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 12,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 5.287341714920546e-06
+    },
+    {
+      "channel": "Im",
+      "case": 12,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 5.287341714920546e-06
+    },
+    {
+      "channel": "Im",
+      "case": 12,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 5.287341714920546e-06
+    },
+    {
+      "channel": "Im",
+      "case": 12,
+      "kind": "offset",
+      "tick": 351,
+      "denominator": 4.811195886411267e-07
+    },
+    {
+      "channel": "Im",
+      "case": 12,
+      "kind": "offset",
+      "tick": 352,
+      "denominator": 4.811195886411267e-07
+    },
+    {
+      "channel": "Im",
+      "case": 12,
+      "kind": "offset",
+      "tick": 353,
+      "denominator": 4.811195886411267e-07
+    },
+    {
+      "channel": "Im",
+      "case": 13,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 4.958445156607027e-06
+    },
+    {
+      "channel": "Im",
+      "case": 13,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 4.958445156607027e-06
+    },
+    {
+      "channel": "Im",
+      "case": 13,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 4.958445156607027e-06
+    },
+    {
+      "channel": "Im",
+      "case": 13,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 13,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 14,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 1.2078144011260248e-05
+    },
+    {
+      "channel": "Im",
+      "case": 14,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 1.2078144011260248e-05
+    },
+    {
+      "channel": "Im",
+      "case": 14,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 1.2078144011260248e-05
+    },
+    {
+      "channel": "Im",
+      "case": 14,
+      "kind": "offset",
+      "tick": 384,
+      "denominator": 1.5218648648049771e-06
+    },
+    {
+      "channel": "Im",
+      "case": 14,
+      "kind": "offset",
+      "tick": 385,
+      "denominator": 1.5218648648049771e-06
+    },
+    {
+      "channel": "Im",
+      "case": 14,
+      "kind": "offset",
+      "tick": 386,
+      "denominator": 1.5218648648049771e-06
+    },
+    {
+      "channel": "Im",
+      "case": 15,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 1.321659421453137e-05
+    },
+    {
+      "channel": "Im",
+      "case": 15,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 1.321659421453137e-05
+    },
+    {
+      "channel": "Im",
+      "case": 15,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 1.321659421453137e-05
+    },
+    {
+      "channel": "Im",
+      "case": 15,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 15,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 16,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 5.675664808746955e-06
+    },
+    {
+      "channel": "Im",
+      "case": 16,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 5.675664808746955e-06
+    },
+    {
+      "channel": "Im",
+      "case": 16,
+      "kind": "onset",
+      "tick": 18,
+      "denominator": 5.675664808746955e-06
+    },
+    {
+      "channel": "Im",
+      "case": 16,
+      "kind": "offset",
+      "tick": 487,
+      "denominator": 4.715412078678849e-07
+    },
+    {
+      "channel": "Im",
+      "case": 16,
+      "kind": "offset",
+      "tick": 488,
+      "denominator": 4.715412078678849e-07
+    },
+    {
+      "channel": "Im",
+      "case": 16,
+      "kind": "offset",
+      "tick": 489,
+      "denominator": 4.715412078678849e-07
+    },
+    {
+      "channel": "Im",
+      "case": 17,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 2.0884468580658743e-06
+    },
+    {
+      "channel": "Im",
+      "case": 17,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 2.0884468580658743e-06
+    },
+    {
+      "channel": "Im",
+      "case": 17,
+      "kind": "onset",
+      "tick": 18,
+      "denominator": 2.0884468580658743e-06
+    },
+    {
+      "channel": "Im",
+      "case": 17,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 17,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 18,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 2.7627669152810273e-06
+    },
+    {
+      "channel": "Im",
+      "case": 18,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 2.7627669152810273e-06
+    },
+    {
+      "channel": "Im",
+      "case": 18,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 2.7627669152810273e-06
+    },
+    {
+      "channel": "Im",
+      "case": 18,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 18,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 19,
+      "kind": "onset",
+      "tick": 10,
+      "denominator": 2.476785087167702e-06
+    },
+    {
+      "channel": "Im",
+      "case": 19,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 2.476785087167702e-06
+    },
+    {
+      "channel": "Im",
+      "case": 19,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 2.476785087167702e-06
+    },
+    {
+      "channel": "Im",
+      "case": 19,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 19,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 20,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 4.135572329060065e-06
+    },
+    {
+      "channel": "Im",
+      "case": 20,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 4.135572329060065e-06
+    },
+    {
+      "channel": "Im",
+      "case": 20,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 4.135572329060065e-06
+    },
+    {
+      "channel": "Im",
+      "case": 20,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 20,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 21,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 4.315299746399565e-06
+    },
+    {
+      "channel": "Im",
+      "case": 21,
+      "kind": "onset",
+      "tick": 16,
+      "denominator": 4.315299746399565e-06
+    },
+    {
+      "channel": "Im",
+      "case": 21,
+      "kind": "onset",
+      "tick": 17,
+      "denominator": 4.315299746399565e-06
+    },
+    {
+      "channel": "Im",
+      "case": 21,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 21,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 22,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 9.55934524339992e-06
+    },
+    {
+      "channel": "Im",
+      "case": 22,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 9.55934524339992e-06
+    },
+    {
+      "channel": "Im",
+      "case": 22,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 9.55934524339992e-06
+    },
+    {
+      "channel": "Im",
+      "case": 22,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 22,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "Im",
+      "case": 23,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 3.6370418685518444e-06
+    },
+    {
+      "channel": "Im",
+      "case": 23,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 3.6370418685518444e-06
+    },
+    {
+      "channel": "Im",
+      "case": 23,
+      "kind": "onset",
+      "tick": 15,
+      "denominator": 3.6370418685518444e-06
+    },
+    {
+      "channel": "Im",
+      "case": 23,
+      "kind": "offset",
+      "tick": 1053,
+      "denominator": 3.252955837078204e-07
+    },
+    {
+      "channel": "Im",
+      "case": 23,
+      "kind": "offset",
+      "tick": 1054,
+      "denominator": 3.252955837078204e-07
+    },
+    {
+      "channel": "Im",
+      "case": 23,
+      "kind": "offset",
+      "tick": 1055,
+      "denominator": 3.252955837078204e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 0,
+      "kind": "onset",
+      "tick": 22,
+      "denominator": 5.49594617554522e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 0,
+      "kind": "onset",
+      "tick": 23,
+      "denominator": 5.49594617554522e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 0,
+      "kind": "onset",
+      "tick": 24,
+      "denominator": 5.49594617554522e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 0,
+      "kind": "offset",
+      "tick": 1005,
+      "denominator": 9.719399605147877e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 0,
+      "kind": "offset",
+      "tick": 1006,
+      "denominator": 9.719399605147877e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 0,
+      "kind": "offset",
+      "tick": 1007,
+      "denominator": 9.719399605147877e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 1,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 7.342538836400779e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 1,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 7.342538836400779e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 1,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 7.342538836400779e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 1,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 1,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 2,
+      "kind": "onset",
+      "tick": 18,
+      "denominator": 1.7276234755012283e-06
+    },
+    {
+      "channel": "K_Pst",
+      "case": 2,
+      "kind": "onset",
+      "tick": 19,
+      "denominator": 1.7276234755012283e-06
+    },
+    {
+      "channel": "K_Pst",
+      "case": 2,
+      "kind": "onset",
+      "tick": 20,
+      "denominator": 1.7276234755012283e-06
+    },
+    {
+      "channel": "K_Pst",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1029,
+      "denominator": 2.521792342575168e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1030,
+      "denominator": 2.521792342575168e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 2,
+      "kind": "offset",
+      "tick": 1031,
+      "denominator": 2.521792342575168e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 3,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 1.888912188343136e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 3,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 1.888912188343136e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 3,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 1.888912188343136e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 3,
+      "kind": "offset",
+      "tick": 1028,
+      "denominator": 3.454414371609593e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 3,
+      "kind": "offset",
+      "tick": 1029,
+      "denominator": 3.454414371609593e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 3,
+      "kind": "offset",
+      "tick": 1030,
+      "denominator": 3.454414371609593e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 4,
+      "kind": "onset",
+      "tick": 23,
+      "denominator": 1.8785390572401264e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 4,
+      "kind": "onset",
+      "tick": 24,
+      "denominator": 1.8785390572401264e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 4,
+      "kind": "onset",
+      "tick": 25,
+      "denominator": 1.8785390572401264e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1083,
+      "denominator": 2.810633723473274e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1084,
+      "denominator": 2.810633723473274e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 4,
+      "kind": "offset",
+      "tick": 1085,
+      "denominator": 2.810633723473274e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 5,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 3.1438465366012055e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 5,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 3.1438465366012055e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 5,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 3.1438465366012055e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 5,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 5,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 6,
+      "kind": "onset",
+      "tick": 21,
+      "denominator": 6.823096976945822e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 6,
+      "kind": "onset",
+      "tick": 22,
+      "denominator": 6.823096976945822e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 6,
+      "kind": "onset",
+      "tick": 23,
+      "denominator": 6.823096976945822e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 6,
+      "kind": "offset",
+      "tick": 491,
+      "denominator": 9.994485185478992e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 6,
+      "kind": "offset",
+      "tick": 492,
+      "denominator": 9.994485185478992e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 6,
+      "kind": "offset",
+      "tick": 493,
+      "denominator": 9.994485185478992e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 7,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 9.054009633908496e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 7,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 9.054009633908496e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 7,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 9.054009633908496e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 7,
+      "kind": "offset",
+      "tick": 433,
+      "denominator": 2.047995850810075e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 7,
+      "kind": "offset",
+      "tick": 434,
+      "denominator": 2.047995850810075e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 7,
+      "kind": "offset",
+      "tick": 435,
+      "denominator": 2.047995850810075e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 8,
+      "kind": "onset",
+      "tick": 24,
+      "denominator": 2.3193163830511297e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 8,
+      "kind": "onset",
+      "tick": 25,
+      "denominator": 2.3193163830511297e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 8,
+      "kind": "onset",
+      "tick": 26,
+      "denominator": 2.3193163830511297e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 8,
+      "kind": "offset",
+      "tick": 3854,
+      "denominator": 7.456916432131988e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 8,
+      "kind": "offset",
+      "tick": 3855,
+      "denominator": 7.456916432131988e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 8,
+      "kind": "offset",
+      "tick": 3856,
+      "denominator": 7.456916432131988e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 10,
+      "kind": "onset",
+      "tick": 22,
+      "denominator": 5.29508750474577e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 10,
+      "kind": "onset",
+      "tick": 23,
+      "denominator": 5.29508750474577e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 10,
+      "kind": "onset",
+      "tick": 24,
+      "denominator": 5.29508750474577e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 10,
+      "kind": "offset",
+      "tick": 554,
+      "denominator": 4.665835426778505e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 10,
+      "kind": "offset",
+      "tick": 555,
+      "denominator": 4.665835426778505e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 10,
+      "kind": "offset",
+      "tick": 556,
+      "denominator": 4.665835426778505e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 11,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 8.180133481742631e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 11,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 8.180133481742631e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 11,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 8.180133481742631e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 11,
+      "kind": "offset",
+      "tick": 486,
+      "denominator": 1.5695012058035706e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 11,
+      "kind": "offset",
+      "tick": 487,
+      "denominator": 1.5695012058035706e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 11,
+      "kind": "offset",
+      "tick": 488,
+      "denominator": 1.5695012058035706e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 12,
+      "kind": "onset",
+      "tick": 20,
+      "denominator": 6.843678748100503e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 12,
+      "kind": "onset",
+      "tick": 21,
+      "denominator": 6.843678748100503e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 12,
+      "kind": "onset",
+      "tick": 22,
+      "denominator": 6.843678748100503e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 12,
+      "kind": "offset",
+      "tick": 285,
+      "denominator": 9.440993426254436e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 12,
+      "kind": "offset",
+      "tick": 286,
+      "denominator": 9.440993426254436e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 12,
+      "kind": "offset",
+      "tick": 287,
+      "denominator": 9.440993426254436e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 13,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 9.251750374293999e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 13,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 9.251750374293999e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 13,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 9.251750374293999e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 13,
+      "kind": "offset",
+      "tick": 2749,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 13,
+      "kind": "offset",
+      "tick": 2750,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 13,
+      "kind": "offset",
+      "tick": 2751,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 14,
+      "kind": "onset",
+      "tick": 19,
+      "denominator": 1.6061639573930034e-06
+    },
+    {
+      "channel": "K_Pst",
+      "case": 14,
+      "kind": "onset",
+      "tick": 20,
+      "denominator": 1.6061639573930034e-06
+    },
+    {
+      "channel": "K_Pst",
+      "case": 14,
+      "kind": "onset",
+      "tick": 21,
+      "denominator": 1.6061639573930034e-06
+    },
+    {
+      "channel": "K_Pst",
+      "case": 14,
+      "kind": "offset",
+      "tick": 345,
+      "denominator": 2.2722378499654655e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 14,
+      "kind": "offset",
+      "tick": 346,
+      "denominator": 2.2722378499654655e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 14,
+      "kind": "offset",
+      "tick": 347,
+      "denominator": 2.2722378499654655e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 15,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 1.7342348080923865e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 15,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 1.7342348080923865e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 15,
+      "kind": "onset",
+      "tick": 14,
+      "denominator": 1.7342348080923865e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 15,
+      "kind": "offset",
+      "tick": 319,
+      "denominator": 3.157846590325281e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 15,
+      "kind": "offset",
+      "tick": 320,
+      "denominator": 3.157846590325281e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 15,
+      "kind": "offset",
+      "tick": 321,
+      "denominator": 3.157846590325281e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 16,
+      "kind": "onset",
+      "tick": 23,
+      "denominator": 2.6133673112409476e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 16,
+      "kind": "onset",
+      "tick": 24,
+      "denominator": 2.6133673112409476e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 16,
+      "kind": "onset",
+      "tick": 25,
+      "denominator": 2.6133673112409476e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 16,
+      "kind": "offset",
+      "tick": 355,
+      "denominator": 3.773609997195776e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 16,
+      "kind": "offset",
+      "tick": 356,
+      "denominator": 3.773609997195776e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 16,
+      "kind": "offset",
+      "tick": 357,
+      "denominator": 3.773609997195776e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 17,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 4.252723326833638e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 17,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 4.252723326833638e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 17,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 4.252723326833638e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 17,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 17,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 18,
+      "kind": "onset",
+      "tick": 20,
+      "denominator": 2.4309922313300184e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 18,
+      "kind": "onset",
+      "tick": 21,
+      "denominator": 2.4309922313300184e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 18,
+      "kind": "onset",
+      "tick": 22,
+      "denominator": 2.4309922313300184e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 18,
+      "kind": "offset",
+      "tick": 4220,
+      "denominator": 6.349054778475275e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 18,
+      "kind": "offset",
+      "tick": 4221,
+      "denominator": 6.349054778475275e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 18,
+      "kind": "offset",
+      "tick": 4222,
+      "denominator": 6.349054778475275e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 19,
+      "kind": "onset",
+      "tick": 9,
+      "denominator": 3.657128354785179e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 19,
+      "kind": "onset",
+      "tick": 10,
+      "denominator": 3.657128354785179e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 19,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 3.657128354785179e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 19,
+      "kind": "offset",
+      "tick": 898,
+      "denominator": 5.6594832183609755e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 19,
+      "kind": "offset",
+      "tick": 899,
+      "denominator": 5.6594832183609755e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 19,
+      "kind": "offset",
+      "tick": 900,
+      "denominator": 5.6594832183609755e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 20,
+      "kind": "onset",
+      "tick": 23,
+      "denominator": 3.3565172376483943e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 20,
+      "kind": "onset",
+      "tick": 24,
+      "denominator": 3.3565172376483943e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 20,
+      "kind": "onset",
+      "tick": 25,
+      "denominator": 3.3565172376483943e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 20,
+      "kind": "offset",
+      "tick": 373,
+      "denominator": 3.4384664657570416e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 20,
+      "kind": "offset",
+      "tick": 374,
+      "denominator": 3.4384664657570416e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 20,
+      "kind": "offset",
+      "tick": 375,
+      "denominator": 3.4384664657570416e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 21,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 3.965437124548385e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 21,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 3.965437124548385e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 21,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 3.965437124548385e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 21,
+      "kind": "offset",
+      "tick": 11998,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 21,
+      "kind": "offset",
+      "tick": 11999,
+      "denominator": 1e-10
+    },
+    {
+      "channel": "K_Pst",
+      "case": 22,
+      "kind": "onset",
+      "tick": 21,
+      "denominator": 5.672003471818391e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 22,
+      "kind": "onset",
+      "tick": 22,
+      "denominator": 5.672003471818391e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 22,
+      "kind": "onset",
+      "tick": 23,
+      "denominator": 5.672003471818391e-07
+    },
+    {
+      "channel": "K_Pst",
+      "case": 22,
+      "kind": "offset",
+      "tick": 621,
+      "denominator": 2.8768051271549323e-09
+    },
+    {
+      "channel": "K_Pst",
+      "case": 22,
+      "kind": "offset",
+      "tick": 622,
+      "denominator": 2.8768051271549323e-09
+    },
+    {
+      "channel": "K_Pst",
+      "case": 22,
+      "kind": "offset",
+      "tick": 623,
+      "denominator": 2.8768051271549323e-09
+    },
+    {
+      "channel": "K_Pst",
+      "case": 23,
+      "kind": "onset",
+      "tick": 11,
+      "denominator": 8.78347031048609e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 23,
+      "kind": "onset",
+      "tick": 12,
+      "denominator": 8.78347031048609e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 23,
+      "kind": "onset",
+      "tick": 13,
+      "denominator": 8.78347031048609e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 23,
+      "kind": "offset",
+      "tick": 319,
+      "denominator": 1.302884763638994e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 23,
+      "kind": "offset",
+      "tick": 320,
+      "denominator": 1.302884763638994e-08
+    },
+    {
+      "channel": "K_Pst",
+      "case": 23,
+      "kind": "offset",
+      "tick": 321,
+      "denominator": 1.302884763638994e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 12,
+      "kind": "onset",
+      "tick": 1517,
+      "denominator": 1.9638407564862795e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 12,
+      "kind": "onset",
+      "tick": 1518,
+      "denominator": 1.9638407564862795e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 12,
+      "kind": "onset",
+      "tick": 1519,
+      "denominator": 1.9638407564862795e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 12,
+      "kind": "offset",
+      "tick": 5483,
+      "denominator": 6.541718240550041e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 12,
+      "kind": "offset",
+      "tick": 5484,
+      "denominator": 6.541718240550041e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 12,
+      "kind": "offset",
+      "tick": 5485,
+      "denominator": 6.541718240550041e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 13,
+      "kind": "onset",
+      "tick": 1517,
+      "denominator": 1.5710726051890363e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 13,
+      "kind": "onset",
+      "tick": 1518,
+      "denominator": 1.5710726051890363e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 13,
+      "kind": "onset",
+      "tick": 1519,
+      "denominator": 1.5710726051890363e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 13,
+      "kind": "offset",
+      "tick": 5483,
+      "denominator": 5.233374592440001e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 13,
+      "kind": "offset",
+      "tick": 5484,
+      "denominator": 5.233374592440001e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 13,
+      "kind": "offset",
+      "tick": 5485,
+      "denominator": 5.233374592440001e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 14,
+      "kind": "onset",
+      "tick": 1461,
+      "denominator": 6.793891373594022e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 14,
+      "kind": "onset",
+      "tick": 1462,
+      "denominator": 6.793891373594022e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 14,
+      "kind": "onset",
+      "tick": 1463,
+      "denominator": 6.793891373594022e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 14,
+      "kind": "offset",
+      "tick": 5651,
+      "denominator": 2.2634951908974506e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 14,
+      "kind": "offset",
+      "tick": 5652,
+      "denominator": 2.2634951908974506e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 14,
+      "kind": "offset",
+      "tick": 5653,
+      "denominator": 2.2634951908974506e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 15,
+      "kind": "onset",
+      "tick": 1461,
+      "denominator": 1.231392811463907e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 15,
+      "kind": "onset",
+      "tick": 1462,
+      "denominator": 1.231392811463907e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 15,
+      "kind": "onset",
+      "tick": 1463,
+      "denominator": 1.231392811463907e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 15,
+      "kind": "offset",
+      "tick": 5651,
+      "denominator": 4.10258503350158e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 15,
+      "kind": "offset",
+      "tick": 5652,
+      "denominator": 4.10258503350158e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 15,
+      "kind": "offset",
+      "tick": 5653,
+      "denominator": 4.10258503350158e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 16,
+      "kind": "onset",
+      "tick": 1346,
+      "denominator": 5.183007715775885e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 16,
+      "kind": "onset",
+      "tick": 1347,
+      "denominator": 5.183007715775885e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 16,
+      "kind": "onset",
+      "tick": 1348,
+      "denominator": 5.183007715775885e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 16,
+      "kind": "offset",
+      "tick": 5996,
+      "denominator": 1.7271834730373565e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 16,
+      "kind": "offset",
+      "tick": 5997,
+      "denominator": 1.7271834730373565e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 16,
+      "kind": "offset",
+      "tick": 5998,
+      "denominator": 1.7271834730373565e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 17,
+      "kind": "onset",
+      "tick": 1346,
+      "denominator": 2.8595904638763317e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 17,
+      "kind": "onset",
+      "tick": 1347,
+      "denominator": 2.8595904638763317e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 17,
+      "kind": "onset",
+      "tick": 1348,
+      "denominator": 2.8595904638763317e-08
+    },
+    {
+      "channel": "SK_E2",
+      "case": 17,
+      "kind": "offset",
+      "tick": 5996,
+      "denominator": 9.529288127102711e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 17,
+      "kind": "offset",
+      "tick": 5997,
+      "denominator": 9.529288127102711e-09
+    },
+    {
+      "channel": "SK_E2",
+      "case": 17,
+      "kind": "offset",
+      "tick": 5998,
+      "denominator": 9.529288127102711e-09
+    }
+  ],
+  "stochastic_updates": 0,
+  "behavioral_selection_performed": false,
+  "elapsed_seconds": 8.615692138671875
+}
