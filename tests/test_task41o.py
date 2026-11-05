@@ -30,4 +30,27 @@ class CausalControls(unittest.TestCase):
         self.assertIn('scripts/run_task41o.py',code);self.assertIn('task41o_final',code)
         self.assertNotIn('scripts/run_task41n_recovery.py',code)
 
+    def test_actual_frozen_raw_replay_matches_original_scan(self):
+        import os
+        from pathlib import Path
+        try:import torch
+        except ImportError:self.skipTest('Local Torch not installed')
+        from src.giada_teacher.task41o_causal_localization import learned_coefficients,n
+        root=Path(__file__).resolve().parents[1];source=root/'artifacts/task41n_frozen.zip.bin'
+        if not source.exists():self.skipTest('Local immutable checkpoint unavailable')
+        previous=os.environ.get('GIADA_TASK41N_FROZEN');os.environ['GIADA_TASK41N_FROZEN']=str(source)
+        try:
+            with torch.inference_mode():
+                nets,_=n.load_models(torch,root,'cpu');net=nets['dual']
+                v=np.full((5,24),-43.,dtype='float32');ca=np.full_like(v,1e-4)
+                initial=np.full((24,18),.2)
+                u,z=learned_coefficients(torch,net,v,ca,'cpu')
+                original=n.scan(torch,net,v,ca,initial,'cpu')
+                for s in range(3):
+                    actual=recurrence(u[:,s],z[:,s],initial,original[:,s],'learned32')
+                    self.assertTrue(n.array_bits_equal(actual,original[:,s]))
+        finally:
+            if previous is None:os.environ.pop('GIADA_TASK41N_FROZEN',None)
+            else:os.environ['GIADA_TASK41N_FROZEN']=previous
+
 if __name__=='__main__':unittest.main()
