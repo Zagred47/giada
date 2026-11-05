@@ -36,6 +36,15 @@ def pack_snapshot(path,compression='gzip'):
 def restore_snapshot_if_missing(path):
     path=Path(path)
     if path.exists():return False
+    # Never inflate a historical v1 export beside a migrated operational DB.
+    db=path.parent/'research_memory.sqlite'
+    if db.is_file():
+        import sqlite3
+        with sqlite3.connect(db) as con:compact=con.execute("SELECT value FROM _mirror_meta WHERE key='storage_profile'").fetchone() is not None
+        con.close()
+        if compact:
+            from .incremental_batch import IncrementalBatchMirror
+            IncrementalBatchMirror(db).export_snapshot_to(path);return True
     manifest=path.with_suffix('.json.manifest.json')
     if not manifest.exists():
         if path.with_suffix('.json.gz').exists() or path.with_suffix('.json.xz').exists():raise ValueError('Missing JSON archive manifest')

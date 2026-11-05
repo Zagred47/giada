@@ -1,5 +1,49 @@
 # Scientific Modeling & Experimentation Lab — SQLite mirror
 
+## Profilo operativo corrente: payload-v2 (5 novembre 2026)
+
+La migrazione fisica separa i testi grandi (>=64 KiB) in `data/raw_reports/`,
+archivio gzip lossless indicizzato dal SHA-256 del testo UTF-8 originale.
+Lo stesso report condiviso tra osservazione e copia tecnica è conservato una
+sola volta nel content store. Il DB conserva riferimenti piccoli; non vengono
+rimossi record, metriche, ID, campi o relazioni. L'hash **logico** della memoria
+deve restare identico prima e dopo la migrazione.
+
+**Per interrogare o scrivere usare sempre l'adapter del repository**:
+
+```python
+from research_memory.mirror import Mirror
+from research_memory.payload_store import open_readonly
+with open_readonly("research_memory/data/research_memory.sqlite") as con:
+    # Stessa SQL/JSON1: lettura e verifica/decompressione trasparenti.
+    rows = con.execute("SELECT Nome, json_extract(Descrizione, '$.valid') FROM observations WHERE _record_id=?", (record_id,)).fetchall()
+```
+
+`python -m research_memory query` e `Mirror.connect()` registrano le funzioni
+richieste dalle viste. Una connessione sqlite3 grezza o un GUI SQL senza adapter
+non può decomprimere i report: non interpretare un errore di funzione mancante
+come dati persi. Le tabelle interne `_store_*` contengono la rappresentazione
+fisica, non i testi logici; non modificarle direttamente. Trigger di sicurezza
+rifiutano l'inserimento di grandi testi inline anche se si bypassa l'API.
+Le scritture correnti usano `IncrementalBatchMirror`; i vecchi batch che
+riscrivono l'intero snapshot sono bloccati sul profilo v2 per evitare regressioni.
+
+L'export ordinario è `giada-payload-snapshot-v2`: contiene i riferimenti e resta
+accanto a `raw_reports`. Per reimportarlo usare `mirror.read_json(path)` e
+`Mirror.import_snapshot`, che verificano e ricostruiscono i testi originali.
+L'export completo in memoria resta un'API di compatibilità esplicita, non il
+percorso usato dai comandi ordinari. Non ripristinare il vecchio XZ Git v1 come
+snapshot corrente del DB migrato.
+
+**Un backup v2 completo è un bundle locale**, non il solo SQLite: file SQLite,
+directory sorella `raw_reports`, `manifest.json` e `payload_manifest.json`.
+`prepare_drive_backup` copia e verifica anche i report; `record_local_backup
+--raw-sqlite` ne registra il perimetro. La rotazione conserva due bundle completi
+e verificati, senza eliminare il content store operativo. Non cancellare a mano
+`data/raw_reports`: contiene informazioni originali necessarie alle query.
+Le istruzioni storiche sottostanti sul "singolo SQLite autosufficiente" valgono
+soltanto per i backup precedenti alla migrazione. Airtable/Drive restano esclusi.
+
 ## Rotazione locale dei backup — 30 ottobre 2026
 
 Per richiesta dell'utente, `prepare_drive_backup` conserva automaticamente le

@@ -14,7 +14,8 @@ def run(conn, qid, **params):
 
 
 def main():
-    source = sqlite3.connect(DB.resolve().as_uri() + "?mode=ro", uri=True)
+    from research_memory.payload_store import open_readonly,register
+    source = open_readonly(DB)
     source.row_factory = sqlite3.Row
     source.execute("PRAGMA query_only=ON")
     syntax = []
@@ -35,6 +36,7 @@ def main():
     mem = sqlite3.connect(":memory:")
     mem.row_factory = sqlite3.Row
     source.backup(mem)
+    register(mem,DB)
     source.close()
     relations = list(mem.execute("SELECT * FROM _mirror_relations"))
     keys = [r[0] for r in mem.execute("SELECT table_key FROM _mirror_tables")]

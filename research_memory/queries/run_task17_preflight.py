@@ -26,7 +26,8 @@ def main():
         ("Q22", {"needle": "voltaggio"}),
         ("Q22", {"needle": "Ca_HVA"}),
     ]
-    with sqlite3.connect(DB.as_uri() + "?mode=ro", uri=True) as conn:
+    from research_memory.payload_store import open_readonly
+    with open_readonly(DB) as conn:
         conn.row_factory = sqlite3.Row
         conn.execute("PRAGMA query_only=ON")
         for query_id, params in cases:

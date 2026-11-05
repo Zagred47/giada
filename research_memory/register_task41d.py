@@ -9,7 +9,8 @@ from .mirror import Contract
 class PreviewComplete(Exception):pass
 class Preview:
     def __init__(self):
-        self.contract=Contract();self.con=sqlite3.connect((ROOT/'data/research_memory.sqlite').resolve().as_uri()+'?mode=ro',uri=True);self.con.row_factory=sqlite3.Row
+        from .payload_store import open_readonly
+        self.contract=Contract();self.con=open_readonly(ROOT/'data/research_memory.sqlite')
     def local_upsert(self,table,fields):
         self.contract.normalize(table,fields,partial=True)
         return dict(record_id='rec'+hashlib.sha256(fields['Codice stabile'].encode()).hexdigest()[:14])

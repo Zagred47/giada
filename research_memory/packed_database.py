@@ -37,6 +37,8 @@ def restore_if_missing(database):
         return False
     info = json.loads(manifest.read_text(encoding='utf-8'))
     if info['format'] == 'sqlite-local-backup-v1':
+        if info.get('payload_manifest'):
+            raise FileNotFoundError('Payload-v2 restore requires SQLite AND sibling raw_reports from '+str(Path(info['local_archive']).parent)+'. Verify payload_manifest.json and use Mirror.connect(). Do not restore SQLite alone.')
         raise FileNotFoundError('Latest verified SQLite backup is local at '
             + info['local_archive'] + ('. Copy the verified SQLite file to ' if info.get('archive_format')=='SQLite3' else '. Extract its single original SQLite to ')
             + str(database) + ' and verify SHA256 ' + info['sqlite_sha256']
@@ -72,6 +74,11 @@ def restore_if_missing(database):
 
 
 def pack(database):
+    database=Path(database)
+    if not database.is_file():raise FileNotFoundError(database)
+    with closing(sqlite3.connect(database.resolve().as_uri()+'?mode=ro',uri=True)) as probe:
+        if probe.execute("SELECT value FROM _mirror_meta WHERE key='storage_profile'").fetchone():
+            raise ValueError('Payload-v2 requires DB + compressed reports; use prepare_drive_backup, not legacy single-file pack')
     database = Path(database)
     archive, manifest = paths(database)
     if manifest.exists() and json.loads(manifest.read_text(encoding='utf-8')).get('format') in {'sqlite-drive-backup-v1','sqlite-local-backup-v1'}:

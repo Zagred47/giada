@@ -89,17 +89,14 @@ def main():
     print('Verifying all65 original JSON byte hashes and preserved41f',flush=True)
     with m.connect() as con:
         for r in progress['raw_reports']:
-            rowid=con.execute('SELECT rowid FROM observations WHERE _record_id=?',(r['observation'],)).fetchone()[0]
             digest=hashlib.sha256()
-            with con.blobopen('observations','Descrizione',rowid,readonly=True) as blob:
-                while block:=blob.read(1024*1024):digest.update(block)
+            from .payload_store import observation_bytes
+            for block in observation_bytes(con,m.path,r['observation']):digest.update(block)
             assert digest.hexdigest()==r['sha256'],r['member']
         old=json.loads((repo/'experiments/results/task41f_audited_v1/memory_receipt.json').read_text())
         for r in old['raw_reports']:
-            rowid=con.execute('SELECT rowid FROM observations WHERE _record_id=?',(r['observation'],)).fetchone()[0]
             digest=hashlib.sha256()
-            with con.blobopen('observations','Descrizione',rowid,readonly=True) as blob:
-                while block:=blob.read(1024*1024):digest.update(block)
+            for block in observation_bytes(con,m.path,r['observation']):digest.update(block)
             assert digest.hexdigest()==r['canonical_json_sha256'],r['member']
     m.export_snapshot_to(ROOT/'data/airtable_snapshot.json')
     write_json(folder/'memory_receipt.json',dict(valid=True,verification=baseline,raw_reports=progress['raw_reports'],records=ids,

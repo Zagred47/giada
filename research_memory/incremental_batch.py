@@ -86,14 +86,14 @@ class IncrementalBatchMirror(Mirror):
         for ti,key in enumerate(sorted(self.contract.tables)):
             if ti:h.update(b',')
             h.update((dumps(key)+':{').encode())
-            for ri,row in enumerate(con.execute('SELECT rowid,record_id,created_time FROM _remote_records WHERE table_key=? ORDER BY record_id',(key,))):
+            from .payload_store import remote_rows,remote_bytes
+            for ri,row in enumerate(remote_rows(con,key)):
                 if ri:h.update(b',')
                 h.update((dumps(row['record_id'])+':{"createdTime":'+dumps(row['created_time'])+',"fields":').encode())
                 # _remote_records is written exclusively with canonical dumps.
                 # Stream its UTF-8 TEXT bytes through SQLite incremental IO;
                 # several original scientific reports exceed400MB per row.
-                with con.blobopen('_remote_records','fields_json',row['rowid'],readonly=True) as blob:
-                    while chunk:=blob.read(1024*1024):h.update(chunk)
+                for chunk in remote_bytes(con,self.path,row['rowid']):h.update(chunk)
                 h.update(b'}')
             h.update(b'}')
         h.update(b'}');return h.hexdigest()
@@ -115,6 +115,7 @@ class IncrementalBatchMirror(Mirror):
                 return json.loads(row[0])
             # Recheck reciprocity against the transaction's final logical view.
             for (key,rid),row in dirty.items():
+                from .payload_store import physical,values_for
                 for fid in self.contract.link_fields:
                     if fid not in row['fields']:continue
                     link,reverse=self.contract.link_fields[fid]
@@ -125,8 +126,10 @@ class IncrementalBatchMirror(Mirror):
                 scalar=[f for f in self.contract.tables[key]['fields'] if f['type']!='multipleRecordLinks']
                 cols=['_record_id','_created_time']+[f['name'] for f in scalar]
                 values=[rid,row['createdTime']]+[row['fields'][f['id']] for f in scalar]
-                con.execute(f'INSERT INTO {quote(key)} ({",".join(map(quote,cols))}) VALUES ({",".join("?" for _ in cols)}) ON CONFLICT(_record_id) DO UPDATE SET '+','.join(quote(k)+'=excluded.'+quote(k) for k in cols[1:]),values)
-                con.execute('INSERT INTO _remote_records VALUES (?,?,?,?) ON CONFLICT(table_key,record_id) DO UPDATE SET created_time=excluded.created_time,fields_json=excluded.fields_json',(key,rid,row['createdTime'],dumps(row['fields'])))
+                values=values_for(con,self.path,key,cols,values)
+                con.execute(f'INSERT INTO {quote(physical(con,key))} ({",".join(map(quote,cols))}) VALUES ({",".join("?" for _ in cols)}) ON CONFLICT(_record_id) DO UPDATE SET '+','.join(quote(k)+'=excluded.'+quote(k) for k in cols[1:]),values)
+                remote=values_for(con,self.path,'_remote_records',['table_key','record_id','created_time','fields_json'],[key,rid,row['createdTime'],dumps(row['fields'])])
+                con.execute('INSERT INTO '+quote(physical(con,'_remote_records'))+' VALUES (?,?,?,?) ON CONFLICT(table_key,record_id) DO UPDATE SET created_time=excluded.created_time,fields_json=excluded.fields_json',remote)
             for link in self.contract.links:
                 sources=set()
                 for (key,rid),row in dirty.items():
@@ -174,6 +177,9 @@ class IncrementalBatchMirror(Mirror):
         return report
 
     def export_snapshot_to(self,path):
+        from .payload_store import active,compact_export
+        with self.connect() as con:compact=active(con)
+        if compact:return compact_export(self,path)
         path=Path(path);temp=path.with_name(path.name+'.'+uuid.uuid4().hex+'.tmp')
         try:
             with self.connect() as con,temp.open('wb') as stream:

@@ -178,11 +178,10 @@ def main():
     print('Readback of all original JSON byte hashes',flush=True)
     with m.connect() as con:
         for row in progress['raw_reports']:
-            rid=con.execute('SELECT rowid FROM observations WHERE _record_id=?',(row['observation'],)).fetchone()[0]
-            assert con.execute('SELECT json_valid(Descrizione) FROM observations WHERE rowid=?',(rid,)).fetchone()[0]==1,row['member']
+            assert con.execute('SELECT json_valid(Descrizione) FROM observations WHERE _record_id=?',(row['observation'],)).fetchone()[0]==1,row['member']
             hh=hashlib.sha256()
-            with con.blobopen('observations','Descrizione',rid,readonly=True) as blob:
-                while block:=blob.read(1024*1024):hh.update(block)
+            from .payload_store import observation_bytes
+            for block in observation_bytes(con,m.path,row['observation']):hh.update(block)
             assert hh.hexdigest()==row['sha256'],row['member']
     write_json(folder/'memory_receipt.json',dict(valid=True,verification=baseline,records=ids,raw_reports=progress['raw_reports'],
         raw_original_bytes_verified=True,raw_reports_json1_queryable=True,completed_runs=len(run_ids),final_archive_complete=True,airtable_accessed=False,

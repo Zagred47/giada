@@ -12,6 +12,9 @@ class StagedMirror(Mirror):
     """Use local_upsert validation/reciprocal links, import the complete batch once."""
     def __init__(self):
         super().__init__()
+        from .payload_store import active
+        with self.connect() as con:
+            if active(con):raise ValueError('Legacy whole-snapshot batch disabled for payload-v2; use IncrementalBatchMirror to preserve compact storage and avoid stale snapshot overwrite')
         self.staged = super().export_snapshot()
 
     def export_snapshot(self):

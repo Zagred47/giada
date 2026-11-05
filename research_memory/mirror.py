@@ -41,7 +41,9 @@ def digest(value):
 
 
 def read_json(path):
-    return json.loads(Path(path).read_text(encoding="utf-8-sig"))
+    value=json.loads(Path(path).read_text(encoding="utf-8-sig"))
+    if isinstance(value,dict) and value.get('format')=='giada-payload-snapshot-v2':value['_source_directory']=str(Path(path).resolve().parent)
+    return value
 
 
 def write_json(path, value):
@@ -178,7 +180,11 @@ class Mirror:
         restore_if_missing(self.path)
         from .packed_snapshot import restore_snapshot_if_missing
         if self.path.resolve() == DEFAULT_DB.resolve():
-            restore_snapshot_if_missing(ROOT / 'data' / 'airtable_snapshot.json')
+            compact=False
+            if self.path.exists():
+                with sqlite3.connect(self.path) as c:compact=c.execute("SELECT value FROM _mirror_meta WHERE key='storage_profile'").fetchone() is not None
+                c.close()
+            if not compact:restore_snapshot_if_missing(ROOT / 'data' / 'airtable_snapshot.json')
         self.contract = contract or Contract()
 
     def connect(self):
@@ -186,6 +192,8 @@ class Mirror:
             raise ValueError("Database missing; run init first")
         conn = sqlite3.connect(self.path, timeout=30, factory=ClosingConnection)
         conn.row_factory = sqlite3.Row
+        from .payload_store import register
+        register(conn,self.path)
         conn.execute("PRAGMA foreign_keys=ON")
         row = conn.execute("SELECT value FROM _mirror_meta WHERE key='schema_fingerprint'").fetchone()
         if row is None or row[0] != self.contract.fingerprint:
@@ -263,6 +271,11 @@ class Mirror:
         return {"created": True, "path": str(self.path)}
 
     def normalize_snapshot(self, snapshot):
+        if snapshot.get('format')=='giada-payload-snapshot-v2':
+            from .payload_store import Store
+            if '_source_directory' not in snapshot:raise ValueError('Payload export must be loaded with research_memory.mirror.read_json(path)')
+            store=Store(Path(snapshot['_source_directory'])/'raw_reports')
+            snapshot={**snapshot,'format':'airtable-record-snapshot-v1','tables':{tid:[{**r,'cellValuesByFieldId':{k:store.read(v) for k,v in r['cellValuesByFieldId'].items()}} for r in rows] for tid,rows in snapshot['tables'].items()}}
         if snapshot.get("format") != "airtable-record-snapshot-v1" or snapshot.get("base_id") != self.contract.base_id or snapshot.get("complete") is not True:
             raise ValueError("Expected a complete snapshot of this exact base")
         if set(snapshot.get("tables", {})) != set(self.contract.by_id):
@@ -337,6 +350,13 @@ class Mirror:
         reconciliation with Airtable.
         """
 
+        from .payload_store import active
+        with self.connect() as con:compact=active(con)
+        if compact:
+            from .incremental_batch import IncrementalBatchMirror
+            batch=IncrementalBatchMirror(self.path,self.contract)
+            result=batch.local_upsert(table,values,record_id);batch.commit_batch()
+            return {**batch.status(),**result}
         key = self.contract.key(table)
         patch = self.contract.normalize(key, values, partial=True)
         code_fid = self.field_id(key, "Codice stabile")
@@ -463,7 +483,11 @@ class Mirror:
             # Only one unresolved operation per semantic identity. Applied history is unlimited.
             if conn.execute("SELECT 1 FROM _outbox WHERE table_key=? AND stable_code=? AND status='pending'", (key, code)).fetchone():
                 raise ValueError("Pending operation already exists for this record")
-            conn.execute("INSERT INTO _outbox (operation_id,table_key,stable_code,record_id,patch_json,before_json,status) VALUES (?,?,?,?,?,?,'pending')", (opid, key, code, record_id, dumps(patch), dumps(before) if before is not None else None))
+            serialized=dumps(patch);previous=dumps(before) if before is not None else None
+            from .payload_store import active,LIMIT
+            if active(conn) and any(v is not None and len(v.encode('utf-8'))>LIMIT for v in (serialized,previous)):
+                raise ValueError('Large remote-outbox payload disabled on compact memory; use local-upsert/IncrementalBatchMirror. Future Airtable reconciliation is a separate operation.')
+            conn.execute("INSERT INTO _outbox (operation_id,table_key,stable_code,record_id,patch_json,before_json,status) VALUES (?,?,?,?,?,?,'pending')", (opid, key, code, record_id, serialized, previous))
         return {"operation_id": opid, "status": "pending", "message": "Not yet written to either semantic dataset; use payload or sync"}
 
     def operation(self, operation_id):
@@ -557,7 +581,7 @@ class Mirror:
         with self.connect() as conn:
             conn.execute("PRAGMA query_only=ON")
             denied = {sqlite3.SQLITE_ATTACH, sqlite3.SQLITE_DETACH, sqlite3.SQLITE_PRAGMA}
-            conn.set_authorizer(lambda action, *_: sqlite3.SQLITE_DENY if action in denied else sqlite3.SQLITE_OK)
+            conn.set_authorizer(lambda action,a,b,*_: sqlite3.SQLITE_DENY if action in denied or action==sqlite3.SQLITE_FUNCTION and str(b).lower() in ('giada_store_text','giada_store_fields') else sqlite3.SQLITE_OK)
             # Bound runaway recursive/Cartesian queries, not only output size.
             ticks = [0]
             def progress():
@@ -683,12 +707,14 @@ def main(argv=None):
     elif args.command == "import-snapshot":
         result = mirror.import_snapshot(read_json(args.path))
     elif args.command == "export-snapshot":
-        write_json(args.path, mirror.export_snapshot()); result = {"exported": str(args.path)}
+        from .incremental_batch import IncrementalBatchMirror
+        IncrementalBatchMirror(args.db).export_snapshot_to(args.path); result = {"exported": str(args.path)}
     elif args.command == "stage":
         result = mirror.stage(args.table, read_json(args.fields), args.record_id)
     elif args.command == "local-upsert":
         result = mirror.local_upsert(args.table, read_json(args.fields), args.record_id)
-        write_json(args.snapshot, mirror.export_snapshot())
+        from .incremental_batch import IncrementalBatchMirror
+        IncrementalBatchMirror(args.db).export_snapshot_to(args.snapshot)
         result["snapshot"] = str(args.snapshot)
     elif args.command == "payload":
         result = mirror.payload(args.operation_id)

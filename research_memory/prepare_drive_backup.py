@@ -14,6 +14,9 @@ def main():
     with closing(sqlite3.connect(DEFAULT_DB.resolve().as_uri()+'?mode=ro',uri=True)) as source:
         with closing(sqlite3.connect(path)) as backup:source.backup(backup)
     with closing(sqlite3.connect(path)) as c:
+        from .payload_store import register,active
+        register(c,path)
+        external=active(c)
         integrity=c.execute('pragma integrity_check').fetchone()[0]
         fk=c.execute('pragma foreign_key_check').fetchall()
         assert integrity=='ok' and not fk
@@ -31,10 +34,15 @@ def main():
         source=str(DEFAULT_DB),single_file=True,airtable_accessed=False,
         external_dependencies='Artifact paths and scientific source/checkpoint references require Git repository or Kaggle artifacts. Numeric case/channel metrics remain queryable inside SQLite.',
         post_upload_verification='Pending; see separate Drive receipt.')
+    if external:
+        from .payload_backup import copy_reports
+        manifest.update(copy_reports(DEFAULT_DB,folder))
     (folder/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     readme=f'''# GIADA — research memory SQLite\n\nSnapshot `{path.name}`, UTC {stamp}.\n\nDatabase reale originale, singolo file, {path.stat().st_size} byte; {records} record semantici.\nSHA-256: `{h.hexdigest()}`. Backup SQLite API consistente; integrity_check=ok, zero violazioni FK.\n\nOrigine: mirror locale autorevole, nessun accesso Airtable. Include risultati Task39 e preregistrazione Task39b; lo stato del lancio e' quello registrato alla data dello snapshot.\n\nAprire inizialmente in sola lettura: `sqlite3.connect('file:PATH?mode=ro', uri=True)`.\nSchema completo in `schema.sql`, conteggi e checksum in `manifest.json`.\n78 tabelle semantiche e241 relazioni; `v_records`, `v_links`, `v_evidence_chains` per esplorazione.\nLe osservazioni contengono anche JSON dettagliato interrogabile con JSON1.\n\nPer aggiornare usare l'interfaccia versionata research_memory, poi creare una nuova versione; non sovrascrivere database concorrenti o snapshot precedenti.\nIl DB non contiene i file binari esterni dei checkpoint: i percorsi rimandano alla repository GitHub Zagred47/giada e agli artefatti Kaggle. Le metriche numeriche archiviate sono interne al DB.\n\nGoogle Drive e' archivio, non server SQLite. Nessuna condivisione pubblica o sincronizzazione Airtable effettuata.\n'''
     readme=readme.replace("Include risultati Task39 e preregistrazione Task39b; lo stato del lancio e' quello registrato alla data dello snapshot.",
         "Include la memoria locale allo stato della data indicata; i risultati e gli stati di esecuzione sono interrogabili nelle tabelle findings, runs e observations. Consultare la ricevuta della versione per il perimetro aggiornato.")
+    if external:
+        readme='''# GIADA — backup payload-v2\n\nQuesto backup richiede il file SQLite **e** la directory `raw_reports` qui accanto.\nNon separare i due elementi. `payload_manifest.json` contiene SHA256 originali e compressi di ogni report.\nPer le query usare `research_memory.mirror.Mirror(path).connect()` oppure `research_memory.payload_store.open_readonly(path)`.\nLe viste mantengono campi, ID, relazioni e query JSON originali; la decompressione è lossless.\nChecksum SQLite in `manifest.json`. Nessun accesso Airtable o Drive.\n'''
     (folder/'README.md').write_text(readme,encoding='utf-8')
     (ROOT/'drive_exports/latest_local.json').write_text(json.dumps(dict(folder=str(folder),**manifest),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     # Rotate only after the new SQLite passes integrity/FKs and its complete

@@ -8,6 +8,8 @@ def main():
     args=parser.parse_args()
     info=json.loads((ROOT/'drive_exports/latest_local.json').read_text());folder=Path(info['folder'])
     if args.raw_sqlite:
+        from .payload_backup import verify_reports
+        verify_reports(folder,info)
         path=folder/info['filename'];h=hashlib.sha256()
         with path.open('rb') as stream:
             for chunk in iter(lambda:stream.read(1024*1024),b''):h.update(chunk)
@@ -19,6 +21,9 @@ def main():
             integrity_check='ok',foreign_key_errors=[],valid=True,single_file=True,
             scope=args.scope,
             drive_updated=False,upload_deferred_by_user=True,airtable_accessed=False)
+        if info.get('payload_manifest'):
+            receipt.update({k:info[k] for k in ('payload_manifest','payload_manifest_sha256','payload_files','payload_bytes','restore_requires')})
+            receipt['single_file']=False
         write_json(ROOT/'data/local_backup_receipt.json',receipt)
         write_json(ROOT/'data/research_memory.sqlite.manifest.json',receipt)
         manifest=json.loads((folder/'manifest.json').read_text())

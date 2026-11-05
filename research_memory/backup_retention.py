@@ -23,6 +23,8 @@ def rotate(directory=None,keep=2,apply=False,progress=print):
         assert path.stat().st_size==manifest['bytes']
         progress('Verifying retained snapshot '+folder.name,flush=True)
         assert sha(path)==manifest['sha256'],'Retained backup SHA mismatch: '+str(path)
+        from .payload_backup import verify_reports
+        verify_reports(folder,manifest)
         survivors.append(dict(folder=str(folder),filename=path.name,bytes=manifest['bytes'],sha256=manifest['sha256']))
     plan=[]
     for folder in folders[keep:]:
