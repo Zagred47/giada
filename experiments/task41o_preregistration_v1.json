@@ -1,0 +1,61 @@
+{
+  "task": "41o",
+  "title": "Localizzazione causale delle code lente, prima di altro training",
+  "roadmap_relation": "Sottotask diagnostica della41; non Task42",
+  "recovery_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63",
+  "training_updates": 0,
+  "selection_performed": false,
+  "hypotheses": {
+    "arithmetic": "FP32 recurrent rounding accounts for the tail timing errors: learned64 rescues them using identical learned coefficients.",
+    "equilibrium": "Biased learned equilibrium dominates: oracle_u rescues more baseline failures than oracle_z without adding regressions.",
+    "relaxation": "Biased learned update fraction dominates: oracle_z rescues more failures than oracle_u without adding regressions.",
+    "accumulation": "Small local errors accumulate: teacher_previous/reset controls rescue failures that persist in learned64.",
+    "interaction": "Both coefficient errors interact: neither single oracle rescues a case but oracle_both does.",
+    "sensitivity": "Very shallow current crossings amplify small current errors into long offset delays; inspect crossing slopes and per-channel oracle rescues. This does not waive timing gates."
+  },
+  "arms": [
+    "learned32",
+    "learned64",
+    "oracle_u",
+    "oracle_z",
+    "oracle_both",
+    "teacher_previous",
+    "reset_10ms",
+    "reset_100ms"
+  ],
+  "success": "Exact replay of archived baseline, complete per-case causal contrasts including regressions, oracle-both identity and immutable weights. This is information gain only; model improvement requires a subsequent non-oracle repair passing all original quality/stress/regression/cost gates.",
+  "stop": "Any input/hash/baseline replay mismatch or nonfinite stops technical execution, not scientific rejection. Max90minutes. No training before causal attribution.",
+  "limits": [
+    "All41n stress data are opened diagnostic data, not an independent confirmation.",
+    "No oracle or periodically reset state is deployable or selectable.",
+    "No information-insufficiency claim follows from a one-step improvement alone.",
+    "Original FP32 floor failures remain explicit; no precision-policy release change.",
+    "This stage does not measure a new speedup or authorize42; repair and independent confirmation remain separate gates."
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  }
+}

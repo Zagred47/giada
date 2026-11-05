@@ -6,6 +6,7 @@ from research_memory.mirror import write_json
 FOLDER=ROOT/'experiments/results/task41n_recovery_v1';DEST=ROOT/'artifacts/task41n_recovery_kaggle_external'
 SLUG='alessandrobelli/giada-task41n-evaluation-only-recovery'
 DATASET='alessandrobelli/giada-task41n-evaluation-recovery-input'
+OUTPUT_PATTERN=r'(kaggle_receipt\.json|task41n_recovery_final\.zip|process\.log)$'
 def sha(path):
     with Path(path).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 
@@ -116,7 +117,7 @@ def main():
         else:raise RuntimeError('Finite monitoring deadline reached; inspect existing run, never auto-restart')
     for attempt in range(12):
         try:
-            api.kernels_output(ref,str(DEST),file_pattern=r'(kaggle_receipt\.json|task41n_recovery_final\.zip|process\.log)$',force=True,quiet=True);break
+            api.kernels_output(ref,str(DEST),file_pattern=OUTPUT_PATTERN,force=True,quiet=True);break
         except Exception:
             if attempt==11:raise
             time.sleep(30)

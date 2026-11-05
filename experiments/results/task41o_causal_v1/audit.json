@@ -1,0 +1,672 @@
+{
+  "valid": true,
+  "task": "41o",
+  "source_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63",
+  "baseline_passed": 61,
+  "total": 72,
+  "failures": [
+    {
+      "model_seed": 17,
+      "case": 5,
+      "family": "doublepulse_recovery",
+      "input_seed": 9410173,
+      "history": 1,
+      "panel": "low_mixed",
+      "channels": [
+        {
+          "channel": "K_Pst",
+          "metrics": {
+            "channel": "K_Pst",
+            "passed": false,
+            "scale_ma_cm2": 2.1292482086596894e-06,
+            "rmse_ma_cm2": 1.77117377253854e-10,
+            "max_abs_ma_cm2": 1.2998922727841255e-09,
+            "nrmse": 8.318305800775812e-05,
+            "nmax": 0.0006104935382814652,
+            "signed_charge_error_ma_ms_cm2": 5.647748141371758e-08,
+            "absolute_charge_error_ma_ms_cm2": 5.647748141371758e-08,
+            "signed_charge_normalized": 2.210384287437797e-05,
+            "absolute_charge_normalized": 2.210384287437797e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00010884895114795617,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.9
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 998.4000000000001,
+          "prediction_offset_ms": 999.3000000000001,
+          "crossing_slope_ma_cm2_per_ms": 8.037562395397794e-12,
+          "current_error_at_crossing_ma_cm2": -7.076966945792635e-12,
+          "linearized_timing_error_ms": 0.8804867194368303
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 9.990267414921018e-05,
+        "max_abs": 0.0006870627611694768,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 17,
+      "case": 16,
+      "family": "calcium_swing",
+      "input_seed": 9410173,
+      "history": 0,
+      "panel": "mixed_diagonal",
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "metrics": {
+            "channel": "Nap_Et2",
+            "passed": false,
+            "scale_ma_cm2": 0.0011402641062870946,
+            "rmse_ma_cm2": 2.063210154267118e-08,
+            "max_abs_ma_cm2": 3.75297708639095e-08,
+            "nrmse": 1.8094142777021214e-05,
+            "nmax": 3.2913226556006575e-05,
+            "signed_charge_error_ma_ms_cm2": 2.2124221857990807e-05,
+            "absolute_charge_error_ma_ms_cm2": 2.2124221857990807e-05,
+            "signed_charge_normalized": 1.6168930905278957e-05,
+            "absolute_charge_normalized": 1.6168930905278957e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.1642170065528027,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 0.8
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 769.5,
+          "prediction_offset_ms": 770.3000000000001,
+          "crossing_slope_ma_cm2_per_ms": 1.7875684345833136e-08,
+          "current_error_at_crossing_ma_cm2": -1.339925636348598e-08,
+          "linearized_timing_error_ms": 0.7495800498742515
+        },
+        {
+          "channel": "SK_E2",
+          "metrics": {
+            "channel": "SK_E2",
+            "passed": false,
+            "scale_ma_cm2": 6.777018744833376e-06,
+            "rmse_ma_cm2": 9.898422374447204e-09,
+            "max_abs_ma_cm2": 1.9060013587839232e-08,
+            "nrmse": 0.0014605865421271713,
+            "nmax": 0.0028124481140575407,
+            "signed_charge_error_ma_ms_cm2": 7.73743603164907e-06,
+            "absolute_charge_error_ma_ms_cm2": 7.73743603164907e-06,
+            "signed_charge_normalized": 0.000951430651512346,
+            "absolute_charge_normalized": 0.000951430651512346,
+            "reference_signed_charge_ma_ms_cm2": 0.00247028607406295,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.2,
+              "offset_error_ms": 0.4
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 593.6,
+          "prediction_offset_ms": 594.0,
+          "crossing_slope_ma_cm2_per_ms": 1.3573820511562235e-08,
+          "current_error_at_crossing_ma_cm2": 4.968657569247721e-09,
+          "linearized_timing_error_ms": 0.3660470952165161
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 0.00011587511389937973,
+        "max_abs": 0.0011313209139065528,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 17,
+      "case": 17,
+      "family": "calcium_swing",
+      "input_seed": 9410173,
+      "history": 1,
+      "panel": "low_mixed",
+      "channels": [
+        {
+          "channel": "SK_E2",
+          "metrics": {
+            "channel": "SK_E2",
+            "passed": false,
+            "scale_ma_cm2": 3.7390448247356562e-06,
+            "rmse_ma_cm2": 5.461198551418915e-09,
+            "max_abs_ma_cm2": 1.0515869565704097e-08,
+            "nrmse": 0.001460586542127109,
+            "nmax": 0.0028124481140574587,
+            "signed_charge_error_ma_ms_cm2": 4.2689302243580665e-06,
+            "absolute_charge_error_ma_ms_cm2": 4.2689302243580665e-06,
+            "signed_charge_normalized": 0.000951430651512271,
+            "absolute_charge_normalized": 0.000951430651512271,
+            "reference_signed_charge_ma_ms_cm2": 0.0013629164546554212,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.2,
+              "offset_error_ms": 0.4
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 593.6,
+          "prediction_offset_ms": 594.0,
+          "crossing_slope_ma_cm2_per_ms": 7.48900442017192e-09,
+          "current_error_at_crossing_ma_cm2": 2.741328314067624e-09,
+          "linearized_timing_error_ms": 0.36604709521652185
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 0.00011337419934189296,
+        "max_abs": 0.0011074996481736654,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 17,
+      "case": 19,
+      "family": "near_threshold_staircase",
+      "input_seed": 9410143,
+      "history": 1,
+      "panel": "calcium_mix",
+      "channels": [
+        {
+          "channel": "K_Pst",
+          "metrics": {
+            "channel": "K_Pst",
+            "passed": false,
+            "scale_ma_cm2": 2.071741630596018e-06,
+            "rmse_ma_cm2": 4.8940989979442614e-11,
+            "max_abs_ma_cm2": 3.6509157064527883e-10,
+            "nrmse": 2.3623114608824466e-05,
+            "nmax": 0.00017622446991145602,
+            "signed_charge_error_ma_ms_cm2": 1.415943327250069e-08,
+            "absolute_charge_error_ma_ms_cm2": 1.415943327250069e-08,
+            "signed_charge_normalized": 5.695462963540154e-06,
+            "absolute_charge_normalized": 5.695462963540154e-06,
+            "reference_signed_charge_ma_ms_cm2": 0.00019966160355678158,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.1,
+              "offset_error_ms": 0.9
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 629.0,
+          "prediction_offset_ms": 629.9000000000001,
+          "crossing_slope_ma_cm2_per_ms": 2.1732010674182542e-11,
+          "current_error_at_crossing_ma_cm2": -1.8524354756180777e-11,
+          "linearized_timing_error_ms": 0.8523994872774273
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 8.986180579022374e-05,
+        "max_abs": 0.0006986176801003219,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 17,
+      "case": 23,
+      "family": "near_threshold_staircase",
+      "input_seed": 9410173,
+      "history": 1,
+      "panel": "low_mixed",
+      "channels": [
+        {
+          "channel": "Im",
+          "metrics": {
+            "channel": "Im",
+            "passed": false,
+            "scale_ma_cm2": 0.00028407040973132096,
+            "rmse_ma_cm2": 1.1011321519526129e-07,
+            "max_abs_ma_cm2": 1.1558442343943321e-07,
+            "nrmse": 0.0003876264877408682,
+            "nmax": 0.0004068865305216235,
+            "signed_charge_error_ma_ms_cm2": 0.00013032357539447792,
+            "absolute_charge_error_ma_ms_cm2": 0.00013032357539447792,
+            "signed_charge_normalized": 0.0003823100744569526,
+            "absolute_charge_normalized": 0.0003823100744569526,
+            "reference_signed_charge_ma_ms_cm2": 0.10363262699635777,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 13.8
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 240.60000000000002,
+          "prediction_offset_ms": 226.8,
+          "crossing_slope_ma_cm2_per_ms": 6.8501614991690494e-09,
+          "current_error_at_crossing_ma_cm2": 1.1276338614952923e-07,
+          "linearized_timing_error_ms": 16.46142009399455
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 0.00013031832360405692,
+        "max_abs": 0.0004928056194762331,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 29,
+      "case": 16,
+      "family": "calcium_swing",
+      "input_seed": 9410173,
+      "history": 0,
+      "panel": "mixed_diagonal",
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "metrics": {
+            "channel": "Nap_Et2",
+            "passed": false,
+            "scale_ma_cm2": 0.0011402641062870946,
+            "rmse_ma_cm2": 3.2827706001462164e-08,
+            "max_abs_ma_cm2": 5.615591963127869e-08,
+            "nrmse": 2.8789563593609107e-05,
+            "nmax": 4.924816919312885e-05,
+            "signed_charge_error_ma_ms_cm2": 3.84902033901965e-05,
+            "absolute_charge_error_ma_ms_cm2": 3.84902033901965e-05,
+            "signed_charge_normalized": 2.8129596744277854e-05,
+            "absolute_charge_normalized": 2.8129596744277854e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.1642170065528027,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 2.0
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 769.5,
+          "prediction_offset_ms": 767.5,
+          "crossing_slope_ma_cm2_per_ms": 1.7875684345833136e-08,
+          "current_error_at_crossing_ma_cm2": 3.597216987085946e-08,
+          "linearized_timing_error_ms": 2.0123520406224142
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 5.676164663336716e-05,
+        "max_abs": 0.001080868102968341,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 29,
+      "case": 23,
+      "family": "near_threshold_staircase",
+      "input_seed": 9410173,
+      "history": 1,
+      "panel": "low_mixed",
+      "channels": [
+        {
+          "channel": "Im",
+          "metrics": {
+            "channel": "Im",
+            "passed": false,
+            "scale_ma_cm2": 0.00028407040973132096,
+            "rmse_ma_cm2": 4.890860899789073e-08,
+            "max_abs_ma_cm2": 6.361425837345721e-08,
+            "nrmse": 0.00017217072712412884,
+            "nmax": 0.00022393834836097412,
+            "signed_charge_error_ma_ms_cm2": 5.8488835351573057e-05,
+            "absolute_charge_error_ma_ms_cm2": 5.8488835351573057e-05,
+            "signed_charge_normalized": 0.0001715796311640157,
+            "absolute_charge_normalized": 0.0001715796311640157,
+            "reference_signed_charge_ma_ms_cm2": 0.10363262699635777,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 7.800000000000001
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 240.60000000000002,
+          "prediction_offset_ms": 248.4,
+          "crossing_slope_ma_cm2_per_ms": 6.8501614991690494e-09,
+          "current_error_at_crossing_ma_cm2": -4.8159349914553805e-08,
+          "linearized_timing_error_ms": 7.030396279036007
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 6.948788606333846e-05,
+        "max_abs": 0.0003293358008067959,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 43,
+      "case": 5,
+      "family": "doublepulse_recovery",
+      "input_seed": 9410173,
+      "history": 1,
+      "panel": "low_mixed",
+      "channels": [
+        {
+          "channel": "K_Pst",
+          "metrics": {
+            "channel": "K_Pst",
+            "passed": false,
+            "scale_ma_cm2": 2.1292482086596894e-06,
+            "rmse_ma_cm2": 2.0544221023563216e-10,
+            "max_abs_ma_cm2": 1.508329231742224e-09,
+            "nrmse": 9.64857969118373e-05,
+            "nmax": 0.0007083858169319212,
+            "signed_charge_error_ma_ms_cm2": 7.176316408724318e-08,
+            "absolute_charge_error_ma_ms_cm2": 7.176316408724318e-08,
+            "signed_charge_normalized": 2.8086268428523775e-05,
+            "absolute_charge_normalized": 2.8086268428523775e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00010884895114795617,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 1.6
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 998.4000000000001,
+          "prediction_offset_ms": 1000.0,
+          "crossing_slope_ma_cm2_per_ms": 8.037562395397794e-12,
+          "current_error_at_crossing_ma_cm2": -1.230292641096969e-11,
+          "linearized_timing_error_ms": 1.5306788060537098
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 9.64469214688431e-05,
+        "max_abs": 0.0007990899919867456,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 43,
+      "case": 16,
+      "family": "calcium_swing",
+      "input_seed": 9410173,
+      "history": 0,
+      "panel": "mixed_diagonal",
+      "channels": [
+        {
+          "channel": "Nap_Et2",
+          "metrics": {
+            "channel": "Nap_Et2",
+            "passed": false,
+            "scale_ma_cm2": 0.0011402641062870946,
+            "rmse_ma_cm2": 3.93515797756353e-08,
+            "max_abs_ma_cm2": 1.744957470681003e-07,
+            "nrmse": 3.451093440428563e-05,
+            "nmax": 0.0001530309917728533,
+            "signed_charge_error_ma_ms_cm2": 4.5874406541179364e-05,
+            "absolute_charge_error_ma_ms_cm2": 4.5874406541179364e-05,
+            "signed_charge_normalized": 3.3526155832554336e-05,
+            "absolute_charge_normalized": 3.3526155832554336e-05,
+            "reference_signed_charge_ma_ms_cm2": -0.1642170065528027,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 2.3000000000000003
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 769.5,
+          "prediction_offset_ms": 767.2,
+          "crossing_slope_ma_cm2_per_ms": 1.7875684345833136e-08,
+          "current_error_at_crossing_ma_cm2": 4.230883401144857e-08,
+          "linearized_timing_error_ms": 2.366837162310424
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 0.00010619461150513053,
+        "max_abs": 0.0011650472665950262,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 43,
+      "case": 19,
+      "family": "near_threshold_staircase",
+      "input_seed": 9410143,
+      "history": 1,
+      "panel": "calcium_mix",
+      "channels": [
+        {
+          "channel": "K_Pst",
+          "metrics": {
+            "channel": "K_Pst",
+            "passed": false,
+            "scale_ma_cm2": 2.071741630596018e-06,
+            "rmse_ma_cm2": 7.426019393970569e-11,
+            "max_abs_ma_cm2": 3.439404965795905e-10,
+            "nrmse": 3.5844331572533885e-05,
+            "nmax": 0.0001660151495245295,
+            "signed_charge_error_ma_ms_cm2": 6.11145233947563e-08,
+            "absolute_charge_error_ma_ms_cm2": 6.11145233947563e-08,
+            "signed_charge_normalized": 2.4582587299256407e-05,
+            "absolute_charge_normalized": 2.4582587299256407e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.00019966160355678158,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.1,
+              "offset_error_ms": 3.0
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 629.0,
+          "prediction_offset_ms": 632.0,
+          "crossing_slope_ma_cm2_per_ms": 2.1732010674182542e-11,
+          "current_error_at_crossing_ma_cm2": -6.44275257364695e-11,
+          "linearized_timing_error_ms": 2.964637129182386
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 5.8029918668179475e-05,
+        "max_abs": 0.000423489608175176,
+        "passed": true
+      }
+    },
+    {
+      "model_seed": 43,
+      "case": 23,
+      "family": "near_threshold_staircase",
+      "input_seed": 9410173,
+      "history": 1,
+      "panel": "low_mixed",
+      "channels": [
+        {
+          "channel": "Im",
+          "metrics": {
+            "channel": "Im",
+            "passed": false,
+            "scale_ma_cm2": 0.00028407040973132096,
+            "rmse_ma_cm2": 1.9563383098542494e-08,
+            "max_abs_ma_cm2": 4.103584790786201e-08,
+            "nrmse": 6.886807787212298e-05,
+            "nmax": 0.00014445660829888785,
+            "signed_charge_error_ma_ms_cm2": 2.2845413107056324e-05,
+            "absolute_charge_error_ma_ms_cm2": 2.2845413107056324e-05,
+            "signed_charge_normalized": 6.701804765194186e-05,
+            "absolute_charge_normalized": 6.701804765194186e-05,
+            "reference_signed_charge_ma_ms_cm2": 0.10363262699635777,
+            "event": {
+              "status": "evaluable",
+              "peak_error_ms": 0.0,
+              "onset_error_ms": 0.0,
+              "offset_error_ms": 2.6
+            },
+            "blocked_current_passed": true
+          },
+          "reference_offset_ms": 240.60000000000002,
+          "prediction_offset_ms": 243.20000000000002,
+          "crossing_slope_ma_cm2_per_ms": 6.8501614991690494e-09,
+          "current_error_at_crossing_ma_cm2": -1.7211062178093886e-08,
+          "linearized_timing_error_ms": 2.5125045855023496
+        }
+      ],
+      "gate": {
+        "finite": true,
+        "occupancy_violations": 0,
+        "rmse": 4.207313165298104e-05,
+        "max_abs": 0.00036577091277956164,
+        "passed": true
+      }
+    }
+  ],
+  "single_channel_oracle_passed": {
+    "Ca_HVA": 61,
+    "Ca_LVAst": 61,
+    "NaTa_t": 61,
+    "NaTs2_t": 61,
+    "Nap_Et2": 63,
+    "Ih": 61,
+    "Im": 64,
+    "K_Pst": 65,
+    "K_Tst": 61,
+    "SK_E2": 62,
+    "SKv3_1": 61
+  },
+  "memory_query": "SELECT stable_code,name FROM v_records WHERE table_key='findings' AND (stable_code LIKE '%41m%' OR stable_code LIKE '%41l%' OR stable_code LIKE '%39j%') ORDER BY stable_code LIMIT 30",
+  "memory_matches": [
+    {
+      "stable_code": "findings-giada-task39j-result-decision-v1",
+      "name": "Task39j decision"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-freeze_contrast-v1",
+      "name": "Task39j freeze_contrast"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-numerics-v1",
+      "name": "Task39j numerics"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-outcome-v1",
+      "name": "Task39j outcome"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-registered_contrasts-v1",
+      "name": "Task39j registered_contrasts"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-remaining_stress-v1",
+      "name": "Task39j remaining_stress"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-scope-v1",
+      "name": "Task39j scope"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-selection-v1",
+      "name": "Task39j selection"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-sufficient_package-v1",
+      "name": "Task39j sufficient_package"
+    },
+    {
+      "stable_code": "findings-giada-task39j-result-unnecessary_additions-v1",
+      "name": "Task39j unnecessary_additions"
+    },
+    {
+      "stable_code": "findings-giada-task41l-preflight-v1",
+      "name": "Task41l technical execution verified"
+    },
+    {
+      "stable_code": "findings-giada-task41l-result-cost-v1",
+      "name": "Task41l cost"
+    },
+    {
+      "stable_code": "findings-giada-task41l-result-feedback_numerics-v1",
+      "name": "Task41l feedback_numerics"
+    },
+    {
+      "stable_code": "findings-giada-task41l-result-local_separability-v1",
+      "name": "Task41l local_separability"
+    },
+    {
+      "stable_code": "findings-giada-task41l-result-objective_mismatch-v1",
+      "name": "Task41l objective_mismatch"
+    },
+    {
+      "stable_code": "findings-giada-task41l-result-outcome-v1",
+      "name": "Task41l outcome"
+    },
+    {
+      "stable_code": "findings-giada-task41l-result-recovery-v1",
+      "name": "Task41l recovery"
+    },
+    {
+      "stable_code": "findings-giada-task41l-result-step_coverage_protection-v1",
+      "name": "Task41l step_coverage_protection"
+    },
+    {
+      "stable_code": "findings-giada-task41l-result-stop_policy-v1",
+      "name": "Task41l stop_policy"
+    },
+    {
+      "stable_code": "findings-giada-task41l-submitted-v1",
+      "name": "Task41l scientific run submitted"
+    },
+    {
+      "stable_code": "findings-giada-task41m-launch-v1",
+      "name": "Task41m actual frozen verification running"
+    },
+    {
+      "stable_code": "findings-giada-task41m-result-cost-v1",
+      "name": "Task41m cost"
+    },
+    {
+      "stable_code": "findings-giada-task41m-result-decision-v1",
+      "name": "Task41m decision"
+    },
+    {
+      "stable_code": "findings-giada-task41m-result-quality-v1",
+      "name": "Task41m quality"
+    },
+    {
+      "stable_code": "findings-giada-task41m-result-reference-v1",
+      "name": "Task41m reference"
+    },
+    {
+      "stable_code": "findings-giada-task41m-result-scope-v1",
+      "name": "Task41m scope"
+    },
+    {
+      "stable_code": "findings-giada-task41m-result-separation-v1",
+      "name": "Task41m separation"
+    }
+  ],
+  "local_readout_numeric_differences": 2344,
+  "archived_classifications_reproduced": true,
+  "interpretation": "Post-hoc Windows/NumPy localization, not a released model or independent confirmation. Float32 readout reductions can differ across platforms; all archived pass/fail predicates reproduced. GPU pinned replay required for release. Oracle channel swaps diagnose necessity/sufficiency only on this opened panel.",
+  "thresholds_changed": false
+}
