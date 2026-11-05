@@ -7,6 +7,7 @@ FOLDER=ROOT/'experiments/results/task41n_recovery_v1';DEST=ROOT/'artifacts/task4
 SLUG='alessandrobelli/giada-task41n-evaluation-only-recovery'
 DATASET='alessandrobelli/giada-task41n-evaluation-recovery-input'
 OUTPUT_PATTERN=r'(kaggle_receipt\.json|task41n_recovery_final\.zip|process\.log)$'
+LAUNCH_SCOPE=dict(training_updates_performed=0,selection_recomputed=False)
 def sha(path):
     with Path(path).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 
@@ -97,10 +98,15 @@ def main():
         else:assert not launchfile.exists(),'Inspect existing launch; never duplicate'
         memory=json.loads((FOLDER/'preregistration_receipt.json').read_text());assert memory['valid']
         assert json.loads((FOLDER/'input_verified.json').read_text())['valid']
-        revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+        revision=os.environ.get('GIADA_PINNED_REVISION') or subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+        if os.environ.get('GIADA_PINNED_REVISION'):
+            # Alternate GitHub API publication may have a different commit ID,
+            # but the complete committed tree must remain byte-identical.
+            tree=lambda rev:subprocess.check_output(['git','rev-parse',rev+'^{tree}'],cwd=ROOT,text=True).strip()
+            assert len(revision)==40 and tree(revision)==tree('HEAD'),'Pinned publication tree mismatch'
         write_json(FOLDER/'submission_pending.json',dict(revision=revision,submitted_at=time.time()))
         result=api.kernels_push(str(bundle(revision)),timeout='7200',acc='NvidiaTeslaT4');assert not result.error,result.error
-        launch=dict(ref=result.ref,version=result.version_number,url=result.url,revision=revision,training_updates_performed=0,selection_recomputed=False)
+        launch=dict(ref=result.ref,version=result.version_number,url=result.url,revision=revision,**LAUNCH_SCOPE)
         write_json(launchfile,launch);(FOLDER/'submission_pending.json').unlink();print(json.dumps(launch),flush=True);return
     launch=json.loads(launchfile.read_text());ref=launch['ref'].lstrip('/').removeprefix('code/')+'/'+str(launch['version'])
     if a.mode in ('status','supervise'):
