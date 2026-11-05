@@ -7,6 +7,7 @@ FOLDER=ROOT/'experiments/results/task41n_recovery_v1';DEST=ROOT/'artifacts/task4
 SLUG='alessandrobelli/giada-task41n-evaluation-only-recovery'
 DATASET='alessandrobelli/giada-task41n-evaluation-recovery-input'
 OUTPUT_PATTERN=r'(kaggle_receipt\.json|task41n_recovery_final\.zip|process\.log)$'
+LAUNCH_SCOPE=dict(training_updates_performed=0,selection_recomputed=False)
 def sha(path):
     with Path(path).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 
@@ -100,7 +101,7 @@ def main():
         revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
         write_json(FOLDER/'submission_pending.json',dict(revision=revision,submitted_at=time.time()))
         result=api.kernels_push(str(bundle(revision)),timeout='7200',acc='NvidiaTeslaT4');assert not result.error,result.error
-        launch=dict(ref=result.ref,version=result.version_number,url=result.url,revision=revision,training_updates_performed=0,selection_recomputed=False)
+        launch=dict(ref=result.ref,version=result.version_number,url=result.url,revision=revision,**LAUNCH_SCOPE)
         write_json(launchfile,launch);(FOLDER/'submission_pending.json').unlink();print(json.dumps(launch),flush=True);return
     launch=json.loads(launchfile.read_text());ref=launch['ref'].lstrip('/').removeprefix('code/')+'/'+str(launch['version'])
     if a.mode in ('status','supervise'):

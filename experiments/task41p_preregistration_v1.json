@@ -1,0 +1,70 @@
+{
+  "task": "41p",
+  "title": "Riparazione mirata delle code lente nelle teste esistenti",
+  "roadmap_relation": "Sottotask41, non42; riparazione esplorativa dopo la diagnosi41o",
+  "recovery_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63",
+  "arms": [
+    "baseline",
+    "equilibrium",
+    "joint_nap"
+  ],
+  "trainable": "Only existing parent.c/d equilibrium columns8,9,11,12,13 and parent.sc/sd SK equilibrium column0; joint_nap also existing parent.c/d update columns25,26. All trunks, corrections, donor and other heads frozen. Materialize into identical float32 state_dict; no wrapper at inference.",
+  "fit_seed": 9412101,
+  "minibatch_seed": 9412111,
+  "development_seeds": [
+    9412201,
+    9412213,
+    9412229
+  ],
+  "fit_points": 16384,
+  "batch_size": 512,
+  "learning_rate": 2e-05,
+  "gradient_clip": 1.0,
+  "checkpoints": [
+    1000,
+    4000,
+    12000
+  ],
+  "training_loss": "Paired coefficient equilibrium error scaled1e-4, Nap relative log-update error scaled.01 for joint only, plus .25 mean held-input occupancy error scaled1e-4 at1/8/40/100/500/1000ms. Training scales are not scientific acceptance tolerances. Same target endpoints and minibatches both arms; independent clipping and Adam moments per arm/seed.",
+  "selection": "Highest pass count on new development stress histories, tie earliest checkpoint. Report all budgets and case-level regressions. Freeze before opened41n re-evaluation. No claim of sealed independent confirmation.",
+  "success": "Opened stress pass count >61/72 with no newly failed previously passed stress rows; no new development failures vs frozen baseline; no acquired native autonomous trajectory/response or imposed regression. Same cost protocol at1/642/4096, no qualified speedup claim until all quality gates pass. Any original FP32 floor failure stays explicit.",
+  "stop": "Nonfinite, source SHA mismatch, zero-update materialization mismatch, optimizer/preflight failure or90minute worker budget: preserve partial logs/checkpoints; do not auto-retrain or change thresholds.",
+  "hypotheses": {
+    "equilibrium": "Updating only equilibrium readouts improves slow-tail timing without changing any other raw head.",
+    "joint_nap": "Nap_Et2 needs joint equilibrium/update repair; joint arm rescues residual cases beyond equilibrium-only.",
+    "budget": "Same trajectory checkpoints reveal optimization progress or plateau; no inference of unlimited scaling from one budget.",
+    "transfer": "Any stress improvement must preserve acquired imposed/autonomous cases; shared coupled dynamics can still regress despite frozen other heads."
+  },
+  "limits": [
+    "Opened41n panel used only after new-development checkpoint freeze; diagnostic reuse, not independent confirmation.",
+    "Teacher coefficients are offline training labels only. No oracle state, reset, coefficient lookup or teacher rate formula in candidate inference.",
+    "Frozen-feature readout calibration may be capacity-limited; failure is not evidence against the full abstraction level.",
+    "No added parameters or extra inference operations; no Task42 authorization; failed original FP32 controls218/234 remain failed."
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  }
+}
