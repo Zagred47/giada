@@ -9,6 +9,7 @@ launcher.FOLDER=ROOT/'experiments/results/task41r_protocol_v1';launcher.DEST=ROO
 launcher.SLUG='alessandrobelli/giada-task41r-direct-timing-factorial'
 launcher.OUTPUT_PATTERN=r'(kaggle_receipt\.json|task41r_final\.zip|process\.log)$'
 launcher.LAUNCH_SCOPE=dict(stochastic_training_updates=0,deterministic_weights_frozen=True,development_nomination=True,thresholds_changed=False)
+launcher.STATUS_LABEL='GIADA41r'
 original_notebook=launcher.notebook
 def notebook(revision,source_sha):
     value=original_notebook(revision,source_sha)

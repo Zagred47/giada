@@ -8,6 +8,7 @@ SLUG='alessandrobelli/giada-task41n-evaluation-only-recovery'
 DATASET='alessandrobelli/giada-task41n-evaluation-recovery-input'
 OUTPUT_PATTERN=r'(kaggle_receipt\.json|task41n_recovery_final\.zip|process\.log)$'
 LAUNCH_SCOPE=dict(training_updates_performed=0,selection_recomputed=False)
+STATUS_LABEL='41n recovery'
 def sha(path):
     with Path(path).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 
@@ -116,7 +117,7 @@ def main():
                 if a.mode=='status':raise
                 print('Read-only status retry '+type(error).__name__+'; run untouched',flush=True);time.sleep(30);continue
             write_json(FOLDER/'status.json',dict(status=name,observed_at=time.time(),launch=launch,failure_message=state.failure_message))
-            print('[41n recovery] '+name,flush=True)
+            print('['+STATUS_LABEL+'] '+name,flush=True)
             if a.mode=='status':return
             if any(word in name for word in ('complete','error','fail','cancel')):break
             time.sleep(30)
