@@ -4,6 +4,14 @@ import numpy as np
 from src.giada_teacher import task41n_evaluation_recovery as r
 ROOT=Path(__file__).resolve().parents[1]
 class RecoveryTests(unittest.TestCase):
+    def test_dispatch_notebook_has_explicit_python_kernel(self):
+        import sys
+        sys.path.insert(0,str(ROOT/'scripts'))
+        from task41n_recovery_kaggle import notebook
+        book=notebook('a'*40,'b'*64)
+        self.assertEqual(book['metadata']['kernelspec']['name'],'python3')
+        self.assertEqual(len({c['id'] for c in book['cells']}),len(book['cells']))
+        compile(''.join(book['cells'][1]['source']),'notebook','exec')
     def test_source_and_immutable_floor(self):
         with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as d:
             plan,spec,freeze,floors=r.verify_source(ROOT,ROOT/'artifacts/task41n_primary_external/recovery_final.zip',Path(d)/'source')

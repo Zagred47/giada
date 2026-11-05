@@ -44,7 +44,7 @@ finally:
  print('[GIADA41n recovery] final archive persisted '+digest,flush=True)
 assert code==0,'Evaluation recovery failed technically; preserve output and logs'
 '''%(revision,source_sha)
-    return dict(nbformat=4,nbformat_minor=5,metadata={},cells=[dict(cell_type='markdown',metadata={},source=['# GIADA41n — evaluation-only recovery\nNo training/selection/native regeneration. Original failed FP32 floors retained; no reinstated primary confirmation.']),dict(cell_type='code',execution_count=None,metadata={},outputs=[],source=code.splitlines(keepends=True))])
+    return dict(nbformat=4,nbformat_minor=5,metadata=dict(kernelspec=dict(name='python3',display_name='Python 3',language='python'),language_info=dict(name='python')),cells=[dict(cell_type='markdown',id='scope41n',metadata={},source=['# GIADA41n — evaluation-only recovery\nNo training/selection/native regeneration. Original failed FP32 floors retained; no reinstated primary confirmation.']),dict(cell_type='code',id='recovery41n',execution_count=None,metadata={},outputs=[],source=code.splitlines(keepends=True))])
 
 def bundle(revision):
     plan=json.loads((ROOT/'experiments/task41n_recovery_v1.json').read_text());folder=ROOT/'artifacts/task41n_recovery_notebook';folder.mkdir(exist_ok=True)
@@ -77,13 +77,23 @@ def publish(api):
             time.sleep(15)
 
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['publish','launch','status','supervise','retrieve']);a=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('mode',choices=['publish','launch','retry-notebook-format','status','supervise','retrieve']);a=ap.parse_args()
     from kaggle.api.kaggle_api_extended import KaggleApi
     api=KaggleApi();api.authenticate();FOLDER.mkdir(exist_ok=True);DEST.mkdir(exist_ok=True)
     if a.mode=='publish':publish(api);return
     launchfile=FOLDER/'kaggle_launch.json'
-    if a.mode=='launch':
-        assert not launchfile.exists() and not (FOLDER/'submission_pending.json').exists(),'Inspect existing/uncertain launch; never duplicate'
+    if a.mode in ('launch','retry-notebook-format'):
+        assert not (FOLDER/'submission_pending.json').exists(),'Inspect uncertain launch; never duplicate'
+        if a.mode=='retry-notebook-format':
+            old=json.loads(launchfile.read_text());assert old['version']==1
+            status=api.kernels_status(old['ref'].lstrip('/').removeprefix('code/')+'/1');assert 'error' in str(status.status).lower()
+            log=DEST/'giada-task41n-evaluation-only-recovery.log';text=log.read_text(encoding='utf-8')
+            assert 'No kernel name found in notebook' in text and not (DEST/'kaggle_receipt.json').exists()
+            preserved=DEST/'attempt1_notebook_metadata.log'
+            if not preserved.exists():shutil.copy2(log,preserved)
+            assert sha(preserved)==sha(log)
+            write_json(FOLDER/'technical_attempt_v1.json',dict(valid=True,launch=old,phase='provider_notebook_metadata_before_cells',cause='Papermill requires kernelspec.name; no worker/cell executed',log_local=preserved.relative_to(ROOT).as_posix(),log_sha256=sha(preserved),training_updates=0,selection_recomputed=False,source_unchanged=True))
+        else:assert not launchfile.exists(),'Inspect existing launch; never duplicate'
         memory=json.loads((FOLDER/'preregistration_receipt.json').read_text());assert memory['valid']
         assert json.loads((FOLDER/'input_verified.json').read_text())['valid']
         revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()

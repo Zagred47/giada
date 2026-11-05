@@ -9,7 +9,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--validate-only',action='store_true');ap.add_argument('--result',action='store_true');ap.add_argument('--running',action='store_true');a=ap.parse_args()
     repo=ROOT.parent;folder=repo/'experiments/results/task41n_recovery_v1';folder.mkdir(exist_ok=True)
     plan=json.loads((repo/'experiments/task41n_recovery_v1.json').read_text());m=ResultPreview() if a.validate_only else IncrementalBatchMirror();ids={}
-    previous=(folder/'launch_memory_receipt.json' if (folder/'launch_memory_receipt.json').exists() else folder/'preregistration_receipt.json') if a.result else (folder/'preregistration_receipt.json' if a.running else ROOT/'data/payload_migration_receipt.json')
+    previous=(folder/'launch_memory_receipt.json' if (folder/'launch_memory_receipt.json').exists() else folder/'preregistration_receipt.json') if a.result or a.running else ROOT/'data/payload_migration_receipt.json'
     baseline={} if a.validate_only else json.loads(previous.read_text(encoding='utf-8'))['verification']
     if not a.validate_only:assert m.baseline_hash==baseline['snapshot_hash']
     def put(table,suffix,**fields):
@@ -19,6 +19,7 @@ def main():
         if code in ids:return ids[code]
         rows=m.query("SELECT record_id FROM v_records WHERE stable_code='"+code+"'")['rows'];assert len(rows)==1,code;return rows[0]['record_id']
     if a.running:
+        if (folder/'technical_attempt_v1.json').exists():put('observations','technical-v1',Nome='Task41n Kaggle notebook-format failure before execution',Descrizione=(folder/'technical_attempt_v1.json').read_text())
         launch=json.loads((folder/'kaggle_launch.json').read_text());status=json.loads((folder/'status.json').read_text())
         put('observations','launch',Nome='Task41n recovery actual private Kaggle submission',Descrizione=json.dumps(dict(launch=launch,status=status,input=json.loads((folder/'input_verified.json').read_text()))))
         put('experiments','diagnostic',Stato='In corso')

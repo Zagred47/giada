@@ -1,16 +1,21 @@
 """Finite authorized lifecycle: launch once, monitor, register, back up and push."""
-import json,subprocess,sys,time,traceback
+import argparse,json,subprocess,sys,time,traceback
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from research_memory.mirror import write_json
 FOLDER=ROOT/'experiments/results/task41n_recovery_v1'
 def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--resume-format-fix',action='store_true');args=ap.parse_args()
     start=time.time()
     def status(state,**kw):write_json(FOLDER/'workflow.json',dict(state=state,elapsed_seconds=time.time()-start,**kw))
     def command(*args):subprocess.run([sys.executable,'-u',*args],cwd=ROOT,check=True)
     try:
         assert json.loads((FOLDER/'preregistration_receipt.json').read_text())['valid']
-        status('launching_once');command('scripts/task41n_recovery_kaggle.py','launch');command('scripts/task41n_recovery_kaggle.py','status')
+        if args.resume_format_fix:
+            assert json.loads((FOLDER/'kaggle_launch.json').read_text())['version']==2 and (FOLDER/'technical_attempt_v1.json').exists()
+            command('scripts/task41n_recovery_kaggle.py','status')
+        else:
+            status('launching_once');command('scripts/task41n_recovery_kaggle.py','launch');command('scripts/task41n_recovery_kaggle.py','status')
         status('recording_actual_launch');command('-m','research_memory.register_task41n_recovery','--running')
         status('monitoring_existing_evaluation');command('scripts/task41n_recovery_kaggle.py','supervise')
         status('registering_recovered_output');command('-m','research_memory.register_task41n_recovery','--result','--validate-only');command('-m','research_memory.register_task41n_recovery','--result')
