@@ -63,13 +63,15 @@ def publish(api):
         write_json(marker,dict(dataset=DATASET,source_sha256=plan['source_sha256'],private=True))
     for attempt in range(30):
         try:
-            api.dataset_download_file(DATASET,'source41n.zip.bin',path=str(readback),force=True,quiet=True,unzip=True)
+            api.dataset_download_file(DATASET,'source41n.zip.bin',path=str(readback),force=True,quiet=True)
             path=readback/'source41n.zip.bin'
             assert path.stat().st_size==plan['source_bytes'] and sha(path)==plan['source_sha256']
             write_json(FOLDER/'input_verified.json',dict(valid=True,dataset=DATASET,private=True,sha256=plan['source_sha256'],bytes=path.stat().st_size))
             for p in (folder/'source41n.zip.bin',path):
                 assert p.resolve().is_relative_to(ROOT/'artifacts') and p.name=='source41n.zip.bin';p.unlink(missing_ok=True)
             return
+        except TypeError:
+            raise RuntimeError('SDK signature mismatch; inspect API before retry') from None
         except Exception:
             if attempt==29:raise RuntimeError('Private input readback unavailable; no GPU launched, no automatic resubmission')
             time.sleep(15)
