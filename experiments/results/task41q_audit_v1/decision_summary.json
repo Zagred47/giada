@@ -1,0 +1,42 @@
+{
+  "task": "41q",
+  "valid": true,
+  "posthoc": true,
+  "objective_conflict": {
+    "baseline_mean_full_objective": 1.6336977874254266,
+    "adam12000_mean_full_objective": 1.113070855201064,
+    "fixed_rate_lower_bound": 1.0730594858562874,
+    "lower_bound_fraction_of_final_objective": 0.9640531695194292,
+    "K_Pst_activation_fraction_of_lower_bound": 0.9954236579236646,
+    "interpretation": "Most remaining41p loss cannot be removed by equilibrium heads while z stays frozen. Per-input optimum can bias equilibrium to compensate fixed-rate error; simply extending same training is not justified."
+  },
+  "same_feature_room": {
+    "diagnostic_ridge": 1e-06,
+    "all_ridges_reported": true,
+    "selection_performed": false,
+    "Im": {
+      "baseline_rmse": 0.00011495947190413938,
+      "adam4000_rmse": 1.7777849315312394e-05,
+      "direct_rmse": 8.410963373670048e-08
+    },
+    "SK_E2": {
+      "baseline_rmse": 9.339934449009267e-05,
+      "adam4000_rmse": 1.6273578803691477e-05,
+      "direct_rmse": 9.443734075262878e-07
+    },
+    "original_objective_direct_mean": 1.1060999796587458,
+    "interpretation": "Actual float32 materialized heads on independent anchors show substantial unused same-feature accuracy for Im/SK. This refutes a blanket capacity explanation for these coefficients only, not all channels or timing."
+  },
+  "recommended_next_step": "Do not expand architecture or extend the same Adam loss first. Evaluate saved direct-fit checkpoints diagnostically on GPU, and contrast fixed versus learnable K_Pst update/appropriately matched trajectory objective. Separate equilibrium accuracy from compensation of frozen z; protect old cases. No deployment or selection from41q.",
+  "limits": [
+    "No GPU or fresh full training allocated",
+    "Opened diagnostic panels do not constitute independent confirmation",
+    "Direct fits are diagnostic only, never silently selected",
+    "No thresholds, baseline weights or abstraction changed",
+    "Original FP32 failures218/234 remain explicit",
+    "A failed local linearized solve cannot prove representation impossibility",
+    "Coefficient RMSE is dimensionless, not voltage error or behavioral pass count.",
+    "CPU direct fits have not passed original GPU stress or coupled trajectory gates.",
+    "Fixed-rate lower bound is for chosen41p synthetic training objective, not a lower bound on achievable neuron accuracy."
+  ]
+}

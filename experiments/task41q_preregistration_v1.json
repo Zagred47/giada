@@ -1,0 +1,20 @@
+{
+  "task": "41q",
+  "plan_status": "Post-hoc forensic analysis plan, not prospective preregistration of an independent experiment; filename follows historical repository convention",
+  "scope": "Post-hoc CPU checkpoint audit and direct linearized readout fits; no new stochastic training, no selection or release",
+  "source41p_sha256": "7551fa0756bc314697a5e2a6b348009d8bc445db832edfbba455fd72444f7c6d",
+  "source41n_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63",
+  "checkpoints": [1000, 4000, 12000],
+  "validation_seed": 9413101,
+  "validation_points": 4096,
+  "direct_ridges_relative": [0.01, 0.0001, 0.000001],
+  "direct_fit": "One weighted linearized ridge least-squares solve in the SAME existing frozen feature space. A=features*sigmoid_derivative; rhs=teacher_probability-baseline_probability; lambda=relative_ridge*largest_singular_value. Fit on original41p training anchors only; report each ridge and both arm scopes on independent anchors. Materialize float32 weights; no new model chosen.",
+  "analyses": ["Reproduce original fit input bytes", "Compute full fixed training objective for baseline and every checkpoint, not sampled log minibatches", "Measure actual materialized coefficient errors on fit and independent anchors", "Measure surrogate versus materialized logit gap", "Compare coefficient/current errors at archived reference offset crossings and actual timing errors", "SVD effective ranks, parameter displacement and actual float32 direct-fit errors", "Post-hoc extension: analytic per-input lower bound for training objective with nontrainable update fractions fixed, distinguishing frozen-rate error from useful optimization progress"],
+  "hypotheses": {
+    "objective": "Lower original full training loss can coincide with worse crossing coefficients and archived timing, indicating objective/support mismatch.",
+    "optimizer": "A deterministic same-feature direct fit can improve held-out coefficient errors beyond Adam checkpoints, indicating unused room within tested heads (not proof that timing passes).",
+    "representation": "Failure of these local linearized fits is inconclusive about full architecture capacity; ill conditioning, quantization and nonlinear objective remain alternatives.",
+    "materialization": "Surrogate precision/rounding can separate training predictions from actual materialized network; quantify this gap rather than assuming equivalence."
+  },
+  "limits": ["No GPU or fresh full training allocated", "Opened diagnostic panels do not constitute independent confirmation", "Direct fits are diagnostic only, never silently selected", "No thresholds, baseline weights or abstraction changed", "Original FP32 failures218/234 remain explicit", "A failed local linearized solve cannot prove representation impossibility"]
+}
