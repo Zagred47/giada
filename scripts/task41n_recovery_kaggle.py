@@ -98,7 +98,12 @@ def main():
         else:assert not launchfile.exists(),'Inspect existing launch; never duplicate'
         memory=json.loads((FOLDER/'preregistration_receipt.json').read_text());assert memory['valid']
         assert json.loads((FOLDER/'input_verified.json').read_text())['valid']
-        revision=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+        revision=os.environ.get('GIADA_PINNED_REVISION') or subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+        if os.environ.get('GIADA_PINNED_REVISION'):
+            # Alternate GitHub API publication may have a different commit ID,
+            # but the complete committed tree must remain byte-identical.
+            tree=lambda rev:subprocess.check_output(['git','rev-parse',rev+'^{tree}'],cwd=ROOT,text=True).strip()
+            assert len(revision)==40 and tree(revision)==tree('HEAD'),'Pinned publication tree mismatch'
         write_json(FOLDER/'submission_pending.json',dict(revision=revision,submitted_at=time.time()))
         result=api.kernels_push(str(bundle(revision)),timeout='7200',acc='NvidiaTeslaT4');assert not result.error,result.error
         launch=dict(ref=result.ref,version=result.version_number,url=result.url,revision=revision,**LAUNCH_SCOPE)
