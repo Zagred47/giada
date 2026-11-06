@@ -1,0 +1,87 @@
+{
+  "task": "41s",
+  "selectable": ["incumbent", "crossing_single", "crossing_iterative", "window_single", "window_iterative", "window_iterative_coverage"],
+  "scope": "Prospective same-head nonlinear relinearization2x2: crossing/window objective x single/iterative controlled step; equal-budget coverage package and activation/inactivation probes. Frozen41r incumbent and regressing joint control.",
+  "ridge_relative": 0.000001,
+  "fit_path_seeds": [
+    9415101,
+    9415113,
+    9415127
+  ],
+  "development_seeds": [
+    9415201,
+    9415211,
+    9415229
+  ],
+  "arms": [
+    "baseline",
+    "incumbent",
+    "joint_control",
+    "probe_activation",
+    "probe_inactivation",
+    "crossing_single",
+    "crossing_iterative",
+    "window_single",
+    "window_iterative",
+    "window_iterative_coverage"
+  ],
+  "factorial": {
+    "objective": [
+      "crossing",
+      "relaxation_window"
+    ],
+    "solver": [
+      "single_unguarded",
+      "iterative_nonlinear_backtracking"
+    ]
+  },
+  "coefficient_objective": "Fixed coefficient/SVD geometry from16384 same anchors evaluated at incumbent. Displacement regularizer centered on incumbent, existing heads only. No repeated Adam training.",
+  "timing_objective": "New imposed training paths24, crossing +/-1tick vs windows +/-1,10,100ticks includingcenter; reference slopes times unchanged0.3ms normalize residuals. Exactly512 deterministically sampled residual rows/channel/seed in every arm; full causal recurrence/current Jacobian evaluated at current model. Four maximum accepted iterations; single uses1 unguarded step, iterative trials alpha1,.5,.25,.125 on actual nonlinear fit residual only. This algorithm factor combines relinearization and safeguard; trial history and prediction/actual gap distinguish mechanisms.",
+  "trainable_heads": "Only existing Nap_Et2 equilibrium/update heads8,9 and K_Pst equilibrium/update12,13. Im/SK_E2 and all trunks, donors, other heads preserved from frozen41r incumbent. No parameter/op count increase.",
+  "nomination": "New-development only, before opened41n. Candidate selectable only among central4+coverage and incumbent, with no new failed development cases vs incumbent and count>=incumbent. Highestcount then registered armorder; probes/joint_control diagnostic only. Old stress opened diagnostic, no sealed confirmation.",
+  "progress": "More than incumbent66/72 openedstress, no newly failed incumbent stress/development case, no acquired native/imposed regression. Retain originalFP32 floor218/234 and primary330/336 caveat. Report all arms and paired differences. NoTask42/speedupqualification.",
+  "stop": "Input, weights, source or GPU identity/parity failure; nonfinite; materialization/head isolation failure;90minute worker cap. Preserve partial output, no stochastic retraining or automatic resubmission.",
+  "hypotheses": {
+    "linearization": "One-shot Jacobian predicts improvement not realized nonlinearly; shorter/trust-controlled relinearized steps improve same-head behavior.",
+    "memory_identification": "Activation vs inactivation swaps isolate the regressing K_Pst direction; coefficient-equivalent corrections need not preserve recovery memory.",
+    "objective_support": "Relaxation-window residuals improve actual offset gates beyond isolated crossing rows at equal fit residual count.",
+    "coverage": "At matched maximum budget, broadened history/duration coverage improves unseen recovery and tails without new failed cases.",
+    "conditioning": "Shallow-tail crossing amplifies tiny residuals; report residual/slope-predicted displacement alongside unchanged exact timing metrics."
+  },
+  "limits": [
+    "Same abstraction, architecture,parameter count,step size and thresholds.",
+    "All labels offline only; no teacherat inference.",
+    "Opened41n stress is diagnostic, never selection/independentconfirmation.",
+    "Coverage is a combined duration/history intervention; solver combines relinearization/backtracking. Neither contrast alone isolates its subfactors.",
+    "No global representational sufficiency or optimality claim; original numerical floor remains.",
+    "Timing floor/slope probe is diagnostic; evaluator remains exactly unchanged."
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-7,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-7,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "recovery_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63",
+  "coverage": "One matched comparison window_iterative vs window_iterative_coverage. Same24 paths,512 residualrows/channel/seed,16384 geometryanchors,4iterationcap. Coverage package timewarps paths by.5/1/2 cyclically and replaces initial gate equilibria -95/-42 with-70/-35mV. Offline labels recomputed for quantized paths; inference unchanged. This tests combined duration/history coverage, not their separate effects. Report evaluations/candidates actually used, since backtracking may stop early."
+}
