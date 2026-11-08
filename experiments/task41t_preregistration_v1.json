@@ -1,0 +1,118 @@
+{
+  "task": "41t",
+  "local_preparation_disclosure": "Guarded K fits were prepared locally before preregistration: three of four final models were bit-identical to incumbent, while rate-only changed. Preserve their fit logs as local_guarded_K_pilot, not a prospective GPU result. The four prospective K arms use channel/seed-local fit improvement without the hard guard, to create actual identifying interventions. All Nap variants remain unchanged; no development or openedstress was accessed in this pilot.",
+  "preservation_policy": "Hard trainingguard only in Nap protected cells; guard<=incumbent*(1+1e-6)+1e-12 is a training acceptance tolerance, not a scientific gate change. K arms have no hardguard; their transfer/regressions are assessed on newdevelopment and unchanged openedstress. All main scientific thresholds unchanged.",
+  "rebase_control": "nap_rebased_only projects full existing Nap head weights onto reliable feature singular vectors, without trajectory fitting. This isolates legacy cancelling coefficients from the restricted-update conditioning package, which otherwise preserves legacy weights. Same tensor sizes, inference ops and FP32. Full FP64 dynamics probe is unavailable in legacy code; isolated final-reduction32vs64 probes are explicitly scoped and repeated on GPU.",
+  "selectable": [
+    "incumbent",
+    "k_equilibrium",
+    "k_rate",
+    "k_joint",
+    "k_activation",
+    "nap_original_free",
+    "nap_original_protected",
+    "nap_conditioned_free",
+    "nap_conditioned_protected",
+    "nap_conditioned_memory",
+    "nap_rebased_only",
+    "recomposed"
+  ],
+  "scope": "Separate same-head K_Pst identification and Nap numerical conditioning/protection; full recurrence numerical audit precedes fit; channel/seed-local acceptance; development-only recomposition.",
+  "ridge_relative": 0.000001,
+  "fit_path_seeds": [
+    9417101,
+    9417113,
+    9417127
+  ],
+  "development_seeds": [
+    9417201,
+    9417211,
+    9417229
+  ],
+  "arms": [
+    "baseline",
+    "incumbent",
+    "k_equilibrium",
+    "k_rate",
+    "k_joint",
+    "k_activation",
+    "nap_original_free",
+    "nap_original_protected",
+    "nap_conditioned_free",
+    "nap_conditioned_protected",
+    "nap_conditioned_memory",
+    "nap_rebased_only",
+    "recomposed"
+  ],
+  "factorial": {
+    "Nap_geometry": [
+      "original_probability_SVD_ridge1e-6",
+      "feature_SVD_truncated1e-3"
+    ],
+    "Nap_preservation": [
+      "off",
+      "on"
+    ],
+    "K_heads": [
+      "inactivation_equilibrium",
+      "inactivation_rate",
+      "inactivation_joint",
+      "activation_joint_control"
+    ]
+  },
+  "coefficient_objective": "Same16384 coefficient anchors; original probability-Jacobian SVD or truncated feature-SVD geometry. Truncation restricts training displacements only: exact same heads/shapes in FP32 inference. Conditioning is a geometric intervention package, not isolated rank alone.",
+  "timing_objective": "Same512 normalized training residual rows/channel/seed from41s window generator, new independent pathseeds; at most3iterations and alpha1,.5,.25,.125. Recompute causal Jacobian and exact materialized nonlinear residual. Accept independently for each channel/modelseed, never a sum across channels or seeds. Regularize displacement from41r incumbent. Fit/guard evaluation counts logged.",
+  "trainable_heads": "Existing K_Pst inactivation13 equilibrium and/or update, activation12 joint control; Nap8,9 equilibrium/update only. Each arm modifies only its declared channel. Im/SK/trunks/donor/otherheads remain bit-identical. No layer,state,parameter,inference-op or timestep change.",
+  "nomination": "Evaluate newdevelopment for all atomic arms first. For K and Nap separately choose best atom having no newly failed developmentcases vs incumbent and count>=incumbent, ties incumbent then registeredorder. Compose only channel-specific heads from these two choices, save source hashes, evaluate recomposed development. Freeze overallnominee on this same development before opened41n. No oracle routing, no choosing by openedstress.",
+  "progress": "More than incumbent66/72 openedstress, no newly failed incumbent stress/development case, no acquired native/imposed regression. Retain originalFP32 floor218/234 and primary330/336 caveat. Report all arms and paired differences. NoTask42/speedupqualification.",
+  "stop": "Stop on nonfinite, source/hash/GPU/parity/head-isolation failure or failed full-recurrence finite-difference audit; preserve logs. No automatic resubmit.90minute worker cap.",
+  "hypotheses": {
+    "numerical": "Large compensating Nap rate weights make materialized FP32 optimization unstable; restricted reliable feature directions improve full-GPU transfer without changing inference.",
+    "identification": "K inactivation equilibrium and speed compensations differ in history-dependent generalization; separate heads and activationcontrol distinguish them.",
+    "preservation": "Independent channel/seed acceptance plus fit-guard preservation prevents hidden tradeoffs and acquired regressions.",
+    "memory": "Matched-history protocols identify slow recovery better than ordinary initial equilibria at matched maximum budget.",
+    "derivative": "Full materialized recurrence directional finite differences support the Jacobian at resolvable perturbations; FP64 comparison is diagnostic only."
+  },
+  "limits": [
+    "All41n stress is opened diagnostic; selection only newdevelopment.",
+    "FP64 model is a numerical probe only, never selectable or used for main inference.",
+    "Truncated training subspace preserves inference architecture but can restrict expressivity of a repair; failure is not proof no solution exists.",
+    "Protection uses dedicated trainingguard residuals, not scientific threshold relaxation or openedstress labels.",
+    "Numerical audit finite directional checks are local, not a proof for every weight/input.",
+    "OriginalFP32floor218/234 remains explicit, noTask42/qualifiedspeedupauthorization.",
+    "Coverage tests history distribution; no claim that all rare regimes are covered."
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-7,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-7,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "recovery_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63",
+  "coverage": "Guard always has24 matched voltage/calcium paths with paired prehistories: equilibrium-85mV,100ms at-25mV, then10ms vs500ms recovery at-65mV. Inputs afterinitialization same withinpairs. nap_conditioned_memory uses those pairedhistories in fit; comparator nap_conditioned_protected uses ordinary fitinitials. Same24paths/512rows/channel/16384anchors/maximum3iterations, no openedstress access.",
+  "guard_path_seeds": [
+    9417151,
+    9417163,
+    9417179
+  ]
+}
