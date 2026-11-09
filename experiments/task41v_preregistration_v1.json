@@ -1,0 +1,124 @@
+{
+  "task": "41v",
+  "direct_curve_minibatches": "Common fixed-shuffled voltage anchor pool, minibatch_seed+1. Alternate FP32 forward batch widths24/48 to match ordinary/challenge evaluation widths rather than fitting only a giant GEMM shape. Cyclic24-anchor stride; identical curve minibatches in all direct arms. No additional inference input or operation.",
+  "scope": "Two targeted2x2 matrices: coefficient vs trajectory supervision x existing global heads vs existing local correction bank. K_u12 and joint Nap_u8/z9; isolated Nap controls; development-only recomposition and canonical GPU oracle replication.",
+  "arms": [
+    "baseline",
+    "incumbent",
+    "k_indirect_heads",
+    "k_indirect_local",
+    "k_direct_heads",
+    "k_direct_local",
+    "nap_indirect_heads",
+    "nap_indirect_local",
+    "nap_direct_heads",
+    "nap_direct_local",
+    "nap_u_direct_local",
+    "nap_z_direct_local",
+    "recomposed"
+  ],
+  "selectable": [
+    "incumbent",
+    "k_indirect_heads",
+    "k_indirect_local",
+    "k_direct_heads",
+    "k_direct_local",
+    "nap_indirect_heads",
+    "nap_indirect_local",
+    "nap_direct_heads",
+    "nap_direct_local",
+    "nap_u_direct_local",
+    "nap_z_direct_local",
+    "recomposed"
+  ],
+  "fit_path_seeds": [
+    9421101,
+    9421113,
+    9421127
+  ],
+  "development_seeds": [
+    9421201,
+    9421211,
+    9421229
+  ],
+  "minibatch_seed": 9421301,
+  "checkpoints": [
+    64,
+    256,
+    768
+  ],
+  "batch_paths": 4,
+  "learning_rate": 0.00001,
+  "gradient_clip": 1,
+  "compile_scan": false,
+  "factorial": {
+    "supervision": [
+      "indirect crossing current loss",
+      "direct raw logit coefficient loss"
+    ],
+    "representation": [
+      "existing output head columns",
+      "existing parent.correction columns"
+    ]
+  },
+  "trainable_heads": "K targets u12 only (c/d12 or correction2); Nap targets u8 and z9 jointly (c/d8,26 or correction0,5). Isolated local direct controls each Nap coefficient. All trunks, other heads, donor and other correction entries frozen exactly. Existing3x32x8correction bank only; no additional inference parameters or operations.",
+  "coefficient_objective": "Common Adam1e-5 with FP64 master parameters/moments, FP32 quantized model forward and gradients. Accumulate sub-ULP updates in masters, copy to original FP32 tensors each step; no altered inference arithmetic.3modelseeds vectorized, independent moments/clipping perseed. Same optimizer in all41uarms, not an exact reproduction of deterministic41t fitting. Checkpoints preserve masters, optimizer,RNG and minibatchorder.",
+  "timing_objective": "Indirect: original normalized current residual around crossings, restricted to target channel. Direct: exact offline teacher coefficient logits, MSE normalized1e-3, fixed2048before-dedup voltage anchors(-100..60 plus-70..-30), quantizedFP32 inputs; labels clamp1e-12 only to keep training targets finite, never scientific gates. Common AdamFP64masters/FP32forward, lr1e-5, independently clipped modelseeds,64/256/768checkpoints.",
+  "coverage": "Development includes24 ordinary plus24 predetermined challenge paths generated with separate seeds, fixed cyclicV shifts-2/0/+2mV; identical scientific metrics,144modelseedcases. No baseline-dependent mining or threshold change. Opened41n remains72cases diagnostic.",
+  "nomination": "All training before development. Only candidates with no newly failed full developmentcase are eligible. Perchannel lexicographic: highest fullcase passcount, then lower worst targetchannel normalized timing error, then earliestbudget/registeredorder. This new prospective tie-break does NOT retroactively promote41u. Compose disjoint K and Nap parameter entries from independently selected winners. Evaluate combineddevelopment before finalnomination and opened41n. Overall rank passcount then worst timing over K/Nap; exactties incumbentfirst.",
+  "causal_probes": "Posthoc41u CPUfactorial is motivation, not independentconfirmation. Replicate canonical GPUFP32 state update with teacher u12, u8, z9, Nap pair, combined and no-interventioncontrol. Six diagnostic wrappers nonselectable, no oracle in learned inference.",
+  "training_numerics": "Differentiable associative affine scan accumulates FP64 during training only; sigmoid logits remain FP32. Canonical sequential FP32 neural inference and original coupled solvers are unchanged. Local scan/gradient tests, GPU compile forward/backward parity or explicit eager fallback before optimization. Report surrogate scan discrepancy; no inference precision waiver.",
+  "backup": "All model and optimizer states exported at0/64/256/768. Atomic latest checkpoint ZIP/receipt in/kaggle/working; console attempts external readback while running when provider exposes outputs. Final persisted ZIP downloaded outside runtime and SHA/CRC verified. Do not claim an intermediate off-runtime backup unless readback verified. Kernel worker runs as subprocess; parent archives partial outputs even on Python/worker errors. DBbackup local only,last2verified.",
+  "progress": "More than incumbent66/72 openedstress, no newly failed incumbent stress/development case, no acquired native/imposed regression. Retain originalFP32 floor218/234 and primary330/336 caveat. Report all arms and paired differences. NoTask42/speedupqualification.",
+  "stop": "Stop on source/hash/GPU/parity/nonfinite/head-isolation failure. Preserve checkpoint0 and lastcompleted budgets. No automatic resubmit.90minute worker cap. NoTask42authorization.",
+  "hypotheses": {
+    "supervision": "Direct supervision learns the identified causal coefficient without unreachable multi-gate compensation objectives.",
+    "locality": "Existing local correction entries transfer better than global readout perturbations while preserving other outputs exactly.",
+    "Nap_pair": "Coordinated u8/z9 learning transfers where isolated repairs do not.",
+    "selection": "Target-specific timing tie-break detects repairs hidden by ceiling in development passcounts, with all hard gates unchanged.",
+    "oracle_replication": "Canonical GPU control and combined oracles reproduce the CPU-localized correction pattern; not a learned success."
+  },
+  "limits": [
+    "No changed abstraction, scientific thresholds, state,parameters or inference arithmetic.",
+    "Raw-logit supervision and training scales are not altered acceptance thresholds.",
+    "Local-bank bounded tanh may limit representability; record required teacher residual range before fitting.",
+    "New144case development counts cannot be numerically compared to old72case development counts.",
+    "Newselectiontie-break preregistered, not a retroactive release of older rejected candidates.",
+    "Opened41n not independentconfirmation; originalFP32floor218/234 retained; noTask42/qualifiedspeedupauthorization.",
+    "768updates is a bounded learnability test, not proof optimization exhausted.",
+    "GPU teacher wrappers diagnostic only, not selectable models."
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-7,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-7,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "recovery_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63",
+  "challenge_seeds": [
+    9421251,
+    9421261,
+    9421279
+  ],
+  "preservation_weight": 0
+}
