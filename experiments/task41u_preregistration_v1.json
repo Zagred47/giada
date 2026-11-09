@@ -1,0 +1,105 @@
+{
+  "task": "41u",
+  "scope": "Same-architecture 2x2 learnability: mean crossing-window surrogate vs full-timeline worst-case signed threshold margin, heads vs heads+existing shared voltage trunk. Matched coverage arm and nonselectable causal probes.",
+  "arms": [
+    "baseline",
+    "incumbent",
+    "mean_heads",
+    "mean_features",
+    "margin_heads",
+    "margin_features",
+    "margin_features_coverage"
+  ],
+  "selectable": [
+    "incumbent",
+    "mean_heads",
+    "mean_features",
+    "margin_heads",
+    "margin_features_coverage"
+  ],
+  "fit_path_seeds": [
+    9419101,
+    9419113,
+    9419127
+  ],
+  "development_seeds": [
+    9419201,
+    9419211,
+    9419229
+  ],
+  "minibatch_seed": 9419251,
+  "checkpoints": [
+    64,
+    256,
+    768
+  ],
+  "batch_paths": 4,
+  "learning_rate": 0.00001,
+  "gradient_clip": 1,
+  "preservation_weight": 0.1,
+  "compile_scan": true,
+  "factorial": {
+    "objective": [
+      "mean normalized current residual around reference crossings",
+      "maximum signed active/inactive margin violation over full timeline and minibatch cases +.001mean residual"
+    ],
+    "adaptable": [
+      "existing target output columns only",
+      "same columns plus existing parent.a/b shared voltage features"
+    ]
+  },
+  "trainable_heads": "Only parent.c/d columns8,9,12,13,25,26,29,30; gradient masks preserve all other c/d columns exactly. Feature arms also train existing parent.a/b, with decoded-coefficient distillation of all other gates on256 fixed voltage/calcium anchors. No new parameter,state,layer,inferenceop,timestep or teacheratinference.",
+  "coefficient_objective": "Common Adam1e-5 with FP64 master parameters/moments, FP32 quantized model forward and gradients. Accumulate sub-ULP updates in masters, copy to original FP32 tensors each step; no altered inference arithmetic.3modelseeds vectorized, independent moments/clipping perseed. Same optimizer in all41uarms, not an exact reproduction of deterministic41t fitting. Checkpoints preserve masters, optimizer,RNG and minibatchorder.",
+  "timing_objective": "Mean family: normalized current errors at onset/offset +/-1,10,100ticks. Margin family: signed distance to the original reference baseline+10%amplitude threshold across the full timeline; max temporal/case/channel violation (train margin .01 normalized units) plus.001mean residual. Reference event eligibility unchanged. These are training losses; scientific0.3ms timing and all other gates unchanged.",
+  "coverage": "Same24paths,4perminibatch and768maximumupdates. Extra margin_features_coverage arm uses balanced restV(-65,-50,-40,-35), plateau10/50/200ms at-30/-20/-10mV, paired initialhistories100msat-25 then10/500msrecoveryat-65. Two histories share the same futureV/Ca. This is a coverage package, not separate identification of each subfactor.",
+  "nomination": "Finish all768updates of all5arms before ANY development evaluation. Evaluate saved64/256/768 checkpoints plus incumbent budget0 on newdevelopment; perarm choose highest count among checkpoints with no new developmentfailure, earliest budget tie. Overall choose no-new-failure highest count, incumbent/registeredorder ties. Freeze before opened41n/native evaluation. Report all checkpoints and fallback0 honestly. No optimizer feedback from development.",
+  "causal_probes": "Nonselectable teacher equilibrium or update substitutions separately for gates8,9,12,13, and single target-state realignment at100/600/900ms. Paired offline FP64 recurrence control required; other gates archived GPU. Interpret relative to pairedcontrol, not bitwise GPU qualification. No learned candidate receives teacher inputs.",
+  "training_numerics": "Differentiable associative affine scan accumulates FP64 during training only; sigmoid logits remain FP32. Canonical sequential FP32 neural inference and original coupled solvers are unchanged. Local scan/gradient tests, GPU compile forward/backward parity or explicit eager fallback before optimization. Report surrogate scan discrepancy; no inference precision waiver.",
+  "backup": "All model and optimizer states exported at0/64/256/768. Atomic latest checkpoint ZIP/receipt in/kaggle/working; console attempts external readback while running when provider exposes outputs. Final persisted ZIP downloaded outside runtime and SHA/CRC verified. Do not claim an intermediate off-runtime backup unless readback verified. Kernel worker runs as subprocess; parent archives partial outputs even on Python/worker errors. DBbackup local only,last2verified.",
+  "progress": "More than incumbent66/72 openedstress, no newly failed incumbent stress/development case, no acquired native/imposed regression. Retain originalFP32 floor218/234 and primary330/336 caveat. Report all arms and paired differences. NoTask42/speedupqualification.",
+  "stop": "Stop on source/hash/GPU/parity/nonfinite/head-isolation failure. Preserve checkpoint0 and lastcompleted budgets. No automatic resubmit.90minute worker cap. NoTask42authorization.",
+  "hypotheses": {
+    "objective": "Case-average crossing surrogates miss worst-case temporal margins; full-timeline objective improves unchanged timing gates.",
+    "features": "Frozen features, not architecture abstraction, restrict transferable repairs; existing trunk adaptation helps at matched data/budget.",
+    "interaction": "Feature adaptation may only help when paired with behavior-aligned objective; report all2x2contrasts,notonlywinner.",
+    "coverage": "Matched-history balanced regimes improve slow-tail generalization beyond ordinary training distribution.",
+    "accumulation": "Gate-specific oracles and phase resets localize equilibrium/rate/history errors; diagnostic only,not selectable."
+  },
+  "limits": [
+    "Same scientific gates and abstraction, no additional inference parameters.",
+    "Other-gate distillation is a training regularizer, not proof of preserved behavior; full acquired native/imposed/autonomous checks remain required.",
+    "Training associative scan differs in precision/association from canonical inference; report preflight discrepancy.",
+    "768updates is a bounded mini scaling law, not proof optimizer/capacity exhausted.",
+    "All opened41n stress/native data is diagnostic, never selection or independentconfirmation.",
+    "OriginalFP32floor218/234 retained; primary330/336 caveat remains.",
+    "Probe teacher oracles andFP64recurrences are nondeployable and nonselectable.",
+    "Coverage bundles several changes; no isolatedsubfactorclaim."
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-7,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-7,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "recovery_sha256": "6d2557b43a3026b35a6976a26b8ee33f1008ba6d61a57772a7d17e9f3f363a63"
+}
