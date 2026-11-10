@@ -1497,6 +1497,18 @@ si influenzano tramite il solver assiale classico?
   sito, un gruppo di canali e poi tutti; confrontare accoppiamento nullo,
   debole e forte. Misurare correnti locali, V/Ca e propagazione; un batch
   disconnesso è solo il controllo negativo dell'accoppiamento.
+  **10 novembre2026 — esecuzione esplorativa autorizzata:**43 completa con
+  180/180 casi imposti e autonomi per ordine,60/60 controlli di permutazione;
+  tutti i pesi finiti e41r invariata. Nessuna sanatoria dei sei fallimenti41.
+  [Protocollo44](task44_preregistration_v1.json) e
+  [notebook unico](../notebooks/giada_task44_composition_localization.ipynb):
+  otto maschere (nessuna, sito prossimale, distale, Ca, Na, K, Ih, tutti),
+  imposta/autonoma, accoppiamenti0/.25/1 su catene4/8 e biforcazione5;
+  due protocolli200ms appaiati. Bracci vettorizzati, preflight bitwise contro
+  i core precedenti, nessuna selezione/training o soglia modificata.
+  Le maschere ibride sono controlli causali, non candidati meno astratti.
+  I protocolli sono già aperti nella43: questa è una diagnosi causale,
+  non una nuova conferma indipendente.
 - **Task 45 — Copertura multicompartmentale controllata** → Se necessario,
   refit con path locali prodotti da sistemi accoppiati, stessa architettura
   e stessa rappresentazione del livello 1. Confronto appaiato con frozen,
