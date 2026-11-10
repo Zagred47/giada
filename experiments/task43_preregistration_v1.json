@@ -1,0 +1,420 @@
+{
+  "task": "43",
+  "version": "v1",
+  "exploratory": true,
+  "freeze": {
+    "format": "giada-exploratory-transition-v1",
+    "date": "2026-11-10",
+    "candidate": "41r/timing_frozen_k",
+    "logical_weights_sha256": "a8c8240648022024faa4aac66a5f4d0adba6952cea647cc6494594c6e5ca08e6",
+    "baseline_weights_sha256": "d5b7a92d2d0fe350c79e97879003570afefc8eb4b45026e148ef5c4a338d0cd0",
+    "heads_path": "experiments/results/task41r_protocol_v1/heads_timing_frozen_k.npz",
+    "heads_file_sha256": "426bd95fb229d3c0c877a5663bde0449fa7d9b5edd64e8d9bd29e7b73ccb45a8",
+    "full_state_archive": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41v_kaggle_external\\task41v_final.zip",
+    "full_state_archive_sha256": "2dfeb62292db5fa60f7748e8e812145289169b5bbc7b23cb70d00e9c85baba3e",
+    "full_state_member": "frozen_incumbent.pt",
+    "full_state_member_sha256": "39497ead2480f477f1e3581762a91a7406a9324109f1a93d43e1137f88871284",
+    "source_revision": "6734cc2137f6ba3235956876cb07e7019a544bb7",
+    "stress": {
+      "passed": 66,
+      "total": 72,
+      "failed": [
+        [
+          17,
+          "doublepulse_recovery",
+          9410173,
+          1,
+          "low_mixed"
+        ],
+        [
+          17,
+          "near_threshold_staircase",
+          9410143,
+          1,
+          "calcium_mix"
+        ],
+        [
+          29,
+          "calcium_swing",
+          9410173,
+          0,
+          "mixed_diagonal"
+        ],
+        [
+          43,
+          "doublepulse_recovery",
+          9410173,
+          1,
+          "low_mixed"
+        ],
+        [
+          43,
+          "calcium_swing",
+          9410173,
+          0,
+          "mixed_diagonal"
+        ],
+        [
+          43,
+          "near_threshold_staircase",
+          9410143,
+          1,
+          "calcium_mix"
+        ]
+      ]
+    },
+    "native": {
+      "autonomous/primary": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 330,
+        "responses_total": 336,
+        "failed_responses": [
+          {
+            "case": 106,
+            "seed": 17
+          },
+          {
+            "case": 122,
+            "seed": 17
+          },
+          {
+            "case": 106,
+            "seed": 29
+          },
+          {
+            "case": 122,
+            "seed": 29
+          },
+          {
+            "case": 106,
+            "seed": 43
+          },
+          {
+            "case": 122,
+            "seed": 43
+          }
+        ],
+        "passed": false
+      },
+      "autonomous/voltage_solve64": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      },
+      "imposed/primary": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      },
+      "imposed/voltage_solve64": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      }
+    },
+    "known_offset_failures_ms": {
+      "K_Pst": [
+        0.7,
+        1.1,
+        4.4,
+        4.5
+      ],
+      "Nap_Et2": [
+        0.8,
+        1.8
+      ]
+    },
+    "offset_threshold_ms": 0.3,
+    "original_fp32_failed_checks": [
+      218,
+      234
+    ],
+    "task41_original_gate_passed": false,
+    "task42_exploratory_authorized": true,
+    "task42_qualified_release": false,
+    "thresholds_changed": false,
+    "abstraction_changed": false,
+    "task42_launched": false,
+    "future_tasks_automatically_authorized": false,
+    "decision": "Stop serial41 repairs; advance under explicit accepted limitations, not retroactive qualification.",
+    "conditions": [
+      "Keep teacher/formula and frozen41r controls paired.",
+      "Validate passive/axial reference floors, units and balances before interpreting active transfer.",
+      "Separate inherited local failures, new failures and coupling amplification by case identity.",
+      "No privileged teacher corrections online, hidden refit, new solver or abstraction change.",
+      "Keep original quality gates and full failure reporting; no aggregate cancellation of regressions.",
+      "No general ELM superiority, teacher equivalence or integrated speedup claim.",
+      "Reopen41 repairs only for a concrete downstream blocker or genuinely new discriminating hypothesis."
+    ],
+    "speed_scope": "Historical~8x isolated resident ionic core; current integrated benchmark not a qualified speedup.",
+    "roadmap": "experiments/giada_modular_surrogate_roadmap.md"
+  },
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "dt_ms": 0.1,
+  "duration_ms": 200.0,
+  "coupling": [
+    0.0,
+    0.25,
+    1.0
+  ],
+  "protocols": [
+    "recovery",
+    "staircase",
+    "alternating",
+    "relaxation"
+  ],
+  "geometries": [
+    {
+      "id": "chain2",
+      "parents": [
+        -1,
+        0
+      ],
+      "lengths_um": [
+        100.0,
+        110.0
+      ],
+      "diameters_um": [
+        1.2,
+        1.0999999999999999
+      ],
+      "ra_ohm_cm": 130.0
+    },
+    {
+      "id": "chain4",
+      "parents": [
+        -1,
+        0,
+        1,
+        2
+      ],
+      "lengths_um": [
+        100.0,
+        110.0,
+        120.0,
+        100.0
+      ],
+      "diameters_um": [
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2
+      ],
+      "ra_ohm_cm": 130.0
+    },
+    {
+      "id": "chain8",
+      "parents": [
+        -1,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "lengths_um": [
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0
+      ],
+      "diameters_um": [
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999
+      ],
+      "ra_ohm_cm": 130.0
+    },
+    {
+      "id": "chain16",
+      "parents": [
+        -1,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "lengths_um": [
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0,
+        120.0,
+        100.0
+      ],
+      "diameters_um": [
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2
+      ],
+      "ra_ohm_cm": 130.0
+    },
+    {
+      "id": "bifurcation5",
+      "parents": [
+        -1,
+        0,
+        0,
+        1,
+        1
+      ],
+      "lengths_um": [
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0
+      ],
+      "diameters_um": [
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999
+      ],
+      "ra_ohm_cm": 130.0
+    }
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "passive_gates": {
+    "max_single_native_discrete_error_mv": 1e-07,
+    "max_single_fine_endpoint_error_mv": 0.01,
+    "max_paired_native_discrete_error_mv": 1e-06,
+    "max_capacitive_balance_error_na": 1e-10,
+    "max_axial_antisymmetry_error_na": 1e-12,
+    "max_native_axial_ohm_error_na": 1e-10,
+    "max_disconnected_cross_effect_mv": 1e-08,
+    "max_symmetric_voltage_difference_mv": 1e-08,
+    "max_equilibrium_residual_na": 1e-10,
+    "max_convergence_fine_endpoint_error_mv": 0.003
+  },
+  "training_updates": 0,
+  "selection_performed": false,
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "contrasts": [
+    "Matched canonical versus permuted physical node order; invert permutation before scoring.",
+    "Channel-specific .75/1/1.25 conductance heterogeneity and site-specific conditioning history.",
+    "Frozen41r imposed versus autonomous, each against its own canonical formula and native floor.",
+    "Disconnected versus weak versus nominal axial coupling on identical local stimulus streams."
+  ],
+  "execution": "Native and GPU subprocesses isolated. Three frozen model seeds and all12 cases vectorized per topology; two node-order controls sequential on same GPU to preserve matched comparisons. No training or selection; CUDA graph/eager path inherited from42 with explicit fallback and no speedup claim.",
+  "evaluation": "Original per-site quality and compartment/native floor gates. Report event support per channel. Permutation error audited separately using existing numerical tolerances; not a replacement for quality gates.",
+  "hypotheses": {
+    "indexing": "Frozen local operator is equivariant to node reindexing with geometry, forcing and parameters permuted together.",
+    "transfer": "Heterogeneous channels and conditioned local states transfer without retraining.",
+    "feedback": "Longer200ms challenges distinguish local imposed error from autonomous accumulation and coupling amplification."
+  },
+  "backup": "Persist native files after each topology, progress JSON and all frozen outputs. Notebook parent archives partial outputs on worker failure. Kaggle persisted ZIP recovered locally and SHA/CRC verified. DB complete backup local only. No intermediate backup claim without external readback.",
+  "limits": [
+    "Task41 remains NO-GO on original gates; known six timing errors not repaired here.",
+    "Small current-clamp systems, no synapses/RNG, no full Hay morphology or independent model qualification.",
+    "No training, checkpoint/architecture selection, teacher reset in autonomous mode, new abstraction or threshold waiver.",
+    "Native floor failure is a reference/semantics issue, not a learned-model NO-GO.",
+    "Dense classical axial solve reference is not a custom accelerated kernel; measured wall times descriptive only.",
+    "Task43 is exploratory accepted-limits transfer; no automatic44 qualification.",
+    "200ms is not the full10s tail suite; historical six41 timing failures remain unresolved.",
+    "Timing support is reported per channel, never count not_evaluable as timing success."
+  ],
+  "node_orders": [
+    "canonical",
+    "seeded_permutation_43000_plus_node_count"
+  ]
+}

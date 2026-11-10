@@ -1484,6 +1484,15 @@ si influenzano tramite il solver assiale classico?
   Nel ramo esplorativo il riferimento preciso è41r `timing_frozen_k`, non
   un inesistente vincitore promosso di41v. Una conclusione qualificata resta
   subordinata ai criteri originali; l'autorizzazione specifica segue l'audit42.
+  **10 novembre2026 — autorizzazione esplorativa esplicita:** audit42 con
+  180/180 casi per ciascun modo imposto/autonomo entro le soglie, ma solo
+  660/13860 timing valutabili e nessuno per K_Pst; i sei fallimenti41 restano.
+  La43 applica [protocollo preregistrato](task43_preregistration_v1.json) e
+  [notebook unico](../notebooks/giada_task43_frozen_transfer.ipynb): storie locali
+  distinte, eterogeneità per canale .75/1/1.25, quattro protocolli200ms,
+  accoppiamenti0/.25/1, catene2/4/8/16 e biforcazione5, ordine canonico/permutato.
+  41r, soglie e astrazione invariati; nessun training/selezione. Copertura
+  eventi e costi eager/graph espliciti; nessuna accelerazione integrata presunta.
 - **Task 44 — Localizzazione dell'errore di composizione** → Sostituire un
   sito, un gruppo di canali e poi tutti; confrontare accoppiamento nullo,
   debole e forte. Misurare correnti locali, V/Ca e propagazione; un batch
