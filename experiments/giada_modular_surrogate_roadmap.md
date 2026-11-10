@@ -1,5 +1,30 @@
 # 🧭 GIADA — Roadmap modulare per surrogate biofisici
 
+> **Stato operativo — 10 novembre 2026:** si congela il candidato **41r
+> `timing_frozen_k`** e si apre la **Task 42 come ramo esplorativo**.
+> È un emendamento esplicito alla dipendenza tra blocchi, **non** il
+> superamento della Task41: soglie, metriche e risultati originali restano
+> invariati. Le indicazioni storiche «Task42 bloccata/non autorizzata» più
+> sotto descrivono le decisioni precedenti, superate solo quanto al permesso
+> di esplorare, non quanto alla qualificazione scientifica.
+>
+> **Limiti accettati, non risolti:** stress66/72, sei errori di offset
+> (K_Pst:0,7/1,1/4,4/4,5ms; Nap_Et2:0,8/1,8ms; soglia0,3ms).
+> Traiettorie528/528 e risposte336/336 nel riferimento numerico allineato;
+> riferimento primarioFP32 ancora330/336 e controlli218/234 falliti espliciti.
+> Nessuna equivalenza completa al teacher, superiorità generale su ELM o
+> accelerazione integrata qualificata. Il circa8× storico riguarda il core
+> ionico isolato residente, non il compartimento completo corrente.
+>
+> **Regola del ramo42:** mantenere formule/teacher e41r congelata come
+> controlli appaiati; misurare errori ereditati e nuovi/amplificati separatamente.
+> Nessuna correzione teacher online o riaddestramento nascosto. Il floor del
+> riferimento e la sicurezza numerica delle nuove geometrie restano prerequisiti.
+> Il permesso di esplorare non promuove automaticamente Task43–47, il livello1
+> o i livelli successivi. Nessun run è avviato da questo aggiornamento.
+>
+> [Decisione e identità del candidato](task42_exploratory_transition_v1.json).
+
 > **Direzione corrente — 17 ottobre 2026:** aumentare gradualmente
 > l'astrazione del **solo blocco ionico**, dai gate alle correnti, cercando
 > fedeltà causale e accelerazione misurata. Sei nuovi blocchi, **Task 36–71**,
@@ -1401,6 +1426,14 @@ Operatore e interfaccia congelati, errore attribuibile e costo misurato.
 La ricorrenza deve funzionare senza correzioni del teacher; occupazioni
 limitate non sono da sole una dimostrazione di stabilità del compartimento.
 
+**Esito al10 novembre2026:** uscita qualificata **non superata**. Le sottotask
+41…41v non hanno eliminato tutti gli stress mantenendo i risultati acquisiti.
+Per decisione dell'utente si interrompe il ciclo di riparazioni e si prosegue
+con41r come approssimazione sperimentale congelata. Questa deroga riguarda
+il percorso di ricerca, non abbassa o sostituisce alcuna soglia di accettazione.
+Le riparazioni vengono riaperte se un limite blocca concretamente il seguito
+o emerge un'ipotesi discriminante nuova, non come prerequisito seriale infinito.
+
 ## 🌿 Blocco 2 — Livello 1 in più compartimenti
 
 **Domanda:** il guadagno locale e la fedeltà si conservano quando i voltaggi
@@ -1411,10 +1444,29 @@ si influenzano tramite il solver assiale classico?
   attivi 2/4/8/16 compartimenti e una biforcazione piccola, con floor nativo,
   unità e bilanci verificati. Queste geometrie restano il pannello comune
   dei blocchi 4 e 6; la loro ampiezza finale si preregistra prima dei run.
+  **Autorizzata come ramo esplorativo il10 novembre2026**, con41r congelata e
+  limiti del blocco1 riportati sopra. Prima verifica dei riferimenti e dei
+  bilanci; nessuna assunzione che il modulo ionico abbia superato41.
+  Distinguere i fallimenti locali già presenti dalle divergenze introdotte
+  dall'accoppiamento. Soglie invariate; protocollo/run ancora da preparare.
+  **Preregistrazione42-v1 preparata:**
+  [protocollo](task42_preregistration_v1.json),
+  [notebook unico](../notebooks/giada_task42_exploratory_axial_port.ipynb).
+  Catene2/4/8/16 e biforcazione5 × coupling0/0,25/1 × quattro protocolli:
+  60 sistemi attivi appaiati,40ms,tre seed congelati. Floor passivo nativo
+  su tutte le geometrie, riferimento attivo NEURON e confronto formula/41r
+  imposto/autonomo. Nessun training/selezione, sinapsi escluse esplicitamente.
+  Un floor nativo fallito sospende il giudizio sul candidato nel caso
+  interessato, non cambia le soglie e non viene contato come fallimento appreso.
+  Il lancio effettivo è attestato solo dalla ricevuta console
+  `results/task42_protocol_v1/kaggle_launch.json`; nessuna promozione43 implicita.
 - **Task 43 — Trasferimento congelato del livello 1** → Applicare i pesi
   della Task41 con stati locali distinti, parametri eterogenei e ordine dei
   nodi permutato. Prima path imposti, poi feedback assiale; nessun retraining
   nascosto nel risultato di trasferimento.
+  Nel ramo esplorativo il riferimento preciso è41r `timing_frozen_k`, non
+  un inesistente vincitore promosso di41v. Una conclusione qualificata resta
+  subordinata ai criteri originali; l'autorizzazione specifica segue l'audit42.
 - **Task 44 — Localizzazione dell'errore di composizione** → Sostituire un
   sito, un gruppo di canali e poi tutti; confrontare accoppiamento nullo,
   debole e forte. Misurare correnti locali, V/Ca e propagazione; un batch
@@ -1815,7 +1867,11 @@ questo schema sono livelli descrittivi, non identificativi delle Task.
 
 ---
 
-# 🥇 Stato corrente — Task 40 verificata; NO-GO causale, proposta Task 40b
+# 📜 Stato storico — Task 40 verificata; NO-GO causale, proposta Task 40b
+
+Questa sezione conserva la cronologia. Lo stato operativo attuale è
+l'emendamento del10 novembre2026 in apertura:41r congelata,41 non superata,
+Task42 esplorativa autorizzata senza cambiamenti delle soglie.
 
 **Audit 39j (20 ottobre 2026):** J1–J7 superano 72/72 casi development, contro 66/72
 di I3 congelato. J1 arriva a 70/72 stress contro 62/72; J4 arriva a 69/72.
