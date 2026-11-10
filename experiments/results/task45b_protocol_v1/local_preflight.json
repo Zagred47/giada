@@ -1,0 +1,47 @@
+{
+  "valid": true,
+  "tests": [
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_task45b",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "[GIADA45b] original45/chain4/imposed9 paired arms saved\n[GIADA45b] original45/chain4/autonomous9 paired arms saved\n[GIADA45b] paired fit checkpoint 2 finite\n[GIADA45b] paired fit checkpoint 4 finite\n",
+      "stderr": "test_calibration_only_teacher_and_safe_side (tests.test_task45b.RateCoverage.test_calibration_only_teacher_and_safe_side) ... ok\ntest_design_context_and_all_masks (tests.test_task45b.RateCoverage.test_design_context_and_all_masks) ... ok\ntest_full_short_pipeline_preserves_all_arms (tests.test_task45b.RateCoverage.test_full_short_pipeline_preserves_all_arms) ... ok\ntest_inputs_and_no_threshold_change (tests.test_task45b.RateCoverage.test_inputs_and_no_threshold_change) ... ok\ntest_notebook_compiles_and_has_real_worker (tests.test_task45b.RateCoverage.test_notebook_compiles_and_has_real_worker) ... ok\ntest_short_training_and_path_oracles (tests.test_task45b.RateCoverage.test_short_training_and_path_oracles) ... ok\ntest_three_head_materialization_and_adapter (tests.test_task45b.RateCoverage.test_three_head_materialization_and_adapter) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 18.649s\n\nOK\n"
+    },
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_task45",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "[GIADA45] chain4/imposed full horizon and prefixes complete\n[GIADA45] chain4/autonomous full horizon and prefixes complete\n[GIADA45] complete\n",
+      "stderr": "test_context_and_frozen_endpoint (tests.test_task45.Coverage.test_context_and_frozen_endpoint) ... ok\ntest_contract_design_and_geometry (tests.test_task45.Coverage.test_contract_design_and_geometry) ... ok\ntest_crop_and_refit_decision (tests.test_task45.Coverage.test_crop_and_refit_decision) ... ok\ntest_notebook (tests.test_task45.Coverage.test_notebook) ... ok\ntest_short_full_evaluation_with_prefixes (tests.test_task45.Coverage.test_short_full_evaluation_with_prefixes) ... ok\ntest_supervisor_only_retrieves_existing_finished_run (tests.test_task45.Coverage.test_supervisor_only_retrieves_existing_finished_run) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 15.884s\n\nOK\n"
+    },
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_task44",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "[GIADA44] chain4/imposed all8 paired arms complete\n[GIADA44] chain4/autonomous all8 paired arms complete\n",
+      "stderr": "test_evaluate_short_integration (tests.test_task44.Localization.test_evaluate_short_integration) ... ok\ntest_legacy_endpoint_bitwise_parity (tests.test_task44.Localization.test_legacy_endpoint_bitwise_parity) ... ok\ntest_masks_and_contract (tests.test_task44.Localization.test_masks_and_contract) ... ok\ntest_notebook_and_worker (tests.test_task44.Localization.test_notebook_and_worker) ... ok\ntest_score_and_paired_contrasts (tests.test_task44.Localization.test_score_and_paired_contrasts) ... ok\ntest_spatial_state_isolation_and_rollout (tests.test_task44.Localization.test_spatial_state_isolation_and_rollout) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 13.740s\n\nOK\n"
+    }
+  ],
+  "elapsed_seconds": 54.525277853012085,
+  "scope": "Local CPU functional tests with verified immutable learned source; native-phase interface/calibration mocked, not a Linux NEURON/GPU qualification. Runtime must pass pinned GPU and native floors separately.",
+  "thresholds_changed": false,
+  "source_sha256": {
+    "src/giada_teacher/task45b_rate_coverage.py": "692ca685b03f1d9930f34b6f3aaf11350ec7d3dfac9bfef96ccdaeb3d1b8218c",
+    "scripts/run_task45b.py": "ed16943d7e8ee68bc1ba254bef3c879fc908ada97a0d6e2a44167b2997bf0032",
+    "scripts/task45b_kaggle.py": "225fb849346258a0a090b171a5b6005d2ae3a6bfd754ef806c4d16c2156745e4",
+    "experiments/task45b_preregistration_v1.json": "bbbd29d02967d6450806f481273a02a6c06ed6354a1258358a1168ec30f710ff"
+  }
+}

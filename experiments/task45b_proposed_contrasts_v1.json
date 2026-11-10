@@ -1,0 +1,258 @@
+{
+  "task": "45b",
+  "status": "PROPOSED_NOT_LAUNCHED",
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "frozen_reference_sha256": "a8c8240648022024faa4aac66a5f4d0adba6952cea647cc6494594c6e5ca08e6",
+  "execution_authorized": false,
+  "training_authorized": false,
+  "original45_preserved": true,
+  "original41_gate_passed": false,
+  "independent47_accessed": false,
+  "evidence": {
+    "Nap_h": {
+      "channel": "Nap_Et2",
+      "gate": "h",
+      "seed": 29,
+      "voltage_mv": -106.0,
+      "reference_inf": 0.9967310104383614,
+      "learned_inf": 0.9968221187591553,
+      "reference_tau_ms": 1321.208170503629,
+      "learned_tau_ms": 0.591700646542856,
+      "learned_update_probability": 0.1554947942495346,
+      "learned_tau_status": "finite_positive",
+      "learned_raw_inf_logit": 5.748342037200928,
+      "learned_raw_update_logit": -1.692138671875,
+      "baseline_inf": 0.9968191385269165,
+      "baseline_tau_ms": 1378.8792449779507,
+      "baseline_update_probability": 7.252003706526011e-05,
+      "local_hat_feature_sum": 0.0,
+      "constant_voltage_trajectories": {
+        "100": {
+          "reference_state": 0.8465994230823789,
+          "oracles": {
+            "learned": {
+              "state": 0.9968221187591553,
+              "absolute_error": 0.15022269567677637
+            },
+            "oracle_inf": {
+              "state": 0.9967310104383614,
+              "absolute_error": 0.15013158735598253
+            },
+            "oracle_rate": {
+              "state": 0.8466060644106261,
+              "absolute_error": 6.641328247236622e-06
+            },
+            "oracle_both": {
+              "state": 0.8465994230823789,
+              "absolute_error": 0.0
+            }
+          },
+          "fp32_vs_same_coeff_exact_error": 1.7881393432617188e-07
+        },
+        "500": {
+          "reference_state": 0.8858165852533374,
+          "oracles": {
+            "learned": {
+              "state": 0.9968221187591553,
+              "absolute_error": 0.11100553350581788
+            },
+            "oracle_inf": {
+              "state": 0.9967310104383614,
+              "absolute_error": 0.11091442518502403
+            },
+            "oracle_rate": {
+              "state": 0.8858452909306209,
+              "absolute_error": 2.87056772835248e-05
+            },
+            "oracle_both": {
+              "state": 0.8858165852533374,
+              "absolute_error": 0.0
+            }
+          },
+          "fp32_vs_same_coeff_exact_error": 1.7881393432617188e-07
+        },
+        "1000": {
+          "reference_state": 0.9207626106844464,
+          "oracles": {
+            "learned": {
+              "state": 0.9968221187591553,
+              "absolute_error": 0.07605950807470885
+            },
+            "oracle_inf": {
+              "state": 0.9967310104383614,
+              "absolute_error": 0.075968399753915
+            },
+            "oracle_rate": {
+              "state": 0.9208109776849839,
+              "absolute_error": 4.8367000537452576e-05
+            },
+            "oracle_both": {
+              "state": 0.9207626106844464,
+              "absolute_error": 0.0
+            }
+          },
+          "fp32_vs_same_coeff_exact_error": 1.7881393432617188e-07
+        }
+      }
+    },
+    "Ih_m": {
+      "channel": "Ih",
+      "gate": "m",
+      "seed": 29,
+      "voltage_mv": -106.0,
+      "reference_inf": 0.4007818304311473,
+      "learned_inf": 0.4007425010204315,
+      "reference_tau_ms": 76.35186698251883,
+      "learned_tau_ms": 83.62085451684474,
+      "learned_update_probability": 0.0011951591586694121,
+      "learned_tau_status": "finite_positive",
+      "learned_raw_inf_logit": -0.40237224102020264,
+      "learned_raw_update_logit": -6.728280067443848,
+      "baseline_inf": 0.4007425010204315,
+      "baseline_tau_ms": 83.62085451684474,
+      "baseline_update_probability": 0.0011951591586694121,
+      "local_hat_feature_sum": 0.0,
+      "constant_voltage_trajectories": {
+        "100": {
+          "reference_state": 0.295598003780373,
+          "oracles": {
+            "learned": {
+              "state": 0.28288687522722894,
+              "absolute_error": 0.012711128553144047
+            },
+            "oracle_inf": {
+              "state": 0.28291430986955524,
+              "absolute_error": 0.01268369391081775
+            },
+            "oracle_rate": {
+              "state": 0.2955692891450455,
+              "absolute_error": 2.8714635327498073e-05
+            },
+            "oracle_both": {
+              "state": 0.29559800378037304,
+              "absolute_error": 5.551115123125783e-17
+            }
+          },
+          "fp32_vs_same_coeff_exact_error": 1.9614384955124464e-07
+        },
+        "500": {
+          "reference_state": 0.4002237170377498,
+          "oracles": {
+            "learned": {
+              "state": 0.3997564383426196,
+              "absolute_error": 0.00046727869513019105
+            },
+            "oracle_inf": {
+              "state": 0.3997956682333753,
+              "absolute_error": 0.0004280488043744701
+            },
+            "oracle_rate": {
+              "state": 0.40018444394984043,
+              "absolute_error": 3.92730879093528e-05
+            },
+            "oracle_both": {
+              "state": 0.4002237170377498,
+              "absolute_error": 0.0
+            }
+          },
+          "fp32_vs_same_coeff_exact_error": 2.3039292640358866e-08
+        },
+        "1000": {
+          "reference_state": 0.40078103116891395,
+          "oracles": {
+            "learned": {
+              "state": 0.40074000586689346,
+              "absolute_error": 4.102530202049204e-05
+            },
+            "oracle_inf": {
+              "state": 0.40077933502578184,
+              "absolute_error": 1.6961431321127485e-06
+            },
+            "oracle_rate": {
+              "state": 0.4007417018388569,
+              "absolute_error": 3.932933005706962e-05
+            },
+            "oracle_both": {
+              "state": 0.40078103116891395,
+              "absolute_error": 0.0
+            }
+          },
+          "fp32_vs_same_coeff_exact_error": 9.96221721999424e-06
+        }
+      }
+    },
+    "max_constant_clamp_fp32_error": 7.215081073885798e-05
+  },
+  "hypotheses": [
+    {
+      "id": "protocol_domain",
+      "priority": "confirmed_protocol_issue",
+      "claim": "Original disconnected hyperpolarization exceeds the registered physical domain, even for the native/formula teacher.",
+      "test": "Calibrate negative current using native teacher only. Freeze common fixed-current settings across geometry/coupling before inspecting candidate outcomes. Suggested calibration targets -90/-110/-130mV are stimulus difficulty targets, NOT relaxed acceptance thresholds.",
+      "discriminator": "Original nine out-of-domain checks remain reported; calibrated reference stays within original physical bounds and native numerical floors."
+    },
+    {
+      "id": "nap_rate_regression",
+      "priority": "highest_supported_local_mechanism",
+      "claim": "The41r learned Nap_h rate readout regressed outside the opened repair coverage; equilibrium alone is not the primary error at the probed voltage.",
+      "test": "Paired learned-head rollback factorial: keep41r everywhere, restore only Nap_h update-logit head, only equilibrium-logit head (negative causal control), or both from the verified pre41r learned baseline. No analytic runtime replacement in selectable candidates.",
+      "discriminator": "Rate-only rollback rescues state/current response while equilibrium-only rollback does not; test old41r pass cases to expose reintroduced regressions."
+    },
+    {
+      "id": "ih_rate_bias",
+      "priority": "high_supported_local_mechanism",
+      "claim": "Ih transient error reflects an existing learned rate bias, not a new41r change or necessarily missing memory.",
+      "test": "Frozen coefficient probes and factorial oracle controls for x_inf versus update probability on common voltage paths; constrained Ih kinetic readouts (inf and rate) as a learned sidecar only after FIT/DEV freeze.",
+      "discriminator": "At -106mV/seed29 the100ms gate error is .01271; canonical-rate-only diagnostic reduces it to .0000287, equilibrium-only does not."
+    },
+    {
+      "id": "support_vs_budget",
+      "priority": "unresolved_training_cause",
+      "claim": "Negative-tail coverage, optimization budget or frozen-feature conditioning may limit a constrained rate-head repair.",
+      "test": "Equal-count nominal vs tail-balanced FIT support crossed with B vs4B updates, using paired initialization/minibatch indices and checkpoints from the same two training trajectories per seed. Same objective across arms. Diagnostic least-squares projection onto the same frozen readout features bounds optimization error.",
+      "discriminator": "Coverage effect at fixed budget versus budget effect at fixed coverage. Least-squares success with SGD failure points to optimization; failure of both does not justify assuming more compute suffices."
+    },
+    {
+      "id": "timing_conditioning",
+      "priority": "needs_path_probe",
+      "claim": "Flat Ih onset/offset crossings can turn small current bias into large registered timing error.",
+      "test": "Measure current residual and reference slope at the unchanged10%-transient crossings; compare predicted shift deltaI/slope to measured shift. Also save pulse-local event identities as diagnostic sidecar.",
+      "discriminator": "Concentration at flat crossings supports sensitivity of the observable; registered global timing failures still count. No event-window retuning or threshold waiver."
+    },
+    {
+      "id": "fp32_accumulation",
+      "priority": "low_for_dominant_Nap_error",
+      "claim": "FP32 recurrence roundoff is the main source of the observed large Nap_h discrepancy.",
+      "test": "Same frozen FP32 coefficients, FP32 versus FP64 recurrence and exact constant-voltage solution; a small saved-path precision control, not a new selectable precision policy.",
+      "discriminator": "Current constant-clamp probe maximum roundoff .0000722, versus Nap_h learned-coefficient error .0761 at -106mV; therefore roundoff alone is not supported as the dominant explanation there."
+    }
+  ],
+  "phases": [
+    {
+      "name": "A native calibration",
+      "detail": "Teacher-only calibration and freeze. One fixed-current panel preserves coupling counterfactuals; do not independently retune each geometry and call that a pure coupling effect."
+    },
+    {
+      "name": "B atomic identification",
+      "detail": "Common V clamps and replay of saved45 V/Ca paths; x_inf/rate2x2 oracle diagnostics per gate, initial-state and100/500/1000ms probes; teacher-reset one-step versus free gate recurrence. Oracles are never selectable."
+    },
+    {
+      "name": "C constrained learned repair",
+      "detail": "Proposed small FIT/DEV-only support×budget matrix on the relevant rate readouts, plus fixed-feature least-squares diagnostic. Numeric budgets, split hashes and candidate nomination rule must be preregistered before execution."
+    },
+    {
+      "name": "D paired coupled confirmation of mechanism",
+      "detail": "Small2x2x2 factorial: Nap_h learned-rate rollback on/off, pre-frozen Ih inf-readout repair on/off, Ih rate-readout repair on/off. Eight contrasts include unchanged41r. Keep original current algebra/Ca/axial solver and18 states. Compare imposed/autonomous and0/.25/1 coupling with identical streams. Final case/budget caps must be preregistered; no indiscriminate extra arms."
+    }
+  ],
+  "regression_guards": [
+    "Keep all72 interpretable original45 cases unchanged as opened regression fixtures; safe calibration must not erase the difficult -106mV examples.",
+    "Retain original nine out-of-domain cases as labelled diagnostics, never reclassify them as model passes.",
+    "Use43/44 regressions and original41r previously-passing stress cases; original six41 failures remain explicit accepted limitations, not retroactively promoted.",
+    "Same original current/gate/charge/timing/physical/native-floor thresholds. No aggregate cancellation of prefix or qualitative failures.",
+    "Record hidden gate states as well as currents/V; small voltage error does not excuse wrong Nap_h memory.",
+    "No analytic oracle in a nominated network; no abstraction reduction. Keep41r checkpoint immutable.",
+    "No independent47 data access or automatic release/promotion. This is a proposal, not an executed45b."
+  ]
+}

@@ -1525,6 +1525,18 @@ si influenzano tramite il solver assiale classico?
   Refit e mini scaling del budget di training restano **condizionali e differiti**,
   non falsamente completati. Eventuali gap richiedono riferimenti validi e
   una decisione esplicita; la conferma47 resta separata e non consumata.
+  **45b — diagnosi dei tassi e copertura (autorizzata,10 novembre2026):**
+  la45 ha esposto9 controlli fisicamente fuori dominio e gap reali Ih/Nap_h
+  nei72 casi interpretabili. Conservare tutti i casi originali, senza riclassificare
+  i nove come successi. [Preregistrazione45b](task45b_preregistration_v1.json),
+  [notebook unico](../notebooks/giada_task45b_rate_coverage.ipynb): calibrazione
+  teacher-only di tre densità comuni, probe inf/tasso e precisione diagnostici,
+  FIT nominale/tail ×500/2000 aggiornamenti sugli stessi readout Ih, freeze solo
+  da DEV; fattoriale2×2×2 rollback del tasso Nap_h / riparazione inf Ih / tasso Ih.
+  41r resta congelata come riferimento; nessuna sostituzione analitica nei
+  candidati, nessuna modifica a18 gate, solver, astrazione o soglie.
+  Regressioni su44,45 e stress41; conferma47 intatta. Risultati da verificare,
+  non autorizzazione automatica alla46 o promozione delle riparazioni.
 - **Task 46 — Interventi spaziali e frontiera di costo** → Stimoli locali,
   blocchi selettivi e conduttanze eterogenee; ritardi/attenuazione e crossing
   dove presenti. Separare costo ionico dal solve assiale e dal traffico dati;
