@@ -5,6 +5,28 @@ from src.giada_teacher import task42_axial_exploration as x
 ROOT=Path(__file__).resolve().parents[1]
 
 class AxialPort(unittest.TestCase):
+    def test_verified_binary_input_and_duplicate_copies(self):
+        import sys,tempfile,shutil
+        sys.path.insert(0,str(ROOT/'scripts'))
+        from run_task42_gpu_recovery import find_verified_archive
+        plan=json.loads((ROOT/'experiments/task42_gpu_recovery_v1.json').read_text())
+        with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as tmp:
+            root=Path(tmp)
+            with self.assertRaises(RuntimeError):find_verified_archive(root,plan)
+            for name in ('one','two'):
+                (root/name).mkdir();shutil.copy2(ROOT/'artifacts/task42_kaggle_external/task42_final.zip',root/name/'native42.zip.bin')
+            path=find_verified_archive(root,dict(plan,source_archive='native42.zip.bin'))
+            self.assertEqual(path,root/'one/native42.zip.bin')
+            self.assertEqual(find_verified_archive(root,plan,str(root/'two/native42.zip.bin')),root/'two/native42.zip.bin')
+    def test_transport_preflight_before_gpu_setup(self):
+        import sys
+        sys.path.insert(0,str(ROOT/'scripts'))
+        import task42_transport_kaggle as k
+        doc=k.notebook('a'*40,'b'*64);code=''.join(doc['cells'][1]['source']);compile(code,'verified42','exec')
+        self.assertLess(code.index('native_verified='),code.index("'--upgrade'"))
+        self.assertIn('GIADA_TASK42_NATIVE_ARCHIVE=str(native_archive)',code)
+        self.assertIn('input_transport_receipt.json',code)
+        self.assertNotIn('neuron==',code)
     def test_recovery_notebook_cannot_run_native(self):
         import sys
         sys.path.insert(0,str(ROOT/'scripts'))

@@ -17,14 +17,27 @@ def restore_saved_native(archive,out,plan):
             assert not dest.exists();dest.write_bytes(raw)
     return {name:sha for name,sha in plan['members'].items() if name.startswith('native_')}
 
+
+def find_verified_archive(input_root,plan,explicit=None):
+    candidates=[Path(explicit)] if explicit else sorted(Path(input_root).rglob(plan['source_archive']))
+    verified=[]
+    for path in candidates:
+        if not path.is_file() or path.stat().st_size!=plan['source_bytes']:continue
+        with path.open('rb') as stream:sha=hashlib.file_digest(stream,'sha256').hexdigest()
+        if sha==plan['source_sha256']:verified.append(path)
+    if not verified:
+        inventory=[str(p.relative_to(input_root)) for p in Path(input_root).rglob('*') if p.is_file()][:30]
+        raise RuntimeError(f'No verified saved42 archive. Candidate count={len(candidates)}; input inventory={inventory}')
+    return verified[0]
+
 def main():
     source,out=map(Path,sys.argv[1:]);out.mkdir(exist_ok=False)
     try:
         plan=json.loads((ROOT/'experiments/task42_gpu_recovery_v1.json').read_text())
         original=json.loads((ROOT/'experiments/task42_preregistration_v1.json').read_text())
         assert hashlib.sha256(json.dumps(original,sort_keys=True,separators=(',',':')).encode()).hexdigest()==plan['original_protocol_canonical_sha256']
-        archives=list(Path('/kaggle/input').rglob(plan['source_archive']));assert len(archives)==1
-        hashes=restore_saved_native(archives[0],out,plan)
+        archive=find_verified_archive(Path('/kaggle/input'),plan,os.environ.get('GIADA_TASK42_NATIVE_ARCHIVE'))
+        hashes=restore_saved_native(archive,out,plan)
         import torch
         torch.set_num_threads(1);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False;torch.use_deterministic_algorithms(True)
         prior=x.n.contract(ROOT)[0];assert torch.cuda.is_available() and torch.cuda.get_device_name()==prior['gpu'] and torch.__version__==prior['torch']

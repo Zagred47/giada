@@ -1469,6 +1469,14 @@ si influenzano tramite il solver assiale classico?
   [notebook](../notebooks/giada_task42_gpu_recovery.ipynb).
   Nessuna fase nativa, training, selezione o variazione delle soglie.
   Il primo output resta conservato; nuovi esiti solo dopo completamentoGPU.
+  **Secondo recupero, trasporto verificato:** il primo recuperoGPU si è
+  fermato alla ricerca dell'archivio, prima dei confronti. Il nuovo
+  [emendamento di trasporto](task42_verified_transport_v1.json) usa un input
+  privato `.zip.bin`, riscaricato e verificato viaAPI, poi montato e verificato
+  in un preflight Kaggle senzaGPU. Il worker riceve il percorso esplicito;
+  dimensione/SHA256/CRC e otto membri verificati prima del rilancio.
+  [NotebookGPU](../notebooks/giada_task42_verified_input_gpu_recovery.ipynb).
+  Tracce native,41r e soglie originali restano invariati; nessun nuovo training.
 - **Task 43 — Trasferimento congelato del livello 1** → Applicare i pesi
   della Task41 con stati locali distinti, parametri eterogenei e ordine dei
   nodi permutato. Prima path imposti, poi feedback assiale; nessun retraining
