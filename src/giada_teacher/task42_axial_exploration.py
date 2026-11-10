@@ -162,13 +162,21 @@ def runner(torch,net,geo,config,cfg,calcium,base,device):
     return run,args,inj,core,dict(graph_used=graph_used,fallback=fallback,cases=cases,nodes=count)
 
 
+def copy_forcing(torch, destination, path, tick):
+    """Preserve seed axis: [time,seed,case,node] -> [seed,case*node]."""
+    frame=np.asarray(path[tick])
+    if frame.ndim!=3 or frame.shape[0]!=destination.shape[0] or np.prod(frame.shape[1:])!=destination.shape[1]:
+        raise ValueError(f'Invalid imposed frame {frame.shape}; expected seed axis and {tuple(destination.shape)}')
+    destination.copy_(torch.as_tensor(frame,device=destination.device,dtype=destination.dtype).reshape_as(destination))
+
+
 def rollout(torch,net,geo,config,cfg,calcium,base,device,forcing=None):
     run,args,inj,core,info=runner(torch,net,geo,config,cfg,calcium,base,device);count=info['nodes'];cases=info['cases']
     values=[[a.clone()] for a in args[:3]]+[[]];run.reset(args)
     start=time.perf_counter()
     for tick in range(len(inj)):
         if forcing is not None:
-            for j,key in enumerate(('voltage','calcium')):run.args[j].copy_(torch.tensor(forcing[key][tick].reshape(-1),device=device,dtype=args[j].dtype)[None].expand(3,-1))
+            for j,key in enumerate(('voltage','calcium')):copy_forcing(torch,run.args[j],forcing[key],tick)
         injection=torch.tensor(inj[tick].reshape(-1),device=device,dtype=torch.float64)[None].expand(3,-1)
         result=run.tick(injection,args[5])
         for dest,value in zip(values,result):dest.append(value.clone())

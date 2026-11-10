@@ -1,0 +1,28 @@
+{
+  "task": "42",
+  "version": "gpu-recovery-v1",
+  "source_sha256": "9ef80d5e3c4f4188c1f7f6e5ac41d7b7bafda409fe6ba3d6efabb5206c0d7786",
+  "source_bytes": 18226046,
+  "source_kernel": "alessandrobelli/giada-task42-exploratory-axial-port",
+  "source_archive": "task42_final.zip",
+  "members": {
+    "native_chain2.npz": "2273969019eb23108009e384800460bed6bd1693b950c1a13387c47fd535f069",
+    "native_chain4.npz": "3662a9da700b104ac9d5bd848778f8f223e17ab2550f5f9bf0a061736fcd2914",
+    "native_chain8.npz": "72a15ef9379eeb5c39048e1fefad2b07f4cb3558422d17fb2135e63732846b68",
+    "native_chain16.npz": "ec90b33fc18082ce353a89196f1b6c85db29a0f63155acbf3182b9f9da3ec3bf",
+    "native_bifurcation5.npz": "910d6acb8ff8373035a3752b689dce05c018f55c243b274e2c0070ddb1b40075",
+    "native_floor.json": "e0793d9d853f88c4d7a0812c18375a5daad555075826fb670bcd8306105a1f44",
+    "frozen41r.pt": "555fc8f12177f79b286f4529efac132f576759698777f529287880d630d0c1a0",
+    "preregistration.json": "64138c879ee63cb0db940f982a7c4d57870d95f0f6d6b8c946ce41ebe908b920"
+  },
+  "original_protocol_canonical_sha256": "61a6e55c43da9108b190c7af8a4d4c7f0bcb460cec3369df4927c2ee1ceb800d",
+  "adapter_fix": "Preserve [seed,case,node] and reshape only case/node to [seed,case*node]; never flatten seed into sites.",
+  "native_regenerated": false,
+  "training_updates": 0,
+  "selection_performed": false,
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "scope": "Only rerun formula and frozen41r GPU evaluations. All60 native active traces,15 passive checks and frozen checkpoint restored byte-for-byte from saved output. Original failure retained as technical, not scientific.",
+  "stop": "Abort on original/archive/member/protocol/weight hash mismatch, missing native traces, nonfinite input or GPU/parity error. No native compilation, installation or teacher checkout in recovery.",
+  "backup": "Private kernel-source input plus locally verified original ZIP; recovered output persisted and downloaded with SHA/CRC checks. Complete compact DB backup local only; last2 verified."
+}

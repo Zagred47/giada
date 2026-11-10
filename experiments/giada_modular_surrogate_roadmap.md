@@ -1460,6 +1460,15 @@ si influenzano tramite il solver assiale classico?
   interessato, non cambia le soglie e non viene contato come fallimento appreso.
   Il lancio effettivo è attestato solo dalla ricevuta console
   `results/task42_protocol_v1/kaggle_launch.json`; nessuna promozione43 implicita.
+  **Recupero tecnico42, soloGPU:** il primo run ha completato le60 tracce
+  native e i15 controlli passivi (tutti passati), poi si è fermato prima
+  dei confronti appaiati per un adattatore che appiattiva i seed nei siti.
+  Non è un NO-GO scientifico della rete. Il
+  [recupero](task42_gpu_recovery_v1.json) corregge solo quell'adattatore e
+  ripristina input nativi/checkpoint verificati byte per byte;
+  [notebook](../notebooks/giada_task42_gpu_recovery.ipynb).
+  Nessuna fase nativa, training, selezione o variazione delle soglie.
+  Il primo output resta conservato; nuovi esiti solo dopo completamentoGPU.
 - **Task 43 — Trasferimento congelato del livello 1** → Applicare i pesi
   della Task41 con stati locali distinti, parametri eterogenei e ordine dei
   nodi permutato. Prima path imposti, poi feedback assiale; nessun retraining

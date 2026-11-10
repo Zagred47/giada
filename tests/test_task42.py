@@ -5,6 +5,32 @@ from src.giada_teacher import task42_axial_exploration as x
 ROOT=Path(__file__).resolve().parents[1]
 
 class AxialPort(unittest.TestCase):
+    def test_recovery_notebook_cannot_run_native(self):
+        import sys
+        sys.path.insert(0,str(ROOT/'scripts'))
+        import task42_recovery_kaggle as k
+        doc=k.notebook('a'*40,'b'*64);code=''.join(doc['cells'][1]['source']);compile(code,'42-recovery','exec')
+        self.assertIn('run_task42_gpu_recovery.py',code)
+        self.assertNotIn('neuron==',code);self.assertNotIn('SelfishGene',code)
+        worker=(ROOT/'scripts/run_task42_gpu_recovery.py').read_text()
+        self.assertNotIn('x.native(',worker);self.assertNotIn('compile_native(',worker)
+    def test_restore_saved_native_exact_bytes(self):
+        import sys,tempfile,hashlib
+        sys.path.insert(0,str(ROOT/'scripts'))
+        from run_task42_gpu_recovery import restore_saved_native
+        plan=json.loads((ROOT/'experiments/task42_gpu_recovery_v1.json').read_text())
+        with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as tmp:
+            dest=Path(tmp);hashes=restore_saved_native(ROOT/'artifacts/task42_kaggle_external/task42_final.zip',dest,plan)
+            self.assertEqual(len(hashes),6)
+            for name,sha in hashes.items():self.assertEqual(hashlib.sha256((dest/name).read_bytes()).hexdigest(),sha)
+            self.assertTrue((dest/'recovered_frozen41r.pt').is_file())
+    def test_imposed_adapter_preserves_distinct_seeds(self):
+        import torch
+        source=np.arange(2*3*12*2,dtype=float).reshape(2,3,12,2)
+        dest=torch.empty((3,24),dtype=torch.float64)
+        x.copy_forcing(torch,dest,source,1)
+        np.testing.assert_array_equal(dest.numpy(),source[1].reshape(3,24))
+        with self.assertRaises(ValueError):x.copy_forcing(torch,dest,np.zeros((2,1,12,2)),0)
     def test_console_notebook(self):
         import sys
         sys.path.insert(0,str(ROOT/'scripts'))
@@ -60,5 +86,10 @@ class AxialPort(unittest.TestCase):
                 short=dict(config,duration_ms=.3)
                 data,_=x.rollout(torch,model,geo,short,cfg,ca,base,'cpu')
                 self.assertEqual(data['voltage'].shape,(4,3,12,2))
+                imposed,_=x.rollout(torch,model,geo,short,cfg,ca,base,'cpu',data)
+                self.assertEqual(imposed['voltage'].shape,data['voltage'].shape)
+                self.assertTrue(np.isfinite(imposed['voltage']).all())
+                metric=x.n.p.evaluate_currents(data['current'][:,0,0,0],imposed['current'][:,0,0,0],.1,config['quality'],data['gates'][1:,0,0,0],imposed['gates'][1:,0,0,0])
+                self.assertIn('passed',metric)
 
 if __name__=='__main__':unittest.main()
