@@ -1513,6 +1513,18 @@ si influenzano tramite il solver assiale classico?
   refit con path locali prodotti da sistemi accoppiati, stessa architettura
   e stessa rappresentazione del livello 1. Confronto appaiato con frozen,
   mini scaling e morfologie riservate; nessuna informazione futura dai vicini.
+  **10 novembre2026 — fase iniziale congelata autorizzata:**44 ha passato
+  54/54 casi in ogni braccio/modo, senza nuovi fallimenti di feedback/accoppiamento.
+  Prima di attivare il refit opzionale, la45 valuta nuova copertura con41r
+  congelata: [protocollo](task45_preregistration_v1.json),
+  [notebook unico](../notebooks/giada_task45_controlled_coverage.ipynb).
+  Catena4 come ancora, catena6 e biforcazione asimmetrica7 diagnostiche;
+  iperpolarizzazione/rebound, burst/recupero e staircase lento,1000ms;
+  prefissi100/500/1000ms dalla stessa traiettoria, imposta/autonoma e
+  accoppiamenti0/.25/1. Soglie e architettura invariate, nessun training.
+  Refit e mini scaling del budget di training restano **condizionali e differiti**,
+  non falsamente completati. Eventuali gap richiedono riferimenti validi e
+  una decisione esplicita; la conferma47 resta separata e non consumata.
 - **Task 46 — Interventi spaziali e frontiera di costo** → Stimoli locali,
   blocchi selettivi e conduttanze eterogenee; ritardi/attenuazione e crossing
   dove presenti. Separare costo ionico dal solve assiale e dal traffico dati;
