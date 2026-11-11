@@ -1,0 +1,47 @@
+{
+  "valid": true,
+  "tests": [
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_task45c",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "[GIADA45c] original45/chain4/imposed all13 arms saved\n[GIADA45c] original45/chain4/autonomous all13 arms saved\n[GIADA45c] N00 refinement1 finite, fresh DEV complete\n[GIADA45c] N00 refinement4 finite, fresh DEV complete\n[GIADA45c] N01 refinement1 finite, fresh DEV complete\n[GIADA45c] N01 refinement4 finite, fresh DEV complete\n[GIADA45c] N10 refinement1 finite, fresh DEV complete\n[GIADA45c] N10 refinement4 finite, fresh DEV complete\n[GIADA45c] N11 refinement1 finite, fresh DEV complete\n[GIADA45c] N11 refinement4 finite, fresh DEV complete\n[GIADA45c] I0 refinement1 finite, fresh DEV complete\n[GIADA45c] I0 refinement4 finite, fresh DEV complete\n[GIADA45c] I1 refinement1 finite, fresh DEV complete\n[GIADA45c] I1 refinement4 finite, fresh DEV complete\n[GIADA45c] L0 refinement1 finite, fresh DEV complete\n[GIADA45c] L0 refinement4 finite, fresh DEV complete\n[GIADA45c] L1 refinement1 finite, fresh DEV complete\n[GIADA45c] L1 refinement4 finite, fresh DEV complete\n",
+      "stderr": "test_causal_jacobian_finite_difference (tests.test_task45c.PreservingKinetics.test_causal_jacobian_finite_difference) ... ok\ntest_contract_and_histories (tests.test_task45c.PreservingKinetics.test_contract_and_histories) ... ok\ntest_head_isolation_and_packed_maps (tests.test_task45c.PreservingKinetics.test_head_isolation_and_packed_maps) ... ok\ntest_nomination_rejects_new_failure_not_just_count (tests.test_task45c.PreservingKinetics.test_nomination_rejects_new_failure_not_just_count) ... ok\ntest_notebook_compiles_and_uses_both_verified_inputs (tests.test_task45c.PreservingKinetics.test_notebook_compiles_and_uses_both_verified_inputs) ... ok\ntest_short_complete_evaluator (tests.test_task45c.PreservingKinetics.test_short_complete_evaluator) ... ok\ntest_tiny_full_fit_preserves_real_treatment_arms (tests.test_task45c.PreservingKinetics.test_tiny_full_fit_preserves_real_treatment_arms) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 28.857s\n\nOK\n"
+    },
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_task45c_design",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_audit_and_named_gate_correction (tests.test_task45c_design.Design45c.test_audit_and_named_gate_correction) ... ok\ntest_design_is_explicitly_not_a_run (tests.test_task45c_design.Design45c.test_design_is_explicitly_not_a_run) ... ok\ntest_f011_small_freeze_reconstructs_actual_checkpoint (tests.test_task45c_design.Design45c.test_f011_small_freeze_reconstructs_actual_checkpoint) ... ok\ntest_initial_probes_use_correct_gate_and_intermediate_node (tests.test_task45c_design.Design45c.test_initial_probes_use_correct_gate_and_intermediate_node) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 7.578s\n\nOK\n"
+    },
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "tests.test_task45b",
+        "-v"
+      ],
+      "returncode": 0,
+      "stdout": "[GIADA45b] original45/chain4/imposed9 paired arms saved\n[GIADA45b] original45/chain4/autonomous9 paired arms saved\n[GIADA45b] paired fit checkpoint 2 finite\n[GIADA45b] paired fit checkpoint 4 finite\n",
+      "stderr": "test_calibration_only_teacher_and_safe_side (tests.test_task45b.RateCoverage.test_calibration_only_teacher_and_safe_side) ... ok\ntest_design_context_and_all_masks (tests.test_task45b.RateCoverage.test_design_context_and_all_masks) ... ok\ntest_full_short_pipeline_preserves_all_arms (tests.test_task45b.RateCoverage.test_full_short_pipeline_preserves_all_arms) ... ok\ntest_inputs_and_no_threshold_change (tests.test_task45b.RateCoverage.test_inputs_and_no_threshold_change) ... ok\ntest_notebook_compiles_and_has_real_worker (tests.test_task45b.RateCoverage.test_notebook_compiles_and_has_real_worker) ... ok\ntest_short_training_and_path_oracles (tests.test_task45b.RateCoverage.test_short_training_and_path_oracles) ... ok\ntest_three_head_materialization_and_adapter (tests.test_task45b.RateCoverage.test_three_head_materialization_and_adapter) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 18.033s\n\nOK\n"
+    }
+  ],
+  "elapsed_seconds": 58.719682693481445,
+  "source_sha256": {
+    "src/giada_teacher/task45c_preserving_kinetics.py": "05e1733e866948525ddc058c07e24cee0bdb5d16133a099054f7183d6ea49f03",
+    "scripts/run_task45c.py": "2e0edb44907a8af97fccaa133c9c8a499c3a1f62e4d6a7bc793c0737fdc78381",
+    "scripts/task45c_kaggle.py": "a2a7362d9f024a939726425efd1dc0462a75881103ee4ac60d55ec136889f27c",
+    "experiments/task45c_preregistration_v1.json": "79f7cfea86dab8c443d661e660f117ae5dd9043e5451028deff0f3811718b4ae",
+    "experiments/task45c_transport_v1.json": "797405fe35653110e7a6f6ab4b37b4b3e31f51f611eece75bb20a21212c6a631"
+  },
+  "scope": "Local CPU mathematical/functional tests, including tiny synthetic end-to-end evaluator and actual immutable f011 reconstruction. Source/native methods mocked in tiny test; not a real CUDA or scientific45c result. Runtime GPU and full native/reference floor checks still mandatory."
+}

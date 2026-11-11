@@ -1,0 +1,670 @@
+{
+  "task": "45c",
+  "version": "v1",
+  "status": "PREREGISTERED_EXECUTABLE",
+  "date": "2026-11-11",
+  "preparation_authorized": true,
+  "remote_execution_authorized": true,
+  "notebook_implemented": true,
+  "training_performed": false,
+  "baseline": {
+    "valid": true,
+    "source_archive_sha256": "eee11b0924fe6bde6b8851afe8e6ec166f3a94711420db81dc66d6f88becc6da",
+    "source_member": "f011.pt",
+    "source_member_sha256": "acd04e07eb264879c8005a7e8681b5e26d9ee89bc3e4a9c74f676fffe0d5d776",
+    "logical_weights_sha256": "45410636cbaa3d38af9eb2048cf8b08d40175ec0569365767f35de97fa84ad35",
+    "heads_path": "experiments/results/task45b_audited_v1/f011_ih_heads.npz",
+    "heads_sha256": "5de4f57032d072761bb240fe8864e0616f42aa9673e2f4fa41932297612e77ba",
+    "base41r": "a8c8240648022024faa4aac66a5f4d0adba6952cea647cc6494594c6e5ca08e6",
+    "changed_state_keys": [
+      "parent.c",
+      "parent.d"
+    ],
+    "columns": [
+      10,
+      27
+    ],
+    "not_a_qualified_release": true
+  },
+  "reference41r": {
+    "format": "giada-exploratory-transition-v1",
+    "date": "2026-11-10",
+    "candidate": "41r/timing_frozen_k",
+    "logical_weights_sha256": "a8c8240648022024faa4aac66a5f4d0adba6952cea647cc6494594c6e5ca08e6",
+    "baseline_weights_sha256": "d5b7a92d2d0fe350c79e97879003570afefc8eb4b45026e148ef5c4a338d0cd0",
+    "heads_path": "experiments/results/task41r_protocol_v1/heads_timing_frozen_k.npz",
+    "heads_file_sha256": "426bd95fb229d3c0c877a5663bde0449fa7d9b5edd64e8d9bd29e7b73ccb45a8",
+    "full_state_archive": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41v_kaggle_external\\task41v_final.zip",
+    "full_state_archive_sha256": "2dfeb62292db5fa60f7748e8e812145289169b5bbc7b23cb70d00e9c85baba3e",
+    "full_state_member": "frozen_incumbent.pt",
+    "full_state_member_sha256": "39497ead2480f477f1e3581762a91a7406a9324109f1a93d43e1137f88871284",
+    "source_revision": "6734cc2137f6ba3235956876cb07e7019a544bb7",
+    "stress": {
+      "passed": 66,
+      "total": 72,
+      "failed": [
+        [
+          17,
+          "doublepulse_recovery",
+          9410173,
+          1,
+          "low_mixed"
+        ],
+        [
+          17,
+          "near_threshold_staircase",
+          9410143,
+          1,
+          "calcium_mix"
+        ],
+        [
+          29,
+          "calcium_swing",
+          9410173,
+          0,
+          "mixed_diagonal"
+        ],
+        [
+          43,
+          "doublepulse_recovery",
+          9410173,
+          1,
+          "low_mixed"
+        ],
+        [
+          43,
+          "calcium_swing",
+          9410173,
+          0,
+          "mixed_diagonal"
+        ],
+        [
+          43,
+          "near_threshold_staircase",
+          9410143,
+          1,
+          "calcium_mix"
+        ]
+      ]
+    },
+    "native": {
+      "autonomous/primary": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 330,
+        "responses_total": 336,
+        "failed_responses": [
+          {
+            "case": 106,
+            "seed": 17
+          },
+          {
+            "case": 122,
+            "seed": 17
+          },
+          {
+            "case": 106,
+            "seed": 29
+          },
+          {
+            "case": 122,
+            "seed": 29
+          },
+          {
+            "case": 106,
+            "seed": 43
+          },
+          {
+            "case": 122,
+            "seed": 43
+          }
+        ],
+        "passed": false
+      },
+      "autonomous/voltage_solve64": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      },
+      "imposed/primary": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      },
+      "imposed/voltage_solve64": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      }
+    },
+    "known_offset_failures_ms": {
+      "K_Pst": [
+        0.7,
+        1.1,
+        4.4,
+        4.5
+      ],
+      "Nap_Et2": [
+        0.8,
+        1.8
+      ]
+    },
+    "offset_threshold_ms": 0.3,
+    "original_fp32_failed_checks": [
+      218,
+      234
+    ],
+    "task41_original_gate_passed": false,
+    "task42_exploratory_authorized": true,
+    "task42_qualified_release": false,
+    "thresholds_changed": false,
+    "abstraction_changed": false,
+    "task42_launched": false,
+    "future_tasks_automatically_authorized": false,
+    "decision": "Stop serial41 repairs; advance under explicit accepted limitations, not retroactive qualification.",
+    "conditions": [
+      "Keep teacher/formula and frozen41r controls paired.",
+      "Validate passive/axial reference floors, units and balances before interpreting active transfer.",
+      "Separate inherited local failures, new failures and coupling amplification by case identity.",
+      "No privileged teacher corrections online, hidden refit, new solver or abstraction change.",
+      "Keep original quality gates and full failure reporting; no aggregate cancellation of regressions.",
+      "No general ELM superiority, teacher equivalence or integrated speedup claim.",
+      "Reopen41 repairs only for a concrete downstream blocker or genuinely new discriminating hypothesis."
+    ],
+    "speed_scope": "Historical~8x isolated resident ionic core; current integrated benchmark not a qualified speedup.",
+    "roadmap": "experiments/giada_modular_surrogate_roadmap.md"
+  },
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "passive_gates": {
+    "max_single_native_discrete_error_mv": 1e-07,
+    "max_single_fine_endpoint_error_mv": 0.01,
+    "max_paired_native_discrete_error_mv": 1e-06,
+    "max_capacitive_balance_error_na": 1e-10,
+    "max_axial_antisymmetry_error_na": 1e-12,
+    "max_native_axial_ohm_error_na": 1e-10,
+    "max_disconnected_cross_effect_mv": 1e-08,
+    "max_symmetric_voltage_difference_mv": 1e-08,
+    "max_equilibrium_residual_na": 1e-10,
+    "max_convergence_fine_endpoint_error_mv": 0.003
+  },
+  "dt_ms": 0.1,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "independent47_accessed": false,
+  "corrected_target": {
+    "primary": "Ca_LVAst.h",
+    "primary_index": 3,
+    "negative_control": "NaTs2_t.h",
+    "negative_control_index": 7,
+    "reason": {
+      "previous_assistant_statement": "Residual gate index3 was described as NaTs2_t.h.",
+      "correct": "Index3 is Ca_LVAst.h; NaTs2_t.h is index7.",
+      "why": "Verified source STATE_NAMES/OFFSETS and per-gate trace errors. This corrects interpretation only, not measured metrics or gates."
+    }
+  },
+  "hypotheses": [
+    {
+      "id": "nap_compensation",
+      "claim": "Global Nap_h rate rollback breaks a learned equilibrium/rate compensation on nominal histories.",
+      "test": "Nap2x2: rate-only versus joint equilibrium/rate, crossed with functional preservation guard off/on. All start f011, not the old baseline.",
+      "discriminator": "If joint+guard preserves old pass identities while rescuing negative-tail gate memory, compensation/preservation is supported; low coefficient RMSE alone does not count."
+    },
+    {
+      "id": "nap_information_vs_conditioning",
+      "claim": "Frozen-feature conditioning or inadequate rare-history coverage, not missing memory state, limits the repair.",
+      "test": "One common nominal+negative-tail FIT pool; same frozen-feature least-squares diagnostic and1/4 nonlinear refinements. Probe coefficient, free recurrence and functional losses separately.",
+      "discriminator": "Compare ideal FIT projection, actual quantized forward and cross-history DEV. Do not infer that more data/steps necessarily cures a failed readout space."
+    },
+    {
+      "id": "ih_crossing_residual",
+      "claim": "A tiny equilibrium/rate bias amplified at a flat crossing explains the remaining Ih offset.",
+      "test": "Ih coefficient-only versus crossing-aware joint-readout refinement, same FIT support. Observe the actual intermediate node1 as well as root/distal; probe inf-only/rate-only oracles diagnostically.",
+      "discriminator": "Reduced actual signed onset/offset under original event evaluator, with correct current amplitude and no new pass-case failures. DeltaI/slope alone is not a success criterion."
+    },
+    {
+      "id": "calva_tail",
+      "claim": "Ca_LVAst.h kinetic-map extrapolation causes the hidden-state failures near -130mV.",
+      "test": "Ca_LVAst.h rate-only versus joint equilibrium/rate readout fits on nominal+tail FIT; inf/rate2x2 oracles and teacher-reset/free recurrence first. Identify real owning module through Swap mask, not hardcoded parent.",
+      "discriminator": "A kinetic oracle must explain the gate error before attributing it to optimization. Preserve Ca current, calcium feedback and nominal Ca_LVAst gating."
+    },
+    {
+      "id": "gate_identity_negative_control",
+      "claim": "NaTs2_t.h is the dominant failed hidden gate in the six45b safe-panel cases.",
+      "test": "Probe channel/state IDs for both Ca_LVAst.h(index3) and NaTs2_t.h(index7) on all six failures; NaTs2_t.h stays frozen as negative attribution control unless new evidence says otherwise.",
+      "discriminator": "45b actual18-state traces contradict this claim: dominant index3, not7. No unnecessary NaTs2_t.h training based on a naming mistake."
+    },
+    {
+      "id": "repair_interaction",
+      "claim": "Repairs selected independently on DEV compose without new coupled feedback or inherited-pass regressions.",
+      "test": "Combine pre-frozen DEV-selected Nap/Ih/Ca_LVAst repairs and compare with each component under identical imposed/autonomous, coupling and prefix cases.",
+      "discriminator": "Combined arm must retain the union of acquired pass identities, not only improve an aggregate average. Distinguish inherited f011 failures from new composition failures."
+    }
+  ],
+  "arms": [
+    {
+      "id": "C0",
+      "role": "baseline",
+      "change": "f011 unchanged"
+    },
+    {
+      "id": "N00",
+      "role": "Nap causal contrast",
+      "change": "rate only without preservation"
+    },
+    {
+      "id": "N01",
+      "role": "Nap causal contrast",
+      "change": "rate only + functional preservation"
+    },
+    {
+      "id": "N10",
+      "role": "Nap causal contrast",
+      "change": "joint inf/rate without preservation"
+    },
+    {
+      "id": "N11",
+      "role": "Nap causal contrast",
+      "change": "joint inf/rate + functional preservation"
+    },
+    {
+      "id": "I0",
+      "role": "Ih control",
+      "change": "joint inf/rate, coefficient-only objective"
+    },
+    {
+      "id": "I1",
+      "role": "Ih treatment",
+      "change": "same heads/support plus causal crossing-aware objective"
+    },
+    {
+      "id": "L0",
+      "role": "Ca_LVAst contrast",
+      "change": "h rate-only readout"
+    },
+    {
+      "id": "L1",
+      "role": "Ca_LVAst contrast",
+      "change": "h equilibrium+rate readouts"
+    },
+    {
+      "id": "J",
+      "role": "composition",
+      "change": "DEV-frozen best nonregressing component of each family, no coupled-outcome selection"
+    }
+  ],
+  "additional_diagnostic_controls": [
+    "all-formula",
+    "41r unchanged",
+    "45b/f111 known rollback-regression control"
+  ],
+  "fixed_structure": "Same18explicit gate states, recurrence map, current algebra, calcium and axial solver. Only existing relevant kinetic readout weights/biases can change; trunk, all other heads and NaTs2_t.h frozen. No online oracle, new basis, V-dependent head switching or altered precision policy.",
+  "phase_order": [
+    "Verify f011 byte/logical hashes and gate-index ownership; CPU/GPU materialization parity before scientific evaluation.",
+    "Diagnostic coefficient/oracle probes on opened45b paths, including intermediate Ih-failed node. No new fitted weights during this phase.",
+    "Generate separate FIT/DEV local histories with new seeds, including nominal/recovery, negative-tail and long relaxation; freeze hashes. Opened45b data are diagnostic audit fixtures, not an independent confirmation.",
+    "Prepare eight component treatments in paired vectorized groups, checkpoint1/4 refinements along same trajectories; report finite/conditioning/actual-forward diagnostics.",
+    "DEV no-regression nomination and weight hashes; combine selected components only after this freeze.",
+    "All coupled candidates and controls in one notebook, imposed/autonomous and coupling0/.25/1; original45 and safe45b panels,44 and original41 stress regressions. No47 access."
+  ],
+  "fitting_design": {
+    "budget_checkpoints": [
+      1,
+      4
+    ],
+    "budget_unit": "nonlinear frozen-feature refinement, not SGD steps",
+    "candidate_solver": "FIT-only whitened regularized least-squares/Gauss-Newton in existing head space; coefficients plus exact causal gate/current sensitivities. Actual FP32 materialized models checked at each checkpoint.",
+    "paired_fit_seeds": [
+      9453101,
+      9453113,
+      9453127
+    ],
+    "paired_dev_seeds": [
+      9453201,
+      9453211,
+      9453229
+    ],
+    "nominal_voltage_mv": [
+      -100,
+      60
+    ],
+    "tail_voltage_mv": [
+      -135,
+      -100
+    ],
+    "nominal_fraction": 0.5,
+    "horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000
+    ],
+    "preservation": "Guarded Nap arms preserve functional responses, event crossings and hidden-state accuracy on nominal FIT histories against the teacher; a separate bounded f011 imitation term may preserve existing compensation. Guard acceptance is tested case-by-case on DEV with original gates, not assumed from loss.",
+    "saturation": "Exact0/1 coefficient labels are censored and counts reported; evaluator probabilities/states are never clipped to hide failure."
+  },
+  "nomination": "Highest DEV all-prefix joint pass count, no new failure on any f011-passing DEV case, then smallest worst original-gate severity, then earlier checkpoint/registered arm order. Baseline fallback if no eligible repair. No old stress or coupled-audit outcomes used to select weights. Report all candidates including rejected ones.",
+  "metrics": [
+    "Original current nRMSE/nmax/signed and absolute charge/onset/offset/peak criteria.",
+    "Per-gate RMSE/max/occupancy with channel+state names, not only pooled V or current.",
+    "Original V/Ca/native-floor/physical-domain criteria at every100/500/1000ms prefix.",
+    "Case-identity regression maps, event support and signed crossing shifts; intermediate-node slope/baseline diagnostics.",
+    "Parameter count and resident ionic/integrated execution costs separately; no speedup claim from batching overhead alone."
+  ],
+  "source_transport": {
+    "valid": true,
+    "mode": "existing_Kaggle_output_readonly_no_payload_upload",
+    "source45b_sha256": "eee11b0924fe6bde6b8851afe8e6ec166f3a94711420db81dc66d6f88becc6da",
+    "source45b_bytes": 4615315339,
+    "kernel_source": "alessandrobelli/giada-task45b-rate-coverage",
+    "mounted_archive": "task45b_final.zip",
+    "archive": "native45c.zip.bin",
+    "local": "artifacts/task45c_input/native45c.zip.bin",
+    "bytes": 364940302,
+    "sha256": "e57dadeed758be324857362e25ed9711ff6b672e7ef86d1b2e9b9b47af02a283",
+    "members": {
+      "frozen41r.pt": "555fc8f12177f79b286f4529efac132f576759698777f529287880d630d0c1a0",
+      "f111.pt": "77493c2032f52696281ec9c0a165feb8028192d0dcd0aabad1b1fdb106195dda",
+      "f011.pt": "acd04e07eb264879c8005a7e8681b5e26d9ee89bc3e4a9c74f676fffe0d5d776",
+      "calibration_freeze.json": "ece6254a481c0b89668998b5513eaec5cccb6fe6b6b6231dbbb7711dbcf8f476",
+      "original45/native_45_asymmetric_branch7.npz": "c717da97ec1457e95d9aad78347c8c9d1304d7b7bc0cd812b2c30cdc0a997e49",
+      "original45/native_floor.json": "10a9277920dbc8c239eb00b90c15cbe593c79b93a2192e9e3b5f147c601fc837",
+      "original45/native_chain4.npz": "7432d53572a8b7d00ac116549e8ec99780603fdbbb03c1c5705a4e18e339f1bd",
+      "original45/native_45_chain6.npz": "06af3c92053eeab0292ea2ca88a29be7a81a4dbf1f15873a3e4742b0acb61e98",
+      "safe_hyper/native_45_asymmetric_branch7.npz": "e2f444cf73a8e677f14346889e55c6442f65553e6e14b5b60db7e0af71bf04cb",
+      "safe_hyper/native_floor.json": "a23d92b9fd682744fa469736a1cf564667e9d3ce4db5d47b3bd2a118e83c8812",
+      "safe_hyper/native_chain4.npz": "2438f3415f089204d9050029fc37d22e51104f966047fcded6be7e3bf21f21e7",
+      "safe_hyper/native_45_chain6.npz": "80b454afe2c8c9dac3b5e6b7768dd66c4579b827072eb721eb80d5c311c32749",
+      "regression44/native_floor.json": "15942c337f896bb73a200e9c09f21c478fd2000aafb0e16977dfe38c6bfa912b",
+      "regression44/native_chain8.npz": "f67a80d8a64a277bf192b566ec3deacd79759d3ec15400a673227e0012f933f2",
+      "regression44/native_bifurcation5.npz": "30d2178893c670604a19e8268a1fe659ef8afe8c50dba7ae8c8b47b3d97e8e14",
+      "regression44/native_chain4.npz": "95f10f813919d53dcba06934b7b60531c7cf25b9da145f2ebc56f9d5045b4416"
+    },
+    "local_payload_upload_blocked": true,
+    "local_payload_uploaded": false,
+    "rationale": "Conservative alternative to denied local archive upload: read existing user-owned45b persisted output within Kaggle. No native payload exported from local machine. CPU mounted preflight mandatory."
+  },
+  "limits": [
+    "Exploratory45c, not independent47 or qualified release.",
+    "No thresholds, state representation, inference equations or abstraction changes.",
+    "Fresh DEV labels only nominate targeted repairs; all-model coupled and historical regressions can still reject them.",
+    "Original single-transient evaluator unchanged; signed/slope probes diagnostic only."
+  ],
+  "execution_authority": "User explicitly authorized notebook implementation, DB registration, Git push and one Kaggle run; local-only DB backup.",
+  "cost": {
+    "batches": [
+      1,
+      642,
+      4096
+    ],
+    "ticks": 80,
+    "repetitions": 30,
+    "minimum_paired_saving": 0.1,
+    "scope": "Original resident single-compartment ionic/integrated CUDA Graph benchmark, all materialized candidates; formula32/formula64 and H controls. Separate from13-arm coupled evaluator overhead; no automatic speed qualification."
+  },
+  "prior45b": "experiments/task45b_preregistration_v1.json",
+  "panels": [
+    "original45",
+    "safe_hyper",
+    "regression44"
+  ],
+  "duration_ms": 1000.0,
+  "prefix_horizons_ms": [
+    100.0,
+    500.0,
+    1000.0
+  ],
+  "fitting_horizons_ms": [
+    1.0,
+    8.0,
+    40.0,
+    100.0,
+    500.0,
+    1000.0
+  ],
+  "geometries": [
+    {
+      "id": "chain4",
+      "parents": [
+        -1,
+        0,
+        1,
+        2
+      ],
+      "lengths_um": [
+        100.0,
+        110.0,
+        120.0,
+        100.0
+      ],
+      "diameters_um": [
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2
+      ],
+      "ra_ohm_cm": 130.0
+    },
+    {
+      "id": "45_chain6",
+      "parents": [
+        -1,
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "lengths_um": [
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0,
+        120.0
+      ],
+      "diameters_um": [
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999,
+        1.0
+      ],
+      "ra_ohm_cm": 130.0
+    },
+    {
+      "id": "45_asymmetric_branch7",
+      "parents": [
+        -1,
+        0,
+        0,
+        1,
+        1,
+        2,
+        5
+      ],
+      "lengths_um": [
+        100.0,
+        110.0,
+        120.0,
+        100.0,
+        110.0,
+        120.0,
+        100.0
+      ],
+      "diameters_um": [
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2,
+        1.0999999999999999,
+        1.0,
+        1.2
+      ],
+      "ra_ohm_cm": 130.0
+    }
+  ],
+  "coupling": [
+    0.0,
+    0.25,
+    1.0
+  ],
+  "original45_protocols": [
+    "45_hyper_rebound",
+    "45_burst_recovery",
+    "45_slow_staircase"
+  ],
+  "calibration": {
+    "target_minima_mv": [
+      -90.0,
+      -110.0,
+      -130.0
+    ],
+    "amplitude_bracket_ma_cm2": [
+      -0.008,
+      0.0
+    ],
+    "bisection_steps": 12,
+    "geometry": "chain4",
+    "coupling": 0.0,
+    "rule": "Native-only disconnected root chain4, same conditioning and40:200ms pulse. Bisect for target minimum over whole1000ms. Keep safe side (minimum >=target). Freeze resulting three current densities, COMMON to every geometry and coupling. Do not inspect candidate results before freeze. Other geometries retain explicit physical-domain checks."
+  },
+  "model_arms": [
+    "C0",
+    "N00",
+    "N01",
+    "N10",
+    "N11",
+    "I0",
+    "I1",
+    "L0",
+    "L1",
+    "J",
+    "R41",
+    "R111"
+  ],
+  "coupled_arms": [
+    "none",
+    "C0",
+    "N00",
+    "N01",
+    "N10",
+    "N11",
+    "I0",
+    "I1",
+    "L0",
+    "L1",
+    "J",
+    "R41",
+    "R111"
+  ],
+  "fitting": {
+    "points": 2048,
+    "nominal_fraction": 0.5,
+    "coefficient_seed": 9453001,
+    "paths_per_role": 24,
+    "duration_ms": 1000.0,
+    "fit_seeds": [
+      9453101,
+      9453113,
+      9453127
+    ],
+    "dev_seeds": [
+      9453201,
+      9453211,
+      9453229
+    ],
+    "families": [
+      "doublepulse",
+      "staircase",
+      "tail_hold",
+      "tail_ramp"
+    ],
+    "initial_voltages_mv": [
+      -95.0,
+      -42.0
+    ],
+    "checkpoints": [
+      1,
+      4
+    ],
+    "sample_ticks": 128,
+    "coefficient_scale": 1.0,
+    "ridge": 0.001,
+    "whitening_floor": 1e-05,
+    "max_whitened_step_norm": 2.0,
+    "current_weight": 1.0,
+    "gate_weight": 1.0,
+    "crossing_weight": 1.0,
+    "imitation_weight": 0.1,
+    "precision": "FP64 NumPy causal sensitivity/linear solves; frozen FP32 quantized features/logits. Check actual FP32 materialized forward on DEV at checkpoints1/4. No optimizer state sharing or hidden resets.",
+    "objective": "Equal macro-normalized coefficient rows plus selected path rows. N00/N10 coefficient-only; N01/N11 add nominal teacher gate/current preservation and bounded f011-current imitation on nominal FIT histories. I0 coefficient-only; I1 adds original10%-transient crossing-neighbor current rows. L0/L1 add gate and current path rows on all FIT histories. Same data and unchanged evaluator.",
+    "sensitivities": "Exact causal recurrence Jacobian for existing h/u/z readout heads on imposed FIT paths, with frozen other gates. Regularized whitened Gauss-Newton, independent seed solves, step norm cap2. No new features, layers or runtime coefficient formulas.",
+    "nominal_guard": "Teacher-current/gate FIT rows, not a promise of no regressions. Actual all-channel previously-passing DEV identities must remain passed; reject candidates introducing any new DEV failure.",
+    "nomination": "For each family: candidates with no new all-channel/prefix failure vs C0 on fresh DEV. Rank highest all-prefix TARGET current+gate pass count, then smallest target worst normalized severity, earlier checkpoint/registered order. C0 fallback. Freeze component choices before coupled audits. J combines only these frozen heads. Report whole-model DEV outcomes as well; target acquisition never presented as a global pass."
+  },
+  "implementation_scope": "New fixed-V/Ca histories are synthetic FIT/DEV only. Opened45b native/calibration fixtures reused verbatim, checksummed. No native regeneration, no Task47 data. Native reference floors and physical-domain checks still required for interpreting all coupled results.",
+  "regression_guards": [
+    "C0 must exactly reconstruct f011 logical hash; six41r failures and FP32 controls218/234 remain explicit.",
+    "No NaTs2_t.h weight changes; its index7 is probed as attribution control, Ca_LVAst.h is index3.",
+    "Report all100/500/1000ms prefixes; no averaging away intermediate failures.",
+    "Old original45 invalid physical regimes stay diagnostic, never counted as model passes.",
+    "All13 arms evaluated at identical arm/case/seed batch shape; all-formula null control and packed/materialized parity mandatory.",
+    "41 stress and44 regressions are opened audits after nomination, never selection input."
+  ],
+  "persistence": "Persist source/member checks, fitted checkpoints and nomination before coupled phase; results per geometry/mode. Native source cache excluded from final ZIP. Full metrics plus V/Ca and target gate3/7/9/10/current1/4/5 for all arms; full18/11 tensors for C0/J. Partial/final ZIP on failure/success, Kaggle persisted output and local SHA/CRC readback. DB local2 verified bundles.",
+  "runtime_budget": "One private T4 run, worker5400seconds, outer7200seconds. No automatic relaunch on failure. FIT/DEV Jacobian solves on CPU avoid long-BPTT overhead; CUDA resident comparisons and shared seed/arm batches. Eager execution timings descriptive, no speedup claim."
+}

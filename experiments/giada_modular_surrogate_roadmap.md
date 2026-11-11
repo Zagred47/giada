@@ -1537,6 +1537,26 @@ si influenzano tramite il solver assiale classico?
   candidati, nessuna modifica a18 gate, solver, astrazione o soglie.
   Regressioni su44,45 e stress41; conferma47 intatta. Risultati da verificare,
   non autorizzazione automatica alla46 o promozione delle riparazioni.
+  **11 novembre2026 — audit45b e disegno45c:** f011 (entrambe le teste Ih)
+  conserva66/72 stress e migliora45 a69/68/68 di72 ai tre prefissi;
+  f111 raggiunge72/71/71 ma regredisce a64/72 nello stress.45c parte da
+  f011, senza promozione di release: [disegno](task45c_design_v1.json).
+  Correzione documentale esplicita: il gate indice3 che resta errato a−130mV
+  è **Ca_LVAst.h**, non NaTs2_t.h (indice7), come risulta dalle18tracce.
+  Confronti previsti: Nap_h rate-only/joint ×preservazione funzionale;
+  Ih coefficient-only/crossing-aware sul nodo intermedio; Ca_LVAst.h
+  rate-only/joint, NaTs2_t.h come controllo di attribuzione e combinazione
+  congelata prima dell'audit accoppiato. Soglie/18stati/solver invariati.
+  Il disegno storico precedeva l'implementazione. **11 novembre2026 — 45c
+  implementata e preregistrata:** dieci bracci principali, tre controlli,
+  checkpoint di raffinamento1/4 e selezione su nuovi FIT/DEV, prima dei
+  confronti accoppiati e degli stress. [Protocollo](task45c_preregistration_v1.json)
+  e [notebook](../notebooks/giada_task45c_preserving_kinetics.ipynb).
+  Il preflight CPU su Kaggle verifica gli hash dell'output45b già montato:
+  nessun upload locale dei payload nativi e nessuna rigenerazione NEURON.
+  Backup del DB esclusivamente locale; log e archivio finale/anche parziale
+  persistiti su Kaggle e recuperati con verifica SHA/CRC. Il lancio autorizzato
+  resta distinto dall'esito, che richiede audit; nessun successo45c dichiarato.
 - **Task 46 — Interventi spaziali e frontiera di costo** → Stimoli locali,
   blocchi selettivi e conduttanze eterogenee; ritardi/attenuazione e crossing
   dove presenti. Separare costo ionico dal solve assiale e dal traffico dati;
