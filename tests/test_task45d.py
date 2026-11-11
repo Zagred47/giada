@@ -22,6 +22,7 @@ class Task45d(unittest.TestCase):
         text=''.join(document['cells'][1]['source']);compile(text,'45d-notebook','exec')
         self.assertIn('run_task45d.py',text);self.assertIn('str(native[0]),str(checkpoints[0])',text);self.assertIn('threading.Timer(10800',text)
         self.assertIn('12000',str(k.k.main.__code__.co_consts));self.assertNotIn('training_updates_performed=0',text)
+        self.assertIn(420,k.k.main.__code__.co_consts)
     def test_feature_training_and_real_materialization(self):
         torch=self.torch;p=self.tiny();data=d.c.histories(p,'fit');po=d.pool(torch,self.base,p,data,0,'cpu')
         matched=d.pool(torch,self.base,p,data,1,'cpu');self.assertGreater(matched['v'].max(),50);self.assertLess(matched['v'].min(),-130)

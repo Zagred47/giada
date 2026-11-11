@@ -34,6 +34,7 @@ k.bundle=bundle
 tree=ast.parse(inspect.getsource(k.main))
 for node in ast.walk(tree):
     if isinstance(node,ast.keyword) and node.arg=='timeout' and isinstance(node.value,ast.Constant) and node.value.value=='7200':node.value.value='12000'
+    if isinstance(node,ast.Constant) and node.value==240:node.value=420
 exec(compile(tree,'45d_console_dispatch','exec'),k.__dict__)
 def mount():
     from kaggle.api.kaggle_api_extended import KaggleApi

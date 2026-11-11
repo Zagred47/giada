@@ -25,8 +25,13 @@
     "src/giada_teacher/task45d_learnability_execution.py": "ab1508adfefc5091b02d44f6ee7f148a7ca8367cc819948ab9dda636905b61b3",
     "src/giada_teacher/task45c_preserving_kinetics.py": "c7fc222a8b59442faaecc2f7e33f4403bdda188e8a8ed1e1b41e5d68bfc46d5e",
     "scripts/run_task45d.py": "e7291b3885363e82c32ab010d4ba6324c5aff29485a1f6f913460299a72bedf6",
-    "scripts/task45d_kaggle.py": "05ff7727c7d5c1454e32c9c651b758ed270470aafc375775d0701d7f3b637ba6",
+    "scripts/task45d_kaggle.py": "109cae1e7fc635a47e08769fb8b1124df02e07d34bc64fea77ff0562267eb543",
     "experiments/task45d_preregistration_v1.json": "da404050c79acb4a2b33d18094b634ae78cdd4bd009cbded5e29d589f7d9a309"
   },
-  "scope": "CPU actual checkpoint training/materialization, tiny complete fit and mocked-native short full evaluator. Not real scientific45d, not GPU timing. Runtime paired-source/stepper GPU preflight still mandatory."
+  "scope": "CPU actual checkpoint training/materialization, tiny complete fit and mocked-native short full evaluator. Not real scientific45d, not GPU timing. Runtime paired-source/stepper GPU preflight still mandatory.",
+  "dispatch_extension_test": {
+    "valid": true,
+    "scope": "Only provider timeout/monitoring window; no worker or protocol change",
+    "stderr": "test_notebook_inputs_and_timers (tests.test_task45d.Task45d.test_notebook_inputs_and_timers) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 6.132s\n\nOK\n"
+  }
 }
