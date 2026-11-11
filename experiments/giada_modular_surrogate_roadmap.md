@@ -1557,6 +1557,16 @@ si influenzano tramite il solver assiale classico?
   Backup del DB esclusivamente locale; log e archivio finale/anche parziale
   persistiti su Kaggle e recuperati con verifica SHA/CRC. Il lancio autorizzato
   resta distinto dall'esito, che richiede audit; nessun successo45c dichiarato.
+  **11 novembre2026 — audit45c e Task45d:** J migliora safe-hyper100ms
+  da66 a69/81, ma resta64/81 a1000ms e68/72 sui protocolli originali;
+  stress66/72 e44=54/54 conservati. Benchmark recuperato senza nuovo training:
+  J214.051ms integrato/batch642 vs106.085ms formula32 e129.373ms formula64;
+  nessuna accelerazione dimostrata.45d distingue budget/passo Nap, supporto
+  e adattamento delle feature esistenti, loss temporale Ih e duplicazioni
+  di esecuzione. [Protocollo45d](task45d_preregistration_v1.json) e
+  [notebook45d](../notebooks/giada_task45d_learnability_execution.ipynb).
+  Stessi18stati,dt0.1ms,soglie,readout e solver; nessun salto alla46/47.
+  Preregistrazione e backup DB locali; output completi/parziali esterni verificati.
 - **Task 46 — Interventi spaziali e frontiera di costo** → Stimoli locali,
   blocchi selettivi e conduttanze eterogenee; ritardi/attenuazione e crossing
   dove presenti. Separare costo ionico dal solve assiale e dal traffico dati;

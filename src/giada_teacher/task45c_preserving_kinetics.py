@@ -397,10 +397,10 @@ def evaluate(torch,root,source,fixtures,out,device='cuda'):
                             rows.extend(measured)
                         np.savez_compressed(dest/('traces_'+geo['id']+'_'+mode+'.npz'),voltage=pred['voltage'],calcium=pred['calcium'],
                             target_gates=pred['gates'][...,[3,7,9,10]],target_currents=pred['current'][...,[1,4,5]],
-                            full_gates_C0_J=pred['gates'][:,:,[1,10]],full_currents_C0_J=pred['current'][:,:,[1,10]])
+                            full_gates_C0_J=pred['gates'][:,:,[ARMS.index('C0'),ARMS.index('J')]],full_currents_C0_J=pred['current'][:,:,[ARMS.index('C0'),ARMS.index('J')]])
                         n.p.save_json(dest/('crossings_'+geo['id']+'_'+mode+'.json'),crossing_audit(pred,ref,geo,physical,mode))
                         n.p.save_json(dest/'results.json',rows);n.p.save_json(out/'execution.json',execution)
-                        print('[GIADA45c] '+label+'/'+geo['id']+'/'+mode+' all13 arms saved',flush=True);del pred
+                        print('[GIADA'+p.get('task','45c')+'] '+label+'/'+geo['id']+'/'+mode+' all'+str(len(ARMS))+' arms saved',flush=True);del pred
                     np.savez_compressed(dest/('reference_'+geo['id']+'.npz'),**ref)
             allrows.extend(rows)
         stress={};prior=n.contract(root)[0]
