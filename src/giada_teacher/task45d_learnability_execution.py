@@ -13,6 +13,21 @@ ORIGINAL_BENCHMARK=n.benchmark
 ARMS=('none','C0','C1','A00','A01','A10','A11','Ncap','Nline','T0','T1','J','R41','R111')
 COLS=(3,9,10,20,26,27)
 
+def prepare_training_readout(torch,device):
+    """Normalize resident cache lifetime, not the immutable historical solver.
+
+    Inference-warmed constants are cloned OUTSIDE inference mode; values,
+    dtypes and equations are unchanged. Old CUDA graphs are not reused here.
+    """
+    rows=[]
+    with torch.inference_mode(False),torch.no_grad():
+        for dtype in (torch.float32,torch.float64):
+            v=torch.empty(0,device=device,dtype=dtype);key=(str(v.device),v.dtype);before=c.t.constants(torch,v)
+            after=tuple(x.detach().clone() for x in before)
+            assert all(not torch.is_inference(x) and torch.equal(x,y) for x,y in zip(after,before))
+            c.t._CONSTANTS[key]=after;rows.append(dict(dtype=str(dtype),ordinary_tensors=True,values_bitwise_unchanged=True))
+    return rows
+
 def spec(root):
     p=json.loads((root/'experiments/task45d_preregistration_v1.json').read_text());old,cfg,ca,base=n.contract(root)
     assert p['quality']==old['quality'] and p['compartment_gates']==cfg['gates']
@@ -135,6 +150,7 @@ def fit(torch,baseline,p,out,device):
         with torch.inference_mode():checks=ORIGINAL_BENCHMARK(torch,dict(dual=baseline),baseline.parent,preflight_data,physics,small,dest,device)
         assert len(checks)==2 and all(r['all_outputs_finite'] for r in checks)
         n.p.save_json(out/'GPU_cost_preflight.json',dict(valid=True,autograd_disabled=True,scopes=2,ticks=2))
+    n.p.save_json(out/'training_readout_cache.json',dict(valid=True,rows=prepare_training_readout(torch,device),historical_source_unchanged=True))
     with zipfile.ZipFile(os.environ['GIADA_TASK45C_CHECKPOINTS']) as z:
         previous=copy.deepcopy(baseline);previous.load_state_dict(torch.load(io.BytesIO(z.read('J.pt')),map_location=device,weights_only=True))
     fits=[role(torch,baseline,p,'fit',bool(s),out,device) for s in (0,1)]
@@ -151,6 +167,20 @@ def fit(torch,baseline,p,out,device):
         data=pools[s];tensors[label]={k:torch.tensor(data[k],device=device,dtype=torch.float64 if k not in ('v','ca') else torch.float32) for k in ('v','ca','u','z','raw','label')}
         tensors[label]['initial']=torch.tensor(common_initial,device=device,dtype=torch.float64)
         n.p.save_json(out/(label+'_projection.json'),view.probes)
+    if device=='cuda':
+        # Exercise the actual inference-warmed cache -> backward -> Adam path
+        # before spending the registered training budget. Scratch copies only.
+        for label in ('A00','A01'):
+            scratch=copy.deepcopy(views[label]);groups=[dict(params=[scratch.theta],lr=p['matrix']['theta_lr'])]
+            if p['matrix']['arms'][label]['adapt_features']:groups.append(dict(params=[scratch.model.parent.a,scratch.model.parent.b],lr=p['matrix']['trunk_lr']))
+            opt=torch.optim.Adam(groups,foreach=False)
+            for _ in range(2):
+                opt.zero_grad(set_to_none=True);loss=train_loss(torch,scratch,tensors[label],torch.arange(16,device=device),p).sum();assert bool(torch.isfinite(loss));loss.backward()
+                clip_group(torch,[scratch.theta],p['matrix']['gradient_norm_per_seed_group']);clip_group(torch,[scratch.model.parent.a,scratch.model.parent.b],p['matrix']['gradient_norm_per_seed_group']);opt.step()
+            assert all(bool(torch.isfinite(q).all()) for q in scratch.parameters())
+        del scratch,opt,groups
+        n.p.save_json(out/'GPU_training_transition_preflight.json',dict(valid=True,inference_then_backward_then_Adam=True,scratch_steps_per_style=2,scratch_updates_discarded=True,registered_updates_consumed=0))
+        print('[GIADA45d] inference-to-training preflight passed; scratch updates discarded',flush=True)
     # All arms share minibatch indices and update times. Seeds are tensorized;
     # Adam moments and clipping are independent per seed and parameter group.
     for step in range(1,max(p['matrix']['atomic_checkpoints'])+1):
