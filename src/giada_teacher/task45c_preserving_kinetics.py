@@ -411,7 +411,8 @@ def evaluate(torch,root,source,fixtures,out,device='cuda'):
     assert n.weights_hash(baseline)==original_hash
     with np.load(cache/'native_shadow_traces.npz') as z:cost_data=dict(z)
     cost_cfg=n.old_native.x.calibration_config(n.contract(root)[0],cfg)
-    costs=n.benchmark(torch,dict(dual=baseline,**{k:v for k,v in models.items() if k!='C0'}),parent_control,cost_data,(cost_cfg,ca,base),p,out,device)
+    with torch.inference_mode():
+        costs=n.benchmark(torch,dict(dual=baseline,**{k:v for k,v in models.items() if k!='C0'}),parent_control,cost_data,(cost_cfg,ca,base),p,out,device)
     assert n.weights_hash(baseline)==original_hash
     summaries={}
     for panel in p['panels']:
