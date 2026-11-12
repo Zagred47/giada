@@ -12,6 +12,7 @@ class EvaluationRecovery(unittest.TestCase):
         sys.path.insert(0,str(ROOT/'scripts'));import task45d_evaluation_kaggle as k
         text=''.join(k.notebook('a'*40,'b'*64)['cells'][1]['source']);compile(text,'evaluation-recovery','exec')
         self.assertIn('run_task45d_evaluation_recovery.py',text);self.assertIn('str(saved[0]),str(checkpoints[0])',text);self.assertIn('selection_recomputed=False',text);self.assertNotIn('selection_recomputed=(out/',text)
+        self.assertNotEqual(k.k.SLUG,k.plan()['dataset'])
     def test_skip_completed_block_and_load_saved_freeze(self):
         fixtures.PreservingKinetics.setUpClass();f=fixtures.PreservingKinetics;t=f.torch;p=copy.deepcopy(r.d.spec(ROOT)[0]);p.update(duration_ms=.4,prefix_horizons_ms=[.2,.4],geometries=[p['geometries'][0]],panels=['original45']);panel=dict(p,panel='original45');geo=p['geometries'][0]
         models={k:copy.deepcopy(f.baseline) for k in r.d.ARMS[1:]};cfg,ca,base=f.cfg,f.ca,f.base

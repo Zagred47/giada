@@ -5,7 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parent))
 import task45d_kaggle as old
 from research_memory.mirror import write_json
 k=old.k;ROOT=k.ROOT;F=ROOT/'experiments/results/task45d_evaluation_v1'
-k.FOLDER=F;k.DEST=ROOT/'artifacts/task45d_evaluation_external';k.SLUG='alessandrobelli/giada-task45d-evaluation-recovery';k.OUTPUT_PATTERN=r'(kaggle_receipt\.json|task45d_eval_final\.zip|process\.log)$';k.STATUS_LABEL='45d evaluation recovery'
+k.FOLDER=F;k.DEST=ROOT/'artifacts/task45d_evaluation_external';k.SLUG='alessandrobelli/giada-task45d-evaluation-completion';k.OUTPUT_PATTERN=r'(kaggle_receipt\.json|task45d_eval_final\.zip|process\.log)$';k.STATUS_LABEL='45d evaluation recovery'
 k.LAUNCH_SCOPE=dict(evaluation_only=True,training_updates_performed=0,selection_recomputed=False,thresholds_changed=False,abstraction_changed=False)
 def plan():return json.loads((ROOT/'experiments/task45d_evaluation_recovery_v1.json').read_text())
 def notebook(revision,sha):
@@ -25,7 +25,7 @@ def notebook(revision,sha):
     return doc
 def bundle(revision):
     folder=ROOT/'artifacts/task45d_eval_notebook';folder.mkdir(exist_ok=True);write_json(folder/'notebook.ipynb',notebook(revision,old.plans()[0]['source_sha256']))
-    meta=old.metadata(folder,True,k.SLUG,'GIADA Task45d evaluation recovery');meta['dataset_sources'].append(plan()['dataset']);write_json(folder/'kernel-metadata.json',meta);return folder
+    meta=old.metadata(folder,True,k.SLUG,'GIADA Task45d evaluation completion');meta['dataset_sources'].append(plan()['dataset']);write_json(folder/'kernel-metadata.json',meta);return folder
 k.bundle=bundle
 def publish():
     from kaggle.api.kaggle_api_extended import KaggleApi
