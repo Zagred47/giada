@@ -29,6 +29,8 @@ def main():
             assert z.testzip() is None
             for name in z.namelist():
                 if name.endswith('.json'):obs.append(put('observations','raw-'+name,Nome='46 '+name,Descrizione=z.read(name).decode(),**{'Artefatti dettagliati':[art]}))
+        for name in ('native_environment_verified.json','input_verified.json','local_preflight.json'):
+            obs.append(put('observations','preflight-'+name,Nome='46 '+name,Descrizione=(folder/name).read_text()))
         obs.append(put('observations','comparison',Nome='46 paired geometry/intervention/timing/cost audit',Descrizione=(folder/'comparison.json').read_text(),**{'Artefatti dettagliati':[art]}))
         put('findings','result',Nome='46 exploratory spatial transfer and cost outcome',Esito='Misto',Esperimenti=[exp],Osservazioni=obs,Risultato=json.dumps(receipt['report']),Limitazioni='Original45e incomplete and41limits retained; no automatic47release/speedup. Native-invalid cases are not model evidence; timing and cost are scoped diagnostics.')
         for arm in p['arms']:

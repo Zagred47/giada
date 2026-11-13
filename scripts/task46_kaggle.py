@@ -53,4 +53,9 @@ if __name__=='__main__':
     F.mkdir(exist_ok=True)
     if sys.argv[1]=='mount':mount()
     elif sys.argv[1]=='build':write_json(ROOT/'notebooks/giada_task46_spatial_interventions.ipynb',notebook('PINNED_BY_CONSOLE_DISPATCH',plans()[0]['source_sha256']))
-    else:k.main()
+    else:
+        if sys.argv[1]=='launch':
+            assert json.loads((F/'native_environment_verified.json').read_text())['valid'],'Native environment must pass onCPU first'
+            assert json.loads((F/'local_preflight.json').read_text())['valid']
+            assert json.loads((F/'reconstruction_receipt.json').read_text())['valid']
+        k.main()
