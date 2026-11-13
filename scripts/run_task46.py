@@ -8,11 +8,14 @@ def gpu():
     torch.set_num_threads(1);torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False;torch.use_deterministic_algorithms(True)
     p=a.n.contract(ROOT)[0];assert torch.cuda.is_available() and torch.__version__==p['torch'] and torch.cuda.get_device_name()==p['gpu']
     return torch
+def preflight_output(out):
+    scratch=out.parent/'preflight46'/'models';scratch.mkdir(parents=True,exist_ok=False);return scratch
 def main():
     source,ck45c,ck45d,out=map(Path,sys.argv[1:5]);phase=sys.argv[5] if len(sys.argv)>5 else 'driver';out.mkdir(exist_ok=True);current=phase
     try:
         if phase=='preflight':
-            torch=gpu();a.load_frozen(torch,ROOT,source,ck45c,ck45d,out,'cuda')
+            torch=gpu();scratch=preflight_output(out)
+            a.load_frozen(torch,ROOT,source,ck45c,ck45d,scratch,'cuda')
             a.n.p.save_json(out/'gpu_preflight.json',dict(valid=True,gpu=torch.cuda.get_device_name(),torch=torch.__version__,frozen_P_verified=True,training_updates=0,new_payload_upload=False))
         elif phase=='native':
             teacher=ROOT.parent/'neuron_as_deep_net';assert subprocess.check_output(['git','-C',str(teacher),'rev-parse','HEAD'],text=True).strip()==a.spec(ROOT)[0]['teacher_revision']

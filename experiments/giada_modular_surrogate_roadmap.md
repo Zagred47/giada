@@ -1611,6 +1611,11 @@ si influenzano tramite il solver assiale classico?
   solve assiale, step completo e copie host/device separati, non additivi.
   [Protocollo46](task46_preregistration_v1.json) e
   [notebook46](../notebooks/giada_task46_spatial_interventions.ipynb).
+  Primo tentativo: native completate, errore tecnico prima dei confrontiGPU
+  per cache esclusiva condivisa fra preflight e valutazione. Archivio
+  `8e48be148e2210a0de70b0639401f4c070298d894b73d816d77eccffcdb894b8`
+  preservato. Retry della stessa46 con cartella preflight separata, test
+  dedicato e pesi/ingressi/soglie/equazioni invariati; non una nuova task.
 - **Task 47 — Conferma e decisione sul livello 1** → Geometrie/seed/stimoli
   disgiunti, confronto con formula e candidato locale. Registrare limiti di
   trasferimento e risparmio reale; formulare quale costo o ridondanza rende

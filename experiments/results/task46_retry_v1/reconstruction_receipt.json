@@ -1,0 +1,31 @@
+{
+  "valid": true,
+  "freeze": {
+    "candidate": "45e/P",
+    "logical_weights_sha256": "d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+    "source45e_sha256": "16cf035671bdc4fd877a381db3bfdbf3a7a448e6d075bfb811847f41730180a8",
+    "saved_P_member_sha256": "6e1bf1cb1800a269e1200aa5ccef1c04d25016ee8f51e1c291bf83174ce8e20e",
+    "nomination_sha256": "b34c8d7d6c881db85de8eadd82a913eca5dd7537ab476a8479d6c0e3718ba364",
+    "all_saved_tensors_bitwise_equal": true,
+    "recipe": "Load45cJ; copy ONLY parent.c[:,:,26] and parent.d[:,26] from45dNline. Other tensors immutable. Not training or model selection.",
+    "inputs": [
+      {
+        "filename": "checkpoint45c.zip.bin",
+        "dataset": "alessandrobelli/giada-task45c-cost-checkpoints",
+        "sha256": "555133b7fc71719ecf459e2b04ffed8fd22a50af198bdb409735e0d8ca996afe",
+        "member": "J.pt",
+        "member_sha256": "7a40bc08c9383bcad67feed813e7c9f6459f6790e4a1dd8dda84138dd5faac81"
+      },
+      {
+        "filename": "evaluation45d.zip.bin",
+        "dataset": "alessandrobelli/giada-task45d-evaluation-recovery",
+        "sha256": "daabec1f2e998bdc538c2cd7303470d895ad30bedf2124159b1bcad6e2ebc2f7",
+        "member": "Nline.pt",
+        "member_sha256": "a42654cd15e425ac367929a6d8aab240e217de8ae5bcbcc751df350ee9a3fc97"
+      }
+    ]
+  },
+  "no_new_payload_upload": true,
+  "training_updates": 0,
+  "selection_recomputed": false
+}

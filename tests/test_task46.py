@@ -41,4 +41,17 @@ class Spatial46(unittest.TestCase):
         self.assertIn('run_task46.py',text);self.assertIn('neuron==8.2.7',text);self.assertIn('evaluation45d.zip.bin',text);self.assertIn('checkpoint45c.zip.bin',text)
         self.assertIn('str(checkpoints[0]),str(saved[0]),str(out)',text);self.assertIn('threading.Timer(10800',text);self.assertNotIn('dataset_create_new',Path(k.__file__).read_text())
         worker=(ROOT/'scripts/run_task46.py').read_text();self.assertIn("('preflight','native','gpu')",worker);self.assertIn('subprocess.run',worker)
+    def test_preflight_and_gpu_source_cache_are_distinct(self):
+        sys.path.insert(0,str(ROOT/'scripts'));import run_task46 as worker
+        t=self.torch
+        with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as tmp,patch.dict(os.environ):
+            out=Path(tmp)/'result';out.mkdir();scratch=worker.preflight_output(out);seen=[]
+            def verify(root,source,cache):
+                cache.mkdir(exist_ok=False);seen.append(cache)
+            with patch.object(a.x.repair.p.r,'verify_source',side_effect=verify),patch.object(a.n,'load_models',return_value=({'dual':self.f.old},self.f.old)):
+                hashes=[]
+                for destination in (scratch,out):
+                    models,_,_=a.load_frozen(t,ROOT,out/'unused',ROOT/'artifacts/task45c_cost_input/checkpoint45c.zip.bin',ROOT/'artifacts/task45d_evaluation_input/evaluation45d.zip.bin',destination,'cpu');hashes.append(a.n.weights_hash(models['P']))
+                with self.assertRaises(FileExistsError):a.load_frozen(t,ROOT,out/'unused',ROOT/'artifacts/task45c_cost_input/checkpoint45c.zip.bin',ROOT/'artifacts/task45d_evaluation_input/evaluation45d.zip.bin',out,'cpu')
+            self.assertNotEqual(seen[0],seen[1]);self.assertEqual(hashes,[self.p['freeze']['logical_weights_sha256']]*2)
 if __name__=='__main__':unittest.main()

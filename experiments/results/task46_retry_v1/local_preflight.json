@@ -1,0 +1,24 @@
+{
+  "valid": true,
+  "tests": [
+    {
+      "module": "tests.test_task46",
+      "returncode": 0,
+      "stdout": "[GIADA46] component cost chain4 saved\n[GIADA46] chain4/imposed all4arms and prefixes saved\n[GIADA46] chain4/autonomous all4arms and prefixes saved\n",
+      "stderr": "test_design_contrasts_and_block_isolation (tests.test_task46.Spatial46.test_design_contrasts_and_block_isolation) ... ok\ntest_frozen_recipe_and_short_complete_pipeline (tests.test_task46.Spatial46.test_frozen_recipe_and_short_complete_pipeline) ... ok\ntest_notebook_inputs_and_native_isolation (tests.test_task46.Spatial46.test_notebook_inputs_and_native_isolation) ... ok\ntest_preflight_and_gpu_source_cache_are_distinct (tests.test_task46.Spatial46.test_preflight_and_gpu_source_cache_are_distinct) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 16.404s\n\nOK\n"
+    },
+    {
+      "module": "tests.test_task44",
+      "returncode": 0,
+      "stdout": "[GIADA44] chain4/imposed all8 paired arms complete\n[GIADA44] chain4/autonomous all8 paired arms complete\n",
+      "stderr": "test_evaluate_short_integration (tests.test_task44.Localization.test_evaluate_short_integration) ... ok\ntest_legacy_endpoint_bitwise_parity (tests.test_task44.Localization.test_legacy_endpoint_bitwise_parity) ... ok\ntest_masks_and_contract (tests.test_task44.Localization.test_masks_and_contract) ... ok\ntest_notebook_and_worker (tests.test_task44.Localization.test_notebook_and_worker) ... ok\ntest_score_and_paired_contrasts (tests.test_task44.Localization.test_score_and_paired_contrasts) ... ok\ntest_spatial_state_isolation_and_rollout (tests.test_task44.Localization.test_spatial_state_isolation_and_rollout) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 8.826s\n\nOK\n"
+    }
+  ],
+  "source_sha256": {
+    "src/giada_teacher/task46_spatial_cost.py": "3748900fdd2d214644f132079236919ea79af7cb03250969ff366262efc8049f",
+    "scripts/run_task46.py": "a0dbffec6cfd65a2229640e3f0ce1acb27fa1df6137c4011433dd18b9bc0e651",
+    "scripts/task46_kaggle.py": "84259964ce2d449fc25f9aeca86be4ecd13379578a29a9f7806149f740f62eaa",
+    "experiments/task46_preregistration_v1.json": "04bad7cc71d459d80ec5e96d4b87d531abba4036113c08175796539e889be281"
+  },
+  "scope": "CPU real frozenP reconstruction, intervention isolation, axial/full-core equality, short full paired worker and prior44regression tests. NativeLinux/CUDA checks still mandatory; not scientific46results."
+}
