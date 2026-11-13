@@ -1600,6 +1600,17 @@ si influenzano tramite il solver assiale classico?
   blocchi selettivi e conduttanze eterogenee; ritardi/attenuazione e crossing
   dove presenti. Separare costo ionico dal solve assiale e dal traffico dati;
   freeze prima della conferma, senza modificare il livello di astrazione.
+  **13 novembre2026 — autorizzata come ramo esplorativo:** P della45e congelato,
+  ricomposto bitwise da45cJ + solo head26 di45dNline, già disponibili negli input
+  Kaggle. Nessun nuovo upload di checkpoint, dati nativi o DB.45e resta
+  incompleta/non superata, non rinominata come successo. Nuovo pannello appaiato
+  prossimale/distale, burst/rebound, uniformità/eterogeneità e blocchiNa/Ih
+  (24casi per geometria), scollegato/accoppiato e imposto/autonomo; formula,
+  C1,P,41r congelati;0training/0selezione; soglie originali100/500/1000ms.
+  NativeNEURON isolato daTorch, conPython3.12.11/NEURON8.2.7; costi ionici,
+  solve assiale, step completo e copie host/device separati, non additivi.
+  [Protocollo46](task46_preregistration_v1.json) e
+  [notebook46](../notebooks/giada_task46_spatial_interventions.ipynb).
 - **Task 47 — Conferma e decisione sul livello 1** → Geometrie/seed/stimoli
   disgiunti, confronto con formula e candidato locale. Registrare limiti di
   trasferimento e risparmio reale; formulare quale costo o ridondanza rende
