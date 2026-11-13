@@ -2,7 +2,10 @@
 import json,sys,time
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-import task46_kaggle as launch
+if '--retry' in sys.argv:
+    import task46_retry_kaggle as launch
+else:
+    import task46_kaggle as launch
 from research_memory.mirror import write_json
 def main():
     from kaggle.api.kaggle_api_extended import KaggleApi
@@ -25,7 +28,8 @@ def main():
                         try:events.append(json.loads(payload))
                         except ValueError:events.append(dict(data=payload))
                         if len(events)>2000:break
-    except Exception as ex:error=type(ex).__name__+': '+str(ex).split('\n')[0]
+    except Exception as ex:
+        error='idle_timeout_after_replayed_events' if events and 'timed out' in str(ex) else type(ex).__name__+': '+str(ex).split('\n')[0]
     selected=[q for q in events if isinstance(q,dict) and ('[GIADA' in q.get('data','') or any(w in q.get('data','') for w in ('Traceback','FileExistsError','Error:')))]
     write_json(launch.F/'live_log.json',dict(observed_at=time.time(),events=selected,error=error,read_only=True));print(json.dumps(dict(events=selected[-12:],connection_error=error)))
 if __name__=='__main__':main()
