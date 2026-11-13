@@ -1,0 +1,17 @@
+{
+  "complete": false,
+  "technical_failure": true,
+  "report": {
+    "valid": false,
+    "complete": false,
+    "technical_failure": true,
+    "task": "46",
+    "phase": "gpu",
+    "error": "FileExistsError(17, 'File exists')",
+    "traceback": "Traceback (most recent call last):\n  File \"/tmp/giada_task46/giada/scripts/run_task46.py\", line 22, in main\n    with torch.inference_mode():a.evaluate(torch,ROOT,source,ck45c,ck45d,out)\n                                ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/giada_task46/giada/src/giada_teacher/task46_spatial_cost.py\", line 126, in evaluate\n    p,cfg,ca,base=spec(root);models,parent,cache=load_frozen(torch,root,source,ck45c,ck45d,out,device)\n                                                 ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/giada_task46/giada/src/giada_teacher/task46_spatial_cost.py\", line 46, in load_frozen\n    cache=out.parent/'verified_source46';x.repair.p.r.verify_source(root,source,cache);os.environ['GIADA_TASK41N_FROZEN']=str(cache/'frozen_source.zip.bin')\n                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/giada_task46/giada/src/giada_teacher/task41n_evaluation_recovery.py\", line 13, in verify_source\n    cache.mkdir(exist_ok=False)\n    ~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/pathlib/_local.py\", line 722, in mkdir\n    os.mkdir(self, mode)\n    ~~~~~~~~^^^^^^^^^^^^\nFileExistsError: [Errno 17] File exists: '/tmp/giada_task46/verified_source46'\n",
+    "training_updates": 0,
+    "selection_performed": false,
+    "thresholds_changed": false
+  },
+  "no_scientific_success_claim": true
+}
