@@ -1,0 +1,24 @@
+{
+  "valid": true,
+  "tests": [
+    {
+      "module": "tests.test_task45e",
+      "returncode": 0,
+      "stdout": "[GIADA45e] N00 budget1 saved; untouched heads preserved\n[GIADA45e] N01 budget1 saved; untouched heads preserved\n[GIADA45e] N10 budget1 saved; untouched heads preserved\n[GIADA45e] N11 budget1 saved; untouched heads preserved\n[GIADA45e] Iz budget1 saved; untouched heads preserved\n[GIADA45e] Iu budget1 saved; untouched heads preserved\n[GIADA45e] original45/chain4/imposed all13 arms saved\n[GIADA45e] original45/chain4/autonomous all13 arms saved\n",
+      "stderr": "test_contract (tests.test_task45e.AnchoredRepair.test_contract) ... ok\ntest_isolation_rejects_untargeted_change (tests.test_task45e.AnchoredRepair.test_isolation_rejects_untargeted_change) ... ok\ntest_notebook (tests.test_task45e.AnchoredRepair.test_notebook) ... ok\ntest_real_tiny_fit_and_transplant (tests.test_task45e.AnchoredRepair.test_real_tiny_fit_and_transplant) ... ok\ntest_short_complete_evaluator (tests.test_task45e.AnchoredRepair.test_short_complete_evaluator) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 32.778s\n\nOK\n"
+    },
+    {
+      "module": "tests.test_task45d_cache",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_actual45d_loss_after_inference_readout (tests.test_task45d_cache.CacheTransition.test_actual45d_loss_after_inference_readout) ... ok\ntest_cold_preflight_then_backward_preserves_values_and_cache (tests.test_task45d_cache.CacheTransition.test_cold_preflight_then_backward_preserves_values_and_cache) ... ok\ntest_repairs_legacy_inference_cache (tests.test_task45d_cache.CacheTransition.test_repairs_legacy_inference_cache) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 9.389s\n\nOK\n"
+    }
+  ],
+  "source_sha256": {
+    "src/giada_teacher/task45e_anchored_repair.py": "46072882a407bce76cfc190779e24121f265d89d26a889d6fc52852a395527de",
+    "scripts/run_task45e.py": "058d6318f32f2555973d2800b74183b4dda118cc0a1205b1243292ad7615a3fd",
+    "scripts/task45e_kaggle.py": "6147e2a42675d503ff2b50021e3ac925c861a423107112aaa2fa3e79f3bf8a90",
+    "experiments/task45e_preregistration_v1.json": "13daa21e70bb18df13449979597285ac71992f3e05827cb293c21e4e8ed803b8"
+  },
+  "scope": "Actual CPU models, off-target mutation negative control, tiny all-arm refinement, short paired evaluator+execution probes, and notebook compilation. GPU resident cost/input probes still mandatory in worker."
+}

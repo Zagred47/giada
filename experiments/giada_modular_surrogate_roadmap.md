@@ -1567,6 +1567,21 @@ si influenzano tramite il solver assiale classico?
   [notebook45d](../notebooks/giada_task45d_learnability_execution.ipynb).
   Stessi18stati,dt0.1ms,soglie,readout e solver; nessun salto alla46/47.
   Preregistrazione e backup DB locali; output completi/parziali esterni verificati.
+  **13 novembre2026 — audit45d e Task45e:** valutazioni recuperate senza nuovo
+  training/selezione. Ncap/Nline71/72 originali e75/81 safe-hyper a1000ms,
+  contro68/72 e64/81 diC1;44=54/54 e stress66/72 conservati. Tuttavia tutti
+  i nuovi bracci falliscono la guardia DEV, quindiC1 resta congelato.
+  Audit per identità:18/19 regressioni dei bracci Nap riguardanoCa_LVAst.h,
+  perché la materializzazione riparte da f011 anziché conservare45cJ;
+  resta1 regressione Nap.45e isola questa composizione con un trapianto
+  del solo head Nap suC1, poi incrocia supporto FIT e loss di traiettoria.
+  Ih confronta correzione della sola velocità e di equilibrio+velocità;
+  nessun cambiamento alle soglie per le code piatte. Feature/trunk/donor e
+  colonne non bersaglio devono restare bitwise identici aC1. Benchmark
+  delle reti riparate e delle esecuzioni condivise separato dalla qualità.
+  [Protocollo45e](task45e_preregistration_v1.json),
+  [notebook45e](../notebooks/giada_task45e_anchored_repair.ipynb).
+  Nessuna promozione automatica alla46/47; evidenza aperta resta esplorativa.
 - **Task 46 — Interventi spaziali e frontiera di costo** → Stimoli locali,
   blocchi selettivi e conduttanze eterogenee; ritardi/attenuazione e crossing
   dove presenti. Separare costo ionico dal solve assiale e dal traffico dati;
