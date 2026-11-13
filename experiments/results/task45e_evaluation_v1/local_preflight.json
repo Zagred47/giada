@@ -1,0 +1,26 @@
+{
+  "valid": true,
+  "tests": [
+    {
+      "module": "tests.test_task45e_evaluation_recovery",
+      "returncode": 0,
+      "stdout": "[GIADA45e recovery] saved original45/chain4/autonomous 2/18\n",
+      "stderr": "test_no_training_selection_and_notebook (tests.test_task45e_evaluation_recovery.Evaluation45e.test_no_training_selection_and_notebook) ... ok\ntest_skip_completed_block_and_load_saved_freeze (tests.test_task45e_evaluation_recovery.Evaluation45e.test_skip_completed_block_and_load_saved_freeze) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 33.517s\n\nOK\n"
+    },
+    {
+      "module": "tests.test_task45e",
+      "returncode": 0,
+      "stdout": "[GIADA45e] N00 budget1 saved; untouched heads preserved\n[GIADA45e] N01 budget1 saved; untouched heads preserved\n[GIADA45e] N10 budget1 saved; untouched heads preserved\n[GIADA45e] N11 budget1 saved; untouched heads preserved\n[GIADA45e] Iz budget1 saved; untouched heads preserved\n[GIADA45e] Iu budget1 saved; untouched heads preserved\n[GIADA45e] original45/chain4/imposed all13 arms saved\n[GIADA45e] original45/chain4/autonomous all13 arms saved\n",
+      "stderr": "test_contract (tests.test_task45e.AnchoredRepair.test_contract) ... ok\ntest_isolation_rejects_untargeted_change (tests.test_task45e.AnchoredRepair.test_isolation_rejects_untargeted_change) ... ok\ntest_notebook (tests.test_task45e.AnchoredRepair.test_notebook) ... ok\ntest_real_tiny_fit_and_transplant (tests.test_task45e.AnchoredRepair.test_real_tiny_fit_and_transplant) ... ok\ntest_short_complete_evaluator (tests.test_task45e.AnchoredRepair.test_short_complete_evaluator) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 32.454s\n\nOK\n"
+    }
+  ],
+  "source_sha256": {
+    "src/giada_teacher/task45e_evaluation_recovery.py": "d678f22fc4ff4501f1264f7d151aa459a8a06517567b41f28c13dfdf5396806d",
+    "src/giada_teacher/task45d_evaluation_recovery.py": "a436f6ef91dfeee6520253c80dd5eb349ed6b87ce88a5e66256a54cf07b28b50",
+    "src/giada_teacher/task45e_anchored_repair.py": "46072882a407bce76cfc190779e24121f265d89d26a889d6fc52852a395527de",
+    "scripts/run_task45e_evaluation_recovery.py": "79c23e8f03aff8a4efe74156ffa2d3d1d3c37cd6bba37edf1356a549bc067352",
+    "scripts/task45e_evaluation_kaggle.py": "dd1e011bca9751fd52c196b0c7f821fc1a2299def9def814a97d3eeb408f9234",
+    "experiments/task45e_evaluation_recovery_v1.json": "d12714a187fe350351b24d8ec84c99118efab1fd3171ce38678152a165773ad0"
+  },
+  "scope": "Bounded CPU real checkpoint class and full evaluation-only engine, forbid fit/choose, skip completed block, same freeze bytes and weights, original45e cost closure. No real GPU result claimed."
+}

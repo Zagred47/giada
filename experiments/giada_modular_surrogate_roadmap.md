@@ -1582,6 +1582,20 @@ si influenzano tramite il solver assiale classico?
   [Protocollo45e](task45e_preregistration_v1.json),
   [notebook45e](../notebooks/giada_task45e_anchored_repair.ipynb).
   Nessuna promozione automatica alla46/47; evidenza aperta resta esplorativa.
+  **13 novembre2026 — completamento valutazioni45e:** worker interrotto al
+  limite10800s dopo training e freezeP.30checkpoint finiti,10/18blocchi
+  completati e archivio originale verificato. P71/72 sui protocolli originali,
+  controC1=68/72; safe-hyper parziale52/54 contro42/54 (non confrontare questo
+  denominatore parziale con81). Tutti i bracci selezionati non regrediscono sul
+  nuovo DEV; P700 contro686 identità passanti. Restano8blocchi, stress e costo.
+  Recupero autorizzato esclusivamente dai checkpoint: nessun training,
+  riselezione o variazione delle soglie. Il tentativo CPU di riusare l'output
+  già suKaggle non lo trova come input montabile (run originale in errore),
+  pur essendo scaricabile e già verificato. Nuovo Dataset privato di soli
+  checkpoint/metriche congelati (70MB) richiede autorizzazione esplicita:
+  upload bloccato, nessuna GPU di recupero avviata. Tracce native e DB esclusi.
+  [Protocollo di recupero](task45e_evaluation_recovery_v1.json) e
+  [notebook](../notebooks/giada_task45e_evaluation_recovery.ipynb).
 - **Task 46 — Interventi spaziali e frontiera di costo** → Stimoli locali,
   blocchi selettivi e conduttanze eterogenee; ritardi/attenuazione e crossing
   dove presenti. Separare costo ionico dal solve assiale e dal traffico dati;
