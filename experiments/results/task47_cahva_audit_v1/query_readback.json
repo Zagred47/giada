@@ -1,0 +1,65 @@
+{
+  "valid": true,
+  "airtable_accessed": false,
+  "queries": {
+    "hypotheses": {
+      "sql": "SELECT \"Codice stabile\", Nome, Stato FROM claims WHERE \"Codice stabile\" LIKE ? ORDER BY \"Codice stabile\"",
+      "parameters": [
+        "claims-giada-task47-cahva-audit-%"
+      ],
+      "rows": [
+        {
+          "Codice stabile": "claims-giada-task47-cahva-audit-new-coupling-error-v1",
+          "Nome": "47 Ca_HVA new-coupling-error",
+          "Stato": "Contraddetta nel dominio"
+        },
+        {
+          "Codice stabile": "claims-giada-task47-cahva-audit-physical-delay-v1",
+          "Nome": "47 Ca_HVA physical-delay",
+          "Stato": "Contraddetta nel dominio"
+        },
+        {
+          "Codice stabile": "claims-giada-task47-cahva-audit-roundoff-only-v1",
+          "Nome": "47 Ca_HVA roundoff-only",
+          "Stato": "Contraddetta nel dominio"
+        },
+        {
+          "Codice stabile": "claims-giada-task47-cahva-audit-small-amplitude-error-v1",
+          "Nome": "47 Ca_HVA small-amplitude-error",
+          "Stato": "Supportata nel dominio"
+        },
+        {
+          "Codice stabile": "claims-giada-task47-cahva-audit-support-switch-v1",
+          "Nome": "47 Ca_HVA support-switch",
+          "Stato": "Supportata nel dominio"
+        }
+      ]
+    },
+    "critical_samples": {
+      "sql": "SELECT json_extract(Descrizione,'$.reference[1983]') AS reference_ma_cm2, json_extract(Descrizione,'$.imposed_seed17[1983]') AS imposed_ma_cm2, json_extract(Descrizione,'$.autonomous_seed17[1983]') AS autonomous_ma_cm2 FROM observations WHERE \"Codice stabile\"=?",
+      "parameters": [
+        "observations-giada-task47-cahva-audit-critical_traces.json-v1"
+      ],
+      "rows": [
+        {
+          "reference_ma_cm2": -7.18801748007536e-05,
+          "imposed_ma_cm2": -7.183008710853755e-05,
+          "autonomous_ma_cm2": -7.18303126632236e-05
+        }
+      ]
+    },
+    "diagnosis": {
+      "sql": "SELECT json_extract(Risultato,'$.factual_diagnosis') AS diagnosis,json_extract(Risultato,'$.threshold_samples[0].weak_peak_relative_error') AS weak_peak_relative_error,json_extract(Risultato,'$.official_task47_verdict_unchanged') AS original_verdict FROM findings WHERE \"Codice stabile\"=?",
+      "parameters": [
+        "findings-giada-task47-cahva-audit-mechanism-v1"
+      ],
+      "rows": [
+        {
+          "diagnosis": "Small real amplitude approximation at the final weak response crosses the global10% classification boundary. Global last-active-index then compares different response islands (198.3vs153.4ms), inflating that support difference into44.9ms of apparent offset error. The weak response peak is at198.3ms in both model and reference; not a44.9ms physical relaxation delay. Not solely floating-point rounding.",
+          "weak_peak_relative_error": 0.0006968225175521731,
+          "original_verdict": "NO_GO:143/144at500and1000ms per mode"
+        }
+      ]
+    }
+  }
+}
