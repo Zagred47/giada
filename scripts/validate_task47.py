@@ -9,7 +9,7 @@ def main():
     for module in ('tests.test_task47','tests.test_task46'):
         result=subprocess.run([sys.executable,'-m','unittest',module,'-v'],cwd=ROOT,capture_output=True,text=True)
         rows.append(dict(module=module,returncode=result.returncode,stdout=result.stdout,stderr=result.stderr));print(result.stderr,flush=True)
-    names=['src/giada_teacher/task47_independent_confirmation.py','scripts/run_task47.py','scripts/task47_kaggle.py','experiments/task47_preregistration_v1.json']
+    names=['src/giada_teacher/task47_independent_confirmation.py','scripts/run_task46.py','scripts/run_task47.py','scripts/task47_kaggle.py','scripts/task47_retry_kaggle.py','tests/test_task47.py','experiments/task47_preregistration_v1.json']
     proof=dict(valid=all(r['returncode']==0 for r in rows),tests=rows,source_sha256={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in names},scope='Real CPU frozenP short worker, paired intervention identity, disjoint geometry/input design, unchanged46regressions. Not GPU/native47scientific results.')
     write_json(folder/'local_preflight.json',proof);assert proof['valid']
     for name in ('input_verified.json','native_environment_verified.json'):

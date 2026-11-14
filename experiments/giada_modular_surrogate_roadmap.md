@@ -1636,6 +1636,14 @@ si influenzano tramite il solver assiale classico?
   nessuna autorizzazione automatica della48 o riqualificazione della45e.
   [Protocollo47](task47_preregistration_v1.json),
   [notebook47](../notebooks/giada_task47_independent_confirmation.ipynb).
+  **Primo tentativo47 non valido:** il driver47 richiamava `run_task46.py`
+  nei sottoprocessi, eseguendo native eGPU sulle geometrie46. Exit0 non è una
+  conferma indipendente e non è un NO-GO del modello. Il tentativo resta
+  conservato. Retry dello stesso protocollo47 con entrypoint47 esplicito,
+  test sui figli reali e verifica fail-closed di hash del piano, geometrie e
+  seed in ogni fase, più controllo delle geometrie effettive nei risultati.
+  Nessuna modifica di pesi, soglie, dati preregistrati o astrazione;
+  [notebook del retry](../notebooks/giada_task47_protocol_retry.ipynb).
 
 ### ✅ Uscita del blocco 2
 

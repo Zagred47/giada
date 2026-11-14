@@ -4,20 +4,23 @@
     {
       "module": "tests.test_task47",
       "returncode": 0,
-      "stdout": "[GIADA47] 47_chain5/imposed all4arms and prefixes saved\n[GIADA47] 47_chain5/autonomous all4arms and prefixes saved\n",
-      "stderr": "test_notebook_and_phase_cache_fix (tests.test_task47.Confirmation47.test_notebook_and_phase_cache_fix) ... ok\ntest_prospective_disjoint_and_paired (tests.test_task47.Confirmation47.test_prospective_disjoint_and_paired) ... ok\ntest_real_short_paired_worker (tests.test_task47.Confirmation47.test_real_short_paired_worker) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 19.827s\n\nOK\n"
+      "stdout": "[GIADA47] phase preflight\n[GIADA47] phase native\n[GIADA47] phase gpu\n[GIADA47] 47_chain5/imposed all4arms and prefixes saved\n[GIADA47] 47_chain5/autonomous all4arms and prefixes saved\n",
+      "stderr": "test_notebook_and_phase_cache_fix (tests.test_task47.Confirmation47.test_notebook_and_phase_cache_fix) ... ok\ntest_prospective_disjoint_and_paired (tests.test_task47.Confirmation47.test_prospective_disjoint_and_paired) ... ok\ntest_real_child_routing_and_parent_identity_checks (tests.test_task47.Confirmation47.test_real_child_routing_and_parent_identity_checks) ... ok\ntest_real_short_paired_worker (tests.test_task47.Confirmation47.test_real_short_paired_worker) ... ok\ntest_rejects_completed_but_wrong_protocol (tests.test_task47.Confirmation47.test_rejects_completed_but_wrong_protocol) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 23.624s\n\nOK\n"
     },
     {
       "module": "tests.test_task46",
       "returncode": 0,
       "stdout": "[GIADA46] component cost chain4 saved\n[GIADA46] chain4/imposed all4arms and prefixes saved\n[GIADA46] chain4/autonomous all4arms and prefixes saved\n",
-      "stderr": "test_design_contrasts_and_block_isolation (tests.test_task46.Spatial46.test_design_contrasts_and_block_isolation) ... ok\ntest_frozen_recipe_and_short_complete_pipeline (tests.test_task46.Spatial46.test_frozen_recipe_and_short_complete_pipeline) ... ok\ntest_notebook_inputs_and_native_isolation (tests.test_task46.Spatial46.test_notebook_inputs_and_native_isolation) ... ok\ntest_preflight_and_gpu_source_cache_are_distinct (tests.test_task46.Spatial46.test_preflight_and_gpu_source_cache_are_distinct) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 17.732s\n\nOK\n"
+      "stderr": "test_design_contrasts_and_block_isolation (tests.test_task46.Spatial46.test_design_contrasts_and_block_isolation) ... ok\ntest_frozen_recipe_and_short_complete_pipeline (tests.test_task46.Spatial46.test_frozen_recipe_and_short_complete_pipeline) ... ok\ntest_notebook_inputs_and_native_isolation (tests.test_task46.Spatial46.test_notebook_inputs_and_native_isolation) ... ok\ntest_preflight_and_gpu_source_cache_are_distinct (tests.test_task46.Spatial46.test_preflight_and_gpu_source_cache_are_distinct) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 16.284s\n\nOK\n"
     }
   ],
   "source_sha256": {
-    "src/giada_teacher/task47_independent_confirmation.py": "cb5a89f8c79ba73675d43a9930c61b349735359aff51dfdfb8df5c936ea1d89b",
-    "scripts/run_task47.py": "e0791cc9a8571d6b0d6b4ea2fe8bd85f1fdfa6423ac6159e9a6f1e25cea540f6",
+    "src/giada_teacher/task47_independent_confirmation.py": "fe1f762dd0c696c0d4099583a53d96be4fe5d4b0b890b356e1d0c4a2fd82a590",
+    "scripts/run_task46.py": "4a51218807f05a1dcc75492d1878e2094fcb46f7d9e8be372a1369262fcec629",
+    "scripts/run_task47.py": "b1b39c8995c5750d7038fd4e7a1f539847568fcc68f39278e4b3f4fd3bd2152b",
     "scripts/task47_kaggle.py": "773ca50935fb333b97116484f6e6f6d00c1559c22ac60c063e871d986f10ac9e",
+    "scripts/task47_retry_kaggle.py": "ed6a60a1484dc2fafc2dbfcf56a7f6e893d2acfed02a649d29fde693483af1ac",
+    "tests/test_task47.py": "6dd1d4b8dda82eb7c280431715aa489df263fb88460fb5806e4435977d9cfc06",
     "experiments/task47_preregistration_v1.json": "f0cb84203948fa46a83f6830f0296777efd21e6a4e159faac1127bb0359da161"
   },
   "scope": "Real CPU frozenP short worker, paired intervention identity, disjoint geometry/input design, unchanged46regressions. Not GPU/native47scientific results."

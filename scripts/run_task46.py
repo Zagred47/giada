@@ -1,5 +1,5 @@
 """Isolate CUDA/native phases, fail loudly and preserve each completed block."""
-import json,os,subprocess,sys,traceback
+import hashlib,json,os,subprocess,sys,traceback
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from src.giada_teacher import task46_spatial_cost as a
@@ -10,9 +10,15 @@ def gpu():
     return torch
 def preflight_output(out):
     scratch=out.parent/'preflight46'/'models';scratch.mkdir(parents=True,exist_ok=False);return scratch
-def main():
+def protocol_identity(plan):
+    return dict(task=plan['task'],plan_sha256=hashlib.sha256(json.dumps(plan,sort_keys=True,separators=(',',':')).encode()).hexdigest(),geometries=[dict(id=g['id'],nodes=len(g['parents'])) for g in plan['geometries']],input_seeds=plan.get('input_seeds',[]))
+
+def main(entrypoint=None):
     source,ck45c,ck45d,out=map(Path,sys.argv[1:5]);phase=sys.argv[5] if len(sys.argv)>5 else 'driver';out.mkdir(exist_ok=True);current=phase
     try:
+        plan=a.spec(ROOT)[0];identity=protocol_identity(plan)
+        a.n.p.save_json(out/('executed_protocol_'+phase+'.json'),identity)
+        if phase=='identity':return  # Read-only routing probe; never produces a scientific report.
         if phase=='preflight':
             torch=gpu();scratch=preflight_output(out)
             a.load_frozen(torch,ROOT,source,ck45c,ck45d,scratch,'cuda')
@@ -29,7 +35,9 @@ def main():
                 print('[GIADA'+a.spec(ROOT)[0]['task']+'] phase '+current,flush=True)
                 executable=os.environ.get('GIADA_NATIVE_PYTHON',sys.executable) if current=='native' else sys.executable
                 env=dict(os.environ,PATH=str(Path(executable).parent)+os.pathsep+os.environ.get('PATH',''))
-                subprocess.run([executable,'-u',__file__,str(source),str(ck45c),str(ck45d),str(out),current],cwd=ROOT,check=True,env=env)
+                subprocess.run([executable,'-u',str(entrypoint or Path(__file__).resolve()),str(source),str(ck45c),str(ck45d),str(out),current],cwd=ROOT,check=True,env=env)
+                observed=json.loads((out/('executed_protocol_'+current+'.json')).read_text())
+                assert observed==identity,'Child protocol mismatch: '+current
     except BaseException as ex:
         report=dict(valid=False,complete=False,technical_failure=True,task=a.spec(ROOT)[0]['task'],phase=current,error=repr(ex),traceback=traceback.format_exc(),training_updates=0,selection_performed=False,thresholds_changed=False)
         a.n.p.save_json(out/'failure_report.json',report)

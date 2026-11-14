@@ -1,4 +1,4 @@
-import copy,json,sys,tempfile,unittest
+import copy,json,subprocess,sys,tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 import numpy as np
@@ -31,9 +31,29 @@ class Confirmation47(unittest.TestCase):
                     ref,_=a.y.rollout(t,None,p['geometries'][0],p,self.cfg,self.ca,self.base,'cpu',a.ARMS)
                 np.savez_compressed(out/f'native_{p["geometries"][0]["id"]}.npz',**{k:ref[k][:,0,0] for k in ('voltage','calcium','gates')});(out/'native_floor.json').write_text('{"valid":true}')
                 with patch.object(a,'load_frozen',return_value=(models,self.f.old,cache)),patch.object(a.d,'ORIGINAL_BENCHMARK',return_value=[]),patch.object(a,'component_benchmark',return_value=[]):a.evaluate(t,ROOT,None,None,None,out,'cpu')
-                q.finalize(out);r=json.loads((out/'final_report.json').read_text());self.assertEqual(r['task'],'47');self.assertTrue(r['all_traces_finite']);self.assertFalse(r['task48_authorized'])
+                sys.path.insert(0,str(ROOT/'scripts'));import run_task46 as worker
+                for phase in ('driver','preflight','native','gpu'):a.n.p.save_json(out/f'executed_protocol_{phase}.json',worker.protocol_identity(p))
+                with patch.object(q,'spec',return_value=(p,self.cfg,self.ca,self.base)):q.finalize(out)
+                r=json.loads((out/'final_report.json').read_text());self.assertEqual(r['task'],'47');self.assertTrue(r['all_traces_finite']);self.assertTrue(r['executed_protocol_verified']);self.assertFalse(r['task48_authorized'])
     def test_notebook_and_phase_cache_fix(self):
         sys.path.insert(0,str(ROOT/'scripts'));import task47_kaggle as k
         code=''.join(k.notebook('a'*40)['cells'][1]['source']);compile(code,'47-notebook','exec')
         self.assertIn('run_task47.py',code);self.assertIn('task47_final',code);self.assertNotIn('run_task46.py',code);self.assertIn('GIADA_NATIVE_PYTHON',code)
+    def test_real_child_routing_and_parent_identity_checks(self):
+        sys.path.insert(0,str(ROOT/'scripts'));import run_task46 as worker
+        original_run=subprocess.run;seen=[]
+        with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as tmp:
+            out=Path(tmp)/'out';entry=ROOT/'scripts/run_task47.py'
+            def child(command,**kwargs):
+                self.assertEqual(Path(command[2]).resolve(),entry.resolve());seen.append(command[-1])
+                result=original_run([*command[:-1],'identity'],**kwargs)
+                identity=json.loads((out/'executed_protocol_identity.json').read_text());self.assertEqual(identity['task'],'47');self.assertEqual([g['nodes'] for g in identity['geometries']],[5,9])
+                a.n.p.save_json(out/f'executed_protocol_{command[-1]}.json',identity);return result
+            with q.configured(),patch.object(sys,'argv',['worker','unused','unused','unused',str(out)]),patch.object(worker.subprocess,'run',side_effect=child):worker.main(entrypoint=entry)
+            self.assertEqual(seen,['preflight','native','gpu'])
+    def test_rejects_completed_but_wrong_protocol(self):
+        with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as tmp:
+            out=Path(tmp);a.n.p.save_json(out/'final_report.json',dict(valid=True,complete=True,task='46'))
+            with self.assertRaisesRegex(RuntimeError,'protocol identity audit failed'):q.finalize(out)
+            r=json.loads((out/'final_report.json').read_text());self.assertFalse(r['valid']);self.assertFalse(r['complete']);self.assertTrue(r['technical_failure'])
 if __name__=='__main__':unittest.main()

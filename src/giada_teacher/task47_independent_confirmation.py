@@ -1,5 +1,6 @@
 """New inputs/geometries, unchanged frozen ionic models and evaluation gates."""
-import json
+import hashlib,json
+from pathlib import Path
 from contextlib import contextmanager
 import numpy as np
 from . import task46_spatial_cost as a
@@ -46,6 +47,19 @@ def configured():
 
 def finalize(out):
     path=out/'final_report.json';r=json.loads(path.read_text())
+    if r.get('complete'):
+        root=Path(__file__).resolve().parents[2];p=spec(root)[0]
+        expected=dict(task=p['task'],plan_sha256=hashlib.sha256(json.dumps(p,sort_keys=True,separators=(',',':')).encode()).hexdigest(),geometries=[dict(id=g['id'],nodes=len(g['parents'])) for g in p['geometries']],input_seeds=p['input_seeds'])
+        try:
+            for phase in ('driver','preflight','native','gpu'):
+                assert json.loads((out/f'executed_protocol_{phase}.json').read_text())==expected,'Wrong executed protocol: '+phase
+            rows=json.loads((out/'results.json').read_text())
+            assert {q['geometry'] for q in rows}=={g['id'] for g in p['geometries']},'Wrong evaluated geometry'
+        except (AssertionError,OSError,ValueError) as error:
+            r.update(valid=False,complete=False,technical_failure=True,independent_quality_confirmation_passed=False,error='Task47 protocol identity audit failed: '+str(error))
+            a.n.p.save_json(path,r)
+            raise RuntimeError(r['error']) from error
+        r['executed_protocol_verified']=True
     r.update(task='47',task47_authorized=True,task48_authorized=False)
     if r.get('complete'):
         pools=[m for horizon in r['summary'].values() for m in horizon['P'].values()]
