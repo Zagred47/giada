@@ -1,0 +1,398 @@
+{
+  "task": "47",
+  "version": "v1",
+  "exploratory": true,
+  "training_updates": 0,
+  "selection_performed": false,
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "dt_ms": 0.1,
+  "duration_ms": 1000.0,
+  "prefix_horizons_ms": [
+    100.0,
+    500.0,
+    1000.0
+  ],
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "coupling": [
+    0.0,
+    0.35
+  ],
+  "arms": [
+    "none",
+    "C1",
+    "P",
+    "R41"
+  ],
+  "geometries": [
+    {
+      "id": "47_chain5",
+      "parents": [
+        -1,
+        0,
+        1,
+        2,
+        3
+      ],
+      "lengths_um": [
+        87.0,
+        123.0,
+        96.0,
+        141.0,
+        108.0
+      ],
+      "diameters_um": [
+        1.35,
+        1.12,
+        0.93,
+        0.84,
+        1.04
+      ],
+      "ra_ohm_cm": 145.0
+    },
+    {
+      "id": "47_branch9",
+      "parents": [
+        -1,
+        0,
+        0,
+        1,
+        1,
+        2,
+        2,
+        4,
+        6
+      ],
+      "lengths_um": [
+        91.0,
+        117.0,
+        133.0,
+        82.0,
+        126.0,
+        104.0,
+        147.0,
+        98.0,
+        112.0
+      ],
+      "diameters_um": [
+        1.4,
+        1.15,
+        1.08,
+        0.9,
+        0.87,
+        0.95,
+        0.81,
+        0.78,
+        0.74
+      ],
+      "ra_ohm_cm": 155.0
+    }
+  ],
+  "quality": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "compartment_gates": {
+    "max_shadow_current_error_na": 0.0005,
+    "max_shadow_receptor_state_error": 1e-06,
+    "max_release_mismatch_count": 0,
+    "max_rng_sequence_difference": 0,
+    "max_formula_floor_pooled_voltage_rmse_mv": 0.2,
+    "max_formula_floor_worst_voltage_rmse_mv": 0.5,
+    "max_formula_floor_worst_cai_rmse_mM": 1e-06,
+    "max_candidate_pooled_voltage_rmse_mv": 1.0,
+    "max_candidate_worst_voltage_rmse_mv": 2.0,
+    "max_candidate_worst_cai_rmse_mM": 1e-05,
+    "min_synaptic_voltage_effect_mv": 0.2
+  },
+  "passive_gates": {
+    "max_single_native_discrete_error_mv": 1e-07,
+    "max_single_fine_endpoint_error_mv": 0.01,
+    "max_paired_native_discrete_error_mv": 1e-06,
+    "max_capacitive_balance_error_na": 1e-10,
+    "max_axial_antisymmetry_error_na": 1e-12,
+    "max_native_axial_ohm_error_na": 1e-10,
+    "max_disconnected_cross_effect_mv": 1e-08,
+    "max_symmetric_voltage_difference_mv": 1e-08,
+    "max_equilibrium_residual_na": 1e-10,
+    "max_convergence_fine_endpoint_error_mv": 0.003
+  },
+  "freeze": {
+    "candidate": "45e/P",
+    "logical_weights_sha256": "d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+    "source45e_sha256": "16cf035671bdc4fd877a381db3bfdbf3a7a448e6d075bfb811847f41730180a8",
+    "saved_P_member_sha256": "6e1bf1cb1800a269e1200aa5ccef1c04d25016ee8f51e1c291bf83174ce8e20e",
+    "nomination_sha256": "b34c8d7d6c881db85de8eadd82a913eca5dd7537ab476a8479d6c0e3718ba364",
+    "all_saved_tensors_bitwise_equal": true,
+    "recipe": "Load45cJ; copy ONLY parent.c[:,:,26] and parent.d[:,26] from45dNline. Other tensors immutable. Not training or model selection.",
+    "inputs": [
+      {
+        "filename": "checkpoint45c.zip.bin",
+        "dataset": "alessandrobelli/giada-task45c-cost-checkpoints",
+        "sha256": "555133b7fc71719ecf459e2b04ffed8fd22a50af198bdb409735e0d8ca996afe",
+        "member": "J.pt",
+        "member_sha256": "7a40bc08c9383bcad67feed813e7c9f6459f6790e4a1dd8dda84138dd5faac81"
+      },
+      {
+        "filename": "evaluation45d.zip.bin",
+        "dataset": "alessandrobelli/giada-task45d-evaluation-recovery",
+        "sha256": "daabec1f2e998bdc538c2cd7303470d895ad30bedf2124159b1bcad6e2ebc2f7",
+        "member": "Nline.pt",
+        "member_sha256": "a42654cd15e425ac367929a6d8aab240e217de8ae5bcbcc751df350ee9a3fc97"
+      }
+    ]
+  },
+  "reference41r": {
+    "format": "giada-exploratory-transition-v1",
+    "date": "2026-11-10",
+    "candidate": "41r/timing_frozen_k",
+    "logical_weights_sha256": "a8c8240648022024faa4aac66a5f4d0adba6952cea647cc6494594c6e5ca08e6",
+    "baseline_weights_sha256": "d5b7a92d2d0fe350c79e97879003570afefc8eb4b45026e148ef5c4a338d0cd0",
+    "heads_path": "experiments/results/task41r_protocol_v1/heads_timing_frozen_k.npz",
+    "heads_file_sha256": "426bd95fb229d3c0c877a5663bde0449fa7d9b5edd64e8d9bd29e7b73ccb45a8",
+    "full_state_archive": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task41v_kaggle_external\\task41v_final.zip",
+    "full_state_archive_sha256": "2dfeb62292db5fa60f7748e8e812145289169b5bbc7b23cb70d00e9c85baba3e",
+    "full_state_member": "frozen_incumbent.pt",
+    "full_state_member_sha256": "39497ead2480f477f1e3581762a91a7406a9324109f1a93d43e1137f88871284",
+    "source_revision": "6734cc2137f6ba3235956876cb07e7019a544bb7",
+    "stress": {
+      "passed": 66,
+      "total": 72,
+      "failed": [
+        [
+          17,
+          "doublepulse_recovery",
+          9410173,
+          1,
+          "low_mixed"
+        ],
+        [
+          17,
+          "near_threshold_staircase",
+          9410143,
+          1,
+          "calcium_mix"
+        ],
+        [
+          29,
+          "calcium_swing",
+          9410173,
+          0,
+          "mixed_diagonal"
+        ],
+        [
+          43,
+          "doublepulse_recovery",
+          9410173,
+          1,
+          "low_mixed"
+        ],
+        [
+          43,
+          "calcium_swing",
+          9410173,
+          0,
+          "mixed_diagonal"
+        ],
+        [
+          43,
+          "near_threshold_staircase",
+          9410143,
+          1,
+          "calcium_mix"
+        ]
+      ]
+    },
+    "native": {
+      "autonomous/primary": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 330,
+        "responses_total": 336,
+        "failed_responses": [
+          {
+            "case": 106,
+            "seed": 17
+          },
+          {
+            "case": 122,
+            "seed": 17
+          },
+          {
+            "case": 106,
+            "seed": 29
+          },
+          {
+            "case": 122,
+            "seed": 29
+          },
+          {
+            "case": 106,
+            "seed": 43
+          },
+          {
+            "case": 122,
+            "seed": 43
+          }
+        ],
+        "passed": false
+      },
+      "autonomous/voltage_solve64": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      },
+      "imposed/primary": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      },
+      "imposed/voltage_solve64": {
+        "trajectory_passed": 528,
+        "trajectory_total": 528,
+        "responses_passed": 336,
+        "responses_total": 336,
+        "failed_responses": [],
+        "passed": true
+      }
+    },
+    "known_offset_failures_ms": {
+      "K_Pst": [
+        0.7,
+        1.1,
+        4.4,
+        4.5
+      ],
+      "Nap_Et2": [
+        0.8,
+        1.8
+      ]
+    },
+    "offset_threshold_ms": 0.3,
+    "original_fp32_failed_checks": [
+      218,
+      234
+    ],
+    "task41_original_gate_passed": false,
+    "task42_exploratory_authorized": true,
+    "task42_qualified_release": false,
+    "thresholds_changed": false,
+    "abstraction_changed": false,
+    "task42_launched": false,
+    "future_tasks_automatically_authorized": false,
+    "decision": "Stop serial41 repairs; advance under explicit accepted limitations, not retroactive qualification.",
+    "conditions": [
+      "Keep teacher/formula and frozen41r controls paired.",
+      "Validate passive/axial reference floors, units and balances before interpreting active transfer.",
+      "Separate inherited local failures, new failures and coupling amplification by case identity.",
+      "No privileged teacher corrections online, hidden refit, new solver or abstraction change.",
+      "Keep original quality gates and full failure reporting; no aggregate cancellation of regressions.",
+      "No general ELM superiority, teacher equivalence or integrated speedup claim.",
+      "Reopen41 repairs only for a concrete downstream blocker or genuinely new discriminating hypothesis."
+    ],
+    "speed_scope": "Historical~8x isolated resident ionic core; current integrated benchmark not a qualified speedup.",
+    "roadmap": "experiments/giada_modular_surrogate_roadmap.md"
+  },
+  "cost": {
+    "ticks": 80,
+    "repetitions": 30,
+    "batches": [
+      1,
+      642,
+      4096
+    ]
+  },
+  "teacher_revision": "074c4666300a8ad246601dab179a97a6942f0f29",
+  "factorial": {
+    "stimulus_sites": [
+      "proximal",
+      "distal"
+    ],
+    "forms": [
+      "irregular_burst",
+      "long_rebound"
+    ],
+    "densities": [
+      "uniform",
+      "graded"
+    ],
+    "coupling": [
+      0.0,
+      0.35
+    ],
+    "blocks": [
+      "none",
+      "sodium",
+      "Ih"
+    ],
+    "blocked_subset": "irregular_burst+graded only, both sites/coupling; same waveform for blocked/unblocked counterparts",
+    "cases_per_geometry": 24,
+    "information": "Frozen model seeds17/29/43 are not new training seeds. Disjoint input RNG seeds9471103/9471127 generate new waveforms; two new physical geometries. Same inputs across all arms."
+  },
+  "hypotheses": [
+    {
+      "id": "H1",
+      "contrast": "FrozenP generalizes to new geometry and input seeds under unchanged per-case gates; no candidate repair or post-hoc selection."
+    },
+    {
+      "id": "H2",
+      "contrast": "Imposed/autonomous and disconnected/coupled paired contrasts separate inherited ionic errors from feedback amplification."
+    },
+    {
+      "id": "H3",
+      "contrast": "Matched sodium/Ih block, input location and density perturbations preserve qualitative responses; report actual reference spiking support, never count absent events as demonstrated spike fidelity."
+    },
+    {
+      "id": "H4",
+      "contrast": "Unchanged resident/component cost benchmark tests reproducibility of46cost frontier; distinguish ionic implementation overhead from axial solve and transfers, no speedup inferred from accuracy."
+    }
+  ],
+  "execution": "Four frozen arm lanes Ã—3seeds; one canonical run pergeometry shared by imposed/autonomous. Native generation in isolated process beforeTorch evaluation. No source/native/DB payload upload; only existing private inputs.",
+  "cost_scope": "Existing single-compartment ionic/integrated benchmark plus coupled component profiler. Component timings at fixed state are non-additive and not whole-model speedups. Local ionic port still computes canonical masked branches; report this explicit overhead, do not disguise it.",
+  "progression": "User approved proceeding after46. Independent47evaluation only; no automatic48launch or qualification of unfinished45e. Quality and cost verdicts remain separate.",
+  "limits": [
+    "45e10/18blocks observed, stress/regression44/cost incomplete. P71/72 original,52/54partialhyper, Ih0.9ms and gate max0.04749 at-130mV persist; unchanged gates remain failed.",
+    "30saved45echeckpoints finite; P700DEV versus686C1, no newDEVfailures. Not independent confirmation.",
+    "Same18states/analytic readout/calcium/membrane/synapses and level-one abstraction. No full morphology/network validation.",
+    "Native passive/active floors remain authoritative: invalid references exclude scientific judgments, not silently waived.",
+    "No automatic release, biological equivalence, speedup or task47claim; all outcomes including partial/technical failure persisted."
+  ],
+  "input_seeds": [
+    9471103,
+    9471127
+  ],
+  "independence": "Geometry parent arrays, lengths, diameters, resistivity and stochastic input waveforms differ from46. No new model seeds: same immutable trained ensemble. Input seed is fixed per geometry and shared across causal contrasts.",
+  "decision_rule": "Technical validity requires finite weights/traces, frozen hash, endpoint/null parity, valid native floors. Quality confirmation requires every registered eligible P current/compartment case at every horizon and mode to pass; zero eligible cases cannot pass. Failed/unsupported native or event cases stay explicit. Release/speedup not authorized; cost is a separate measured frontier. No thresholds waived by averages."
+}

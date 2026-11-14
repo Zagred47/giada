@@ -26,12 +26,12 @@ def main():
         else:
             a.n.p.save_json(out/'preregistration.json',a.spec(ROOT)[0])
             for current in ('preflight','native','gpu'):
-                print('[GIADA46] phase '+current,flush=True)
+                print('[GIADA'+a.spec(ROOT)[0]['task']+'] phase '+current,flush=True)
                 executable=os.environ.get('GIADA_NATIVE_PYTHON',sys.executable) if current=='native' else sys.executable
                 env=dict(os.environ,PATH=str(Path(executable).parent)+os.pathsep+os.environ.get('PATH',''))
                 subprocess.run([executable,'-u',__file__,str(source),str(ck45c),str(ck45d),str(out),current],cwd=ROOT,check=True,env=env)
     except BaseException as ex:
-        report=dict(valid=False,complete=False,technical_failure=True,task='46',phase=current,error=repr(ex),traceback=traceback.format_exc(),training_updates=0,selection_performed=False,thresholds_changed=False)
+        report=dict(valid=False,complete=False,technical_failure=True,task=a.spec(ROOT)[0]['task'],phase=current,error=repr(ex),traceback=traceback.format_exc(),training_updates=0,selection_performed=False,thresholds_changed=False)
         a.n.p.save_json(out/'failure_report.json',report)
         if not (out/'final_report.json').exists():a.n.p.save_json(out/'final_report.json',report)
         raise

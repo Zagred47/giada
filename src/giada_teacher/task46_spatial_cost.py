@@ -120,7 +120,7 @@ def component_benchmark(torch,models,p,cfg,ca,base,out,device):
                     if device=='cuda':torch.cuda.synchronize()
                     samples[name][scope].append(1000*(time.perf_counter()-start))
         results.append(dict(geometry=geo['id'],actual_sites_per_model=3*len(design(geo,p)[0])*len(geo['parents']),ticks=p['cost']['ticks'],samples_wall_ms=samples,parity=parity,non_additive=True,scope='Fixed common state; component costs do not sum to autonomous runtime. Full step is original eager coupled implementation; ionic scope retains its canonical masked-branch overhead. H2D/D2H are blocking copies, not resident rollout traffic.'))
-        n.p.save_json(out/'coupled_component_cost.json',results);print('[GIADA46] component cost '+geo['id']+' saved',flush=True)
+        n.p.save_json(out/'coupled_component_cost.json',results);print('[GIADA'+p['task']+'] component cost '+geo['id']+' saved',flush=True)
     return results
 def evaluate(torch,root,source,ck45c,ck45d,out,device='cuda'):
     p,cfg,ca,base=spec(root);models,parent,cache=load_frozen(torch,root,source,ck45c,ck45d,out,device)
@@ -146,7 +146,7 @@ def evaluate(torch,root,source,ck45c,ck45d,out,device='cuda'):
                 np.savez_compressed(out/f'traces_{geo["id"]}_{mode}.npz',**pred)
                 n.p.save_json(out/f'propagation_{geo["id"]}_{mode}.json',propagation(pred,ref,geo,physical,mode));del pred
                 execution[geo['id']+'/'+mode]=info;n.p.save_json(out/'execution.json',execution);n.p.save_json(out/'results.json',rows)
-                print('[GIADA46] '+geo['id']+'/'+mode+' all4arms and prefixes saved',flush=True)
+                print('[GIADA'+p['task']+'] '+geo['id']+'/'+mode+' all4arms and prefixes saved',flush=True)
             np.savez_compressed(out/f'reference_{geo["id"]}.npz',**ref)
         with np.load(cache/'native_shadow_traces.npz') as z:cost_data=dict(z)
         physics=(n.old_native.x.calibration_config(n.contract(root)[0],cfg),ca,base)

@@ -1616,10 +1616,26 @@ si influenzano tramite il solver assiale classico?
   `8e48be148e2210a0de70b0639401f4c070298d894b73d816d77eccffcdb894b8`
   preservato. Retry della stessa46 con cartella preflight separata, test
   dedicato e pesi/ingressi/soglie/equazioni invariati; non una nuova task.
+  **14 novembre2026 — retry completato e auditato:** P144/144 per ciascun
+  orizzonte e modalità, controlli nativi/nulli/parità validi e pesi finiti
+  invariati. C1 scende a128/144 e41r a118/144 a1000ms. I crossing sono
+  effettivamente presenti solo in una parte dei riferimenti: nessuna pretesa
+  di copertura universale degli spike. Il profilo di step accoppiato resta
+  circa2.1volte più lento delle formule; non è uno speedup. Archivio finale
+  verificato SHA256 `e430563b0ce8494bbf696d3e87fe03d97a1cdc19bae02e639cb89a87e72b843e`.
 - **Task 47 — Conferma e decisione sul livello 1** → Geometrie/seed/stimoli
   disgiunti, confronto con formula e candidato locale. Registrare limiti di
   trasferimento e risparmio reale; formulare quale costo o ridondanza rende
   sensata la compressione del blocco 3, senza proclamarla già riuscita.
+  **14 novembre2026 — preparazione autorizzata:** P resta congelato bitwise,
+  controlli formula/C1/41r, nuove chain5/branch9 e seed **degli ingressi**
+  9471103/9471127 (non nuovi seed di addestramento), burst irregolari/rebound
+  nuovi; confronti imposti/autonomi, scollegati/accoppiati e interventiNa/Ih
+  appaiati. Soglie, fisica e astrazione invariate, nessun training/selezione.
+  Conferma di accuratezza e frontiera di costo hanno verdetti separati;
+  nessuna autorizzazione automatica della48 o riqualificazione della45e.
+  [Protocollo47](task47_preregistration_v1.json),
+  [notebook47](../notebooks/giada_task47_independent_confirmation.ipynb).
 
 ### ✅ Uscita del blocco 2
 
