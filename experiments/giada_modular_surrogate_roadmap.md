@@ -1733,6 +1733,10 @@ memoria che determina correnti e risposta agli interventi?
   stessi pesi iniziali per seed e controlli algebrici. Nessuna dinamica temporale
   o nuova qualifica di P. Soglie originali invariate e sintetici separati dai
   campioni raggiungibili; FP32/FP64 e zeri verificati esplicitamente.
+  **51b esito /51c:** uscita log+loss bilanciata migliora aperture minuscole,
+  ma nessun braccio supera tutte le correnti.51c confronta loss logaritmica
+  più peso assoluto0/1/10, sigmoid/log, stesso sampling e seed; selezione
+  development comune. Soglie invariate, ancora nessuna dinamica temporale.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare

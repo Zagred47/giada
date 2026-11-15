@@ -1,0 +1,15 @@
+{
+ "task":"51c","version":"v1","thresholds_changed":false,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "dt_ms":0.1,"history_ms":400,"reachable_stride":20,"synthetic_per_role":1024,
+ "roles":{"fit":{"seed":9513103,"count":36},"development":{"seed":9513127,"count":24},"fresh":{"seed":9513141,"count":24}},
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "representations":["sigmoid_zero","log_exp"],"losses":["log_only","hybrid1","hybrid10"],"seeds":[17,29,43],
+ "updates":3000,"checkpoints":[500,1500,3000],"batch_size":256,"learning_rate":0.002,"gradient_clip":1.0,
+ "loss_definition":"All arms same balanced channel/decade fit-only sampling. L=mean((log10(pred+1e-30)-log10(target+1e-30))^2)/900 + lambda*mean((pred-target)^2), lambda0/1/10. Fixed representation and lambda contrasts; same matrices perseed.",
+ "selection":"Same development score logMSE/900+absoluteMSE for every arm, earliest ties; freeze before fresh. Also save both component scores and all checkpoints. No fresh-based winner selection.",
+ "cost":{"batch":256,"repetitions":3,"scope":"Static packed18models versus analytic product; not matched-workload speedup."},
+ "hypotheses":[{"id":"H1","claim":"Adding absolute loss repairs large openings without destroying tiny-opening accuracy.","contrast":"lambda0/1/10, same representation and sampled rows."},{"id":"H2","claim":"Log output versus sigmoid changes the tradeoff.","contrast":"Two output representations under each identical hybrid objective."}],
+ "limitations":"Static full-state gate-to-opening mapping only; no memory, recurrence or compression qualification. Synthetic and reachable outputs separate. Evaluation uses unchanged amplitude thresholds on sampled trajectories, not dense temporal/event qualification.51b allarms failed; P frozen unchanged.",
+ "runtime_budget_seconds":10800,"output_budget_mb":200
+}
