@@ -1,0 +1,33 @@
+{
+  "task":"51", "version":"v1", "exploratory":true,
+  "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+  "dt_ms":0.1,"history_ms":1200,
+  "roles":{"fit":{"seed":9511103,"count":36},"development":{"seed":9511127,"count":24},"fresh":{"seed":9511141,"count":24}},
+  "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+  "seeds":[17,29,43],"updates":600,"checkpoints":[100,300,600],"batch_size":8,"chunk_ticks":1024,"learning_rate":0.001,"gradient_clip":1.0,"bptt_ticks":64,
+  "arms":[
+    {"id":"A0_B0_C0","widths":[2,3,3,1,1],"trunk":16,"initial_anchor":false,"calibrated_loss":false,"horizon_ticks":64},
+    {"id":"A1_B0_C0","widths":[2,3,3,1,1],"trunk":16,"initial_anchor":true,"calibrated_loss":false,"horizon_ticks":64},
+    {"id":"A0_B1_C0","widths":[2,3,3,1,1],"trunk":16,"initial_anchor":false,"calibrated_loss":true,"horizon_ticks":64},
+    {"id":"A1_B1_C0","widths":[2,3,3,1,1],"trunk":16,"initial_anchor":true,"calibrated_loss":true,"horizon_ticks":64},
+    {"id":"A0_B0_C1","widths":[2,3,3,1,1],"trunk":16,"initial_anchor":false,"calibrated_loss":false,"horizon_ticks":1024},
+    {"id":"A1_B0_C1","widths":[2,3,3,1,1],"trunk":16,"initial_anchor":true,"calibrated_loss":false,"horizon_ticks":1024},
+    {"id":"A0_B1_C1","widths":[2,3,3,1,1],"trunk":16,"initial_anchor":false,"calibrated_loss":true,"horizon_ticks":1024},
+    {"id":"A1_B1_C1","widths":[2,3,3,1,1],"trunk":16,"initial_anchor":true,"calibrated_loss":true,"horizon_ticks":1024}
+  ],
+  "factor_A":"Add4*mean squared difference of log10(opening+1e-8) at initialization, normalized by10decades. Otherwise no dedicated initial loss.",
+  "factor_B":"Legacy global-fit channel MSE plus0.1 opening MSE versus segment/channel normalized asinh-current squared error plus0.1 log10-opening squared error/100. Compound calibration intervention; success cannot be attributed to denominator alone.",
+  "factor_C":"64 versus1024 steps (6.4 versus102.4ms) with latent continuity and truncated BPTT every64steps. Same starting windows/update count, not same FLOPs or supervised samples.102.4ms still shorter than Nap_h timescale; no claim of complete slow-memory training coverage.",
+  "selection":"Identical development scoring for all arms: per-segment/channel normalized current MSE on512step segments at0,150,275,650ms plus initialized log-opening diagnostic. Checkpoint score is mean current MSE only; earliest tie. Freeze before fresh evaluation. No future teacher gates after initialization.",
+  "evaluation_cuts_ms":[300,400],"horizons_ms":[1,8,40,100,500,1000],"future_protocols":["rest","pulse_recovery","hyper_calcium"],
+  "probes":"Initial opening errors by channel; loss curve by member; raw reset-versus-intact current differences after100ms; latent sample traces on selected fresh cases; exact packed/member output and independent gradient checks. No gate decoder online.",
+  "cost":{"batch":24,"ticks":80,"repetitions":3,"scope":"Packed24candidate cost versus3P and canonical replicas, not per-member speedup. Padding retained. Encoding timing separately recorded."},
+  "hypotheses":[
+    {"id":"H1","claim":"Startup output is under-supervised.","contrast":"A1 versusA0 at fixedB,C; evaluate initialized log-opening error separately from later rollout."},
+    {"id":"H2","claim":"Legacy loss underweights quiescent small currents.","contrast":"B1 versusB0 at fixedA,C; report compound calibration and fresh per-channel accuracy, no threshold changes."},
+    {"id":"H3","claim":"Short reinitialized training segments prevent useful persistent memory.","contrast":"C1 versusC0 at fixedA,B, continuous latent state withTBPTT64; compare reset sensitivity and1000ms transfer."},
+    {"id":"H4","claim":"Improvements require interactions rather than a single fix.","contrast":"All8factorial cells with paired initial weights/minibatches; preserve per-seed results and training budget ladders."}
+  ],
+  "thresholds_changed":false,"limitations":"P50/49 errors retained. Physical-state initialization privileged. FixedL10/T16 architecture; no architectural capacity conclusion. No coupled or event-timing release, no per-model speedup from packed timing.",
+  "output_budget_mb":200,"runtime_budget_seconds":10800
+}

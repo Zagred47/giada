@@ -1709,11 +1709,23 @@ memoria che determina correnti e risposta agli interventi?
   checkpoint250/1000/2000 e minibatch appaiati. Encoder fisico solo all'avvio,
   ricorrenza a blocchi familiari e readout di aperture; P congelata e canonico
   separati. Selezione development prima dei fresh. Nessuna qualifica accoppiata.
+  **Esito50:** nessun braccio compatto supera i controlli di correnti/carica
+  (0/2592 ciascuno, con orizzonti ripetuti); P1818/2592. Loss development in
+  miglioramento, ma errori già all'inizio. Costo packed più basso a qualità
+  insufficiente, non speedup qualificato; padding18/32 conservato.
 - **Task 51 — Diagnosi della compressione** → Dimensione dello stato ×
   supervisione ausiliaria in una matrice mirata, ladder dati/budget, reset e
   scambio di memoria come controlli. Misurare separatamente saturazione da
   informazione persa e training insufficiente, recupero e correnti cancellate
   nel totale. Gli oracle privilegiati non sono candidati selezionabili.
+  **Primo notebook51 autorizzato:** fattoriale2x2x2 a L10/T16 fisso, tre seed
+  con pesi iniziali appaiati. A: supervisione iniziale; B: calibrazione composta
+  per correnti piccole/log-aperture; C:6.4/102.4ms con continuità dello stato e
+  TBPTT64. Checkpoint100/300/600, selezione development identica per tutti prima
+  dei fresh, P congelata e soglie invariate. C non equivale a copertura dei
+  tempi lenti di secondi; B non isola il solo denominatore. Probe iniziale,
+  stati latenti salvati e reset causale, encoding/costi separati e checkpoint
+  riprendibili; nessuna qualifica accoppiata o velocità per singolo modello.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare

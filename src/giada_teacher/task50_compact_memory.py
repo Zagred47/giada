@@ -96,7 +96,7 @@ def evaluate(torch,p,net,P,data,out,device):
                 reference=q.canonical_step(torch,reference,v.double(),ca.double(),p['dt_ms']);pg=P(v[None].expand(3,-1),ca[None].expand(3,-1),pg)
                 x=features(torch,v,ca)[None].expand(E,-1,-1);h=net.step(x,h);hr=net.step(x,hr)
                 if tick==round(100/p['dt_ms']) and future=='pulse_recovery':hr=torch.zeros_like(hr)
-            print(f'[GIADA50] evaluated cut={cut} future={future}',flush=True)
+            print(f'[GIADA{p["task"]}] evaluated cut={cut} future={future}',flush=True)
             with gzip.open(out/'evaluation.json.gz','wt',encoding='utf-8') as f:json.dump(rows,f,allow_nan=False)
     return rows
 
