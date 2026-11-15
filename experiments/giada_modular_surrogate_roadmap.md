@@ -1741,6 +1741,11 @@ memoria che determina correnti e risposta agli interventi?
   Residui su più canali, non solo aperture piccole.51d confronta readout
   condiviso/locale e loss ibrida/con termine relativo, con oracle analitico
   non selezionabile. Nessuna modifica delle soglie o della dinamica di P.
+  **51d→51e:** readout condiviso+ibrido resta migliore ma0/24perseed.
+  La località51d era confusa con poche unità per canale.51e confronta
+  shared32/shared88/local8/lineare appreso × obiettivo ibrido/raw-log;
+  least-squares fit-only come controllo di ottimizzazione distinto dai
+  candidati. Soglie invariate, problema ancora statico e P congelata.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare

@@ -1,0 +1,16 @@
+{
+ "task":"51e","version":"v1","thresholds_changed":false,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "dt_ms":0.1,"history_ms":400,"reachable_stride":20,"synthetic_per_role":1024,
+ "roles":{"fit":{"seed":9515103,"count":36},"development":{"seed":9515127,"count":24},"fresh":{"seed":9515141,"count":24}},
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "representations":["shared32","shared88","local8","linear"],"losses":["hybrid","raw_log"],"seeds":[17,29,43],
+ "updates":5000,"checkpoints":[500,1500,3000,5000],"batch_size":256,"learning_rate":0.002,"gradient_clip":1.0,
+ "architecture":"Input log10(gates)/10. Shared32/shared88 SiLU+linear skip; local8 has8units perchannel and only that channel gates; linear has learned full18x11map+bias, no fixed powers. All initialized from same first32 hidden features and same skip perseed; fit mean log-opening bias. Exact same sampled rows.",
+ "loss_definition":"hybrid=log10(pred+1e-30)MSE/900+openingMSE; raw_log=(raw_log10-target_log10)^2/900 before clamp/exp. Raw-log contrast jointly removes output-transform conditioning and absolute component; do not attribute exclusively to one. All outputs10^min(raw,0). Common development score is clipped-output logMSE/900+absoluteMSE, earliest ties. Fit-only bias and pool; freeze before fresh.",
+ "diagnostics":"Report raw-log residual separately from clipped-output loss and fraction raw>0. Learned least-squares linear regression on fit log-gates to fit log-openings, no known powers supplied, evaluated on fresh as separate solver control; not an automatically deployable model. Exact analytic oracle retained as nonselectable control.",
+ "hypotheses":[{"id":"H1","claim":"Shared capacity is insufficient.","contrast":"shared32/shared88 at same objective."},{"id":"H2","claim":"Locality helps when local capacity is not starved.","contrast":"local8/shared88 equal hidden budget but different masks; shared32 only secondary comparison."},{"id":"H3","claim":"Output transform/objective conditioning obstructs learning.","contrast":"raw_log/hybrid at fixedarchitecture; compound contrast disclosed."},{"id":"H4","claim":"Nonlinear parameterization obstructs this log-linear target.","contrast":"learned linear Adam vs learned least-squares and nonlinear arms; no analytic powers fitted into candidates."}],
+ "cost":{"batch":256,"repetitions":3,"scope":"Packed neural readout vs exact product, not matched workload or full-neuron speedup."},
+ "limitations":"Static full physical state only. No temporal/latent-memory qualification; reachable and synthetic separated. Updated data prevents strict cross-run attribution. Original amplitude thresholds unchanged; rawlog metric only diagnostic. Fit least-squares not proof of SGD learnability.",
+ "runtime_budget_seconds":10800,"output_budget_mb":200
+}
