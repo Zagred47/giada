@@ -1644,6 +1644,20 @@ si influenzano tramite il solver assiale classico?
   seed in ogni fase, più controllo delle geometrie effettive nei risultati.
   Nessuna modifica di pesi, soglie, dati preregistrati o astrazione;
   [notebook del retry](../notebooks/giada_task47_protocol_retry.ipynb).
+  **15 novembre2026 — rivalutazione multi-evento sulle tracce salvate:**
+  piano e controlli congelati prima del replay completo; nessun training,
+  selezione o cambiamento delle tolleranze numeriche.3.456confronti di caso
+  e266.112confronti di canale;5.206mutanti negativi respinti e1.313identità
+  accettate. Il verdetto originale resta143/144a500/1000ms per modalità.
+  Il nuovo osservabile conta escursioni connesse sopra la stessa soglia10%:
+  P143/144imposto e140/144autonomo. Ca_HVA resta un mismatch di supporto,
+  non un ritardo di44.9ms fra eventi associati; SK_E2 aggiunge tre casi con
+  frammentazione della maschera per1–2campioni. Non sono nuovi errori del
+  modello congelato né prova automatica di eventi biologici spuri. Nessuna
+  rimozione post-hoc dei campioni o autorizzazione automatica della48.
+  [Specifica multi-evento](task47_multi_event_evaluation_v1.json),
+  [risultati completi](results/task47_multi_event_v1/summary.json) e
+  [interpretazione e limiti](results/task47_multi_event_v1/interpretation.json).
 
 ### ✅ Uscita del blocco 2
 

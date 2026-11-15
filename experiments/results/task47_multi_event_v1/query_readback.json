@@ -1,0 +1,112 @@
+{
+  "valid": true,
+  "airtable_accessed": false,
+  "queries": {
+    "P_original_vs_multi": {
+      "sql": "SELECT Nome,json_extract(Descrizione,'$.original_passed') AS original_passed,json_extract(Descrizione,'$.multi_event_passed') AS multi_event_passed,json_extract(Descrizione,'$.total') AS total FROM observations WHERE \"Codice stabile\" LIKE ? ORDER BY Nome",
+      "parameters": [
+        "observations-giada-task47-multi-event-case-summary-%/P-v1"
+      ],
+      "rows": [
+        {
+          "Nome": "47 original versus multi-event 100.0/autonomous/P",
+          "original_passed": 144,
+          "multi_event_passed": 144,
+          "total": 144
+        },
+        {
+          "Nome": "47 original versus multi-event 100.0/imposed/P",
+          "original_passed": 144,
+          "multi_event_passed": 144,
+          "total": 144
+        },
+        {
+          "Nome": "47 original versus multi-event 1000.0/autonomous/P",
+          "original_passed": 143,
+          "multi_event_passed": 140,
+          "total": 144
+        },
+        {
+          "Nome": "47 original versus multi-event 1000.0/imposed/P",
+          "original_passed": 143,
+          "multi_event_passed": 143,
+          "total": 144
+        },
+        {
+          "Nome": "47 original versus multi-event 500.0/autonomous/P",
+          "original_passed": 143,
+          "multi_event_passed": 140,
+          "total": 144
+        },
+        {
+          "Nome": "47 original versus multi-event 500.0/imposed/P",
+          "original_passed": 143,
+          "multi_event_passed": 143,
+          "total": 144
+        }
+      ]
+    },
+    "negative_controls": {
+      "sql": "SELECT Nome,json_extract(Descrizione,'$.total') AS total,json_extract(Descrizione,'$.as_expected') AS as_expected,json_extract(Descrizione,'$.unexpected') AS unexpected FROM observations WHERE \"Codice stabile\" LIKE ? ORDER BY Nome",
+      "parameters": [
+        "observations-giada-task47-multi-event-control-%-v1"
+      ],
+      "rows": [
+        {
+          "Nome": "47 saved-reference control amplitude_1p5x",
+          "total": 1313,
+          "as_expected": 1313,
+          "unexpected": 0
+        },
+        {
+          "Nome": "47 saved-reference control delay_1ms",
+          "total": 1313,
+          "as_expected": 1313,
+          "unexpected": 0
+        },
+        {
+          "Nome": "47 saved-reference control deleted_episode",
+          "total": 1267,
+          "as_expected": 1267,
+          "unexpected": 0
+        },
+        {
+          "Nome": "47 saved-reference control identity",
+          "total": 1313,
+          "as_expected": 1313,
+          "unexpected": 0
+        },
+        {
+          "Nome": "47 saved-reference control spurious_episode",
+          "total": 1313,
+          "as_expected": 1313,
+          "unexpected": 0
+        }
+      ]
+    },
+    "scoped_claims": {
+      "sql": "SELECT Nome,Stato FROM claims WHERE \"Codice stabile\" LIKE ? ORDER BY Nome",
+      "parameters": [
+        "claims-giada-task47-multi-event-%-v1"
+      ],
+      "rows": [
+        {
+          "Nome": "47 multi-event automatic-quality-go",
+          "Stato": "Contraddetta nel dominio"
+        },
+        {
+          "Nome": "47 multi-event control-rejection",
+          "Stato": "Supportata nel dominio"
+        },
+        {
+          "Nome": "47 multi-event support-not-offset",
+          "Stato": "Supportata nel dominio"
+        },
+        {
+          "Nome": "47 multi-event threshold-topology",
+          "Stato": "Supportata nel dominio"
+        }
+      ]
+    }
+  }
+}
