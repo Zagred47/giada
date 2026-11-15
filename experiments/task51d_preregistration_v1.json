@@ -1,0 +1,16 @@
+{
+ "task":"51d","version":"v1","thresholds_changed":false,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "dt_ms":0.1,"history_ms":400,"reachable_stride":20,"synthetic_per_role":1024,
+ "roles":{"fit":{"seed":9514103,"count":36},"development":{"seed":9514127,"count":24},"fresh":{"seed":9514141,"count":24}},
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "representations":["log_exp","log_local"],"losses":["hybrid1","relative_hybrid"],"seeds":[17,29,43],
+ "updates":5000,"checkpoints":[500,1500,3000,5000],"batch_size":256,"learning_rate":0.002,"gradient_clip":1.0,
+ "architecture":"Both outputs exp10(min(raw,0)). log_exp retains51c18->32->11 plus linear skip. log_local uses channel-local masks: each output sees only its1or2 gates via3dedicated hidden units plus masked skip, same padded arrays and initial matrices. No analytic coefficients fixed in learned candidates.",
+ "loss_definition":"Same balanced channel/decade row stream across all arms. hybrid1=logMSE/900+absoluteMSE. relative_hybrid adds mean(asinh((prediction-target)/max(target,1e-4))^2).1e-4 is training scale only, not evaluation floor or threshold. Common development selection score=logMSE/900+absoluteMSE+asinh-relativeMSE for all arms; fresh never selects.",
+ "oracle":"Fixed analytic log-linear coefficients from known channel powers only as nonselectable positive control, predicts openings directly from log gates. Zero handling separate; no claim this is a learned solution. Test against exact product on all fresh rows.",
+ "hypotheses":[{"id":"H1","claim":"Cross-channel readout interference impedes learning the simple channel-local map.","contrast":"log_local versus log_exp, identical objective and sample stream."},{"id":"H2","claim":"Absolute-plus-log loss underweights relative current precision in intermediate regimes.","contrast":"relative_hybrid versus hybrid1 at fixed mask; per-channel errors and tiny/large tradeoff."},{"id":"H3","claim":"Residual error is numerical or absent function expressivity rather than learning.","contrast":"Nonselectable exact log-linear oracle against product; checkpoint500/1500/3000/5000 curves, no claim oracle success proves optimizer learnability."}],
+ "cost":{"batch":256,"repetitions":3,"scope":"Padded packed static evaluation vs analytic product, not per-model speedup."},
+ "limitations":"Static full physical gates only; no temporal recurrence or memory conclusion. Masks change inductive bias, not temporal abstraction. Training1e-4 denominator is not an evaluation tolerance. Separate reachable and synthetic; no new P qualification.",
+ "runtime_budget_seconds":10800,"output_budget_mb":200
+}

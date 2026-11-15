@@ -1737,6 +1737,10 @@ memoria che determina correnti e risposta agli interventi?
   ma nessun braccio supera tutte le correnti.51c confronta loss logaritmica
   più peso assoluto0/1/10, sigmoid/log, stesso sampling e seed; selezione
   development comune. Soglie invariate, ancora nessuna dinamica temporale.
+  **51c→51d:** log+ibrida1 migliora RMSE aperture ma resta0/24perseed.
+  Residui su più canali, non solo aperture piccole.51d confronta readout
+  condiviso/locale e loss ibrida/con termine relativo, con oracle analitico
+  non selezionabile. Nessuna modifica delle soglie o della dinamica di P.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare
