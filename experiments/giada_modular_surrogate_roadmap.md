@@ -1726,6 +1726,13 @@ memoria che determina correnti e risposta agli interventi?
   tempi lenti di secondi; B non isola il solo denominatore. Probe iniziale,
   stati latenti salvati e reset causale, encoding/costi separati e checkpoint
   riprendibili; nessuna qualifica accoppiata o velocità per singolo modello.
+  **Esito51:** tutti gli otto bracci0/2592, P1848/2592 (conteggi aggregati,
+  non campioni indipendenti). Loss calibrata più efficace ma insufficiente;
+  orizzonte102.4ms non risolve la memoria, startup ancora errato. **51b:**
+  isolare la mappa statica gate→aperture, tre parametrizzazioni×due loss,
+  stessi pesi iniziali per seed e controlli algebrici. Nessuna dinamica temporale
+  o nuova qualifica di P. Soglie originali invariate e sintetici separati dai
+  campioni raggiungibili; FP32/FP64 e zeri verificati esplicitamente.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare

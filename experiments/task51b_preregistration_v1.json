@@ -1,0 +1,24 @@
+{
+  "task":"51b","version":"v1","exploratory":true,"thresholds_changed":false,
+  "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+  "dt_ms":0.1,"history_ms":400,
+  "roles":{"fit":{"seed":9512103,"count":36},"development":{"seed":9512127,"count":24},"fresh":{"seed":9512141,"count":24}},
+  "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+  "representations":["sigmoid_zero","sigmoid_fit_bias","log_exp"],"losses":["absolute","log_balanced"],"seeds":[17,29,43],
+  "updates":2000,"checkpoints":[250,1000,2000],"batch_size":256,"learning_rate":0.002,"gradient_clip":1.0,
+  "reachable_stride":20,"synthetic_per_role":1024,"input_log_floor":1e-30,
+  "architecture":"Static shared-shape MLP on log10 physical gates/10,18->32SiLU->11 plus linear skip. Full18 physical gates supplied; no latent compression or recurrence. All arms per seed start with the same weight matrices; only registered output bias/parameterization differs. Targets analytic openings, no P distillation.",
+  "representation_contract":"sigmoid_zero starts logits0; sigmoid_fit_bias initializes perchannel bias from fit mean log10 opening transformed to logits; log_exp predicts log10opening=min(raw,0), starts at fit mean log10opening and exponentiates only at output. No lower output clamp. log loss uses soft floor1e-30 only inside logarithm; exact zeros separately tested by analytic oracle and never called exactly representable by neural output.",
+  "loss_contract":"absolute:mean opening squared error. log_balanced: mean squared log10(pred+1e-30)-log10(target+1e-30), divided900, with equal fit-channel log-decade-bin sampling. Absolute arms use uniform rows from same sampled candidate pool. This is a declared joint objective/sampling intervention, not isolated denominator effect.",
+  "selection":"Checkpoint per arm/seed selected on same development log-error score, tied earliest; report absolute score also. Freeze before fresh access. No overall winner promoted and no fresh-based tuning.",
+  "evaluation":"Reachable samples before/during/after rest, and separate off-manifold positive synthetic gates spanning1e-12..1. Same V/Ca and gbar/reversals for canonical and predicted current. Original current_nrmse0.01/current_nmax0.05 per trajectory and channel; per-decade opening/log errors are diagnostics, not new gates. Zero/boundary algebraic controls; physical log roundtrip FP64/FP32; P frozen parameter check only because this is static, not P dynamics comparison.",
+  "hypotheses":[
+    {"id":"H1","claim":"Uncalibrated sigmoid initialization makes tiny openings hard to learn.","contrast":"sigmoid_fit_bias versus sigmoid_zero at fixed loss; same matrices."},
+    {"id":"H2","claim":"Log-coordinate output improves tiny-opening learnability beyond bias alone.","contrast":"log_exp versus sigmoid_fit_bias at fixed loss and same log-input MLP; no recurrence."},
+    {"id":"H3","claim":"Absolute loss and sample frequency neglect low-opening regimes.","contrast":"absolute/uniform versus log_balanced at fixed representation; perdecade and reachable/offmanifold readback."},
+    {"id":"H4","claim":"A numerical floor or target construction error explains the observed failure.","contrast":"Exact analytic product, log-domain roundtrip and zero/boundary controls versus networks."}
+  ],
+  "cost":{"batch":256,"repetitions":3,"scope":"Static packed18model readout vs analytic product; different workload, not permodel or whole-neuron speedup."},
+  "limitations":"No recurrence, compressed-state or slow-memory conclusion. Full physical state available. Synthetic log-gates not claimed biologically reachable. P and original thresholds unchanged. Neural outputs need not represent exact zero; blocked-current behavior is analytic gbar=0, not learned.",
+  "runtime_budget_seconds":10800,"output_budget_mb":200
+}
