@@ -1,0 +1,39 @@
+{
+  "task": "47",
+  "analysis": "multi-event re-evaluation of immutable saved traces",
+  "version": "v1",
+  "design_status": "Post-hoc evaluator study, frozen before full-corpus re-evaluation; Ca_HVA case already known. Not a new independent confirmation.",
+  "archive_sha256": "797ce8ad2946d8534699945bd6a878c5132cdb6d7e0ecb7599691013b50f45d5",
+  "frozen_P_sha256": "d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+  "scope": "Both47geometries, both imposed/autonomous modes, all24cases, all3frozen seeds, all4arms, all nodes and11current channels;100/500/1000ms prefixes. Reuse immutable original voltage/calcium/gate/amplitude scores and native floors; recompute original timing exactly and substitute only the separately labelled multi-event timing/presence result.",
+  "training_performed": false,
+  "selection_performed": false,
+  "thresholds_changed": false,
+  "original_evaluator_modified": false,
+  "source_quality": "experiments/task47_preregistration_v1.json#quality",
+  "numeric_constants": {
+    "dt_ms": 0.1,
+    "event_threshold_fraction": 0.1,
+    "transient_to_scale_min": 0.25,
+    "transient_to_current_floor_min": 10.0,
+    "peak_plateau_relative_band": 0.001,
+    "peak_timing_limit_ms": 0.2,
+    "onset_offset_limit_ms": 0.3
+  },
+  "definition": {
+    "baseline_and_scale": "Same original reference[0], S=max(max(abs(reference)),floor), reference transient A=max(abs(reference-reference[0])). Candidate uses the same reference baseline and threshold0.1*A; no candidate rescaling.",
+    "eligibility": "Preserve original global temporal eligibility: A>=0.25*S, A>=10*floor and reference global maximum is not at the window boundary. Unsupported/boundary timing is explicitly not_evaluable; original numerical current/state gates remain authoritative.",
+    "events": "An event is a maximal contiguous above-threshold excursion. Preserve one-sample events; no smoothing, hysteresis, minimum duration or gap merging. This is a threshold-episode evaluator, not a detector of every biological or subthreshold response.",
+    "matching": "Monotone one-to-one dynamic programming. Lexicographically maximize matched cardinality, then minimize the sum of peak_distance/0.2 + onset_distance/0.3 + offset_distance/0.3. No learned weights or new distance acceptance gate. With equal counts this is ordered pairing. Matching alone never implies a pass: every matched event must meet the original tolerances; missing and spurious episodes always fail. Equal-count deletion/insertion may be operationally labelled timing, not a causal identity claim.",
+    "peak": "Within each matched episode, same relative near-maximum band0.001 and nearest plateau-sample distance as the original evaluator. Use all matched episodes, not the best global peak.",
+    "endpoints": "Compare original sample-index onsets/offsets with0.3ms tolerance; record right-boundary offsets as censored lower bounds rather than complete physical offsets. No interpolation or relative time shifting.",
+    "unsupported_reference": "Do not invent event timing for absent/boundary reference transients. Record coverage explicitly. An unexpectedly large candidate transient on an amplitude-unsupported reference is a spurious-support failure if it meets the same0.25*S and10*floor eligibility requirements. Boundary-censored reference transients remain not_evaluable, not automatically spurious.",
+    "amplitude": "Do not normalize away amplitude errors or alter existing nrmse/nmax/charge/blocked-current/gate/voltage/calcium gates. Report support mismatch separately from temporal error.",
+    "decision": "Retain original143/144NO-GO. Produce separate original versus multi-event case counts, coverage, new failures/recoveries and event diagnostics. No automatic144/144,48authorization, biological-equivalence or speedup claim. A borderline reference episode absent from the candidate remains a presence failure, not waived."
+  },
+  "negative_controls": {
+    "synthetic": "Identity, flat reference, plateau, exact timing boundary, just-outside-boundary delay, missing/spurious/split/merged episodes, scaling and sign error, single-sample borderline support, equal-count displaced response, boundary censoring. Known-bad controls must fail; allowed sub-tolerance timing and identity controls must pass.",
+    "saved_reference_mutants": "For every unique supported47reference geometry/case/node/channel at1000ms: identity,1ms whole-trace delay, deletion of the first complete threshold episode, injection of an above-threshold single-sample episode in a quiet gap,1.5x transient-amplitude scaling. Report exclusions and observed rejection rates by control type; no selective filtering based on success. Mutants are diagnostics, never candidate training or model changes.",
+    "falsifier": "Any identity failure or accepted validly constructed known-bad control invalidates the new evaluator study for qualification; report it rather than tuning on the full cohort."
+  }
+}

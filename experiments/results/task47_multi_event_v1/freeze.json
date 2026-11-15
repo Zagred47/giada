@@ -1,0 +1,50 @@
+{
+  "valid": true,
+  "created_utc": "2026-11-15T10:28:44.236292+00:00",
+  "post_hoc_known_case_disclosed": true,
+  "full_corpus_evaluation_started": false,
+  "archive_sha256": "797ce8ad2946d8534699945bd6a878c5132cdb6d7e0ecb7599691013b50f45d5",
+  "frozen_P_sha256": "d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+  "quality_snapshot": {
+    "current_scale_floor_ma_cm2": 1e-07,
+    "current_nrmse_max": 0.01,
+    "current_nmax_max": 0.05,
+    "signed_charge_error_max": 0.02,
+    "absolute_charge_error_max": 0.02,
+    "peak_timing_max_ms": 0.2,
+    "peak_plateau_relative_band": 0.001,
+    "onset_offset_max_ms": 0.3,
+    "gate_rmse_max": 0.005,
+    "gate_max_abs_max": 0.03,
+    "occupancy_atol": 2e-07,
+    "blocked_current_atol_ma_cm2": 1e-10,
+    "evaluation_horizons_ms": [
+      1,
+      8,
+      40,
+      100,
+      500,
+      1000,
+      3000,
+      10000
+    ],
+    "normalization": "For each trajectory/channel S=max(max_t abs(I_reference),1e-7 mA/cm2). Charge errors divided by duration*S, not near-zero signed target charge. Report absolute errors and peak-relative charge diagnostics as well. No averaging across regimes to waive a failed critical gate.",
+    "event_support": "Transient timing evaluated only when reference peak-baseline contrast >=25% of S, peak >=10*floor, and peak is internal to the window. Other cases explicitly not_evaluable; amplitude/current gates still apply. Onset/offset use 10% of reference transient amplitude. Multi-event morphology needs dedicated matching in closed-loop stage."
+  },
+  "source_sha256": {
+    "experiments/task47_multi_event_evaluation_v1.json": "8d479b5d4ca98d28e5ae22c4a0f617fe2a713b040c662a7daed9d1db1a45fbcc",
+    "src/giada_teacher/multi_event_evaluation.py": "fa7743babfc7d1af80e6b72c0d028ffc345369c82654cbe2ba51fafc60d4e02f",
+    "tests/test_multi_event_evaluation.py": "99d2e92fc1706a24209d8778b3068d46826d6dc400a13dec07b9de7db9bc7aaf",
+    "scripts/run_task47_multi_event.py": "3a8092cbe5201f5b9edb8d434ba41dc07954f397325b56c6fc0efe7959eda15a",
+    "src/giada_teacher/task37_ionic_playground.py": "9a037b348e73bf3ba1b260ee28db966a3ba1b49b824e5a91598ba0eff6e339e5",
+    "experiments/task47_preregistration_v1.json": "f0cb84203948fa46a83f6830f0296777efd21e6a4e159faac1127bb0359da161"
+  },
+  "unit_tests": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "test_amplitude_and_sign_are_not_normalized_away (tests.test_multi_event_evaluation.MultiEvent.test_amplitude_and_sign_are_not_normalized_away) ... ok\ntest_borderline_single_sample_is_retained_as_missing (tests.test_multi_event_evaluation.MultiEvent.test_borderline_single_sample_is_retained_as_missing) ... ok\ntest_delay_boundaries_and_genuine_delays (tests.test_multi_event_evaluation.MultiEvent.test_delay_boundaries_and_genuine_delays) ... ok\ntest_identity_flat_and_plateau (tests.test_multi_event_evaluation.MultiEvent.test_identity_flat_and_plateau) ... ok\ntest_missing_and_spurious (tests.test_multi_event_evaluation.MultiEvent.test_missing_and_spurious) ... ok\ntest_nonfinite_prediction_fails (tests.test_multi_event_evaluation.MultiEvent.test_nonfinite_prediction_fails) ... ok\ntest_ordered_matching_rejects_displaced_equal_count_event (tests.test_multi_event_evaluation.MultiEvent.test_ordered_matching_rejects_displaced_equal_count_event) ... ok\ntest_right_boundary_is_explicit_and_identity_passes (tests.test_multi_event_evaluation.MultiEvent.test_right_boundary_is_explicit_and_identity_passes) ... ok\ntest_saved_case_not_waived (tests.test_multi_event_evaluation.MultiEvent.test_saved_case_not_waived) ... ok\ntest_split_and_merge_are_not_silently_accepted (tests.test_multi_event_evaluation.MultiEvent.test_split_and_merge_are_not_silently_accepted) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.054s\n\nOK\n"
+  },
+  "thresholds_changed": false,
+  "training_performed": false,
+  "original_evaluator_modified": false
+}
