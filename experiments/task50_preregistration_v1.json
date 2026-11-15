@@ -1,0 +1,32 @@
+{
+  "task": "50", "version": "v1", "exploratory": true,
+  "weights_sha256": "d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+  "dt_ms": 0.1, "history_ms": 400,
+  "roles": {"fit": {"seed": 9501103, "count": 36}, "development": {"seed": 9501127, "count": 24}, "fresh": {"seed": 9501141, "count": 24}},
+  "families": {"Ca": [0, 1], "Na": [2, 3, 4], "K_voltage": [6, 7, 8, 10], "Ih": [5], "SK": [9]},
+  "arms": [
+    {"id": "L5_T16", "widths": [1,1,1,1,1], "trunk": 16},
+    {"id": "L10_T16", "widths": [2,3,3,1,1], "trunk": 16},
+    {"id": "L10_T32", "widths": [2,3,3,1,1], "trunk": 32},
+    {"id": "L18_T16", "widths": [4,6,6,1,1], "trunk": 16},
+    {"id": "L18_T32", "widths": [4,6,6,1,1], "trunk": 32}
+  ],
+  "seeds": [17,29,43], "updates": 2000, "checkpoints": [250,1000,2000],
+  "batch_size": 16, "chunk_ticks": 64, "learning_rate": 0.001, "gradient_clip": 1.0,
+  "loss": "Mean per-channel squared current error normalized by fit-role channel max(abs(current)), floor1e-7, plus0.1*mean opening squared error. All ensemble members use identical minibatch/start indices. Independent parameters and per-member clipping. No teacher forcing of latent state within chunks.",
+  "architecture": "Family-blocked recurrent latent state, sigmoid convex update and sigmoid opening readout; shared V/logCa trunk. Initial family encoder sees only its own physical gates once at chunk/restart. V,Ca remain explicit. No canonical rates, teacher gates or gate decoder during recurrence. Current uses cheap canonical gbar*opening*(V-E). P unchanged and used as comparator, not as training target.",
+  "selection": "Per arm/seed choose checkpoint by development mean normalized current MSE on fixed256tick segments starting at0,150,275ms, before/around rest. Save all checkpoints; ties earliest. Freeze before accessing fresh-role evaluations. No fresh selection or threshold adjustment.",
+  "evaluation_cuts_ms": [300,400], "horizons_ms": [1,8,40,100,500,1000],
+  "future_protocols": ["rest","pulse_recovery","hyper_calcium"],
+  "evaluation": "Canonical initial physical states encoded once; same V/Ca future for candidates, P and canonical64. Full-prefix unchanged current NRMSE/NMAX/charge gates, openings and drift diagnostics; reset-latent negative control at100ms on pulse_recovery. No membrane/coupled-system or event-timing release. Report all arms/seeds, no averaging to waive failed cases.",
+  "cost": {"batch": 24,"ticks": 80,"repetitions": 3,"scope": "Resident current-step latency at same batch, V/Ca/state, eager GPU. Compare compact recurrence+readout, frozenP+readout and canonical64+readout. Initial encoding cost separate; no whole-neuron speedup claim."},
+  "hypotheses": [
+    {"id":"H1","claim":"More latent coordinates preserve slow memory better than five coordinates.","contrast":"L5_T16 versusL10_T16 versusL18_T16 at matched optimizer/minibatches."},
+    {"id":"H2","claim":"Trunk capacity limits learning separately from state capacity.","contrast":"T16 versusT32 at fixedL10 andL18."},
+    {"id":"H3","claim":"Observed errors can be training-budget limited rather than irreducible compression loss.","contrast":"250/1000/2000 checkpoints along same trajectories, development only selection."},
+    {"id":"H4","claim":"Learned latent state carries causal memory, not only an instantaneous V/Ca mapping.","contrast":"Reset latent at100ms versus intact recurrence on the same pulse/recovery trajectory."}
+  ],
+  "thresholds_changed": false,
+  "limitations": "P retains47 and49 failures. Physical initial gates are a privileged state-available contract, not a voltage-only initializer. No assertion of minimal state, full-neuron equivalence or coupled speedup. Task49 PCA failure does not imply nonlinear learned compression impossibility.",
+  "output_budget_mb": 200, "runtime_budget_seconds": 10800
+}

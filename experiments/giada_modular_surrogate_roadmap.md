@@ -1705,6 +1705,10 @@ memoria che determina correnti e risposta agli interventi?
   direttamente aperture efficaci e produrre correnti individuali con readout
   economico; mantenere Ca/SK e parametri espliciti. Controllo livello 1 identico
   per dati, input e perimetro; nessuna necessità di ricostruire i gate online.
+  Matrice iniziale: L5/T16, L10/T16, L10/T32, L18/T16, L18/T32; tre seed,
+  checkpoint250/1000/2000 e minibatch appaiati. Encoder fisico solo all'avvio,
+  ricorrenza a blocchi familiari e readout di aperture; P congelata e canonico
+  separati. Selezione development prima dei fresh. Nessuna qualifica accoppiata.
 - **Task 51 — Diagnosi della compressione** → Dimensione dello stato ×
   supervisione ausiliaria in una matrice mirata, ladder dati/budget, reset e
   scambio di memoria come controlli. Misurare separatamente saturazione da
