@@ -1684,10 +1684,22 @@ memoria che determina correnti e risposta agli interventi?
   studio multi-evento post-hoc separato143/144 imposto e140/144 autonomo,
   senza assimilare frammentazione di soglia a nuovi eventi biologici.
   Nessuna qualifica di P o accelerazione dimostrata. Task49/50 restano separate.
+  **Esito48:** diagnosi completata, backup ZIP verificato;21 coppie costruite,
+  23/63 combinazioni coppia–input con separazione futura >10% della scala comune.
+  Nessuna prova generale di compressibilità dagli stati raggiungibili dopo riposo:
+  il protocollo lava parte delle memorie veloci/SK. FP32/FP64 concordano sul quadro;
+  P conserva errori quantitativi. Non è un nuovo modello migliore o più veloce.
 - **Task 49 — Encoder e inizializzazione causale** → Confrontare encoding
   iniziale dello stato fisico disponibile con warmup causale e stato standard
   nel proprio dominio. Decoder dei gate solo come probe/training; verificare
   restart e storie non viste, includendo il costo di inizializzazione.
+  **Matrice autorizzata:** snapshot300/350/400ms prima/durante/dopo il riposo;
+  identità fisica18 e codec PCA per famiglia5/10 coordinate (fit soltanto),
+  warmup causale0/1/8/40/100/300/400ms, restart serializzato e shuffle negativo.
+  Riferimento canonico64/32, P17/29/43 congelata, storie fit/development/fresh
+  disgiunte, nessuna scelta dei bracci sui fresh. Decoder solo ponte diagnostico:
+  la ricorrenza online compressa resta nella50. Correnti/carica/stati e costo di
+  inizializzazione misurati separatamente; nessuna nuova qualifica eventi/coupling.
 - **Task 50 — Ricorrenze compatte per famiglie** → Poche dimensioni di
   memoria per famiglia, capacità del trunk variata separatamente. Imparare
   direttamente aperture efficaci e produrre correnti individuali con readout
