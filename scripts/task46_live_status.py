@@ -2,7 +2,9 @@
 import json,sys,time
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-if '--task47-retry' in sys.argv:
+if '--task48' in sys.argv:
+    import task48_kaggle as launch
+elif '--task47-retry' in sys.argv:
     import task47_retry_kaggle as launch
 elif '--task47' in sys.argv:
     import task47_kaggle as launch

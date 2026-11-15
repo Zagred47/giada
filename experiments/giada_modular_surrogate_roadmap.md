@@ -1673,6 +1673,17 @@ memoria che determina correnti e risposta agli interventi?
   blocchi 1–2 per proporre raggruppamenti motivati. Cercare collisioni di
   aperture/correnti con futuro diverso, probe di recupero e tempi lenti.
   Un'apertura per canale non viene assunta sufficiente al posto dei gate.
+  **Avvio esplorativo autorizzato il15 novembre2026:** P congelata, nessun
+  training/selezione né modifica delle soglie. Confronti nello stesso notebook:
+  canonicoFP64, canonicoFP32 e P17/29/43; collisioni esatte di apertura,
+  storie raggiungibili appaiate, recupero a1–1000ms e sensibilità per famiglia.
+  V e Ca sono imposti: non è una nuova validazione del compartimento accoppiato.
+  Collisioni costruite non implicano raggiungibilità; vicini approssimati, PCA
+  e rango locale non dimostrano una dimensione minima globale.
+  **Limiti47 conservati:** NO-GO originale143/144 per modalità a500/1000ms;
+  studio multi-evento post-hoc separato143/144 imposto e140/144 autonomo,
+  senza assimilare frammentazione di soglia a nuovi eventi biologici.
+  Nessuna qualifica di P o accelerazione dimostrata. Task49/50 restano separate.
 - **Task 49 — Encoder e inizializzazione causale** → Confrontare encoding
   iniziale dello stato fisico disponibile con warmup causale e stato standard
   nel proprio dominio. Decoder dei gate solo come probe/training; verificare
