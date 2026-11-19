@@ -1,0 +1,17 @@
+{
+ "task":"51f","version":"v1","thresholds_changed":false,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "dt_ms":0.1,"history_ms":400,"reachable_stride":20,"synthetic_per_role":1024,
+ "roles":{"fit":{"seed":9516103,"count":36},"development":{"seed":9516127,"count":24},"fresh":{"seed":9516141,"count":24}},
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "arms":[{"id":"legacy8","units":8,"target":"floored","objective":"legacy"},{"id":"local8_floor","units":8,"target":"floored","objective":"raw"},{"id":"local8_exact","units":8,"target":"exact","objective":"raw"},{"id":"local24_floor","units":24,"target":"floored","objective":"raw"},{"id":"local24_exact","units":24,"target":"exact","objective":"raw"}],
+ "seeds":[17,29,43],"updates":5000,"checkpoints":[500,1500,3000,5000],"batch_size":256,"learning_rate":0.002,"gradient_clip":1.0,
+ "architecture":"Channel-local log input/readout, perchannel8or24SiLUunits plus local linear skip; output10^min(raw,0). All padded to264hidden, first8units and skip identical perseed. Exact log labels computed from positive physical gates in FP64 before exponentiation; no teacher powers fixed inside learned model.",
+ "objective":"All same balanced fit-only pools, based on exact-log decade labels. Legacy=(log10(pred+1e-30)-floorlog)^2/900+absoluteMSE. Raw=(raw-targetlog)^2/900+absoluteMSE with floorlog or exactlog. Exact versus floor at same units is isolated; legacy versus raw is distinct contrast. Current thresholds remain unchanged.",
+ "selection":"Common development exact-log MSE/900 + absoluteMSE, earliestties, frozen beforefresh. Report perchannel/perbin raw and current errors. Sampling identical acrossarms, no fresh adaptation.",
+ "solver_control":"Fit channel-local linear coefficients to floor and exact log labels separately using only fit data; no known exponents supplied. Compare fresh errors, rank/conditioning, and coefficient readout. Solver control is not an automatically deployable recurrent model.",
+ "hypotheses":[{"id":"H1","claim":"Eight hidden units perchannel limit residual accuracy.","contrast":"local24 versus local8 with same raw-targettype."},{"id":"H2","claim":"Flooring log targets distorts the simple log relation and contaminates learning.","contrast":"exact versus floored labels under same architecture/loss and separate fitted linear controls."},{"id":"H3","claim":"Output clipping/log reconstruction impedes optimization independently of target flooring.","contrast":"legacy8 versuslocal8_floor, identical weights and samples, different raw/clipped loss."}],
+ "cost":{"batch":256,"repetitions":3,"scope":"Static packed15models vs product; padded compute not actual compressed deployment."},
+ "limitations":"Full physical state static map only; no recurrent/slow-memory qualification. Teacher exact-log targets are training labels, not inference formulas. Positive targets are distinct from exact-zero handling; zeros remain flagged, not silently floored as exact. Original thresholds and P unchanged.",
+ "runtime_budget_seconds":10800,"output_budget_mb":200
+}

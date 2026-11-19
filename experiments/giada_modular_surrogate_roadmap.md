@@ -1746,6 +1746,11 @@ memoria che determina correnti e risposta agli interventi?
   shared32/shared88/local8/lineare appreso × obiettivo ibrido/raw-log;
   least-squares fit-only come controllo di ottimizzazione distinto dai
   candidati. Soglie invariate, problema ancora statico e P congelata.
+  **51e→51f:** local8+ibrida migliora RMSE raggiungibile a0.00211 ma0/24
+  traiettorie perseed; residui Ca_LVAst/Na/K.51f separa local8/local24 e
+  targetlog floored/esatti, con controllo legacy e regressioni locali fit-only.
+  Nessun coefficiente analitico fissato nei candidati; soglie invariate e
+  nessuna promozione a modello temporale o compresso.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare
