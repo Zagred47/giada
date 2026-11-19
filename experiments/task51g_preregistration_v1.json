@@ -1,0 +1,25 @@
+{
+ "task":"51g","version":"v1","thresholds_changed":false,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "dt_ms":0.1,"history_ms":400,"reachable_stride":20,"synthetic_per_role":1024,
+ "roles":{"fit":{"seed":9517103,"count":36},"development":{"seed":9517127,"count":24},"fresh":{"seed":9517141,"count":24}},
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "arms":[
+  {"id":"standard_constant","units":24,"target":"exact","objective":"raw","initialization":"standard","schedule":"constant"},
+  {"id":"standard_decay","units":24,"target":"exact","objective":"raw","initialization":"standard","schedule":"decay"},
+  {"id":"fit_constant","units":24,"target":"exact","objective":"raw","initialization":"fit","schedule":"constant"},
+  {"id":"fit_decay","units":24,"target":"exact","objective":"raw","initialization":"fit","schedule":"decay"}
+ ],
+ "seeds":[17,29,43],"updates":15000,"checkpoints":[0,500,1500,3000,5000,10000,15000],"batch_size":256,"learning_rate":0.002,"gradient_clip":1.0,
+ "architecture":"Unchanged channel-local 24-unit SiLU plus learned linear skip, full physical gate inputs in log space. Fit initialization estimates local skip and bias by least squares using fit-only exact labels and zeros nonlinear output weights. No analytic exponents supplied. All parameters subsequently trainable.",
+ "objective":"Exact raw-log MSE/900 + absolute opening MSE. Shared minibatches, paired starting random matrices, independent Adam moments and gradient clipping. Decay factor 1 to 0.01 geometrically over 15000 updates; constant stays 1.",
+ "selection":"Common development exact-log MSE/900 + absoluteMSE, earliest tie including update0. Freeze before fresh. Report initialization, final and selected checkpoints separately so fit-only success cannot be attributed to Adam.",
+ "hypotheses":[
+  {"id":"H1","claim":"Persistent step size prevents convergence to the known achievable static map.","contrast":"Decay versus constant within each initialization, same data and budget."},
+  {"id":"H2","claim":"Distance or conditioning at initialization dominates the optimization gap.","contrast":"Fit-estimated versus standard initialization under each schedule; inspect update0 and any subsequent degradation."},
+  {"id":"H3","claim":"The standard initialization mainly needs additional training budget.","contrast":"Nested checkpoints5000,10000,15000 on the same trajectory; no reruns or fresh selection."}
+ ],
+ "cost":{"batch":256,"repetitions":3,"scope":"Packed12 same-architecture models; diagnostic only, not matched deployment speedup."},
+ "limitations":"Static full physical state readout only. Fit-initialized solution is data-derived linear regression plus unchanged trainable nonlinear architecture, not proof of SGD discovery or recurrent compression. Sampled current thresholds unchanged; no temporal or closed-loop qualification.",
+ "runtime_budget_seconds":10800,"output_budget_mb":200
+}

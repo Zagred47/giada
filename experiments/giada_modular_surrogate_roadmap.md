@@ -1751,6 +1751,14 @@ memoria che determina correnti e risposta agli interventi?
   targetlog floored/esatti, con controllo legacy e regressioni locali fit-only.
   Nessun coefficiente analitico fissato nei candidati; soglie invariate e
   nessuna promozione a modello temporale o compresso.
+  **51f→51g:** etichette esatte permettono una regressione locale fit-only
+  quasi esatta (logRMSE 5.94e-15), ma Adam resta lontano; local24 esatto
+  migliora local8 senza superare tutte le traiettorie (0/24 per seed).
+  La 51g incrocia inizializzazione standard/fit-only e passo costante/decrescente,
+  con checkpoint 0/500/1500/3000/5000/10000/15000 e identica architettura.
+  Riporta separatamente punto iniziale, finale e selezionato: un successo
+  della regressione iniziale non è attribuibile alla scoperta da parte di Adam.
+  Soglie e astrazione invariate; nessuna qualificazione ricorrente implicita.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare

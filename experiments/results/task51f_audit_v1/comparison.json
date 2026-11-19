@@ -1,0 +1,730 @@
+{
+  "51e": {
+    "archive_sha256": "e55a2ccda7e195dd74d1826c137b283764b841c1246a1c918902b33a4979198b",
+    "report": {
+      "valid": true,
+      "complete": true,
+      "task": "51e",
+      "P_frozen": true,
+      "finite_parameters": true,
+      "thresholds_changed": false,
+      "temporal_dynamics_tested": false,
+      "evaluation_rows": 264,
+      "elapsed_seconds": 59.571072894999986,
+      "members": [
+        {
+          "representation": "shared32",
+          "loss": "hybrid",
+          "seed": 17
+        },
+        {
+          "representation": "shared32",
+          "loss": "hybrid",
+          "seed": 29
+        },
+        {
+          "representation": "shared32",
+          "loss": "hybrid",
+          "seed": 43
+        },
+        {
+          "representation": "shared32",
+          "loss": "raw_log",
+          "seed": 17
+        },
+        {
+          "representation": "shared32",
+          "loss": "raw_log",
+          "seed": 29
+        },
+        {
+          "representation": "shared32",
+          "loss": "raw_log",
+          "seed": 43
+        },
+        {
+          "representation": "shared88",
+          "loss": "hybrid",
+          "seed": 17
+        },
+        {
+          "representation": "shared88",
+          "loss": "hybrid",
+          "seed": 29
+        },
+        {
+          "representation": "shared88",
+          "loss": "hybrid",
+          "seed": 43
+        },
+        {
+          "representation": "shared88",
+          "loss": "raw_log",
+          "seed": 17
+        },
+        {
+          "representation": "shared88",
+          "loss": "raw_log",
+          "seed": 29
+        },
+        {
+          "representation": "shared88",
+          "loss": "raw_log",
+          "seed": 43
+        },
+        {
+          "representation": "local8",
+          "loss": "hybrid",
+          "seed": 17
+        },
+        {
+          "representation": "local8",
+          "loss": "hybrid",
+          "seed": 29
+        },
+        {
+          "representation": "local8",
+          "loss": "hybrid",
+          "seed": 43
+        },
+        {
+          "representation": "local8",
+          "loss": "raw_log",
+          "seed": 17
+        },
+        {
+          "representation": "local8",
+          "loss": "raw_log",
+          "seed": 29
+        },
+        {
+          "representation": "local8",
+          "loss": "raw_log",
+          "seed": 43
+        },
+        {
+          "representation": "linear",
+          "loss": "hybrid",
+          "seed": 17
+        },
+        {
+          "representation": "linear",
+          "loss": "hybrid",
+          "seed": 29
+        },
+        {
+          "representation": "linear",
+          "loss": "hybrid",
+          "seed": 43
+        },
+        {
+          "representation": "linear",
+          "loss": "raw_log",
+          "seed": 17
+        },
+        {
+          "representation": "linear",
+          "loss": "raw_log",
+          "seed": 29
+        },
+        {
+          "representation": "linear",
+          "loss": "raw_log",
+          "seed": 43
+        }
+      ],
+      "limitations": "Static full physical state only. No temporal/latent-memory qualification; reachable and synthetic separated. Updated data prevents strict cross-run attribution. Original amplitude thresholds unchanged; rawlog metric only diagnostic. Fit least-squares not proof of SGD learnability."
+    },
+    "checkpoint_finite": {
+      "checkpoint_3000.pt": true,
+      "selected.pt": true,
+      "checkpoint_5000.pt": true,
+      "checkpoint_1500.pt": true,
+      "checkpoint_500.pt": true
+    },
+    "arms": {
+      "linear|hybrid": {
+        "reachable": {
+          "opening_rmse": 0.1164029265443484,
+          "log_rmse": 1.4215983152389526
+        },
+        "synthetic": {
+          "opening_rmse": 0.019599781061212223,
+          "log_rmse": 4.424602190653483
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          18,
+          0,
+          9,
+          18,
+          0,
+          0,
+          16,
+          0,
+          18,
+          39,
+          15
+        ]
+      },
+      "linear|raw_log": {
+        "reachable": {
+          "opening_rmse": 0.1264613370100657,
+          "log_rmse": 1.4804169336954753
+        },
+        "synthetic": {
+          "opening_rmse": 0.07456283768018086,
+          "log_rmse": 4.416321913401286
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          18,
+          0,
+          9,
+          18,
+          0,
+          0,
+          0,
+          0,
+          18,
+          39,
+          18
+        ]
+      },
+      "local8|hybrid": {
+        "reachable": {
+          "opening_rmse": 0.0021100561522568264,
+          "log_rmse": 0.08896934737761815
+        },
+        "synthetic": {
+          "opening_rmse": 0.0007698097615502775,
+          "log_rmse": 0.1384503791729609
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          40,
+          0,
+          18,
+          20,
+          47,
+          72,
+          61,
+          22,
+          34,
+          60,
+          51
+        ]
+      },
+      "local8|raw_log": {
+        "reachable": {
+          "opening_rmse": 0.06264724085728328,
+          "log_rmse": 0.223957692583402
+        },
+        "synthetic": {
+          "opening_rmse": 0.016213633740941685,
+          "log_rmse": 0.6832163532574972
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          18,
+          1,
+          12,
+          18,
+          0,
+          23,
+          10,
+          21,
+          19,
+          51,
+          20
+        ]
+      },
+      "shared32|hybrid": {
+        "reachable": {
+          "opening_rmse": 0.005999890776971976,
+          "log_rmse": 0.11091057459513347
+        },
+        "synthetic": {
+          "opening_rmse": 0.014900697084764639,
+          "log_rmse": 0.1933493365844091
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          29,
+          3,
+          20,
+          21,
+          23,
+          16,
+          33,
+          9,
+          25,
+          43,
+          9
+        ]
+      },
+      "shared32|raw_log": {
+        "reachable": {
+          "opening_rmse": 0.035898296162486076,
+          "log_rmse": 0.1015077754855156
+        },
+        "synthetic": {
+          "opening_rmse": 0.022598064815004665,
+          "log_rmse": 0.6627383430798849
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          19,
+          3,
+          18,
+          20,
+          0,
+          13,
+          10,
+          8,
+          23,
+          49,
+          18
+        ]
+      },
+      "shared88|hybrid": {
+        "reachable": {
+          "opening_rmse": 0.006976635816196601,
+          "log_rmse": 0.1650298833847046
+        },
+        "synthetic": {
+          "opening_rmse": 0.017542436718940735,
+          "log_rmse": 0.16731482247511545
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          23,
+          2,
+          19,
+          23,
+          22,
+          3,
+          19,
+          8,
+          23,
+          35,
+          4
+        ]
+      },
+      "shared88|raw_log": {
+        "reachable": {
+          "opening_rmse": 0.03766683613260587,
+          "log_rmse": 0.0986236035823822
+        },
+        "synthetic": {
+          "opening_rmse": 0.023130768910050392,
+          "log_rmse": 0.5019862552483877
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          22,
+          13,
+          18,
+          18,
+          0,
+          8,
+          16,
+          18,
+          21,
+          46,
+          17
+        ]
+      }
+    },
+    "cost": {
+      "samples_ms": {
+        "packed_neural": [
+          34.136555000031876,
+          33.76073999993423,
+          35.39145699994606
+        ],
+        "analytic_product": [
+          37.19179600000189,
+          37.259059000007255,
+          37.950433999981215
+        ]
+      },
+      "ticks": 100,
+      "packed_members": 24,
+      "scope": "Packed neural readout vs exact product, not matched workload or full-neuron speedup.",
+      "not_matched_workload_speedup": true
+    }
+  },
+  "51f": {
+    "archive_sha256": "ab204c6c44ae04a10610f142cd882ae1e9a3340d97cec7506f299671b0f7b416",
+    "report": {
+      "valid": true,
+      "complete": true,
+      "task": "51f",
+      "P_frozen": true,
+      "finite_parameters": true,
+      "thresholds_changed": false,
+      "temporal_dynamics_tested": false,
+      "evaluation_rows": 165,
+      "elapsed_seconds": 59.62742668999999,
+      "members": [
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 17
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 29
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 43
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43
+        }
+      ],
+      "limitations": "Full physical state static map only; no recurrent/slow-memory qualification. Teacher exact-log targets are training labels, not inference formulas. Positive targets are distinct from exact-zero handling; zeros remain flagged, not silently floored as exact. Original thresholds and P unchanged."
+    },
+    "checkpoint_finite": {
+      "checkpoint_3000.pt": true,
+      "selected.pt": true,
+      "checkpoint_5000.pt": true,
+      "checkpoint_1500.pt": true,
+      "checkpoint_500.pt": true
+    },
+    "arms": {
+      "legacy8|legacy": {
+        "reachable": {
+          "opening_rmse": 0.003097919359182318,
+          "log_rmse": 0.1013223056991895
+        },
+        "synthetic": {
+          "opening_rmse": 0.0017819461645558476,
+          "log_rmse": 0.13867301245530447
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          26,
+          0,
+          18,
+          18,
+          48,
+          66,
+          69,
+          27,
+          24,
+          44,
+          63
+        ]
+      },
+      "local24_exact|raw": {
+        "reachable": {
+          "opening_rmse": 0.0026775792551537356,
+          "log_rmse": 0.08467749506235123
+        },
+        "synthetic": {
+          "opening_rmse": 0.0009770532875942688,
+          "log_rmse": 0.0884747455517451
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          48,
+          3,
+          18,
+          22,
+          51,
+          72,
+          72,
+          18,
+          23,
+          63,
+          72
+        ]
+      },
+      "local24_floor|raw": {
+        "reachable": {
+          "opening_rmse": 0.004147904925048351,
+          "log_rmse": 0.34658976395924884
+        },
+        "synthetic": {
+          "opening_rmse": 0.0034424669574946165,
+          "log_rmse": 0.8384967048962911
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          63,
+          0,
+          18,
+          20,
+          23,
+          72,
+          72,
+          9,
+          18,
+          72,
+          71
+        ]
+      },
+      "local8_exact|raw": {
+        "reachable": {
+          "opening_rmse": 0.00393248760762314,
+          "log_rmse": 0.12554447601238886
+        },
+        "synthetic": {
+          "opening_rmse": 0.0021204415631170073,
+          "log_rmse": 0.13853897154331207
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          26,
+          0,
+          19,
+          18,
+          35,
+          66,
+          69,
+          32,
+          27,
+          44,
+          63
+        ]
+      },
+      "local8_floor|raw": {
+        "reachable": {
+          "opening_rmse": 0.003979142444829146,
+          "log_rmse": 0.2954613467057546
+        },
+        "synthetic": {
+          "opening_rmse": 0.0025072904924551644,
+          "log_rmse": 0.8044301271438599
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          29,
+          0,
+          18,
+          18,
+          51,
+          72,
+          66,
+          2,
+          18,
+          50,
+          61
+        ]
+      }
+    },
+    "cost": {
+      "samples_ms": {
+        "packed_neural": [
+          34.61778299998741,
+          34.32930000002443,
+          34.972670000001926
+        ],
+        "analytic_product": [
+          37.51937699996688,
+          37.58241700001008,
+          37.95220199998539
+        ]
+      },
+      "ticks": 100,
+      "packed_members": 15,
+      "scope": "Static packed15models vs product; padded compute not actual compressed deployment.",
+      "not_matched_workload_speedup": true
+    },
+    "solver": {
+      "floored": {
+        "exact_log_rmse": 1.2799058102018663,
+        "opening_rmse": 0.072106510622553,
+        "fit_only": true,
+        "analytic_coefficients_supplied": false
+      },
+      "exact": {
+        "exact_log_rmse": 5.940176212781637e-15,
+        "opening_rmse": 3.9311046319519076e-09,
+        "fit_only": true,
+        "analytic_coefficients_supplied": false
+      }
+    },
+    "exact_log": {
+      "legacy8": {
+        "reachable": 0.10132230066782837,
+        "synthetic": 0.8502780002376973
+      },
+      "local24_exact": {
+        "reachable": 0.08467752757782583,
+        "synthetic": 0.1202850809870775
+      },
+      "local24_floor": {
+        "reachable": 0.3465896940823363,
+        "synthetic": 3.619682467455631
+      },
+      "local8_exact": {
+        "reachable": 0.12554450192986163,
+        "synthetic": 0.17811999812735566
+      },
+      "local8_floor": {
+        "reachable": 0.2954613119311453,
+        "synthetic": 3.6136125964772816
+      }
+    }
+  }
+}
