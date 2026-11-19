@@ -1759,6 +1759,16 @@ memoria che determina correnti e risposta agli interventi?
   Riporta separatamente punto iniziale, finale e selezionato: un successo
   della regressione iniziale non è attribuibile alla scoperta da parte di Adam.
   Soglie e astrazione invariate; nessuna qualificazione ricorrente implicita.
+  **51g→51h:** il braccio standard costante raggiunge26/72 controlli di
+  ampiezza campionati; i bracci inizializzati dal fit raggiungono72/72 ma
+  cinque checkpoint su sei sono già migliori all'inizializzazione.
+  La51h separa nessuna proiezione, ricalibrazione del readout mantenendo
+  il residuo non lineare, e ricalibrazione con uscita non lineare azzerata
+  ma nuovamente addestrabile; incrocia passo costante/decadimento tardivo.
+  Nessuna soglia o livello di astrazione cambia. Salva prima/dopo e finale.
+  **Limite concordato:** dopo51h sono ammesse al massimo51i e51j.
+  Entro51j si chiude questo approfondimento e si procede alla52, anche
+  con limiti residui espliciti e senza convertire i fallimenti in successi.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare

@@ -1,0 +1,29 @@
+{
+ "task":"51h","version":"v1","thresholds_changed":false,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "dt_ms":0.1,"history_ms":400,"reachable_stride":20,"synthetic_per_role":1024,
+ "roles":{"fit":{"seed":9518103,"count":36},"development":{"seed":9518127,"count":24},"fresh":{"seed":9518141,"count":24}},
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "arms":[
+  {"id":"none_constant","units":24,"target":"exact","objective":"raw","projection":"none","schedule":"constant"},
+  {"id":"none_late","units":24,"target":"exact","objective":"raw","projection":"none","schedule":"late"},
+  {"id":"residual_constant","units":24,"target":"exact","objective":"raw","projection":"residual","schedule":"constant"},
+  {"id":"residual_late","units":24,"target":"exact","objective":"raw","projection":"residual","schedule":"late"},
+  {"id":"linearize_constant","units":24,"target":"exact","objective":"raw","projection":"linearize","schedule":"constant"},
+  {"id":"linearize_late","units":24,"target":"exact","objective":"raw","projection":"linearize","schedule":"late"}
+ ],
+ "seeds":[17,29,43],"updates":15000,"intervention_update":10000,"checkpoints":[0,500,1500,3000,5000,10000,12500,15000],"batch_size":256,"learning_rate":0.002,"gradient_clip":1.0,
+ "architecture":"Same local24 SiLU plus linear skip and full physical log-gate inputs as51g. All start identically perseed. At10000, residual fits skip/bias to exact target minus frozen current nonlinear output, preserving nonlinear weights; linearize zeros nonlinear output weights and fits skip/bias to exact targets. All parameters remain trainable. No analytic coefficients supplied.",
+ "objective":"Exact raw-log MSE/900 plus absolute opening MSE. Shared minibatches, independent Adam moments and clipping. At phase boundary all arms restart Adam, including none controls, isolating projection. Constant stays .002; late decays geometrically from .002 to .00002 only after10000.",
+ "selection":"Common development exact-log MSE/900 plus absoluteMSE. Earliest tie, includes0 and postintervention10000. Save and evaluate10000-pre separately; selection frozen beforefresh. Report pre/post/final/selected so projection is not attributed to gradient learning.",
+ "hypotheses":[
+  {"id":"H1","claim":"Early decay failed because it reduced steps before reaching the accurate region.","contrast":"none_late versus none_constant; identical first10000updates."},
+  {"id":"H2","claim":"Remaining error resides in linear readout calibration rather than nonlinear features.","contrast":"residual projection versus none at identical preintervention weights; fit-only, no fresh access."},
+  {"id":"H3","claim":"Nonlinear residual obstructs the simple accurate solution.","contrast":"linearize versus residual at phase boundary and after continuation; same architecture, different data-derived parameter intervention."},
+  {"id":"H4","claim":"A late small step preserves calibrated solutions better than a constant step.","contrast":"late versus constant within each projection; compare pre/post/final and selected."}
+ ],
+ "cost":{"batch":256,"repetitions":3,"scope":"Packed18 diagnostic models; no matched deployment speedup claim."},
+ "limitations":"Static full-state readout only, not recurrent compression or closed-loop validation. Projection is a declared fit-only optimization operation, not SGD discovery. Thresholds and abstraction unchanged.",
+ "stop_policy":"At most51i and51j after51h. After51j proceed toTask52 even if unresolved, retaining explicit limitations without relaxing thresholds or declaring failed gates passed.",
+ "runtime_budget_seconds":10800,"output_budget_mb":200
+}

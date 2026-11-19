@@ -1,0 +1,1041 @@
+{
+  "51f": {
+    "archive_sha256": "ab204c6c44ae04a10610f142cd882ae1e9a3340d97cec7506f299671b0f7b416",
+    "checkpoint_finite": {
+      "checkpoint_3000.pt": true,
+      "selected.pt": true,
+      "checkpoint_5000.pt": true,
+      "checkpoint_1500.pt": true,
+      "checkpoint_500.pt": true
+    },
+    "arms": {
+      "legacy8": {
+        "reachable": {
+          "opening_rmse": 0.003097919359182318,
+          "log_rmse": 0.1013223056991895
+        },
+        "synthetic": {
+          "opening_rmse": 0.0017819461645558476,
+          "log_rmse": 0.13867301245530447
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          26,
+          0,
+          18,
+          18,
+          48,
+          66,
+          69,
+          27,
+          24,
+          44,
+          63
+        ]
+      },
+      "local24_exact": {
+        "reachable": {
+          "opening_rmse": 0.0026775792551537356,
+          "log_rmse": 0.08467749506235123
+        },
+        "synthetic": {
+          "opening_rmse": 0.0009770532875942688,
+          "log_rmse": 0.0884747455517451
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          48,
+          3,
+          18,
+          22,
+          51,
+          72,
+          72,
+          18,
+          23,
+          63,
+          72
+        ]
+      },
+      "local24_floor": {
+        "reachable": {
+          "opening_rmse": 0.004147904925048351,
+          "log_rmse": 0.34658976395924884
+        },
+        "synthetic": {
+          "opening_rmse": 0.0034424669574946165,
+          "log_rmse": 0.8384967048962911
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          63,
+          0,
+          18,
+          20,
+          23,
+          72,
+          72,
+          9,
+          18,
+          72,
+          71
+        ]
+      },
+      "local8_exact": {
+        "reachable": {
+          "opening_rmse": 0.00393248760762314,
+          "log_rmse": 0.12554447601238886
+        },
+        "synthetic": {
+          "opening_rmse": 0.0021204415631170073,
+          "log_rmse": 0.13853897154331207
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          26,
+          0,
+          19,
+          18,
+          35,
+          66,
+          69,
+          32,
+          27,
+          44,
+          63
+        ]
+      },
+      "local8_floor": {
+        "reachable": {
+          "opening_rmse": 0.003979142444829146,
+          "log_rmse": 0.2954613467057546
+        },
+        "synthetic": {
+          "opening_rmse": 0.0025072904924551644,
+          "log_rmse": 0.8044301271438599
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          29,
+          0,
+          18,
+          18,
+          51,
+          72,
+          66,
+          2,
+          18,
+          50,
+          61
+        ]
+      }
+    },
+    "freeze": {
+      "members": [
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 17
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 29
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 43
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43
+        }
+      ],
+      "updates": [
+        5000,
+        5000,
+        5000,
+        1500,
+        3000,
+        3000,
+        5000,
+        5000,
+        5000,
+        1500,
+        1500,
+        1500,
+        5000,
+        5000,
+        5000
+      ],
+      "score": [
+        0.00021051708608865738,
+        0.00015834398800507188,
+        0.00010567676508799195,
+        0.0025103946682065725,
+        0.0026318482123315334,
+        0.0025969301350414753,
+        3.280653618276119e-05,
+        3.886292688548565e-05,
+        3.399919660296291e-05,
+        0.002658355049788952,
+        0.0026255266275256872,
+        0.0026415034662932158,
+        1.4309769539977424e-05,
+        1.4514235772367101e-05,
+        1.4211793313734233e-05
+      ],
+      "fresh_accessed": false
+    },
+    "report": {
+      "valid": true,
+      "complete": true,
+      "task": "51f",
+      "P_frozen": true,
+      "finite_parameters": true,
+      "thresholds_changed": false,
+      "temporal_dynamics_tested": false,
+      "evaluation_rows": 165,
+      "elapsed_seconds": 59.62742668999999,
+      "members": [
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "legacy8",
+          "representation": "legacy8",
+          "loss": "legacy",
+          "units": 8,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "local8_floor",
+          "representation": "local8_floor",
+          "loss": "raw",
+          "units": 8,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 17
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 29
+        },
+        {
+          "arm": "local8_exact",
+          "representation": "local8_exact",
+          "loss": "raw",
+          "units": 8,
+          "target": "exact",
+          "seed": 43
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 17
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 29
+        },
+        {
+          "arm": "local24_floor",
+          "representation": "local24_floor",
+          "loss": "raw",
+          "units": 24,
+          "target": "floored",
+          "seed": 43
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29
+        },
+        {
+          "arm": "local24_exact",
+          "representation": "local24_exact",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43
+        }
+      ],
+      "limitations": "Full physical state static map only; no recurrent/slow-memory qualification. Teacher exact-log targets are training labels, not inference formulas. Positive targets are distinct from exact-zero handling; zeros remain flagged, not silently floored as exact. Original thresholds and P unchanged."
+    }
+  },
+  "51g": {
+    "archive_sha256": "bceb07c279c7cfef4ab3c80ae0e62a2b6e2bcc88d6d7916d1a321e217ff50bdd",
+    "checkpoint_finite": {
+      "checkpoint_15000.pt": true,
+      "checkpoint_3000.pt": true,
+      "selected.pt": true,
+      "checkpoint_10000.pt": true,
+      "checkpoint_5000.pt": true,
+      "checkpoint_1500.pt": true,
+      "checkpoint_500.pt": true,
+      "checkpoint_0.pt": true
+    },
+    "arms": {
+      "fit_constant": {
+        "reachable": {
+          "opening_rmse": 8.45341929789356e-09,
+          "log_rmse": 5.049428182246629e-07
+        },
+        "synthetic": {
+          "opening_rmse": 3.598527031911658e-09,
+          "log_rmse": 9.96057792690408e-07
+        },
+        "trajectory_passes": [
+          24,
+          24,
+          24
+        ],
+        "channel_passes_of72": [
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "fit_decay": {
+        "reachable": {
+          "opening_rmse": 9.580305141791238e-09,
+          "log_rmse": 4.947296853667164e-07
+        },
+        "synthetic": {
+          "opening_rmse": 5.439350451534135e-09,
+          "log_rmse": 9.598253238133718e-07
+        },
+        "trajectory_passes": [
+          24,
+          24,
+          24
+        ],
+        "channel_passes_of72": [
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "standard_constant": {
+        "reachable": {
+          "opening_rmse": 0.0009156274803293248,
+          "log_rmse": 0.022232255743195612
+        },
+        "synthetic": {
+          "opening_rmse": 0.0004934261572392037,
+          "log_rmse": 0.023010907384256523
+        },
+        "trajectory_passes": [
+          7,
+          6,
+          13
+        ],
+        "channel_passes_of72": [
+          66,
+          72,
+          62,
+          69,
+          59,
+          72,
+          72,
+          55,
+          58,
+          68,
+          72
+        ]
+      },
+      "standard_decay": {
+        "reachable": {
+          "opening_rmse": 0.002379368214557568,
+          "log_rmse": 0.09314665446678798
+        },
+        "synthetic": {
+          "opening_rmse": 0.0018548271618783474,
+          "log_rmse": 0.08571064968903859
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          59,
+          3,
+          17,
+          10,
+          51,
+          72,
+          72,
+          20,
+          19,
+          72,
+          72
+        ]
+      }
+    },
+    "freeze": {
+      "members": [
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "fit",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "fit",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "fit",
+          "schedule": "decay"
+        }
+      ],
+      "updates": [
+        15000,
+        10000,
+        15000,
+        15000,
+        15000,
+        15000,
+        0,
+        0,
+        0,
+        0,
+        0,
+        15000
+      ],
+      "score": [
+        1.9667422748170793e-06,
+        1.566994569657254e-06,
+        6.563232659573259e-07,
+        1.4088472198636737e-05,
+        1.41829459607834e-05,
+        1.486292512709042e-05,
+        5.684873272200261e-16,
+        5.684873272200261e-16,
+        5.684873272200261e-16,
+        5.684873272200261e-16,
+        5.684873272200261e-16,
+        5.565337335705774e-16
+      ],
+      "fresh_accessed": false,
+      "initialization_eligible": true
+    },
+    "report": {
+      "valid": true,
+      "complete": true,
+      "task": "51g",
+      "P_frozen": true,
+      "finite_parameters": true,
+      "thresholds_changed": false,
+      "temporal_dynamics_tested": false,
+      "evaluation_rows": 132,
+      "elapsed_seconds": 134.69221634800002,
+      "members": [
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "fit",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "fit",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "fit",
+          "schedule": "decay"
+        }
+      ],
+      "limitations": "Static full physical state readout only. Fit-initialized solution is data-derived linear regression plus unchanged trainable nonlinear architecture, not proof of SGD discovery or recurrent compression. Sampled current thresholds unchanged; no temporal or closed-loop qualification."
+    },
+    "curve": [
+      {
+        "update": 0,
+        "common_score": [
+          0.09430549293756485,
+          0.09430178254842758,
+          0.09432746469974518,
+          0.09430549293756485,
+          0.09430178254842758,
+          0.09432746469974518,
+          5.684873272200261e-16,
+          5.684873272200261e-16,
+          5.684873272200261e-16,
+          5.684873272200261e-16,
+          5.684873272200261e-16,
+          5.684873272200261e-16
+        ]
+      },
+      {
+        "update": 500,
+        "common_score": [
+          0.039681576192379,
+          0.039796825498342514,
+          0.0398278534412384,
+          0.04611054062843323,
+          0.046107325702905655,
+          0.04617702215909958,
+          8.667245740556773e-12,
+          3.616019636498713e-11,
+          1.1329550145267042e-11,
+          6.631863434065563e-14,
+          2.0191652169709862e-11,
+          2.894734365405105e-12
+        ]
+      },
+      {
+        "update": 1500,
+        "common_score": [
+          0.00011544095468707383,
+          0.00010079589992528781,
+          9.914464317262173e-05,
+          0.0001476576435379684,
+          0.00013823472545482218,
+          0.00012636047904379666,
+          2.16881569127525e-12,
+          1.3248136311941328e-12,
+          1.1887256456954987e-10,
+          2.487179212584678e-11,
+          7.231452936462546e-11,
+          3.0305041809342015e-10
+        ]
+      },
+      {
+        "update": 3000,
+        "common_score": [
+          3.225773980375379e-05,
+          3.103672861470841e-05,
+          3.3545926271472126e-05,
+          6.374128861352801e-05,
+          5.936514935456216e-05,
+          6.149179534986615e-05,
+          8.350624358666181e-11,
+          7.86798537433242e-09,
+          5.493060520334048e-11,
+          5.605455674823935e-15,
+          1.0414698617400298e-12,
+          8.136705556289342e-14
+        ]
+      },
+      {
+        "update": 5000,
+        "common_score": [
+          1.6957628758973442e-05,
+          1.6417210645158775e-05,
+          1.6493508155690506e-05,
+          2.593276440165937e-05,
+          2.4829203539411537e-05,
+          2.7024865630664863e-05,
+          1.0677482231713498e-09,
+          4.534150277457627e-10,
+          1.1050179000993143e-11,
+          6.020177574766333e-14,
+          6.6844359908335704e-12,
+          2.489175532360832e-10
+        ]
+      },
+      {
+        "update": 10000,
+        "common_score": [
+          3.8903358472452965e-06,
+          1.566994569657254e-06,
+          6.659019504695607e-07,
+          1.610571052879095e-05,
+          1.5994748537195846e-05,
+          1.6187510482268408e-05,
+          7.127547250324051e-13,
+          1.1103645130086659e-12,
+          1.041295452641755e-10,
+          1.344063092736296e-15,
+          2.3658180449415145e-13,
+          2.5539527361440745e-14
+        ]
+      },
+      {
+        "update": 15000,
+        "common_score": [
+          1.9667422748170793e-06,
+          4.746387276099995e-06,
+          6.563232659573259e-07,
+          1.4088472198636737e-05,
+          1.41829459607834e-05,
+          1.486292512709042e-05,
+          2.8508569727137e-08,
+          7.155716907902843e-09,
+          2.5518643188143786e-12,
+          6.43412844179267e-16,
+          2.5880403489085503e-15,
+          5.565337335705774e-16
+        ]
+      }
+    ],
+    "exact_checkpoint": {
+      "fit_constant": {
+        "initial": {
+          "reachable": 4.236795981599035e-07,
+          "synthetic": 1.315839203027173e-06
+        },
+        "final": {
+          "reachable": 0.00016766000827746482,
+          "synthetic": 0.000205563136372499
+        },
+        "selected": {
+          "reachable": 4.236795981599035e-07,
+          "synthetic": 1.315839203027173e-06
+        }
+      },
+      "fit_decay": {
+        "initial": {
+          "reachable": 4.236795981599035e-07,
+          "synthetic": 1.315839203027173e-06
+        },
+        "final": {
+          "reachable": 3.671182110643619e-07,
+          "synthetic": 1.1332438355615253e-06
+        },
+        "selected": {
+          "reachable": 4.1154503598536803e-07,
+          "synthetic": 1.251626057080197e-06
+        }
+      },
+      "standard_constant": {
+        "initial": {
+          "reachable": 3.6724776144535602,
+          "synthetic": 14.608778989309691
+        },
+        "final": {
+          "reachable": 0.017664115200955576,
+          "synthetic": 0.024348656239825555
+        },
+        "selected": {
+          "reachable": 0.02223224365566835,
+          "synthetic": 0.03199375085197164
+        }
+      },
+      "standard_decay": {
+        "initial": {
+          "reachable": 3.6724776144535602,
+          "synthetic": 14.608778989309691
+        },
+        "final": {
+          "reachable": 0.09314667304634681,
+          "synthetic": 0.11813259954629211
+        },
+        "selected": {
+          "reachable": 0.09314667304634681,
+          "synthetic": 0.11813259954629211
+        }
+      }
+    }
+  }
+}
