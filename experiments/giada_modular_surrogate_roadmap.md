@@ -1766,7 +1766,14 @@ memoria che determina correnti e risposta agli interventi?
   il residuo non lineare, e ricalibrazione con uscita non lineare azzerata
   ma nuovamente addestrabile; incrocia passo costante/decadimento tardivo.
   Nessuna soglia o livello di astrazione cambia. Salva prima/dopo e finale.
-  **Limite concordato:** dopo51h sono ammesse al massimo51i e51j.
+  **51h→51i:** ricalibrazione con ramo non lineare azzerato raggiunge72/72
+  al checkpoint postintervento; il training successivo introduce drift.
+  La51i parte dalla stessa soluzione calibrata e separa Adam standard,
+  passo ridotto, epsilon maggiore, SGD e riferimento congelato.
+  Il checkpoint finale è la misura primaria di conservazione; quello
+  selezionato resta separato per non nascondere regressioni scegliendo0.
+  Soglie e astrazione invariate, ancora nessuna qualificazione ricorrente.
+  **Limite concordato:** dopo51i è ammessa al massimo51j.
   Entro51j si chiude questo approfondimento e si procede alla52, anche
   con limiti residui espliciti e senza convertire i fallimenti in successi.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il

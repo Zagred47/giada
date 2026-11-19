@@ -1,0 +1,1350 @@
+{
+  "51g": {
+    "archive_sha256": "bceb07c279c7cfef4ab3c80ae0e62a2b6e2bcc88d6d7916d1a321e217ff50bdd",
+    "checkpoint_finite": {
+      "checkpoint_15000.pt": true,
+      "checkpoint_3000.pt": true,
+      "selected.pt": true,
+      "checkpoint_10000.pt": true,
+      "checkpoint_5000.pt": true,
+      "checkpoint_1500.pt": true,
+      "checkpoint_500.pt": true,
+      "checkpoint_0.pt": true
+    },
+    "arms": {
+      "fit_constant": {
+        "reachable": {
+          "opening_rmse": 8.45341929789356e-09,
+          "log_rmse": 5.049428182246629e-07
+        },
+        "synthetic": {
+          "opening_rmse": 3.598527031911658e-09,
+          "log_rmse": 9.96057792690408e-07
+        },
+        "trajectory_passes": [
+          24,
+          24,
+          24
+        ],
+        "channel_passes_of72": [
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "fit_decay": {
+        "reachable": {
+          "opening_rmse": 9.580305141791238e-09,
+          "log_rmse": 4.947296853667164e-07
+        },
+        "synthetic": {
+          "opening_rmse": 5.439350451534135e-09,
+          "log_rmse": 9.598253238133718e-07
+        },
+        "trajectory_passes": [
+          24,
+          24,
+          24
+        ],
+        "channel_passes_of72": [
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "standard_constant": {
+        "reachable": {
+          "opening_rmse": 0.0009156274803293248,
+          "log_rmse": 0.022232255743195612
+        },
+        "synthetic": {
+          "opening_rmse": 0.0004934261572392037,
+          "log_rmse": 0.023010907384256523
+        },
+        "trajectory_passes": [
+          7,
+          6,
+          13
+        ],
+        "channel_passes_of72": [
+          66,
+          72,
+          62,
+          69,
+          59,
+          72,
+          72,
+          55,
+          58,
+          68,
+          72
+        ]
+      },
+      "standard_decay": {
+        "reachable": {
+          "opening_rmse": 0.002379368214557568,
+          "log_rmse": 0.09314665446678798
+        },
+        "synthetic": {
+          "opening_rmse": 0.0018548271618783474,
+          "log_rmse": 0.08571064968903859
+        },
+        "trajectory_passes": [
+          0,
+          0,
+          0
+        ],
+        "channel_passes_of72": [
+          59,
+          3,
+          17,
+          10,
+          51,
+          72,
+          72,
+          20,
+          19,
+          72,
+          72
+        ]
+      }
+    },
+    "freeze": {
+      "members": [
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "fit",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "fit",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "fit",
+          "schedule": "decay"
+        }
+      ],
+      "updates": [
+        15000,
+        10000,
+        15000,
+        15000,
+        15000,
+        15000,
+        0,
+        0,
+        0,
+        0,
+        0,
+        15000
+      ],
+      "score": [
+        1.9667422748170793e-06,
+        1.566994569657254e-06,
+        6.563232659573259e-07,
+        1.4088472198636737e-05,
+        1.41829459607834e-05,
+        1.486292512709042e-05,
+        5.684873272200261e-16,
+        5.684873272200261e-16,
+        5.684873272200261e-16,
+        5.684873272200261e-16,
+        5.684873272200261e-16,
+        5.565337335705774e-16
+      ],
+      "fresh_accessed": false,
+      "initialization_eligible": true
+    },
+    "report": {
+      "valid": true,
+      "complete": true,
+      "task": "51g",
+      "P_frozen": true,
+      "finite_parameters": true,
+      "thresholds_changed": false,
+      "temporal_dynamics_tested": false,
+      "evaluation_rows": 132,
+      "elapsed_seconds": 134.69221634800002,
+      "members": [
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_constant",
+          "representation": "standard_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "standard",
+          "schedule": "constant"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "standard_decay",
+          "representation": "standard_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "standard",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_constant",
+          "representation": "fit_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "fit",
+          "schedule": "constant"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "initialization": "fit",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "initialization": "fit",
+          "schedule": "decay"
+        },
+        {
+          "arm": "fit_decay",
+          "representation": "fit_decay",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "initialization": "fit",
+          "schedule": "decay"
+        }
+      ],
+      "limitations": "Static full physical state readout only. Fit-initialized solution is data-derived linear regression plus unchanged trainable nonlinear architecture, not proof of SGD discovery or recurrent compression. Sampled current thresholds unchanged; no temporal or closed-loop qualification."
+    }
+  },
+  "51h": {
+    "archive_sha256": "536d7d0967f4154e7861b7117b9a7e127bfe3e163a173a6730720351d6f7c578",
+    "checkpoint_finite": {
+      "checkpoint_12500.pt": true,
+      "checkpoint_15000.pt": true,
+      "checkpoint_10000_pre.pt": true,
+      "checkpoint_3000.pt": true,
+      "selected.pt": true,
+      "checkpoint_10000.pt": true,
+      "checkpoint_5000.pt": true,
+      "checkpoint_1500.pt": true,
+      "checkpoint_500.pt": true,
+      "checkpoint_0.pt": true
+    },
+    "arms": {
+      "linearize_constant": {
+        "reachable": {
+          "opening_rmse": 8.391094041826364e-09,
+          "log_rmse": 5.013242798668216e-07
+        },
+        "synthetic": {
+          "opening_rmse": 3.834928818946537e-09,
+          "log_rmse": 9.800437510421034e-07
+        },
+        "trajectory_passes": [
+          24,
+          24,
+          24
+        ],
+        "channel_passes_of72": [
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "linearize_late": {
+        "reachable": {
+          "opening_rmse": 8.391094041826364e-09,
+          "log_rmse": 5.013242798668216e-07
+        },
+        "synthetic": {
+          "opening_rmse": 3.834928818946537e-09,
+          "log_rmse": 9.800437510421034e-07
+        },
+        "trajectory_passes": [
+          24,
+          24,
+          24
+        ],
+        "channel_passes_of72": [
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72,
+          72
+        ]
+      },
+      "none_constant": {
+        "reachable": {
+          "opening_rmse": 0.0004468244636276116,
+          "log_rmse": 0.014877097215503454
+        },
+        "synthetic": {
+          "opening_rmse": 0.0005021781350175539,
+          "log_rmse": 0.016209345931808155
+        },
+        "trajectory_passes": [
+          10,
+          9,
+          21
+        ],
+        "channel_passes_of72": [
+          66,
+          72,
+          71,
+          57,
+          70,
+          72,
+          72,
+          71,
+          59,
+          72,
+          72
+        ]
+      },
+      "none_late": {
+        "reachable": {
+          "opening_rmse": 0.0004852549366963406,
+          "log_rmse": 0.01614747755229473
+        },
+        "synthetic": {
+          "opening_rmse": 0.00039602665735098225,
+          "log_rmse": 0.020372014492750168
+        },
+        "trajectory_passes": [
+          6,
+          15,
+          21
+        ],
+        "channel_passes_of72": [
+          64,
+          72,
+          67,
+          69,
+          68,
+          72,
+          72,
+          68,
+          57,
+          72,
+          72
+        ]
+      },
+      "residual_constant": {
+        "reachable": {
+          "opening_rmse": 0.00046493772727747756,
+          "log_rmse": 0.014990844142933687
+        },
+        "synthetic": {
+          "opening_rmse": 0.0006433011537107328,
+          "log_rmse": 0.01647590969999631
+        },
+        "trajectory_passes": [
+          10,
+          17,
+          21
+        ],
+        "channel_passes_of72": [
+          66,
+          72,
+          71,
+          66,
+          70,
+          72,
+          72,
+          71,
+          59,
+          70,
+          72
+        ]
+      },
+      "residual_late": {
+        "reachable": {
+          "opening_rmse": 0.0004936687473673373,
+          "log_rmse": 0.016334649951507647
+        },
+        "synthetic": {
+          "opening_rmse": 0.00039600701711606234,
+          "log_rmse": 0.020469193657239277
+        },
+        "trajectory_passes": [
+          6,
+          16,
+          21
+        ],
+        "channel_passes_of72": [
+          63,
+          72,
+          67,
+          69,
+          68,
+          72,
+          72,
+          69,
+          57,
+          72,
+          72
+        ]
+      }
+    },
+    "freeze": {
+      "members": [
+        {
+          "arm": "none_constant",
+          "representation": "none_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "none",
+          "schedule": "constant"
+        },
+        {
+          "arm": "none_constant",
+          "representation": "none_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "none",
+          "schedule": "constant"
+        },
+        {
+          "arm": "none_constant",
+          "representation": "none_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "none",
+          "schedule": "constant"
+        },
+        {
+          "arm": "none_late",
+          "representation": "none_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "none",
+          "schedule": "late"
+        },
+        {
+          "arm": "none_late",
+          "representation": "none_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "none",
+          "schedule": "late"
+        },
+        {
+          "arm": "none_late",
+          "representation": "none_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "none",
+          "schedule": "late"
+        },
+        {
+          "arm": "residual_constant",
+          "representation": "residual_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "residual",
+          "schedule": "constant"
+        },
+        {
+          "arm": "residual_constant",
+          "representation": "residual_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "residual",
+          "schedule": "constant"
+        },
+        {
+          "arm": "residual_constant",
+          "representation": "residual_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "residual",
+          "schedule": "constant"
+        },
+        {
+          "arm": "residual_late",
+          "representation": "residual_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "residual",
+          "schedule": "late"
+        },
+        {
+          "arm": "residual_late",
+          "representation": "residual_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "residual",
+          "schedule": "late"
+        },
+        {
+          "arm": "residual_late",
+          "representation": "residual_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "residual",
+          "schedule": "late"
+        },
+        {
+          "arm": "linearize_constant",
+          "representation": "linearize_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "linearize",
+          "schedule": "constant"
+        },
+        {
+          "arm": "linearize_constant",
+          "representation": "linearize_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "linearize",
+          "schedule": "constant"
+        },
+        {
+          "arm": "linearize_constant",
+          "representation": "linearize_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "linearize",
+          "schedule": "constant"
+        },
+        {
+          "arm": "linearize_late",
+          "representation": "linearize_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "linearize",
+          "schedule": "late"
+        },
+        {
+          "arm": "linearize_late",
+          "representation": "linearize_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "linearize",
+          "schedule": "late"
+        },
+        {
+          "arm": "linearize_late",
+          "representation": "linearize_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "linearize",
+          "schedule": "late"
+        }
+      ],
+      "updates": [
+        15000,
+        15000,
+        15000,
+        15000,
+        15000,
+        15000,
+        15000,
+        15000,
+        15000,
+        15000,
+        15000,
+        15000,
+        10000,
+        10000,
+        10000,
+        10000,
+        10000,
+        10000
+      ],
+      "score": [
+        1.2397121054164018e-06,
+        3.096409955105628e-07,
+        2.815766890762461e-07,
+        2.0207542092975928e-06,
+        2.860590484488057e-07,
+        2.596042634195328e-07,
+        1.2792992265531211e-06,
+        3.36432577796586e-07,
+        3.695010946103139e-07,
+        2.1156981802050723e-06,
+        2.797458478198678e-07,
+        2.571114521288109e-07,
+        5.633235496757679e-16,
+        5.633235496757679e-16,
+        5.633235496757679e-16,
+        5.633235496757679e-16,
+        5.633235496757679e-16,
+        5.633235496757679e-16
+      ],
+      "fresh_accessed": false
+    },
+    "report": {
+      "valid": true,
+      "complete": true,
+      "task": "51h",
+      "P_frozen": true,
+      "finite_parameters": true,
+      "thresholds_changed": false,
+      "temporal_dynamics_tested": false,
+      "evaluation_rows": 198,
+      "elapsed_seconds": 135.76571288600002,
+      "members": [
+        {
+          "arm": "none_constant",
+          "representation": "none_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "none",
+          "schedule": "constant"
+        },
+        {
+          "arm": "none_constant",
+          "representation": "none_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "none",
+          "schedule": "constant"
+        },
+        {
+          "arm": "none_constant",
+          "representation": "none_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "none",
+          "schedule": "constant"
+        },
+        {
+          "arm": "none_late",
+          "representation": "none_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "none",
+          "schedule": "late"
+        },
+        {
+          "arm": "none_late",
+          "representation": "none_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "none",
+          "schedule": "late"
+        },
+        {
+          "arm": "none_late",
+          "representation": "none_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "none",
+          "schedule": "late"
+        },
+        {
+          "arm": "residual_constant",
+          "representation": "residual_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "residual",
+          "schedule": "constant"
+        },
+        {
+          "arm": "residual_constant",
+          "representation": "residual_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "residual",
+          "schedule": "constant"
+        },
+        {
+          "arm": "residual_constant",
+          "representation": "residual_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "residual",
+          "schedule": "constant"
+        },
+        {
+          "arm": "residual_late",
+          "representation": "residual_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "residual",
+          "schedule": "late"
+        },
+        {
+          "arm": "residual_late",
+          "representation": "residual_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "residual",
+          "schedule": "late"
+        },
+        {
+          "arm": "residual_late",
+          "representation": "residual_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "residual",
+          "schedule": "late"
+        },
+        {
+          "arm": "linearize_constant",
+          "representation": "linearize_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "linearize",
+          "schedule": "constant"
+        },
+        {
+          "arm": "linearize_constant",
+          "representation": "linearize_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "linearize",
+          "schedule": "constant"
+        },
+        {
+          "arm": "linearize_constant",
+          "representation": "linearize_constant",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "linearize",
+          "schedule": "constant"
+        },
+        {
+          "arm": "linearize_late",
+          "representation": "linearize_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 17,
+          "projection": "linearize",
+          "schedule": "late"
+        },
+        {
+          "arm": "linearize_late",
+          "representation": "linearize_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 29,
+          "projection": "linearize",
+          "schedule": "late"
+        },
+        {
+          "arm": "linearize_late",
+          "representation": "linearize_late",
+          "loss": "raw",
+          "units": 24,
+          "target": "exact",
+          "seed": 43,
+          "projection": "linearize",
+          "schedule": "late"
+        }
+      ],
+      "limitations": "Static full-state readout only, not recurrent compression or closed-loop validation. Projection is a declared fit-only optimization operation, not SGD discovery. Thresholds and abstraction unchanged.",
+      "stop_policy": "At most51i and51j after51h. After51j proceed toTask52 even if unresolved, retaining explicit limitations without relaxing thresholds or declaring failed gates passed."
+    },
+    "curve": [
+      {
+        "update": 0,
+        "stage": "standard",
+        "common_score": [
+          0.09226540476083755,
+          0.09226176887750626,
+          0.09229005128145218,
+          0.09226540476083755,
+          0.09226176887750626,
+          0.09229005128145218,
+          0.09226540476083755,
+          0.09226176887750626,
+          0.09229005128145218,
+          0.09226540476083755,
+          0.09226176887750626,
+          0.09229005128145218,
+          0.09226540476083755,
+          0.09226176887750626,
+          0.09229005128145218,
+          0.09226540476083755,
+          0.09226176887750626,
+          0.09229005128145218
+        ]
+      },
+      {
+        "update": 500,
+        "stage": "standard",
+        "common_score": [
+          0.03952737897634506,
+          0.039623815566301346,
+          0.03968711197376251,
+          0.03952737897634506,
+          0.039623815566301346,
+          0.03968711197376251,
+          0.03952737897634506,
+          0.039623815566301346,
+          0.03968711197376251,
+          0.03952737897634506,
+          0.039623815566301346,
+          0.03968711197376251,
+          0.03952737897634506,
+          0.039623815566301346,
+          0.03968711197376251,
+          0.03952737897634506,
+          0.039623815566301346,
+          0.03968711197376251
+        ]
+      },
+      {
+        "update": 1500,
+        "stage": "standard",
+        "common_score": [
+          0.00012651688302867115,
+          0.00011296496086288244,
+          0.00011175134568475187,
+          0.00012651688302867115,
+          0.00011296496086288244,
+          0.00011175134568475187,
+          0.00012651688302867115,
+          0.00011296496086288244,
+          0.00011175134568475187,
+          0.00012651688302867115,
+          0.00011296496086288244,
+          0.00011175134568475187,
+          0.00012651688302867115,
+          0.00011296496086288244,
+          0.00011175134568475187,
+          0.00012651688302867115,
+          0.00011296496086288244,
+          0.00011175134568475187
+        ]
+      },
+      {
+        "update": 3000,
+        "stage": "standard",
+        "common_score": [
+          3.2312313123838976e-05,
+          2.9722370527451858e-05,
+          3.334252687636763e-05,
+          3.2312313123838976e-05,
+          2.9722370527451858e-05,
+          3.334252687636763e-05,
+          3.2312313123838976e-05,
+          2.9722370527451858e-05,
+          3.334252687636763e-05,
+          3.2312313123838976e-05,
+          2.9722370527451858e-05,
+          3.334252687636763e-05,
+          3.2312313123838976e-05,
+          2.9722370527451858e-05,
+          3.334252687636763e-05,
+          3.2312313123838976e-05,
+          2.9722370527451858e-05,
+          3.334252687636763e-05
+        ]
+      },
+      {
+        "update": 5000,
+        "stage": "standard",
+        "common_score": [
+          2.204256634286139e-05,
+          1.9957078620791435e-05,
+          2.0874511392321438e-05,
+          2.204256634286139e-05,
+          1.9957078620791435e-05,
+          2.0874511392321438e-05,
+          2.204256634286139e-05,
+          1.9957078620791435e-05,
+          2.0874511392321438e-05,
+          2.204256634286139e-05,
+          1.9957078620791435e-05,
+          2.0874511392321438e-05,
+          2.204256634286139e-05,
+          1.9957078620791435e-05,
+          2.0874511392321438e-05,
+          2.204256634286139e-05,
+          1.9957078620791435e-05,
+          2.0874511392321438e-05
+        ]
+      },
+      {
+        "update": 10000,
+        "stage": "pre_projection",
+        "common_score": [
+          3.1468177894566907e-06,
+          1.0655689948180225e-06,
+          6.490138844128523e-07,
+          3.1468177894566907e-06,
+          1.0655689948180225e-06,
+          6.490138844128523e-07,
+          3.1468177894566907e-06,
+          1.0655689948180225e-06,
+          6.490138844128523e-07,
+          3.1468177894566907e-06,
+          1.0655689948180225e-06,
+          6.490138844128523e-07,
+          3.1468177894566907e-06,
+          1.0655689948180225e-06,
+          6.490138844128523e-07,
+          3.1468177894566907e-06,
+          1.0655689948180225e-06,
+          6.490138844128523e-07
+        ]
+      },
+      {
+        "update": 10000,
+        "stage": "post_projection",
+        "common_score": [
+          3.1468177894566907e-06,
+          1.0655689948180225e-06,
+          6.490138844128523e-07,
+          3.1468177894566907e-06,
+          1.0655689948180225e-06,
+          6.490138844128523e-07,
+          8.343496301677078e-05,
+          9.302078979089856e-06,
+          1.4278915614340804e-06,
+          8.343496301677078e-05,
+          9.302078979089856e-06,
+          1.4278915614340804e-06,
+          5.633235496757679e-16,
+          5.633235496757679e-16,
+          5.633235496757679e-16,
+          5.633235496757679e-16,
+          5.633235496757679e-16,
+          5.633235496757679e-16
+        ]
+      },
+      {
+        "update": 12500,
+        "stage": "standard",
+        "common_score": [
+          1.5265205774994683e-06,
+          3.2356292649637908e-06,
+          4.484455757847172e-07,
+          2.1680566533177625e-06,
+          2.988888070376561e-07,
+          2.626128150495788e-07,
+          1.3721802361033042e-06,
+          2.4209778075601207e-06,
+          4.0187705963035114e-07,
+          2.2515821456181584e-06,
+          2.84842968767407e-07,
+          2.5836465056272573e-07,
+          4.344999471328492e-09,
+          6.572443977947984e-11,
+          1.0129560384930514e-11,
+          1.1490933665746564e-14,
+          1.4948405265891897e-14,
+          1.6010369435380187e-14
+        ]
+      },
+      {
+        "update": 15000,
+        "stage": "standard",
+        "common_score": [
+          1.2397121054164018e-06,
+          3.096409955105628e-07,
+          2.815766890762461e-07,
+          2.0207542092975928e-06,
+          2.860590484488057e-07,
+          2.596042634195328e-07,
+          1.2792992265531211e-06,
+          3.36432577796586e-07,
+          3.695010946103139e-07,
+          2.1156981802050723e-06,
+          2.797458478198678e-07,
+          2.571114521288109e-07,
+          6.824601439525679e-10,
+          9.82103398605716e-10,
+          1.2448869712855526e-10,
+          7.92225002775853e-15,
+          7.626693127407193e-15,
+          1.526751984657227e-14
+        ]
+      }
+    ],
+    "exact_checkpoint": {
+      "linearize_constant": {
+        "pre": {
+          "reachable": 0.0232645917753459,
+          "synthetic": 0.039675898359861655
+        },
+        "post": {
+          "reachable": 4.1863196800949373e-07,
+          "synthetic": 1.3223082218096814e-06
+        },
+        "final": {
+          "reachable": 0.0003570743497153441,
+          "synthetic": 0.0006139884552408754
+        },
+        "selected": {
+          "reachable": 4.1863196800949373e-07,
+          "synthetic": 1.3223082218096814e-06
+        }
+      },
+      "linearize_late": {
+        "pre": {
+          "reachable": 0.0232645917753459,
+          "synthetic": 0.039675898359861655
+        },
+        "post": {
+          "reachable": 4.1863196800949373e-07,
+          "synthetic": 1.3223082218096814e-06
+        },
+        "final": {
+          "reachable": 2.675360613432211e-06,
+          "synthetic": 3.7746257090408187e-06
+        },
+        "selected": {
+          "reachable": 4.1863196800949373e-07,
+          "synthetic": 1.3223082218096814e-06
+        }
+      },
+      "none_constant": {
+        "pre": {
+          "reachable": 0.0232645917753459,
+          "synthetic": 0.039675898359861655
+        },
+        "post": {
+          "reachable": 0.0232645917753459,
+          "synthetic": 0.039675898359861655
+        },
+        "final": {
+          "reachable": 0.014877078001760849,
+          "synthetic": 0.022756032128815353
+        },
+        "selected": {
+          "reachable": 0.014877078001760849,
+          "synthetic": 0.022756032128815353
+        }
+      },
+      "none_late": {
+        "pre": {
+          "reachable": 0.0232645917753459,
+          "synthetic": 0.039675898359861655
+        },
+        "post": {
+          "reachable": 0.0232645917753459,
+          "synthetic": 0.039675898359861655
+        },
+        "final": {
+          "reachable": 0.016147464023714957,
+          "synthetic": 0.028658434552126365
+        },
+        "selected": {
+          "reachable": 0.016147464023714957,
+          "synthetic": 0.028658434552126365
+        }
+      },
+      "residual_constant": {
+        "pre": {
+          "reachable": 0.0232645917753459,
+          "synthetic": 0.039675898359861655
+        },
+        "post": {
+          "reachable": 0.012778361599843703,
+          "synthetic": 0.040382480835431334
+        },
+        "final": {
+          "reachable": 0.014990832324961253,
+          "synthetic": 0.022871981879914748
+        },
+        "selected": {
+          "reachable": 0.014990832324961253,
+          "synthetic": 0.022871981879914748
+        }
+      },
+      "residual_late": {
+        "pre": {
+          "reachable": 0.0232645917753459,
+          "synthetic": 0.039675898359861655
+        },
+        "post": {
+          "reachable": 0.012778361599843703,
+          "synthetic": 0.040382480835431334
+        },
+        "final": {
+          "reachable": 0.016334638674562457,
+          "synthetic": 0.028668624409720008
+        },
+        "selected": {
+          "reachable": 0.016334638674562457,
+          "synthetic": 0.028668624409720008
+        }
+      }
+    }
+  }
+}
