@@ -1,0 +1,136 @@
+{
+  "task": "51j",
+  "version": "v1",
+  "thresholds_changed": false,
+  "weights_sha256": "d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+  "dt_ms": 0.1,
+  "history_ms": 400,
+  "reachable_stride": 20,
+  "synthetic_per_role": 1024,
+  "roles": {
+    "fit": {
+      "seed": 9520103,
+      "count": 36
+    },
+    "development": {
+      "seed": 9520127,
+      "count": 24
+    },
+    "fresh": {
+      "seed": 9520141,
+      "count": 48
+    }
+  },
+  "families": {
+    "Ca": [
+      0,
+      1
+    ],
+    "Na": [
+      2,
+      3,
+      4
+    ],
+    "K_voltage": [
+      6,
+      7,
+      8,
+      10
+    ],
+    "Ih": [
+      5
+    ],
+    "SK": [
+      9
+    ]
+  },
+  "arms": [
+    {
+      "id": "frozen",
+      "units": 24,
+      "target": "exact",
+      "objective": "raw",
+      "initialization": "fit",
+      "schedule": "constant",
+      "optimizer": "frozen",
+      "lr": 0,
+      "eps": 1e-8
+    },
+    {
+      "id": "adam_default",
+      "units": 24,
+      "target": "exact",
+      "objective": "raw",
+      "initialization": "fit",
+      "schedule": "constant",
+      "optimizer": "adam",
+      "lr": 0.002,
+      "eps": 1e-8
+    },
+    {
+      "id": "adam_large_eps",
+      "units": 24,
+      "target": "exact",
+      "objective": "raw",
+      "initialization": "fit",
+      "schedule": "constant",
+      "optimizer": "adam",
+      "lr": 0.002,
+      "eps": 0.0001
+    },
+    {
+      "id": "sgd",
+      "units": 24,
+      "target": "exact",
+      "objective": "raw",
+      "initialization": "fit",
+      "schedule": "constant",
+      "optimizer": "sgd",
+      "lr": 0.002,
+      "eps": 1e-8
+    }
+  ],
+  "seeds": [
+    61,
+    73,
+    89
+  ],
+  "updates": 5000,
+  "checkpoints": [
+    0,
+    1,
+    10,
+    100,
+    500,
+    1500,
+    3000,
+    5000
+  ],
+  "batch_size": 256,
+  "gradient_clip": 1,
+  "architecture": "Unchanged local24 SiLU plus trainable linear skip. Same fit-only exact-label calibration for all arms; no teacher coefficients supplied. Frozen arm is a no-training preservation control, not a new architecture.",
+  "objective": "Same exact raw-log MSE/900 plus absolute opening MSE, paired minibatches and independent moments/clipping. Adam beta1=.9,beta2=.999, different epsilon or step only as registered. SGD no momentum or weight decay. FP32 model and gradients; FP64 exact labels constructed before cast for training.",
+  "selection": "Common development score, earliest tie including0, freeze beforefresh. Primary preservation result is final checkpoint amplitude gates, also report selected checkpoint separately; do not hide deterioration by selecting0. Log gradient norms, update norms, and drift from initialization at all budgets.",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "claim": "Frozen SGD settings preserve the calibrated solution on new data and seeds.",
+      "contrast": "Final versus initial error and fixed original amplitude thresholds; frozen reference."
+    },
+    {
+      "id": "H2",
+      "claim": "Frozen Adam epsilon1e-4 suppresses drift on new data and seeds.",
+      "contrast": "Adam large epsilon versus default, same base step, initialization and minibatches."
+    }
+  ],
+  "cost": {
+    "batch": 256,
+    "repetitions": 3,
+    "scope": "Packed12 static models; no matched deployment speedup claim."
+  },
+  "limitations": "Static full-state readout only. Fit calibration is not SGD discovery. Optimizer epsilon changes optimization, not evaluation thresholds. No claim of temporal/closed-loop correctness or recurrent compression.",
+  "stop_policy": "This closes the51series. Next task52, with explicit residual limitations whatever the outcome; no51k or additional51subtasks.",
+  "runtime_budget_seconds": 10800,
+  "output_budget_mb": 200,
+  "confirmation": "Hyperparameters fixed from51i: SGD lr0.002 no momentum; Adam lr0.002 epsilon0.0001; controls frozen and Adam epsilon1e-8. New train/development/fresh streams and network seeds, 48freshhistories. Confirmation of the calibration/preservation procedure, not an independent test of recurrent dynamics. No retuning after results."
+}

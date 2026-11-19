@@ -1773,7 +1773,14 @@ memoria che determina correnti e risposta agli interventi?
   Il checkpoint finale è la misura primaria di conservazione; quello
   selezionato resta separato per non nascondere regressioni scegliendo0.
   Soglie e astrazione invariate, ancora nessuna qualificazione ricorrente.
-  **Limite concordato:** dopo51i è ammessa al massimo51j.
+  **51i→51j:** tutti i bracci passano72/72 anche al checkpoint finale;
+  SGD conserva la precisione iniziale, Adam con epsilon1e-4 quasi la conserva,
+  Adam standard introduce più drift. La51j conferma impostazioni congelate
+  su nuovi seed61/73/89 e nuovi stream, con48traiettorie fresh per seed,
+  controlli congelato/Adam standard e checkpoint finali distinti dai selezionati.
+  La conferma riguarda la procedura statica di calibrazione/conservazione,
+  non certifica la memoria ricorrente o il sistema accoppiato.
+  **Limite concordato:** la51j chiude questo approfondimento.
   Entro51j si chiude questo approfondimento e si procede alla52, anche
   con limiti residui espliciti e senza convertire i fallimenti in successi.
 - **Task 52 — Closed loop e interventi a stato compresso** → Inserire il
