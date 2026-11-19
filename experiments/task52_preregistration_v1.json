@@ -1,0 +1,23 @@
+{
+ "task":"52","version":"v1","exploratory":true,"training_updates":0,"selection_recomputed":false,"thresholds_changed":false,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "dt_ms":0.1,"duration_ms":1000,"horizons_ms":[100,500,1000],"seeds":[17,29,43],
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "protocols":["burst","hyper_rebound","relaxation"],"interventions":["none","block_Ca","block_Na","reverse_Ca"],
+ "arms":["canonical64","canonical32","canonical_J","P","P_J","compact","compact_imposed","compact_ca_imposed","oracle_Ca","oracle_Na","oracle_K_voltage","oracle_Ih","oracle_SK","oracle_all","compact_reset"],
+ "inputs":{"task51":{"path":"artifacts/task51_kaggle_external/task51_final.zip","sha256":"b19ca5934c4d3bb3c715153a893b6ade8cb52167d1c15cfc1e9b21042441fb30"},"task51j":{"path":"artifacts/task51j_kaggle_external/task51j_final.zip","sha256":"53e6bbbdf735f5451574f968306a99bb2ab96b3abcb34edd04cc22988294d8db"}},
+ "compact_selection":"Reuse archived Task51 development minima perseed, no52 selection or training. L10/T16 failed old strict gates and remains exploratory. No readout51j applied to10latent coordinates: its18physical-gate contract is different.",
+ "readout_selection":"Use archived51j final SGD weights, ordinal pairing of three readout seeds61/73/89 with P/compact seeds17/29/43. Only full18physical-gate controls receive this readout.",
+ "solver":"Single compartment, analytic semi-implicit voltage and exponential calcium, fixed dt0.1. At each left endpoint update ionic state using oldV/oldCa, compute conductance/current with updated state and oldV, then updateV/Ca. This matches the task50/51 voltage-driven gate convention; not a new nativeNEURON validation. Canonical64 is the declared discrete reference. Original current and compartment thresholds copied verbatim from task46.",
+ "controls":"canonical64 duplicate self-reference, canonical32 floor, full-state P and learned readout controls; compact imposedV/Ca separates ionic error from feedback. Oracle-family currents use canonical trajectory conductances and are never selectable. Reset latent at100ms tests memory causally. Block and reversal deltas paired with identical injections.",
+ "metrics":"All channels and cases at100/500/1000ms: original amplitude/charge and original timing plus existing multi-event diagnostic; voltage/Ca RMSE, physical/finite limits. ImposedV/Ca voltage not treated as autonomous success. Store all traces, intervention deltas and family attributions. No averaging waives failed cases.",
+ "cost":{"batch":24,"ticks":50,"repetitions":3,"scope":"Matched three-seed one-step eager runtime by model; logical10state vs padded18temporary reported. No whole-neuron acceleration claim."},
+ "limitations":"No new native reference, synapses or axial coupling. Compact memory remains unqualified; 51j only validated static readout. Passing discrete reference tests cannot promote full-neuron equivalence. No threshold changes, no return to51subtasks.",
+ "hypotheses":[
+  {"id":"H1","claim":"Autonomous feedback amplifies inherited local current errors.","contrast":"compact autonomous versus imposedV/Ca with identical inputs and initial encoding."},
+  {"id":"H2","claim":"Calcium feedback or a particular ionic family dominates failure.","contrast":"calcium-imposed and each nonselectable family oracle versus compact autonomy."},
+  {"id":"H3","claim":"The validated static readout transfers while compressed recurrence remains limiting.","contrast":"canonical_J and P_J versus original readouts and compactL10."},
+  {"id":"H4","claim":"Preserved mean accuracy can conceal intervention or memory failures.","contrast":"paired blocks/reversal deltas, latent reset and multi-event diagnostics."}
+ ],
+ "output_budget_mb":350,"runtime_budget_seconds":14400
+}

@@ -1787,6 +1787,12 @@ memoria che determina correnti e risposta agli interventi?
   candidato nel singolo compartimento, isolare le famiglie e il feedback Ca.
   Verificare blocchi, inversioni, correnti/carica e memoria lenta; misurare
   byte di stato, latenze e costo degli adattatori. Congelare la scelta.
+  Implementazione esplorativa: candidato L10 congelato dalla51 (nomina
+  da development archiviato), controlli canonici/P a18stati e readout SGD
+  congelato dalla51j. Confronti autonomo/imposto, calcio imposto, cinque
+  oracoli di famiglia non selezionabili, reset, blocchi e inversione.
+  Il riferimento è il modello discreto dichiarato; nessuna nuova audit
+  NEURON è implicita. Errori ereditati della memoria compressa restano espliciti.
 - **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
   contro formule e livello 1, con contratti comuni. Decidere se la memoria
   ridotta conserva le risposte nel dominio e se il risparmio è materiale;
