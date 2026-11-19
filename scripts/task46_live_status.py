@@ -40,7 +40,10 @@ def main():
         with api.build_kaggle_client() as client:
             http=client._http_client;http._init_session();headers=dict(http._session.headers);headers['Accept']='text/event-stream, */*';headers.pop('Content-Type',None)
             # Same endpoint implemented by KaggleApi.kernels_logs_stream.
-            url=http._endpoint+'/v1/kernels/logs/stream/'+launch.k.SLUG
+            receipt=launch.F/'kaggle_launch.json'
+            ref=json.loads(receipt.read_text())['ref'] if receipt.exists() else launch.k.SLUG
+            ref=ref.lstrip('/').removeprefix('code/')
+            url=http._endpoint+'/v1/kernels/logs/stream/'+ref
             with http._session.get(url,stream=True,headers=headers,auth=http._session.auth,timeout=(10,10)) as response:
                 response.raise_for_status()
                 if 'text/event-stream' not in response.headers.get('Content-Type','').lower():
