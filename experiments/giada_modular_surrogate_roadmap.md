@@ -1800,6 +1800,12 @@ memoria che determina correnti e risposta agli interventi?
   e ri-encoding del teacher solo diagnostici dopo freeze, mai selezionabili.
   Stesse soglie, riferimento discreto e confronti imposti/autonomi della52.
   Nessuna promozione automatica alla53 e nessuna riapertura del ramo51.
+  **52c — Riparazione decoder/encoder/memoria:** il controllo passivo della52b
+  spiega quasi tutto il miglioramento apparente del voltaggio; decoder ancora
+  incompatibili con le soglie. D/DE/DR/DER condividono un readout logaritmico
+  calibrato su fit; variano soltanto encoder e ricorrenza addestrabili.
+  Stato10 e ingressi online invariati. Oracoli h0 e stati teacher restano
+  diagnostici; controlli passivi/canonici, correnti e timing obbligatori.
 - **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
   contro formule e livello 1, con contratti comuni. Decidere se la memoria
   ridotta conserva le risposte nel dominio e se il risparmio è materiale;

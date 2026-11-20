@@ -1,0 +1,30 @@
+{
+  "status": "proposed_not_launched",
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "evidence": {
+    "passive_collapse": "All new autonomous outputs lie within 0.0083-0.0364mV RMS of a no-ionic-current passive control; that control has 1.893mV target RMS versus1.877-1.887mV for candidates. The72percent voltage improvement over52 does not establish restored ionic behavior.",
+    "decoder": "For every trained arm, fixed decoder box bounds preclude passing current thresholds on36/36 imposed-reference cases (333/396 channel-cases). This is a frozen-weight feasibility result, not a general impossibility for latent10.",
+    "initialization": "The short10ms future-assisted h0 fit changes100ms mean NRMSE by less than0.1percent. This alone cannot rule out initialization because decoder output is infeasible and the oracle is local/short.",
+    "memory": "Multiscale initialization increases sampled local Jacobian singular values from approximately0.02-0.07 to0.88-0.97, but does not improve final autonomous quality. More retention alone is insufficient; useful information may not be encoded or exposed by readout.",
+    "optimization": "All12 members select the final1200checkpoint and development loss continues to fall. This is evidence against claiming convergence, not proof that additional compute alone will solve the problem."
+  },
+  "hypotheses": [
+    {"id":"H_D","claim":"Restricted learned output range and poorly balanced fitting suppress dynamic current events.","contrast":"Refit an identically calibrated family-wise log decoder on frozen latent trajectories; check achievable range before interpreting other repairs. Compare current peaks/charge/timing as well as log loss, with a no-current negative control.","falsifier":"A verified range-capable decoder still fails on latent histories but succeeds on a full-state diagnostic control, indicating missing latent information rather than output range alone."},
+    {"id":"H_I","claim":"The encoder fails to put distinct physical starting states in distinguishable latent states.","contrast":"With the same trainable decoder, compare encoder frozen versus trainable while recurrence is frozen. Multi-start future-assisted h0 fits at10/100/1000ms are separate nonselectable diagnostics.","falsifier":"A sufficiently optimized h0 gives no improvement after decoder feasibility is established; this weakens, but does not logically exclude, initialization limitation."},
+    {"id":"H_M","claim":"The recurrent state does not retain or organize information needed for future currents.","contrast":"With the same trainable decoder, compare recurrence frozen versus trainable at each encoder setting; probe matched-current histories with different future responses and reset sensitivity.","falsifier":"Frozen recurrence plus decoder-only repair matches trainable recurrence across long histories and interventions."},
+    {"id":"H_O","claim":"The objective/sampling/gradient horizon prioritizes quiet states and does not sufficiently train rare events or long memory.","contrast":"Before full training, audit per-channel and event/quiet gradient contributions, run tiny-subset overfit checks and same-trajectory budget curves. An event-balanced objective is fixed across the main matrix, so that matrix alone does not estimate the objective's causal effect.","falsifier":"Balanced support and successful subset fitting still do not transfer; examine latent information/recurrence rather than declaring more data sufficient."}
+  ],
+  "proposed_main_matrix": {
+    "shared": "A calibrated range-capable decoder is trainable in every arm. Same latent10, same V/Ca online inputs, family layout, training streams, seeds and thresholds.",
+    "arms": [
+      {"id":"D","encoder":"frozen","recurrence":"frozen","decoder":"trainable"},
+      {"id":"DE","encoder":"trainable","recurrence":"frozen","decoder":"trainable"},
+      {"id":"DR","encoder":"frozen","recurrence":"trainable","decoder":"trainable"},
+      {"id":"DER","encoder":"trainable","recurrence":"trainable","decoder":"trainable"}
+    ],
+    "contrasts": "DE-D and DER-DR isolate encoder repair; DR-D and DER-DE isolate recurrent repair, conditional on common decoder training. Interaction is DER-DE-DR+D. Frozen52b and no-ionic-current controls prevent mistaking passive collapse for success.",
+    "diagnostic_controls": ["Frozen52b baseline", "No ionic currents, same passive membrane/input", "Canonical and full-state P controls", "Fixed-decoder range feasibility", "Postfreeze multi-start h0 oracle with multiple horizons", "Teacher-state readout diagnostic, not online candidate input", "Latent collision/future-response probes", "Matched computational cost, all current/timing and autonomous thresholds"],
+    "not_yet_preregistered": "Exact decoder width, objective weights, budgets and support counts require a next-task protocol before any execution. No experiment is launched by this proposal."
+  }
+}

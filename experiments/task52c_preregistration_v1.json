@@ -1,0 +1,22 @@
+{
+ "task":"52c","version":"v1","thresholds_changed":false,"abstraction_changed":false,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "source52b_sha256":"ecf8082612524f0bfde26c6dca178163902df4c1db5b96d97355ab7df795ba73",
+ "source_indices":[9,10,11],"source_choice":"52b log_multiscale selected by prior diagnostic low-opening accuracy and local retention, not by52c data. Not a qualified model.",
+ "dt_ms":0.1,"history_ms":1200,"seeds":[17,29,43],
+ "roles":{"fit":{"seed":9523103,"count":36},"development":{"seed":9523127,"count":24},"fresh":{"seed":9523141,"count":24}},
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "arms":[{"id":"D","widths":[2,3,3,1,1],"trunk":16,"encoder_trainable":false,"recurrence_trainable":false},{"id":"DE","widths":[2,3,3,1,1],"trunk":16,"encoder_trainable":true,"recurrence_trainable":false},{"id":"DR","widths":[2,3,3,1,1],"trunk":16,"encoder_trainable":false,"recurrence_trainable":true},{"id":"DER","widths":[2,3,3,1,1],"trunk":16,"encoder_trainable":true,"recurrence_trainable":true}],
+ "decoder":"Shared design in all arms: family-local16-SiLU-unit readout with linear skip, fit-only standardized latent features, log-output center/span from exact fit log extrema with1decade margin. Upper log clamp0 ensures openings<=1; no positive lower floor. Same perseed decoder initialization in all arms, ridge-calibrated on frozen fit latent trajectories. Increased readout capacity is explicit; logical latent remains10 and online inputsV/Ca unchanged.",
+ "feature_std_floor":0.01,"ridge":0.001,"calibration_stride":20,"probe_updates":32,
+ "updates":2400,"checkpoints":[200,800,2400],"batch_size":24,"chunk_ticks":256,"bptt_ticks":64,"learning_rate":0.001,"adam_epsilon":1e-8,"gradient_clip":1.0,
+ "sampling":"Half windows uniform fit-only, half drawn from uniformly chosen channel's fit opening>=20percent its maximum; clipped valid start. All arms share exact windows.",
+ "objective":"Normalized exact log MSE +0.25 window/channel-scaled current MSE +0.25 max-fit-opening-scaled opening MSE. Active frames (opening>=20percent maxfit) weight5 versus1, normalized per batch/channel. Additional0.25 initial normalized logMSE. Same objective and optimizer in all arms; no causal claim that gains vs52b isolate decoder from objective/sampling changes.",
+ "selection":"Common dev objective on256tick windows at0/150/275/650ms; earliest minimum per member. Fresh, oracle and coupled results never used for checkpoint selection.",
+ "oracle_initialization":{"fit_ms":[10,100,1000],"starts":2,"iterations":6,"learning_rate":0.1,"cases":1,"checkpoint_block":250,"qualification":"Future-assisted h0-only diagnostic afterfreeze, no model weight update or selection; finite multistart optimization is not a global oracle proof."},
+ "diagnostic_ticks":10000,"cost":{"batch":24,"ticks":50,"repetitions":3,"scope":"Same three-seed atomic step+readout; no full-neuron speedup claim."},
+ "hypotheses":[{"id":"D","claim":"Conditioned decoder repair can expose information in frozen latent trajectories.","contrast":"D versus frozen52b, conditional on changed shared fitting procedure."},{"id":"E","claim":"Encoder repair contributes independently.","contrast":"DE-D and DER-DR with common decoder procedure."},{"id":"R","claim":"Recurrence repair contributes independently.","contrast":"DR-D and DER-DE; interaction DER-DE-DR+D."},{"id":"O","claim":"Rare-state support and optimization remain limiting.","contrast":"Fit support counts, tiny-subset fitting diagnostic, gradient contributions and nested200/800/2400 budgets; not an isolated objective ablation."}],
+ "controls":"Canonical64/32, P/P_J, frozen52b log_multiscale, passive zero-ionic baseline; autonomous/imposedV-Ca/Ca-imposed/reset/all-current-oracle for each trained arm; decoder interval bounds, multihorizonh0, teacher-state algebraic oracle, latent/future collision probe. Physical fullstate only initialization online, never teacher input afterstart.",
+ "runtime_budget_seconds":6900,"output_budget_mb":600,
+ "limitations":"Exploratory repeated coupled52panel, not independent final confirmation. DiscreteoldCa reference, no newNEURON audit. Training chunks25.6ms/TBPTT6.4ms do not guarantee long-memory learning. State10/padded18 unchanged; readout parameter count grows. Diagnostics cannot override original gates."
+}
