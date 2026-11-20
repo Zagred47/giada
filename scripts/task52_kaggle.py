@@ -15,6 +15,9 @@ def notebook(revision):
         for line in cell['source']:
             line=line.replace('giada_task51j','giada_task52').replace('run_task51j.py','run_task52.py').replace('task51j_final','task52_final').replace('GIADA51j','GIADA52')
             line=line.replace('str(saved[0]),str(out)','str(saved[0]),str(package[0]),str(out)')
+            line=line.replace('training_updates_performed=5000',"training_updates_performed=worker_report.get('training_updates',0)").replace('selection_recomputed=True',"selection_recomputed=worker_report.get('selection_recomputed',False)")
+            if "(out/'runtime_receipt.json').write_text" in line:
+                lines.append(" worker_report=json.loads((out/'final_report.json').read_text()) if (out/'final_report.json').exists() else {}\n")
             lines.append(line)
             if line.startswith(' with saved[0].open'):
                 lines.extend([" package=list(Path('/kaggle/input').rglob('models52.zip.bin'));assert len(package)==1\n",f" with package[0].open('rb') as f:assert hashlib.file_digest(f,'sha256').hexdigest()=={proof['sha256']!r}\n"])

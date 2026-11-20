@@ -1,0 +1,30 @@
+{
+ "task":"52b","version":"v1","thresholds_changed":false,"abstraction_changed":false,"from_scratch":true,
+ "weights_sha256":"d2c3c77a1d4eff5ee84c2fd200746f98c468d62649823e71bfb94a1d13c9b256",
+ "dt_ms":0.1,"history_ms":1200,
+ "roles":{"fit":{"seed":9522103,"count":36},"development":{"seed":9522127,"count":24},"fresh":{"seed":9522141,"count":24}},
+ "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+ "arms":[
+  {"id":"sigmoid_standard","widths":[2,3,3,1,1],"trunk":16,"decoder":"sigmoid","memory":"standard"},
+  {"id":"log_standard","widths":[2,3,3,1,1],"trunk":16,"decoder":"log","memory":"standard"},
+  {"id":"sigmoid_multiscale","widths":[2,3,3,1,1],"trunk":16,"decoder":"sigmoid","memory":"multiscale"},
+  {"id":"log_multiscale","widths":[2,3,3,1,1],"trunk":16,"decoder":"log","memory":"multiscale"}
+ ],
+ "seeds":[17,29,43],"updates":1200,"checkpoints":[100,400,1200],"batch_size":32,"chunk_ticks":256,"bptt_ticks":64,"learning_rate":0.001,"adam_epsilon":1e-8,"gradient_clip":1.0,
+ "initial_tau_ms":[1,100,0.1,10,1000,1,100,1000,1000,100],
+ "initialization":"Same perseed random weights acrossall4arms. Common zero output weights give identical initial mean openings, calibrated fromfit only; decoder biases mapped to logit/log10 of that same mean. Rate input/recurrent weights initiallyzero in allarms; standard ratebias0, multiscale bias from listed timeconstants. All weights/biases then trainable.",
+ "objective":"Same segment/channel-scaled asinh current MSE +0.1 exact log-opening MSE/900 +0.1 opening MSE; extra4*exact log-opening MSE/900 atinitial point. Sigmoid uses stablelogsigmoid/ln10; loghead uses rawclamped<=0. No 1e-8 target floor. Exact teacher logtargets from positive physical gates; FP32 output underflow remains separately observable.",
+ "selection":"Common development loss onfixed256step windows starting0,150,275,650ms. Lowest mean current/log/opening objective perseed; earliestties. Freeze before anyfresh/oracle/coupled evaluation. No candidate chosen using diagnostic oracles or fresh results.",
+ "training_limits":"25.6ms stateful chunks, truncated gradients every6.4ms. This does not establish sufficient training for1000ms memory. Budget ladder diagnoses trend; no convergence claim from final budget alone. Preservation success of SGD/high-epsilonAdam in51j does not establish the best optimizer for learning fromscratch; commonAdam is fixed here.",
+ "oracle_initialization":{"iterations":60,"learning_rate":0.05,"window_ticks":100,"cases":3,"qualification":"Future-assisted h0 fit is a nonselectable diagnostic. Only h0 changes, never network parameters. Finite optimization is not a global optimum proof."},
+ "diagnostics":"Normal encoder, future-assisted h0 oracle and teacher re-encoding evaluated onthe samecanonical voltage/calcium paths. Frozen52baseline and all4newmodels compared in52closed-loop protocols. Decoder range and directcarry/Jacobian probes recorded. Oracle modes never count as deployable success.",
+ "hypotheses":[
+  {"id":"H_D","claim":"A log decoder improves learnability of small and large openings.","contrast":"log versus sigmoid at each memory initialization; commonloss and matchinginitial outputs."},
+  {"id":"H_M","claim":"Multiscale initial retention helps avoid premature loss of slow information.","contrast":"multiscale versus standard at eachdecoder, allparameters trainable and same10states."},
+  {"id":"H_I","claim":"Initializer error contributes independently of recurrence and decoder.","contrast":"Normal h0 versus optimized diagnostic h0 and teacher re-encoding afterfreeze."},
+  {"id":"H_B","claim":"Residual failure may reflect incomplete optimization at the registered budget.","contrast":"100/400/1200same-trajectory checkpoints, nofresh modelselection."}
+ ],
+ "cost":{"batch":24,"ticks":50,"repetitions":3,"scope":"Matched three-seed permodel step+readout, logical10state/padded18temporary; no whole-neuron speedup claim."},
+ "limitations":"Full physical initial state is available once toencoder; onlyV/Ca andlatent state online. Same52discrete reference, not newNEURON validation. No native synapses/axial coupling. Quality thresholds copied unchanged. Old52model is frozen comparison, not a valid compressed release.",
+ "runtime_budget_seconds":10800,"output_budget_mb":500
+}

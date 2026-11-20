@@ -18,6 +18,9 @@ class Composition(unittest.TestCase):
     def test_notebook(self):
         sys.path.insert(0,str(ROOT/'scripts'));import task52_kaggle as k
         doc=k.notebook('a'*40);self.assertIn('run_task52.py',json.dumps(doc));self.assertIn('str(package[0])',json.dumps(doc))
+        self.assertNotIn('training_updates_performed=5000',json.dumps(doc))
+        self.assertNotIn('selection_recomputed=True',json.dumps(doc))
+        self.assertIn("worker_report.get('training_updates',0)",json.dumps(doc))
         for c in doc['cells']:
             if c['cell_type']=='code':compile(''.join(c['source']),'52','exec')
     def test_quality(self):

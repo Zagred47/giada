@@ -1,0 +1,19 @@
+{
+ "status":"proposed_not_launched",
+ "scope":"Task52 failure attribution; keep latent10, V/Ca inputs, same initial-state contract and all existing evaluation thresholds",
+ "evidence":{
+  "decoder":"Fixed sigmoid decoder box bounds exclude accurate current predictions on36/36 trajectories, even with any latent in[0,1]^10. This does not prove architecture impossibility after retraining.",
+  "memory":"Sampled full-state transition Jacobian maximum singular value0.0255655; reset has tiny effect on existing trajectories. Local evidence of contraction, not a global memory theorem.",
+  "feedback":"Errors persist with imposedV/Ca. ImposingCa alone does not repair; correctingCa currents helps voltage. Do not confuse calcium current error with calcium-state feedback.",
+  "initialization":"Not isolated by52; fixed decoder already prevents success for any initialization. Diagnose only after or together with decoder repair."
+ },
+ "hypotheses":[
+  {"id":"decoder_range","claim":"The learned decoder has insufficient low-opening range and/or poor conditioning.","contrast":"Sigmoid versus log-opening readout, identical latent width and same hybrid objective/samples/budget."},
+  {"id":"memory_contraction","claim":"The fitted transition overwrites slow information too quickly.","contrast":"Current recurrence initialization versus learned multiscale update initialization; same10coordinates and parameter count, no analytic gate equations."},
+  {"id":"initialization","claim":"A better initial latent state can recover behavior once output range is adequate.","contrast":"Normal encoder versus diagnostic optimized initial state under frozen candidate. A future-assisted oracle is explicitly nonselectable and never used for model selection."},
+  {"id":"optimization_budget","claim":"Even an adequate representation may not be learned at the initial training budget.","contrast":"Nested checkpoints from the same trajectory; no duplicate independent runs or posthoc threshold adjustment."}
+ ],
+ "proposed_matrix":{"decoder":["sigmoid","log_opening"],"memory_initialization":["current","multiscale"],"trained_arms":4,"pairing":"same seeds, initial shared weights where compatible, minibatches, data, optimizer and common selection score","budgets":"nested checkpoints to preregister before execution"},
+ "diagnostics_after_freeze":["decoder attainable-range bounds","initialization encoder versus optimizedh0 oracle, reported separately","teacher re-encoding diagnostic versus true recurrence, not deployable","state Jacobians, reset sensitivity and slow-history separation","imposed and autonomous V/Ca, current/charge/timing and intervention regressions"],
+ "interpretation_rules":["Decoder repair without memory repair improving only initial/one-step scores supports memory limitation.","Memory intervention helping long histories at matched decoder supports dynamic retention limitation.","Optimizedh0 helping with frozen future transition supports initialization limitation; lack of benefit is not by itself proof of insufficient dimension.","Do not treat the oracle as an eligible model or reopen51subtasks."]
+}

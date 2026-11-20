@@ -1793,6 +1793,13 @@ memoria che determina correnti e risposta agli interventi?
   oracoli di famiglia non selezionabili, reset, blocchi e inversione.
   Il riferimento è il modello discreto dichiarato; nessuna nuova audit
   NEURON è implicita. Errori ereditati della memoria compressa restano espliciti.
+  **52b — Diagnosi fattoriale decoder × memoria:** dopo il fallimento del
+  candidato congelato52, quattro bracci appaiati (sigmoide/logaritmico ×
+  inizializzazione standard/multiscala), sempre10 coordinate di stato e
+  ingressi V/Ca. Budget annidati100/400/1200; controlli h0 assistito dal futuro
+  e ri-encoding del teacher solo diagnostici dopo freeze, mai selezionabili.
+  Stesse soglie, riferimento discreto e confronti imposti/autonomi della52.
+  Nessuna promozione automatica alla53 e nessuna riapertura del ramo51.
 - **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
   contro formule e livello 1, con contratti comuni. Decidere se la memoria
   ridotta conserva le risposte nel dominio e se il risparmio è materiale;
