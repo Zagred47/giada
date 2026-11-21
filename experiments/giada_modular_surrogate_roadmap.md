@@ -1818,6 +1818,17 @@ memoria che determina correnti e risposta agli interventi?
   e10stati. Fattori: perdita su corrente totale/carica e perdita sulle traiettorie
   autonome. Il preflight210/300 resta tale, non viene riclassificato come passato.
   Soglie e controlli invariati; preregistrazione separata dalla fase diagnostica.
+  **52d esito:** il braccio traiettorie migliora il voltaggio a1s da0,903 a0,730mV
+  su36/36casi, ma resta0/36sul contratto completo. Correnti mancanti, Ih debole
+  e lievi regressioni del calcio impediscono la promozione; vantaggio atomico
+  di costo non equivale a speedup del neurone intero.
+  **52e — Supporto mirato × perdite per famiglia:** controllo iniziale del
+  decoder su soli stati fit (testimoni puntuali, non fattibilità temporale).
+  Quattro bracci dalla52dtraiettorie: controllo, dati mirati, loss per famiglia,
+  combinato. Decoder/ricorrenza addestrabili, encoder congelato,10stati.
+  Stessa selezione anti-regressione su development per tutti, con fallback al
+  checkpoint iniziale se nessuna riparazione è ammissibile. Soglie scientifiche
+  invariate; controlli imposti/autonomi, oracoli nonselezionabili e costo atomico.
 - **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
   contro formule e livello 1, con contratti comuni. Decidere se la memoria
   ridotta conserva le risposte nel dominio e se il risparmio è materiale;

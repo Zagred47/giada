@@ -1,0 +1,22 @@
+{
+  "task":"52e", "thresholds_changed":false, "abstraction_changed":false,
+  "source52d_sha256":"7220f72e128cb7241aaa3db8f509c77ad29da986c630f5cd456dd5db1018e224", "source_indices":[6,7,8],
+  "dt_ms":0.1,"history_ms":1200,"seeds":[17,29,43],
+  "roles":{"fit":{"seed":9525103,"count":36},"development":{"seed":9525127,"count":24}},
+  "families":{"Ca":[0,1],"Na":[2,3,4],"K_voltage":[6,7,8,10],"Ih":[5],"SK":[9]},
+  "arms":[
+    {"id":"control","widths":[2,3,3,1,1],"trunk":16,"encoder_trainable":false,"recurrence_trainable":true,"support":false,"family_loss":false},
+    {"id":"support","widths":[2,3,3,1,1],"trunk":16,"encoder_trainable":false,"recurrence_trainable":true,"support":true,"family_loss":false},
+    {"id":"family","widths":[2,3,3,1,1],"trunk":16,"encoder_trainable":false,"recurrence_trainable":true,"support":false,"family_loss":true},
+    {"id":"combined","widths":[2,3,3,1,1],"trunk":16,"encoder_trainable":false,"recurrence_trainable":true,"support":true,"family_loss":true}
+  ],
+  "updates":800,"checkpoints":[100,300,500,800],"batch_size":16,"chunk_ticks":128,"bptt_ticks":128,"learning_rate":0.0001,"adam_epsilon":0.0001,"gradient_clip":1.0,
+  "coupled_training":{"duration_ms":400,"fit_seed":9526201,"development_seed":9526229,"batch_size":4,"burnin_ticks":128,"horizon_before300":512,"horizon_after300":1024,"voltage_scale_mv":1.0,"calcium_scale_mM":0.0001},
+  "support_protocol":{"fit_seed":9526301,"development_seed":9526327,"count_per_role":12,"replace_fraction":0.5,"description":"Canonical voltage clamp histories: alternating long hyperpolarization/recovery and brief repeated depolarizing bursts, randomized durations/amplitudes. No fresh evaluation traces are used to manufacture targets."},
+  "objective":"All arms retain52d trajectory plus perchannel loss. G adds0.1*[mean family loss + maximum family loss]; each family loss combines asinh(log10 opening residual)^2, normalized current MSE, cumulative signed charge and peak-magnitude error. Identical fit-only scales for allarms. S replaces half the teacher windows only; coupled batches are identical.",
+  "selection":"Common validation ordinary and targeted windows plus autonomous V/Ca. For each seed require no increase in any channel's validation current MSE, V MSE or Ca MSE versus initial52d, within1e-6 relative plus1e-12 numeric tolerance. Among eligible checkpoints choose lowest common full objective. Initial checkpoint is fallback; no eligible trained checkpoint is not success. These are additional selection guards, not changes to scientific acceptance thresholds.",
+  "cost":{"batch":24,"ticks":50,"repetitions":3,"scope":"Same three-seed atomic update andreadout; not whole neuron."},
+  "runtime_budget_seconds":6900,"output_budget_mb":900,
+  "diagnostics":"Fit-only decoder diagnostic before launch; shared128 vs512tick gradient probe; unchanged encoder and controls; initial fallback eligibility, per-channel nonregression; saved fresh coupled panel and current substitutions as52d.",
+  "limitations":"Exploratory reused52coupled panel; new development clamp targets do not create independent confirmation. Numerical free-latent decoder witnesses are not temporal feasibility. Decoder remains trainable, encoder remains frozen; no state dimensions or online physical gates added. Nonregression on development cannot guarantee nonregression on evaluation."
+}

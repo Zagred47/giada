@@ -1,0 +1,2920 @@
+{
+  "archive_sha256": "7220f72e128cb7241aaa3db8f509c77ad29da986c630f5cd456dd5db1018e224",
+  "archive_bytes": 237801218,
+  "report": {
+    "valid": true,
+    "execution_valid": true,
+    "scientific_acceptance_passed": false,
+    "promotion_authorized": false,
+    "complete": true,
+    "task": "52d",
+    "training_updates": 800,
+    "selection_recomputed": true,
+    "thresholds_changed": false,
+    "abstraction_changed": false,
+    "decoder_recalibration_authorized": true,
+    "logical_state": 10,
+    "finite_parameters": true,
+    "encoder_unchanged": true,
+    "postfreeze_weights_unchanged": true,
+    "frozen_controls_unchanged": true,
+    "elapsed_seconds": 5299.02700273,
+    "limitations": "Exploratory reused52coupled evaluation panel, not independent confirmation. Same latent10/padded18, V/Ca online; no newNEURON audit. Encoder freezing is common, not independently tested. Short TBPTT limits long-memory credit assignment. Recalibration authorized, no guarantee of feasibility or accuracy."
+  },
+  "checkpoint_finiteness": {
+    "checkpoint_300.pt": true,
+    "initial.pt": true,
+    "calibration.pt": true,
+    "P.pt": true,
+    "resumable_training.pt": true,
+    "checkpoint_800.pt": true,
+    "selected.pt": true,
+    "checkpoint_100.pt": true,
+    "R41.pt": true,
+    "C1.pt": true
+  },
+  "selection": {
+    "members": [
+      {
+        "arm": "control",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "control",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "control",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "balance",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "balance",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "balance",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "trajectory",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "trajectory",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "trajectory",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "combined",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "combined",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "combined",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      }
+    ],
+    "updates": [
+      100,
+      100,
+      100,
+      300,
+      100,
+      100,
+      300,
+      300,
+      300,
+      300,
+      300,
+      300
+    ],
+    "score": [
+      1.811577558517456,
+      1.8555898666381836,
+      1.9247150421142578,
+      1.8429627418518066,
+      1.9080531597137451,
+      2.001337766647339,
+      1.240722894668579,
+      1.249511480331421,
+      1.2257585525512695,
+      1.2079379558563232,
+      1.2477701902389526,
+      1.227509617805481
+    ],
+    "fresh_accessed": false,
+    "encoder_unchanged": true
+  },
+  "arms": {
+    "frozen52cDE": {
+      "modes": {
+        "P": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 0.0008723947691418957,
+            "calcium_rmse_mM": 1.0333174214224699e-08
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 0.0017886387245077883,
+            "calcium_rmse_mM": 8.295529612863934e-08
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 0.0012648240629304372,
+            "calcium_rmse_mM": 5.953592323064757e-08
+          }
+        },
+        "P_J": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 0.0008725106560064387,
+            "calcium_rmse_mM": 1.0326164926773848e-08
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 0.0017895264457272147,
+            "calcium_rmse_mM": 8.30657662524721e-08
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 0.001265451812617824,
+            "calcium_rmse_mM": 5.961539117281755e-08
+          }
+        },
+        "canonical32": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 1.9982091720251133e-06,
+            "calcium_rmse_mM": 1.0151442183570764e-10
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 4.591277623345443e-06,
+            "calcium_rmse_mM": 6.035284228855314e-11
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 3.849411404544777e-06,
+            "calcium_rmse_mM": 4.273423846311334e-11
+          }
+        },
+        "canonical64": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 1.760710889812141e-06,
+            "calcium_rmse_mM": 6.084451841041161e-12
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.0901828429802667e-06,
+            "calcium_rmse_mM": 4.6709347528837714e-12
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.1798206255172953e-06,
+            "calcium_rmse_mM": 3.703613417284409e-12
+          }
+        },
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.9049959197126767,
+            "calcium_rmse_mM": 0.00015312868379922817
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.2726266800159503,
+            "calcium_rmse_mM": 0.0001028604236503811
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9027315661357207,
+            "calcium_rmse_mM": 7.301605754910053e-05
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.066598364880664,
+            "calcium_rmse_mM": 5.263162947726035e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.300793903301098,
+            "calcium_rmse_mM": 3.1851692894792097e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.922588809009481,
+            "calcium_rmse_mM": 2.2523674475310096e-07
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.033064629183961934,
+            "calcium_rmse_mM": 5.265178298365128e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.019810311397038045,
+            "calcium_rmse_mM": 3.195025300749074e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.014026422945214778,
+            "calcium_rmse_mM": 2.2593370482062654e-07
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.9049959197126767,
+            "calcium_rmse_mM": 0.00015312868379922817
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.2726228154070063,
+            "calcium_rmse_mM": 0.00010286043215804461
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9027288417953082,
+            "calcium_rmse_mM": 7.301606353225943e-05
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 3.1273326430308406,
+            "calcium_rmse_mM": 9.506822133893617e-06
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.805037153353365,
+            "calcium_rmse_mM": 6.3538392029828815e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.278404005549478,
+            "calcium_rmse_mM": 4.5065235562987835e-06
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 3.1100309676187776,
+            "calcium_rmse_mM": 9.507292587278303e-06
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.6363519321106492,
+            "calcium_rmse_mM": 6.358656496456842e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.1571334268542695,
+            "calcium_rmse_mM": 4.510012648230668e-06
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.8762910466895748,
+            "calcium_rmse_mM": 0.00015312565931631934
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.0189710634284281,
+            "calcium_rmse_mM": 0.00010285479200235347
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.7205573977415903,
+            "calcium_rmse_mM": 7.301200931831935e-05
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 1.760710889812141e-06,
+            "calcium_rmse_mM": 6.084451841041161e-12
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.0901828429802667e-06,
+            "calcium_rmse_mM": 4.6709347528837714e-12
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.1798206255172953e-06,
+            "calcium_rmse_mM": 3.703613417284409e-12
+          }
+        }
+      },
+      "channels": {
+        "compact": {
+          "0": {
+            "median_nrmse": 0.11326954083598775,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.07651823409899214,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.03509377283114042,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03563387302636519,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.0976508868895776,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8909811241182579,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.05167823582087659,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.10107370554434036,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06761010746931616,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.12703733085959473,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.09487804811837049,
+            "passed": 0
+          }
+        },
+        "compact_imposed": {
+          "0": {
+            "median_nrmse": 0.11622196996467526,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.07655344193752595,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.03509400241569359,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03563402962989308,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.10154726196337405,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8910210767051732,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.06893486405314928,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.09718038301982063,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06773216299185665,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.12702828357749452,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.09132795984834188,
+            "passed": 0
+          }
+        }
+      },
+      "imposed_net_current_rmse": 0.0001421963071317672,
+      "imposed_channel_error_rss": 0.00016797830701276465,
+      "cases": [
+        {
+          "seed": 17,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.3839820808563993
+        },
+        {
+          "seed": 17,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.38156543934265136
+        },
+        {
+          "seed": 17,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.09046460103248967
+        },
+        {
+          "seed": 17,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.38426929858806386
+        },
+        {
+          "seed": 17,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.1088120916507311
+        },
+        {
+          "seed": 17,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2608421924075262
+        },
+        {
+          "seed": 17,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.1421397046180386
+        },
+        {
+          "seed": 17,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.109569415045277
+        },
+        {
+          "seed": 17,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.9158126878027318
+        },
+        {
+          "seed": 17,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2628694942468777
+        },
+        {
+          "seed": 17,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.860487341000943
+        },
+        {
+          "seed": 17,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.8533316789317718
+        },
+        {
+          "seed": 29,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.3842749338638717
+        },
+        {
+          "seed": 29,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.38190210415083714
+        },
+        {
+          "seed": 29,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.09044029304966478
+        },
+        {
+          "seed": 29,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3845575943179994
+        },
+        {
+          "seed": 29,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.1066168353912509
+        },
+        {
+          "seed": 29,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.250795145764181
+        },
+        {
+          "seed": 29,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.1313395096277774
+        },
+        {
+          "seed": 29,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.1093517455689137
+        },
+        {
+          "seed": 29,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.91198567555242
+        },
+        {
+          "seed": 29,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2261094334511662
+        },
+        {
+          "seed": 29,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.851005999170998
+        },
+        {
+          "seed": 29,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.8568399171752948
+        },
+        {
+          "seed": 43,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.38411101490006644
+        },
+        {
+          "seed": 43,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.3817058356968205
+        },
+        {
+          "seed": 43,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.09044467195235899
+        },
+        {
+          "seed": 43,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3843974052856952
+        },
+        {
+          "seed": 43,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.116085803746366
+        },
+        {
+          "seed": 43,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2591027012689862
+        },
+        {
+          "seed": 43,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.1568928269078578
+        },
+        {
+          "seed": 43,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.1172929420903195
+        },
+        {
+          "seed": 43,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.9549989528000696
+        },
+        {
+          "seed": 43,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.3047852925353076
+        },
+        {
+          "seed": 43,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.8988605765471759
+        },
+        {
+          "seed": 43,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.894065164653389
+        }
+      ],
+      "cost_median_ms": {
+        "canonical64": 271.24981499946443,
+        "P_full18": 368.0142880002677,
+        "J_readout_only": 20.124054000007163,
+        "compact10_step_readout": 50.98266099957982
+      }
+    },
+    "control": {
+      "modes": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.9701245529258495,
+            "calcium_rmse_mM": 0.00014864966818381266
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.3024523732744433,
+            "calcium_rmse_mM": 0.00010002982545660075
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9237434955570447,
+            "calcium_rmse_mM": 7.100819810110725e-05
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.1123774362183068,
+            "calcium_rmse_mM": 5.260269964323616e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.3287339248281738,
+            "calcium_rmse_mM": 3.1641628324409524e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9422742648018803,
+            "calcium_rmse_mM": 2.2375128860265853e-07
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.03593714787982026,
+            "calcium_rmse_mM": 5.263896757952736e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.021005800545398294,
+            "calcium_rmse_mM": 3.1731504442672737e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.014870678918279947,
+            "calcium_rmse_mM": 2.2438684049086876e-07
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.9701245529258495,
+            "calcium_rmse_mM": 0.00014864966818381266
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.3024293641520552,
+            "calcium_rmse_mM": 0.00010002983274922777
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9237272728279131,
+            "calcium_rmse_mM": 7.100820324173229e-05
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 3.1735876252037087,
+            "calcium_rmse_mM": 9.814593537802182e-06
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.831029230980643,
+            "calcium_rmse_mM": 6.557743769781288e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.2967443111396917,
+            "calcium_rmse_mM": 4.651346275476601e-06
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 3.1566079610313458,
+            "calcium_rmse_mM": 9.815396902045667e-06
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.6650707653375239,
+            "calcium_rmse_mM": 6.5628341596937225e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.177441704408539,
+            "calcium_rmse_mM": 4.655029397977719e-06
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.9424621319180102,
+            "calcium_rmse_mM": 0.00014864549479056533
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.056128481815378,
+            "calcium_rmse_mM": 0.000100022730952936
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.7468329689248208,
+            "calcium_rmse_mM": 7.1003101404461e-05
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 1.760710889812141e-06,
+            "calcium_rmse_mM": 6.084451841041161e-12
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.0901828429802667e-06,
+            "calcium_rmse_mM": 4.6709347528837714e-12
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.1798206255172953e-06,
+            "calcium_rmse_mM": 3.703613417284409e-12
+          }
+        }
+      },
+      "channels": {
+        "compact": {
+          "0": {
+            "median_nrmse": 0.11316792764334642,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.0765273497247178,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.035092116084732075,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03563245820300402,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.09695194017937768,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8901179384255125,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.05328806087573315,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.10385961248255363,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06729405960676033,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.12865673577119513,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.10111407943735926,
+            "passed": 0
+          }
+        },
+        "compact_imposed": {
+          "0": {
+            "median_nrmse": 0.11499274635904555,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.07656131958445193,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.03509246804300903,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03563267160237184,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.10105282838937898,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.890160720931706,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.0760900341854321,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.09845091278252761,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06760678618101176,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.1286903780021304,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.09858343307137687,
+            "passed": 0
+          }
+        }
+      },
+      "imposed_net_current_rmse": 0.00015074337040646887,
+      "imposed_channel_error_rss": 0.0001697861120293566,
+      "cases": [
+        {
+          "seed": 17,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.3830880441625448
+        },
+        {
+          "seed": 17,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.3806590906829009
+        },
+        {
+          "seed": 17,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.09020996827933427
+        },
+        {
+          "seed": 17,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3833761750866604
+        },
+        {
+          "seed": 17,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.123268152846621
+        },
+        {
+          "seed": 17,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.283109021443909
+        },
+        {
+          "seed": 17,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.1638484723399312
+        },
+        {
+          "seed": 17,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.122346011409958
+        },
+        {
+          "seed": 17,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.9611896319052293
+        },
+        {
+          "seed": 17,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.3020275567797701
+        },
+        {
+          "seed": 17,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.9063014895982882
+        },
+        {
+          "seed": 17,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.8935408832624959
+        },
+        {
+          "seed": 29,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.3833845313352373
+        },
+        {
+          "seed": 29,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.38098203262738484
+        },
+        {
+          "seed": 29,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.09024532640280633
+        },
+        {
+          "seed": 29,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3836691965563606
+        },
+        {
+          "seed": 29,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.115913026138057
+        },
+        {
+          "seed": 29,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2582935191195987
+        },
+        {
+          "seed": 29,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.147629829684219
+        },
+        {
+          "seed": 29,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.118366023597547
+        },
+        {
+          "seed": 29,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.960517908266161
+        },
+        {
+          "seed": 29,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2150523970539067
+        },
+        {
+          "seed": 29,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.8997749241022875
+        },
+        {
+          "seed": 29,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.9023440546278962
+        },
+        {
+          "seed": 43,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.38323112955631494
+        },
+        {
+          "seed": 43,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.38081207828870034
+        },
+        {
+          "seed": 43,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.0902443397141641
+        },
+        {
+          "seed": 43,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3835186221692226
+        },
+        {
+          "seed": 43,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.1344178611104418
+        },
+        {
+          "seed": 43,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.285027990354197
+        },
+        {
+          "seed": 43,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.1831559412801325
+        },
+        {
+          "seed": 43,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.1340649280749435
+        },
+        {
+          "seed": 43,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.005884032073977
+        },
+        {
+          "seed": 43,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.3315701695025808
+        },
+        {
+          "seed": 43,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.951923320327915
+        },
+        {
+          "seed": 43,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.939103939836758
+        }
+      ],
+      "cost_median_ms": {
+        "canonical64": 262.2729699996853,
+        "P_full18": 364.8308239999096,
+        "J_readout_only": 20.116359999519773,
+        "compact10_step_readout": 51.60537400024623
+      },
+      "vs_52cDE": {
+        "voltage_improved_cases": 13,
+        "voltage_regressed_cases": 23,
+        "max_case_worsening_mv": 0.05306274378073916,
+        "net_current_relative_change": 0.06010749116558611
+      }
+    },
+    "balance": {
+      "modes": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.0185651250117407,
+            "calcium_rmse_mM": 0.00014516387494782846
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.3251096234717363,
+            "calcium_rmse_mM": 9.795051810843229e-05
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9396953197697356,
+            "calcium_rmse_mM": 6.953487628627896e-05
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.2079128275541544,
+            "calcium_rmse_mM": 5.255456628182667e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.3697660726933918,
+            "calcium_rmse_mM": 3.149324062448242e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9711873295565248,
+            "calcium_rmse_mM": 2.2270197889287115e-07
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.03782351389027753,
+            "calcium_rmse_mM": 5.261683720174808e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.021846905696749803,
+            "calcium_rmse_mM": 3.1572792971511666e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.01546470007183444,
+            "calcium_rmse_mM": 2.2326452704001853e-07
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.0185651250117407,
+            "calcium_rmse_mM": 0.00014516387494782846
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.3251126412212124,
+            "calcium_rmse_mM": 9.795052628004107e-05
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9396974477194329,
+            "calcium_rmse_mM": 6.953488203492917e-05
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 3.212675655810484,
+            "calcium_rmse_mM": 1.0065673627113885e-05
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.8528522602103423,
+            "calcium_rmse_mM": 6.721630950153325e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.3121385303318305,
+            "calcium_rmse_mM": 4.767708203445234e-06
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 3.196028739710601,
+            "calcium_rmse_mM": 1.0066927158394228e-05
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.6891758976679576,
+            "calcium_rmse_mM": 6.7270253884170844e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.1944874583108516,
+            "calcium_rmse_mM": 4.77160669418293e-06
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.9917150642091341,
+            "calcium_rmse_mM": 0.00014515824975471696
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.0841642299779783,
+            "calcium_rmse_mM": 9.794197064161103e-05
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.7666582662454682,
+            "calcium_rmse_mM": 6.952874122202401e-05
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 1.760710889812141e-06,
+            "calcium_rmse_mM": 6.084451841041161e-12
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.0901828429802667e-06,
+            "calcium_rmse_mM": 4.6709347528837714e-12
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.1798206255172953e-06,
+            "calcium_rmse_mM": 3.703613417284409e-12
+          }
+        }
+      },
+      "channels": {
+        "compact": {
+          "0": {
+            "median_nrmse": 0.11280926971030562,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.07649571115358605,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.035091983686545675,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03563216954299746,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.0956979008215535,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8885898117944466,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.055507738609828314,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.11201102427629092,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.0672230893124997,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.12869811808886417,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.10888511164380166,
+            "passed": 0
+          }
+        },
+        "compact_imposed": {
+          "0": {
+            "median_nrmse": 0.11485646430950415,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.07653246487701809,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.035092491337411436,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03563263478495206,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.10021815298147488,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8886377030197549,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.07551531844173867,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.10716281551730439,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06756668354116349,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.12870493745278017,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.10663014276585334,
+            "passed": 0
+          }
+        }
+      },
+      "imposed_net_current_rmse": 0.00015676071684451532,
+      "imposed_channel_error_rss": 0.00017145802449647127,
+      "cases": [
+        {
+          "seed": 17,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.3822086992304843
+        },
+        {
+          "seed": 17,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.37982306612150796
+        },
+        {
+          "seed": 17,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.08976231348787632
+        },
+        {
+          "seed": 17,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3824922773881583
+        },
+        {
+          "seed": 17,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.1202937027721007
+        },
+        {
+          "seed": 17,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2738475218457805
+        },
+        {
+          "seed": 17,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.1601853536228182
+        },
+        {
+          "seed": 17,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.1207733359545518
+        },
+        {
+          "seed": 17,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.971077519705762
+        },
+        {
+          "seed": 17,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2256374186554333
+        },
+        {
+          "seed": 17,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.9137390078142062
+        },
+        {
+          "seed": 17,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.9059256914509154
+        },
+        {
+          "seed": 29,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.3824471545986121
+        },
+        {
+          "seed": 29,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.3800842114873354
+        },
+        {
+          "seed": 29,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.08984194708761395
+        },
+        {
+          "seed": 29,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.38272760674852857
+        },
+        {
+          "seed": 29,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.1290652237612486
+        },
+        {
+          "seed": 29,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.283478390604628
+        },
+        {
+          "seed": 29,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.1670671710087461
+        },
+        {
+          "seed": 29,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.1293389876825781
+        },
+        {
+          "seed": 29,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.008062206652796
+        },
+        {
+          "seed": 29,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.2646106436131703
+        },
+        {
+          "seed": 29,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.9490487227062941
+        },
+        {
+          "seed": 29,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.9449089358250627
+        },
+        {
+          "seed": 43,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.38244489750723104
+        },
+        {
+          "seed": 43,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.3800454496246671
+        },
+        {
+          "seed": 43,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.08993316329510578
+        },
+        {
+          "seed": 43,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3827310093834173
+        },
+        {
+          "seed": 43,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.1554437102224957
+        },
+        {
+          "seed": 43,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.3216047877671913
+        },
+        {
+          "seed": 43,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.2112952126445677
+        },
+        {
+          "seed": 43,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.1522290736462821
+        },
+        {
+          "seed": 43,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.0544570385969476
+        },
+        {
+          "seed": 43,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.3943752938343887
+        },
+        {
+          "seed": 43,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.003684496520807
+        },
+        {
+          "seed": 43,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.9820294398793957
+        }
+      ],
+      "cost_median_ms": {
+        "canonical64": 282.5982459999068,
+        "P_full18": 373.0044160001853,
+        "J_readout_only": 21.494704999895475,
+        "compact10_step_readout": 52.94484900059615
+      },
+      "vs_52cDE": {
+        "voltage_improved_cases": 13,
+        "voltage_regressed_cases": 23,
+        "max_case_worsening_mv": 0.10482391997363105,
+        "net_current_relative_change": 0.10242466915298931
+      }
+    },
+    "trajectory": {
+      "modes": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.2609889688590363,
+            "calcium_rmse_mM": 0.00015432563045949773
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.0280336914983528,
+            "calcium_rmse_mM": 0.00010330532710932516
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.7304144619400917,
+            "calcium_rmse_mM": 7.332610966551837e-05
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.6833773194209372,
+            "calcium_rmse_mM": 5.257565419892596e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.1409445673081995,
+            "calcium_rmse_mM": 3.1676140040216747e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.8099182462015125,
+            "calcium_rmse_mM": 2.2399533609691808e-07
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.02703364227620964,
+            "calcium_rmse_mM": 5.261526377931007e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.017073071820992127,
+            "calcium_rmse_mM": 3.161853561570322e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.012093496462227215,
+            "calcium_rmse_mM": 2.2358799094718133e-07
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.2609889688590363,
+            "calcium_rmse_mM": 0.00015432563045949773
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.0279817765401107,
+            "calcium_rmse_mM": 0.00010330533473226327
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.7303779240203562,
+            "calcium_rmse_mM": 7.33261150380809e-05
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.6995828743465276,
+            "calcium_rmse_mM": 8.340007353463746e-06
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.5833715797316334,
+            "calcium_rmse_mM": 5.459243645160761e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.1219195108303277,
+            "calcium_rmse_mM": 3.8697297272396116e-06
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.679469503107661,
+            "calcium_rmse_mM": 8.340547896016559e-06
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.3880115923651015,
+            "calcium_rmse_mM": 5.463344315575448e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.9815214934522787,
+            "calcium_rmse_mM": 3.8727010034353535e-06
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.216886412638699,
+            "calcium_rmse_mM": 0.00015432267771987033
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.6895149353452131,
+            "calcium_rmse_mM": 0.00010330003208043674
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.4875850979103927,
+            "calcium_rmse_mM": 7.332230396914277e-05
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 1.760710889812141e-06,
+            "calcium_rmse_mM": 6.084451841041161e-12
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.0901828429802667e-06,
+            "calcium_rmse_mM": 4.6709347528837714e-12
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.1798206255172953e-06,
+            "calcium_rmse_mM": 3.703613417284409e-12
+          }
+        }
+      },
+      "channels": {
+        "compact": {
+          "0": {
+            "median_nrmse": 0.11345097238027703,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.0765149698029679,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.035085948956957574,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03562424229120937,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.0949287665452781,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8901568709224945,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.05164730929817427,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.05580076728224019,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06645361191035466,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.13124121260379992,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.09468131327134213,
+            "passed": 0
+          }
+        },
+        "compact_imposed": {
+          "0": {
+            "median_nrmse": 0.11428464390460952,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.07654600594699118,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.03508590372428181,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03562356466303271,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.09921094131461694,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8901995048370943,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.06371341575960038,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.09833259249403199,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06687674470668592,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.13123660045412677,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.09117386336950078,
+            "passed": 0
+          }
+        }
+      },
+      "imposed_net_current_rmse": 0.00012262619632776554,
+      "imposed_channel_error_rss": 0.00015774106357477265,
+      "cases": [
+        {
+          "seed": 17,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.38330951441427286
+        },
+        {
+          "seed": 17,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.38088938176003007
+        },
+        {
+          "seed": 17,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.09019178521475897
+        },
+        {
+          "seed": 17,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.38359553610997155
+        },
+        {
+          "seed": 17,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.0250793684783384
+        },
+        {
+          "seed": 17,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.0948995700575073
+        },
+        {
+          "seed": 17,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.0369486530656202
+        },
+        {
+          "seed": 17,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.0394241897944994
+        },
+        {
+          "seed": 17,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.5733642869332987
+        },
+        {
+          "seed": 17,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.739865896219404
+        },
+        {
+          "seed": 17,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.5624991288244037
+        },
+        {
+          "seed": 17,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.5566805939327872
+        },
+        {
+          "seed": 29,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.3835738429603117
+        },
+        {
+          "seed": 29,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.38118641013350035
+        },
+        {
+          "seed": 29,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.09020800077966423
+        },
+        {
+          "seed": 29,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3838575109028608
+        },
+        {
+          "seed": 29,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.0276021341368888
+        },
+        {
+          "seed": 29,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.1039560751541055
+        },
+        {
+          "seed": 29,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.0356197586684561
+        },
+        {
+          "seed": 29,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.0415604143008332
+        },
+        {
+          "seed": 29,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.5966084114214665
+        },
+        {
+          "seed": 29,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.711578955549702
+        },
+        {
+          "seed": 29,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.5835874053770801
+        },
+        {
+          "seed": 29,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.5810621241588169
+        },
+        {
+          "seed": 43,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.383455100538657
+        },
+        {
+          "seed": 43,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.38103710094478116
+        },
+        {
+          "seed": 43,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.09024787878792213
+        },
+        {
+          "seed": 43,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3837411192960743
+        },
+        {
+          "seed": 43,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.0256679319989632
+        },
+        {
+          "seed": 43,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.12646750045848
+        },
+        {
+          "seed": 43,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.0311221740759757
+        },
+        {
+          "seed": 43,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.038757577875614
+        },
+        {
+          "seed": 43,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.5107869602917187
+        },
+        {
+          "seed": 43,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.8698570273590234
+        },
+        {
+          "seed": 43,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.5054734463330203
+        },
+        {
+          "seed": 43,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.49690085116379107
+        }
+      ],
+      "cost_median_ms": {
+        "canonical64": 252.73944400032633,
+        "P_full18": 375.27530300030776,
+        "J_readout_only": 20.966144999874814,
+        "compact10_step_readout": 51.84262399961881
+      },
+      "vs_52cDE": {
+        "voltage_improved_cases": 36,
+        "voltage_regressed_cases": 0,
+        "max_case_worsening_mv": -0.00019679316443685368,
+        "net_current_relative_change": -0.13762741943689782
+      }
+    },
+    "combined": {
+      "modes": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.2621969297202433,
+            "calcium_rmse_mM": 0.00015401112731904066
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.0308617973739733,
+            "calcium_rmse_mM": 0.00010322436538404161
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.7323699437428685,
+            "calcium_rmse_mM": 7.327011454356668e-05
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.7067818487237894,
+            "calcium_rmse_mM": 5.255386093992245e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.1509461580260423,
+            "calcium_rmse_mM": 3.165793205490776e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.8169327240020604,
+            "calcium_rmse_mM": 2.238665824133088e-07
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.027635986728857108,
+            "calcium_rmse_mM": 5.260236877944836e-07
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.017303755554801924,
+            "calcium_rmse_mM": 3.1609386987463397e-07
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.012256178932569195,
+            "calcium_rmse_mM": 2.2352329979625852e-07
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.2621969297202433,
+            "calcium_rmse_mM": 0.00015401112731904066
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.030863938445861,
+            "calcium_rmse_mM": 0.00010322437520255846
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.7323714507475916,
+            "calcium_rmse_mM": 7.327012146261686e-05
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.7392529127429452,
+            "calcium_rmse_mM": 8.56907578742822e-06
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.6043773057885093,
+            "calcium_rmse_mM": 5.611351624331381e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.136724215801276,
+            "calcium_rmse_mM": 3.977718577005448e-06
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 2.7195654778075258,
+            "calcium_rmse_mM": 8.570067576271738e-06
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.4120933453177142,
+            "calcium_rmse_mM": 5.615840816300007e-06
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.99855071482985,
+            "calcium_rmse_mM": 3.980966521842453e-06
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 1.2182535285559264,
+            "calcium_rmse_mM": 0.00015400745229562
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.6940108377827864,
+            "calcium_rmse_mM": 0.00010321844757976203
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "voltage_rmse_mv": 0.4907644158619075,
+            "calcium_rmse_mM": 7.326586459145785e-05
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 1.760710889812141e-06,
+            "calcium_rmse_mM": 6.084451841041161e-12
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.0901828429802667e-06,
+            "calcium_rmse_mM": 4.6709347528837714e-12
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "voltage_rmse_mv": 2.1798206255172953e-06,
+            "calcium_rmse_mM": 3.703613417284409e-12
+          }
+        }
+      },
+      "channels": {
+        "compact": {
+          "0": {
+            "median_nrmse": 0.11337208145870223,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.0764856384661833,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.03508650294913204,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.035624767004780976,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.09430678245005589,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8882006421146234,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.0528458824898447,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.05568002074952054,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06647414159499138,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.13124249058160997,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.10313969167715918,
+            "passed": 0
+          }
+        },
+        "compact_imposed": {
+          "0": {
+            "median_nrmse": 0.11408751645799048,
+            "passed": 9
+          },
+          "1": {
+            "median_nrmse": 0.07652141765851818,
+            "passed": 9
+          },
+          "2": {
+            "median_nrmse": 0.035086590931271575,
+            "passed": 9
+          },
+          "3": {
+            "median_nrmse": 0.03562433815126219,
+            "passed": 9
+          },
+          "4": {
+            "median_nrmse": 0.09864963326922672,
+            "passed": 9
+          },
+          "5": {
+            "median_nrmse": 0.8882498263970267,
+            "passed": 0
+          },
+          "6": {
+            "median_nrmse": 0.06521181387240116,
+            "passed": 0
+          },
+          "7": {
+            "median_nrmse": 0.09876240137282333,
+            "passed": 0
+          },
+          "8": {
+            "median_nrmse": 0.06690283216611359,
+            "passed": 0
+          },
+          "9": {
+            "median_nrmse": 0.13123812071092555,
+            "passed": 0
+          },
+          "10": {
+            "median_nrmse": 0.10071419832471884,
+            "passed": 0
+          }
+        }
+      },
+      "imposed_net_current_rmse": 0.00012430779131412413,
+      "imposed_channel_error_rss": 0.0001583003816806895,
+      "cases": [
+        {
+          "seed": 17,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.38240139919394184
+        },
+        {
+          "seed": 17,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.3800127999852816
+        },
+        {
+          "seed": 17,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.0897731808679057
+        },
+        {
+          "seed": 17,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.3826853200820761
+        },
+        {
+          "seed": 17,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.0238010496869752
+        },
+        {
+          "seed": 17,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.1021690955839623
+        },
+        {
+          "seed": 17,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.0384462164778883
+        },
+        {
+          "seed": 17,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.0370747761626997
+        },
+        {
+          "seed": 17,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.5671196207094042
+        },
+        {
+          "seed": 17,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.7315463896787998
+        },
+        {
+          "seed": 17,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.5606039454408076
+        },
+        {
+          "seed": 17,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.5480278947483055
+        },
+        {
+          "seed": 29,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.38240388045766566
+        },
+        {
+          "seed": 29,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.38006573558873075
+        },
+        {
+          "seed": 29,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.089727705363927
+        },
+        {
+          "seed": 29,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.38268272832347644
+        },
+        {
+          "seed": 29,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.0288583987396054
+        },
+        {
+          "seed": 29,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.115018225922567
+        },
+        {
+          "seed": 29,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.041347679879324
+        },
+        {
+          "seed": 29,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.0413127148686798
+        },
+        {
+          "seed": 29,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.6123982161126837
+        },
+        {
+          "seed": 29,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.7187965851595683
+        },
+        {
+          "seed": 29,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.5992965591461935
+        },
+        {
+          "seed": 29,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.5915630699746292
+        },
+        {
+          "seed": 43,
+          "case": 0,
+          "protocol": "burst",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.38234151677895234
+        },
+        {
+          "seed": 43,
+          "case": 1,
+          "protocol": "burst",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.3799545638596032
+        },
+        {
+          "seed": 43,
+          "case": 2,
+          "protocol": "burst",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.08981464472120645
+        },
+        {
+          "seed": 43,
+          "case": 3,
+          "protocol": "burst",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.38262548220384796
+        },
+        {
+          "seed": 43,
+          "case": 4,
+          "protocol": "hyper_rebound",
+          "intervention": "none",
+          "voltage_rmse_mv": 1.023208796666918
+        },
+        {
+          "seed": 43,
+          "case": 5,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 1.1517490403483364
+        },
+        {
+          "seed": 43,
+          "case": 6,
+          "protocol": "hyper_rebound",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 1.0323028966675383
+        },
+        {
+          "seed": 43,
+          "case": 7,
+          "protocol": "hyper_rebound",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 1.0330631044600156
+        },
+        {
+          "seed": 43,
+          "case": 8,
+          "protocol": "relaxation",
+          "intervention": "none",
+          "voltage_rmse_mv": 0.4867672462569679
+        },
+        {
+          "seed": 43,
+          "case": 9,
+          "protocol": "relaxation",
+          "intervention": "block_Ca",
+          "voltage_rmse_mv": 0.9019457319739937
+        },
+        {
+          "seed": 43,
+          "case": 10,
+          "protocol": "relaxation",
+          "intervention": "block_Na",
+          "voltage_rmse_mv": 0.49240599006945507
+        },
+        {
+          "seed": 43,
+          "case": 11,
+          "protocol": "relaxation",
+          "intervention": "reverse_Ca",
+          "voltage_rmse_mv": 0.4636428166546933
+        }
+      ],
+      "cost_median_ms": {
+        "canonical64": 245.8723040008408,
+        "P_full18": 370.56288100029633,
+        "J_readout_only": 21.778737000204273,
+        "compact10_step_readout": 53.55312700066861
+      },
+      "vs_52cDE": {
+        "voltage_improved_cases": 36,
+        "voltage_regressed_cases": 0,
+        "max_case_worsening_mv": -0.0006300272311525329,
+        "net_current_relative_change": -0.12580154983256042
+      }
+    }
+  }
+}
