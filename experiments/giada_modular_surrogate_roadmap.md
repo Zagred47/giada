@@ -1806,6 +1806,12 @@ memoria che determina correnti e risposta agli interventi?
   calibrato su fit; variano soltanto encoder e ricorrenza addestrabili.
   Stato10 e ingressi online invariati. Oracoli h0 e stati teacher restano
   diagnostici; controlli passivi/canonici, correnti e timing obbligatori.
+  **52d — Preflight del decoder congelato:** ricerca di testimoni puntuali
+  sui tre protocolli e tre seed:210/300 verificati,90 irrisolti. Non è una
+  prova di impossibilità matematica, ma la fattibilità non è stabilita.
+  La matrice a quattro bracci (bilancio corrente/carica × traiettoria autonoma)
+  resta pianificata, non avviata, in attesa di risolvere il vincolo del decoder.
+  Non sbloccare implicitamente i suoi pesi né cambiare soglie o astrazione.
 - **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
   contro formule e livello 1, con contratti comuni. Decidere se la memoria
   ridotta conserva le risposte nel dominio e se il risparmio è materiale;

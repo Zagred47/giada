@@ -1,0 +1,24 @@
+{
+ "status":"proposed_not_launched","thresholds_changed":false,"abstraction_changed":false,
+ "evidence":{
+  "before_feedback":"Imposed-path net-current RMSE increases D->DR from1.43925e-4 to1.75185e-4mA/cm2 and DE->DER from1.42196e-4 to1.93260e-4. Thus feedback alone cannot explain regression.",
+  "objective_mismatch":"Development loss improves with recurrent training but autonomousV worsens: D0.911/DE0.903 versusDR1.237/DER1.578mV. Relaxation dominates:1.019->1.695 and0.997->2.399mV.",
+  "error_balance":"Ca_HVA has the largest positive algebraic contribution to the increase in net-current MSE, especially relaxation/reverse_Ca. Its individual current RMSE nevertheless decreases. This is an error covariance/balance issue, not proof Ca_HVA alone caused the regression.",
+  "representation":"Recurrent training shifts standardized latent trajectories away from the fixed calibration: imposed latent RMS about0.18 forD/DE,0.94DR,1.16DER. A3-sigma count is descriptive, not a rigorous OOD decision.",
+  "feedback":"Sampled maximum one-step voltage sensitivity is not generally larger forDR/DER. This weakens a simple uniformly-excessive-local-gain explanation; does not exclude long-horizon feedback instability."
+ },
+ "hypotheses":[
+  {"id":"H_balance","claim":"Independent relative channel losses favor improved marginals while allowing worse net-current bias, timing or error covariance.","contrast":"Add time-aligned total-current and signed-charge loss, retaining every per-channel objective and original evaluation gate; compare against unchanged objective.","falsifier":"No improvement of imposed net-current error at matched channel accuracy, or only artificial cancellation that fails individual-channel gates."},
+  {"id":"H_exposure","claim":"Short imposed-voltage training and repeated teacher initialization fail to constrain long continuous autonomous trajectories.","contrast":"Add differentiable autonomous voltage/calcium trajectory loss after shared burn-in, with identical rollout horizons and initial states in every arm; compare against no trajectory-loss weight.","falsifier":"Autonomous failure persists despite improved matched free-rollout development loss and adequate burn-in/support; inspect mechanism-specific bias rather than attributing all failures to exposure."},
+  {"id":"H_coordinates","claim":"Updating recurrence and decoder together allows coordinate drift and coadaptation that transfers poorly beyond training windows.","contrast":"Start from frozen52cDE encoder/readout and train only recurrence in all four arms; compare latent distributions, decoder feasibility and original52cDR/DER controls. If feasibility fails, do not claim recurrence-only repair can work.","falsifier":"Anchoring encoder/readout does not improve transfer and paired checkpoint probes show no decoder-coordinate mismatch."},
+  {"id":"H_selection","claim":"The scalar development objective and current training budget are misaligned with tail-case autonomous success.","contrast":"Save nested checkpoints and evaluate the same prespecified development panel perprotocol/channel, including relaxation and reversal; select using a preregistered rule that does not open fresh evaluation.","falsifier":"No earlier checkpoint or protocol-balanced development rule offers a better matched tradeoff; additional budget alone is not established as the fix."}
+ ],
+ "proposed_matrix":{
+  "starting_point":"52c DE, exploratory and unqualified; encoder and decoder frozen in all new trained arms; recurrence trainable. All states remain latent10, onlineV/Ca unchanged.",
+  "factors":{"net_current_charge_term":[false,true],"autonomous_trajectory_term":[false,true]},
+  "arms":["control","balance","trajectory","balance+trajectory"],
+  "shared":"Same initial weights, data, seeds, burn-in and rollout horizons; preserve channelwise loss in every arm. Exact weights, budgets and selection rule must be preregistered before execution.",
+  "diagnostics":["FrozenDE and52cDR/DER","Passive/canonical/P controls","Postfreeze Ca_HVA andIh current replacement, alone and together, nonselectable","Imposed versus autonomous andCa-imposed","Total-current bias/charge and error covariance","Latent shift and decoder feasibility","Checkpoint-resolved relaxation/reversal errors and speed"],
+  "limitations":"This matrix estimates balance and trajectory-loss effects conditional on fixed encoder/readout; anchoring itself is not an independently crossed factor. Oracles never authorize a candidate. No next experiment launched by this analysis."
+ }
+}

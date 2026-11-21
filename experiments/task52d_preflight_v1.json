@@ -1,0 +1,15 @@
+{
+ "task":"52d","phase":"decoder_feasibility_preflight","main_experiment_status":"awaiting_decoder_decision",
+ "thresholds_changed":false,"abstraction_changed":false,"logical_state":10,"model_training_performed":false,"kaggle_training_started":false,
+ "source":"artifacts/task52c_kaggle_external/task52c_final.zip","source_sha256":"14f9a6ef762a97f1987665e188bc50f39db594a4d3cbd11214f614d7ecc1bc1f",
+ "candidate":"52c DE selected, seed17/29/43, all weights frozen",
+ "target_points":"100 representative points perseed across three unblocked canonical protocols: uniform times plus perchannel current peaks.300checks total.",
+ "methods":["Conservative interval bounds from52c","Three normalized latent Adam starts,3200updates each; frozen decoder","Familywise bounded least-squares with analytic Jacobians, max250evaluations, including grids and local starts"],
+ "grid":"Per latent coordinate11uniform points plus mean/std-derived points;1001points for one-dimensional families. No temporal realizability constraint on witness states.",
+ "result":{"interval_not_excluding_targets":true,"adam_witnesses":45,"combined_witnesses":210,"total":300,"maximum_normalized_current_error":0.9972116351127625,"required_nmax":0.05},
+ "interpretation":"Feasibility not established. Failed numerical search is not proof of mathematical impossibility, especially for joint family outputs. Do not present210/300pointwise witnesses as a qualified recurrent model.",
+ "planned_four_arms":["control","net_current_and_charge_loss","autonomous_trajectory_loss","both"],
+ "planned_constraints":"Encoder and decoder frozen, recurrence trainable, same initialDE, same states/inputs/thresholds. Not implemented or launched while decoder feasibility remains unresolved.",
+ "next_choice":"User direction requested: allow decoder recalibration without changing abstraction, or further analyze frozen decoder. No silent relaxation of the proposed freezing contract.",
+ "dependencies":"Local Python3.12.14, PyTorch from workspace, SciPy1.14.1 installed in artifacts/decoder_probe_deps; no cloud GPU used."
+}
