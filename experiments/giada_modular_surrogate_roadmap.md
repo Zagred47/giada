@@ -1812,6 +1812,12 @@ memoria che determina correnti e risposta agli interventi?
   La matrice a quattro bracci (bilancio corrente/carica × traiettoria autonoma)
   resta pianificata, non avviata, in attesa di risolvere il vincolo del decoder.
   Non sbloccare implicitamente i suoi pesi né cambiare soglie o astrazione.
+  **52d v2 — Ricalibrazione esplicitamente autorizzata:** dopo il preflight,
+  l'utente consente di addestrare il decoder in tutti i quattro bracci.
+  Encoder congelato; decoder e ricorrenza addestrabili con stessa architettura
+  e10stati. Fattori: perdita su corrente totale/carica e perdita sulle traiettorie
+  autonome. Il preflight210/300 resta tale, non viene riclassificato come passato.
+  Soglie e controlli invariati; preregistrazione separata dalla fase diagnostica.
 - **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
   contro formule e livello 1, con contratti comuni. Decidere se la memoria
   ridotta conserva le risposte nel dominio e se il risparmio è materiale;
