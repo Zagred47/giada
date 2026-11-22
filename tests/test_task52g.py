@@ -32,6 +32,16 @@ class Preservation(unittest.TestCase):
             out=Path(tmp)/'out';out.mkdir();g.run(torch,ROOT,ROOT/'artifacts/task41n_primary_external/recovery_final.zip',ROOT/'artifacts/task45c_cost_input/checkpoint45c.zip.bin',ROOT/'artifacts/task45d_evaluation_input/evaluation45d.zip.bin',ROOT/'artifacts/task52e_input/models52e.zip.bin',out,'cpu',p,cp)
             report=json.loads((out/'final_report.json').read_text());self.assertEqual(report['task'],'52g');self.assertTrue(report['complete']);self.assertEqual(report['encoder_calibration_updates'],0)
             rows=json.loads((out/'learning_curve.json').read_text());self.assertEqual(len(rows),2);self.assertEqual(len(rows[-1]['conflict_fraction']),12)
+    def test_unmodified_one_step_matches_long_credit(self):
+        torch.set_num_threads(1);p=config();p['updates']=1;p['checkpoints']=[1]
+        for arm in p['arms']:arm['guard']=False;arm['project']=False
+        net,cal,_=g.f.load_model(torch,p,ROOT/'artifacts/task52e_input/models52e.zip.bin','cpu');other=copy.deepcopy(net)
+        ordinary=g.f.c.b.data(torch,p,'cpu');data=g.f.merge_data(torch,ordinary,g.f.support_data(torch,p,'cpu'));aut=g.f.d.coupled_data(torch,p,ROOT,'cpu');cal=dict(cal,maxop=data['op'].amax((0,1)).clamp_min(1e-30))
+        with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as tmp:
+            left=Path(tmp)/'left';right=Path(tmp)/'right';left.mkdir();right.mkdir()
+            g.f.train(torch,p,net,data,aut,cal,left,len(ordinary['meta']));g.train(torch,p,other,data,aut,cal,right,len(ordinary['meta']))
+            a=torch.load(left/'checkpoint_1.pt',weights_only=True);b=torch.load(right/'checkpoint_1.pt',weights_only=True)
+            for name in a:self.assertTrue(torch.allclose(a[name],b[name],atol=1e-6,rtol=1e-5),name)
     def test_contract(self):
         p=g.plan(ROOT);self.assertEqual(len(p['arms']),4);self.assertFalse(p['thresholds_changed']);self.assertEqual(p['user_cap'].split(';')[0],'Last allowed subtask52j')
         old=g.f.plan(ROOT);self.assertEqual(p['selection'],old['selection']);self.assertEqual(p['roles'],old['roles']);self.assertEqual(p['coupled_training'],old['coupled_training'])
