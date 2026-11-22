@@ -1829,6 +1829,15 @@ memoria che determina correnti e risposta agli interventi?
   Stessa selezione anti-regressione su development per tutti, con fallback al
   checkpoint iniziale se nessuna riparazione è ammissibile. Soglie scientifiche
   invariate; controlli imposti/autonomi, oracoli nonselezionabili e costo atomico.
+  **Limite operativo richiesto dall'utente:** la serie52non prosegue oltre52j.
+  Dopo52j si procede verso53, eventualmente come ramo esplorativo con limiti
+  espliciti: questo limite di budget non cambia le soglie e non trasforma un
+  esito non superato in una conferma scientifica positiva. Nessuna52k.
+  **52f — Allineamento encoder × credito temporale:** quattro bracci
+  con encoder invariato/ricalibrato eBPTT128/512, stesso forward512.
+  Ricalibrazione solo fit a decoder/ricorrenza congelati; encoder poi congelato.
+  Stessi10stati, soglie e guard anti-regressione della52e; fallback52d conservato.
+  Checkpoint più fitti, controlli appaiati e backup; nessuna promozione automatica.
 - **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
   contro formule e livello 1, con contratti comuni. Decidere se la memoria
   ridotta conserva le risposte nel dominio e se il risparmio è materiale;

@@ -1,0 +1,176 @@
+{
+  "task": "52f",
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "source52d_sha256": "7220f72e128cb7241aaa3db8f509c77ad29da986c630f5cd456dd5db1018e224",
+  "source_indices": [
+    6,
+    7,
+    8
+  ],
+  "dt_ms": 0.1,
+  "history_ms": 1200,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "roles": {
+    "fit": {
+      "seed": 9525103,
+      "count": 36
+    },
+    "development": {
+      "seed": 9525127,
+      "count": 24
+    }
+  },
+  "families": {
+    "Ca": [
+      0,
+      1
+    ],
+    "Na": [
+      2,
+      3,
+      4
+    ],
+    "K_voltage": [
+      6,
+      7,
+      8,
+      10
+    ],
+    "Ih": [
+      5
+    ],
+    "SK": [
+      9
+    ]
+  },
+  "arms": [
+    {
+      "id": "control",
+      "widths": [
+        2,
+        3,
+        3,
+        1,
+        1
+      ],
+      "trunk": 16,
+      "encoder_trainable": false,
+      "recurrence_trainable": true,
+      "support": true,
+      "family_loss": true,
+      "recalibrate": false,
+      "bptt": 128
+    },
+    {
+      "id": "encoder",
+      "widths": [
+        2,
+        3,
+        3,
+        1,
+        1
+      ],
+      "trunk": 16,
+      "encoder_trainable": false,
+      "recurrence_trainable": true,
+      "support": true,
+      "family_loss": true,
+      "recalibrate": true,
+      "bptt": 128
+    },
+    {
+      "id": "long_credit",
+      "widths": [
+        2,
+        3,
+        3,
+        1,
+        1
+      ],
+      "trunk": 16,
+      "encoder_trainable": false,
+      "recurrence_trainable": true,
+      "support": true,
+      "family_loss": true,
+      "recalibrate": false,
+      "bptt": 512
+    },
+    {
+      "id": "combined",
+      "widths": [
+        2,
+        3,
+        3,
+        1,
+        1
+      ],
+      "trunk": 16,
+      "encoder_trainable": false,
+      "recurrence_trainable": true,
+      "support": true,
+      "family_loss": true,
+      "recalibrate": true,
+      "bptt": 512
+    }
+  ],
+  "updates": 800,
+  "checkpoints": [
+    50,
+    100,
+    150,
+    200,
+    300,
+    400,
+    600,
+    800
+  ],
+  "batch_size": 8,
+  "chunk_ticks": 512,
+  "bptt_ticks": 128,
+  "learning_rate": 0.0001,
+  "adam_epsilon": 0.0001,
+  "gradient_clip": 1,
+  "coupled_training": {
+    "duration_ms": 400,
+    "fit_seed": 9526201,
+    "development_seed": 9526229,
+    "batch_size": 4,
+    "burnin_ticks": 128,
+    "horizon_before300": 512,
+    "horizon_after300": 512,
+    "voltage_scale_mv": 1,
+    "calcium_scale_mM": 0.0001
+  },
+  "support_protocol": {
+    "fit_seed": 9526301,
+    "development_seed": 9526327,
+    "count_per_role": 12,
+    "replace_fraction": 0.5,
+    "description": "Canonical voltage clamp histories: alternating long hyperpolarization/recovery and brief repeated depolarizing bursts, randomized durations/amplitudes. No fresh evaluation traces are used to manufacture targets."
+  },
+  "objective": "All arms use fixed52ecombined objective andsupport. Only encoder recalibration andBPTT128vs512 differ. Same512tick forward windows, paired batches,800mainupdates;80calibration steps apply only to encoder arms, zero maskedupdates to controls. Decoder andrecurrence frozen during calibration; encoder frozen thereafter.",
+  "selection": "Same52e guard against original52d trajectory before recalibration: everychannel currentMSE andseparateV/Ca developmentMSE nonincreasing within1e-6relative+1e-12absolute. Same baseline fallback andshared full validation objective. Eight preregistered checkpoints. No fresh selection.",
+  "cost": {
+    "batch": 24,
+    "ticks": 50,
+    "repetitions": 3,
+    "scope": "Same three-seed atomic update andreadout; not whole neuron."
+  },
+  "runtime_budget_seconds": 6900,
+  "output_budget_mb": 900,
+  "diagnostics": "Save pre/post encoder calibration loss, prove decoder/recurrence unchanged, fixedencoders unchanged, andallencoders frozen after phase. Shared credit probe, all paired evaluations andnegative controls as52e.",
+  "limitations": "Exploratory reused52coupled panel; new development clamp targets do not create independent confirmation. Numerical free-latent decoder witnesses are not temporal feasibility. Decoder remains trainable, encoder remains frozen; no state dimensions or online physical gates added. Nonregression on development cannot guarantee nonregression on evaluation. Same combined data/objective acrossarms; change in forwardwindow vs52e is common not a tested factor. Encoder warmup costs are reported separately. No automaticTask53 authorization.",
+  "encoder_calibration": {
+    "updates": 80,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "fit_only": true,
+    "decoder_recurrence_frozen": true
+  },
+  "user_cap": "Last allowed subtask52j; no52k. Any subsequent53transition retains unresolved quality limits."
+}

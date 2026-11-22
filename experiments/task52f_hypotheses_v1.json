@@ -1,0 +1,22 @@
+{
+  "status":"proposal_not_launched",
+  "thresholds_changed":false,"abstraction_changed":false,"logical_state":10,
+  "source":"52e saved development curves and52d trajectory baseline",
+  "facts":[
+    "All48 seed/checkpoint decisions rejected reproducibly. Final selected models are unchanged52d fallbacks, not evaluated trained52e winners.",
+    "Combined300 development mean MSE ratios: Ih0.9535,Im0.8628,K_Pst0.6259,NaTs2_t0.8710,V0.99898,Ca0.98662. Mean improvement does not imply everyseed improved.",
+    "Combined300 blockers: seed17Ca_HVA+0.2201percent MSE;seed29Nap_Et2+1.1674percent;seed43Ca_HVA+0.01995percent,NaTa_t+27.9614percent,Ca+0.27653percent.",
+    "Family800 K_Pst mean MSE ratio0.316 andIh0.941, but SK_E2~1.018 and autonomousV~1.042. Support800 worsensIh~20.2percent on average. More targeted data alone was not sufficient in this setup.",
+    "Fit-only encoder/readout mismatch exists; scalar free-latentIh decoder witnesses are accurate. Truncated-gradient128vs512 probe cosine0.38454,norms3.8129vs13.4557; this is local sensitivity, not proof of the cause."
+  ],
+  "hypotheses":[
+    {"id":"initial_alignment","claim":"After recurrence/readout adaptation, the frozen encoder initializes latent coordinates poorly; recalibrating it may reduce initial and slow current errors.","test":"Factor A: fit-only encoder recalibration with frozen decoder/recurrence, then freeze encoder for common training. No additional online inputs, dimensions or physical gates.","falsifier":"If encoded-state errors fail to improve, or later regressions remain despite repaired initialization, this is not a sufficient explanation."},
+    {"id":"temporal_credit","claim":"Short truncated gradients favor local current improvements over longer recovery dynamics.","test":"Factor B:128vs512tick BPTT, same512tick forward windows, data, initialweights and update budget. Report time/memory separately; retain nested checkpoints.","falsifier":"If longer gradients do not improve slow development trajectories or eligible checkpoints, the observed gradient rotation alone did not identify a useful repair."},
+    {"id":"shared_interference","claim":"Shared trunk and multi-channel family updates trade one current against another, especially within Na andCa families.","test":"Shared gradient diagnostics: per-family norm andcosines, and initial/readout/rollout residuals. Do not change shared-trunk learning andBPTT together without a separate contrast.","falsifier":"Consistently aligned gradients and no relation between conflict and regressions weaken this explanation."},
+    {"id":"selection_resolution","claim":"Some nearby checkpoints might satisfy the guard even though100/300/500/800 do not.","test":"Denser preregistered development-only checkpoint grid during the same training paths; no fresh selection and no relaxation of the guard.","falsifier":"If no eligible checkpoint appears, finer checkpoint resolution does not solve the tradeoff."}
+  ],
+  "proposed_matrix":["control: fixedencoder,128BPTT","A: recalibratedencoder,128BPTT","B: fixedencoder,512BPTT","A+B: recalibratedencoder,512BPTT"],
+  "common":"Same52d trajectory starting reference; fixed52ecombined support/objective for allarms; same forward512tick windows andupdates. Paired seeds andbatches. Original acceptance thresholds and additional per-seed/channel/V/Ca non-regression guards unchanged. Initialization recalibration is learned, not oracle deployment. Further exactbudgets require preregistration before launch.",
+  "interpretation":"All numeric ratios above are saved development MSE, notRMSE or new held-out results. Rejected-checkpoint autonomous full-panel performance is unknown. No promotion inferred from lower mean loss.",
+  "user_budget":{"last_allowed_subtask":"52j","no_52k":true,"after_52j":"Proceed toward53with explicit unresolved limits and branch qualification if strict acceptance is still unmet; do not relabel a no-go as passed."}
+}
