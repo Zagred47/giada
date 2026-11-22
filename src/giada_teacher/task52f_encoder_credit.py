@@ -129,11 +129,35 @@ def calibrate_encoder(torch,p,net,data,cal,out):
 
 def train(torch,p,net,data,aut,cal,out,ordinary_count):
     device=data['v'].device;E=len(net.members);fit=torch.tensor([i for i,m in enumerate(data['meta'][:ordinary_count]) if m['role']=='fit'],device=device);sup=torch.tensor([i for i,m in enumerate(data['meta']) if i>=ordinary_count and m['role']=='fit'],device=device);ai=torch.tensor([i for i,m in enumerate(aut['meta']) if m['role']=='fit'],device=device)
-    score0,ch0,tr0=validate(torch,p,net,data,aut,cal);best=score0.cpu().numpy();chosen=np.zeros(E,int);selected=copy.deepcopy(net.state_dict());curve=[]
-    torch.save(selected,out/'initial.pt');calibrate_encoder(torch,p,net,data,cal,out);encoder={k:v.clone() for k,v in net.state_dict().items() if k in ('enc','eb')};torch.save(net.state_dict(),out/'after_encoder_calibration.pt')
+    resumed=(out/'resume_request.json').exists();start_update=0
+    if resumed:
+        baseline=json.loads((out/'validation_baseline.json').read_text());ch0=torch.tensor(baseline['channels'],device=device);tr0=torch.tensor(baseline['trajectory'],device=device);best=np.array(baseline['score']);chosen=np.zeros(E,int)
+        selected=torch.load(out/'initial.pt',map_location=device,weights_only=True);curve=json.loads((out/'learning_curve.json').read_text())
+        saved=torch.load(out/'resumable_training.pt',map_location=device,weights_only=True);start_update=int(saved['update']);assert start_update==json.loads((out/'resume_request.json').read_text())['checkpoint_update']
+        for row in curve:
+            assert row['update']<=start_update
+            values=np.array(row['score']);mask=np.array(row['eligible'])&(values<best)
+            if mask.any():
+                checkpoint_state=torch.load(out/f'checkpoint_{row["update"]}.pt',map_location=device,weights_only=True)
+                for key in selected:selected[key][mask]=checkpoint_state[key][mask]
+            best=np.where(mask,values,best);chosen[mask]=row['update']
+        net.load_state_dict(saved['model'])
+    else:
+        score0,ch0,tr0=validate(torch,p,net,data,aut,cal);best=score0.cpu().numpy();chosen=np.zeros(E,int);selected=copy.deepcopy(net.state_dict());curve=[]
+        torch.save(selected,out/'initial.pt');calibrate_encoder(torch,p,net,data,cal,out);torch.save(net.state_dict(),out/'after_encoder_calibration.pt')
+        a.n.p.save_json(out/'validation_baseline.json',dict(score=best.tolist(),channels=ch0.cpu().tolist(),trajectory=tr0.cpu().tolist()))
+    encoder={k:v.clone() for k,v in net.state_dict().items() if k in ('enc','eb')}
     opt=torch.optim.Adam([v for v in net.parameters() if v.requires_grad],lr=p['learning_rate'],eps=p['adam_epsilon']);rng=np.random.default_rng(9526599);started=time.monotonic();extra=torch.tensor([arm['family_loss'] for arm in p['arms'] for _ in p['seeds']],device=device)
-    a.n.p.save_json(out/'validation_baseline.json',dict(score=best.tolist(),channels=ch0.cpu().tolist(),trajectory=tr0.cpu().tolist()))
-    for update in range(1,p['updates']+1):
+    if resumed:
+        opt.load_state_dict(saved['optimizer'])
+        # The original checkpoint did not store RNG state. Its sampler has only
+        # these five NumPy draws per update; replay draws, not training.
+        for update in range(1,start_update+1):
+            rng.integers(len(fit),size=p['batch_size']);rng.integers(len(data['v'])-p['chunk_ticks'],size=p['batch_size']);rng.integers(len(sup),size=p['batch_size']//2)
+            rng.integers(len(ai),size=p['coupled_training']['batch_size']);length=p['coupled_training']['horizon_before300' if update<=300 else 'horizon_after300'];rng.integers(len(aut['inj'])-length,size=p['coupled_training']['batch_size'])
+        if 'rng' in saved:assert saved['rng']==rng.bit_generator.state
+        a.n.p.save_json(out/'resume_state_verified.json',dict(valid=True,checkpoint_update=start_update,optimizer_restored=True,encoder_calibration_repeated=False,rng_reconstructed=True,selected_updates=chosen.tolist()))
+    for update in range(start_update+1,p['updates']+1):
         if time.monotonic()-started>p['runtime_budget_seconds']*.8:raise TimeoutError('52f training time limit; checkpoint retained')
         ii=fit[torch.tensor(rng.integers(len(fit),size=p['batch_size']),device=device)];ss=torch.tensor(rng.integers(len(data['v'])-p['chunk_ticks'],size=p['batch_size']),device=device)
         ids=ii[None].expand(E,-1).clone();starts=ss[None].expand(E,-1).clone();n=p['batch_size']//2;si=sup[torch.tensor(rng.integers(len(sup),size=n),device=device)]
@@ -150,7 +174,7 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count):
             score,ch,tr=validate(torch,p,net,data,aut,cal);eligible=((ch<=ch0*(1+1e-6)+1e-12).all(1)&(tr<=tr0*(1+1e-6)+1e-12).all(1));values=score.cpu().numpy();mask=eligible.cpu().numpy()&(values<best)
             for k,v in net.state_dict().items():selected[k][mask]=v[mask].detach()
             best=np.where(mask,values,best);chosen[mask]=update;curve.append(dict(update=update,score=values.tolist(),eligible=eligible.cpu().tolist(),channel_errors=ch.cpu().tolist(),trajectory_error=tr.cpu().tolist(),gradient_norm=norm.cpu().tolist()))
-            torch.save(net.state_dict(),out/f'checkpoint_{update}.pt');torch.save(dict(model=net.state_dict(),optimizer=opt.state_dict(),update=update),out/'resumable_training.pt');a.n.p.save_json(out/'learning_curve.json',curve);checkpoint(out,update)
+            torch.save(net.state_dict(),out/f'checkpoint_{update}.pt');torch.save(dict(model=net.state_dict(),optimizer=opt.state_dict(),update=update,rng=rng.bit_generator.state),out/'resumable_training.pt');a.n.p.save_json(out/'learning_curve.json',curve);checkpoint(out,update)
     assert all(torch.equal(net.state_dict()[k],v) for k,v in encoder.items());net.load_state_dict(selected);torch.save(selected,out/'selected.pt');a.n.p.save_json(out/'selection_freeze.json',dict(members=net.members,updates=chosen.tolist(),score=best.tolist(),baseline_fallback=(chosen==0).tolist(),fresh_accessed=False,encoder_frozen_after_calibration=True))
 
 def credit_probe(torch,p,net,data,cal,out):
@@ -169,7 +193,13 @@ def run(torch,root,source,cost_source,recovery,package,out,device='cuda',overrid
     p=plan(root) if override is None else override;out.mkdir(exist_ok=True);started=time.monotonic();a.n.p.save_json(out/'preregistration.json',p)
     models=parent.load(torch,root,package,source,cost_source,recovery,out,device);net,cal,state=load_model(torch,p,package,device);frozen=d.view(torch,p,net,cal,state,0,device);models['compact']=frozen;before={k:a.n.weights_hash(v) for k,v in models.items()}
     with torch.no_grad():ordinary=c.b.data(torch,p,device);support=support_data(torch,p,device);data=merge_data(torch,ordinary,support);aut=d.coupled_data(torch,p,root,device)
-    fit=torch.tensor([i for i,m in enumerate(data['meta']) if m['role']=='fit'],device=device);cal=dict(cal,maxop=data['op'][:,fit].amax((0,1)).clamp_min(1e-30));torch.save(cal,out/'calibration.pt');a.n.p.save_json(out/'history_metadata.json',data['meta']);credit_probe(torch,p,net,support,cal,out);train(torch,p,net,data,aut,cal,out,len(ordinary['meta']));freeze=a.n.weights_hash(net)
+    fit=torch.tensor([i for i,m in enumerate(data['meta']) if m['role']=='fit'],device=device);cal=dict(cal,maxop=data['op'][:,fit].amax((0,1)).clamp_min(1e-30))
+    if (out/'resume_request.json').exists():
+        previous=torch.load(out/'calibration.pt',map_location=device,weights_only=True)
+        assert all(torch.equal(v,previous[k]) for k,v in cal.items() if torch.is_tensor(v))
+    else:
+        torch.save(cal,out/'calibration.pt');a.n.p.save_json(out/'history_metadata.json',data['meta']);credit_probe(torch,p,net,support,cal,out)
+    train(torch,p,net,data,aut,cal,out,len(ordinary['meta']));freeze=a.n.weights_hash(net)
     for v in net.parameters():v.requires_grad_(False)
     pp=parent.plan(root) if coupled_override is None else copy.deepcopy(coupled_override);pp['cost']=p['cost'];pp['runtime_budget_seconds']=p['runtime_budget_seconds'];pp['families']['Ca_Ih']=[0,1,5];a.n.p.save_json(out/'unchanged_quality.json',dict(quality=pp['quality'],compartment_gates=pp['compartment_gates']));cases,inj,mult,rev=parent.design(pp);a.n.p.save_json(out/'cases.json',cases)
     inj=torch.tensor(inj,device=device,dtype=torch.float64);mult=torch.tensor(mult,device=device,dtype=torch.float64);rev=torch.tensor(rev,device=device,dtype=torch.float64);physics=a.n.contract(root)[1:];summaries={}
@@ -188,5 +218,6 @@ def run(torch,root,source,cost_source,recovery,package,out,device='cuda',overrid
     for arm in p['arms']:
         with gzip.open(out/arm['id']/'interventions.json.gz','rt') as f:rr=[r for r in json.load(f) if r['arm']=='compact']
         accepted.append(all(x['all_quality_passed'] for x in summaries[arm['id']]['compact'].values()) and all(r['current']['conservative_passed'] and r['voltage_response_rmse_mv']<=pp['compartment_gates']['max_candidate_worst_voltage_rmse_mv'] and r['calcium_response_rmse_mM']<=pp['compartment_gates']['max_candidate_worst_cai_rmse_mM'] for r in rr))
-    a.n.p.save_json(out/'final_report.json',dict(valid=True,execution_valid=True,scientific_acceptance_passed=any(accepted),complete=True,task='52f',finite_parameters=True,encoder_frozen_after_calibration=True,postfreeze_weights_unchanged=True,frozen_controls_unchanged=True,training_updates=p['updates'],encoder_calibration_updates=p['encoder_calibration']['updates'],selection_recomputed=True,thresholds_changed=False,abstraction_changed=False,logical_state=10,promotion_authorized=False,summary=summaries,elapsed_seconds=time.monotonic()-started,limitations=p['limitations'],last_allowed_subtask='52j'))
+    resumed_from=json.loads((out/'resume_request.json').read_text())['checkpoint_update'] if (out/'resume_request.json').exists() else 0
+    a.n.p.save_json(out/'final_report.json',dict(valid=True,execution_valid=True,scientific_acceptance_passed=any(accepted),complete=True,task='52f',finite_parameters=True,encoder_frozen_after_calibration=True,postfreeze_weights_unchanged=True,frozen_controls_unchanged=True,training_updates=p['updates'],resumed_from=resumed_from,new_training_updates=p['updates']-resumed_from,encoder_calibration_repeated=False if resumed_from else None,encoder_calibration_updates=p['encoder_calibration']['updates'],selection_recomputed=True,thresholds_changed=False,abstraction_changed=False,logical_state=10,promotion_authorized=False,summary=summaries,elapsed_seconds=time.monotonic()-started,limitations=p['limitations'],last_allowed_subtask='52j'))
     checkpoint(out,p['updates'])

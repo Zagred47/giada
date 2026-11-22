@@ -1,0 +1,14 @@
+{
+  "task":"52f-recovery",
+  "source_sha256":"86012728909ac23f20bbce0cabed479d7d6546495b99e41ab095523890d5cf18",
+  "checkpoint_update":600,
+  "target_update":800,
+  "retraining_from_zero":false,
+  "encoder_calibration_repeated":false,
+  "thresholds_changed":false,
+  "abstraction_changed":false,
+  "reason":"Original run exceeded its per-run training wall time after logged620updates. Last saved optimizer/model checkpoint600 is preserved. Continue only601-800 and then evaluate.",
+  "rng":"Reconstruct original PCG64 sampler by replaying five deterministic draw calls per completed update. Validate split/continuous equality locally. Future checkpoints also save RNG state.",
+  "selection":"Reconstruct running best from saved initial checkpoint, recorded development scores/eligibility and saved checkpoints through600. No new historical development scoring and no fresh selection.",
+  "last_allowed_subtask":"52j"
+}

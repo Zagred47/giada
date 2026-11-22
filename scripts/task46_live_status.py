@@ -2,7 +2,9 @@
 import json,sys,time
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-if '--task52f' in sys.argv:
+if '--task52f-resume' in sys.argv:
+    import task52f_resume_kaggle as launch
+elif '--task52f' in sys.argv:
     import task52f_kaggle as launch
 elif '--task52e' in sys.argv:
     import task52e_kaggle as launch

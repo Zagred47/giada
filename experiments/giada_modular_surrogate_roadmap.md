@@ -1838,6 +1838,10 @@ memoria che determina correnti e risposta agli interventi?
   Ricalibrazione solo fit a decoder/ricorrenza congelati; encoder poi congelato.
   Stessi10stati, soglie e guard anti-regressione della52e; fallback52d conservato.
   Checkpoint più fitti, controlli appaiati e backup; nessuna promozione automatica.
+  **Recupero operativo52f:** il primo run raggiunge il limite di tempo dopo620
+  aggiornamenti; checkpoint/Adam600 verificati e conservati. La ripresa esegue
+  soltanto601-800, ricostruendo il sampler e la selezione storica senza training
+  duplicato, poi completa le valutazioni originarie. Non è una nuova sottotask.
 - **Task 53 — Conferma indipendente del livello 2** → Test fresh dopo freeze
   contro formule e livello 1, con contratti comuni. Decidere se la memoria
   ridotta conserva le risposte nel dominio e se il risparmio è materiale;
