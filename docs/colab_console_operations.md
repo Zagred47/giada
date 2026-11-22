@@ -16,6 +16,14 @@ console transfer uses 4MiB transport chunks and verifies the reassembled
 original SHA256 before any scientific execution. Chunks are removed after
 successful reassembly; no original checkpoint or dataset is deleted.
 
+The installed CLI was updated to0.8.0 during recovery. If Jupyter execution
+fails before the worker starts, the official `ssh -s SESSION -- COMMAND`
+channel can run the same pinned worker. Confirm absence of its output root
+before retrying. Colab allows only one active SSH connection per runtime:
+keep that connection for the worker, and retrieve backups with Contents
+`download`, not a second SSH connection. Do not stop the foreground SSH
+driver while it owns a running experiment.
+
 ## Contract
 
 Use the official `google-colab-cli` in Ubuntu WSL2. Native Windows is not an

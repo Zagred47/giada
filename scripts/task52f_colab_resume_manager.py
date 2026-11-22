@@ -30,13 +30,16 @@ def main():
         with logpath.open('a') as log:
             log.write('[manager] '+phase+'\n');log.flush()
             proc=subprocess.Popen(cmd,cwd=repo if repo.exists() else root,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
-            sel=selectors.DefaultSelector();sel.register(proc.stdout,selectors.EVENT_READ);last=time.monotonic()
+            status(state='running',phase=phase,worker_pid=proc.pid)
+            sel=selectors.DefaultSelector();sel.register(proc.stdout,selectors.EVENT_READ);last=time.monotonic();resume_saved=False
             while True:
                 if sel.select(5):
                     line=proc.stdout.readline()
                     if line:log.write(line);log.flush();print(line.rstrip(),flush=True)
                     elif proc.poll() is not None:break
                 elif proc.poll() is not None:break
+                if not resume_saved and (out/'resume_state_verified.json').exists():
+                    publish('resume600');resume_saved=True;last=time.monotonic()
                 if time.monotonic()-last>=180:publish(str(int(time.time())));last=time.monotonic()
                 if time.time()-started>14400:proc.terminate();raise RuntimeError('Four-hour safety budget exhausted; checkpoint preserved')
             sel.close()
