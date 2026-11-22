@@ -1,5 +1,21 @@
 # Colab console operations
 
+## WSL control-plane recovery (22 November 2026)
+
+If even `wsl --list --verbose` hangs, this is below the Colab CLI layer.
+Do not allocate duplicate cloud runs or repeatedly reinstall the CLI. In the
+observed incident, Ubuntu-only termination and then shutdown also hung;
+WslService remained StopPending. After explicit approval to interrupt all
+local WSL workloads (including Docker), an administrator restarted the stuck
+service. Verify distribution enumeration, account identity, server sessions
+and a CUDA smoke before resuming. Do not automatically repeat this global
+restart: it may interrupt unrelated local Linux workloads.
+
+For Task52f, large single-request upload failed at the runtime proxy. The
+console transfer uses 4MiB transport chunks and verifies the reassembled
+original SHA256 before any scientific execution. Chunks are removed after
+successful reassembly; no original checkpoint or dataset is deleted.
+
 ## Contract
 
 Use the official `google-colab-cli` in Ubuntu WSL2. Native Windows is not an
