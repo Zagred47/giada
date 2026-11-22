@@ -13,16 +13,17 @@ request=dict(task='52g',session='giada-task52g-preservation',profile='primary',r
 (F/'dispatch_request.json').write_text(json.dumps(request,indent=2))
 code="""import os,json,subprocess,sys
 from pathlib import Path
-request=REQUEST
+request=__REQUEST_PAYLOAD__
 for item in request['inputs']:
     assert Path(item['remote']).is_file(), 'Upload the registered input: '+item['remote']
 bootstrap=Path('/content/giada52g_notebook_bootstrap')
 assert not bootstrap.exists(), 'Use the existing console run; do not duplicate it'
-subprocess.run(['git','clone','--quiet','https://github.com/Zagred47/giada.git',str(bootstrap)],check=True)
-subprocess.run(['git','checkout','--detach',request['revision']],cwd=bootstrap,check=True)
+subprocess.run(['git','clone','--quiet','--depth','1','--branch','codex/surrogate-validity-audit','https://github.com/Zagred47/giada.git',str(bootstrap)],check=True)
+subprocess.run(['git','fetch','--quiet','--depth','1','origin',request['revision']],cwd=bootstrap,check=True)
+subprocess.run(['git','checkout','--detach','FETCH_HEAD'],cwd=bootstrap,check=True)
 launch=Path('/content/task52g_launch.json');launch.write_text(json.dumps(request))
 subprocess.run([sys.executable,str(bootstrap/'scripts/task52g_console_manager.py')],env=dict(os.environ,GIADA_LAUNCH_REQUEST=str(launch)),check=True)
-""".replace('REQUEST',repr(request))
+""".replace('__REQUEST_PAYLOAD__',repr(request))
 doc=dict(nbformat=4,nbformat_minor=5,metadata=dict(kernelspec=dict(name='python3',display_name='Python 3',language='python')),cells=[dict(cell_type='markdown',metadata={},source=['# GIADA52g — preservazione delle correnti e conflitto dei gradienti\n','Quattro bracci appaiati, stessi512tick,800aggiornamenti,10stati. Soglie originali; limite52j.\n','Il lancio operativo avviene via console con backup esterni; NON eseguire una seconda copia di questo notebook. Gli input verificati devono essere caricati negli stessi percorsi/content.']),dict(cell_type='code',metadata={},execution_count=None,outputs=[],source=code.splitlines(keepends=True))])
 (ROOT/'notebooks/giada_task52g_gradient_preservation.ipynb').write_text(json.dumps(doc,indent=2))
 print(json.dumps(dict(valid=True,revision=revision,session=request['session'],inputs=len(inputs))))
