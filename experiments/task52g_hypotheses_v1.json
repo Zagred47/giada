@@ -1,0 +1,273 @@
+{
+  "task": "52g",
+  "source": "52f",
+  "facts": {
+    "finite": true,
+    "all_fallback": true,
+    "last": {
+      "control": {
+        "arm": "control",
+        "update": 800,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 3.0541358986626084,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9806028339183012,
+          "Ca_LVAst": 0.9656994061385843,
+          "NaTa_t": 1.1481124619709446,
+          "NaTs2_t": 0.7730014684737635,
+          "Nap_Et2": 74.93214043590278,
+          "Ih": 1.4354294538336354,
+          "Im": 1.5331094941778456,
+          "K_Pst": 1.0998696355797388,
+          "K_Tst": 1.0066200094236857,
+          "SK_E2": 0.972235494607527,
+          "SKv3_1": 1.6827161621774103
+        },
+        "voltage_mse_ratio": 1.0692083902022278,
+        "calcium_mse_ratio": 0.7009194955352905,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1",
+              "voltage"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "encoder": {
+        "arm": "encoder",
+        "update": 800,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 3.0291263361135825,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9804625823257892,
+          "Ca_LVAst": 0.9653782511757086,
+          "NaTa_t": 1.170339905736316,
+          "NaTs2_t": 0.7742152839410111,
+          "Nap_Et2": 73.93439994378483,
+          "Ih": 1.4398454456641552,
+          "Im": 1.5342414661492965,
+          "K_Pst": 1.1125358784503978,
+          "K_Tst": 1.0146532309118699,
+          "SK_E2": 0.9721212535287647,
+          "SKv3_1": 1.6722647130577428
+        },
+        "voltage_mse_ratio": 1.060316319284426,
+        "calcium_mse_ratio": 0.7046419180036981,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1",
+              "voltage"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1",
+              "voltage"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "long_credit": {
+        "arm": "long_credit",
+        "update": 800,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 1.0014495096818887,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9333763309009643,
+          "Ca_LVAst": 0.9566753920046432,
+          "NaTa_t": 3.045503260713789,
+          "NaTs2_t": 0.988170318070558,
+          "Nap_Et2": 1.5310741448551546,
+          "Ih": 1.7907009208112976,
+          "Im": 1.186412788986855,
+          "K_Pst": 1.5975452333033016,
+          "K_Tst": 1.244234171899204,
+          "SK_E2": 0.9745152645943613,
+          "SKv3_1": 2.4017889222941595
+        },
+        "voltage_mse_ratio": 0.9588180363025276,
+        "calcium_mse_ratio": 0.6481046856942672,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "NaTs2_t",
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "combined": {
+        "arm": "combined",
+        "update": 800,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 0.9978836676067816,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9305827094888489,
+          "Ca_LVAst": 0.9565204068751658,
+          "NaTa_t": 2.7283566308867133,
+          "NaTs2_t": 0.9565272029060564,
+          "Nap_Et2": 1.4621463049156311,
+          "Ih": 1.7621117000536521,
+          "Im": 1.195652398282608,
+          "K_Pst": 1.6542971989655098,
+          "K_Tst": 1.218209138548836,
+          "SK_E2": 0.9743997660811995,
+          "SKv3_1": 2.465719720537502
+        },
+        "voltage_mse_ratio": 0.9588745373747227,
+        "calcium_mse_ratio": 0.6400572268851762,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "NaTs2_t",
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "hypotheses": [
+    {
+      "id": "preservation",
+      "claim": "A missing per-channel training penalty permits compensated current regressions despite better V/Ca.",
+      "test": "guard vs control andcombined vs projection",
+      "falsifier": "Penalty activates but original per-channel nonregression andeligible checkpoints do not improve."
+    },
+    {
+      "id": "conflict",
+      "claim": "Conflicting trajectory gradients overwrite useful current gradients.",
+      "test": "projection vs control andcombined vs guard; measure dot products",
+      "falsifier": "Conflicts are corrected but no improvement in original guards, or there are few conflicts."
+    },
+    {
+      "id": "interaction",
+      "claim": "Current-level penalty andgradient priority together retain long-credit benefits.",
+      "test": "2x2 difference of differences on originaldevelopment errors andeligible seed-checkpoints",
+      "falsifier": "Combined loses V/Ca benefit or cannot reduce current regressions relative to both single interventions."
+    }
+  ],
+  "user_cap": "Do not go beyond52j; no thresholds or abstraction changes."
+}

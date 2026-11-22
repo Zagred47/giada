@@ -189,7 +189,7 @@ def credit_probe(torch,p,net,data,cal,out):
     assert before==a.n.weights_hash(net)
     a.n.p.save_json(out/'credit_assignment_probe.json',dict(valid=True,forward_ticks=length,truncations=[min(128,length),length],cosine=cosine,norms=[float(x.norm()) for x in gradients],weights_unchanged=True,qualification='Fit-only short-window gradient sensitivity, not proof about all slow timescales. No optimizer step.'))
 
-def run(torch,root,source,cost_source,recovery,package,out,device='cuda',override=None,coupled_override=None):
+def run(torch,root,source,cost_source,recovery,package,out,device='cuda',override=None,coupled_override=None,train_fn=None,task_name='52f'):
     p=plan(root) if override is None else override;out.mkdir(exist_ok=True);started=time.monotonic();a.n.p.save_json(out/'preregistration.json',p)
     models=parent.load(torch,root,package,source,cost_source,recovery,out,device);net,cal,state=load_model(torch,p,package,device);frozen=d.view(torch,p,net,cal,state,0,device);models['compact']=frozen;before={k:a.n.weights_hash(v) for k,v in models.items()}
     with torch.no_grad():ordinary=c.b.data(torch,p,device);support=support_data(torch,p,device);data=merge_data(torch,ordinary,support);aut=d.coupled_data(torch,p,root,device)
@@ -199,7 +199,7 @@ def run(torch,root,source,cost_source,recovery,package,out,device='cuda',overrid
         assert all(torch.equal(v,previous[k]) for k,v in cal.items() if torch.is_tensor(v))
     else:
         torch.save(cal,out/'calibration.pt');a.n.p.save_json(out/'history_metadata.json',data['meta']);credit_probe(torch,p,net,support,cal,out)
-    train(torch,p,net,data,aut,cal,out,len(ordinary['meta']));freeze=a.n.weights_hash(net)
+    (train_fn or train)(torch,p,net,data,aut,cal,out,len(ordinary['meta']));freeze=a.n.weights_hash(net)
     for v in net.parameters():v.requires_grad_(False)
     pp=parent.plan(root) if coupled_override is None else copy.deepcopy(coupled_override);pp['cost']=p['cost'];pp['runtime_budget_seconds']=p['runtime_budget_seconds'];pp['families']['Ca_Ih']=[0,1,5];a.n.p.save_json(out/'unchanged_quality.json',dict(quality=pp['quality'],compartment_gates=pp['compartment_gates']));cases,inj,mult,rev=parent.design(pp);a.n.p.save_json(out/'cases.json',cases)
     inj=torch.tensor(inj,device=device,dtype=torch.float64);mult=torch.tensor(mult,device=device,dtype=torch.float64);rev=torch.tensor(rev,device=device,dtype=torch.float64);physics=a.n.contract(root)[1:];summaries={}
@@ -219,5 +219,5 @@ def run(torch,root,source,cost_source,recovery,package,out,device='cuda',overrid
         with gzip.open(out/arm['id']/'interventions.json.gz','rt') as f:rr=[r for r in json.load(f) if r['arm']=='compact']
         accepted.append(all(x['all_quality_passed'] for x in summaries[arm['id']]['compact'].values()) and all(r['current']['conservative_passed'] and r['voltage_response_rmse_mv']<=pp['compartment_gates']['max_candidate_worst_voltage_rmse_mv'] and r['calcium_response_rmse_mM']<=pp['compartment_gates']['max_candidate_worst_cai_rmse_mM'] for r in rr))
     resumed_from=json.loads((out/'resume_request.json').read_text())['checkpoint_update'] if (out/'resume_request.json').exists() else 0
-    a.n.p.save_json(out/'final_report.json',dict(valid=True,execution_valid=True,scientific_acceptance_passed=any(accepted),complete=True,task='52f',finite_parameters=True,encoder_frozen_after_calibration=True,postfreeze_weights_unchanged=True,frozen_controls_unchanged=True,training_updates=p['updates'],resumed_from=resumed_from,new_training_updates=p['updates']-resumed_from,encoder_calibration_repeated=False if resumed_from else None,encoder_calibration_updates=p['encoder_calibration']['updates'],selection_recomputed=True,thresholds_changed=False,abstraction_changed=False,logical_state=10,promotion_authorized=False,summary=summaries,elapsed_seconds=time.monotonic()-started,limitations=p['limitations'],last_allowed_subtask='52j'))
+    a.n.p.save_json(out/'final_report.json',dict(valid=True,execution_valid=True,scientific_acceptance_passed=any(accepted),complete=True,task=task_name,finite_parameters=True,encoder_frozen_after_calibration=True,postfreeze_weights_unchanged=True,frozen_controls_unchanged=True,training_updates=p['updates'],resumed_from=resumed_from,new_training_updates=p['updates']-resumed_from,encoder_calibration_repeated=False if resumed_from else None,encoder_calibration_updates=p['encoder_calibration']['updates'],selection_recomputed=True,thresholds_changed=False,abstraction_changed=False,logical_state=10,promotion_authorized=False,summary=summaries,elapsed_seconds=time.monotonic()-started,limitations=p['limitations'],last_allowed_subtask='52j'))
     checkpoint(out,p['updates'])

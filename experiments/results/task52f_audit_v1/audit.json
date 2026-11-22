@@ -1,0 +1,3860 @@
+{
+  "valid": true,
+  "backup": {
+    "valid": true,
+    "remote": {
+      "label": "final",
+      "archive": "/content/giada_task52f_resume600/recovery_final.zip",
+      "sha256": "9300dc7b7bc42c022ecb2d88fc5bc16b43d21b39cc925f351653785ad981abe6",
+      "bytes": 238268533
+    },
+    "local": "C:\\Users\\belli\\Documents\\GIADA NEW\\elmneuron\\artifacts\\task52f_resume_colab_external\\recovery_final.zip",
+    "runtime_independent": true,
+    "verified_at": 1795379087.803628
+  },
+  "finite_tensor_count": 452,
+  "finite_pt_files": [
+    "C1.pt",
+    "P.pt",
+    "R41.pt",
+    "after_encoder_calibration.pt",
+    "calibration.pt",
+    "checkpoint_100.pt",
+    "checkpoint_150.pt",
+    "checkpoint_200.pt",
+    "checkpoint_300.pt",
+    "checkpoint_400.pt",
+    "checkpoint_50.pt",
+    "checkpoint_600.pt",
+    "checkpoint_800.pt",
+    "initial.pt",
+    "resumable_training.pt",
+    "selected.pt"
+  ],
+  "finite_parameters_independently_verified": true,
+  "completion": {
+    "complete": true,
+    "training_updates": 800,
+    "resumed_from": 600,
+    "new_training_updates": 200,
+    "scientific_acceptance_passed": false,
+    "thresholds_changed": false,
+    "abstraction_changed": false
+  },
+  "all_selected_fallback": true,
+  "freeze": {
+    "members": [
+      {
+        "arm": "control",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "control",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "control",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "encoder",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "encoder",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "encoder",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_credit",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_credit",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_credit",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "combined",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "combined",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "combined",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      }
+    ],
+    "updates": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "score": [
+      1.5082552433013916,
+      1.5570404529571533,
+      1.5739965438842773,
+      1.5082552433013916,
+      1.5570404529571533,
+      1.5739965438842773,
+      1.5082552433013916,
+      1.5570404529571533,
+      1.5739965438842773,
+      1.5082552433013916,
+      1.5570404529571533,
+      1.5739965438842773
+    ],
+    "baseline_fallback": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "fresh_accessed": false,
+    "encoder_frozen_after_calibration": true
+  },
+  "arms": {
+    "control": {
+      "last": {
+        "arm": "control",
+        "update": 800,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 3.0541358986626084,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9806028339183012,
+          "Ca_LVAst": 0.9656994061385843,
+          "NaTa_t": 1.1481124619709446,
+          "NaTs2_t": 0.7730014684737635,
+          "Nap_Et2": 74.93214043590278,
+          "Ih": 1.4354294538336354,
+          "Im": 1.5331094941778456,
+          "K_Pst": 1.0998696355797388,
+          "K_Tst": 1.0066200094236857,
+          "SK_E2": 0.972235494607527,
+          "SKv3_1": 1.6827161621774103
+        },
+        "voltage_mse_ratio": 1.0692083902022278,
+        "calcium_mse_ratio": 0.7009194955352905,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1",
+              "voltage"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "best_score_diagnostic": {
+        "arm": "control",
+        "update": 50,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 0.9956809984858491,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9954782361288563,
+          "Ca_LVAst": 0.9864441445483051,
+          "NaTa_t": 0.9897220643281693,
+          "NaTs2_t": 0.9840116477144648,
+          "Nap_Et2": 0.9856638854017635,
+          "Ih": 0.9926369392172614,
+          "Im": 0.9516008864334626,
+          "K_Pst": 1.0892588033215296,
+          "K_Tst": 0.9577210324727982,
+          "SK_E2": 0.9984618500502833,
+          "SKv3_1": 1.1842009737877903
+        },
+        "voltage_mse_ratio": 0.9778004521816298,
+        "calcium_mse_ratio": 0.9697038603902062,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "K_Pst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "eligible_seed_checkpoints": 0,
+      "selected": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.0280336914983528,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.7304144619400917,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.047671307206415346,
+            "pooled_voltage_rmse": 0.02703364227620964,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.017073071820992127,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.012093496462227214,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 3.0270902956896495,
+            "pooled_voltage_rmse": 1.6833773194209372,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.1409445673081995,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.8099182462015125,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5893815726065597,
+            "pooled_voltage_rmse": 1.0279817765401107,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1261320515892157,
+            "pooled_voltage_rmse": 0.7303779240203562,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.40903833863909,
+            "pooled_voltage_rmse": 2.6995828743465276,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.429415915285148,
+            "pooled_voltage_rmse": 1.5833715797316334,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.7194229677231778,
+            "pooled_voltage_rmse": 1.1219195108303277,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7288688058718207,
+            "pooled_voltage_rmse": 1.216886412638699,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.2237146262981602,
+            "pooled_voltage_rmse": 0.6895149353452131,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.8653401784182916,
+            "pooled_voltage_rmse": 0.4875850979103927,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.409927566293933,
+            "pooled_voltage_rmse": 2.679469503107661,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4288141099719107,
+            "pooled_voltage_rmse": 1.3880115923651015,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.7175167924315538,
+            "pooled_voltage_rmse": 0.9815214934522787,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      },
+      "cost": {
+        "samples_ms": {
+          "canonical64": [
+            251.70250399969518,
+            263.9211489995432,
+            238.33810100040864
+          ],
+          "P_full18": [
+            357.82050599937065,
+            365.3686090001429,
+            377.11451399991347
+          ],
+          "J_readout_only": [
+            25.717461999192892,
+            23.785630999554996,
+            21.540689000175917
+          ],
+          "compact10_step_readout": [
+            49.67458999999508,
+            49.723782999535615,
+            51.08024499986641
+          ]
+        },
+        "state_bytes_per_instance": {
+          "P": 72,
+          "compact": 40,
+          "compact_padded_temporary": 72
+        },
+        "batch": 24,
+        "seeds": 3,
+        "scope": "Same three-seed atomic update andreadout; not whole neuron.",
+        "whole_neuron_speedup_claimed": false
+      }
+    },
+    "encoder": {
+      "last": {
+        "arm": "encoder",
+        "update": 800,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 3.0291263361135825,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9804625823257892,
+          "Ca_LVAst": 0.9653782511757086,
+          "NaTa_t": 1.170339905736316,
+          "NaTs2_t": 0.7742152839410111,
+          "Nap_Et2": 73.93439994378483,
+          "Ih": 1.4398454456641552,
+          "Im": 1.5342414661492965,
+          "K_Pst": 1.1125358784503978,
+          "K_Tst": 1.0146532309118699,
+          "SK_E2": 0.9721212535287647,
+          "SKv3_1": 1.6722647130577428
+        },
+        "voltage_mse_ratio": 1.060316319284426,
+        "calcium_mse_ratio": 0.7046419180036981,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1",
+              "voltage"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1",
+              "voltage"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "best_score_diagnostic": {
+        "arm": "encoder",
+        "update": 50,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 0.9955440046815894,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9955283630049371,
+          "Ca_LVAst": 0.9863915661044033,
+          "NaTa_t": 0.989944770889943,
+          "NaTs2_t": 0.9851107724731042,
+          "Nap_Et2": 0.9856599689441654,
+          "Ih": 0.9925397076393581,
+          "Im": 0.951279827762507,
+          "K_Pst": 1.0849635591966043,
+          "K_Tst": 0.954681588226927,
+          "SK_E2": 0.9986136186792729,
+          "SKv3_1": 1.180494646239018
+        },
+        "voltage_mse_ratio": 0.9811124455020007,
+        "calcium_mse_ratio": 0.9704610506333992,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "K_Pst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "eligible_seed_checkpoints": 0,
+      "selected": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.0280336914983528,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.7304144619400917,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.047671307206415346,
+            "pooled_voltage_rmse": 0.02703364227620964,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.017073071820992127,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.012093496462227214,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 3.0270902956896495,
+            "pooled_voltage_rmse": 1.6833773194209372,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.1409445673081995,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.8099182462015125,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5893815726065597,
+            "pooled_voltage_rmse": 1.0279817765401107,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1261320515892157,
+            "pooled_voltage_rmse": 0.7303779240203562,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.40903833863909,
+            "pooled_voltage_rmse": 2.6995828743465276,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.429415915285148,
+            "pooled_voltage_rmse": 1.5833715797316334,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.7194229677231778,
+            "pooled_voltage_rmse": 1.1219195108303277,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7288688058718207,
+            "pooled_voltage_rmse": 1.216886412638699,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.2237146262981602,
+            "pooled_voltage_rmse": 0.6895149353452131,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.8653401784182916,
+            "pooled_voltage_rmse": 0.4875850979103927,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.409927566293933,
+            "pooled_voltage_rmse": 2.679469503107661,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4288141099719107,
+            "pooled_voltage_rmse": 1.3880115923651015,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.7175167924315538,
+            "pooled_voltage_rmse": 0.9815214934522787,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      },
+      "cost": {
+        "samples_ms": {
+          "canonical64": [
+            270.51942799971584,
+            258.0990180003937,
+            239.59363599988137
+          ],
+          "P_full18": [
+            353.6524390001432,
+            368.6752140001772,
+            351.1469090008177
+          ],
+          "J_readout_only": [
+            19.160810000357742,
+            19.876246999956493,
+            20.090719999643625
+          ],
+          "compact10_step_readout": [
+            49.5419499993659,
+            51.79380499976105,
+            49.35814300006314
+          ]
+        },
+        "state_bytes_per_instance": {
+          "P": 72,
+          "compact": 40,
+          "compact_padded_temporary": 72
+        },
+        "batch": 24,
+        "seeds": 3,
+        "scope": "Same three-seed atomic update andreadout; not whole neuron.",
+        "whole_neuron_speedup_claimed": false
+      }
+    },
+    "long_credit": {
+      "last": {
+        "arm": "long_credit",
+        "update": 800,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 1.0014495096818887,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9333763309009643,
+          "Ca_LVAst": 0.9566753920046432,
+          "NaTa_t": 3.045503260713789,
+          "NaTs2_t": 0.988170318070558,
+          "Nap_Et2": 1.5310741448551546,
+          "Ih": 1.7907009208112976,
+          "Im": 1.186412788986855,
+          "K_Pst": 1.5975452333033016,
+          "K_Tst": 1.244234171899204,
+          "SK_E2": 0.9745152645943613,
+          "SKv3_1": 2.4017889222941595
+        },
+        "voltage_mse_ratio": 0.9588180363025276,
+        "calcium_mse_ratio": 0.6481046856942672,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "NaTs2_t",
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "best_score_diagnostic": {
+        "arm": "long_credit",
+        "update": 300,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 0.9847855281774541,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9859843723495257,
+          "Ca_LVAst": 0.9647731201809021,
+          "NaTa_t": 1.2767239066190574,
+          "NaTs2_t": 0.8950910961544681,
+          "Nap_Et2": 1.0829382686209392,
+          "Ih": 0.9722822591989759,
+          "Im": 0.9185470153177518,
+          "K_Pst": 1.0435889556664044,
+          "K_Tst": 0.9535472537725161,
+          "SK_E2": 0.9879293616817852,
+          "SKv3_1": 1.2615067961696225
+        },
+        "voltage_mse_ratio": 0.9623609333498285,
+        "calcium_mse_ratio": 0.8609022398544912,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "eligible_seed_checkpoints": 0,
+      "selected": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.0280336914983528,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.7304144619400917,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.047671307206415346,
+            "pooled_voltage_rmse": 0.02703364227620964,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.017073071820992127,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.012093496462227214,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 3.0270902956896495,
+            "pooled_voltage_rmse": 1.6833773194209372,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.1409445673081995,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.8099182462015125,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5893815726065597,
+            "pooled_voltage_rmse": 1.0279817765401107,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1261320515892157,
+            "pooled_voltage_rmse": 0.7303779240203562,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.40903833863909,
+            "pooled_voltage_rmse": 2.6995828743465276,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.429415915285148,
+            "pooled_voltage_rmse": 1.5833715797316334,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.7194229677231778,
+            "pooled_voltage_rmse": 1.1219195108303277,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7288688058718207,
+            "pooled_voltage_rmse": 1.216886412638699,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.2237146262981602,
+            "pooled_voltage_rmse": 0.6895149353452131,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.8653401784182916,
+            "pooled_voltage_rmse": 0.4875850979103927,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.409927566293933,
+            "pooled_voltage_rmse": 2.679469503107661,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4288141099719107,
+            "pooled_voltage_rmse": 1.3880115923651015,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.7175167924315538,
+            "pooled_voltage_rmse": 0.9815214934522787,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      },
+      "cost": {
+        "samples_ms": {
+          "canonical64": [
+            255.12881800023024,
+            274.2135580001559,
+            260.4296699992119
+          ],
+          "P_full18": [
+            351.55374700025277,
+            376.38103400058753,
+            525.0672320007652
+          ],
+          "J_readout_only": [
+            31.471641000280215,
+            31.485907999922347,
+            31.34725400013849
+          ],
+          "compact10_step_readout": [
+            75.06539799942402,
+            76.50229099999706,
+            76.24896600009379
+          ]
+        },
+        "state_bytes_per_instance": {
+          "P": 72,
+          "compact": 40,
+          "compact_padded_temporary": 72
+        },
+        "batch": 24,
+        "seeds": 3,
+        "scope": "Same three-seed atomic update andreadout; not whole neuron.",
+        "whole_neuron_speedup_claimed": false
+      }
+    },
+    "combined": {
+      "last": {
+        "arm": "combined",
+        "update": 800,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 0.9978836676067816,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9305827094888489,
+          "Ca_LVAst": 0.9565204068751658,
+          "NaTa_t": 2.7283566308867133,
+          "NaTs2_t": 0.9565272029060564,
+          "Nap_Et2": 1.4621463049156311,
+          "Ih": 1.7621117000536521,
+          "Im": 1.195652398282608,
+          "K_Pst": 1.6542971989655098,
+          "K_Tst": 1.218209138548836,
+          "SK_E2": 0.9743997660811995,
+          "SKv3_1": 2.465719720537502
+        },
+        "voltage_mse_ratio": 0.9588745373747227,
+        "calcium_mse_ratio": 0.6400572268851762,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "NaTs2_t",
+              "Nap_Et2",
+              "Ih",
+              "Im",
+              "K_Pst",
+              "K_Tst",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "best_score_diagnostic": {
+        "arm": "combined",
+        "update": 300,
+        "eligible": [
+          false,
+          false,
+          false
+        ],
+        "score_ratio": 0.9847728693171196,
+        "current_mse_ratio": {
+          "Ca_HVA": 0.9865058947861098,
+          "Ca_LVAst": 0.9648056671241788,
+          "NaTa_t": 1.2560382719444412,
+          "NaTs2_t": 0.8940487155280931,
+          "Nap_Et2": 1.074528852359936,
+          "Ih": 0.9709465951155224,
+          "Im": 0.912985245059852,
+          "K_Pst": 1.0571594945575427,
+          "K_Tst": 0.9533369459437493,
+          "SK_E2": 0.9878926993955459,
+          "SKv3_1": 1.2793670228101977
+        },
+        "voltage_mse_ratio": 0.962370826075681,
+        "calcium_mse_ratio": 0.8540776396971935,
+        "per_seed": [
+          {
+            "seed": 17,
+            "blockers": [
+              "Nap_Et2",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 29,
+            "blockers": [
+              "Nap_Et2",
+              "Im",
+              "K_Pst",
+              "SKv3_1"
+            ]
+          },
+          {
+            "seed": 43,
+            "blockers": [
+              "NaTa_t",
+              "SKv3_1"
+            ]
+          }
+        ]
+      },
+      "eligible_seed_checkpoints": 0,
+      "selected": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.0280336914983528,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.7304144619400917,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.047671307206415346,
+            "pooled_voltage_rmse": 0.02703364227620964,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.017073071820992127,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.012093496462227214,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 3.0270902956896495,
+            "pooled_voltage_rmse": 1.6833773194209372,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.1409445673081995,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.8099182462015125,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5893815726065597,
+            "pooled_voltage_rmse": 1.0279817765401107,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1261320515892157,
+            "pooled_voltage_rmse": 0.7303779240203562,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.40903833863909,
+            "pooled_voltage_rmse": 2.6995828743465276,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.429415915285148,
+            "pooled_voltage_rmse": 1.5833715797316334,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.7194229677231778,
+            "pooled_voltage_rmse": 1.1219195108303277,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7288688058718207,
+            "pooled_voltage_rmse": 1.216886412638699,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.2237146262981602,
+            "pooled_voltage_rmse": 0.6895149353452131,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.8653401784182916,
+            "pooled_voltage_rmse": 0.4875850979103927,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.409927566293933,
+            "pooled_voltage_rmse": 2.679469503107661,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4288141099719107,
+            "pooled_voltage_rmse": 1.3880115923651015,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.7175167924315538,
+            "pooled_voltage_rmse": 0.9815214934522787,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      },
+      "cost": {
+        "samples_ms": {
+          "canonical64": [
+            376.0328700000173,
+            346.5025949999472,
+            346.9432510000843
+          ],
+          "P_full18": [
+            525.133033000202,
+            520.9974710005554,
+            519.3168360001437
+          ],
+          "J_readout_only": [
+            34.05375000056665,
+            35.3144919999977,
+            34.076992999871436
+          ],
+          "compact10_step_readout": [
+            83.89199699922756,
+            80.13502999983757,
+            79.87337400027172
+          ]
+        },
+        "state_bytes_per_instance": {
+          "P": 72,
+          "compact": 40,
+          "compact_padded_temporary": 72
+        },
+        "batch": 24,
+        "seeds": 3,
+        "scope": "Same three-seed atomic update andreadout; not whole neuron.",
+        "whole_neuron_speedup_claimed": false
+      }
+    }
+  },
+  "rows": [
+    {
+      "arm": "control",
+      "update": 50,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9956809984858491,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9954782361288563,
+        "Ca_LVAst": 0.9864441445483051,
+        "NaTa_t": 0.9897220643281693,
+        "NaTs2_t": 0.9840116477144648,
+        "Nap_Et2": 0.9856638854017635,
+        "Ih": 0.9926369392172614,
+        "Im": 0.9516008864334626,
+        "K_Pst": 1.0892588033215296,
+        "K_Tst": 0.9577210324727982,
+        "SK_E2": 0.9984618500502833,
+        "SKv3_1": 1.1842009737877903
+      },
+      "voltage_mse_ratio": 0.9778004521816298,
+      "calcium_mse_ratio": 0.9697038603902062,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "encoder",
+      "update": 50,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9955440046815894,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9955283630049371,
+        "Ca_LVAst": 0.9863915661044033,
+        "NaTa_t": 0.989944770889943,
+        "NaTs2_t": 0.9851107724731042,
+        "Nap_Et2": 0.9856599689441654,
+        "Ih": 0.9925397076393581,
+        "Im": 0.951279827762507,
+        "K_Pst": 1.0849635591966043,
+        "K_Tst": 0.954681588226927,
+        "SK_E2": 0.9986136186792729,
+        "SKv3_1": 1.180494646239018
+      },
+      "voltage_mse_ratio": 0.9811124455020007,
+      "calcium_mse_ratio": 0.9704610506333992,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "long_credit",
+      "update": 50,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9933101512063948,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9959743057157961,
+        "Ca_LVAst": 0.9873855783291603,
+        "NaTa_t": 0.9882689406377448,
+        "NaTs2_t": 0.9807069633181079,
+        "Nap_Et2": 0.987093288718908,
+        "Ih": 0.9924212565536606,
+        "Im": 1.0192947223970832,
+        "K_Pst": 0.913795996990145,
+        "K_Tst": 0.9073706082961596,
+        "SK_E2": 0.9984556113115679,
+        "SKv3_1": 0.9877880231871826
+      },
+      "voltage_mse_ratio": 1.077268464093893,
+      "calcium_mse_ratio": 0.9618584933766607,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Im",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Im",
+            "K_Tst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "SKv3_1",
+            "voltage"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "combined",
+      "update": 50,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9932294727097591,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9959601077503155,
+        "Ca_LVAst": 0.987308230671427,
+        "NaTa_t": 0.9878739848432957,
+        "NaTs2_t": 0.9807450013638821,
+        "Nap_Et2": 0.9870640071974511,
+        "Ih": 0.9923890256187201,
+        "Im": 1.024676300139505,
+        "K_Pst": 0.9079712966635421,
+        "K_Tst": 0.9020267547793402,
+        "SK_E2": 0.9986209138295766,
+        "SKv3_1": 0.9790834649476098
+      },
+      "voltage_mse_ratio": 1.0864280465305403,
+      "calcium_mse_ratio": 0.9620223662205767,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Im",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Im",
+            "K_Tst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "Im",
+            "SKv3_1",
+            "voltage"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "update": 100,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9988100124946677,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.993221022481286,
+        "Ca_LVAst": 0.9778700099148971,
+        "NaTa_t": 0.9823899419114769,
+        "NaTs2_t": 0.9518124364562781,
+        "Nap_Et2": 1.0045813011394433,
+        "Ih": 0.9820352851154711,
+        "Im": 0.948165988276162,
+        "K_Pst": 1.1691096814291198,
+        "K_Tst": 0.9260553890296146,
+        "SK_E2": 0.9971965759749558,
+        "SKv3_1": 1.313424835755071
+      },
+      "voltage_mse_ratio": 0.9632693041902313,
+      "calcium_mse_ratio": 0.9590654929958483,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "encoder",
+      "update": 100,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9974316355750689,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9932812927503128,
+        "Ca_LVAst": 0.9777971837580411,
+        "NaTa_t": 0.9834338867217834,
+        "NaTs2_t": 0.9531904461817331,
+        "Nap_Et2": 0.9943838024947654,
+        "Ih": 0.9819811253041744,
+        "Im": 0.9480909429243903,
+        "K_Pst": 1.1641163005321236,
+        "K_Tst": 0.9238793087790268,
+        "SK_E2": 0.9970934228694487,
+        "SKv3_1": 1.3126763851044296
+      },
+      "voltage_mse_ratio": 0.9632674311880894,
+      "calcium_mse_ratio": 0.9602876620246583,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "long_credit",
+      "update": 100,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9927346126679191,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9939883147825479,
+        "Ca_LVAst": 0.9798581657911459,
+        "NaTa_t": 0.987711323591188,
+        "NaTs2_t": 0.9573568030910256,
+        "Nap_Et2": 0.9838903616388777,
+        "Ih": 0.9845197393087632,
+        "Im": 1.0296151863399519,
+        "K_Pst": 1.0628996228002918,
+        "K_Tst": 0.9143005308522657,
+        "SK_E2": 0.9979285422554592,
+        "SKv3_1": 1.1727878062401293
+      },
+      "voltage_mse_ratio": 0.9633443183252818,
+      "calcium_mse_ratio": 0.9577570780657131,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "combined",
+      "update": 100,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9925719668137939,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9939670688058467,
+        "Ca_LVAst": 0.9797494672174919,
+        "NaTa_t": 0.9861937550825187,
+        "NaTs2_t": 0.9569578678659454,
+        "Nap_Et2": 0.983980514637851,
+        "Ih": 0.9845808553429102,
+        "Im": 1.0284806259654766,
+        "K_Pst": 1.063628525204521,
+        "K_Tst": 0.9105433180196726,
+        "SK_E2": 0.997839272342604,
+        "SKv3_1": 1.1697177634126559
+      },
+      "voltage_mse_ratio": 0.9633417702071038,
+      "calcium_mse_ratio": 0.9526090581567462,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "update": 150,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9973019231854306,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9920455703813486,
+        "Ca_LVAst": 0.9715627367159488,
+        "NaTa_t": 1.0004438083805616,
+        "NaTs2_t": 0.9231187636363205,
+        "Nap_Et2": 1.1438739767135468,
+        "Ih": 0.9707393173461848,
+        "Im": 0.9973668350891582,
+        "K_Pst": 1.2860541081254124,
+        "K_Tst": 0.9731762624562009,
+        "SK_E2": 0.9933091476495676,
+        "SKv3_1": 1.5286627954155216
+      },
+      "voltage_mse_ratio": 0.9629558241371662,
+      "calcium_mse_ratio": 0.9492858393224676,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "encoder",
+      "update": 150,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9963869785208074,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9921162912615645,
+        "Ca_LVAst": 0.9715269032793491,
+        "NaTa_t": 1.002131179744773,
+        "NaTs2_t": 0.9248881083595655,
+        "Nap_Et2": 1.1083426252731512,
+        "Ih": 0.9706971011350342,
+        "Im": 0.9974110043175605,
+        "K_Pst": 1.2834071793127686,
+        "K_Tst": 0.9701362388525517,
+        "SK_E2": 0.9932045839247347,
+        "SKv3_1": 1.5310771760205248
+      },
+      "voltage_mse_ratio": 0.9629547244650887,
+      "calcium_mse_ratio": 0.9510353035155582,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "long_credit",
+      "update": 150,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9913801245185847,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.992508965822299,
+        "Ca_LVAst": 0.9741977461838455,
+        "NaTa_t": 1.0013769269707835,
+        "NaTs2_t": 0.9350232381526214,
+        "Nap_Et2": 0.9856857207790747,
+        "Ih": 0.9765190445460364,
+        "Im": 0.938177812751972,
+        "K_Pst": 1.1858794751963047,
+        "K_Tst": 0.9547577721010444,
+        "SK_E2": 0.9929369552179269,
+        "SKv3_1": 1.3551423367048854
+      },
+      "voltage_mse_ratio": 0.9631139103017357,
+      "calcium_mse_ratio": 0.9512860815950095,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "combined",
+      "update": 150,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9909862102903189,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9923964617102593,
+        "Ca_LVAst": 0.9741828002890994,
+        "NaTa_t": 0.9999148181905281,
+        "NaTs2_t": 0.9367295040272224,
+        "Nap_Et2": 0.9865514393706164,
+        "Ih": 0.9762881931365223,
+        "Im": 0.9408100337174105,
+        "K_Pst": 1.1781923335054334,
+        "K_Tst": 0.9480513152780922,
+        "SK_E2": 0.9929107387748868,
+        "SKv3_1": 1.3391102739677005
+      },
+      "voltage_mse_ratio": 0.9631080043828395,
+      "calcium_mse_ratio": 0.9391371931876288,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "update": 200,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 1.0002996529593162,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9896984865976707,
+        "Ca_LVAst": 0.9700845745500137,
+        "NaTa_t": 1.0098803358347486,
+        "NaTs2_t": 0.9054777160063926,
+        "Nap_Et2": 1.6780646496127327,
+        "Ih": 0.9627179957516389,
+        "Im": 1.0504915193979034,
+        "K_Pst": 1.236983007228665,
+        "K_Tst": 0.9457683176145232,
+        "SK_E2": 0.9905226206121766,
+        "SKv3_1": 1.4836794833771316
+      },
+      "voltage_mse_ratio": 0.9627268223408924,
+      "calcium_mse_ratio": 0.9045224946150028,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "encoder",
+      "update": 200,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9995454091707651,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.989802265605883,
+        "Ca_LVAst": 0.9700960235475954,
+        "NaTa_t": 1.0129239514146695,
+        "NaTs2_t": 0.9073834491398262,
+        "Nap_Et2": 1.6508787010218404,
+        "Ih": 0.962634835701801,
+        "Im": 1.0514011007227306,
+        "K_Pst": 1.2342802029768054,
+        "K_Tst": 0.9426884025243368,
+        "SK_E2": 0.9903720226224801,
+        "SKv3_1": 1.4834216347265243
+      },
+      "voltage_mse_ratio": 0.9627443722244203,
+      "calcium_mse_ratio": 0.9062561898741358,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "long_credit",
+      "update": 200,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9880351501778121,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9902950629544778,
+        "Ca_LVAst": 0.970706317412141,
+        "NaTa_t": 1.0492633971248086,
+        "NaTs2_t": 0.9191930916885243,
+        "Nap_Et2": 0.9986235088563727,
+        "Ih": 0.9679665283874401,
+        "Im": 0.9491541246997929,
+        "K_Pst": 1.13335944893509,
+        "K_Tst": 0.94259369928705,
+        "SK_E2": 0.9910251209775535,
+        "SKv3_1": 1.2995291308492563
+      },
+      "voltage_mse_ratio": 0.9628926322818051,
+      "calcium_mse_ratio": 0.9165314702470043,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "combined",
+      "update": 200,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9879120632577717,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9899637581882482,
+        "Ca_LVAst": 0.9708018703057645,
+        "NaTa_t": 1.0393708839583484,
+        "NaTs2_t": 0.920022476341536,
+        "Nap_Et2": 1.0000532040076855,
+        "Ih": 0.9677740592314487,
+        "Im": 0.9431305487115891,
+        "K_Pst": 1.137414611700889,
+        "K_Tst": 0.9447827423891614,
+        "SK_E2": 0.991017160995593,
+        "SKv3_1": 1.3114019358005284
+      },
+      "voltage_mse_ratio": 0.9628871823207777,
+      "calcium_mse_ratio": 0.904233842318462,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "update": 300,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 1.0568179293034319,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9892788390494189,
+        "Ca_LVAst": 0.9623884755543357,
+        "NaTa_t": 1.1660647511901139,
+        "NaTs2_t": 0.8743248275502195,
+        "Nap_Et2": 3.921574551972355,
+        "Ih": 0.9672691123545131,
+        "Im": 1.180530819502158,
+        "K_Pst": 1.1277288324390133,
+        "K_Tst": 0.9538755532827157,
+        "SK_E2": 0.987210016716614,
+        "SKv3_1": 1.4211853866678632
+      },
+      "voltage_mse_ratio": 1.0310495157442807,
+      "calcium_mse_ratio": 0.870941474910755,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "encoder",
+      "update": 300,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 1.056782587522457,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9893950201454597,
+        "Ca_LVAst": 0.9623566050250657,
+        "NaTa_t": 1.1766038899764373,
+        "NaTs2_t": 0.8770503473307457,
+        "Nap_Et2": 3.9166042986468863,
+        "Ih": 0.9675286352706394,
+        "Im": 1.1767701023410932,
+        "K_Pst": 1.1133586857739877,
+        "K_Tst": 0.9470979896620543,
+        "SK_E2": 0.9869889600903133,
+        "SKv3_1": 1.411327927488319
+      },
+      "voltage_mse_ratio": 1.0341306846777902,
+      "calcium_mse_ratio": 0.8749790327228543,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "Im",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "long_credit",
+      "update": 300,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9847855281774541,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9859843723495257,
+        "Ca_LVAst": 0.9647731201809021,
+        "NaTa_t": 1.2767239066190574,
+        "NaTs2_t": 0.8950910961544681,
+        "Nap_Et2": 1.0829382686209392,
+        "Ih": 0.9722822591989759,
+        "Im": 0.9185470153177518,
+        "K_Pst": 1.0435889556664044,
+        "K_Tst": 0.9535472537725161,
+        "SK_E2": 0.9879293616817852,
+        "SKv3_1": 1.2615067961696225
+      },
+      "voltage_mse_ratio": 0.9623609333498285,
+      "calcium_mse_ratio": 0.8609022398544912,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "combined",
+      "update": 300,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9847728693171196,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9865058947861098,
+        "Ca_LVAst": 0.9648056671241788,
+        "NaTa_t": 1.2560382719444412,
+        "NaTs2_t": 0.8940487155280931,
+        "Nap_Et2": 1.074528852359936,
+        "Ih": 0.9709465951155224,
+        "Im": 0.912985245059852,
+        "K_Pst": 1.0571594945575427,
+        "K_Tst": 0.9533369459437493,
+        "SK_E2": 0.9878926993955459,
+        "SKv3_1": 1.2793670228101977
+      },
+      "voltage_mse_ratio": 0.962370826075681,
+      "calcium_mse_ratio": 0.8540776396971935,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "update": 400,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 1.2568179553149659,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9895125071750371,
+        "Ca_LVAst": 0.9615327388404357,
+        "NaTa_t": 1.1738028096895894,
+        "NaTs2_t": 0.8449329573740894,
+        "Nap_Et2": 10.795701852310371,
+        "Ih": 1.061546406744548,
+        "Im": 1.3902586769053737,
+        "K_Pst": 1.1972628562162482,
+        "K_Tst": 0.9970031455557011,
+        "SK_E2": 0.9811012688606128,
+        "SKv3_1": 1.606153989704883
+      },
+      "voltage_mse_ratio": 1.063020081688449,
+      "calcium_mse_ratio": 0.839152467715107,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "encoder",
+      "update": 400,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 1.2589300387240117,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9896838375391278,
+        "Ca_LVAst": 0.9616066112838922,
+        "NaTa_t": 1.1824797729193552,
+        "NaTs2_t": 0.8470700678356936,
+        "Nap_Et2": 10.852739140888248,
+        "Ih": 1.062712548687434,
+        "Im": 1.3912448110992948,
+        "K_Pst": 1.1803931417339184,
+        "K_Tst": 0.9902043958656591,
+        "SK_E2": 0.9809189022315555,
+        "SKv3_1": 1.5884533558979965
+      },
+      "voltage_mse_ratio": 1.0766479612537425,
+      "calcium_mse_ratio": 0.8433399571037429,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "long_credit",
+      "update": 400,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9942222695387503,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9833165363685712,
+        "Ca_LVAst": 0.960792515537979,
+        "NaTa_t": 1.7090374793550802,
+        "NaTs2_t": 0.9047846382784822,
+        "Nap_Et2": 1.6109878205866268,
+        "Ih": 1.0745336261453653,
+        "Im": 1.0028957529938158,
+        "K_Pst": 1.1320003035012707,
+        "K_Tst": 1.0477056231166326,
+        "SK_E2": 0.9825740959579843,
+        "SKv3_1": 1.495746906059004
+      },
+      "voltage_mse_ratio": 0.9617186693510238,
+      "calcium_mse_ratio": 0.8229651061932198,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "NaTs2_t",
+            "Nap_Et2",
+            "Ih",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "combined",
+      "update": 400,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9936297080410444,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9831148727192233,
+        "Ca_LVAst": 0.9608399006197484,
+        "NaTa_t": 1.6683471636954437,
+        "NaTs2_t": 0.9015382567044528,
+        "Nap_Et2": 1.5983579225747369,
+        "Ih": 1.0724132424318935,
+        "Im": 1.0077074491635118,
+        "K_Pst": 1.1364741827650302,
+        "K_Tst": 1.0508264335448694,
+        "SK_E2": 0.9825803531670915,
+        "SKv3_1": 1.5098924780575524
+      },
+      "voltage_mse_ratio": 0.961736088361194,
+      "calcium_mse_ratio": 0.8094294526331653,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "NaTs2_t",
+            "Nap_Et2",
+            "Ih",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "update": 600,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 2.353866271763247,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9855191828954893,
+        "Ca_LVAst": 0.9639920954975127,
+        "NaTa_t": 1.6215826378051268,
+        "NaTs2_t": 0.8523653254856636,
+        "Nap_Et2": 49.783866061051775,
+        "Ih": 1.2288571983207648,
+        "Im": 1.460418984541601,
+        "K_Pst": 1.1520747817482118,
+        "K_Tst": 1.019364997966492,
+        "SK_E2": 0.9755784833461227,
+        "SKv3_1": 1.807654311835953
+      },
+      "voltage_mse_ratio": 0.9722274868134241,
+      "calcium_mse_ratio": 0.7647178213653452,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "NaTs2_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "encoder",
+      "update": 600,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 2.367056510564467,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.985977523224261,
+        "Ca_LVAst": 0.9637835644165014,
+        "NaTa_t": 1.6491519090868234,
+        "NaTs2_t": 0.8523323995285788,
+        "Nap_Et2": 50.17409951869987,
+        "Ih": 1.2293045950994712,
+        "Im": 1.4531033610850306,
+        "K_Pst": 1.1296947122763514,
+        "K_Tst": 1.011365651227177,
+        "SK_E2": 0.9754105987270821,
+        "SKv3_1": 1.7716203334226357
+      },
+      "voltage_mse_ratio": 0.974387696435155,
+      "calcium_mse_ratio": 0.768981608345438,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "NaTs2_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "long_credit",
+      "update": 600,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 1.0196128879268074,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9718504164226761,
+        "Ca_LVAst": 0.9572709073001406,
+        "NaTa_t": 3.8464717701855347,
+        "NaTs2_t": 1.173180963450325,
+        "Nap_Et2": 2.1151759495584037,
+        "Ih": 1.3635969673166024,
+        "Im": 1.0765728292659473,
+        "K_Pst": 1.2955010035232135,
+        "K_Tst": 1.1933965653975662,
+        "SK_E2": 0.9769341372217332,
+        "SKv3_1": 1.9497523106664272
+      },
+      "voltage_mse_ratio": 0.9603200074682641,
+      "calcium_mse_ratio": 0.7481246038985326,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "NaTs2_t",
+            "Nap_Et2",
+            "Ih",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "combined",
+      "update": 600,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 1.0155456735656656,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9704051928783293,
+        "Ca_LVAst": 0.957228667603169,
+        "NaTa_t": 3.936926932934956,
+        "NaTs2_t": 1.170412885406318,
+        "Nap_Et2": 1.9335446530547944,
+        "Ih": 1.353244464779168,
+        "Im": 1.0862040690396022,
+        "K_Pst": 1.3193748562417593,
+        "K_Tst": 1.2008722777829341,
+        "SK_E2": 0.9768978593980467,
+        "SKv3_1": 1.986739868341524
+      },
+      "voltage_mse_ratio": 0.9603600611752334,
+      "calcium_mse_ratio": 0.733362936539317,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "NaTs2_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "control",
+      "update": 800,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 3.0541358986626084,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9806028339183012,
+        "Ca_LVAst": 0.9656994061385843,
+        "NaTa_t": 1.1481124619709446,
+        "NaTs2_t": 0.7730014684737635,
+        "Nap_Et2": 74.93214043590278,
+        "Ih": 1.4354294538336354,
+        "Im": 1.5331094941778456,
+        "K_Pst": 1.0998696355797388,
+        "K_Tst": 1.0066200094236857,
+        "SK_E2": 0.972235494607527,
+        "SKv3_1": 1.6827161621774103
+      },
+      "voltage_mse_ratio": 1.0692083902022278,
+      "calcium_mse_ratio": 0.7009194955352905,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "encoder",
+      "update": 800,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 3.0291263361135825,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9804625823257892,
+        "Ca_LVAst": 0.9653782511757086,
+        "NaTa_t": 1.170339905736316,
+        "NaTs2_t": 0.7742152839410111,
+        "Nap_Et2": 73.93439994378483,
+        "Ih": 1.4398454456641552,
+        "Im": 1.5342414661492965,
+        "K_Pst": 1.1125358784503978,
+        "K_Tst": 1.0146532309118699,
+        "SK_E2": 0.9721212535287647,
+        "SKv3_1": 1.6722647130577428
+      },
+      "voltage_mse_ratio": 1.060316319284426,
+      "calcium_mse_ratio": 0.7046419180036981,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1",
+            "voltage"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "long_credit",
+      "update": 800,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 1.0014495096818887,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9333763309009643,
+        "Ca_LVAst": 0.9566753920046432,
+        "NaTa_t": 3.045503260713789,
+        "NaTs2_t": 0.988170318070558,
+        "Nap_Et2": 1.5310741448551546,
+        "Ih": 1.7907009208112976,
+        "Im": 1.186412788986855,
+        "K_Pst": 1.5975452333033016,
+        "K_Tst": 1.244234171899204,
+        "SK_E2": 0.9745152645943613,
+        "SKv3_1": 2.4017889222941595
+      },
+      "voltage_mse_ratio": 0.9588180363025276,
+      "calcium_mse_ratio": 0.6481046856942672,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "NaTs2_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    },
+    {
+      "arm": "combined",
+      "update": 800,
+      "eligible": [
+        false,
+        false,
+        false
+      ],
+      "score_ratio": 0.9978836676067816,
+      "current_mse_ratio": {
+        "Ca_HVA": 0.9305827094888489,
+        "Ca_LVAst": 0.9565204068751658,
+        "NaTa_t": 2.7283566308867133,
+        "NaTs2_t": 0.9565272029060564,
+        "Nap_Et2": 1.4621463049156311,
+        "Ih": 1.7621117000536521,
+        "Im": 1.195652398282608,
+        "K_Pst": 1.6542971989655098,
+        "K_Tst": 1.218209138548836,
+        "SK_E2": 0.9743997660811995,
+        "SKv3_1": 2.465719720537502
+      },
+      "voltage_mse_ratio": 0.9588745373747227,
+      "calcium_mse_ratio": 0.6400572268851762,
+      "per_seed": [
+        {
+          "seed": 17,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 29,
+          "blockers": [
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "SKv3_1"
+          ]
+        },
+        {
+          "seed": 43,
+          "blockers": [
+            "NaTa_t",
+            "NaTs2_t",
+            "Nap_Et2",
+            "Ih",
+            "Im",
+            "K_Pst",
+            "K_Tst",
+            "SKv3_1"
+          ]
+        }
+      ]
+    }
+  ],
+  "encoder_calibration": {
+    "initial_fit_loss": [
+      0.1286589652299881,
+      0.153455913066864,
+      0.14559558033943176,
+      0.1286589652299881,
+      0.153455913066864,
+      0.14559558033943176,
+      0.1286589652299881,
+      0.153455913066864,
+      0.14559558033943176,
+      0.1286589652299881,
+      0.153455913066864,
+      0.14559558033943176
+    ],
+    "final_fit_loss": [
+      0.1286589652299881,
+      0.153455913066864,
+      0.14559558033943176,
+      0.11991553008556366,
+      0.12938538193702698,
+      0.11494477093219757,
+      0.1286589652299881,
+      0.153455913066864,
+      0.14559558033943176,
+      0.11991553008556366,
+      0.12938538193702698,
+      0.11494477093219757
+    ],
+    "curve": [
+      {
+        "step": 20,
+        "fit_loss": [
+          0.3824619948863983,
+          0.3892930746078491,
+          0.39118877053260803,
+          0.37710100412368774,
+          0.38402438163757324,
+          0.3806329369544983,
+          0.3824619948863983,
+          0.3892930746078491,
+          0.39118877053260803,
+          0.37710100412368774,
+          0.38402438163757324,
+          0.3806329369544983
+        ]
+      },
+      {
+        "step": 40,
+        "fit_loss": [
+          0.3433467149734497,
+          0.35122203826904297,
+          0.341342031955719,
+          0.3336734473705292,
+          0.3402388393878937,
+          0.3250187933444977,
+          0.3433467149734497,
+          0.35122203826904297,
+          0.341342031955719,
+          0.3336734473705292,
+          0.3402388393878937,
+          0.3250187933444977
+        ]
+      },
+      {
+        "step": 60,
+        "fit_loss": [
+          0.37129953503608704,
+          0.3764650821685791,
+          0.37521934509277344,
+          0.355579674243927,
+          0.3605436086654663,
+          0.3628503084182739,
+          0.37129953503608704,
+          0.3764650821685791,
+          0.37521934509277344,
+          0.355579674243927,
+          0.3605436086654663,
+          0.3628503084182739
+        ]
+      },
+      {
+        "step": 80,
+        "fit_loss": [
+          0.4225313067436218,
+          0.43904635310173035,
+          0.4411737322807312,
+          0.40848299860954285,
+          0.4213964343070984,
+          0.4140234887599945,
+          0.4225313067436218,
+          0.43904635310173035,
+          0.4411737322807312,
+          0.40848299860954285,
+          0.4213964343070984,
+          0.4140234887599945
+        ]
+      }
+    ],
+    "steps": 80,
+    "fit_only": true,
+    "other_weights_unchanged": true,
+    "control_encoders_unchanged": true
+  },
+  "credit_probe": {
+    "valid": true,
+    "forward_ticks": 512,
+    "truncations": [
+      128,
+      512
+    ],
+    "cosine": 0.3845442831516266,
+    "norms": [
+      3.8129069805145264,
+      13.455717086791992
+    ],
+    "weights_unchanged": true,
+    "qualification": "Fit-only short-window gradient sensitivity, not proof about all slow timescales. No optimizer step."
+  },
+  "controls": {
+    "canonical64": {
+      "100": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 2.19059131498802e-06,
+        "pooled_voltage_rmse": 1.760710889812141e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "500": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 2.14833515769724e-06,
+        "pooled_voltage_rmse": 2.0901828429802667e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "1000": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 2.6690902629181677e-06,
+        "pooled_voltage_rmse": 2.1798206255172953e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      }
+    },
+    "canonical32": {
+      "100": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 2.2880516533955263e-06,
+        "pooled_voltage_rmse": 1.9982091720251133e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "500": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 8.64090821436354e-06,
+        "pooled_voltage_rmse": 4.591277623345443e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "1000": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 6.293552192264062e-06,
+        "pooled_voltage_rmse": 3.849411404544777e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      }
+    },
+    "P": {
+      "100": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 0.0022183417278212507,
+        "pooled_voltage_rmse": 0.0008723947691418957,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "500": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 0.0054093046729876216,
+        "pooled_voltage_rmse": 0.0017886387245077883,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "1000": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 0.0038251475850545713,
+        "pooled_voltage_rmse": 0.0012648240629304372,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      }
+    },
+    "P_J": {
+      "100": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 0.002219350104573372,
+        "pooled_voltage_rmse": 0.0008725106560064387,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "500": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 0.005409339498293558,
+        "pooled_voltage_rmse": 0.0017895264457272147,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "1000": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 0.003825172211740733,
+        "pooled_voltage_rmse": 0.001265451812617824,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      }
+    },
+    "compact": {
+      "100": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 2.7284017813527006,
+        "pooled_voltage_rmse": 1.2609889688590363,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "500": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.5898568791530907,
+        "pooled_voltage_rmse": 1.0280336914983528,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "1000": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.12646750045848,
+        "pooled_voltage_rmse": 0.7304144619400917,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      }
+    },
+    "compact_imposed": {
+      "100": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 0.047671307206415346,
+        "pooled_voltage_rmse": 0.02703364227620964,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      },
+      "500": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 0.022843491966402844,
+        "pooled_voltage_rmse": 0.017073071820992127,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      },
+      "1000": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 0.016168620481017727,
+        "pooled_voltage_rmse": 0.012093496462227214,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      }
+    },
+    "compact_ca_imposed": {
+      "100": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 3.0270902956896495,
+        "pooled_voltage_rmse": 1.6833773194209372,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "500": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.5898568791530907,
+        "pooled_voltage_rmse": 1.1409445673081995,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "1000": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.12646750045848,
+        "pooled_voltage_rmse": 0.8099182462015125,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      }
+    },
+    "compact_reset": {
+      "100": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 2.7284017813527006,
+        "pooled_voltage_rmse": 1.2609889688590363,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "500": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.5893815726065597,
+        "pooled_voltage_rmse": 1.0279817765401107,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "1000": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.1261320515892157,
+        "pooled_voltage_rmse": 0.7303779240203562,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      }
+    },
+    "oracle_Ca": {
+      "100": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 5.40903833863909,
+        "pooled_voltage_rmse": 2.6995828743465276,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "500": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 2.429415915285148,
+        "pooled_voltage_rmse": 1.5833715797316334,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "1000": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.7194229677231778,
+        "pooled_voltage_rmse": 1.1219195108303277,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      }
+    },
+    "oracle_Ih": {
+      "100": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 2.7288688058718207,
+        "pooled_voltage_rmse": 1.216886412638699,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "500": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.2237146262981602,
+        "pooled_voltage_rmse": 0.6895149353452131,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      },
+      "1000": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 0.8653401784182916,
+        "pooled_voltage_rmse": 0.4875850979103927,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      }
+    },
+    "oracle_Ca_Ih": {
+      "100": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 5.409927566293933,
+        "pooled_voltage_rmse": 2.679469503107661,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "500": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 2.4288141099719107,
+        "pooled_voltage_rmse": 1.3880115923651015,
+        "pooled_voltage_passed": false,
+        "all_quality_passed": false
+      },
+      "1000": {
+        "passed": 0,
+        "total": 36,
+        "worst_voltage_rmse": 1.7175167924315538,
+        "pooled_voltage_rmse": 0.9815214934522787,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": false
+      }
+    },
+    "oracle_all": {
+      "100": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 2.19059131498802e-06,
+        "pooled_voltage_rmse": 1.760710889812141e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "500": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 2.14833515769724e-06,
+        "pooled_voltage_rmse": 2.0901828429802667e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      },
+      "1000": {
+        "passed": 36,
+        "total": 36,
+        "worst_voltage_rmse": 2.6690902629181677e-06,
+        "pooled_voltage_rmse": 2.1798206255172953e-06,
+        "pooled_voltage_passed": true,
+        "all_quality_passed": true
+      }
+    }
+  },
+  "qualification": "Development ratios are MSE, not RMSE. Diagnostic best is not an eligible selected candidate. Coupled panel evaluates baseline fallbacks; no unseen-final-checkpoint performance is inferred."
+}
