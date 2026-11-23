@@ -24,6 +24,15 @@ keep that connection for the worker, and retrieve backups with Contents
 `download`, not a second SSH connection. Do not stop the foreground SSH
 driver while it owns a running experiment.
 
+Task52g recovery switches to a detached remote manager (`start_new_session`,
+stdin closed, stdout/stderr redirected to a runtime file). The short SSH
+launcher can therefore finish without ending the scientific worker. Check
+`job_status.json` and verified external archives, not the launcher exit code.
+The recovery also writes `recovery_latest.pt` every20updates without running
+extra validation or changing selection checkpoints. That file is resumable
+state only, never evidence of an eligible selected model. Original validated
+`checkpoint_*.pt` files remain in the complete archive.
+
 ## Contract
 
 Use the official `google-colab-cli` in Ubuntu WSL2. Native Windows is not an
