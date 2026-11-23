@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT));sys.path.insert(0,str(ROOT.parent/'_kaggle_cli_deps'))
 F=ROOT/'experiments/results/task52g_resume640_v1';F.mkdir(exist_ok=True)
 DEST=ROOT/'artifacts/task52g_kaggle_external';DATASET='alessandrobelli/giada-task52g-resume640-input';SLUG='alessandrobelli/giada-task52g-resume640'
+PREFIX='task52g'
 SOURCE=ROOT/'artifacts/task52g_resume620_external/recovery_1795427655.zip'
 def save(p,d):p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(d,indent=2))
 def sha(p):
@@ -39,7 +40,7 @@ def publish():
         except Exception:
             if attempt==29:raise
             time.sleep(10)
-def build(revision):
+def build(revision,write_notebook=True):
     inputs=json.loads((ROOT/'experiments/results/task52g_resume620_v1/dispatch_request.json').read_text())['inputs']
     inputs[-1].update(sha256=sha(SOURCE))
     checks=[(Path(i['remote']).name,i['sha256']) for i in inputs]
@@ -95,7 +96,8 @@ assert returncode==0,'Worker failed: inspect saved logs and checkpoint, do not r
     doc=dict(nbformat=4,nbformat_minor=5,metadata=dict(kernelspec=dict(name='python3',display_name='Python3',language='python')),cells=[dict(cell_type='markdown',metadata={},source=['# GIADA52g — recovery640 on Kaggle\nOriginal thresholds, Adam, RNG, anchor and selection points preserved. Continue641–800, then original evaluations.']),dict(cell_type='code',metadata={},execution_count=None,outputs=[],source=code.splitlines(True))])
     folder=ROOT/'artifacts/task52g_kaggle_notebook';folder.mkdir(exist_ok=True);save(folder/'notebook.ipynb',doc)
     meta=json.loads((ROOT/'artifacts/task52f_notebook/kernel-metadata.json').read_text());meta.update(id=SLUG,title='GIADA Task52g Resume640');meta['dataset_sources'].append(DATASET);save(folder/'kernel-metadata.json',meta)
-    save(ROOT/'notebooks/giada_task52g_resume640.ipynb',doc);return folder
+    if write_notebook:save(ROOT/'notebooks/giada_task52g_resume640.ipynb',doc)
+    return folder
 def launch():
     for n in ('local_preflight.json','input_verified.json','preregistration_receipt.json'):assert json.loads((F/n).read_text())['valid']
     assert not (F/'kaggle_launch.json').exists() and not (F/'launch_pending.json').exists()
@@ -108,8 +110,8 @@ def supervise():
     for _ in range(960):
         try:
             s=a.kernels_status(ref);state=str(s.status).split('.')[-1].lower();save(F/'status.json',dict(status=state,failure_message=s.failure_message,at=time.time()));print(state,flush=True)
-            a.kernels_output(ref,str(DEST),file_pattern=r'(task52g_final\.zip|task52g_checkpoint_latest\.zip|task52g_checkpoint_receipt\.json|kaggle_receipt\.json|process\.log)$',force=True,quiet=True)
-            for receipt in ('task52g_checkpoint_receipt.json','kaggle_receipt.json'):
+            a.kernels_output(ref,str(DEST),file_pattern=rf'({PREFIX}_final\.zip|{PREFIX}_checkpoint_latest\.zip|{PREFIX}_checkpoint_receipt\.json|kaggle_receipt\.json|process\.log)$',force=True,quiet=True)
+            for receipt in (PREFIX+'_checkpoint_receipt.json','kaggle_receipt.json'):
                 rp=DEST/receipt
                 if rp.exists():
                     p=json.loads(rp.read_text());archive=DEST/p['archive']

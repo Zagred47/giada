@@ -44,7 +44,9 @@ def teacher(torch,p,net,data,ids,starts,cal,reference_mse,backward=True):
         h=net.step(f.t.features(torch,data['v'][starts+k,ids],data['ca'][starts+k,ids]),h)
         if (k+1)%width==0 or k+1==L:
             first=(k//width)*width;count=k+1-first;base=reference_mse[first:k+1].mean(0);relative=(reg/count-base)/base.clamp_min(p['preservation']['denominator_floor'])
-            penalty=relative.relu().mean(1)*p['preservation']['weight']*count/L
+            excess=relative.relu()
+            worst=torch.tensor([a.get('worst_guard',False) for a in p['arms'] for _ in p['seeds']],device=ids.device)
+            penalty=torch.where(worst,excess.mean(1)+excess.amax(1),excess.mean(1))*p['preservation']['weight']*count/L
             block=block+mask.to(penalty.dtype)*penalty;penalty_value+=penalty.detach();activation+=(relative.detach()>0).float()*count/L;reg=torch.zeros_like(reg)
         if backward and ((k+1)%p['bptt_ticks']==0 or k+1==L):
             if k+1==L:
@@ -98,6 +100,14 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count):
         ii=fit[torch.tensor(rng.integers(len(fit),size=p['batch_size']),device=device)];ss=torch.tensor(rng.integers(len(data['v'])-p['chunk_ticks'],size=p['batch_size']),device=device);ids=ii[None].expand(E,-1).clone();starts=ss[None].expand(E,-1).clone();n=p['batch_size']//2;si=sup[torch.tensor(rng.integers(len(sup),size=n),device=device)]
         for i,a in enumerate(p['arms']):
             if a['support']:ids[len(p['seeds'])*i:len(p['seeds'])*(i+1),:n]=si
+        if p.get('targeted_Ih'):
+            slow=torch.tensor([i for i,m in enumerate(data['meta']) if m['role']=='fit' and m.get('protocol')=='slow_recovery'],device=device)
+            assert len(slow)>0
+            count=max(1,n//2);ti=slow[torch.tensor(rng.integers(len(slow),size=count),device=device)]
+            anchors=np.array(p['targeted_Ih']['start_ms']);ts=torch.tensor(np.rint(anchors[rng.integers(len(anchors),size=count)]/p['dt_ms']),device=device,dtype=torch.long).clamp_max(len(data['v'])-p['chunk_ticks']-1)
+            for i,a in enumerate(p['arms']):
+                if a.get('targeted_Ih'):
+                    block=slice(i*len(p['seeds']),(i+1)*len(p['seeds']));ids[block,:count]=ti;starts[block,:count]=ts
         rmse=reference_errors(torch,p,reference,data,ids,starts);opt.zero_grad(set_to_none=True);_,_,_,diagnostic=teacher(torch,p,net,data,ids,starts,cal,rmse)
         gc=[v.grad.detach().clone() if v.grad is not None else torch.zeros_like(v) for v in params];opt.zero_grad(set_to_none=True)
         aid=ai[torch.tensor(rng.integers(len(ai),size=p['coupled_training']['batch_size']),device=device)];length=p['coupled_training']['horizon_before300' if update<=300 else 'horizon_after300'];ast=torch.tensor(rng.integers(len(aut['inj'])-length,size=len(aid)),device=device)
