@@ -3,7 +3,7 @@ import numpy as np
 from .mirror import ROOT,write_json
 from .incremental_batch import IncrementalBatchMirror
 def main():
-    repo=ROOT.parent;F=repo/'experiments/results/task52h_protocol_v1';old=json.loads((repo/'experiments/results/task52g_resume640_v1/preregistration_receipt.json').read_text());pre=json.loads((F/'local_preflight.json').read_text());assert pre['valid']
+    repo=ROOT.parent;F=repo/'experiments/results/task52h_protocol_v1';baseline=F/'preregistration_receipt.json';old=json.loads((baseline if baseline.exists() else repo/'experiments/results/task52g_resume640_v1/preregistration_receipt.json').read_text());pre=json.loads((F/'local_preflight.json').read_text());assert pre['valid']
     p=json.loads((repo/'experiments/task52h_preregistration_v1.json').read_text());path=repo/'artifacts/task52g_kaggle_external/task52g_final.zip';backup=json.loads((path.parent/'external_backup_receipt.json').read_text())
     assert hashlib.sha256(path.read_bytes()).hexdigest()==backup['remote']['sha256']
     with zipfile.ZipFile(path) as z:
@@ -26,6 +26,8 @@ def main():
     source=json.loads((repo/'experiments/results/task52g_protocol_v1/preregistration_receipt.json').read_text());oldexp=source['records']['experiments-giada-task52f-audit52g-52g-v1']
     finding=put('findings','52g',Nome='52g guards reduce some regressions but no eligible checkpoint',Esito='Misto',Esperimenti=[oldexp],Osservazioni=[obs]+detailed,Risultato=json.dumps(audit),Limitazioni='Training trajectories differ; final selected fallback outputs are identical. No scientific promotion. Reused evaluation panel.')
     m.local_upsert('experiments',{'Stato':'Concluso'},record_id=oldexp)
+    for key,rid in source['records'].items():
+        if key.startswith('runs-'):m.local_upsert('runs',{'Stato':'Completata'},record_id=rid)
     exp=put('experiments','52h',Nome='52h targeted Ih coverage x worst-current guard',Tipo='Esplorativo',Stato='Preregistrato',Descrizione=json.dumps(p),**{'Obiettivo informativo':'Separate fit coverage from mean-penalty dilution without changing inference abstraction or quality thresholds.'})
     proto=put('protocols','52h',Nome='52h paired factorial with feasibility gate',Versione='v1',Modalità='Ricomposizione',Esperimento=[exp],Procedura=json.dumps(p),**{'Criteri di successo':p['selection'],'Regole di arresto':'Stop full training if bounded fit-only Ih feasibility fails for any seed, or nonfinite/contract failure. Cap52j.'})
     claims=[]
