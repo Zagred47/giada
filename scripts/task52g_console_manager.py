@@ -4,7 +4,7 @@ from pathlib import Path
 def sha(p):
     with Path(p).open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
 def main():
-    request=json.loads(Path(os.environ.get('GIADA_LAUNCH_REQUEST','/content/task52g_launch.json')).read_text());root=Path(request['remote_root']);root.mkdir(exist_ok=False);repo=root/'giada';out=root/'result';logpath=root/'process.log';logpath.touch();start=time.time();proc=None;update=0
+    request=json.loads(Path(os.environ.get('GIADA_LAUNCH_REQUEST','/content/task52g_launch.json')).read_text());root=Path(request['remote_root']);root.mkdir(exist_ok=False);repo=root/'giada';out=root/'result';logpath=root/'process.log';logpath.touch();start=time.time();proc=None;update=request.get('resumed_from',0)
     def status(**kw):
         p=root/'job_status.tmp';p.write_text(json.dumps(dict(task='52g',revision=request['revision'],update=update,thresholds_changed=False,elapsed_seconds=time.time()-start,**kw)));p.replace(root/'job_status.json')
     def publish(label):
@@ -45,7 +45,8 @@ def main():
         assert sha(repo/'experiments/task52g_preregistration_v1.json')==request['protocol_sha256']
         run([sys.executable,'-m','pip','install','--quiet','torch==2.11.0+cu130','--index-url','https://download.pytorch.org/whl/cu130'],'torch_setup')
         env=dict(os.environ,CUBLAS_WORKSPACE_CONFIG=':4096:8',MPLBACKEND='Agg')
-        run([sys.executable,'-u',str(repo/'scripts/run_task52g.py'),*[i['remote'] for i in request['inputs']],str(out)],'training_and_evaluation',env)
+        runner='run_task52g_resume.py' if request.get('resumed_from') else 'run_task52g.py'
+        run([sys.executable,'-u',str(repo/'scripts'/runner),*[i['remote'] for i in request['inputs']],str(out)],'training_and_evaluation',env)
         report=json.loads((out/'final_report.json').read_text());assert report['complete'] and report['training_updates']==800
         final=publish('final');status(state='finished',technical_failure=False,archive_sha256=final['sha256'],scientific_acceptance_passed=report['scientific_acceptance_passed']);return 0
     except BaseException as error:

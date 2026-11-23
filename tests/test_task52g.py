@@ -45,4 +45,20 @@ class Preservation(unittest.TestCase):
     def test_contract(self):
         p=g.plan(ROOT);self.assertEqual(len(p['arms']),4);self.assertFalse(p['thresholds_changed']);self.assertEqual(p['user_cap'].split(';')[0],'Last allowed subtask52j')
         old=g.f.plan(ROOT);self.assertEqual(p['selection'],old['selection']);self.assertEqual(p['roles'],old['roles']);self.assertEqual(p['coupled_training'],old['coupled_training'])
+    def test_resume_preserves_updates_and_original_anchor(self):
+        torch.set_num_threads(1);p=config()
+        initial,cal,_=g.f.load_model(torch,p,ROOT/'artifacts/task52e_input/models52e.zip.bin','cpu')
+        data0=g.f.c.b.data(torch,p,'cpu');data=g.f.merge_data(torch,data0,g.f.support_data(torch,p,'cpu'));aut=g.f.d.coupled_data(torch,p,ROOT,'cpu');cal=dict(cal,maxop=data['op'].amax((0,1)).clamp_min(1e-30))
+        with tempfile.TemporaryDirectory(dir=ROOT/'artifacts') as tmp:
+            full=Path(tmp)/'full';split=Path(tmp)/'split';full.mkdir();split.mkdir()
+            g.train(torch,p,copy.deepcopy(initial),data,aut,cal,full,len(data0['meta']))
+            short=copy.deepcopy(p);short['updates']=1;short['checkpoints']=[1]
+            g.train(torch,short,copy.deepcopy(initial),data,aut,cal,split,len(data0['meta']))
+            # Exercise the legacy checkpoint lacking diagnostic accumulators.
+            state=torch.load(split/'resumable_training.pt',weights_only=True);state.pop('diagnostic_sums');torch.save(state,split/'resumable_training.pt')
+            (split/'resume_request.json').write_text(json.dumps(dict(checkpoint_update=1)))
+            g.train(torch,p,copy.deepcopy(initial),data,aut,cal,split,len(data0['meta']))
+            left=torch.load(full/'checkpoint_2.pt',weights_only=True);right=torch.load(split/'checkpoint_2.pt',weights_only=True)
+            for key in left:self.assertTrue(torch.equal(left[key],right[key]),key)
+            self.assertEqual(json.loads((full/'selection_freeze.json').read_text()),json.loads((split/'selection_freeze.json').read_text()))
 if __name__=='__main__':unittest.main()

@@ -18,9 +18,13 @@ def rotate(dest,newest):
         path=dest/'retention_receipt.json';history=json.loads(path.read_text()) if path.exists() else []
         history.append(dict(at=time.time(),newest=newest.name,removed=removed,immutable_checkpoints_preserved=True));path.write_text(json.dumps(history,indent=2))
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--attach',action='store_true');a=ap.parse_args();request=json.loads((F/'dispatch_request.json').read_text());session=request['session'];remote=request['remote_root'];dest=ROOT/'artifacts/task52g_colab_external';dest.mkdir(exist_ok=True);seen=set()
+    ap=argparse.ArgumentParser();ap.add_argument('--attach',action='store_true');ap.add_argument('--request',type=Path,default=F/'dispatch_request.json');ap.add_argument('--destination',type=Path,default=ROOT/'artifacts/task52g_colab_external');a=ap.parse_args();request=json.loads(a.request.read_text());session=request['session'];remote=request['remote_root'];dest=a.destination;dest.mkdir(exist_ok=True);seen=set()
     with (dest/'console.log').open('a') as log:
-        driver=None if a.attach else subprocess.Popen(['powershell.exe','-NoProfile','-File',str(ROOT/'scripts/colab.ps1'),'ssh','-s',session,'--','python3','-u','/content/task52g_console_manager.py'],cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)
+        command=['python3','-u','/content/task52g_console_manager.py']
+        if request.get('detached_manager'):
+            code="import subprocess;f=open('/content/task52g_detached.log','ab');p=subprocess.Popen(['python3','-u','/content/task52g_console_manager.py'],stdin=subprocess.DEVNULL,stdout=f,stderr=subprocess.STDOUT,start_new_session=True);print('MANAGER_PID',p.pid)"
+            command=['python3','-c',code]
+        driver=None if a.attach else subprocess.Popen(['powershell.exe','-NoProfile','-File',str(ROOT/'scripts/colab.ps1'),'ssh','-s',session,'--',*command],cwd=ROOT,stdout=log,stderr=subprocess.STDOUT)
         def download(name,path):
             r=cli(ROOT,'download','-s',session,remote+'/'+name,str(path),capture_output=True,text=True,timeout=90);return r.returncode==0 and path.exists()
         for poll in range(500):

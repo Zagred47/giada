@@ -1,0 +1,15 @@
+{
+  "task": "52g-resume",
+  "source_sha256": "90f4d52b4fdc6f9242893b6f3f791e25eb178414374b50788d9dcdf3ff4bc210",
+  "checkpoint_update": 600,
+  "target_update": 800,
+  "last_observed_log_update": 740,
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "retraining_from_zero": false,
+  "original_reference_preserved": true,
+  "selection": "Reconstruct historical selected weights from saved eligibility and scores; no historical rescoring. Apply unchanged selection only to new checkpoints.",
+  "rng": "Restore the saved NumPy PCG64 state, no approximate replay.",
+  "diagnostics": "Original archive lacks exact running sums. Reconstruct diagnostic sums from saved600 means; possible roundoff does not affect training or selection. New checkpoints store exact sums.",
+  "last_allowed_subtask": "52j"
+}

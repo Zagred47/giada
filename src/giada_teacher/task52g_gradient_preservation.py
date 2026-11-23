@@ -57,15 +57,43 @@ def teacher(torch,p,net,data,ids,starts,cal,reference_mse,backward=True):
 
 def train(torch,p,net,data,aut,cal,out,ordinary_count):
     device=data['v'].device;E=len(net.members);fit=torch.tensor([i for i,m in enumerate(data['meta'][:ordinary_count]) if m['role']=='fit'],device=device);sup=torch.tensor([i for i,m in enumerate(data['meta']) if i>=ordinary_count and m['role']=='fit'],device=device);ai=torch.tensor([i for i,m in enumerate(aut['meta']) if m['role']=='fit'],device=device)
-    score0,ch0,tr0=f.validate(torch,p,net,data,aut,cal);best=score0.cpu().numpy();chosen=np.zeros(E,int);selected=copy.deepcopy(net.state_dict());curve=[]
-    torch.save(selected,out/'initial.pt');f.a.n.p.save_json(out/'validation_baseline.json',dict(score=best.tolist(),channels=ch0.cpu().tolist(),trajectory=tr0.cpu().tolist()))
+    resumed=(out/'resume_request.json').exists();start_update=0
+    if resumed:
+        baseline=json.loads((out/'validation_baseline.json').read_text());ch0=torch.tensor(baseline['channels'],device=device);tr0=torch.tensor(baseline['trajectory'],device=device);best=np.array(baseline['score']);chosen=np.zeros(E,int)
+        selected=torch.load(out/'initial.pt',map_location=device,weights_only=True);curve=json.loads((out/'learning_curve.json').read_text());saved=torch.load(out/'resumable_training.pt',map_location=device,weights_only=True);start_update=int(saved['update'])
+        assert start_update==json.loads((out/'resume_request.json').read_text())['checkpoint_update']
+        for row in curve:
+            assert row['update']<=start_update
+            values=np.array(row['score']);take=np.array(row['eligible'])&(values<best)
+            if take.any():
+                state=torch.load(out/f'checkpoint_{row["update"]}.pt',map_location=device,weights_only=True)
+                for key in selected:selected[key][take]=state[key][take]
+            best=np.where(take,values,best);chosen[take]=row['update']
+    else:
+        score0,ch0,tr0=f.validate(torch,p,net,data,aut,cal);best=score0.cpu().numpy();chosen=np.zeros(E,int);selected=copy.deepcopy(net.state_dict());curve=[]
+        torch.save(selected,out/'initial.pt');f.a.n.p.save_json(out/'validation_baseline.json',dict(score=best.tolist(),channels=ch0.cpu().tolist(),trajectory=tr0.cpu().tolist()))
+    # The preservation reference always remains the ORIGINAL model, not the
+    # resumed candidate. Otherwise resumption would silently move the anchor.
     reference=copy.deepcopy(net)
     for v in reference.parameters():v.requires_grad_(False)
+    if resumed:net.load_state_dict(saved['model'])
     encoder={k:v.clone() for k,v in net.state_dict().items() if k in ('enc','eb')};params=[v for v in net.parameters() if v.requires_grad]
     opt=torch.optim.Adam(params,lr=p['learning_rate'],eps=p['adam_epsilon']);rng=np.random.default_rng(9526599);started=time.monotonic()
     mask=torch.tensor([a['project'] for a in p['arms'] for _ in p['seeds']],device=device)
     conflict_sum=torch.zeros(E,device=device,dtype=torch.float64);dot_sum=conflict_sum.clone();after_sum=conflict_sum.clone();guard_sum=conflict_sum.clone();step_uphill=conflict_sum.clone();step_current=conflict_sum.clone();step_trajectory=conflict_sum.clone();active_sum=torch.zeros(E,11,device=device,dtype=torch.float64)
-    for update in range(1,p['updates']+1):
+    if resumed:
+        opt.load_state_dict(saved['optimizer']);rng.bit_generator.state=saved['rng']
+        keys=['conflict_fraction','mean_dot_before','mean_dot_after','mean_guard','actual_adam_current_uphill_fraction','actual_step_current_dot','actual_step_trajectory_dot','channel_penalty_activation']
+        values=[conflict_sum,dot_sum,after_sum,guard_sum,step_uphill,step_current,step_trajectory,active_sum]
+        if 'diagnostic_sums' in saved:
+            for key,value in zip(keys,values):value.copy_(saved['diagnostic_sums'][key].to(device))
+            diagnostic_source='exact_saved_sums'
+        else:
+            assert curve[-1]['update']==start_update
+            for key,value in zip(keys,values):value.copy_(torch.tensor(curve[-1][key],device=device,dtype=value.dtype)*start_update)
+            diagnostic_source='reconstructed_from_saved_means; roundoff_only; not_used_for_training_or_selection'
+        f.a.n.p.save_json(out/'resume_state_verified.json',dict(valid=True,checkpoint_update=start_update,optimizer_restored=True,rng_restored=True,original_reference_preserved=True,historical_selection_rescored=False,diagnostic_source=diagnostic_source))
+    for update in range(start_update+1,p['updates']+1):
         if time.monotonic()-started>p['runtime_budget_seconds']*.8:raise TimeoutError('52g training time limit; checkpoints retained')
         ii=fit[torch.tensor(rng.integers(len(fit),size=p['batch_size']),device=device)];ss=torch.tensor(rng.integers(len(data['v'])-p['chunk_ticks'],size=p['batch_size']),device=device);ids=ii[None].expand(E,-1).clone();starts=ss[None].expand(E,-1).clone();n=p['batch_size']//2;si=sup[torch.tensor(rng.integers(len(sup),size=n),device=device)]
         for i,a in enumerate(p['arms']):
@@ -86,7 +114,8 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count):
             score,ch,tr=f.validate(torch,p,net,data,aut,cal);eligible=((ch<=ch0*(1+1e-6)+1e-12).all(1)&(tr<=tr0*(1+1e-6)+1e-12).all(1));values=score.cpu().numpy();take=eligible.cpu().numpy()&(values<best)
             for k,v in net.state_dict().items():selected[k][take]=v[take].detach()
             best=np.where(take,values,best);chosen[take]=update;curve.append(dict(update=update,score=values.tolist(),eligible=eligible.cpu().tolist(),channel_errors=ch.cpu().tolist(),trajectory_error=tr.cpu().tolist(),gradient_norm=norm.cpu().tolist(),conflict_fraction=(conflict_sum/update).cpu().tolist(),mean_dot_before=(dot_sum/update).cpu().tolist(),mean_dot_after=(after_sum/update).cpu().tolist(),mean_guard=(guard_sum/update).cpu().tolist(),channel_penalty_activation=(active_sum/update).cpu().tolist(),actual_adam_current_uphill_fraction=(step_uphill/update).cpu().tolist(),actual_step_current_dot=(step_current/update).cpu().tolist(),actual_step_trajectory_dot=(step_trajectory/update).cpu().tolist()))
-            torch.save(net.state_dict(),out/f'checkpoint_{update}.pt');torch.save(dict(model=net.state_dict(),optimizer=opt.state_dict(),update=update,rng=rng.bit_generator.state),out/'resumable_training.pt');f.a.n.p.save_json(out/'learning_curve.json',curve);f.checkpoint(out,update)
+            diagnostic_sums=dict(zip(['conflict_fraction','mean_dot_before','mean_dot_after','mean_guard','actual_adam_current_uphill_fraction','actual_step_current_dot','actual_step_trajectory_dot','channel_penalty_activation'],[v.detach().clone() for v in (conflict_sum,dot_sum,after_sum,guard_sum,step_uphill,step_current,step_trajectory,active_sum)]))
+            torch.save(net.state_dict(),out/f'checkpoint_{update}.pt');torch.save(dict(model=net.state_dict(),optimizer=opt.state_dict(),update=update,rng=rng.bit_generator.state,diagnostic_sums=diagnostic_sums),out/'resumable_training.pt');f.a.n.p.save_json(out/'learning_curve.json',curve);f.checkpoint(out,update)
     assert all(torch.equal(net.state_dict()[k],v) for k,v in encoder.items());net.load_state_dict(selected);torch.save(selected,out/'selected.pt');f.a.n.p.save_json(out/'selection_freeze.json',dict(members=net.members,updates=chosen.tolist(),score=best.tolist(),baseline_fallback=(chosen==0).tolist(),fresh_accessed=False,encoder_frozen_after_calibration=True))
 
 def run(torch,root,source,cost_source,recovery,package,out,device='cuda',override=None,coupled_override=None):
