@@ -11,7 +11,7 @@ def rotate(dest,newest):
         if old.resolve().parent!=dest.resolve() or old.is_symlink():raise RuntimeError('Unsafe backup retention target')
         with zipfile.ZipFile(old) as z:
             if z.testzip() is not None:continue
-            immutable=[i for i in z.infolist() if (i.filename.endswith(('.pt','.npz')) and not i.filename.endswith('resumable_training.pt'))]
+            immutable=[i for i in z.infolist() if (i.filename.endswith(('.pt','.npz')) and not i.filename.endswith(('resumable_training.pt','recovery_latest.pt')))]
             if any(latest.get(i.filename)!=(i.CRC,i.file_size) for i in immutable):continue
         removed.append(dict(name=old.name,bytes=old.stat().st_size));old.unlink()
     if removed:

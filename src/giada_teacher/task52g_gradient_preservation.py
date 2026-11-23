@@ -109,7 +109,12 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count):
         previous=[v.detach().clone() for v in params];opt.step();assert all(torch.isfinite(v).all() for v in net.parameters())
         actual_c=sum(((v.detach()-old).double()*gradient.double()).reshape(E,-1).sum(1) for v,old,gradient in zip(params,previous,gc));actual_v=sum(((v.detach()-old).double()*gradient.double()).reshape(E,-1).sum(1) for v,old,gradient in zip(params,previous,gv))
         step_uphill+=(actual_c>0);step_current+=actual_c;step_trajectory+=actual_v;conflict_sum+=diagnosis['conflict'];dot_sum+=diagnosis['dot'];after_sum+=diagnosis['after'];guard_sum+=diagnostic['penalty'];active_sum+=diagnostic['activation']
-        if update%20==0:print(f'[GIADA52g] training {update}/{p["updates"]}',flush=True)
+        if update%20==0:
+            # Recovery-only snapshots: no extra validation or ranking point.
+            sums=dict(zip(['conflict_fraction','mean_dot_before','mean_dot_after','mean_guard','actual_adam_current_uphill_fraction','actual_step_current_dot','actual_step_trajectory_dot','channel_penalty_activation'],[v.detach().clone() for v in (conflict_sum,dot_sum,after_sum,guard_sum,step_uphill,step_current,step_trajectory,active_sum)]))
+            temporary=out/'recovery_latest.pt.tmp'
+            torch.save(dict(model=net.state_dict(),optimizer=opt.state_dict(),update=update,rng=rng.bit_generator.state,diagnostic_sums=sums,recovery_only=True),temporary);temporary.replace(out/'recovery_latest.pt')
+            print(f'[GIADA52g] training {update}/{p["updates"]}',flush=True)
         if update in p['checkpoints']:
             score,ch,tr=f.validate(torch,p,net,data,aut,cal);eligible=((ch<=ch0*(1+1e-6)+1e-12).all(1)&(tr<=tr0*(1+1e-6)+1e-12).all(1));values=score.cpu().numpy();take=eligible.cpu().numpy()&(values<best)
             for k,v in net.state_dict().items():selected[k][take]=v[take].detach()

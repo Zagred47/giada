@@ -11,7 +11,7 @@ def main():
         stage=root/'snapshot';stage.mkdir(exist_ok=True)
         if out.exists():
             for source in out.rglob('*'):
-                if source.is_file():
+                if source.is_file() and not source.name.endswith('.tmp'):
                     dest=stage/source.relative_to(out);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,dest)
         shutil.copy2(logpath,stage/'console_process.log');(stage/'dispatch_request.json').write_text(json.dumps(request,indent=2))
         archive=Path(shutil.make_archive(str(root/('recovery_'+label)),'zip',stage));r=dict(label=label,archive=str(archive),sha256=sha(archive),bytes=archive.stat().st_size,update=update)
