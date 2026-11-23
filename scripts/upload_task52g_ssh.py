@@ -1,7 +1,8 @@
 """Official CLI SSH binary streaming, without copying credentials or chunk files."""
-import hashlib,json,subprocess,sys
+import hashlib,json,subprocess,sys,os
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];request_path=Path(sys.argv[1]) if len(sys.argv)>1 else ROOT/'experiments/results/task52g_protocol_v1/dispatch_request.json';F=request_path.parent;r=json.loads(request_path.read_text());base=[sys.executable,str(ROOT/'scripts/colab_profile_cli.py'),'--auth=oauth2','ssh','-s',r['session'],'--'];receipts=[]
+os.environ['GIADA_COLAB_PROFILE']=r.get('profile','primary')
 def send(local,remote,digest):
     code="import sys,hashlib,json,shutil;from pathlib import Path;p=Path("+repr(remote)+");p.parent.mkdir(parents=True,exist_ok=True);f=p.open('wb');shutil.copyfileobj(sys.stdin.buffer,f);f.close();d=hashlib.sha256(p.read_bytes()).hexdigest();assert d=="+repr(digest)+";print(json.dumps(dict(remote=str(p),sha256=d,bytes=p.stat().st_size)))"
     with local.open('rb') as stream:done=subprocess.run(base+['python3','-c',code],stdin=stream,capture_output=True,text=False,timeout=300)

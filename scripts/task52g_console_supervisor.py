@@ -1,4 +1,4 @@
-import argparse,json,subprocess,time,zipfile
+import argparse,json,subprocess,time,zipfile,os
 from pathlib import Path
 from task41b_local_supervisor import cli,file_sha
 ROOT=Path(__file__).resolve().parents[1];F=ROOT/'experiments/results/task52g_protocol_v1'
@@ -19,6 +19,7 @@ def rotate(dest,newest):
         history.append(dict(at=time.time(),newest=newest.name,removed=removed,immutable_checkpoints_preserved=True));path.write_text(json.dumps(history,indent=2))
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--attach',action='store_true');ap.add_argument('--request',type=Path,default=F/'dispatch_request.json');ap.add_argument('--destination',type=Path,default=ROOT/'artifacts/task52g_colab_external');a=ap.parse_args();request=json.loads(a.request.read_text());session=request['session'];remote=request['remote_root'];dest=a.destination;dest.mkdir(exist_ok=True);seen=set()
+    os.environ['GIADA_COLAB_PROFILE']=request.get('profile','primary')
     with (dest/'console.log').open('a') as log:
         command=['python3','-u','/content/task52g_console_manager.py']
         if request.get('detached_manager'):

@@ -17,6 +17,10 @@ def configure_profile():
     os.umask(0o077)
     folder=Path.home()/'.config/colab-cli-reserve';folder.mkdir(parents=True,mode=0o700,exist_ok=True)
     auth.TOKEN_CONFIG_PATH=str(folder/'token.json')
+    # CLI0.8 renamed the legacy-store hook and introduced keyring namespaces.
+    # Keep the reserve account isolated; never fall through to primary auth.
+    if hasattr(auth,'LEGACY_TOKEN_PATH'):auth.LEGACY_TOKEN_PATH=str(folder/'token.json')
+    if hasattr(auth,'KEYRING_SERVICE_NAME'):auth.KEYRING_SERVICE_NAME='google-colab-cli-reserve'
     state._store=StateStore(str(folder/'sessions.json'))
     state._settings_store=SettingsStore(str(folder/'settings.json'))
     state._history=HistoryLogger(str(folder/'history'))
