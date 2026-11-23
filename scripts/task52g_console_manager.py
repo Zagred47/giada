@@ -45,6 +45,7 @@ def main():
         assert sha(repo/'experiments/task52g_preregistration_v1.json')==request['protocol_sha256']
         run([sys.executable,'-m','pip','install','--quiet','torch==2.11.0+cu130','--index-url','https://download.pytorch.org/whl/cu130'],'torch_setup')
         env=dict(os.environ,CUBLAS_WORKSPACE_CONFIG=':4096:8',MPLBACKEND='Agg')
+        if request.get('resume_spec'):env['GIADA_RESUME_SPEC']=request['resume_spec']
         runner='run_task52g_resume.py' if request.get('resumed_from') else 'run_task52g.py'
         run([sys.executable,'-u',str(repo/'scripts'/runner),*[i['remote'] for i in request['inputs']],str(out)],'training_and_evaluation',env)
         report=json.loads((out/'final_report.json').read_text());assert report['complete'] and report['training_updates']==800
