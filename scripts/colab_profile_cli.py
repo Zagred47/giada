@@ -4,6 +4,7 @@ Credential loading and Google consent remain entirely in the official SDK.
 This wrapper never reads, copies or logs credential contents.
 """
 import os
+import sys
 from pathlib import Path
 
 def configure_profile():
@@ -27,5 +28,9 @@ def configure_profile():
 
 if __name__=='__main__':
     configure_profile()
+    # The official SSH proxy starts a fresh CLI process. Pass its documented
+    # --config option so that child resolves the reserve session as well.
+    if os.environ.get('GIADA_COLAB_PROFILE','primary')=='reserve' and '--config' not in sys.argv:
+        sys.argv[1:1]=['--config',str(Path.home()/'.config/colab-cli-reserve/sessions.json')]
     from colab_cli.cli import app
     app()
