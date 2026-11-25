@@ -57,7 +57,7 @@ def teacher(torch,p,net,data,ids,starts,cal,reference_mse,backward=True):
             block=torch.zeros_like(common)
     return common,fam,perchannel,dict(penalty=penalty_value,activation=activation)
 
-def train(torch,p,net,data,aut,cal,out,ordinary_count):
+def train(torch,p,net,data,aut,cal,out,ordinary_count,baseline_model=None):
     device=data['v'].device;E=len(net.members);fit=torch.tensor([i for i,m in enumerate(data['meta'][:ordinary_count]) if m['role']=='fit'],device=device);sup=torch.tensor([i for i,m in enumerate(data['meta']) if i>=ordinary_count and m['role']=='fit'],device=device);ai=torch.tensor([i for i,m in enumerate(aut['meta']) if m['role']=='fit'],device=device)
     resumed=(out/'resume_request.json').exists();start_update=0
     if resumed:
@@ -72,15 +72,32 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count):
                 for key in selected:selected[key][take]=state[key][take]
             best=np.where(take,values,best);chosen[take]=row['update']
     else:
-        score0,ch0,tr0=f.validate(torch,p,net,data,aut,cal);best=score0.cpu().numpy();chosen=np.zeros(E,int);selected=copy.deepcopy(net.state_dict());curve=[]
+        score0,ch0,tr0=f.validate(torch,p,net,data,aut,cal)
+        if baseline_model is not None:
+            initial_ch,initial_tr=ch0,tr0
+            _,ch0,tr0=f.validate(torch,p,baseline_model,data,aut,cal)
+            assert (initial_ch<=ch0*(1+1e-6)+1e-12).all() and (initial_tr<=tr0*(1+1e-6)+1e-12).all()
+        best=score0.cpu().numpy();chosen=np.zeros(E,int);selected=copy.deepcopy(net.state_dict());curve=[]
         torch.save(selected,out/'initial.pt');f.a.n.p.save_json(out/'validation_baseline.json',dict(score=best.tolist(),channels=ch0.cpu().tolist(),trajectory=tr0.cpu().tolist()))
     # The preservation reference always remains the ORIGINAL model, not the
     # resumed candidate. Otherwise resumption would silently move the anchor.
-    reference=copy.deepcopy(net)
+    reference=copy.deepcopy(baseline_model if baseline_model is not None else net)
     for v in reference.parameters():v.requires_grad_(False)
     if resumed:net.load_state_dict(saved['model'])
     encoder={k:v.clone() for k,v in net.state_dict().items() if k in ('enc','eb')};params=[v for v in net.parameters() if v.requires_grad]
     opt=torch.optim.Adam(params,lr=p['learning_rate'],eps=p['adam_epsilon']);rng=np.random.default_rng(9526599);started=time.monotonic()
+    guard_config=p.get('step_acceptance');guard_history=[]
+    if guard_config:
+        reserved=fit[:guard_config['ordinary_cases']].tolist()+sup[:guard_config['support_cases']].tolist()
+        fit=fit[~torch.isin(fit,torch.tensor(reserved,device=device))];sup=sup[~torch.isin(sup,torch.tensor(reserved,device=device))]
+        guard_ids=torch.tensor(reserved,device=device)[None].expand(E,-1)
+        guard_starts=torch.full_like(guard_ids,round(guard_config['start_ms']/p['dt_ms'])).clamp_max(len(data['v'])-guard_config['ticks']-1)
+        gp=copy.deepcopy(p);gp['chunk_ticks']=guard_config['ticks']
+        def guard_errors():
+            with torch.no_grad():return f.teacher(torch,gp,net,data,guard_ids,guard_starts,cal,torch.ones(E,device=device),False)[2]
+        guard_baseline=guard_errors();guard_mask=torch.tensor([a['acceptance_guard'] for a in p['arms'] for _ in p['seeds']],device=device)
+        decay_mask=torch.tensor([a['decay'] for a in p['arms'] for _ in p['seeds']],device=device)
+        f.a.n.p.save_json(out/'step_guard_panel.json',dict(fit_only=True,excluded_from_gradient_sampling=reserved,start_ms=guard_config['start_ms'],ticks=guard_config['ticks'],baseline=guard_baseline.cpu().tolist()))
     mask=torch.tensor([a['project'] for a in p['arms'] for _ in p['seeds']],device=device)
     conflict_sum=torch.zeros(E,device=device,dtype=torch.float64);dot_sum=conflict_sum.clone();after_sum=conflict_sum.clone();guard_sum=conflict_sum.clone();step_uphill=conflict_sum.clone();step_current=conflict_sum.clone();step_trajectory=conflict_sum.clone();active_sum=torch.zeros(E,11,device=device,dtype=torch.float64)
     if resumed:
@@ -101,7 +118,7 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count):
         for i,a in enumerate(p['arms']):
             if a['support']:ids[len(p['seeds'])*i:len(p['seeds'])*(i+1),:n]=si
         if p.get('targeted_Ih'):
-            slow=torch.tensor([i for i,m in enumerate(data['meta']) if m['role']=='fit' and m.get('protocol')=='slow_recovery'],device=device)
+            slow=torch.tensor([i for i,m in enumerate(data['meta']) if m['role']=='fit' and m.get('protocol')=='slow_recovery' and (not guard_config or i not in reserved)],device=device)
             assert len(slow)>0
             count=max(1,n//2);ti=slow[torch.tensor(rng.integers(len(slow),size=count),device=device)]
             anchors=np.array(p['targeted_Ih']['start_ms']);ts=torch.tensor(np.rint(anchors[rng.integers(len(anchors),size=count)]/p['dt_ms']),device=device,dtype=torch.long).clamp_max(len(data['v'])-p['chunk_ticks']-1)
@@ -116,7 +133,32 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count):
         for v,g in zip(params,grads):v.grad=g
         norm=sum(v.grad.double().reshape(E,-1).square().sum(-1) for v in params).sqrt();factor=(p['gradient_clip']/norm.clamp_min(1e-12)).clamp_max(1)
         for v in params:assert torch.isfinite(v.grad).all();v.grad.mul_(factor.to(v.dtype).reshape(E,*([1]*(v.ndim-1))))
-        previous=[v.detach().clone() for v in params];opt.step();assert all(torch.isfinite(v).all() for v in net.parameters())
+        previous=[v.detach().clone() for v in params]
+        moments=copy.deepcopy(opt.state_dict()) if guard_config else None
+        opt.step();assert all(torch.isfinite(v).all() for v in net.parameters())
+        if guard_config:
+            delta=[v.detach()-old for v,old in zip(params,previous)]
+            schedule=max(guard_config['minimum_lr_fraction'],1-update/p['updates'])
+            lr_factor=torch.where(decay_mask,torch.full((E,),schedule,device=device),torch.ones(E,device=device))
+            accepted=torch.zeros(E,device=device,dtype=torch.bool);chosen_scale=torch.zeros(E,device=device)
+            for multiplier in guard_config['trial_factors']:
+                scales=lr_factor*multiplier
+                with torch.no_grad():
+                    for v,old,change in zip(params,previous,delta):v.copy_(old+change*scales.reshape(E,*([1]*(v.ndim-1))))
+                    errors=guard_errors();safe=(errors<=guard_baseline*(1+1e-6)+1e-12).all(1)
+                    take=(~accepted)&(safe&guard_mask|((~guard_mask) if multiplier==1 else torch.zeros_like(guard_mask)))
+                    chosen_scale=torch.where(take,scales,chosen_scale);accepted|=take
+            with torch.no_grad():
+                for v,old,change in zip(params,previous,delta):v.copy_(old+change*chosen_scale.reshape(E,*([1]*(v.ndim-1))))
+            # Rejected members keep their pre-step moments; scalar Adam step still
+            # counts attempted updates for the common batched optimizer.
+            for v,pid in zip(params,moments['param_groups'][0]['params']):
+                before_state=moments['state'].get(pid,{})
+                for key in ('exp_avg','exp_avg_sq'):
+                    if key in opt.state[v]:
+                        old=before_state.get(key,torch.zeros_like(v));mask_shape=(E,)+tuple(1 for _ in range(v.ndim-1))
+                        opt.state[v][key].copy_(torch.where(accepted.reshape(mask_shape),opt.state[v][key],old))
+            guard_history.append(dict(update=update,scale=chosen_scale.cpu().tolist(),accepted=accepted.cpu().tolist()))
         actual_c=sum(((v.detach()-old).double()*gradient.double()).reshape(E,-1).sum(1) for v,old,gradient in zip(params,previous,gc));actual_v=sum(((v.detach()-old).double()*gradient.double()).reshape(E,-1).sum(1) for v,old,gradient in zip(params,previous,gv))
         step_uphill+=(actual_c>0);step_current+=actual_c;step_trajectory+=actual_v;conflict_sum+=diagnosis['conflict'];dot_sum+=diagnosis['dot'];after_sum+=diagnosis['after'];guard_sum+=diagnostic['penalty'];active_sum+=diagnostic['activation']
         if update%20==0:
@@ -124,13 +166,16 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count):
             sums=dict(zip(['conflict_fraction','mean_dot_before','mean_dot_after','mean_guard','actual_adam_current_uphill_fraction','actual_step_current_dot','actual_step_trajectory_dot','channel_penalty_activation'],[v.detach().clone() for v in (conflict_sum,dot_sum,after_sum,guard_sum,step_uphill,step_current,step_trajectory,active_sum)]))
             temporary=out/'recovery_latest.pt.tmp'
             torch.save(dict(model=net.state_dict(),optimizer=opt.state_dict(),update=update,rng=rng.bit_generator.state,diagnostic_sums=sums,recovery_only=True),temporary);temporary.replace(out/'recovery_latest.pt')
-            print(f'[GIADA52g] training {update}/{p["updates"]}',flush=True)
+            print(f'[GIADA{p["task"]}] training {update}/{p["updates"]}',flush=True)
         if update in p['checkpoints']:
             score,ch,tr=f.validate(torch,p,net,data,aut,cal);eligible=((ch<=ch0*(1+1e-6)+1e-12).all(1)&(tr<=tr0*(1+1e-6)+1e-12).all(1));values=score.cpu().numpy();take=eligible.cpu().numpy()&(values<best)
             for k,v in net.state_dict().items():selected[k][take]=v[take].detach()
             best=np.where(take,values,best);chosen[take]=update;curve.append(dict(update=update,score=values.tolist(),eligible=eligible.cpu().tolist(),channel_errors=ch.cpu().tolist(),trajectory_error=tr.cpu().tolist(),gradient_norm=norm.cpu().tolist(),conflict_fraction=(conflict_sum/update).cpu().tolist(),mean_dot_before=(dot_sum/update).cpu().tolist(),mean_dot_after=(after_sum/update).cpu().tolist(),mean_guard=(guard_sum/update).cpu().tolist(),channel_penalty_activation=(active_sum/update).cpu().tolist(),actual_adam_current_uphill_fraction=(step_uphill/update).cpu().tolist(),actual_step_current_dot=(step_current/update).cpu().tolist(),actual_step_trajectory_dot=(step_trajectory/update).cpu().tolist()))
             diagnostic_sums=dict(zip(['conflict_fraction','mean_dot_before','mean_dot_after','mean_guard','actual_adam_current_uphill_fraction','actual_step_current_dot','actual_step_trajectory_dot','channel_penalty_activation'],[v.detach().clone() for v in (conflict_sum,dot_sum,after_sum,guard_sum,step_uphill,step_current,step_trajectory,active_sum)]))
             torch.save(net.state_dict(),out/f'checkpoint_{update}.pt');torch.save(dict(model=net.state_dict(),optimizer=opt.state_dict(),update=update,rng=rng.bit_generator.state,diagnostic_sums=diagnostic_sums),out/'resumable_training.pt');f.a.n.p.save_json(out/'learning_curve.json',curve);f.checkpoint(out,update)
+    if guard_config:
+        f.a.n.p.save_json(out/'step_acceptance_history.json',guard_history)
+        f.a.n.p.save_json(out/'final_step_guard_errors.json',dict(errors=guard_errors().cpu().tolist(),baseline=guard_baseline.cpu().tolist(),guarded=guard_mask.cpu().tolist()))
     assert all(torch.equal(net.state_dict()[k],v) for k,v in encoder.items());net.load_state_dict(selected);torch.save(selected,out/'selected.pt');f.a.n.p.save_json(out/'selection_freeze.json',dict(members=net.members,updates=chosen.tolist(),score=best.tolist(),baseline_fallback=(chosen==0).tolist(),fresh_accessed=False,encoder_frozen_after_calibration=True))
 
 def run(torch,root,source,cost_source,recovery,package,out,device='cuda',override=None,coupled_override=None):
