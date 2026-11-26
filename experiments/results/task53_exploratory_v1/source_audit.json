@@ -1,0 +1,1413 @@
+{
+  "report": {
+    "valid": true,
+    "execution_valid": true,
+    "scientific_acceptance_passed": false,
+    "complete": true,
+    "task": "52j",
+    "finite_parameters": true,
+    "encoder_frozen_after_calibration": true,
+    "postfreeze_weights_unchanged": true,
+    "frozen_controls_unchanged": true,
+    "training_updates": 400,
+    "resumed_from": 0,
+    "new_training_updates": 400,
+    "encoder_calibration_repeated": null,
+    "encoder_calibration_updates": 0,
+    "selection_recomputed": true,
+    "thresholds_changed": false,
+    "abstraction_changed": false,
+    "logical_state": 10,
+    "promotion_authorized": false,
+    "summary": {
+      "passive": {
+        "oracle_passive": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 10.059535479977693,
+            "pooled_voltage_rmse": 5.186022245524238,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 4.504086860949294,
+            "pooled_voltage_rmse": 2.675048277629283,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 3.1858405246744237,
+            "pooled_voltage_rmse": 1.892993741378154,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        }
+      },
+      "frozen52d_trajectory": {
+        "canonical64": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        },
+        "canonical32": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.2880516533955263e-06,
+            "pooled_voltage_rmse": 1.9982091720251133e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 8.64090821436354e-06,
+            "pooled_voltage_rmse": 4.591277623345443e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 6.293552192264062e-06,
+            "pooled_voltage_rmse": 3.849411404544777e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        },
+        "P": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 0.0022183417278212507,
+            "pooled_voltage_rmse": 0.0008723947691418957,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 0.0054093046729876216,
+            "pooled_voltage_rmse": 0.0017886387245077883,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 0.0038251475850545713,
+            "pooled_voltage_rmse": 0.0012648240629304372,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        },
+        "P_J": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 0.002219350104573372,
+            "pooled_voltage_rmse": 0.0008725106560064387,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 0.005409339498293558,
+            "pooled_voltage_rmse": 0.0017895264457272147,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 0.003825172211740733,
+            "pooled_voltage_rmse": 0.001265451812617824,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        },
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.0280336914983528,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.7304144619400917,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.047671307206415346,
+            "pooled_voltage_rmse": 0.02703364227620964,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.017073071820992127,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.012093496462227215,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 3.0270902956896495,
+            "pooled_voltage_rmse": 1.6833773194209372,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5898568791530907,
+            "pooled_voltage_rmse": 1.1409445673081995,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.12646750045848,
+            "pooled_voltage_rmse": 0.8099182462015125,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7284017813527006,
+            "pooled_voltage_rmse": 1.2609889688590363,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5893815726065597,
+            "pooled_voltage_rmse": 1.0279817765401107,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1261320515892157,
+            "pooled_voltage_rmse": 0.7303779240203562,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.40903833863909,
+            "pooled_voltage_rmse": 2.6995828743465276,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.429415915285148,
+            "pooled_voltage_rmse": 1.5833715797316334,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.719422967723178,
+            "pooled_voltage_rmse": 1.1219195108303277,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.7288688058718207,
+            "pooled_voltage_rmse": 1.216886412638699,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.2237146262981602,
+            "pooled_voltage_rmse": 0.6895149353452131,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.8653401784182916,
+            "pooled_voltage_rmse": 0.4875850979103927,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.409927566293933,
+            "pooled_voltage_rmse": 2.679469503107661,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4288141099719107,
+            "pooled_voltage_rmse": 1.3880115923651015,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.717516792431554,
+            "pooled_voltage_rmse": 0.9815214934522787,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      },
+      "short_current": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4101428713536204,
+            "pooled_voltage_rmse": 1.2087977601469078,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5591666351998839,
+            "pooled_voltage_rmse": 1.0109749312648542,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.104775650384284,
+            "pooled_voltage_rmse": 0.7183830725227454,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.046808544425248524,
+            "pooled_voltage_rmse": 0.02646961912382263,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.016851103242043818,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.011936660716781707,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.9025271888059185,
+            "pooled_voltage_rmse": 1.6218600850839204,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5591666351998839,
+            "pooled_voltage_rmse": 1.1197949829466445,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.104775650384284,
+            "pooled_voltage_rmse": 0.7949971635262864,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4101428713536204,
+            "pooled_voltage_rmse": 1.2087977601469078,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5586844639103943,
+            "pooled_voltage_rmse": 1.0109163499500504,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.104435373111606,
+            "pooled_voltage_rmse": 0.7183418478974603,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.173301730886453,
+            "pooled_voltage_rmse": 2.6183099375817105,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.324100690523291,
+            "pooled_voltage_rmse": 1.5464040932011711,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.6449986021234024,
+            "pooled_voltage_rmse": 1.0958128362887298,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.411221894761692,
+            "pooled_voltage_rmse": 1.1629260360929565,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.081887805648036,
+            "pooled_voltage_rmse": 0.6643038764630204,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.7650484621628237,
+            "pooled_voltage_rmse": 0.4697572918244704,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.174739960050743,
+            "pooled_voltage_rmse": 2.5978383265239042,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.3237052909133635,
+            "pooled_voltage_rmse": 1.3460245386846852,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.6431899164573827,
+            "pooled_voltage_rmse": 0.9518306803913815,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      },
+      "long_current": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.44424291285163,
+            "pooled_voltage_rmse": 1.1983815719148028,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.565184726417228,
+            "pooled_voltage_rmse": 1.0080012574965709,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1090220811592342,
+            "pooled_voltage_rmse": 0.7162879642529625,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.04656969544513324,
+            "pooled_voltage_rmse": 0.026431465904706946,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.01681847089541059,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.011913609499090838,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.876852822512666,
+            "pooled_voltage_rmse": 1.6178242115052828,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.565184726417228,
+            "pooled_voltage_rmse": 1.118035120978149,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1090220811592342,
+            "pooled_voltage_rmse": 0.7937553514053932,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.44424291285163,
+            "pooled_voltage_rmse": 1.1983815719148028,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5647046833815728,
+            "pooled_voltage_rmse": 1.0079423482874836,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.108683300395301,
+            "pooled_voltage_rmse": 0.7162465099214614,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.146002306302249,
+            "pooled_voltage_rmse": 2.612640413110058,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.31187933188965,
+            "pooled_voltage_rmse": 1.5438873738216417,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.636360457490958,
+            "pooled_voltage_rmse": 1.0940351094740746,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4453515456667985,
+            "pooled_voltage_rmse": 1.1521061505556285,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.0971606589723755,
+            "pooled_voltage_rmse": 0.6598040401963121,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.7758485399791694,
+            "pooled_voltage_rmse": 0.46657526805452304,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.147647279709583,
+            "pooled_voltage_rmse": 2.5921455157466955,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.3115714389673285,
+            "pooled_voltage_rmse": 1.3431582588176538,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.6346095625109398,
+            "pooled_voltage_rmse": 0.9498038130705235,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      },
+      "short_coupled": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4101428713536204,
+            "pooled_voltage_rmse": 1.2087977601469078,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5591666351998839,
+            "pooled_voltage_rmse": 1.0109749312648542,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.104775650384284,
+            "pooled_voltage_rmse": 0.7183830725227454,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.046808544425248524,
+            "pooled_voltage_rmse": 0.02646961912382263,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.016851103242043818,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.011936660716781707,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.9025271888059185,
+            "pooled_voltage_rmse": 1.6218600850839204,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5591666351998839,
+            "pooled_voltage_rmse": 1.1197949829466445,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.104775650384284,
+            "pooled_voltage_rmse": 0.7949971635262864,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4101428713536204,
+            "pooled_voltage_rmse": 1.2087977601469078,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5586844639103943,
+            "pooled_voltage_rmse": 1.0109163499500504,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.104435373111606,
+            "pooled_voltage_rmse": 0.7183418478974603,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.173301730886453,
+            "pooled_voltage_rmse": 2.6183099375817105,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.324100690523291,
+            "pooled_voltage_rmse": 1.5464040932011711,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.6449986021234024,
+            "pooled_voltage_rmse": 1.0958128362887298,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.411221894761692,
+            "pooled_voltage_rmse": 1.1629260360929565,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.081887805648036,
+            "pooled_voltage_rmse": 0.6643038764630204,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.7650484621628237,
+            "pooled_voltage_rmse": 0.4697572918244704,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.174739960050743,
+            "pooled_voltage_rmse": 2.5978383265239042,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.3237052909133635,
+            "pooled_voltage_rmse": 1.3460245386846852,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.6431899164573827,
+            "pooled_voltage_rmse": 0.9518306803913815,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      },
+      "long_coupled": {
+        "compact": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.44424291285163,
+            "pooled_voltage_rmse": 1.1983815719148028,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.565184726417228,
+            "pooled_voltage_rmse": 1.0080012574965709,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1090220811592342,
+            "pooled_voltage_rmse": 0.7162879642529625,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.04656969544513324,
+            "pooled_voltage_rmse": 0.026431465904706946,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.022843491966402844,
+            "pooled_voltage_rmse": 0.01681847089541059,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.016168620481017727,
+            "pooled_voltage_rmse": 0.011913609499090838,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_ca_imposed": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.876852822512666,
+            "pooled_voltage_rmse": 1.6178242115052828,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.565184726417228,
+            "pooled_voltage_rmse": 1.118035120978149,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.1090220811592342,
+            "pooled_voltage_rmse": 0.7937553514053932,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "compact_reset": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.44424291285163,
+            "pooled_voltage_rmse": 1.1983815719148028,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.5647046833815728,
+            "pooled_voltage_rmse": 1.0079423482874836,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.108683300395301,
+            "pooled_voltage_rmse": 0.7162465099214614,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.146002306302249,
+            "pooled_voltage_rmse": 2.612640413110058,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.31187933188965,
+            "pooled_voltage_rmse": 1.5438873738216417,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.636360457490958,
+            "pooled_voltage_rmse": 1.0940351094740746,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.4453515456667985,
+            "pooled_voltage_rmse": 1.1521061505556285,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.0971606589723755,
+            "pooled_voltage_rmse": 0.6598040401963121,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 0.7758485399791694,
+            "pooled_voltage_rmse": 0.46657526805452304,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_Ca_Ih": {
+          "100": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 5.147647279709583,
+            "pooled_voltage_rmse": 2.5921455157466955,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "500": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 2.3115714389673285,
+            "pooled_voltage_rmse": 1.3431582588176538,
+            "pooled_voltage_passed": false,
+            "all_quality_passed": false
+          },
+          "1000": {
+            "passed": 0,
+            "total": 36,
+            "worst_voltage_rmse": 1.6346095625109398,
+            "pooled_voltage_rmse": 0.9498038130705235,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": false
+          }
+        },
+        "oracle_all": {
+          "100": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.19059131498802e-06,
+            "pooled_voltage_rmse": 1.760710889812141e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "500": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.14833515769724e-06,
+            "pooled_voltage_rmse": 2.0901828429802667e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          },
+          "1000": {
+            "passed": 36,
+            "total": 36,
+            "worst_voltage_rmse": 2.6690902629181677e-06,
+            "pooled_voltage_rmse": 2.1798206255172953e-06,
+            "pooled_voltage_passed": true,
+            "all_quality_passed": true
+          }
+        }
+      }
+    },
+    "elapsed_seconds": 8255.075937859001,
+    "limitations": "Last52subtask, no52k. Reused data and warmstart, not independent confirmation.400attempts chosen because52i had no eligible600/800checkpoints. Fit acceptance cannot prove generalization. Proceed53after audit with unresolved limits explicit. Thresholds and10states unchanged.",
+    "last_allowed_subtask": "52j",
+    "next_phase": "53 with unresolved limitations; no52k"
+  },
+  "backup": {
+    "valid": true,
+    "archive": "task52j_final.zip",
+    "sha256": "695dfdd61f9343fd61aec45c85eae0ac23b684c54e2ba1da190d08cb306758ab",
+    "bytes": 237727124,
+    "revision": "828ba5a409fb7edcbae9f5046e00a1c9cdad7716",
+    "at": 1795711979.55323,
+    "worker_exit_code": 0,
+    "thresholds_changed": false
+  },
+  "selection": {
+    "members": [
+      {
+        "arm": "short_current",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "short_current",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "short_current",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_current",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_current",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_current",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "short_coupled",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "short_coupled",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "short_coupled",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_coupled",
+        "seed": 17,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_coupled",
+        "seed": 29,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      },
+      {
+        "arm": "long_coupled",
+        "seed": 43,
+        "widths": [
+          2,
+          3,
+          3,
+          1,
+          1
+        ],
+        "trunk": 16
+      }
+    ],
+    "updates": [
+      0,
+      0,
+      0,
+      400,
+      0,
+      400,
+      0,
+      0,
+      0,
+      400,
+      0,
+      400
+    ],
+    "score": [
+      1.4883865118026733,
+      1.5570404529571533,
+      1.5454210042953491,
+      1.4865896701812744,
+      1.5570404529571533,
+      1.544898271560669,
+      1.4883865118026733,
+      1.5570404529571533,
+      1.5454210042953491,
+      1.4865896701812744,
+      1.5570404529571533,
+      1.544898271560669
+    ],
+    "baseline_fallback": [
+      true,
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      false,
+      true,
+      false
+    ],
+    "fresh_accessed": false,
+    "encoder_frozen_after_calibration": true
+  }
+}
