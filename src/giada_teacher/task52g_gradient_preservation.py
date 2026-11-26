@@ -93,11 +93,25 @@ def train(torch,p,net,data,aut,cal,out,ordinary_count,baseline_model=None):
         guard_ids=torch.tensor(reserved,device=device)[None].expand(E,-1)
         guard_starts=torch.full_like(guard_ids,round(guard_config['start_ms']/p['dt_ms'])).clamp_max(len(data['v'])-guard_config['ticks']-1)
         gp=copy.deepcopy(p);gp['chunk_ticks']=guard_config['ticks']
+        if guard_config.get('long_ticks'):
+            long_gp=copy.deepcopy(p);long_gp['chunk_ticks']=guard_config['long_ticks'];long_mask=torch.tensor([a['long_guard'] for a in p['arms'] for _ in p['seeds']],device=device)
+        if guard_config.get('coupled_cases'):
+            coupled_ids=ai[:guard_config['coupled_cases']];ai=ai[guard_config['coupled_cases']:]
+            coupled_starts=torch.full_like(coupled_ids,round(guard_config['coupled_start_ms']/p['dt_ms']))
+            coupled_mask=torch.tensor([a['coupled_guard'] for a in p['arms'] for _ in p['seeds']],device=device)
         def guard_errors():
-            with torch.no_grad():return f.teacher(torch,gp,net,data,guard_ids,guard_starts,cal,torch.ones(E,device=device),False)[2]
+            with torch.no_grad():
+                result=f.teacher(torch,gp,net,data,guard_ids,guard_starts,cal,torch.ones(E,device=device),False)[2]
+                if guard_config.get('long_ticks'):
+                    wide=f.teacher(torch,long_gp,net,data,guard_ids,guard_starts,cal,torch.ones(E,device=device),False)[2]
+                    result=torch.where(long_mask[:,None],wide,result)
+                if guard_config.get('coupled_cases'):
+                    _,parts=f.trajectory(torch,p,net,aut,coupled_ids,coupled_starts,guard_config['coupled_ticks'],torch.ones(E,device=device),False,components=True)
+                    result=torch.cat((result,torch.where(coupled_mask[:,None],parts,torch.zeros_like(parts))),1)
+                return result
         guard_baseline=guard_errors();guard_mask=torch.tensor([a['acceptance_guard'] for a in p['arms'] for _ in p['seeds']],device=device)
         decay_mask=torch.tensor([a['decay'] for a in p['arms'] for _ in p['seeds']],device=device)
-        f.a.n.p.save_json(out/'step_guard_panel.json',dict(fit_only=True,excluded_from_gradient_sampling=reserved,start_ms=guard_config['start_ms'],ticks=guard_config['ticks'],baseline=guard_baseline.cpu().tolist()))
+        f.a.n.p.save_json(out/'step_guard_panel.json',dict(fit_only=True,excluded_from_gradient_sampling=reserved,coupled_excluded_from_gradient_sampling=coupled_ids.cpu().tolist() if guard_config.get('coupled_cases') else [],metric_columns=[f'current_{j}' for j in range(11)]+(['voltage','calcium'] if guard_config.get('coupled_cases') else []),start_ms=guard_config['start_ms'],ticks=guard_config['ticks'],baseline=guard_baseline.cpu().tolist()))
     mask=torch.tensor([a['project'] for a in p['arms'] for _ in p['seeds']],device=device)
     conflict_sum=torch.zeros(E,device=device,dtype=torch.float64);dot_sum=conflict_sum.clone();after_sum=conflict_sum.clone();guard_sum=conflict_sum.clone();step_uphill=conflict_sum.clone();step_current=conflict_sum.clone();step_trajectory=conflict_sum.clone();active_sum=torch.zeros(E,11,device=device,dtype=torch.float64)
     if resumed:

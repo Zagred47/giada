@@ -1,0 +1,263 @@
+{
+  "task": "52j",
+  "thresholds_changed": false,
+  "abstraction_changed": false,
+  "source52d_sha256": "7220f72e128cb7241aaa3db8f509c77ad29da986c630f5cd456dd5db1018e224",
+  "source_indices": [
+    6,
+    7,
+    8
+  ],
+  "dt_ms": 0.1,
+  "history_ms": 1200,
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "roles": {
+    "fit": {
+      "seed": 9525103,
+      "count": 36
+    },
+    "development": {
+      "seed": 9525127,
+      "count": 24
+    }
+  },
+  "families": {
+    "Ca": [
+      0,
+      1
+    ],
+    "Na": [
+      2,
+      3,
+      4
+    ],
+    "K_voltage": [
+      6,
+      7,
+      8,
+      10
+    ],
+    "Ih": [
+      5
+    ],
+    "SK": [
+      9
+    ]
+  },
+  "arms": [
+    {
+      "id": "short_current",
+      "widths": [
+        2,
+        3,
+        3,
+        1,
+        1
+      ],
+      "trunk": 16,
+      "encoder_trainable": false,
+      "recurrence_trainable": true,
+      "support": true,
+      "family_loss": true,
+      "recalibrate": false,
+      "bptt": 512,
+      "guard": true,
+      "project": false,
+      "worst_guard": true,
+      "targeted_Ih": false,
+      "decay": true,
+      "acceptance_guard": true,
+      "long_guard": false,
+      "coupled_guard": false
+    },
+    {
+      "id": "long_current",
+      "widths": [
+        2,
+        3,
+        3,
+        1,
+        1
+      ],
+      "trunk": 16,
+      "encoder_trainable": false,
+      "recurrence_trainable": true,
+      "support": true,
+      "family_loss": true,
+      "recalibrate": false,
+      "bptt": 512,
+      "guard": true,
+      "project": false,
+      "worst_guard": true,
+      "targeted_Ih": false,
+      "decay": true,
+      "acceptance_guard": true,
+      "long_guard": true,
+      "coupled_guard": false
+    },
+    {
+      "id": "short_coupled",
+      "widths": [
+        2,
+        3,
+        3,
+        1,
+        1
+      ],
+      "trunk": 16,
+      "encoder_trainable": false,
+      "recurrence_trainable": true,
+      "support": true,
+      "family_loss": true,
+      "recalibrate": false,
+      "bptt": 512,
+      "guard": true,
+      "project": false,
+      "worst_guard": true,
+      "targeted_Ih": false,
+      "decay": true,
+      "acceptance_guard": true,
+      "long_guard": false,
+      "coupled_guard": true
+    },
+    {
+      "id": "long_coupled",
+      "widths": [
+        2,
+        3,
+        3,
+        1,
+        1
+      ],
+      "trunk": 16,
+      "encoder_trainable": false,
+      "recurrence_trainable": true,
+      "support": true,
+      "family_loss": true,
+      "recalibrate": false,
+      "bptt": 512,
+      "guard": true,
+      "project": false,
+      "worst_guard": true,
+      "targeted_Ih": false,
+      "decay": true,
+      "acceptance_guard": true,
+      "long_guard": true,
+      "coupled_guard": true
+    }
+  ],
+  "updates": 400,
+  "checkpoints": [
+    25,
+    50,
+    100,
+    150,
+    200,
+    300,
+    400
+  ],
+  "batch_size": 8,
+  "chunk_ticks": 512,
+  "bptt_ticks": 128,
+  "learning_rate": 0.0001,
+  "adam_epsilon": 0.0001,
+  "gradient_clip": 1,
+  "coupled_training": {
+    "duration_ms": 400,
+    "fit_seed": 9526201,
+    "development_seed": 9526229,
+    "batch_size": 4,
+    "burnin_ticks": 128,
+    "horizon_before300": 512,
+    "horizon_after300": 512,
+    "voltage_scale_mv": 1,
+    "calcium_scale_mM": 0.0001
+  },
+  "support_protocol": {
+    "fit_seed": 9526301,
+    "development_seed": 9526327,
+    "count_per_role": 12,
+    "replace_fraction": 0.5,
+    "description": "Canonical voltage clamp histories: alternating long hyperpolarization/recovery and brief repeated depolarizing bursts, randomized durations/amplitudes. No fresh evaluation traces are used to manufacture targets."
+  },
+  "objective": "Final2x2 diagnostic:128vs512tick current acceptance panel x additional128tick autonomousV/Ca acceptance panel. Same decaying step, initial52i combined weights,400attempts. All reserved fit panels excluded from gradient sampling in every arm.",
+  "selection": "Unchanged original52d per-channel andV/Ca development guards and same validation objective/checkpoints. Initial warmstart retained as fallback; no reset of tolerances to a worse baseline.",
+  "cost": {
+    "batch": 24,
+    "ticks": 50,
+    "repetitions": 3,
+    "scope": "Same three-seed atomic update andreadout; not whole neuron."
+  },
+  "runtime_budget_seconds": 14400,
+  "output_budget_mb": 900,
+  "diagnostics": "Original channel/V/Ca eligibility per checkpoint; Ih error and regressions for all11channels; support x worst-guard contrasts and interaction. Same final imposed/autonomous, interventions and cost evaluation. No promotion by mean score.",
+  "limitations": "Last52subtask, no52k. Reused data and warmstart, not independent confirmation.400attempts chosen because52i had no eligible600/800checkpoints. Fit acceptance cannot prove generalization. Proceed53after audit with unresolved limits explicit. Thresholds and10states unchanged.",
+  "encoder_calibration": {
+    "updates": 0,
+    "batch_size": 128,
+    "learning_rate": 0.0001,
+    "fit_only": true,
+    "decoder_recurrence_frozen": true
+  },
+  "user_cap": "Last allowed subtask52j; no52k. Any subsequent53transition retains unresolved quality limits.",
+  "preservation": {
+    "weight": 1.0,
+    "denominator_floor": 1e-06,
+    "block_ticks": 128,
+    "reference": "Frozen original52d trajectory, same fit windows and initial conditions; training-only reference, never an inference component.",
+    "formula": "mean_channels relu((block_MSE-current_reference_block_MSE)/clamp(reference_block_MSE,1e-6)); block is128ticks and batch-averaged. No penalty for improving a channel."
+  },
+  "projection": {
+    "priority": "current-objective gradient, including guard when enabled",
+    "formula": "For each independent seed/model: if dot(gc,gv)<0, gv <- gv-dot(gc,gv)/norm(gc)^2*gc; use gc+gv before the original per-model gradient clip and Adam.",
+    "limitation": "Euclidean first-order gradient protection is not a guarantee for finite Adam steps, individual channels, or autonomous rollouts. Test those explicitly."
+  },
+  "targeted_Ih": {
+    "start_ms": [
+      50,
+      150,
+      350,
+      550,
+      700,
+      900
+    ],
+    "fraction_total_batch": 0.25,
+    "description": "Replace two of eight fit windows with existing slow_recovery fit histories, sampling preregistered onset/late hyperpolarization/recovery anchors. No development or fresh targets added. Same total batch and updates."
+  },
+  "warmstart": {
+    "source_sha256": "a9bf728bb5d567c1abffb35d9293d7e460b04d52dda2a36982e3f6ca2bb61f45",
+    "indices": [
+      9,
+      10,
+      11
+    ],
+    "selected_updates": [
+      150,
+      0,
+      300
+    ],
+    "description": "Same selected52i combined weights for all four arms; one fallback inherited. Common optimizer reset, not recovery or independent confirmation."
+  },
+  "step_acceptance": {
+    "ordinary_cases": 2,
+    "support_cases": 2,
+    "start_ms": 350,
+    "ticks": 128,
+    "trial_factors": [
+      1.0,
+      0.5,
+      0.25,
+      0.125
+    ],
+    "minimum_lr_fraction": 0.05,
+    "description": "Fixed fit-only panel excluded from all gradient minibatches in all arms. Accept first step preserving each current MSE versus initial warmstart within original1e-6relative+1e-12absolute tolerance, otherwise zero step. Reject restores Adam moments; common Adam bias-correction clock counts attempts. No development/fresh acceptance feedback.",
+    "long_ticks": 512,
+    "coupled_cases": 2,
+    "coupled_start_ms": 200,
+    "coupled_ticks": 128
+  }
+}
